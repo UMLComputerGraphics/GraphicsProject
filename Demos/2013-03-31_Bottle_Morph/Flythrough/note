@@ -1,0 +1,21 @@
+BIG ITEMS:
+    - SMOOTH ROTATIONS
+
+-allow terrain.cpp to start without a camera :p
+-Add a camera mode that follows its Object PTM if possible? (I.e, Origin is PTM instead of 0,0,0.)
+
+Dreamboat:
+
+-Camera should utilize an extra "trans" style object for the camera, in addition to the implicit inherited one for his model.
+
+Cameras class:
+Camera &Cameras::Active( size_t n ) {
+  if (n < camList.size()) {
+    activeCamera = n;
+  }
+  camList.at(activeCamera).Send( Camera::CTM );
+  return Active();
+}
+Implement an "Active" or "Send All" function straight in Camera, avoid sending only the CTM.
+
+-upside-down camera correction? (detect when we are upside down, invert looks?)
