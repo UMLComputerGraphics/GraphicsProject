@@ -29,7 +29,7 @@ CC=g++
 CFLAGS=-Wall -pedantic -I $(RELDIR)/include
 LDLIBS=-lSOIL
 
-EXECS=fly terrain morph
+EXECS=fly terrain morph morphlite
 
 
 #EXEC sources are implied to be $EXEC.cpp !!
