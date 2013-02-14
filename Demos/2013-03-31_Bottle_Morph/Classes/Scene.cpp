@@ -34,6 +34,15 @@ Object *Scene::AddObject( const std::string &objName ) {
 
 }
 
+// An AddObject method where a different shader can be specified
+Object *Scene::AddObject( const std::string &objName, GLuint gShader ) {
+  
+  Object *obj = new Object( objName, gShader );
+  InsertObject( objName, obj );
+  return obj;
+
+}
+
 void Scene::SetShader( GLuint gShader ) {
   this->gShader = gShader;
 }

@@ -8,6 +8,8 @@
 #include "globals.h"
 #include <stdexcept>
 
+#include <iostream>
+
 #include "Timer.hpp"
 
 using Angel::vec4;
@@ -31,7 +33,7 @@ Object::Object( const std::string &name, GLuint gShader )
 
   // Associate this Object with the Shader.
   SetShader( gShader );
-  glUseProgram( gShader );
+  //glUseProgram( gShader );
 
   // Set our name from the constructor...
   this->name = name;
@@ -58,6 +60,8 @@ Object::Object( const std::string &name, GLuint gShader )
   glBindVertexArray( vao );
   GLuint glsl_uniform;
 
+  std::cout << "Shader in constructor: " << gShader << " for " << name << std::endl;
+
   /* Create five VBOs: One each for Positions, Colors, Normals, 
      Textures and Draw Order. */
   glGenBuffers( 8, buffer );
@@ -68,24 +72,7 @@ Object::Object( const std::string &name, GLuint gShader )
   glEnableVertexAttribArray( glsl_uniform );
   glVertexAttribPointer( glsl_uniform, 4, GL_FLOAT, GL_FALSE, 0, 0 );
 
-  /* Create the MORPH Vertex buffer and link it with the shader. */
-  glBindBuffer( GL_ARRAY_BUFFER, buffer[VERTICES_MORPH] );
-  glsl_uniform = glGetAttribLocation( gShader, "vPositionMorph" );
-  glEnableVertexAttribArray( glsl_uniform );
-  glVertexAttribPointer( glsl_uniform, 4, GL_FLOAT, GL_FALSE, 0, 0 );
-
-  /* Create the Normal buffer and link it with the shader. */
-  glBindBuffer( GL_ARRAY_BUFFER, buffer[NORMALS] );
-  glsl_uniform = glGetAttribLocation( gShader, "vNormal" );
-  glEnableVertexAttribArray( glsl_uniform );
-  glVertexAttribPointer( glsl_uniform, 3, GL_FLOAT, GL_FALSE, 0, 0 );
-
-  /* Create the Normal MORPH buffer and link it with the shader. */
-  glBindBuffer( GL_ARRAY_BUFFER, buffer[NORMALS_MORPH] );
-  glsl_uniform = glGetAttribLocation( gShader, "vNormalMorph" );
-  glEnableVertexAttribArray( glsl_uniform );
-  glVertexAttribPointer( glsl_uniform, 3, GL_FLOAT, GL_FALSE, 0, 0 );
-
+  std::cout << "glsl vPosition in shader " << gShader << ": " << glsl_uniform << std::endl;
   /* Create the Color buffer and link it with the shader. */
   glBindBuffer( GL_ARRAY_BUFFER, buffer[COLORS] );
   glEnable( GL_BLEND );
@@ -94,19 +81,14 @@ Object::Object( const std::string &name, GLuint gShader )
   glEnableVertexAttribArray( glsl_uniform );
   glVertexAttribPointer( glsl_uniform, 4, GL_FLOAT, GL_FALSE, 0, 0 );
 
-  /* Create the Color Morph buffer and link it with the shader. */
-  glBindBuffer( GL_ARRAY_BUFFER, buffer[COLORS_MORPH] );
-  glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-  glsl_uniform = glGetAttribLocation( gShader, "vColorMorph" );
-  glEnableVertexAttribArray( glsl_uniform );
-  glVertexAttribPointer( glsl_uniform, 4, GL_FLOAT, GL_FALSE, 0, 0 );
-
-  /* Create the Texture Coordinate buffer and link it with the shader. */
+  std::cout << "glsl vColor in shader " << gShader << ": " << glsl_uniform << std::endl;
+    /* Create the Texture Coordinate buffer and link it with the shader. */
   glBindBuffer( GL_ARRAY_BUFFER, buffer[TEXCOORDS] );
   glsl_uniform = glGetAttribLocation( gShader, "vTex" );
   glEnableVertexAttribArray( glsl_uniform );
   glVertexAttribPointer( glsl_uniform, 2, GL_FLOAT, GL_FALSE, 0, 0 );
 
+  std::cout << "glsl vTex in shader " << gShader << ": " << glsl_uniform << std::endl;
   if (DEBUG) 
     fprintf( stderr,
 	     "buffhandles: %u %u %u %u %u\n",
@@ -122,6 +104,7 @@ Object::Object( const std::string &name, GLuint gShader )
 
   /* Unset the VAO context. */
   glBindVertexArray( 0 );
+
 }
 
 
@@ -178,9 +161,6 @@ void Object::Buffer( void ) {
   glBufferData( GL_ARRAY_BUFFER, sizeof(Angel::vec4) * points.size(),
 		&(points[0]), GL_STATIC_DRAW );
 
-  glBindBuffer( GL_ARRAY_BUFFER, buffer[NORMALS] );
-  glBufferData( GL_ARRAY_BUFFER, sizeof(Angel::vec3) * normals.size(),
-		&(normals[0]), GL_STATIC_DRAW );
 
   glBindBuffer( GL_ARRAY_BUFFER, buffer[COLORS] );
   glBufferData( GL_ARRAY_BUFFER, sizeof(Angel::vec4) * colors.size(),
@@ -364,6 +344,14 @@ void Object::Draw( void ) {
 
   glBindVertexArray( vao );
 
+
+  if (name != "Camera1")
+  {
+    //std::cout << "Name: " << name << " Shader: " << GetShader() << std::endl;
+  
+    glUseProgram(GetShader());
+  }
+
   Send( Object::IsTextured ) ;
   Send( Object::ObjectCTM  ) ;
   Send( Object::MorphPercentage );
@@ -378,6 +366,7 @@ void Object::Draw( void ) {
 
   glBindVertexArray(0);
 
+  std::cout << "curr shader: " << glGetIntegerv(GL_CURRENT_PROGRAM, 0) << std::endl;
   // Draw all of our Children.
   // (With clothes on, pervert.)
   Scene::Draw();
