@@ -54,9 +54,6 @@ void init() {
   gHeavy = Angel::InitShader( "shaders/vtest.glsl", "shaders/ftest.glsl" );
   gShader = Angel::InitShader("shaders/vterrain.glsl", "shaders/fterrain.glsl");
 
-  std::cout << "gHeavy is: " << gHeavy << std::endl;
-  std::cout << "gShader is: " << gShader << std::endl;
-
   theScene.SetShader( gShader );
   myScreen.camList.SetShader( gShader );
   myScreen.camList.AddCamera( "Camera1");
