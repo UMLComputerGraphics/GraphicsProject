@@ -60,8 +60,6 @@ Object::Object( const std::string &name, GLuint gShader )
   glBindVertexArray( vao );
   GLuint glsl_uniform;
 
-  std::cout << "Shader in constructor: " << gShader << " for " << name << std::endl;
-
   /* Create five VBOs: One each for Positions, Colors, Normals, 
      Textures and Draw Order. */
   glGenBuffers( 8, buffer );
@@ -72,7 +70,6 @@ Object::Object( const std::string &name, GLuint gShader )
   glEnableVertexAttribArray( glsl_uniform );
   glVertexAttribPointer( glsl_uniform, 4, GL_FLOAT, GL_FALSE, 0, 0 );
 
-  std::cout << "glsl vPosition in shader " << gShader << ": " << glsl_uniform << std::endl;
   /* Create the Color buffer and link it with the shader. */
   glBindBuffer( GL_ARRAY_BUFFER, buffer[COLORS] );
   glEnable( GL_BLEND );
@@ -81,14 +78,12 @@ Object::Object( const std::string &name, GLuint gShader )
   glEnableVertexAttribArray( glsl_uniform );
   glVertexAttribPointer( glsl_uniform, 4, GL_FLOAT, GL_FALSE, 0, 0 );
 
-  std::cout << "glsl vColor in shader " << gShader << ": " << glsl_uniform << std::endl;
     /* Create the Texture Coordinate buffer and link it with the shader. */
   glBindBuffer( GL_ARRAY_BUFFER, buffer[TEXCOORDS] );
   glsl_uniform = glGetAttribLocation( gShader, "vTex" );
   glEnableVertexAttribArray( glsl_uniform );
   glVertexAttribPointer( glsl_uniform, 2, GL_FLOAT, GL_FALSE, 0, 0 );
 
-  std::cout << "glsl vTex in shader " << gShader << ": " << glsl_uniform << std::endl;
   if (DEBUG) 
     fprintf( stderr,
 	     "buffhandles: %u %u %u %u %u\n",
@@ -366,7 +361,6 @@ void Object::Draw( void ) {
 
   glBindVertexArray(0);
 
-  std::cout << "curr shader: " << glGetIntegerv(GL_CURRENT_PROGRAM, 0) << std::endl;
   // Draw all of our Children.
   // (With clothes on, pervert.)
   Scene::Draw();

@@ -62,9 +62,9 @@ void init() {
   myScreen.camList.AddCamera( "Camera1");
   myScreen.camList.Next();
 
-  Object *medic = theScene.AddObject("medic", gHeavy);
+  Object *heavy = theScene.AddObject("heavy", gHeavy);
+  Object *medic = theScene.AddObject("medic", gShader);
   Object *spy = theScene.AddObject("spy", gShader);
-  Object *heavy = theScene.AddObject("heavy", gShader);
   loadModelFromFile( heavy, "../models/heavyT.obj" );
   loadModelFromFile( medic, "../models/medicT.obj" );
   loadModelFromFile(spy, "../models/spyT.obj");
