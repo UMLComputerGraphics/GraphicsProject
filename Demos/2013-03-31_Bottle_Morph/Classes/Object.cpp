@@ -100,9 +100,7 @@ Object::Object( const std::string &name, GLuint gShader )
   /* Unset the VAO context. */
   glBindVertexArray( 0 );
 
-}
-
-
+} 
 void Object::destroyMorphTarget(){
 
   if ( this->morphTarget != NULL ) {
@@ -310,6 +308,9 @@ void Object::Texture( const char** filename ) {
 
 
 void Object::Send( Object::UniformEnum which ) {
+
+  //glUseProgram(GetShader());
+
   switch (which) {
     
   case Object::IsTextured:
@@ -342,8 +343,6 @@ void Object::Draw( void ) {
 
   if (name != "Camera1")
   {
-    //std::cout << "Name: " << name << " Shader: " << GetShader() << std::endl;
-  
     glUseProgram(GetShader());
   }
 

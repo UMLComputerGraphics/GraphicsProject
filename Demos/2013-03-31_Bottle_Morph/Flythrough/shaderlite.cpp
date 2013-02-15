@@ -1,7 +1,7 @@
 /**
    @file shaderlite.cpp
    @author Greg Giannone
-   @authors John Huston, Nicholas VerVoort, Chris Compton
+   @authors John Huston, Nicholas VerVoort, Chris Compton, Nick StPierre
    @date 2013-2-13
    @brief An attempt at having different shaders for different objects
    @details This is a demo this the objective of loading two different models
@@ -44,11 +44,13 @@ typedef Angel::vec4 point4;
 Screen myScreen( 800, 600 );
 Scene theScene;
 bool fixed_yaw = true;
+bool heavy;
 
+GLuint gShader, gHeavy;
 // Initialization: load and compile shaders, initialize camera(s), load models.
 void init() {
   
-  GLuint gShader, gHeavy;
+  heavy = false;
 
   // Load shaders and use the resulting shader program. 
   gHeavy = Angel::InitShader( "shaders/vtest.glsl", "shaders/ftest.glsl" );
@@ -94,6 +96,15 @@ void cleanup( void ) {
 void displayViewport( void ) {  
   theScene.Draw(); /* Draw free-floating objects */
   myScreen.camList.Draw(); /* Draw camera-attached objects */
+
+  if (heavy)
+  {
+    glUseProgram(gShader);
+  }
+  else
+  {
+    glUseProgram(gHeavy);
+  }
 }
 
 void display( void ) {
@@ -102,6 +113,85 @@ void display( void ) {
   myScreen.camList.View( displayViewport );
   glutSwapBuffers();
 }
+
+void keyboard( unsigned char key, int x, int y ) {
+
+  // Hacky, for the wii reset, below.
+  Camera *camptr = dynamic_cast< Camera* >( myScreen.camList["AutoCamera2"] );
+
+  switch( key ) {
+
+  case 033: // Escape Key	  
+    cleanup();
+    glutLeaveMainLoop();
+    break;
+
+  case ';': // Print Info
+    fprintf( stderr, "Active Object: %s\n",
+	     theScene.Active()->Name().c_str() );
+    break;
+
+  case '~':
+#ifdef WII
+    CalibrateGyro( Wii );
+    if (camptr) camptr->resetRotation();
+#endif
+    break;
+    
+    
+  case '+':
+    std::stringstream camName;
+    camName << "AutoCamera" << myScreen.camList.NumCameras() + 1;
+    myScreen.camList.AddCamera( camName.str() );
+    break;
+  }
+
+  if (myScreen.camList.NumCameras() < 1) return;
+
+  /* A shorthand variable with local scope that refers to "The Active Camera." */
+  Camera &cam = *(myScreen.camList.Active());
+  
+  switch( key ) {
+  case '-':
+    myScreen.camList.PopCamera();
+    break;
+  case ';':
+    fprintf( stderr, "Camera Position: (%f,%f,%f)\n", cam.X(), cam.Y(), cam.Z() );
+    break;
+    
+  case 'w':
+    cam.Move( Camera::Forward );
+    break;
+  case 's':
+    cam.Move( Camera::Backward );
+    break;
+  case 'a':
+    cam.Move( Camera::Left );
+    break;
+  case 'd':
+    cam.Move( Camera::Right );
+    break;
+  case 'q':
+    cam.Move( Camera::Up );
+    break;
+  case 'e':
+    cam.Move( Camera::Down );
+    break;
+    
+    //Perspectives
+  case 'z': cam.changePerspective( Camera::PERSPECTIVE ); break;
+  case 'x': cam.changePerspective( Camera::ORTHO ); break;
+  case 'c': cam.changePerspective( Camera::ORTHO2D ); break;
+  case 'v': cam.changePerspective( Camera::FRUSTUM ); break;
+  case 'b': cam.changePerspective( Camera::IDENTITY ); break;
+
+  case 't': heavy = !heavy; break;
+    //  case '[': theScene["bottle"]->setMorphPercentage(0.0); break;
+    //  case ']': theScene["bottle"]->setMorphPercentage(1.0); break;
+
+  }
+}
+
 
 // Sorry about this, but it's better if you don't know.
 #include "keybindings.inc"

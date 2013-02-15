@@ -673,6 +673,8 @@ void Camera::viewport( size_t _X, size_t _Y,
    @return Void.
 **/
 void Camera::Send( Object::UniformEnum which ) {
+
+  //glUseProgram(GetShader());
   
   switch (which) {
   case TRANSLATION:

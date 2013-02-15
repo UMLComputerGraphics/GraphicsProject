@@ -25,83 +25,6 @@ void keylift( unsigned char key, int x, int y ) {
   }
 }
 
-
-void keyboard( unsigned char key, int x, int y ) {
-
-  // Hacky, for the wii reset, below.
-  Camera *camptr = dynamic_cast< Camera* >( myScreen.camList["AutoCamera2"] );
-
-  switch( key ) {
-
-  case 033: // Escape Key	  
-    cleanup();
-    glutLeaveMainLoop();
-    break;
-
-  case ';': // Print Info
-    fprintf( stderr, "Active Object: %s\n",
-	     theScene.Active()->Name().c_str() );
-    break;
-
-  case '~':
-#ifdef WII
-    CalibrateGyro( Wii );
-    if (camptr) camptr->resetRotation();
-#endif
-    break;
-    
-    
-  case '+':
-    std::stringstream camName;
-    camName << "AutoCamera" << myScreen.camList.NumCameras() + 1;
-    myScreen.camList.AddCamera( camName.str() );
-    break;
-  }
-
-  if (myScreen.camList.NumCameras() < 1) return;
-
-  /* A shorthand variable with local scope that refers to "The Active Camera." */
-  Camera &cam = *(myScreen.camList.Active());
-  
-  switch( key ) {
-  case '-':
-    myScreen.camList.PopCamera();
-    break;
-  case ';':
-    fprintf( stderr, "Camera Position: (%f,%f,%f)\n", cam.X(), cam.Y(), cam.Z() );
-    break;
-    
-  case 'w':
-    cam.Move( Camera::Forward );
-    break;
-  case 's':
-    cam.Move( Camera::Backward );
-    break;
-  case 'a':
-    cam.Move( Camera::Left );
-    break;
-  case 'd':
-    cam.Move( Camera::Right );
-    break;
-  case 'q':
-    cam.Move( Camera::Up );
-    break;
-  case 'e':
-    cam.Move( Camera::Down );
-    break;
-    
-    //Perspectives
-  case 'z': cam.changePerspective( Camera::PERSPECTIVE ); break;
-  case 'x': cam.changePerspective( Camera::ORTHO ); break;
-  case 'c': cam.changePerspective( Camera::ORTHO2D ); break;
-  case 'v': cam.changePerspective( Camera::FRUSTUM ); break;
-  case 'b': cam.changePerspective( Camera::IDENTITY ); break;
-    //  case '[': theScene["bottle"]->setMorphPercentage(0.0); break;
-    //  case ']': theScene["bottle"]->setMorphPercentage(1.0); break;
-
-  }
-}
-
 void keyboard_ctrl( int key, int x, int y ) {
 
   switch (key) {
@@ -169,11 +92,14 @@ void mouseroll( int x, int y ) {
 void mouselook( int x, int y ) {
 
   if ((x != myScreen.MidpointX()) || (y != myScreen.MidpointY())) {
-    const double dx = ((double)x - myScreen.MidpointX());
-    const double dy = ((double)y - myScreen.MidpointY());
+    double dx = ((double)x - myScreen.MidpointX());
+    double dy = ((double)y - myScreen.MidpointY());
+
+	if (abs(dx) > 100) dx = 0.0;
+	if (abs(dy) > 100) dy = 0.0;
     
     if (myScreen.camList.NumCameras() > 0) {
-      myScreen.camList.Active()->pitch( dy );
+      myScreen.camList.Active()->pitch( -dy );
       myScreen.camList.Active()->yaw( dx, fixed_yaw );
     }    
 
