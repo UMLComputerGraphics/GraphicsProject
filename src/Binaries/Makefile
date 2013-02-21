@@ -29,9 +29,7 @@ CC=g++
 CFLAGS=-Wall -pedantic -I $(RELDIR)/include
 LDLIBS=-lSOIL
 
-EXECS=fly terrain morph morphlite
-
-
+EXECS=terrain morph morphlite
 #EXEC sources are implied to be $EXEC.cpp !!
 
 COMMON_SOURCES=model.cpp InitShader.cpp
@@ -45,7 +43,7 @@ SOURCES=$(addprefix $(COMMON_DIR)/, $(COMMON_SOURCES)) \
 UNAME := $(shell uname)
 ifeq ($(UNAME), Linux)
 CFLAGS += -I /usr/include/SOIL
-LDLIBS += -lGL -lGLU -lGLEW -lglut -lXmu -lX11 -lm
+LDLIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm
 endif
 
 ifeq ($(UNAME), Darwin)
@@ -64,7 +62,6 @@ ifdef WII
 endif
 
 #DEBUG=1
-
 ifdef DEBUG
 	CFLAGS += -DDEBUG -O0 -ggdb
 else

@@ -18,7 +18,7 @@ OBJS = $(subst .cpp,.o,$(COMMON)) \
        $(subst .cpp,.o,$(CLASSES))
 
 CXXOPTS = -fmessage-length=0 -pedantic 
-CXXINCS = -I$(CURDIR)/include
+CXXINCS = "-I$(CURDIR)/include"
 
 DIRT = $(wildcard */*.o */*.so */*.d *.i *~ */*~ *.log)
 
@@ -39,7 +39,7 @@ UNAME := $(shell uname)
 ifeq ($(UNAME), Linux)
     CXXINCS += -I/usr/include/SOIL
     CXXDEFS += -DFREEGLUT_STATIC -DGLEW_STATIC
-    LDLIBS += -lGL -lGLU -lGLEW -lglut -lXmu -lX11 -lm
+    LDLIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm
 endif
 
 ifeq ($(UNAME), Darwin)
