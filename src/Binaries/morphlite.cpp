@@ -51,38 +51,56 @@ void init() {
   
   // Load shaders and use the resulting shader program. 
   gShader = Angel::InitShader( "shaders/vmorph.glsl", "shaders/fmorph.glsl" );
+
+  // Let the other objects know which shader to use.
   theScene.SetShader( gShader );
   myScreen.camList.SetShader( gShader );
+
+  // We start with no cameras, by default. Add one and set it "active" by using Next().
   myScreen.camList.AddCamera( "Camera1" );
   myScreen.camList.Next();
 
-
+  // Create an object and add it to the scene with the name "bottle".
   Object *bottle = theScene.AddObject( "bottle" );
+
+  // Use the object loader to actually fill out the vertices and-so-on of the bottle.
   loadModelFromFile( bottle, "../models/bottle-a.obj" );
+
+  // Scale the bottle down!
   bottle->trans.scale.Set( 0.01 );
+
+  // Buffer the object onto the GPU. This does not happen by default,
+  // To allow you to make many changes and buffer only once,
+  // or to buffer changes selectively.
   bottle->Buffer();
 
-  // Objects has-a pointer to an object which is their "morph target."
+  // Object class has-a pointer to an object which is the morph target.
   // they are created and buffered as follows:
 
   // this makes a new object and links it to the source object. it returns the addr of the new obj..
   bottle->genMorphTarget( gShader ) ; 
+
   // we can get the addr of the morph object like this, also.
   Object *bottleMorphTarget = bottle->getMorphTargetPtr() ; 
+
   // with this model, we can use all the preexisting Object class functionality
   loadModelFromFile( bottleMorphTarget, "../models/bottle-b.obj" ); 
   bottleMorphTarget->trans.scale.Set( 0.01 );
+
   // YES THIS IS THE REAL OBJECT, NOT THE TARGET. 
   // IT SENDS THE MORPH VERTICES TO THE SHADER, NOT TO THE DRAW LIST TO BE DRAWN!
   bottle->BufferMorphOnly(); 
 
+  // Generic OpenGL setup: Enable the depth buffer and set a nice background color.
   glEnable( GL_DEPTH_TEST );
   glClearColor( 0.3, 0.5, 0.9, 1.0 );
 
 }
 
 void cleanup( void ) {
+
   theScene.DestroyObject();
+
 }
 
 //--------------------------------------------------------------------
@@ -90,20 +108,37 @@ void cleanup( void ) {
 /** A function that takes no arguments.
     Is responsible for drawing a SINGLE VIEWPORT. **/
 void displayViewport( void ) {  
-  theScene.Draw(); /* Draw free-floating objects */
-  myScreen.camList.Draw(); /* Draw camera-attached objects */
+
+  // Draw free-floating objects. I.e, everything in the scene.
+  theScene.Draw();
+
+  // Draw objects that are attached to the cameras.
+  myScreen.camList.Draw();
+
 }
 
+// GLUT display callback. Effectively calls displayViewport per-each Camera.
 void display( void ) {
+
+  // Clear the buffer.
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+
   // Tell camList to draw using our displayViewport rendering function.
   myScreen.camList.View( displayViewport );
+
+  // Swap to the next buffer.
   glutSwapBuffers();
+
 }
 
 // Sorry about this, but it's better if you don't know.
-#include "keybindings.inc"
+// For the sake of this simple framework example, the
+// GLUT keybinding code only clutters the application.
+#include "morphlite_keybindings.c"
 
+
+// This is called on window resizes, which ultimately
+// computes new viewport dimensions and aspect ratios.
 void resizeEvent( int width, int height ) {
 
   /* Handles resizing the child cameras as well. */
@@ -116,18 +151,25 @@ void resizeEvent( int width, int height ) {
 void idle( void ) {
 
   // Compute the time since last idle().
+  // This is a global, stateful operation.
   Tick.Tock();
+
+  // Animation variables.
   static double timer = 0.0 ;
   if ( (timer += 0.005 ) > 360.0 ) timer = 0.0 ;
   float percent = ( sin(timer) + 1 ) / 2 ;
 
+  // Update the morph percentage.
   theScene["bottle"]->setMorphPercentage(percent);
 
   if (DEBUG_MOTION) 
     fprintf( stderr, "Time since last idle: %lu\n", Tick.Delta() );
 
-  // Move all camera(s).
+  // Move all cameras: Apply velocity and acceleration adjustments.
+  // If no cameras are currently moving, this will do nothing ;)
   myScreen.camList.IdleMotion();
+
+  // Inform GLUT we'd like to render a new frame.
   glutPostRedisplay();
   
 }

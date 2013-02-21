@@ -28,8 +28,10 @@ void keylift( unsigned char key, int x, int y ) {
 
 void keyboard( unsigned char key, int x, int y ) {
 
+#ifdef WII
   // Hacky, for the wii reset, below.
   Camera *camptr = dynamic_cast< Camera* >( myScreen.camList["AutoCamera2"] );
+#endif
 
   switch( key ) {
 
