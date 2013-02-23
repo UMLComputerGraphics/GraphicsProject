@@ -4,6 +4,7 @@
 #include <vector>
 #include "globals.h"
 #include "mat.hpp"
+#include "model.hpp"
 #include "Object.hpp"
 #include "Particle.hpp"
 #include "platform.h"
@@ -26,6 +27,10 @@ Particle::Particle(vec4 initPos, vec3 initScale, vec3 initVel, float initAlpha,
   setScale( initScale );
   setVel( initVel );
   setTexFile( initTex );
+
+  loadModelFromFile( this, "../models/particle.obj" );
+  this->Buffer();
+  
 }
 
 // Destructor(s)
