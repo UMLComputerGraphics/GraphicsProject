@@ -1,0 +1,365 @@
+{
+   i965_fgCreateWindow_Suppress
+   Memcheck:Cond
+   ...
+   fun:fgOpenWindow
+   fun:fgCreateWindow
+   ...
+}
+
+{
+   libdrm_fgEnumWindows_stack_alloc_ioctl
+   Memcheck:Param
+   ioctl(generic)
+   fun:ioctl
+   fun:drmIoctl
+   obj:/usr/lib/x86_64-linux-gnu/libdrm_intel.so.1.0.0
+   ...
+   fun:fgEnumWindows
+   ...
+}
+
+{
+   param_ioctl_createcontext
+   Memcheck:Param
+   ioctl(generic)
+   fun:ioctl
+   fun:drmIoctl
+   ...
+   fun:CreateContext
+   ...
+}
+
+{
+   param_ioctl_linkprogram
+   Memcheck:Param
+   ioctl(generic)
+   fun:ioctl
+   fun:drmIoctl
+   obj:/usr/lib/x86_64-linux-gnu/libdrm_intel.so.1.0.0
+   fun:brw_cache_new_bo
+   fun:brw_upload_cache
+   fun:do_wm_prog
+   ...
+   fun:link_program
+   ...
+}
+
+{
+   cond_libdrm_driBindContext
+   Memcheck:Cond
+   obj:/usr/lib/x86_64-linux-gnu/libdrm_intel.so.1.0.0
+   fun:intel_region_alloc
+   fun:intel_miptree_create
+   ...
+   fun:intel_miptree_create_for_renderbuffer
+   fun:intel_alloc_renderbuffer_storage
+   fun:_mesa_resize_framebuffer
+   fun:intel_resize_buffers
+   fun:intel_update_renderbuffers
+   fun:intel_prepare_render
+   fun:intelMakeCurrent
+   fun:driBindContext
+   ...
+}
+ 
+{
+   param_ioctl_fgOpenWindow
+   Memcheck:Param
+   ioctl(generic)
+   fun:ioctl
+   fun:drmIoctl
+   ...
+   fun:fgOpenWindow
+   fun:fgCreateWindow
+}
+
+{
+   param_ioctl_fgDeinitialize
+   Memcheck:Param
+   ioctl(generic)
+   fun:ioctl
+   fun:drmIoctl
+   obj:/usr/lib/x86_64-linux-gnu/libdrm_intel.so.1.0.0
+   obj:/usr/lib/x86_64-linux-gnu/libdrm_intel.so.1.0.0
+   fun:intelDestroyScreen
+   fun:driDestroyScreen
+   fun:dri2DestroyScreen
+   fun:FreeScreenConfigs.isra.3
+   fun:glx_display_free
+   fun:__glXCloseDisplay
+   fun:XCloseDisplay
+   fun:fgDeinitialize
+}
+
+{
+   param_ioctl_link_program
+   Memcheck:Param
+   ioctl(generic)
+   fun:ioctl
+   fun:drmIoctl
+   obj:/usr/lib/x86_64-linux-gnu/libdrm_intel.so.1.0.0
+   fun:brw_upload_cache
+   fun:do_wm_prog
+   fun:_Z17brw_fs_precompileP10gl_contextP17gl_shader_program
+   fun:_Z21brw_shader_precompileP10gl_contextP17gl_shader_program
+   fun:brw_link_shader
+   fun:_mesa_glsl_link_shader
+   fun:link_program
+   ...
+}
+
+{
+   param_ioctl_libdrm_main
+   Memcheck:Param
+   ioctl(generic)
+   fun:ioctl
+   fun:drmIoctl
+   obj:/usr/lib/x86_64-linux-gnu/libdrm_intel.so.1.0.0
+   ...
+   fun:intel_bufferobj_data
+   fun:_mesa_BufferDataARB
+   fun:_ZN6Object6BufferEv
+   fun:_Z4initv
+   fun:main
+}
+
+{
+   param_ioctl_libdrm_fgOpenWindow
+   Memcheck:Param
+   ioctl(generic)
+   fun:ioctl
+   fun:drmIoctl
+   obj:/usr/lib/x86_64-linux-gnu/libdrm_intel.so.1.0.0
+   obj:/usr/lib/x86_64-linux-gnu/libdrm_intel.so.1.0.0
+   fun:intelInitScreen2
+   fun:dri2CreateNewScreen
+   fun:dri2CreateScreen
+   fun:__glXInitialize
+   fun:glXGetFBConfigs
+   fun:glXChooseFBConfig
+   fun:fgChooseFBConfig
+   fun:fgOpenWindow
+}
+ {
+   i965_fgCreateWindow_Suppress
+   Memcheck:Cond
+   ...
+   fun:fgOpenWindow
+   fun:fgCreateWindow
+   ...
+}
+
+{
+   libdrm_fgEnumWindows_stack_alloc_ioctl
+   Memcheck:Param
+   ioctl(generic)
+   fun:ioctl
+   fun:drmIoctl
+   obj:/usr/lib/x86_64-linux-gnu/libdrm_intel.so.1.0.0
+   ...
+   fun:fgEnumWindows
+   ...
+}
+
+{
+   param_ioctl_createcontext
+   Memcheck:Param
+   ioctl(generic)
+   fun:ioctl
+   fun:drmIoctl
+   ...
+   fun:CreateContext
+   ...
+}
+
+{
+   param_ioctl_linkprogram
+   Memcheck:Param
+   ioctl(generic)
+   fun:ioctl
+   fun:drmIoctl
+   obj:/usr/lib/x86_64-linux-gnu/libdrm_intel.so.1.0.0
+   fun:brw_cache_new_bo
+   fun:brw_upload_cache
+   fun:do_wm_prog
+   ...
+   fun:link_program
+   ...
+}
+
+{
+   cond_libdrm_driBindContext
+   Memcheck:Cond
+   obj:/usr/lib/x86_64-linux-gnu/libdrm_intel.so.1.0.0
+   fun:intel_region_alloc
+   fun:intel_miptree_create
+   ...
+   fun:intel_miptree_create_for_renderbuffer
+   fun:intel_alloc_renderbuffer_storage
+   fun:_mesa_resize_framebuffer
+   fun:intel_resize_buffers
+   fun:intel_update_renderbuffers
+   fun:intel_prepare_render
+   fun:intelMakeCurrent
+   fun:driBindContext
+   ...
+}
+ 
+{
+   param_ioctl_fgOpenWindow
+   Memcheck:Param
+   ioctl(generic)
+   fun:ioctl
+   fun:drmIoctl
+   ...
+   fun:fgOpenWindow
+   fun:fgCreateWindow
+}
+
+{
+   param_ioctl_fgDeinitialize
+   Memcheck:Param
+   ioctl(generic)
+   fun:ioctl
+   fun:drmIoctl
+   obj:/usr/lib/x86_64-linux-gnu/libdrm_intel.so.1.0.0
+   obj:/usr/lib/x86_64-linux-gnu/libdrm_intel.so.1.0.0
+   fun:intelDestroyScreen
+   fun:driDestroyScreen
+   fun:dri2DestroyScreen
+   fun:FreeScreenConfigs.isra.3
+   fun:glx_display_free
+   fun:__glXCloseDisplay
+   fun:XCloseDisplay
+   fun:fgDeinitialize
+}
+
+{
+   param_ioctl_link_program
+   Memcheck:Param
+   ioctl(generic)
+   fun:ioctl
+   fun:drmIoctl
+   obj:/usr/lib/x86_64-linux-gnu/libdrm_intel.so.1.0.0
+   fun:brw_upload_cache
+   fun:do_wm_prog
+   fun:_Z17brw_fs_precompileP10gl_contextP17gl_shader_program
+   fun:_Z21brw_shader_precompileP10gl_contextP17gl_shader_program
+   fun:brw_link_shader
+   fun:_mesa_glsl_link_shader
+   fun:link_program
+   ...
+}
+
+{
+   param_ioctl_libdrm_main
+   Memcheck:Param
+   ioctl(generic)
+   fun:ioctl
+   fun:drmIoctl
+   obj:/usr/lib/x86_64-linux-gnu/libdrm_intel.so.1.0.0
+   ...
+   fun:intel_bufferobj_data
+   fun:_mesa_BufferDataARB
+   fun:_ZN6Object6BufferEv
+   fun:_Z4initv
+   fun:main
+}
+
+{
+   param_ioctl_libdrm_fgOpenWindow
+   Memcheck:Param
+   ioctl(generic)
+   fun:ioctl
+   fun:drmIoctl
+   obj:/usr/lib/x86_64-linux-gnu/libdrm_intel.so.1.0.0
+   obj:/usr/lib/x86_64-linux-gnu/libdrm_intel.so.1.0.0
+   fun:intelInitScreen2
+   fun:dri2CreateNewScreen
+   fun:dri2CreateScreen
+   fun:__glXInitialize
+   fun:glXGetFBConfigs
+   fun:glXChooseFBConfig
+   fun:fgChooseFBConfig
+   fun:fgOpenWindow
+}
+
+{
+   addr1_bcmp_link_program
+   Memcheck:Addr1
+   fun:bcmp
+   fun:brw_upload_cache
+   ...
+   fun:brw_link_shader
+   fun:_mesa_glsl_link_shader
+   fun:link_program
+   ...
+}
+
+{
+   addr1_bcmp_fgEnumWindows
+   Memcheck:Addr1
+   fun:bcmp
+   fun:brw_upload_cache
+   fun:do_wm_prog
+   fun:brw_upload_wm_prog
+   fun:brw_upload_state
+   fun:brw_draw_prims
+   fun:vbo_draw_arrays
+   fun:_mesa_meta_glsl_Clear
+   fun:brw_clear
+   fun:_Z7displayv
+   fun:fghcbDisplayWindow
+   fun:fgEnumWindows
+}
+
+{
+   mesa_error_log_msg_leak
+   Memcheck:Leak
+   fun:malloc
+   fun:_mesa_log_msg
+   fun:_mesa_error
+   ...
+}
+
+{
+   libX11_realloc
+   Memcheck:Leak
+   fun:realloc
+   obj:/usr/lib/x86_64-linux-gnu/libX11.so.6.3.0
+   obj:/usr/lib/x86_64-linux-gnu/libX11.so.6.3.0
+   obj:/usr/lib/x86_64-linux-gnu/libX11.so.6.3.0
+   fun:_XlcCreateLC
+   fun:_XlcDefaultLoader
+   fun:_XOpenLC
+   fun:_XrmInitParseInfo
+   obj:/usr/lib/x86_64-linux-gnu/libX11.so.6.3.0
+   fun:XrmGetStringDatabase
+   obj:/usr/lib/x86_64-linux-gnu/libX11.so.6.3.0
+   fun:XGetDefault
+}
+
+{
+   libglut_glutInit
+   Memcheck:Leak
+   fun:malloc
+   fun:fgHintPresent
+   fun:glutInit
+   fun:main
+}
+
+{
+   dri2CreateNewDrawable
+   Memcheck:Leak
+   fun:malloc
+   fun:dri2CreateNewDrawable
+   fun:dri2CreateDrawable
+   fun:driFetchDrawable
+   fun:dri2_bind_context
+   fun:MakeContextCurrent
+   fun:fgOpenWindow
+   fun:fgCreateWindow
+   fun:glutCreateWindow
+   fun:main
+}
