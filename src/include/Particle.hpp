@@ -23,9 +23,8 @@ class Particle : public Object {
 
 public:
 
-  Particle( void );
   Particle( vec4 initPos, vec3 initScale, vec3 initVel, float initAlpha, 
-	    vec4 initColor, float initLifespan, float initSpin );
+	    vec4 initColor, float initLifespan, float initSpin, string initTex );
   virtual ~Particle( void ) ;
 
   /* Apply all changes to object's transformation */
@@ -40,6 +39,8 @@ public:
   void setLifespan( float newLifespan ) ;
   void setSpin( float newSpin );
 
+  void setTexFile( string newFilename );
+
  private:
   vec4 mPos;
   vec3 mScale;
@@ -49,6 +50,9 @@ public:
   vec4 blendColor;
   float lifespan;
   float spin;
+
+  string texFilename;
+
 };
 
 #endif
