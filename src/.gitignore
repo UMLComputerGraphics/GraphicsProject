@@ -1,4 +1,28 @@
-*.d
+# Compiled Object files
+*.slo
+*.lo
 *.o
+
+# Compiled Dynamic libraries
+*.so
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+
+# Compiled headers
+*.h.gch
+*.hpp.gch
+
+# Emacs cruft
+*~
+\#*
+
+# Dependency Files
+*.d
+
+# Mac OSX cruft
+.DS_Store
 .cproject
 .project
