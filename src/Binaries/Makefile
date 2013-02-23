@@ -29,12 +29,12 @@ CC=g++
 CFLAGS=-Wall -pedantic -I $(RELDIR)/include
 LDLIBS=-lSOIL
 
-EXECS=terrain morph morphlite
+EXECS=terrain morphlite ds
 #EXEC sources are implied to be $EXEC.cpp !!
 
-COMMON_SOURCES=model.cpp InitShader.cpp
+COMMON_SOURCES=model.cpp InitShader.cpp glut_callbacks.cpp
 
-CLASS_SOURCES=Camera.cpp vec.cpp mat.cpp Cameras.cpp Screen.cpp Timer.cpp Object.cpp Scene.cpp Transformation.cpp LightSource.cpp Lights.cpp TransCache.cpp
+CLASS_SOURCES=Camera.cpp vec.cpp mat.cpp Cameras.cpp Screen.cpp Timer.cpp Object.cpp Scene.cpp Transformation.cpp LightSource.cpp Lights.cpp TransCache.cpp Grinstein.cpp Settings.cpp
 
 SOURCES=$(addprefix $(COMMON_DIR)/, $(COMMON_SOURCES)) \
 	$(addprefix $(CLASSES_DIR)/, $(CLASS_SOURCES))
@@ -43,7 +43,7 @@ SOURCES=$(addprefix $(COMMON_DIR)/, $(COMMON_SOURCES)) \
 UNAME := $(shell uname)
 ifeq ($(UNAME), Linux)
 CFLAGS += -I /usr/include/SOIL
-LDLIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm
+LDLIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm -lXmu
 endif
 
 ifeq ($(UNAME), Darwin)

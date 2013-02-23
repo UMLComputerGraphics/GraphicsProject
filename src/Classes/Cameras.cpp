@@ -9,6 +9,7 @@
 
 #include <cmath>
 #include <vector>
+#include <stdexcept>
 #include "Camera.hpp"
 #include "Cameras.hpp"
 #include "globals.h"
@@ -60,7 +61,19 @@ Camera *Cameras::Obj2Cam( std::list< Object* >::iterator &it ) {
 }
 
 Camera *Cameras::Active( void ) {
+
+  // Use the base method to retrieve the active object.
+  Object *camptr = Scene::Active();
+  
+  // Convert it to a Camera pointer.
   return Obj2Cam( currentObj );
+
+  /*if (!active_cam) {
+    throw std::logic_error( "Cameras::Active() was called, "
+			    "\tBut there is no Active camera.\n" );
+  }
+  return active_cam;
+  */
 }
 
 Camera *Cameras::Prev( void ) {

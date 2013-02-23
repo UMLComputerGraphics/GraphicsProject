@@ -90,7 +90,7 @@ InitShader(const char* vShaderFile, const char* fShaderFile)
     }
 
     /* use program object */
-    glUseProgram(program);
+    //glUseProgram(program);
 
     return program;
 }
@@ -193,7 +193,7 @@ InitShader(const char* vShaderFile, const char* gShaderFile, const char* fShader
     }
 
     /* use program object */
-    glUseProgram(program);
+    //glUseProgram(program);
 
     return program;
 }

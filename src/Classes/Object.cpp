@@ -7,8 +7,8 @@
 #include <SOIL.h>
 #include "globals.h"
 #include <stdexcept>
-
 #include "Timer.hpp"
+#include "Grinstein.hpp"
 
 using Angel::vec4;
 using Angel::mat4;
@@ -23,15 +23,14 @@ Object::Object( const std::string &name, GLuint gShader )
      Each VBO contains some component data for how to render the vertex:
      Position, Color, Direction (Normal), Texture and Draw Order. */
 
-  if (DEBUG)
-    fprintf( stderr, "\nCreating %d handles for uniforms\n", Object::End );
 
   // Create room for our GLUniform handles
+  if (DEBUG)
+    fprintf( stderr, "\nCreating %d handles for uniforms\n", Object::End );
   handles.resize( Object::End );
 
   // Associate this Object with the Shader.
   SetShader( gShader );
-  glUseProgram( gShader );
 
   // Set our name from the constructor...
   this->name = name;
@@ -39,7 +38,7 @@ Object::Object( const std::string &name, GLuint gShader )
   /* Initialize our draw mode to GL_TRIANGLES until informed otherwise. */
   draw_mode = GL_TRIANGLES;
 
-  // Load 
+  // Get Uniform handles for the following shader variables
   Link( Object::IsTextured, "fIsTextured" );
   Link( Object::ObjectCTM, "OTM" );
   Link( Object::MorphPercentage, "morphPercentage" );
@@ -47,13 +46,13 @@ Object::Object( const std::string &name, GLuint gShader )
   //Default to "Not Textured"
   this->isTextured = false;
 
-
+  // Linear Interpolation Demo: Morph Percentage
   this->morphPercentage = 1.0;
+  // Pointer to an Object to Morph to.
   this->morphTarget = NULL ;
 
   /* Create our VAO, which is our handle to all 
      the rest of the following information. */
-
   glGenVertexArrays( 1, &vao );
   glBindVertexArray( vao );
   GLuint glsl_uniform;
@@ -363,6 +362,22 @@ void Object::Send( Object::UniformEnum which ) {
 void Object::Draw( void ) {
 
   glBindVertexArray( vao );
+  GLint currShader;
+  glGetIntegerv(GL_CURRENT_PROGRAM, &currShader);
+  if ((GLuint)currShader != GetShader()) {
+    std::cerr << "The shader being used (" << currShader << "), does not"
+      " match the shader desired by this object (" << name << "), shader [" << GetShader() << "]\n";
+    std::cerr << "Switching shader.\n";
+    // Set OpenGL to use this object's shader.
+    glUseProgram( GetShader() );
+    std::cerr << "Now using correct shader...\n";
+    // Set the Active Camera's shader to the Object's Shader.
+    Grinstein::GetCameras()->Active()->SetShader(GetShader());
+    std::cerr << "Updated the shader for the active camera ...\n";
+    // Send the Camera's info to the new shader.
+    Grinstein::GetCameras()->Active()->View();
+    std::cerr << "Force-updated the CTM on the shader.\n";
+  }  
 
   Send( Object::IsTextured ) ;
   Send( Object::ObjectCTM  ) ;
