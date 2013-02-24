@@ -1,18 +1,18 @@
 #include <string>
 #include <vector>
+#include <SOIL.h>
+#include <stdexcept>
+
 #include "platform.h"
+#include "Engine.hpp"
 #include "vec.hpp"
 #include "mat.hpp"
 #include "Object.hpp"
-#include <SOIL.h>
 #include "globals.h"
-#include <stdexcept>
 #include "Timer.hpp"
-#include "Grinstein.hpp"
 
 using Angel::vec4;
 using Angel::mat4;
-
 
 Object::Object( const std::string &name, GLuint gShader )
 {
@@ -362,21 +362,24 @@ void Object::Send( Object::UniformEnum which ) {
 void Object::Draw( void ) {
 
   glBindVertexArray( vao );
+
+  // Check to see if the correct shader program is engaged.
   GLint currShader;
   glGetIntegerv(GL_CURRENT_PROGRAM, &currShader);
   if ((GLuint)currShader != GetShader()) {
-    std::cerr << "The shader being used (" << currShader << "), does not"
-      " match the shader desired by this object (" << name << "), shader [" << GetShader() << "]\n";
-    std::cerr << "Switching shader.\n";
+
+    Camera *activeCamera = Engine::Instance()->Cams()->Active();
+    
+    if (DEBUG) std::cerr << "Switching shading context.\n";
+
     // Set OpenGL to use this object's shader.
     glUseProgram( GetShader() );
-    std::cerr << "Now using correct shader...\n";
+
     // Set the Active Camera's shader to the Object's Shader.
-    Grinstein::GetCameras()->Active()->SetShader(GetShader());
-    std::cerr << "Updated the shader for the active camera ...\n";
+    activeCamera->SetShader( GetShader() );
+
     // Send the Camera's info to the new shader.
-    Grinstein::GetCameras()->Active()->View();
-    std::cerr << "Force-updated the CTM on the shader.\n";
+    activeCamera->View();
   }  
 
   Send( Object::IsTextured ) ;

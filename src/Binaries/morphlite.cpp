@@ -18,7 +18,7 @@
 #include "Object.hpp"
 #include "Timer.hpp"
 #include "Scene.hpp"
-#include "Grinstein.hpp"
+#include "Engine.hpp"
 /* Utilities and Common */
 #include "model.hpp"
 #include "InitShader.hpp"
@@ -28,8 +28,8 @@
 void init() {
   
   // Get handles to the Scene and the Screen.
-  Scene *rootScene = Grinstein::GetScene();
-  Screen *primScreen = Grinstein::GetScreen();
+  Scene *rootScene = Engine::Instance()->RootScene();
+  Screen *primScreen = Engine::Instance()->MainScreen();
 
   // Load shaders and use the resulting shader program. 
   GLuint gShader = Angel::InitShader( "shaders/vmorph.glsl", "shaders/fmorph.glsl" );
@@ -80,15 +80,15 @@ void init() {
 }
 
 void cleanup( void ) {
-  Grinstein::GetScene()->DestroyObject();
+  Engine::Instance()->RootScene()->DestroyObject();
 }
 
 //--------------------------------------------------------------------
 
 // Implementation of drawing the display with regards to a single viewport.
 void draw( void ) {
-  static Scene *theScene = Grinstein::GetScene();
-  static Cameras *camList = Grinstein::GetCameras();
+  static Scene *theScene = Engine::Instance()->RootScene();
+  static Cameras *camList = Engine::Instance()->Cams();
 
   theScene->Draw();
   camList->Draw();
@@ -96,7 +96,7 @@ void draw( void ) {
 
 // GLUT display callback. Effectively calls displayViewport per-each Camera.
 void display( void ) {
-  static Cameras *camList = Grinstein::GetCameras();
+  static Cameras *camList = Engine::Instance()->Cams();
 
   // Clear the buffer.
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
@@ -111,8 +111,8 @@ void display( void ) {
 
 void idle( void ) {
 
-  static Cameras *camList = Grinstein::GetCameras();
-  static Scene *rootScene = Grinstein::GetScene();
+  static Cameras *camList = Engine::Instance()->Cams();
+  static Scene *rootScene = Engine::Instance()->RootScene();
 
   // Compute the time since last idle().
   // This is a global, stateful operation.

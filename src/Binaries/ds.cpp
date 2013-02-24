@@ -1,7 +1,7 @@
 /**
    @file ds.cpp
    @author John Huston
-   @authors ...
+   @authors John Huston, Greg Giannone
    @date 2013-02-20
    @brief Dual-shader demo.
    @details Work in progress!
@@ -18,7 +18,7 @@
 #include "Object.hpp"
 #include "Timer.hpp"
 #include "Scene.hpp"
-#include "Grinstein.hpp"
+#include "Engine.hpp"
 /* Utilities and Common */
 #include "model.hpp"
 #include "InitShader.hpp"
@@ -26,34 +26,25 @@
 
 // Initialization: load and compile shaders, initialize camera(s), load models.
 void init() {
+
   GLuint shader[2];
-  Cameras *camlist = Grinstein::GetCameras();
-  Scene *rootscene = Grinstein::GetScene();
+  Cameras *camList = Engine::Instance()->Cams();
+  Scene *rootScene = Engine::Instance()->RootScene();
 
   shader[0] = Angel::InitShader( "shaders/vred.glsl", "shaders/fragment.glsl" );
   shader[1] = Angel::InitShader( "shaders/vblu.glsl", "shaders/fragment.glsl" );
-  
-  std::cerr << "shader[0]: " << shader[0] << " shader[1]: " << shader[1] << "\n";
-  std::cerr << "theScene.GetShader: " << Grinstein::GetScene()->GetShader() << "\n";
 
-  camlist->SetShader( shader[0] );
-  camlist->AddCamera( "Camera1" );
-  camlist->Next();
-  camlist->Active()->changePerspective( Camera::IDENTITY );
+  camList->SetShader( shader[0] );
+  camList->AddCamera( "Camera1" );
+  camList->Next();
+  camList->Active()->changePerspective( Camera::IDENTITY );
 
-  // Fail.
-  try {
-    rootscene->AddObject( "Failure Object" );
-  } catch ( std::exception &e ) {
-    std::cerr << "Failed to add the object. Surprise.\n";
-  }
+  // Adding objects without a default shader:
+  Object *A = rootScene->AddObject( "Object A (RED)", shader[0] );
 
-  // Set without a default.
-  Object *A = rootscene->AddObject( "Object A (RED)", shader[0] );
-
-  // Test setting, then overriding, the default.
-  rootscene->SetShader( shader[0] ); 
-  Object *B = rootscene->AddObject( "Object B (BLU)", shader[1] );
+  // Setting a default and adding objects without:
+  rootScene->SetShader( shader[1] ); 
+  Object *B = rootScene->AddObject( "Object B (BLU)" );
 
   // Draw two squares:
   triangle(A, vec4(-1,0,0,1), vec4(0,0,0,1), vec4(-1,1,0,1), 0);
@@ -69,15 +60,16 @@ void init() {
 }
 
 void cleanup( void ) {
-  Grinstein::GetScene()->DestroyObject();
+  Engine::Instance()->RootScene()->DestroyObject();
 }
 
 //--------------------------------------------------------------------
 
 // Implementation of drawing the display with regards to a single viewport.
 void draw( void ) {
-  static Scene *theScene = Grinstein::GetScene();
-  static Cameras *camList = Grinstein::GetCameras();
+  static Scene *theScene = Engine::Instance()->RootScene();
+  static Cameras *camList = Engine::Instance()->Cams();
+
 
   theScene->Draw();
   camList->Draw();
@@ -85,7 +77,7 @@ void draw( void ) {
 
 // Display/Render the entire screen.
 void display( void ) {
-  static Cameras *camList = Grinstein::GetCameras();
+  static Cameras *camList = Engine::Instance()->Cams();
 
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
@@ -97,7 +89,7 @@ void display( void ) {
 
 void idle( void ) {
 
-  static Cameras *camList = Grinstein::GetCameras();
+  static Cameras *camList = Engine::Instance()->Cams();
 
   // Compute the time since last idle().
   Tick.Tock();

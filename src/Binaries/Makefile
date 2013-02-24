@@ -34,7 +34,7 @@ EXECS=terrain morphlite ds
 
 COMMON_SOURCES=model.cpp InitShader.cpp glut_callbacks.cpp
 
-CLASS_SOURCES=Camera.cpp vec.cpp mat.cpp Cameras.cpp Screen.cpp Timer.cpp Object.cpp Scene.cpp Transformation.cpp LightSource.cpp Lights.cpp TransCache.cpp Grinstein.cpp Settings.cpp
+CLASS_SOURCES=Camera.cpp vec.cpp mat.cpp Cameras.cpp Screen.cpp Timer.cpp Object.cpp Scene.cpp Transformation.cpp LightSource.cpp Lights.cpp TransCache.cpp Engine.cpp
 
 SOURCES=$(addprefix $(COMMON_DIR)/, $(COMMON_SOURCES)) \
 	$(addprefix $(CLASSES_DIR)/, $(CLASS_SOURCES))

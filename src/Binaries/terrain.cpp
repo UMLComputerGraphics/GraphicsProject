@@ -20,7 +20,7 @@
 #include "vec.hpp"
 #include "mat.hpp"
 // Utilities and Classes
-#include "Grinstein.hpp"
+#include "Engine.hpp"
 #include "Camera.hpp"
 #include "Cameras.hpp"
 #include "Screen.hpp"
@@ -74,7 +74,7 @@ void randomize_terrain() {
   
   srand(time(NULL));
 
-  Object *Terrain = (*Grinstein::GetScene())["terrain"];
+  Object *Terrain = (*Engine::Instance()->RootScene())["terrain"];
   double magnitude = landGen( Terrain, terrain_size, H );
   Terrain->Buffer();
   GLint handle = glGetUniformLocation( Terrain->GetShader(), "terrainMag" );
@@ -92,12 +92,12 @@ void randomize_terrain() {
 **/
 void init() {
 
-  Scene *theScene = Grinstein::GetScene();
-  Screen *myScreen = Grinstein::GetScreen();
+  Scene *theScene = Engine::Instance()->RootScene();
+  Screen *myScreen = Engine::Instance()->MainScreen();
 
   // Load the shaders.
   GLuint gShader = Angel::InitShader( "shaders/vterrain.glsl", "shaders/fterrain.glsl" );
-  Grinstein::GetSettings()->Set( "fixed_yaw", true );
+  Engine::Instance()->Opt( "fixed_yaw", true );
 
   // Give the Shader handle to the Scene Graph and the Camera List.
   theScene->SetShader( gShader );
@@ -231,7 +231,7 @@ void init() {
 **/
 void cleanup( void ) {
 
-  Grinstein::GetScene()->DestroyObject();
+  Engine::Instance()->RootScene()->DestroyObject();
 
 }
 
@@ -243,9 +243,9 @@ void cleanup( void ) {
 void displayViewport( void ) {  
 
   // Draw free-floating objects
-  Grinstein::GetScene()->Draw();
+  Engine::Instance()->RootScene()->Draw();
   // Draw camera-attached objects
-  Grinstein::GetCameras()->Draw();
+  Engine::Instance()->Cams()->Draw();
 
 }
 
@@ -259,7 +259,7 @@ void display( void ) {
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
   // Tell camList to draw using our displayViewport rendering function.
-  Grinstein::GetCameras()->View( displayViewport );
+  Engine::Instance()->Cams()->View( displayViewport );
 
   // Utilize multi-buffering.
   glutSwapBuffers();
@@ -416,7 +416,7 @@ float ticker = 0.0;
 
 void idle( void ) {
 
-  Scene &theScene = (*Grinstein::GetScene());
+  Scene &theScene = (*Engine::Instance()->RootScene());
 
   Tick.Tock();
 
@@ -464,7 +464,7 @@ void idle( void ) {
 #endif
   
   // Move all camera(s).
-  Grinstein::GetCameras()->IdleMotion();
+  Engine::Instance()->Cams()->IdleMotion();
   glutPostRedisplay();
 
 }
@@ -474,8 +474,8 @@ void idle( void ) {
 
 void menufunc( int value ) {
 
-  Scene *theScene = Grinstein::GetScene();
-  Settings *opt = Grinstein::GetSettings();
+  Engine *EN = Engine::Instance();
+  Scene *theScene = EN->RootScene();
 
   switch (value) {
   case 0:
@@ -483,8 +483,7 @@ void menufunc( int value ) {
     (*theScene)["terrain"]->Buffer();
     break;
   case 1:
-    if (opt->Get("fixed_yaw")) opt->Set("fixed_yaw",false);
-    opt->Set("fixed_yaw",true);
+    EN->Flip( "fixed_yaw" );
     break;
   }
 

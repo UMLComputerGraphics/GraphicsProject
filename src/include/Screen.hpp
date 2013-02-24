@@ -9,7 +9,7 @@ class Screen {
 
 public:
 
-  Screen( int x, int y );
+  Screen( int x = 0, int y = 0 );
   Screen( const vec2 &newSize );
 
   // Set the size

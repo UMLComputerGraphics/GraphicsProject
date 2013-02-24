@@ -66,14 +66,8 @@ Camera *Cameras::Active( void ) {
   Object *camptr = Scene::Active();
   
   // Convert it to a Camera pointer.
-  return Obj2Cam( currentObj );
+  return dynamic_cast< Camera* >( camptr );
 
-  /*if (!active_cam) {
-    throw std::logic_error( "Cameras::Active() was called, "
-			    "\tBut there is no Active camera.\n" );
-  }
-  return active_cam;
-  */
 }
 
 Camera *Cameras::Prev( void ) {

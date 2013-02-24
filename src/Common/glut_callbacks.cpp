@@ -5,8 +5,7 @@
 #include "Camera.hpp"
 #include "Scene.hpp"
 #include "Screen.hpp"
-#include "Settings.hpp"
-#include "Grinstein.hpp"
+#include "Engine.hpp"
 #include <sstream>
 
 /**
@@ -20,7 +19,7 @@
 **/
 void keylift( unsigned char key, int x, int y ) {
 
-  Cameras *camList = Grinstein::GetCameras();
+  Cameras *camList = Engine::Instance()->Cams();
 
   if (camList->NumCameras() < 1) return;
   Camera &cam = *(camList->Active());
@@ -60,8 +59,8 @@ void keylift( unsigned char key, int x, int y ) {
 **/
 void keyboard( unsigned char key, int x, int y ) {
 
-  static Scene *theScene = Grinstein::GetScene();
-  static Cameras *camList = Grinstein::GetCameras();
+  Scene *theScene = Engine::Instance()->RootScene();
+  Cameras *camList = Engine::Instance()->Cams();
 
 #ifdef WII
   // Hacky, for the wii reset, below.
@@ -154,8 +153,8 @@ void keyboard( unsigned char key, int x, int y ) {
 **/
 void keyboard_ctrl( int key, int x, int y ) {
 
-  static Scene *theScene = Grinstein::GetScene();
-  static Cameras *camList = Grinstein::GetCameras();
+  Scene *theScene = Engine::Instance()->RootScene();
+  Cameras *camList = Engine::Instance()->Cams();
   
   switch (key) {
     //Cycle between Active Objects ...
@@ -197,7 +196,7 @@ void keyboard_ctrl( int key, int x, int y ) {
 
 void mouse( int button, int state, int x, int y ) {
 
-  static Cameras *camList = Grinstein::GetCameras();
+  static Cameras *camList = Engine::Instance()->Cams();
   if (camList->NumCameras() < 1) return;
 
   if ( state == GLUT_DOWN ) {
@@ -212,7 +211,8 @@ void mouse( int button, int state, int x, int y ) {
 
 void mouseroll( int x, int y ) {
 
-  static Screen *myScreen = Grinstein::GetScreen();
+  static Screen *myScreen = Engine::Instance()->MainScreen();
+
   if ((x != myScreen->MidpointX()) || (y != myScreen->MidpointY())) {
     if (myScreen->camList.NumCameras() > 0)
       myScreen->camList.Active()->roll( x - myScreen->MidpointX() );
@@ -223,7 +223,7 @@ void mouseroll( int x, int y ) {
 
 void mouselook( int x, int y ) {
 
-  static Screen *myScreen = Grinstein::GetScreen();
+  static Screen *myScreen = Engine::Instance()->MainScreen();
   if ((x != myScreen->MidpointX()) || (y != myScreen->MidpointY())) {
     const double dx = ((double)x - myScreen->MidpointX());
     const double dy = ((double)y - myScreen->MidpointY());
@@ -232,7 +232,7 @@ void mouselook( int x, int y ) {
 
     if (myScreen->camList.NumCameras() > 0) {
       myScreen->camList.Active()->pitch( dy );
-      myScreen->camList.Active()->yaw( dx, Grinstein::GetSettings()->Get("fixed_yaw") );
+      myScreen->camList.Active()->yaw( dx, Engine::Instance()->Opt("fixed_yaw") );
     }
 
     glutWarpPointer( myScreen->MidpointX(), myScreen->MidpointY() );
@@ -257,7 +257,7 @@ void mouselook( int x, int y ) {
 void resizeEvent( int width, int height ) {
 
   // Get a handle to the screen object
-  Screen *scr = Grinstein::GetScreen();
+  Screen *scr = Engine::Instance()->MainScreen();
 
   // Update the size, which propagates changes to cameras and viewports.
   scr->Size( width, height );
