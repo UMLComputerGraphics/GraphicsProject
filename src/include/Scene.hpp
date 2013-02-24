@@ -19,9 +19,8 @@ class Scene {
   void SetShader( GLuint gShader );
   GLuint GetShader( void );
 
-  Object *AddObject( const std::string &objName );
+  Object *AddObject( const std::string &objName, GLuint Object_Shader = 0 );
   void InsertObject( const std::string name, Object *obj );
-
   void DelObject( const std::string &objName );
   void DelObject( void );
   void PopObject( void );

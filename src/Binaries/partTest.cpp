@@ -29,12 +29,12 @@
 #include "Object.hpp"
 #include "Timer.hpp"
 #include "Scene.hpp"
+#include "glut_callbacks.h"
 
 #include "LightSource.hpp"
 #include "Lights.hpp"
 
 #include "Particle.hpp"
-
 
 // Type Aliases
 using Angel::vec3;
@@ -106,21 +106,15 @@ void display( void ) {
 
 }
 
-// Sorry about this, but it's better if you don't know.
-// For the sake of this simple framework example, the
-// GLUT keybinding code only clutters the application.
-#include "morphlite_keybindings.c"
-
-
 // This is called on window resizes, which ultimately
 // computes new viewport dimensions and aspect ratios.
-void resizeEvent( int width, int height ) {
+/*void resizeEvent( int width, int height ) {
 
-  /* Handles resizing the child cameras as well. */
+  /* Handles resizing the child cameras as well.
   myScreen.Size( width, height );
   glutWarpPointer( myScreen.MidpointX(), myScreen.MidpointY() );
 
-}
+}*/
 
 
 void idle( void ) {
