@@ -1,11 +1,10 @@
 /**
    @file terrain.cpp
    @authors John Huston, Nicholas StPierre, Chris Compton
-   @date 2012-12-06
-   @brief This is a derivative of our main project file, fly.cpp.
+   @date 2013-02-23
+   @brief This is a trimmed version of our Fall 2012 project.
    @details This is a tech demo for terrain generation using an udpated
-   engine derived from fly.cpp, which was mostly based on Ed Angel's code
-   from his book.
+   engine derived from Ed Angel's code from his book.
 **/
 
 // System Headers
@@ -21,18 +20,17 @@
 #include "vec.hpp"
 #include "mat.hpp"
 // Utilities and Classes
-#include "model.hpp"
+#include "Engine.hpp"
 #include "Camera.hpp"
-#include "InitShader.hpp"
 #include "Cameras.hpp"
 #include "Screen.hpp"
 #include "Object.hpp"
 #include "Timer.hpp"
 #include "Scene.hpp"
-
-// Nick's Beta Lighting
-//#include "LightSource.hpp
-//#include "Lights.hpp"
+// Utilities
+#include "model.hpp"
+#include "InitShader.hpp"
+#include "glut_callbacks.h"
 
 // Type Aliases
 using Angel::vec3;
@@ -49,13 +47,7 @@ bool usingWii = false;
 #endif
 
 // Application Globals
-Screen myScreen( 800, 600 );
-Scene theScene;
-GLuint gShader;
 bool fixed_yaw = true;
-
-// #lights
-//Lights lights(false); // Bool controls the lighting mode. False indicates the simpler, faster one.
 
 // Textures
 // Obtained from www.goodtextures.com
@@ -82,10 +74,10 @@ void randomize_terrain() {
   
   srand(time(NULL));
 
-  Object *Terrain = theScene["terrain"];
+  Object *Terrain = (*Engine::Instance()->RootScene())["terrain"];
   double magnitude = landGen( Terrain, terrain_size, H );
   Terrain->Buffer();
-  GLint handle = glGetUniformLocation( gShader, "terrainMag" );
+  GLint handle = glGetUniformLocation( Terrain->GetShader(), "terrainMag" );
   if (handle != -1) glUniform1f( handle, magnitude );
 
 }
@@ -100,18 +92,20 @@ void randomize_terrain() {
 **/
 void init() {
 
-  
-  // Load shaders. Give the Shader handle to the Scene Graph and the Camera List.
-  gShader = Angel::InitShader( "shaders/vterrain.glsl", "shaders/fterrain.glsl" );
-  theScene.SetShader( gShader );
-  myScreen.camList.SetShader( gShader );
+  Scene *theScene = Engine::Instance()->RootScene();
+  Screen *myScreen = Engine::Instance()->MainScreen();
+
+  // Load the shaders.
+  GLuint gShader = Angel::InitShader( "shaders/vterrain.glsl", "shaders/fterrain.glsl" );
+  Engine::Instance()->Opt( "fixed_yaw", true );
+
+  // Give the Shader handle to the Scene Graph and the Camera List.
+  theScene->SetShader( gShader );
+  myScreen->camList.SetShader( gShader );
 
   // Cameras must be added after setting a shader.
-  myScreen.camList.AddCamera( "Camera1" );
-  myScreen.camList.Next();
-
-  // initialize lights
-  //lights.init_lights(gShader);
+  myScreen->camList.AddCamera( "Camera1" );
+  myScreen->camList.Next();
 
   /*
     NOTE:
@@ -124,12 +118,13 @@ void init() {
   */
 
   // Let's create some objects.
-  Object *terrain = theScene.AddObject( "terrain" );
+  Object *terrain = theScene->AddObject( "terrain" );
+  glUseProgram( gShader ); // Temporary hack until I refine the texturing management subsystem.
   terrain->Texture( terrainTex );
   terrain->Mode( GL_TRIANGLE_STRIP );
   randomize_terrain(); // This call depends upon "terrain" existing within theScene.
   
-  Object *pyramid = theScene.AddObject( "pyramid" );
+  Object *pyramid = theScene->AddObject( "pyramid" );
 
 /*
   Object *box   = theScene.AddObject( "box" ) ;
@@ -147,7 +142,7 @@ void init() {
 		      4 );
   pyramid->Buffer();
 
-  Object *cube_base = theScene.AddObject( "basecube" );
+  Object *cube_base = theScene->AddObject( "basecube" );
   colorcube( cube_base, 1.0 );
   cube_base->Buffer();
   
@@ -158,7 +153,7 @@ void init() {
   // These models came from VALVE,
   // From their game "Team Fortress 2."
   // The model processing was done in Blender.
-  Object *heavy = theScene.AddObject( "heavy" );
+  Object *heavy = theScene->AddObject( "heavy" );
   loadModelFromFile( heavy, "../models/heavyT.obj" );
   heavy->Buffer();
   heavy->trans.scale.Set( 0.10 );
@@ -176,7 +171,7 @@ void init() {
   spy->trans.offset.Set( 0, 20, 0 );
   spy->Buffer();
 
-  Object *ball = theScene.AddObject( "ball" );
+  Object *ball = theScene->AddObject( "ball" );
   sphere( ball );
   ball->trans.scale.Set( 1000 );
   ball->Buffer();
@@ -199,12 +194,8 @@ void init() {
   actualMoon->Buffer();
   */
 
-  //lights.addLightSource( LightSource( point4(0.0, 30.0, 0.0, 1.0), 				      color4(1.0, 1.0, 0.0, 1.0)));
-  //lights.addLightSource( LightSource( point4(0.0, -1.0, 0.0, 1.0), 				      color4(1.0, 0.0, 1.0, 1.0)));
-  //lights.addLightSource( LightSource( point4(10.0, 10.0, 10.0, 1.0), 				      color4(0.0, 1.0, 1.0, 1.0)));
-
   // The water gets generated last -- In order for our fake transparency to work.
-  Object *agua = theScene.AddObject( "agua" );
+  Object *agua = theScene->AddObject( "agua" );
   makeAgua( terrain, agua );
   agua->Buffer();
   agua->Mode( GL_TRIANGLES );
@@ -213,7 +204,7 @@ void init() {
   glClearColor( 0.3, 0.5, 0.9, 1.0 );
 
   //Attach a model to the Camera.
-  Object *cam = myScreen.camList.Active();
+  Object *cam = myScreen->camList.Active();
   loadModelFromFile( cam, "../models/rainbow_dashT.obj" );
   // http://kp-shadowsquirrel.deviantart.com/		
   //   art/Pony-Model-Download-Center-215266264
@@ -230,10 +221,6 @@ void init() {
 
 }
 
-  // Nick: Stop littering the global namespace everywhere in the mainfile,
-  // Put them in the functions as statics or put them at the top of the file.
-  float timeOfDay = 0.0; // If we are going for day and night
-
 /**
    cleanup is a routine to call at exit time that will free up the
    resources the application is using.
@@ -244,7 +231,7 @@ void init() {
 **/
 void cleanup( void ) {
 
-  theScene.DestroyObject();
+  Engine::Instance()->RootScene()->DestroyObject();
 
 }
 
@@ -254,8 +241,12 @@ void cleanup( void ) {
     @return void.
 **/
 void displayViewport( void ) {  
-  theScene.Draw();         // Draw free-floating objects
-  myScreen.camList.Draw(); // Draw camera-attached objects
+
+  // Draw free-floating objects
+  Engine::Instance()->RootScene()->Draw();
+  // Draw camera-attached objects
+  Engine::Instance()->Cams()->Draw();
+
 }
 
 /**
@@ -266,51 +257,13 @@ void displayViewport( void ) {
 void display( void ) {
   // Clear the screen and begin rendering.
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-  //lights.sendAll();
+
   // Tell camList to draw using our displayViewport rendering function.
-  myScreen.camList.View( displayViewport );
+  Engine::Instance()->Cams()->View( displayViewport );
 
   // Utilize multi-buffering.
   glutSwapBuffers();
 }
-
-
-/**
-   keylift is registered as a GLUT callback for when a user releases a depressed key.
-   
-   @param key The key that was lifted.
-   @param x The x coordinate of the mouse at the time the key was released.
-   @param y The y coordinate of the mouse at the time the key was released.
-
-   @return void.
-**/
-void keylift( unsigned char key, int x, int y ) {
-
-  if (myScreen.camList.NumCameras() < 1) return;
-  Camera &cam = *(myScreen.camList.Active());
-
-  switch( key ) {
-  case 'w':
-    cam.Stop( Camera::Forward );
-    break;
-  case 's':
-    cam.Stop( Camera::Backward );
-    break;
-  case 'a':
-    cam.Stop( Camera::Left );
-    break;
-  case 'd':
-    cam.Stop( Camera::Right );
-    break;
-  case 'q':
-    cam.Stop( Camera::Up );
-    break;
-  case 'e':
-    cam.Stop( Camera::Down );
-    break;
-  }
-}
-
 
 // This global switch controls if we generate terrain or not.
 bool switchingTerrain = false ;
@@ -381,219 +334,6 @@ void TerrainGenerationAnimation( TransCache &obj ) {
   }
 }
 
-/*
-bool pushSun = false ;
-void moveSun(TransCache &sun){
-
-  switch ( sunState ) {
-
-  case SHRINKING:
-
-    sun.orbit.RotateZ( timeOfDay*0.1 );
-    timeOfDay += 0.001 * Tick.Scale();
-    if ( timeOfDay > 90.0 ) sunState = TRANSITIONING ;
-
-    break;
-
-  case TRANSITIONING:
-
-    if ( pushSun ) {
-      sunState = GROWING ;
-      pushSun = false ;
-    }
-
-    return;
-
-  case GROWING:
-
-    sun.orbit.RotateZ( timeOfDay*0.1 ) ;
-    timeOfDay += 0.001 * Tick.Scale( ) ;
-
-    if ( timeOfDay > 360.0 ) sunState = DONE ;
-
-    break;
-
-  case DONE:
-
-    if ( pushSun ) {
-      sunState = SHRINKING ;
-      pushSun = false ;
-    }
-
-    return;
-
-  }
-
-
-}
-*/
-
-/**
-   keyboard is a callback registered with GLUT.
-   It handles keyboard input.
-
-   @param key The key pressed by the user.
-   @param x The X coordinate of the mouse when the key was pressed.
-   @param y The Y coordinate of the mouse when the key was pressed.
-   
-   @return void.
-**/
-void keyboard( unsigned char key, int x, int y ) {
-
-  // Hacky, for the wii reset, below.
-  Camera *camptr = dynamic_cast< Camera* >( myScreen.camList["AutoCamera2"] );
-
-  switch( key ) {
-
-  case 033: // Escape Key	  
-    cleanup();
-    glutLeaveMainLoop();
-    break;
-
-  case ';': // Print Info
-    fprintf( stderr, "Active Object: %s\n",
-	     theScene.Active()->Name().c_str() );
-    break;
-
-  case '~':
-#ifdef WII
-    CalibrateGyro( Wii );
-    if (camptr) camptr->resetRotation();
-#endif
-    break;
-    
-  case 'l':
-    // Trigger the Terrain Generation animation.
-    switchingTerrain = true;
-    break;
-    
-  case '+':
-    std::stringstream camName;
-    camName << "AutoCamera" << myScreen.camList.NumCameras() + 1;
-    myScreen.camList.AddCamera( camName.str() );
-    break;
-  }
-
-  if (myScreen.camList.NumCameras() < 1) return;
-
-  /* A shorthand variable with local scope that refers to "The Active Camera." */
-  Camera &cam = *(myScreen.camList.Active());
-  
-  switch( key ) {
-  case '-':
-    myScreen.camList.PopCamera();
-    break;
-  case ';':
-    fprintf( stderr, "Camera Position: (%f,%f,%f)\n", cam.X(), cam.Y(), cam.Z() );
-    break;
-    
-  case 'w':
-    cam.Move( Camera::Forward );
-    break;
-  case 's':
-    cam.Move( Camera::Backward );
-    break;
-  case 'a':
-    cam.Move( Camera::Left );
-    break;
-  case 'd':
-    cam.Move( Camera::Right );
-    break;
-  case 'q':
-    cam.Move( Camera::Up );
-    break;
-  case 'e':
-    cam.Move( Camera::Down );
-    break;
-    
-    //Perspectives
-  case 'z': cam.changePerspective( Camera::PERSPECTIVE ); break;
-  case 'x': cam.changePerspective( Camera::ORTHO ); break;
-  case 'c': cam.changePerspective( Camera::ORTHO2D ); break;
-  case 'v': cam.changePerspective( Camera::FRUSTUM ); break;
-  case 'b': cam.changePerspective( Camera::IDENTITY ); break;
-
-  //case 't': lights.addLightSource( randomLight() /*! not defined !*/ ) ; break;
-  //case 't': pushSun = true; break;
-  }
-}
-
-
-/**
-   keyboard_ctrl is registered as a GLUT callback.
-   It is responsible for catching when special keys are pressed.
-
-   @param key The key pressed.
-   @param x The X coordinate of the mouse when the key was pressed.
-   @param y The Y coordinate of the mouse when the key was pressed.
-
-   @return void.
-**/
-void keyboard_ctrl( int key, int x, int y ) {
-
-  switch (key) {
-    //Cycle between Active Objects ...
-  case GLUT_KEY_LEFT:
-    theScene.Prev();
-    break;
-  case GLUT_KEY_RIGHT:
-    theScene.Next();
-    break;
-
-    //Change the Draw Mode ...
-  case GLUT_KEY_F1:
-    theScene.Active()->Mode( GL_POINTS );
-    break;
-  case GLUT_KEY_F2:
-    theScene.Active()->Mode( GL_LINE_STRIP );
-    break;
-  case GLUT_KEY_F3:
-    theScene.Active()->Mode( GL_TRIANGLE_STRIP );
-    break;
-  case GLUT_KEY_F4:
-    theScene.Active()->Mode( GL_TRIANGLES );
-    break;
-  }
-
-  // If there are no Cameras, don't muck around with this section.
-  if (myScreen.camList.NumCameras() < 1) return;
-
-  switch( key ) {
-  case GLUT_KEY_PAGE_UP:
-    myScreen.camList.Prev();
-    break;
-
-  case GLUT_KEY_PAGE_DOWN:
-    myScreen.camList.Next();
-    break;
-  }
-}
-
-void mouse( int button, int state, int x, int y ) {
-
-  if (myScreen.camList.NumCameras() < 1) return;
-
-  if ( state == GLUT_DOWN ) {
-    switch( button ) {
-    case 3: myScreen.camList.Active()->dFOV( 1 ); break;
-    case 4: myScreen.camList.Active()->dFOV( -1 ); break;
-    }
-  }
-
-}
-
-
-void mouseroll( int x, int y ) {
-
-  if ((x != myScreen.MidpointX()) || (y != myScreen.MidpointY())) {
-    if (myScreen.camList.NumCameras() > 0)
-      myScreen.camList.Active()->roll( x - myScreen.MidpointX() );
-    glutWarpPointer( myScreen.MidpointX(), myScreen.MidpointY() );
-  }
-
-}
-
-
 /**
    wiilook is an analog of mouselook, for wii remote controls.
    It takes a reference to a Camera, and two vec3s,
@@ -628,48 +368,6 @@ void wiilook( Camera &WiiCamera, const Angel::vec3 &NewTheta,
   OldTheta = NewTheta;
 
 }
-
-void mouselook( int x, int y ) {
-
-  if ((x != myScreen.MidpointX()) || (y != myScreen.MidpointY())) {
-    const double dx = ((double)x - myScreen.MidpointX());
-    const double dy = ((double)y - myScreen.MidpointY());
-    
-    if (myScreen.camList.NumCameras() > 0) {
-      myScreen.camList.Active()->pitch( dy );
-      myScreen.camList.Active()->yaw( dx, fixed_yaw );
-    }    
-
-    glutWarpPointer( myScreen.MidpointX(), myScreen.MidpointY() );
-  }
-  
-}
-
-
-/**
-   resizeEvent is registered as a glut callback for when
-   the screen is resized. It instructs the screen object
-   of the new size, which informs all of the children cameras
-   to recompute their aspect ratios, viewport positions, and so on.
-
-   We also warp the pointer to the center of the screen, for
-   compatibility with mouselook( void ).
-
-   @param width The new width of the window.
-   @param height The new height of the window.
-
-   @return void.
-**/
-void resizeEvent( int width, int height ) {
-
-  // Resize all of our cameras and recompute aspect ratios.
-  myScreen.Size( width, height );
-
-  // Warp cursor to center so that we don't have a big mouse jump.
-  glutWarpPointer( myScreen.MidpointX(), myScreen.MidpointY() );
-
-}
-
 
 void simpleRotateY( TransCache &obj ) {
   obj.rotation.RotateY( Tick.Scale() * 1.5 ); 
@@ -711,32 +409,16 @@ void animationTest( TransCache &obj ) {
   // Object moves its focal orbit-point, x = 5.
   //obj.displacement.Set( 5, 0, 0 ); 
 }
+
 /// hackity hack hack hackey doo!
 float heightScale = 0.0;
 float ticker = 0.0;
 
-//###
-//void sunOrbit(TransCache &sun ) {
-
-//}
-
-/*
-void moonOrbit(TransCache &moon) {
-  moon.orbit.RotateZ( timeOfDay*0.1 );
-}
-*/
-
 void idle( void ) {
 
-  Tick.Tock();
+  Scene &theScene = (*Engine::Instance()->RootScene());
 
-  //  if ( timeOfDay > 360.0 ) timeOfDay = 0.0;
-  glClearColor( 
-	       0.4*(sin(timeOfDay*DegreesToRadians)*sin(timeOfDay*DegreesToRadians)),
-	       0.4,
-	       0.45*(1.0+cos(timeOfDay*DegreesToRadians)),
-	       1.0 );
-  //  glClearColor( 0.0,0.0,0.1,1.0);
+  Tick.Tock();
 
   if (DEBUG_MOTION) 
     fprintf( stderr, "Time since last idle: %lu\n", Tick.Delta() );
@@ -755,20 +437,6 @@ void idle( void ) {
   Spy.Animation( simpleRotateY );
 
   Terrain.Animation( TerrainGenerationAnimation );
-
-  //Sun.Animation( moveSun ) ;// sunOrbit  );
-  //Moon.Animation( moonOrbit );
-
-  // Move light absolutely, ie to the point given
-  //lights.moveLight( 0, Sun.GetPosition() ) ;
-
-  // Move light absolutely, ie to the point given
-  //lights.moveLight( 0, Sun.GetPosition() ) ;
-
-  // lights hack
-  //glUniform4fv( glGetUniformLocation(gShader, "sunHeight"), 1,
-	//       Sun.GetPosition() );
-
 
 #ifdef WII
   if (usingWii) {
@@ -796,7 +464,7 @@ void idle( void ) {
 #endif
   
   // Move all camera(s).
-  myScreen.camList.IdleMotion();
+  Engine::Instance()->Cams()->IdleMotion();
   glutPostRedisplay();
 
 }
@@ -806,14 +474,16 @@ void idle( void ) {
 
 void menufunc( int value ) {
 
+  Engine *EN = Engine::Instance();
+  Scene *theScene = EN->RootScene();
+
   switch (value) {
   case 0:
-    landGen( theScene["terrain"], 12, 40.0 );
-    theScene["terrain"]->Buffer();
+    landGen( (*theScene)["terrain"], 12, 40.0 );
+    (*theScene)["terrain"]->Buffer();
     break;
   case 1:
-    if (fixed_yaw) fixed_yaw = false;
-    else fixed_yaw = true;
+    EN->Flip( "fixed_yaw" );
     break;
   }
 
@@ -837,7 +507,7 @@ int main( int argc, char **argv ) {
 
   glutInit( &argc, argv );
   glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH );
-  glutInitWindowSize( myScreen.Width(), myScreen.Height() );
+  //glutInitWindowSize( 0, 0 );
   glutCreateWindow( "Terrain" );
   glutFullScreen();
   glutSetCursor( GLUT_CURSOR_NONE );

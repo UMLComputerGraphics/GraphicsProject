@@ -9,7 +9,8 @@
 typedef std::pair< std::string, Object * > mapping;
 
 Scene::Scene() {
-  currentObj = list.begin();
+  currentObj = list.end();
+  gShader = 0;
 }
 
 Scene::~Scene() {
@@ -26,17 +27,42 @@ void Scene::InsertObject( const std::string name, Object *obj ) {
   map.insert( mapping( name, obj ) );
 }
 
-Object *Scene::AddObject( const std::string &objName ) {
+Object *Scene::AddObject( const std::string &objName,
+			  GLuint shader ) {
+
+  // Note that 'shader' defaults to 0.
+  if ((!shader) && (!gShader))
+    throw std::invalid_argument( "A call to AddObject() was made without "
+				 "specifying either the object-specific shader,\n"
+				 "\tor informing the parent Scene of a default shader to use." );
   
-  Object *obj = new Object( objName, gShader );
+  Object *obj = new Object( objName, ((shader) ? shader : gShader) );
   InsertObject( objName, obj );
   return obj;
 
 }
 
+/**
+   Sets the Default shader for the scene.
+   In the context of inheritance by objects,
+   This sets the shader to use to render the physical object.
+   
+   @param gShader The GLuint handle to the shader to use.
+   
+   @return void.
+**/
+
 void Scene::SetShader( GLuint gShader ) {
   this->gShader = gShader;
 }
+
+/**
+   Retrieves the handle for the default shader for the scene.
+   In the context of inheritance by objects,
+   This retrieves the shader handle to use to draw the object.
+
+   @return A GLuint handle to the shader program.
+**/
 
 GLuint Scene::GetShader( void ) {
   return gShader;
@@ -87,8 +113,13 @@ void Scene::PopObject( void ) {
 
 Object *Scene::Next( void ) {
 
-  ++currentObj;
-  if (currentObj == list.end())
+  // If the list is empty, we can't cycle.
+  if (list.size() == 0)
+    throw std::logic_error( "Next() called, but there are no Objects"
+			    " in this list." );
+
+  // Move to the next one. Cycle back if needed.
+  if (++currentObj == list.end())
     currentObj = list.begin();
 
   return *currentObj;
@@ -96,20 +127,30 @@ Object *Scene::Next( void ) {
 }
 
 Object *Scene::Prev( void ) {
-
-  if (currentObj == list.begin()) {
+  
+  if (list.size() == 0)
+    throw std::logic_error( "Prev() called, but there are no objects"
+			    " in this list." );
+  
+  if (currentObj == list.begin())
     currentObj = --list.end();
-  } else {
+  else
     --currentObj;
-  }
-
+  
   return *currentObj;
 
 }
 
 
 Object *Scene::Active( void ) {
-  return *currentObj;
+  
+  if (list.size() == 0) 
+    throw std::logic_error( "Active() called, but the object list is empty." );
+  else if (currentObj == list.end())
+    throw std::logic_error( "Active() called, but the active object is out-of-bounds." );
+  else
+    return *currentObj;
+
 }
 
 void Scene::Draw( void ) {

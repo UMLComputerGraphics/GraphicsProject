@@ -12,8 +12,8 @@
 #else
 /* Peasant Code */
 #define GLEW_INIT()				\
-	 glewExperimental = GL_TRUE;		\
-	 glewInit();
+  glewExperimental = GL_FALSE;			\
+  glewInit();
 #endif
-	 
+
 #endif
