@@ -30,6 +30,7 @@
 #include "Timer.hpp"
 #include "Scene.hpp"
 #include "glut_callbacks.h"
+#include "Engine.hpp"
 
 #include "LightSource.hpp"
 #include "Lights.hpp"
@@ -44,27 +45,27 @@ typedef Angel::vec4 point4;
 
 // Global objects for magical camera success
 Screen myScreen( 800, 600 );
-Scene theScene;
-GLuint gShader;
 bool fixed_yaw = true;
 
 // Initialization: load and compile shaders, initialize camera(s), load models.
-void init() {
+void init() 
+{
+
+  GLuint gShader;
+  Cameras *camList = Engine::Instance()->Cams();
+  Scene *rootScene = Engine::Instance()->RootScene();
   
   // Load shaders and use the resulting shader program. 
-  gShader = Angel::InitShader( "shaders/vterrain.glsl", "shaders/fterrain.glsl" );
+  gShader = Angel::InitShader( "shaders/vmorph.glsl", "shaders/fmorph.glsl" );
 
-  // Let the other objects know which shader to use.
-  theScene.SetShader( gShader );
-  myScreen.camList.SetShader( gShader );
-
-  // We start with no cameras, by default. Add one and set it "active" by using Next().
-  myScreen.camList.AddCamera( "Camera1" );
-  myScreen.camList.Next();
+  camList->SetShader( gShader );
+  camList->AddCamera( "Camera1" );
+  camList->Next();
+  camList->Active()->changePerspective( Camera::IDENTITY );
 
   Particle particle = Particle( vec4(0,0,0,1), vec3(0,0,0), vec3(0,0,0), 1.0,
 				 vec4( 1,1,1,1), 1.0, 0, "someString", gShader );
-  theScene.InsertObject( "particle", &particle );
+  //  theScene.InsertObject( "particle", &particle );
 
   // Generic OpenGL setup: Enable the depth buffer and set a nice background color.
   glEnable( GL_DEPTH_TEST );
@@ -72,67 +73,48 @@ void init() {
 
 }
 
-void cleanup( void ) {
-
-  theScene.DestroyObject();
-
+void cleanup( void ) 
+{
+  Engine::Instance()->RootScene()->DestroyObject();
 }
 
 //--------------------------------------------------------------------
 
-/** A function that takes no arguments.
-    Is responsible for drawing a SINGLE VIEWPORT. **/
-void displayViewport( void ) {  
+void draw( void )
+{
+  static Scene *theScene  = Engine::Instance()->RootScene();
+  static Cameras *camList = Engine::Instance()->Cams();
 
-  // Draw free-floating objects. I.e, everything in the scene.
-  theScene.Draw();
-
-  // Draw objects that are attached to the cameras.
-  myScreen.camList.Draw();
-
+  theScene->Draw();
+  camList->Draw();
 }
 
 // GLUT display callback. Effectively calls displayViewport per-each Camera.
-void display( void ) {
-
+void display( void ) 
+{
+  static Cameras *camList = Engine::Instance()->Cams();
+  
   // Clear the buffer.
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-  // Tell camList to draw using our displayViewport rendering function.
-  myScreen.camList.View( displayViewport );
+  // Tell camList to draw using our 'draw' rendering function.
+  camList->View( draw );
 
   // Swap to the next buffer.
   glutSwapBuffers();
 
 }
 
-// This is called on window resizes, which ultimately
-// computes new viewport dimensions and aspect ratios.
-/*void resizeEvent( int width, int height ) {
-
-  /* Handles resizing the child cameras as well.
-  myScreen.Size( width, height );
-  glutWarpPointer( myScreen.MidpointX(), myScreen.MidpointY() );
-
-}*/
-
-
-void idle( void ) {
+void idle( void ) 
+{
+  static Cameras *camList = Engine::Instance()->Cams();
 
   // Compute the time since last idle().
-  // This is a global, stateful operation.
   Tick.Tock();
 
-  if (DEBUG_MOTION) 
-    fprintf( stderr, "Time since last idle: %lu\n", Tick.Delta() );
-
-  // Move all cameras: Apply velocity and acceleration adjustments.
-  // If no cameras are currently moving, this will do nothing ;)
-  myScreen.camList.IdleMotion();
-
-  // Inform GLUT we'd like to render a new frame.
+  // Move all camera(s).
+  camList->IdleMotion();
   glutPostRedisplay();
-  
 }
 
 int main( int argc, char **argv ) {

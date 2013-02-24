@@ -226,7 +226,9 @@ void Object::Link( UniformEnum which, const std::string &name ) {
 
 }
 
-
+// This function is specific to texturing the terrain in terrain.cpp
+// It will need to be generalized for individual objects, or a new
+// function will need to be designed.
 void Object::Texture( const char** filename ) {
 
   Tick.Tock();
