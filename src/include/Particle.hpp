@@ -24,7 +24,8 @@ class Particle : public Object {
 public:
 
   Particle( vec4 initPos, vec3 initScale, vec3 initVel, float initAlpha, 
-	    vec4 initColor, float initLifespan, float initSpin, string initTex );
+	    vec4 initColor, float initLifespan, float initSpin, 
+	    string initTex, GLuint gShader );
   virtual ~Particle( void ) ;
 
   /* Apply all changes to object's transformation */

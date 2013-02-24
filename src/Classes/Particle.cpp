@@ -17,7 +17,9 @@ using Angel::mat4;
 
 // Constructor(s)
 Particle::Particle(vec4 initPos, vec3 initScale, vec3 initVel, float initAlpha, 
-		   vec4 initColor, float initLifespan, float initSpin, string initTex )
+		   vec4 initColor, float initLifespan, float initSpin, 
+		   string initTex, GLuint gShader )
+  :Object( "particle", gShader )
 {
   setAlpha( initAlpha );
   setColor( initColor );
@@ -50,7 +52,7 @@ Particle::setAlpha( float newAlpha )
 void
 Particle::setColor( vec4 newColor )
 {
-  blendcolor = newColor;
+  blendColor = newColor;
 }
 
 void 
