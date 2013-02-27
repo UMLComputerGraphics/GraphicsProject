@@ -29,6 +29,7 @@
 #include "Object.hpp"
 #include "Timer.hpp"
 #include "Scene.hpp"
+#include "modelFunctions.hpp"
 
 #include "LightSource.hpp"
 #include "Lights.hpp"
@@ -69,18 +70,29 @@ void init() {
   // Make ya models here
 
   Object *bottle = theScene.AddObject( "bottle" );
-  loadModelFromFile( bottle, "../models/bottle-a.obj" ); // loadModelFromFile( bottle_a, "../models/bottle-a.obj" );
-  bottle->trans.scale.Set( 0.01 );
-  bottle->Buffer();
+  loadModelFromFile( bottle, "../models/bottle-b.obj" ); // loadModelFromFile( bottle_a, "../models/bottle-a.obj" );
 
   // Objects has-a pointer to an object which is their "morph target."
   // they are created and buffered as follows:
 
   bottle->genMorphTarget( gShader ) ; // this makes a new object and links it to the source object. it returns the addr of the new obj..
   Object *bottleMorphTarget = bottle->getMorphTargetPtr() ; // we can get the addr of the morph object like this, also.
-    loadModelFromFile( bottleMorphTarget, "../models/bottle-b.obj" ); // with this model, we can use all the preexisting Object class functionality
+  loadModelFromFile( bottleMorphTarget, "../models/bottle-a.obj" ); // with this model, we can use all the preexisting Object class functionality
   //loadModelFromFile( bottle->getMorphTargetPtr(), "../models/bottle-b.obj" ); // with this model, we can use all the preexisting Object class functionality
+
+  printf("Number Vertices: %d\n",bottle->getNumberPoints());
+  printf("Number Vertices: %d\n",bottleMorphTarget->getNumberPoints());
+  printf("Colors: %d\n",bottle->colors.size());
+  printf("Normals: %d\n",bottle->normals.size());
+  printf("Indices: %d\n",bottle->indices.size());
+  makeModelsSameSize(bottle, bottleMorphTarget);
+
+  printf("Number Vertices: %d\n",bottle->getNumberPoints());
+  printf("Number Vertices: %d\n",bottleMorphTarget->getNumberPoints());
+
+  bottle->trans.scale.Set( 0.01 );
   bottleMorphTarget->trans.scale.Set( 0.01 );
+  bottle->Buffer();
   bottle->BufferMorphOnly(); // YES THIS IS THE REAL OBJECT, NOT THE TARGET. IT SENDS THE MORPH VERTICES TO THE SHADER, NOT TO THE DRAW LIST TO BE DRAWN!
 
   /*
@@ -360,11 +372,31 @@ void idle( void ) {
 
   Tick.Tock();
 
+  //zach m  - in order to eventually allow for user specified equations,
+  //          we need to think of equations between 0 and 1.
+  //          The current line "percent = timer" would be the line where
+  //          we would handle a user specified equation in the form of
+  //          y = x, where y is the percent and x is the timer. We may
+  //          want to specify that the y should equal 1 when x equals 1,
+  //          otherwise we can get a percent greater than 100.
   static double timer = 0.0 ;
+  static bool trigger = false;
+  if(trigger == false){
+	  if( (timer += 0.01) >1 ){
+		  timer = 1.0;
+		  trigger = true;
+	  }
+  }else{
+	  if( (timer -= 0.01) < 0){
+		  timer = 0.0;
+		  trigger = false;
+	  }
+  }
+  float percent = timer;
 
-  if ( (timer += 0.005 ) > 360.0 ) timer = 0.0 ;
+  //if ( (timer += 0.05 ) > 360.0 ) timer = 0.0 ;
 
-  float percent = ( sin(timer) + 1 ) / 2 ;
+  //float percent = ( sin(timer) + 1 ) / 2 ;
 
   theScene["bottle"]->setMorphPercentage(percent);
   //  theScene["heavy"]->setMorphPercentage(percent);
@@ -420,6 +452,7 @@ void menufunc( int value ) {
   case 1:
     break;
   }
+
 
 }
 
