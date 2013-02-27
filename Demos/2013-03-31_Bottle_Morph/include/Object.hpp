@@ -65,6 +65,7 @@ public:
   float getMorphPercentage()     const  ;
   void  setMorphPercentage(const float) ;
   void  destroyMorphTarget()            ;
+  int getNumberPoints();
 
   /* Bad. Bad! Protect these. ...Later? :( */
   std::vector<Angel::vec4> points;
