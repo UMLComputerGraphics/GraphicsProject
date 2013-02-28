@@ -4,7 +4,7 @@ COMMONRAW=$(wildcard Common/*.cpp)
 CLASSES=$(wildcard Classes/*.cpp)
 
 #things not needed or that break build
-DIAF=Common/LoadTexture.cpp
+DIAF=Common/LoadTexture.cpp Classes/Particle.cpp
 
 ifndef WII
 DIAF += \

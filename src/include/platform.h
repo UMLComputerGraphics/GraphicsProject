@@ -13,7 +13,8 @@
 /* Peasant Code */
 #define GLEW_INIT()				\
   glewExperimental = GL_FALSE;			\
-  glewInit();
+  GLenum rc = glewInit();				\
+  fprintf( stderr, "%s\n", glewGetErrorString(rc) );
 #endif
 
 #endif

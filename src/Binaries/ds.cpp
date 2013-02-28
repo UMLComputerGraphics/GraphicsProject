@@ -7,7 +7,7 @@
    @details Work in progress!
    Based loosely on Ed Angel's tutorials.
 **/
-
+#include <SOIL.h>
 /* Multi-platform support and OpenGL headers. */
 #include "globals.h"
 #include "platform.h"
@@ -27,12 +27,13 @@
 // Initialization: load and compile shaders, initialize camera(s), load models.
 void init() {
 
-  GLuint shader[2];
+  GLuint shader[3];
   Cameras *camList = Engine::Instance()->Cams();
   Scene *rootScene = Engine::Instance()->RootScene();
 
   shader[0] = Angel::InitShader( "shaders/vred.glsl", "shaders/fragment.glsl" );
   shader[1] = Angel::InitShader( "shaders/vblu.glsl", "shaders/fragment.glsl" );
+  shader[2] = Angel::InitShader( "shaders/vtex.glsl", "shaders/ftex.glsl" );
 
   camList->SetShader( shader[0] );
   camList->AddCamera( "Camera1" );
@@ -46,6 +47,9 @@ void init() {
   rootScene->SetShader( shader[1] ); 
   Object *B = rootScene->AddObject( "Object B (BLU)" );
 
+  // Third Object, over-ride default shader.
+  Object *C = rootScene->AddObject( "Object C (TEX)", shader[1] );
+
   // Draw two squares:
   triangle(A, vec4(-1,0,0,1), vec4(0,0,0,1), vec4(-1,1,0,1), 0);
   triangle(A, vec4(0,0,0,1), vec4(-1,1,0,1), vec4(0,1,0,1), 0);
@@ -54,6 +58,14 @@ void init() {
   triangle(B, vec4(0,-1,0,1), vec4(1,-1,0,1), vec4(0,0,0,1), 0);
   triangle(B, vec4(1,-1,0,1), vec4(0,0,0,1), vec4(1,0,0,1), 0);
   B->Buffer();
+
+  triangle(C, vec4(-1,-1,0,1), vec4(0,-1,0,1), vec4(-1,0,0,1), 0);
+  C->texcoords.push_back( vec2(0,0) );
+  C->texcoords.push_back( vec2(1,1) );
+  C->texcoords.push_back( vec2(0,1) );
+  C->Buffer();
+
+  //GLint tex2ddirt = txload_w( "../Textures/GrassGreenTexture0002.jpg" );
 
   glEnable( GL_DEPTH_TEST );
   glClearColor( 0, 0, 0, 1.0 );
@@ -122,9 +134,9 @@ int main( int argc, char **argv ) {
 
   /* Register our Callbacks */
   glutDisplayFunc( display );
-  //glutKeyboardFunc( keyboard );
-  //glutKeyboardUpFunc( keylift );
-  //glutSpecialFunc( keyboard_ctrl );
+  glutKeyboardFunc( keyboard );
+  glutKeyboardUpFunc( keylift );
+  glutSpecialFunc( keyboard_ctrl );
   //glutMouseFunc( mouse );
   //glutMotionFunc( mouseroll );
   //glutPassiveMotionFunc( mouselook );

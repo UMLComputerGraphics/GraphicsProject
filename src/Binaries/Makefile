@@ -27,7 +27,7 @@ CLASSES_DIR = $(RELDIR)/Classes
 EXT=cpp
 CC=g++
 CFLAGS=-Wall -pedantic -I $(RELDIR)/include
-LDLIBS=-lSOIL
+LDLIBS=-lSOIL -pthread
 
 EXECS=terrain morphlite ds
 #EXEC sources are implied to be $EXEC.cpp !!
@@ -43,7 +43,7 @@ SOURCES=$(addprefix $(COMMON_DIR)/, $(COMMON_SOURCES)) \
 UNAME := $(shell uname)
 ifeq ($(UNAME), Linux)
 CFLAGS += -I /usr/include/SOIL
-LDLIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm -lXmu
+LDLIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm
 endif
 
 ifeq ($(UNAME), Darwin)

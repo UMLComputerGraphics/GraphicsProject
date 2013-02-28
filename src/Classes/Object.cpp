@@ -370,7 +370,7 @@ void Object::Draw( void ) {
 
     Camera *activeCamera = Engine::Instance()->Cams()->Active();
     
-    if (DEBUG) std::cerr << "Switching shading context.\n";
+    //if (DEBUG) std::cerr << "Switching shading context.\n";
 
     // Set OpenGL to use this object's shader.
     glUseProgram( GetShader() );
@@ -394,7 +394,7 @@ void Object::Draw( void ) {
   else
     glDrawArrays( draw_mode, 0, points.size() );
 
-  glBindVertexArray(0);
+  glBindVertexArray( 0 );
 
   // Draw all of our Children.
   // (With clothes on, pervert.)
