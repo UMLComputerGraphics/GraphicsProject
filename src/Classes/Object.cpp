@@ -485,3 +485,7 @@ Object* Object::genMorphTarget(GLuint gShader) {
   return obj ;
 
 }
+
+int Object::getNumberPoints(){
+	return points.size();
+}
