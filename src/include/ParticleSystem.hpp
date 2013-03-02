@@ -8,7 +8,6 @@
 #include "Particle.hpp"
 #include "vec.hpp"
 
-
 using Angel::vec2;
 using Angel::vec3;
 using Angel::vec4;
@@ -19,7 +18,6 @@ using std::vector;
 /**
    @author Chris Compton, christopher_compton@student.uml.edu
    @since 24 Feb 2013
-
    @brief todo
 
 **/
@@ -29,7 +27,7 @@ class ParticleSystem : public Object
 
 public:
   
-  ParticleSystem();
+  ParticleSystem( const std::string &name, GLuint shader);
   ~ParticleSystem( void ) ;
 
   void  addParticle( void );
