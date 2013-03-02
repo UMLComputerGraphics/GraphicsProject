@@ -57,9 +57,9 @@ Object::Object( const std::string &name, GLuint gShader )
   glBindVertexArray( vao );
   GLuint glsl_uniform;
 
-  /* Create five VBOs: One each for Positions, Colors, Normals, 
-     Textures and Draw Order. */
-  glGenBuffers( 8, buffer );
+  /* Create (Eight) VBOs: One each for Positions, Colors, Normals, 
+     Textures, Draw Order; Three for Morphing (Position,Colors,Normals.) */
+  glGenBuffers( NUM_BUFFERS, buffer );
 
   /* Create the Vertex buffer and link it with the shader. */
   glBindBuffer( GL_ARRAY_BUFFER, buffer[VERTICES] );
@@ -108,10 +108,11 @@ Object::Object( const std::string &name, GLuint gShader )
 
   if (DEBUG) 
     fprintf( stderr,
-	     "buffhandles: %u %u %u %u %u\n",
+	     "buffhandles: %u %u %u %u %u %u %u %u\n",
 	     buffer[VERTICES], buffer[NORMALS],
 	     buffer[COLORS], buffer[TEXCOORDS],
-	     buffer[INDICES] );
+	     buffer[INDICES], buffer[VERTICES_MORPH],
+	     buffer[NORMALS_MORPH], buffer[COLORS_MORPH] );
 
   /* Create the Drawing Order buffer, but we don't need to link it 
      with any uniform,
@@ -218,6 +219,12 @@ void Object::Link( UniformEnum which, const std::string &name ) {
 	     which, handles.size() );
     return;
   }
+
+  // Save the link between the Uniform and the Variable Name.
+  _uniformMap[ which ] = name;
+  
+  fprintf( stderr, "Linking enum[%u] with %s for object %s\n",
+	   which, name.c_str(), this->name.c_str() );
 
   handles[which] = glGetUniformLocation( GetShader(), name.c_str() );
   if (DEBUG)

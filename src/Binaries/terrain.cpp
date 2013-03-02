@@ -46,9 +46,6 @@ CWii Wii;
 bool usingWii = false;
 #endif
 
-// Application Globals
-bool fixed_yaw = true;
-
 // Textures
 // Obtained from www.goodtextures.com
 const char* terrainTex[] = {
@@ -97,6 +94,7 @@ void init() {
 
   // Load the shaders.
   GLuint gShader = Angel::InitShader( "shaders/vterrain.glsl", "shaders/fterrain.glsl" );
+  // Initialize engine setting: Enable "fixed yaw"... disable free-Y rotation.
   Engine::Instance()->Opt( "fixed_yaw", true );
 
   // Give the Shader handle to the Scene Graph and the Camera List.
@@ -359,7 +357,8 @@ void wiilook( Camera &WiiCamera, const Angel::vec3 &NewTheta,
   float roll = MovementRates.z / 20;
 
   if (abs(yaw) >= 0.1)
-    WiiCamera.yaw( -MovementRates.y / 20, fixed_yaw );
+    WiiCamera.yaw( -MovementRates.y / 20, 
+		   Engine::Instance()->Opt( "fixed_yaw" ) );
   if (abs(pitch) >= 0.1)
     WiiCamera.pitch( -MovementRates.x / 20 );
   if (abs(roll) >= 0.1)
