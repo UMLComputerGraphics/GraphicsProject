@@ -33,29 +33,32 @@ public:
   void  addParticle( void );
   
   // Getters and Setters
-  vec4   getColor( void );
-  float  getLifespan( void );
-  int    getNumParticles( void );
-  void   setColor( vec4 newColor );
-  void   setLifespan( float newLifespan );
-  void   setNumParticles( int newNumParticles );
+  vec4  getColor( void );
+  float getLifespan( void );
+  float getMaxLife( void );
+  float getMinLife( void );
+  int   getNumParticles( void );
 
-  /* some suggested functions for particle behaviors */
-
-  void candleFlame();       // Most likely for this project. Franck had equation suggestions.
-  void smokeSyestem();      
-  void percipitation();     // rain, snow, etc
+  void  setColor( vec4 newColor );
+  void  setLifespan( float minLifespan, float maxLifespan );
+  void  setNumParticles( int newNumParticles );
 
   /* The Do-All function.  Will do everything needed in order
      to have the particles behave according to our specification
      on each call to Draw(). That's the idea, anyway. */
   void update();
 
+protected:
+
 private:
+
+  float rangeRandom( float min, float max );
 
   vector<Particle> particles;  
   int    numParticles;   // Number of particles that each instance of ParticleSystem will manage
-
+  float  maxLife;
+  float  minLife;
+  
   // Pass-through variable... maybe not be needed and function can pass through
   vec4   color;          
 

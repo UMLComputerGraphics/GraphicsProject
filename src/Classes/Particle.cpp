@@ -16,7 +16,8 @@ using Angel::vec4;
 using Angel::mat4;
 
 // Constructor(s)
-Particle::Particle( vec4 position, float scale )
+Particle::Particle( vec4 position, float scale, float lifeSpan )
+  : mPos(position), mScale(scale), lifespan(lifeSpan)
 {
 
 }

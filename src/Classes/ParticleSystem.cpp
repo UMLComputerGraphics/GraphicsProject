@@ -1,5 +1,7 @@
+#include <cmath>
 #include <string>
 #include <SOIL.h>
+#include <cstdlib>
 #include <stdexcept>
 #include <vector>
 #include "globals.h"
@@ -37,7 +39,7 @@ ParticleSystem::addParticle( void )
 
   if ( numToAdd > 0 )
     for ( int i = 0 ; i < numToAdd ; i++ )
-      particles.push_back( new Particle::Particle() );
+      particles.push_back( Particle::Particle( vec4(0,0,0,1), 1, rangeRandom(minLife, maxLife) ));
 }
 
 // Getters and Setters
@@ -48,21 +50,15 @@ ParticleSystem::getColor( void )
 }
 
 float
-ParticleSystem::getLifespan( void )
+ParticleSystem::getMaxLife( void )
 {
-  return lifespan;
+  return maxLife;
 }
 
-int
-ParticleSystem::getMaxAngle( void )
+float
+ParticleSystem::getMinLife( void )
 {
-  return maxAngle;
-}
-
-int
-ParticleSystem::getMinAngle( void )
-{
-  return minAngle;
+  return minLife;
 }
 
 int
@@ -77,22 +73,31 @@ ParticleSystem::setColor( vec4 newColor )
   color = newColor;
 }
 
+void 
+ParticleSystem::setLifespan( float minLifespan, float maxLifespan )
+{
+  minLife = minLifespan ;
+  maxLife = maxLifespan ;
+}
+
 void
 ParticleSystem::setNumParticles( int newNumParticles )
 {
   numParticles = newNumParticles;
 }
 
+
 // Other functions
 
 void
-ParticleSystem::candleFlame(){}
-
-void
-ParticleSystem::smokeSystem(){}
-
-void
-ParticleSystem::percipitation(){}
-
-void
 ParticleSystem::update(){}
+
+// Private Functions
+
+float
+ParticleSystem::rangeRandom( float min, float max )
+{
+  float diff = max - min;
+  
+  return  fmod( (float)random(), diff) + min; 
+}
