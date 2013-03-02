@@ -28,18 +28,20 @@ void Scene::InsertObject( const std::string name, Object *obj ) {
 }
 
 Object *Scene::AddObject( const std::string &objName,
-			  GLuint shader ) {
+			  GLuint shader, ObjectType oType ) {
 
   // Note that 'shader' defaults to 0.
   if ((!shader) && (!gShader))
     throw std::invalid_argument( "A call to AddObject() was made without "
 				 "specifying either the object-specific shader,\n"
 				 "\tor informing the parent Scene of a default shader to use." );
-  
-  Object *obj = new Object( objName, ((shader) ? shader : gShader) );
+  if( oType == OBJECT ) {
+    Object *obj = new Object( objName, ((shader) ? shader : gShader) );
+  } else {
+    ParticleSystem *obj = new ParticleSystem( objName, ((shader) ? shader : gShader) );
+  }
   InsertObject( objName, obj );
   return obj;
-
 }
 
 /**

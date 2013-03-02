@@ -19,7 +19,7 @@ class Scene {
   void SetShader( GLuint gShader );
   GLuint GetShader( void );
 
-  Object *AddObject( const std::string &objName, GLuint Object_Shader = 0 );
+  Object *AddObject( const std::string &objName, GLuint Object_Shader = 0, ObjectType oType = OBJECT );
   void InsertObject( const std::string name, Object *obj );
   void DelObject( const std::string &objName );
   void DelObject( void );
@@ -42,6 +42,8 @@ protected:
   std::list< Object* > list;
   std::map< std::string, Object* > map;
   std::list< Object* >::iterator currentObj;
+
+  enum ObjectType { OBJECT, PARTICLESYSTEM };
   
   /* Handle to the shader ... */
   GLuint gShader;
