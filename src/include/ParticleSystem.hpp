@@ -27,7 +27,7 @@ class ParticleSystem : public Object
 
 public:
   
-  ParticleSystem( const std::string &name, GLuint shader);
+  ParticleSystem( int particleAmt, const std::string &name, GLuint shader);
   ~ParticleSystem( void ) ;
 
   void  addParticle( void );

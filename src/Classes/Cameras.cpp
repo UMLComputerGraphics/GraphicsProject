@@ -36,7 +36,7 @@ Cameras::~Cameras( void ) { }
 Camera *Cameras::AddCamera( const std::string &name ) {
 
   Camera *cam = new Camera( name, gShader );
-  Scene::InsertObject( name, cam );
+  Scene::InsertObject( cam );
   CalculateViewports();
   return cam;
   //Set Active Camera?
