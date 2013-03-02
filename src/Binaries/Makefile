@@ -29,7 +29,7 @@ CC=g++
 CFLAGS=-Wall -pedantic -I $(RELDIR)/include
 LDLIBS=-lSOIL -pthread
 
-EXECS=terrain morphlite ds
+EXECS=terrain morphlite ds zachMorphDemo
 #EXEC sources are implied to be $EXEC.cpp !!
 
 COMMON_SOURCES=model.cpp InitShader.cpp glut_callbacks.cpp
