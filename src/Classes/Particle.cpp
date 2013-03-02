@@ -30,6 +30,18 @@ Particle::~Particle()
 // Setters (Will we need getters? Probably not)
 
 void
+Particle::changeVel( vec3 newVel )
+{
+  mVel += newVel;
+}
+
+float 
+Particle::getLifespan( void )
+{
+  return lifespan;
+}
+
+void
 Particle::setAlpha( float newAlpha )
 {
   color.w = newAlpha;
@@ -60,29 +72,19 @@ Particle::setScale( vec3 newScale )
 }
 
 void
-Particle::setVel( vec3 newVel )
-{
-  mVel = newVel;
-}
-
-void
 Particle::setSpin( float newSpin )
 {
   spin = newSpin;
 }
 
 void
+Particle::setVel( vec3 newVel )
+{
+  mVel = newVel;
+}
+
+void
 Particle::setTexFile( string newFilename )
 {
   texFilename = newFilename;
-}
-
-// Other Methods
-
-void
-Particle::update()
-{
-  // What do you do? Call things that move object in the Transcache(?) class.
-  // Also will handle billboarding and spinning.
-  // ALL THE PARTICLE MOVEMENTS
 }

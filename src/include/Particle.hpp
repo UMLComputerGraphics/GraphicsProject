@@ -24,18 +24,19 @@ class Particle {
 
 public:
 
-  Particle( vec4 position, float scale,  );
+  Particle( vec4 position, float scale );
   ~Particle( void ) ;
 
-
-
-
   void changeVel( vec3 newVel );
+
+  float getLifespan( void );
 
   void setAlpha( float newAlpha );  // changes the alpha level of color
   void setColor( vec4 newColor );
   void setLifespan( float newLifespan );
+  void setPos( vec4 newPos );
   void setScale( vec3 newScale );
+  void setSpin( float newSpin );
   void setVel( vec3 newVel );
   void setTexFile( string newFilename );
 

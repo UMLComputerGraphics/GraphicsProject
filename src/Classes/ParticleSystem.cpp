@@ -17,9 +17,10 @@ using Angel::vec4;
 using Angel::mat4;
 
 // Constructor(s)
-ParticleSystem::ParticleSystem()
+ParticleSystem::ParticleSystem( const std::string &name, GLuint shader)
+  :Object( name, shader )
 {
-
+  
 }
 
 ParticleSystem::~ParticleSystem( void )
