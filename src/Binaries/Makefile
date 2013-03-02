@@ -36,7 +36,7 @@ EXECS=terrain morph morphlite partTest ds
 
 COMMON_SOURCES=model.cpp InitShader.cpp glut_callbacks.cpp
 
-CLASS_SOURCES=Camera.cpp vec.cpp mat.cpp Cameras.cpp Screen.cpp Timer.cpp Object.cpp Scene.cpp Transformation.cpp LightSource.cpp Lights.cpp TransCache.cpp Engine.cpp Particle.cpp
+CLASS_SOURCES=Camera.cpp vec.cpp mat.cpp Cameras.cpp Screen.cpp Timer.cpp Object.cpp Scene.cpp Transformation.cpp LightSource.cpp Lights.cpp TransCache.cpp Engine.cpp Particle.cpp ParticleSystem.cpp
 
 
 SOURCES=$(addprefix $(COMMON_DIR)/, $(COMMON_SOURCES)) \

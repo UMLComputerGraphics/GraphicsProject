@@ -72,12 +72,6 @@ Particle::setScale( vec3 newScale )
 }
 
 void
-Particle::setSpin( float newSpin )
-{
-  spin = newSpin;
-}
-
-void
 Particle::setVel( vec3 newVel )
 {
   mVel = newVel;

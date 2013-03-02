@@ -33,7 +33,7 @@ ParticleSystem::addParticle( void )
 {
   
   int numParticles = getNumParticles();
-  int numToAdd = numParticles - paricles.size();
+  int numToAdd = numParticles - particles.size();
 
   if ( numToAdd > 0 )
     for ( int i = 0 ; i < numToAdd ; i++ )
