@@ -78,24 +78,6 @@ ParticleSystem::setColor( vec4 newColor )
 }
 
 void
-ParticleSystem::setLifespan( float newLifespan )
-{
-  lifespan = newLifespan;
-}
-
-void
-ParticleSystem::setMaxAngle( int newMaxAngle )
-{
-  maxAngle = newMaxAngle;
-}
-
-void
-ParticleSystem::setMinAngle( int newMinAngle )
-{
-  minAngle = newMinAngle;
-}
-
-void
 ParticleSystem::setNumParticles( int newNumParticles )
 {
   numParticles = newNumParticles;

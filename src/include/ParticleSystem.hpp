@@ -35,13 +35,9 @@ public:
   // Getters and Setters
   vec4   getColor( void );
   float  getLifespan( void );
-  int    getMaxAngle( void );      // Max/Min angles may not be needed if movement
-  int    getMinAngle( void );      // is parameterized...
   int    getNumParticles( void );
   void   setColor( vec4 newColor );
   void   setLifespan( float newLifespan );
-  void   setMaxAngle( int newMaxAngle );
-  void   setMinAngle( int newMinAngle );
   void   setNumParticles( int newNumParticles );
 
   /* some suggested functions for particle behaviors */
@@ -62,10 +58,6 @@ private:
 
   // Pass-through variable... maybe not be needed and function can pass through
   vec4   color;          
-
-  // Will these be needed if their movement is parametrized?
-  int    minAngle;       // minAngle and maxAngle represent the range in degrees
-  int    maxAngle;       // that the particles will move away from point of creation
 
 };
 
