@@ -1,4 +1,5 @@
 #include <string>
+#include <cstdio>    // remove after debugging
 #include <vector>
 #include <SOIL.h>
 #include <stdexcept>
@@ -13,9 +14,11 @@
 
 using Angel::vec4;
 using Angel::mat4;
+using namespace::std;  // remove after debugging
 
 Object::Object( const std::string &name, GLuint gShader )
 {
+  cout << "\n\nObject name: " << name << "\n\n";
 
   /* The constructor is going to initialize the VAO and a series of VBOs.
      The VAO is our general handle to this collection of VBOs.

@@ -7,35 +7,28 @@
    @details This is a tech demo for morphing two objects back and forth.
    This is mostly based on ed angel's code from his book.
 **/
-
+/* Multi-platform support and OpenGL headers */
 #include "globals.h"
+#include "platform.h"
+/* Engine Classes */
+#include "Camera.hpp"
+#include "Cameras.hpp"
+#include "Engine.hpp"
+#include "Object.hpp"
+#include "Particle.hpp"
+#include "Scene.hpp"
+#include "Screen.hpp"
+#include "Timer.hpp"
+/* Utilities and Common */
+#include "glut_callbacks.h"
+#include "InitShader.hpp"
+#include "model.hpp"
 /* System Headers */
 #include <cmath>
 #include <cstdio>
 #include <sstream>
 #include <cstdlib>
 #include <time.h>
-/* Multi-platform support and OpenGL headers. */
-#include "platform.h"
-/* Ed Angel's Math Classes */
-#include "vec.hpp"
-#include "mat.hpp"
-/* Utilities and Classes */
-#include "model.hpp"
-#include "Camera.hpp"
-#include "InitShader.hpp"
-#include "Cameras.hpp"
-#include "Screen.hpp"
-#include "Object.hpp"
-#include "Timer.hpp"
-#include "Scene.hpp"
-#include "glut_callbacks.h"
-#include "Engine.hpp"
-
-#include "LightSource.hpp"
-#include "Lights.hpp"
-
-#include "Particle.hpp"
 
 // Type Aliases
 using Angel::vec3;
@@ -63,9 +56,9 @@ void init()
   camList->Next();
   camList->Active()->changePerspective( Camera::IDENTITY );
 
-  Particle particle = Particle( vec4(0,0,0,1), vec3(0,0,0), vec3(0,0,0), 1.0,
-				 vec4( 1,1,1,1), 1.0, 0, "someString", gShader );
-  //  theScene.InsertObject( "particle", &particle );
+  /*  Particle particle = Particle( vec4(0,0,0,1), vec3(0,0,0), vec3(0,0,0), 1.0,
+      vec4( 1,1,1,1), 1.0, 0, "someString", gShader ); */
+  Object particle = rootScene->AddObject( "ParticleCloud", gShader );
 
   // Generic OpenGL setup: Enable the depth buffer and set a nice background color.
   glEnable( GL_DEPTH_TEST );

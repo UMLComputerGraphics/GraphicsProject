@@ -16,23 +16,9 @@ using Angel::vec4;
 using Angel::mat4;
 
 // Constructor(s)
-Particle::Particle(vec4 initPos, vec3 initScale, vec3 initVel, float initAlpha, 
-		   vec4 initColor, float initLifespan, float initSpin, 
-		   string initTex, GLuint gShader )
-  :Object( "particle", gShader )
+Particle::Particle( vec4 position, float scale )
 {
-  setAlpha( initAlpha );
-  setColor( initColor );
-  setLifespan( initLifespan );
-  setSpin( initSpin);
-  setPos( initPos );
-  setScale( initScale );
-  setVel( initVel );
-  setTexFile( initTex );
 
-  loadModelFromFile( this, "../models/particle.obj" );
-  this->Buffer();
-  
 }
 
 // Destructor(s)
@@ -46,13 +32,13 @@ Particle::~Particle()
 void
 Particle::setAlpha( float newAlpha )
 {
-  alpha = newAlpha;
+  color.w = newAlpha;
 }
 
 void
 Particle::setColor( vec4 newColor )
 {
-  blendColor = newColor;
+  color = newColor;
 }
 
 void 
