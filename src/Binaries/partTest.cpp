@@ -1,13 +1,12 @@
 /**
-   @file morph.cpp
+   @file partTest.cpp
    @author Nicholas St.Pierre
    @authors John Huston, Nicholas VerVoort, Chris Compton
-   @date 2012-12-06
+   @date 2013-02-23
    @brief This is a derivative of our main project file, fly.cpp.
-   @details This is a tech demo for morphing two objects back and forth.
-   This is mostly based on ed angel's code from his book.
-**/
-/* Multi-platform support and OpenGL headers */
+   @details This is a tech demo for a particle system
+*/
+
 #include "globals.h"
 #include "platform.h"
 /* Engine Classes */
@@ -124,7 +123,7 @@ int main( int argc, char **argv ) {
   glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH );
   glutInitWindowSize( myScreen.Width(), myScreen.Height() );
   glutCreateWindow( "Particle Test" );
-  glutFullScreen();
+  //  glutFullScreen();
   glutSetCursor( GLUT_CURSOR_NONE );
 
   GLEW_INIT();
