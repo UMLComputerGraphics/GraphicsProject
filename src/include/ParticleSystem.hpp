@@ -24,7 +24,7 @@ using std::vector;
 
 **/
 
-class ParticleSystem : Public Object
+class ParticleSystem : public Object
 {
 
 public:

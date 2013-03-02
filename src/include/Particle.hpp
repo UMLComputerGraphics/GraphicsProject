@@ -24,7 +24,7 @@ class Particle {
 
 public:
 
-  Particle( vec4 position, float scale,  );
+  Particle( vec4 position, float scale  );
   ~Particle( void ) ;
 
 

@@ -14,7 +14,7 @@
 #include "Cameras.hpp"
 #include "Engine.hpp"
 #include "Object.hpp"
-#include "Particle.hpp"
+#include "ParticleSystem.hpp"
 #include "Scene.hpp"
 #include "Screen.hpp"
 #include "Timer.hpp"
@@ -55,7 +55,7 @@ void init()
   camList->Next();
   camList->Active()->changePerspective( Camera::IDENTITY );
 
-  Object particleSystem = rootScene->AddObject( "ParticleCloud", gShader, PARTICLESYSTEM );
+  Object *particleSystem = rootScene->AddObject( "ParticleCloud", gShader, Scene::PARTICLESYSTEM );
 
   // Generic OpenGL setup: Enable the depth buffer and set a nice background color.
   glEnable( GL_DEPTH_TEST );

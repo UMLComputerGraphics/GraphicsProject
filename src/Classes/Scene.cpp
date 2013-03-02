@@ -5,6 +5,7 @@
 
 #include "Scene.hpp"
 #include "Object.hpp"
+#include "ParticleSystem.hpp"
 
 typedef std::pair< std::string, Object * > mapping;
 
@@ -30,15 +31,17 @@ void Scene::InsertObject( const std::string name, Object *obj ) {
 Object *Scene::AddObject( const std::string &objName,
 			  GLuint shader, ObjectType oType ) {
 
+  Object* obj;
+
   // Note that 'shader' defaults to 0.
   if ((!shader) && (!gShader))
     throw std::invalid_argument( "A call to AddObject() was made without "
 				 "specifying either the object-specific shader,\n"
 				 "\tor informing the parent Scene of a default shader to use." );
   if( oType == OBJECT ) {
-    Object *obj = new Object( objName, ((shader) ? shader : gShader) );
+    obj = new Object( objName, ((shader) ? shader : gShader) );
   } else {
-    ParticleSystem *obj = new ParticleSystem( objName, ((shader) ? shader : gShader) );
+    obj = new ParticleSystem( objName, ((shader) ? shader : gShader) );
   }
   InsertObject( objName, obj );
   return obj;

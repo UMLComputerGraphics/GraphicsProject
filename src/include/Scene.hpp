@@ -16,6 +16,8 @@ class Scene {
   Scene( );
   virtual ~Scene( );
 
+  enum ObjectType { OBJECT, PARTICLESYSTEM };
+
   void SetShader( GLuint gShader );
   GLuint GetShader( void );
 
@@ -42,8 +44,6 @@ protected:
   std::list< Object* > list;
   std::map< std::string, Object* > map;
   std::list< Object* >::iterator currentObj;
-
-  enum ObjectType { OBJECT, PARTICLESYSTEM };
   
   /* Handle to the shader ... */
   GLuint gShader;
