@@ -1,17 +1,18 @@
 #BUILD EVERYTHING FROM A FOLDER OTHER THAN COMMON OR CLASSES AS AN EXECUTABLE!
 SOURCES=$(filter-out Common/%.cpp Classes/%.cpp,$(wildcard */*.cpp))
 COMMONRAW=$(wildcard Common/*.cpp)
-CLASSES=$(wildcard Classes/*.cpp)
+CLASSESRAW=$(wildcard Classes/*.cpp)
 
 #things not needed or that break build
 DIAF=Common/LoadTexture.cpp \
-        Classes/Particle.cpp
+     Classes/Particle.cpp
 
 ifndef WII
 DIAF += \
 	Common/WiiUtil.cpp
 endif
 COMMON=$(filter-out $(DIAF),$(COMMONRAW))
+CLASSES=$(filter-out $(DIAF),$(CLASSESRAW))
 
 TARGETS = $(basename $(strip $(SOURCES)))
 
