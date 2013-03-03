@@ -74,7 +74,7 @@ void randomize_terrain() {
   Object *Terrain = (*Engine::Instance()->RootScene())["terrain"];
   double magnitude = landGen( Terrain, terrain_size, H );
   Terrain->Buffer();
-  GLint handle = glGetUniformLocation( Terrain->GetShader(), "terrainMag" );
+  GLint handle = glGetUniformLocation( Terrain->Shader(), "terrainMag" );
   if (handle != -1) glUniform1f( handle, magnitude );
 
 }
@@ -98,8 +98,8 @@ void init() {
   Engine::Instance()->Opt( "fixed_yaw", true );
 
   // Give the Shader handle to the Scene Graph and the Camera List.
-  theScene->SetShader( gShader );
-  myScreen->camList.SetShader( gShader );
+  theScene->Shader( gShader );
+  myScreen->camList.Shader( gShader );
 
   // Cameras must be added after setting a shader.
   myScreen->camList.AddCamera( "Camera1" );
@@ -210,11 +210,11 @@ void init() {
   cam->Mode( GL_TRIANGLES );
   cam->trans.scale.Set( 0.05 );
   cam->trans.PreRotation.RotateY( 180 );
-  cam->Propegate(); 
+  cam->Propagate(); 
 
-  // Add the Propegate method to the Scene Graph directly, instead of this:
+  // Add the Propagate method to the Scene Graph directly, instead of this:
   // Note: Terrain doesn't/shouldn't have children ...
-  terrain->Propegate();
+  terrain->Propagate();
 
 
 }
@@ -531,6 +531,8 @@ int main( int argc, char **argv ) {
     fprintf( stderr, "GL_VERSION: %s\n", glGetString( GL_VERSION ));
     fprintf( stderr, "GL_SHADING_LANGUAGE_VERSION: %s\n", 
 	     glGetString( GL_SHADING_LANGUAGE_VERSION ));
+    fprintf( stderr, "GL_EXTENSIONS: %s\n",
+	     glGetString( GL_EXTENSIONS ) );
   }
 
   int menu = glutCreateMenu( menufunc );

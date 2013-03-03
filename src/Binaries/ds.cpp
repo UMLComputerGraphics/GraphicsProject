@@ -35,7 +35,7 @@ void init() {
   shader[1] = Angel::InitShader( "shaders/vblu.glsl", "shaders/fragment.glsl" );
   shader[2] = Angel::InitShader( "shaders/vtex.glsl", "shaders/ftex.glsl" );
 
-  camList->SetShader( shader[0] );
+  //camList->Shader( shader[0] );
   camList->AddCamera( "Camera1" );
   camList->Next();
   camList->Active()->changePerspective( Camera::IDENTITY );
@@ -44,7 +44,7 @@ void init() {
   Object *A = rootScene->AddObject( "Object A (RED)", shader[0] );
 
   // Setting a default and adding objects without:
-  rootScene->SetShader( shader[1] ); 
+  rootScene->Shader( shader[1] ); 
   Object *B = rootScene->AddObject( "Object B (BLU)" );
 
   // Third Object, over-ride default shader.

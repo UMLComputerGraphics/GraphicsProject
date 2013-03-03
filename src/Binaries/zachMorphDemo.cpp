@@ -40,8 +40,8 @@ void init() {
   GLuint gShader = Angel::InitShader( "shaders/vmorph.glsl", "shaders/fmorph.glsl" );
 
   // Let the other objects know which shader to use by default.
-  rootScene->SetShader( gShader );
-  primScreen->camList.SetShader( gShader );
+  rootScene->Shader( gShader );
+  primScreen->camList.Shader( gShader );
 
   // We start with no cameras, by default. Add one and set it "active" by using Next().
   primScreen->camList.AddCamera( "Camera1" );

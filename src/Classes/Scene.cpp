@@ -52,7 +52,7 @@ Object *Scene::AddObject( const std::string &objName,
    @return void.
 **/
 
-void Scene::SetShader( GLuint gShader ) {
+void Scene::Shader( GLuint gShader ) {
   this->gShader = gShader;
 }
 
@@ -64,7 +64,7 @@ void Scene::SetShader( GLuint gShader ) {
    @return A GLuint handle to the shader program.
 **/
 
-GLuint Scene::GetShader( void ) {
+GLuint Scene::Shader( void ) {
   return gShader;
 }
 

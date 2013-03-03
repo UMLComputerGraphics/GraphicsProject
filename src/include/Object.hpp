@@ -30,6 +30,7 @@ class Object : public Scene {
 public:
 
   typedef const unsigned int UniformEnum;
+  typedef std::map< Object::UniformEnum, std::string > UniformMap;
 
   typedef enum Uniforms {
     Begin,
@@ -51,10 +52,12 @@ public:
   /* OpenGL Methods */
   virtual void Link( UniformEnum which, const std::string &name );
   virtual void Send( UniformEnum which );
+  virtual GLuint Shader( void );
+  virtual void Shader( GLuint newShader );
 
   /* Animation and Related */
   void Animation(void (*anim_func)( TransCache &arg ));
-  void Propegate( void );
+  void Propagate( void );
 
   /* Info Get */  
   vec4 GetPosition() const ;
@@ -80,7 +83,7 @@ public:
 
 protected:
   /** name is used as an identifying handle for the object. **/
-  std::string name;     
+  std::string name;
 
   /** Vertex Array Object handle identifying our buffers/object. **/
   GLuint vao;

@@ -30,7 +30,7 @@ Object::Object( const std::string &name, GLuint gShader )
   handles.resize( Object::End );
 
   // Associate this Object with the Shader.
-  SetShader( gShader );
+  Shader( gShader );
 
   // Set our name from the constructor...
   this->name = name;
@@ -226,13 +226,51 @@ void Object::Link( UniformEnum which, const std::string &name ) {
   fprintf( stderr, "Linking enum[%u] with %s for object %s\n",
 	   which, name.c_str(), this->name.c_str() );
 
-  handles[which] = glGetUniformLocation( GetShader(), name.c_str() );
+  handles[which] = glGetUniformLocation( Shader(), name.c_str() );
   if (DEBUG)
     fprintf( stderr, "Linking handles[%d] to %s; got %d.\n",
 	     which, name.c_str(), handles[which] );
 
 }
 
+/**
+   Sets the shader to be used by this object.
+   Triggers a query of the shader program,
+   for the locations of the Uniform locations
+   that the object needs.
+
+   @param newShader a GLuint handle to the shader program to use.
+   
+   @return None.
+**/
+void Object::Shader( GLuint newShader ) {
+  
+  // Cache the shader handle for later.
+  Scene::Shader( newShader );
+
+  // We have to use the program to query the glUniform locations.
+  glUseProgram( newShader );
+
+  // Re-Link our Uniforms to this shader.
+  UniformMap::iterator it;
+  for (it = _uniformMap.begin(); it != _uniformMap.end(); ++it) {
+    Link( it->first, it->second );
+  }
+
+}
+
+/**
+   Returns the Object's current Shader.
+   Defined because C++ will not let you overload an overrided function,
+   without re-overloading it in the derived class.
+
+   @return a GLuint handle to the shader program used by this Object.
+**/
+GLuint Object::Shader( void ) {
+
+  return Scene::Shader();
+
+}
 
 void Object::Texture( const char** filename ) {
 
@@ -282,15 +320,15 @@ void Object::Texture( const char** filename ) {
   fprintf( stderr, "took %lu usec to load textures.\n", Tick.Delta() );
 
   
-  GLuint gSampler0 = glGetUniformLocation( GetShader(), "gSampler0" );
+  GLuint gSampler0 = glGetUniformLocation( Shader(), "gSampler0" );
   glUniform1i( gSampler0, 0 );
-  GLuint gSampler1 = glGetUniformLocation( GetShader(), "gSampler1" );
+  GLuint gSampler1 = glGetUniformLocation( Shader(), "gSampler1" );
   glUniform1i( gSampler1, 1 );
-  GLuint gSampler2 = glGetUniformLocation( GetShader(), "gSampler2" );
+  GLuint gSampler2 = glGetUniformLocation( Shader(), "gSampler2" );
   glUniform1i( gSampler2, 2 );
-  GLuint gSampler3 = glGetUniformLocation( GetShader(), "gSampler3" );
+  GLuint gSampler3 = glGetUniformLocation( Shader(), "gSampler3" );
   glUniform1i( gSampler3, 3 );
-  GLuint gSampler4 = glGetUniformLocation( GetShader(), "gSampler4" );
+  GLuint gSampler4 = glGetUniformLocation( Shader(), "gSampler4" );
   glUniform1i( gSampler4, 4 );
 
   glActiveTexture( GL_TEXTURE0 );
@@ -373,17 +411,17 @@ void Object::Draw( void ) {
   // Check to see if the correct shader program is engaged.
   GLint currShader;
   glGetIntegerv(GL_CURRENT_PROGRAM, &currShader);
-  if ((GLuint)currShader != GetShader()) {
+  if ((GLuint)currShader != Shader()) {
 
     Camera *activeCamera = Engine::Instance()->Cams()->Active();
     
     //if (DEBUG) std::cerr << "Switching shading context.\n";
 
     // Set OpenGL to use this object's shader.
-    glUseProgram( GetShader() );
+    glUseProgram( Shader() );
 
     // Set the Active Camera's shader to the Object's Shader.
-    activeCamera->SetShader( GetShader() );
+    activeCamera->Shader( Shader() );
 
     // Send the Camera's info to the new shader.
     activeCamera->View();
@@ -423,13 +461,13 @@ const std::string &Object::Name( void ) const {
 
 void Object::Animation(void (*anim_func)( TransCache &arg )) {
   anim_func( this->trans );
-  Object::Propegate();
+  Object::Propagate();
 }
 
-void Object::Propegate( void ) {
+void Object::Propagate( void ) {
 
   //fprintf( stderr, "\n" );
-  //fprintf( stderr, "Propegate called on %s\n", name.c_str() );
+  //fprintf( stderr, "Propagate called on %s\n", name.c_str() );
 
   std::list<Object*>::iterator it;
   
@@ -441,7 +479,7 @@ void Object::Propegate( void ) {
   for ( it = list.begin(); it != list.end(); ++it ) {
     (*it)->trans.PTM( this->trans.OTM() );
     //Tell that child to update his CTM and propegate.
-    (*it)->Propegate();
+    (*it)->Propagate();
   }
 
   //std::cerr << "{" << name << "::OTM:" << this->trans.OTM() << "}\n";
