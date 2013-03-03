@@ -43,19 +43,21 @@ bool fixed_yaw = true;
 void init() 
 {
 
-  GLuint gShader;
+  GLuint shader;
   Cameras *camList = Engine::Instance()->Cams();
   Scene *rootScene = Engine::Instance()->RootScene();
   
   // Load shaders and use the resulting shader program. 
-  gShader = Angel::InitShader( "shaders/vmorph.glsl", "shaders/fmorph.glsl" );
+  shader = Angel::InitShader( "shaders/vParticle.glsl", 
+			      "shaders/gParticle.glsl",
+			      "shaders/fParticle.glsl");
 
-  camList->SetShader( gShader );
+  camList->SetShader( shader );
   camList->AddCamera( "Camera1" );
   camList->Next();
   camList->Active()->changePerspective( Camera::IDENTITY );
 
-  Object *particleSystem = new ParticleSystem( 5, "ParticleSystem", gShader );
+  Object *particleSystem = new ParticleSystem( 5, "ParticleSystem", shader );
   rootScene->InsertObject( particleSystem );
 
   // Generic OpenGL setup: Enable the depth buffer and set a nice background color.
