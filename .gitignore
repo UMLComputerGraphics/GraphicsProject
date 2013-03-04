@@ -1,3 +1,5 @@
 *.DS_Store
 *~
-#*#
+#*#src/.settings
+src/.settings/
+src/.settings/language.settings.xml
