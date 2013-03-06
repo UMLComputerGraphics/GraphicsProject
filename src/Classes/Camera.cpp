@@ -36,16 +36,16 @@ void Camera::commonInit( void ) {
 
   for ( size_t i = (size_t) Camera::Direction_Begin; 
 	i != (size_t)Direction_End; ++i )
-    Motion[i] = false;
+    _motion[i] = false;
 
-  this->speed = 0;
-  this->speed_cap = 0;
-  this->MaxAccel = 10;
-  this->MaxSpeed = 2000;
-  this->FrictionMagnitude = 4;
-  this->aspect = 1;
-  this->currView = PERSPECTIVE;
-  this->fovy = 45.0;
+  this->_speed = 0;
+  this->_speed_cap = 0;
+  this->_maxAccel = 10;
+  this->_maxSpeed = 2000;
+  this->_frictionMagnitude = 4;
+  this->_aspectRatio = 1;
+  this->_currentView = PERSPECTIVE;
+  this->_fovy = 45.0;
 }
 
 /**
@@ -106,10 +106,10 @@ Camera::~Camera( void ) {
 **/
 void Camera::X( const float &in, const bool &update ) { 
 
-  ctm.offset.SetX( -in );
+  _ctm.offset.SetX( -in );
   trans.offset.SetX( in );
   if (update) {
-    ctm.CalcCTM();
+    _ctm.CalcCTM();
     trans.CalcCTM();
     Send( TRANSLATION );
   }
@@ -123,10 +123,10 @@ void Camera::X( const float &in, const bool &update ) {
    @return Void.
 **/
 void Camera::Y( const float &in, const bool &update ) { 
-  ctm.offset.SetY( -in );
+  _ctm.offset.SetY( -in );
   trans.offset.SetY( in );
   if (update) {
-    ctm.CalcCTM();
+    _ctm.CalcCTM();
     trans.CalcCTM();
     Send( TRANSLATION );
   }
@@ -140,11 +140,11 @@ void Camera::Y( const float &in, const bool &update ) {
    @return Void.
 **/
 void Camera::Z( const float &in, const bool &update ) { 
-  ctm.offset.SetZ( -in );
+  _ctm.offset.SetZ( -in );
   trans.offset.SetZ( in );
   if (update) {
     trans.CalcCTM();
-    ctm.CalcCTM();
+    _ctm.CalcCTM();
     Send( TRANSLATION );
   }
 }
@@ -165,7 +165,7 @@ void Camera::pos( const float &x, const float &y,
   Z(z, false);
   if (update) {
     trans.CalcCTM();
-    ctm.CalcCTM();
+    _ctm.CalcCTM();
     Send( TRANSLATION );
   }
 }
@@ -242,7 +242,7 @@ void Camera::dPos( const float &x, const float &y,
   dY( y, false );
   dZ( z, false );
   trans.CalcCTM();
-  ctm.CalcCTM();
+  _ctm.CalcCTM();
   Send( TRANSLATION );
 }
 
@@ -287,7 +287,7 @@ void Camera::adjustRotation( const mat4 &adjustment, const bool &fixed ) {
 
   // Apply our rotational adjustment to the camera.
   // Unintuitively, we need to adjust the Orbit.
-  ctm.orbit.Adjust( adjustment, order );
+  _ctm.orbit.Adjust( adjustment, order );
 
   /*
     Next, our Camera may have a physical object whose
@@ -299,7 +299,7 @@ void Camera::adjustRotation( const mat4 &adjustment, const bool &fixed ) {
 
   // Update our state.
   trans.CalcCTM();
-  ctm.CalcCTM();
+  _ctm.CalcCTM();
   Send( ROTATION );
 }
 
@@ -311,7 +311,7 @@ void Camera::adjustRotation( const mat4 &adjustment, const bool &fixed ) {
   @param V a vec4 representing the movement offset vector.
   @return A rotated vec4.
 **/
-#define ROTATE_OFFSET(V) (V * ctm.orbit.Matrix())
+#define ROTATE_OFFSET(V) (V * _ctm.orbit.Matrix())
 
 
 /**
@@ -432,7 +432,7 @@ void Camera::Accel( const vec3 &raw_accel ) {
     This should keep the animation relatively consistent across platforms.
   */
 
-  float Scale = (MaxAccel/SQRT3) * (1-POW5(speed_cap)) * (Tick.Scale());
+  float Scale = (_maxAccel/SQRT3) * (1-POW5(_speed_cap)) * (Tick.Scale());
   vec3 accel = raw_accel * Scale;
 
   if (DEBUG_MOTION) {
@@ -443,7 +443,7 @@ void Camera::Accel( const vec3 &raw_accel ) {
 	     "Accel(); Scale = (MaxAccel/SQRT3) * (1-POW5(speed_cap)) * Tick.Scale()\n" );
     fprintf( stderr,
 	     "Accel(); Scale = (%f/%f) * (%f) * (%f)\n",
-	     MaxAccel, SQRT3, (1-POW5(speed_cap)), Tick.Scale() );
+	     _maxAccel, SQRT3, (1-POW5(_speed_cap)), Tick.Scale() );
     fprintf( stderr,
 	     "Accel(); Scale = %f\n", Scale );
     fprintf( stderr,
@@ -452,14 +452,14 @@ void Camera::Accel( const vec3 &raw_accel ) {
   }
   
   //The acceleration is finally applied to the velocity vector.
-  velocity += accel;
+  _velocity += accel;
 
   //speed and speed_cap must now be recalculated.
-  speed_cap = (speed = length(velocity))/MaxSpeed;
+  _speed_cap = (_speed = length(_velocity))/_maxSpeed;
 
   if (DEBUG_MOTION) 
     fprintf( stderr, "Applied Acceleration to Velocity, Is now: (%f,%f,%f)\n", 
-	     velocity.x, velocity.y, velocity.z );
+	     _velocity.x, _velocity.y, _velocity.z );
 }
 
 
@@ -470,7 +470,7 @@ void Camera::Accel( const vec3 &raw_accel ) {
    @return Void.
 **/
 void Camera::Move( const Camera::Direction &Dir ) { 
-  Motion[Dir] = true; 
+  _motion[Dir] = true; 
 }
 
 
@@ -480,7 +480,7 @@ void Camera::Move( const Camera::Direction &Dir ) {
    @return Void.
 **/
 void Camera::Stop( const Camera::Direction &Dir ) {
-  Motion[Dir] = false;
+  _motion[Dir] = false;
 }
 
 
@@ -493,15 +493,15 @@ void Camera::Idle( void ) {
 
   /* Apply the automated motion instructions, if any --
      These are primarily from the keyboard. */
-  if (Motion[Camera::Forward]) Accel(vec3(0,0,1));
-  if (Motion[Camera::Backward]) Accel(vec3(0,0,-1));
-  if (Motion[Camera::Right]) Accel(vec3(0,1,0));
-  if (Motion[Camera::Left]) Accel(vec3(0,-1,0));
-  if (Motion[Camera::Up]) Accel(vec3(1,0,0));
-  if (Motion[Camera::Down]) Accel(vec3(-1,0,0));
+  if (_motion[Camera::Forward]) Accel(vec3(0,0,1));
+  if (_motion[Camera::Backward]) Accel(vec3(0,0,-1));
+  if (_motion[Camera::Right]) Accel(vec3(0,1,0));
+  if (_motion[Camera::Left]) Accel(vec3(0,-1,0));
+  if (_motion[Camera::Up]) Accel(vec3(1,0,0));
+  if (_motion[Camera::Down]) Accel(vec3(-1,0,0));
 
 
-  if (speed) {
+  if (_speed) {
     /* Apply the velocity vectors computed from Accel,
        which includes instructions from keyboard and the Balance Board. */
     /* 1/20000 is a magic constant which converts our velocity units
@@ -513,34 +513,34 @@ void Camera::Idle( void ) {
     
     if (DEBUG_MOTION)
       fprintf( stderr, "Applying Translation: + (%f,%f,%f)\n",
-	       velocity.x * Scale, velocity.y * Scale,
-	       velocity.z * Scale );
+	       _velocity.x * Scale, _velocity.y * Scale,
+	       _velocity.z * Scale );
     
-    heave( velocity.x * Scale );
-    sway( velocity.y * Scale );
-    surge( velocity.z * Scale );
+    heave( _velocity.x * Scale );
+    sway( _velocity.y * Scale );
+    surge( _velocity.z * Scale );
     
     // Friction Calculations
-    if (speed < (FrictionMagnitude * Tick.Scale())) {
+    if (_speed < (_frictionMagnitude * Tick.Scale())) {
       if (DEBUG_MOTION)
 	fprintf( stderr, "Friction has stopped all movement.\n" );
-      velocity = vec3(0,0,0);
-      speed = 0;
-      speed_cap = 0;
+      _velocity = vec3(0,0,0);
+      _speed = 0;
+      _speed_cap = 0;
     } else {
       // Friction is a vector that is the opposite of velocity.
-      vec3 frictionVec = -velocity;
+      vec3 frictionVec = -_velocity;
       /* By dividing friction by (speed/FrictionMagnitude), 
 	 we guarantee that the magnitude is FrictionMagnitude. */
-      frictionVec = frictionVec / (speed/FrictionMagnitude);
+      frictionVec = frictionVec / (_speed/_frictionMagnitude);
       frictionVec *= Tick.Scale();
 
       if (DEBUG_MOTION)
 	fprintf( stderr, "Applying friction to Velocity: + (%f,%f,%f)\n",
 		 frictionVec.x, frictionVec.y, frictionVec.z );
-      velocity += frictionVec;
-      speed = length(velocity);
-      speed_cap = speed/MaxSpeed;
+      _velocity += frictionVec;
+      _speed = length(_velocity);
+      _speed_cap = _speed/_maxSpeed;
     }
   }
 }
@@ -550,21 +550,21 @@ void Camera::Idle( void ) {
    X() returns the current position of the camera in model coordinates.
    @return The current X coordinate of the camera in model coordinates.
 **/
-float Camera::X( void ) const { return -ctm.offset.Matrix()[0][3]; }
+float Camera::X( void ) const { return -_ctm.offset.Matrix()[0][3]; }
 
 
 /**
    Y() returns the current position of the camera in model coordinates.
    @return The current Y coordinate of the camera in model coordinates.
 **/
-float Camera::Y( void ) const { return -ctm.offset.Matrix()[1][3]; }
+float Camera::Y( void ) const { return -_ctm.offset.Matrix()[1][3]; }
 
 
 /**
    Z() returns the current position of the camera in model coordinates.
    @return The current Z coordinate of the camera in model coordinates.
 **/
-float Camera::Z( void ) const { return -ctm.offset.Matrix()[2][3]; }
+float Camera::Z( void ) const { return -_ctm.offset.Matrix()[2][3]; }
 
 
 /**
@@ -578,7 +578,7 @@ vec4 Camera::pos( void ) const { return vec4( X(), Y(), Z(), 1.0 ); }
    FOV() gets the current camera Field-of-view angle.
    @return A float that is the y axis viewing angle.
 **/
-float Camera::FOV( void ) const { return fovy; }
+float Camera::FOV( void ) const { return _fovy; }
 
 
 /**
@@ -588,8 +588,8 @@ float Camera::FOV( void ) const { return fovy; }
    @return Void.
 **/
 void Camera::FOV( const float &in ) { 
-  fovy = in;
-  if (currView == Camera::PERSPECTIVE)
+  _fovy = in;
+  if (_currentView == Camera::PERSPECTIVE)
     refreshPerspective();
 }
 
@@ -601,7 +601,7 @@ void Camera::FOV( const float &in ) {
 **/
 void Camera::changePerspective( const view_type &vType ) {
   
-  currView = vType;
+  _currentView = vType;
   refreshPerspective();
 
 }
@@ -618,22 +618,22 @@ void Camera::refreshPerspective( void ) {
   static const GLfloat zNear = 0.001;
   static const GLfloat zFar = 100.0;
   
-  switch (currView) {
+  switch (_currentView) {
   case PERSPECTIVE:
-    view = Perspective( fovy, aspect, zNear, zFar );
+    _view = Perspective( _fovy, _aspectRatio, zNear, zFar );
     break;
   case ORTHO:
-    view = Ortho( -1.0, 1.0, -1.0, 1.0, zNear, zFar );
+    _view = Ortho( -1.0, 1.0, -1.0, 1.0, zNear, zFar );
     break;
   case ORTHO2D:
-    view = Ortho2D( -1.0, 1.0, -1.0, 1.0 );
+    _view = Ortho2D( -1.0, 1.0, -1.0, 1.0 );
     break;
   case FRUSTUM:
-    view = Frustum( -1.0, 1.0, -1.0, 1.0, zNear, zFar );
+    _view = Frustum( -1.0, 1.0, -1.0, 1.0, zNear, zFar );
     break;
   case IDENTITY:
   default:
-    view = mat4( GLuint(1.0) );
+    _view = mat4( GLuint(1.0) );
     break;
   }
 }
@@ -661,9 +661,9 @@ void Camera::dFOV( const float &by ) {
 **/
 void Camera::viewport( size_t _X, size_t _Y,
 		       size_t _Width, size_t _Height ) {
-  this->position = Angel::vec2( _X, _Y );
-  this->size = Angel::vec2( _Width, _Height );
-  this->aspect = (double)_Width / (double)_Height;
+  this->_viewportPosition = Angel::vec2( _X, _Y );
+  this->_viewportSize = Angel::vec2( _Width, _Height );
+  this->_aspectRatio = (double)_Width / (double)_Height;
   refreshPerspective();
 }
 
@@ -677,28 +677,29 @@ void Camera::Send( Object::UniformEnum which ) {
   switch (which) {
   case TRANSLATION:
     if (handles[which] != -1)
-      glUniformMatrix4fv( handles[which], 1, GL_TRUE, ctm.offset.Matrix() );
+      glUniformMatrix4fv( handles[which], 1, GL_TRUE, _ctm.offset.Matrix() );
     Send( CTM );
     break;
   case ROTATION:
     if (handles[which] != -1)
-      glUniformMatrix4fv( handles[which], 1, GL_TRUE, ctm.orbit.Matrix() );
+      glUniformMatrix4fv( handles[which], 1, GL_TRUE, _ctm.orbit.Matrix() );
     Send( CTM );
     break;
   case VIEW:
     if (handles[which] != -1)
-      glUniformMatrix4fv( handles[which], 1, GL_TRUE, view );
+      glUniformMatrix4fv( handles[which], 1, GL_TRUE, _view );
     Send( CTM );
     break;
   case CTM:
-    ctm.CalcCTM( POSTMULT );
+    _ctm.CalcCTM( POSTMULT );
     if (handles[which] != -1)
-      glUniformMatrix4fv( handles[which], 1, GL_TRUE, ctm.OTM() );
+      glUniformMatrix4fv( handles[which], 1, GL_TRUE, _ctm.OTM() );
     break;
   default:
     // If we don't know which variable this is,
     // See if our parent method knows.
     Object::Send( which );
+    break;
   }
 }
 
@@ -710,7 +711,7 @@ void Camera::Send( Object::UniformEnum which ) {
 **/
 void Camera::View( void ) {
 
-  glViewport( position.x, position.y, size.x, size.y );
+  glViewport( _viewportPosition.x, _viewportPosition.y, _viewportSize.x, _viewportSize.y );
   /* Send all of our matrices, who knows what the shader's gonna do with 'em */
   Send( TRANSLATION );
   Send( ROTATION );
@@ -729,6 +730,6 @@ void Camera::resetRotation( void ) {
 
   // The transpose of any rotation is its inverse.
   // Thus, this resets the rotational matrix.
-  this->ctm.orbit.Adjust(transpose(this->ctm.rotation.Matrix()));
+  this->_ctm.orbit.Adjust(transpose(this->_ctm.rotation.Matrix()));
 
 }

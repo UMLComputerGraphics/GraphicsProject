@@ -1,18 +1,22 @@
 #BUILD EVERYTHING FROM A FOLDER OTHER THAN COMMON OR CLASSES AS AN EXECUTABLE!
-SOURCES=$(filter-out SpelchkCommon/%.cpp Common/%.cpp Classes/%.cpp,$(wildcard */*.cpp))
+SOURCESRAW=$(filter-out SpelchkCommon/%.cpp Common/%.cpp Classes/%.cpp,$(wildcard */*.cpp))
 SPELLCHKCOMMONRAW=$(wildcard SpelchkCommon/*.cpp)
 COMMONRAW=$(wildcard Common/*.cpp)
 CLASSESRAW=$(wildcard Classes/*.cpp)
 
+
 #things not needed or that break build
 DIAF=Common/LoadTexture.cpp \
      Classes/Particle.cpp \
+     Binaries/raytracer1.cpp \
      SpelchkCommon/KinectInator.cpp
+
 
 ifndef WII
 DIAF += \
 	Common/WiiUtil.cpp
 endif
+SOURCES=$(filter-out $(DIAF),$(SOURCESRAW))
 COMMON=$(filter-out $(DIAF),$(COMMONRAW))
 CLASSES=$(filter-out $(DIAF),$(CLASSESRAW))
 SPELLCHKCOMMON=$(filter-out $(DIAF),$(SPELLCHKCOMMONRAW))

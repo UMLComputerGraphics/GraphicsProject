@@ -63,9 +63,9 @@ void init() {
 
   printf("Number Vertices: %d\n",bottle->getNumberPoints());
   printf("Number Vertices: %d\n",bottleMorphTarget->getNumberPoints());
-  printf("Colors: %d\n",bottle->colors.size());
-  printf("Normals: %d\n",bottle->normals.size());
-  printf("Indices: %d\n",bottle->indices.size());
+  printf("Colors: %lu\n",bottle->colors.size());
+  printf("Normals: %lu\n",bottle->normals.size());
+  printf("Indices: %lu\n",bottle->indices.size());
   //makeModelsSameSize(bottle, bottleMorphTarget);
 
   printf("Number Vertices: %d\n",bottle->getNumberPoints());
