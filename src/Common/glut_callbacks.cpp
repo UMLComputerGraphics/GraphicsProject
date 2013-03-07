@@ -64,7 +64,7 @@ void keyboard( unsigned char key, int x, int y ) {
 
 #ifdef WII
   // Hacky, for the wii reset, below.
-  Camera *camptr = dynamic_cast< Camera* >( (*camList)["AutoCamera2"] );
+  Camera *camptr = dynamic_cast< Camera* >( (*_camList)["AutoCamera2"] );
 #endif
 
   switch( key ) {
@@ -214,8 +214,8 @@ void mouseroll( int x, int y ) {
   static Screen *myScreen = Engine::Instance()->MainScreen();
 
   if ((x != myScreen->MidpointX()) || (y != myScreen->MidpointY())) {
-    if (myScreen->camList.NumCameras() > 0)
-      myScreen->camList.Active()->roll( x - myScreen->MidpointX() );
+    if (myScreen->_camList.NumCameras() > 0)
+      myScreen->_camList.Active()->roll( x - myScreen->MidpointX() );
     glutWarpPointer( myScreen->MidpointX(), myScreen->MidpointY() );
   }
 
@@ -230,9 +230,9 @@ void mouselook( int x, int y ) {
 
     if ((abs(dx) > 100) || (abs(dy) > 100)) return;
 
-    if (myScreen->camList.NumCameras() > 0) {
-      myScreen->camList.Active()->pitch( dy );
-      myScreen->camList.Active()->yaw( dx, Engine::Instance()->Opt("fixed_yaw") );
+    if (myScreen->_camList.NumCameras() > 0) {
+      myScreen->_camList.Active()->pitch( dy );
+      myScreen->_camList.Active()->yaw( dx, Engine::Instance()->Opt("fixed_yaw") );
     }
 
     glutWarpPointer( myScreen->MidpointX(), myScreen->MidpointY() );

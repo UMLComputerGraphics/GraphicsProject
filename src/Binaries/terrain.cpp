@@ -99,11 +99,11 @@ void init() {
 
   // Give the Shader handle to the Scene Graph and the Camera List.
   theScene->Shader( gShader );
-  myScreen->camList.Shader( gShader );
+  myScreen->_camList.Shader( gShader );
 
   // Cameras must be added after setting a shader.
-  myScreen->camList.AddCamera( "Camera1" );
-  myScreen->camList.Next();
+  myScreen->_camList.AddCamera( "Camera1" );
+  myScreen->_camList.Next();
 
   /*
     NOTE:
@@ -202,7 +202,7 @@ void init() {
   glClearColor( 0.3, 0.5, 0.9, 1.0 );
 
   //Attach a model to the Camera.
-  Object *cam = myScreen->camList.Active();
+  Object *cam = myScreen->_camList.Active();
   loadModelFromFile( cam, "../models/rainbow_dashT.obj" );
   // http://kp-shadowsquirrel.deviantart.com/		
   //   art/Pony-Model-Download-Center-215266264
@@ -440,7 +440,7 @@ void idle( void ) {
 #ifdef WII
   if (usingWii) {
     static const unsigned NumPolls = 20;
-    Camera *camptr = dynamic_cast< Camera* >( myScreen.camList["AutoCamera2"] );
+    Camera *camptr = dynamic_cast< Camera* >( myScreen._camList["AutoCamera2"] );
     Angel::vec3 theta_diff;
     Angel::vec3 accel_mag;
 

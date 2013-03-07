@@ -35,7 +35,7 @@ Cameras::~Cameras( void ) { }
 **/
 Camera *Cameras::AddCamera( const std::string &name ) {
 
-  Camera *cam = new Camera( name, gShader );
+  Camera *cam = new Camera( name, _gShader );
   Scene::InsertObject( name, cam );
   CalculateViewports();
   return cam;
@@ -44,7 +44,7 @@ Camera *Cameras::AddCamera( const std::string &name ) {
 }
 
 size_t Cameras::NumCameras( void ) const {
-  return list.size();
+  return _list.size();
 }
 
 //DelCamera( const std::string &name );
@@ -84,14 +84,14 @@ Camera *Cameras::Next( void ) {
 
 void Cameras::IdleMotion( void ) {
   std::list<Object*>::iterator it;
-  for (it = list.begin(); it != list.end(); ++it) {
+  for (it = _list.begin(); it != _list.end(); ++it) {
     Obj2Cam(it)->Idle();
   }
 }
 
 void Cameras::View(void (*draw_func)(void)) {
   std::list< Object* >::iterator it;
-  for (it = list.begin(); it != list.end(); ++it) {
+  for (it = _list.begin(); it != _list.end(); ++it) {
     Obj2Cam(it)->View();
     (*draw_func)();
   }
@@ -134,11 +134,11 @@ void Cameras::CalculateViewports( void ) {
     ((int)(numCameras - (numRows * numMaxCols)) / (int)(numMinCols - numMaxCols)) :
     0;
 
-  std::list< Object * >::iterator it = list.begin();
+  std::list< Object * >::iterator it = _list.begin();
 
   /* This is confusing as hell. Good luck! */
   for (size_t allocHeight = 0, row = 0;
-       (row < numRows) || (it != list.end()); //Terminate on either cond. Just in case.
+       (row < numRows) || (it != _list.end()); //Terminate on either cond. Just in case.
        ++row) {
     size_t myWidth;
     size_t myHeight;
@@ -173,14 +173,14 @@ void Cameras::CalculateViewports( void ) {
 
 void Cameras::TellMeYourSecrets( void ) {
   std::list<Object *>::iterator it;
-  for ( it = list.begin(); it != list.end(); ++it ) {
+  for ( it = _list.begin(); it != _list.end(); ++it ) {
     fprintf( stderr, "Camera: [%s]; Ptr: [%p]\n",
 	     Obj2Cam(it)->Name().c_str(),
 	     (void*)(*it) );
   }
 
   std::map<std::string, Object*>::iterator it2;
-  for (it2 = map.begin(); it2 != map.end(); ++it2 ) {
+  for (it2 = _map.begin(); it2 != _map.end(); ++it2 ) {
     fprintf( stderr, "[M]Camera: {%p}[%s]-->[%s]\n",
 	     (void*)(it2->second),
 	     it2->first.c_str(),

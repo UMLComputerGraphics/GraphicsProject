@@ -36,11 +36,11 @@ void init() {
 
   // Let the other objects know which shader to use by default.
   rootScene->Shader( gShader );
-  primScreen->camList.Shader( gShader );
+  primScreen->_camList.Shader( gShader );
 
   // We start with no cameras, by default. Add one and set it "active" by using Next().
-  primScreen->camList.AddCamera( "Camera1" );
-  primScreen->camList.Next();
+  primScreen->_camList.AddCamera( "Camera1" );
+  primScreen->_camList.Next();
 
   // Create an object and add it to the scene with the name "bottle".
   Object *bottle = rootScene->AddObject( "bottle" );
