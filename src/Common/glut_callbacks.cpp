@@ -7,6 +7,8 @@
 #include "Screen.hpp"
 #include "Engine.hpp"
 #include <sstream>
+#include <stdexcept>
+#include <exception>
 
 /**
    keylift is registered as a GLUT callback for when a user releases a depressed key.
@@ -80,16 +82,16 @@ void keyboard( unsigned char key, int x, int y ) {
 
   case ';': // Print Info
 
-  // Make sure there IS an active object before trying to get a pointer to one
-    if ( theScene->Active() != NULL ){
-
+    // Active() will throw if there is no active object, or if the requested object doesn't exist
+    try 
+    {
       fprintf( stderr, "Active Object: %s\n",
 	       theScene->Active()->Name().c_str() );
+    }
 
-    } else {
-
-      fprintf( stderr, "There is currently no Active Object\n");
-
+    catch( std::logic_error& e ) 
+    {
+      fprintf( stderr, "There is currently no Active Object, or no more Objects in the scene\n");
     }
 
     break;
@@ -178,16 +180,26 @@ void keyboard_ctrl( int key, int x, int y ) {
 
     //Change the Draw Mode ...
   case GLUT_KEY_F1:
-    theScene->Active()->Mode( GL_POINTS );
+    try
+    {
+	 theScene->Active()->Mode( GL_POINTS );
+    }
+    catch( std::logic_error& e ) 
+     {
+       fprintf(stderr, "Error: Attempt to change active object draw mode failed\nReason: %s\n", e.what() ) ;
+     }
     break;
   case GLUT_KEY_F2:
-    theScene->Active()->Mode( GL_LINE_STRIP );
+
+	 theScene->Active()->Mode( GL_LINE_STRIP );
     break;
   case GLUT_KEY_F3:
-    theScene->Active()->Mode( GL_TRIANGLE_STRIP );
+
+	 theScene->Active()->Mode( GL_TRIANGLE_STRIP );
     break;
   case GLUT_KEY_F4:
-    theScene->Active()->Mode( GL_TRIANGLES );
+
+	 theScene->Active()->Mode( GL_TRIANGLES );
     break;
   }
 
