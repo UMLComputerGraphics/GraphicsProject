@@ -79,8 +79,19 @@ void keyboard( unsigned char key, int x, int y ) {
     break;
 
   case ';': // Print Info
-    fprintf( stderr, "Active Object: %s\n",
-	     theScene->Active()->Name().c_str() );
+
+  // Make sure there IS an active object before trying to get a pointer to one
+    if ( theScene->Active() != NULL ){
+
+      fprintf( stderr, "Active Object: %s\n",
+	       theScene->Active()->Name().c_str() );
+
+    } else {
+
+      fprintf( stderr, "There is currently no Active Object\n");
+
+    }
+
     break;
 
   case '~':

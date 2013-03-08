@@ -96,9 +96,9 @@ namespace Angel {
   GLuint InitShader ( const char* vShaderFile, const char* gShaderFile,
                       const char* fShaderFile ) {
 
-    //#ifndef GL_GEOMETRY_SHADER
-    //#define GL_GEOMETRY_SHADER 0x8DD9
-    //#endif
+    #ifndef GL_GEOMETRY_SHADER
+    #define GL_GEOMETRY_SHADER 0x8DD9
+    #endif
 
     struct Shader {
       const char* filename;
