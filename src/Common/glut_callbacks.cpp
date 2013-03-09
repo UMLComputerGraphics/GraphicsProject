@@ -190,16 +190,34 @@ void keyboard_ctrl( int key, int x, int y ) {
      }
     break;
   case GLUT_KEY_F2:
-
+    try
+    {
 	 theScene->Active()->Mode( GL_LINE_STRIP );
+    }
+    catch( std::logic_error& e ) 
+     {
+       fprintf(stderr, "Error: Attempt to change active object draw mode failed\nReason: %s\n", e.what() ) ;
+     }
     break;
   case GLUT_KEY_F3:
-
+    try
+    {
 	 theScene->Active()->Mode( GL_TRIANGLE_STRIP );
+    }
+    catch( std::logic_error& e ) 
+     {
+       fprintf(stderr, "Error: Attempt to change active object draw mode failed\nReason: %s\n", e.what() ) ;
+     }
     break;
   case GLUT_KEY_F4:
-
+    try
+    {
 	 theScene->Active()->Mode( GL_TRIANGLES );
+    }
+    catch( std::logic_error& e ) 
+     {
+       fprintf(stderr, "Error: Attempt to change active object draw mode failed\nReason: %s\n", e.what() ) ;
+     }
     break;
   }
 
