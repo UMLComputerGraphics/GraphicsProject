@@ -48,6 +48,13 @@ endif
 
 ifeq ($(UNAME), Darwin)
 LDLIBS += -framework Carbon -framework OpenGL -framework GLUT
+# this next line is required to compile with FModEX
+#LIB_PATH                        = ../../api/lib
+#LIB_NAME_RELEASE        = libfmodex.dylib
+#LIB_NAME_LOGGING        = libfmodexL.dylib
+ARCH                            = -arch i386 -arch ppc -arch x86_64
+#pick one architecture!
+
 endif
 
 # Configuration Options
@@ -59,6 +66,13 @@ ifdef WII
 	CFLAGS += -DWII -I/usr/local/include/wiic
 	LDLIBS += -lwiic -lwiicpp
 	SOURCES += $(COMMON_DIR)/WiiUtil.cpp
+endif
+
+
+USE_FMOD=1
+
+ifdef USE_FMOD
+FMODSOURCES += libfmodex.dylib libfmodexL.dylib
 endif
 
 #DEBUG=1
