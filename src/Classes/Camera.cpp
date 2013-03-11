@@ -733,3 +733,9 @@ void Camera::resetRotation( void ) {
   this->_ctm.orbit.Adjust(transpose(this->_ctm.rotation.Matrix()));
 
 }
+
+/**
+   dPos returns the camera's velocity.
+   @return The current velocity of the camera.
+**/
+vec3 Camera::dPos( void ) const { return _velocity; }

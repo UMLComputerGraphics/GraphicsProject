@@ -120,6 +120,9 @@ public:
   float Z ( void ) const;
   vec4 pos ( void ) const;
 
+  /* Get Velocity */
+  vec3 dPos ( void ) const;
+
   /* OpenGL Methods */
   virtual void Send ( Object::UniformEnum which );
   void View ( void );

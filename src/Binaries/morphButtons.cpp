@@ -15,6 +15,8 @@
 #include <sstream>
 #include <cstdlib>
 #include <time.h>
+#include <exception>
+#include <stdexcept>
 /* Multi-platform support and OpenGL headers. */
 #include "platform.h"
 /* Ed Angel's Math Classes */
@@ -81,6 +83,7 @@ bool pause_morph = false ;
 
 FMOD::System     *system ;
 FMOD::Sound      *sound1, *sound2, *sound3 ;
+//FMOD::Sound      *heavy_channel, *ding_channel;
 FMOD::Channel    *channel = 0 ;
 FMOD_RESULT       result ;
 
@@ -270,7 +273,7 @@ void keyboard( unsigned char key, int x, int y ) {
 
   case 'i': // to A - Smooth
     if ( a_morph_status == TO_A_LINEAR || a_morph_status == TO_B_LINEAR ) {
-      ;
+      ; // @todo: fix jumpiness when switching modes
     }
 
     a_morph_status = TO_A_SMOOTH ;
@@ -279,7 +282,7 @@ void keyboard( unsigned char key, int x, int y ) {
 
   case 'o': // to B - Smooth
     if ( a_morph_status == TO_A_LINEAR || a_morph_status == TO_B_LINEAR ) {
-      ;
+      ; // @todo: fix jumpiness when switching modes
     }
 
     a_morph_status = TO_B_SMOOTH ;
@@ -288,7 +291,7 @@ void keyboard( unsigned char key, int x, int y ) {
 
   case 'j': // to A - Linear
     if ( a_morph_status == TO_A_SMOOTH || a_morph_status == TO_B_SMOOTH ) {
-      ;
+      ; // @todo: fix jumpiness when switching modes
     }
 
     a_morph_status = TO_A_LINEAR ;
@@ -297,7 +300,7 @@ void keyboard( unsigned char key, int x, int y ) {
 
   case 'k': // to B - Linear
     if  ( a_morph_status == TO_A_SMOOTH || a_morph_status == TO_B_SMOOTH) {
-      ;
+      ; // @todo: fix jumpiness when switching modes
     }
 
     a_morph_status = TO_B_LINEAR ;
@@ -568,13 +571,15 @@ void updateListener( void ) {
     static FMOD_VECTOR lastpos   = { 0.0f, 0.0f, 0.0f } ;
     const  FMOD_VECTOR forward   = { 0.0f, 0.0f, 1.0f } ;
     const  FMOD_VECTOR up        = { 0.0f, 1.0f, 0.0f } ;
-    FMOD_VECTOR vel;
 
-    FMOD_VECTOR listenerpos = convert_vec4_to_FMOD_VECTOR( cam.pos() ) ;
+    FMOD_VECTOR vel;
+    FMOD_VECTOR listenerpos;
+    
+    listenerpos = convert_vec4_to_FMOD_VECTOR( cam.pos() ) ;
+    vel = convert_vec4_to_FMOD_VECTOR( cam.dPos() ) ;
 
     // ********* NOTE ******* READ NEXT COMMENT!!!!!
     // vel = how far we moved last FRAME (m/f), then time compensate it to SECONDS (m/s).
-
     /*
     vel.x = (listenerpos.x - lastpos.x) * (1000 / INTERFACE_UPDATETIME);
     vel.y = (listenerpos.y - lastpos.y) * (1000 / INTERFACE_UPDATETIME);
@@ -587,9 +592,8 @@ void updateListener( void ) {
     result = system->set3DListenerAttributes(0, &listenerpos, &vel, &forward, &up);
     ERRCHECK(result);
 
+    // don't know what the point of this variable was.
     //t += (30 * (1.0f / (float)INTERFACE_UPDATETIME));    // t is just a time value .. it increments in 30m/s steps in this example
-
-////////////////////////////////////////////////////////////////////////////////
 
   }
 
