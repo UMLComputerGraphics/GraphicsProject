@@ -8,6 +8,10 @@
    This is mostly based on ed angel's code from his book.
 **/
 
+#ifndef USE_FMOD
+#define USE_FMOD
+#endif
+
 #include "globals.h"
 /* System Headers */
 #include <cmath>
@@ -67,7 +71,6 @@ bool fixed_yaw = true;
 /* 'A' represents the 'first' model and 'B' represents the morph target*/
 
 typedef enum { DONE,
-	       DING,
 	       TO_A_SMOOTH, 
 	       TO_B_SMOOTH,
 	       TO_A_LINEAR,
@@ -473,9 +476,6 @@ float driveTheMorph(void){
     case DONE:
       break ;
 
-    case DING:
-      a_morph_status = DONE ;
-      break;
 
     case TO_A_LINEAR:
 
@@ -568,10 +568,11 @@ void updateListener( void ) {
   // It looks like an FMOD_VECTOR is very, very similar to an Angel::vec3
 
   //static float t = 0;
-    static FMOD_VECTOR lastpos   = { 0.0f, 0.0f, 0.0f } ;
-    const  FMOD_VECTOR forward   = { 0.0f, 0.0f, 1.0f } ;
-    const  FMOD_VECTOR up        = { 0.0f, 1.0f, 0.0f } ;
-
+  //static FMOD_VECTOR lastpos   = { 0.0f, 0.0f, 0.0f } ;
+    FMOD_VECTOR forward   = convert_vec4_to_FMOD_VECTOR( cam.forward() ) ;
+    FMOD_VECTOR up        = convert_vec4_to_FMOD_VECTOR( cam.up() ) ; // = { 0.0f, 1.0f, 0.0f } ;
+    //unsigned long timeSinceLastFrame = Tick.Delta();
+    float framesToSeconds;
     FMOD_VECTOR vel;
     FMOD_VECTOR listenerpos;
     
@@ -581,13 +582,34 @@ void updateListener( void ) {
     // ********* NOTE ******* READ NEXT COMMENT!!!!!
     // vel = how far we moved last FRAME (m/f), then time compensate it to SECONDS (m/s).
     /*
+#ifdef _RT
+    framesToSeconds = (float)(timeSinceLastFrame / SecToNSec);
+#else
+    framesToSeconds = (float)(timeSinceLastFrame / SecTouSec);
+#endif
+    */
+
+    framesToSeconds = 60 * Tick.Scale();
+    //framesToSeconds = Tick.Rate() * Tick.Scale();
+
+    vel.x *= framesToSeconds ;
+    vel.y *= framesToSeconds ;
+    vel.z *= framesToSeconds ;
+
+    if ( DEBUG ) {
+
+      fprintf(stderr, "we appear to be operating at %f frames per second \n", framesToSeconds );
+
+    }
+
+    /*
     vel.x = (listenerpos.x - lastpos.x) * (1000 / INTERFACE_UPDATETIME);
     vel.y = (listenerpos.y - lastpos.y) * (1000 / INTERFACE_UPDATETIME);
     vel.z = (listenerpos.z - lastpos.z) * (1000 / INTERFACE_UPDATETIME);
     */
 
     // store pos for next time
-    lastpos = listenerpos;
+    //lastpos = listenerpos;
 
     result = system->set3DListenerAttributes(0, &listenerpos, &vel, &forward, &up);
     ERRCHECK(result);
@@ -595,12 +617,10 @@ void updateListener( void ) {
     // don't know what the point of this variable was.
     //t += (30 * (1.0f / (float)INTERFACE_UPDATETIME));    // t is just a time value .. it increments in 30m/s steps in this example
 
-  }
-
   system->update();
 
 
-  Sleep(INTERFACE_UPDATETIME - 1);
+//Sleep(INTERFACE_UPDATETIME - 1);
 
 
 

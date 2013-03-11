@@ -123,6 +123,13 @@ public:
   /* Get Velocity */
   vec3 dPos ( void ) const;
 
+  /* Get directional vectors */
+  vec4 forward ( void ) const;
+  vec4 up ( void ) const;
+
+
+
+
   /* OpenGL Methods */
   virtual void Send ( Object::UniformEnum which );
   void View ( void );

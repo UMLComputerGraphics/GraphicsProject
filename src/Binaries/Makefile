@@ -13,6 +13,7 @@
 # Flags:
 # WII=TRUE -- Enable Wii Controls.
 # POSTMULT -- Enable Post multiplication code.
+# USE_FMOD -- Enable fmod resources and build steps
 
 # We can define the relative dir. By default, assume the root is up one.
 ifndef RELDIR
@@ -22,6 +23,7 @@ endif
 # Define our directories where the goodies live.
 COMMON_DIR = $(RELDIR)/Common
 CLASSES_DIR = $(RELDIR)/Classes
+FMOD_DIR = $(RELDIR)/fMod
 
 # Some basic, common settings.
 EXT=cpp
@@ -29,7 +31,7 @@ CC=g++
 CFLAGS=-Wall -pedantic -I $(RELDIR)/include
 LDLIBS=-lSOIL -pthread
 
-EXECS=terrain morphlite ds zachMorphDemo
+EXECS=terrain morphlite ds zachMorphDemo morphButtons
 #EXEC sources are implied to be $EXEC.cpp !!
 
 COMMON_SOURCES=model.cpp InitShader.cpp glut_callbacks.cpp
@@ -39,22 +41,32 @@ CLASS_SOURCES=Camera.cpp vec.cpp mat.cpp Cameras.cpp Screen.cpp Timer.cpp Object
 SOURCES=$(addprefix $(COMMON_DIR)/, $(COMMON_SOURCES)) \
 	$(addprefix $(CLASSES_DIR)/, $(CLASS_SOURCES))
 
+# choose your architecture
+ARCH                            = -arch x86_64
+#ARCH                            = -arch ppc
+#ARCH                            = -arch i386
+
+
+#FMOD_LIB_PATH=$(addprefix $(FMOD_DIR), ../fMod/lib)
+#LIB_NAME_RELEASE        = libfmodex.dylib
+#LIB_NAME_LOGGING        = libfmodexL.dylib
+
+CFLAGS += $(ARCH)
+
 # Platform-dependent configuration.
 UNAME := $(shell uname)
+
 ifeq ($(UNAME), Linux)
 CFLAGS += -I /usr/include/SOIL
 LDLIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm
+FMOD_RELEASE=$(addprefix $(FMOD_DIR), lib/libfmodex64.dylib)
+# need some more stuff for handling various architectures.
+# @todo
 endif
 
 ifeq ($(UNAME), Darwin)
 LDLIBS += -framework Carbon -framework OpenGL -framework GLUT
-# this next line is required to compile with FModEX
-#LIB_PATH                        = ../../api/lib
-#LIB_NAME_RELEASE        = libfmodex.dylib
-#LIB_NAME_LOGGING        = libfmodexL.dylib
-ARCH                            = -arch i386 -arch ppc -arch x86_64
-#pick one architecture!
-
+FMOD_RELEASE=$(addprefix $(FMOD_DIR), lib/libfmodex.dylib)
 endif
 
 # Configuration Options
@@ -121,6 +133,7 @@ wipe: realclean
 realclean: clean
 	rm -f *~
 	find $(RELDIR) -name '*.d' -exec rm '{}' \;
+
 
 # Make documentation ...
 .PHONY: docs
