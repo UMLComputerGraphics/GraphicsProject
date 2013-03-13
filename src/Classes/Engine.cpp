@@ -58,7 +58,7 @@ Engine::Engine( const Engine &copy ) {
 **/
 Cameras *Engine::Cams( void ) {
 
-  return &(_screen.camList);
+  return &(_screen._camList);
 
 }
 

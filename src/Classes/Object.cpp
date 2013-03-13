@@ -476,7 +476,7 @@ void Object::Propagate( void ) {
   this->trans.CalcCTM();
 
   //Send my OTM as the PTM to all of my children.
-  for ( it = list.begin(); it != list.end(); ++it ) {
+  for ( it = _list.begin(); it != _list.end(); ++it ) {
     (*it)->trans.PTM( this->trans.OTM() );
     //Tell that child to update his CTM and propegate.
     (*it)->Propagate();
