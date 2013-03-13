@@ -98,12 +98,7 @@ Camera::~Camera( void ) {
 }
 
 
-/**
-   Sets the X coordinate of the camera.
-   @param in     The new X coordinate of the camera.
-   @param update Whether or not to update the shader with the new coordinates.
-   @return Void.
-**/
+
 void Camera::X( const float &in, const bool &update ) { 
 
   _ctm.offset.SetX( -in );

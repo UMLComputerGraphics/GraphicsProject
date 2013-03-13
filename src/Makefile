@@ -9,7 +9,7 @@ CLASSESRAW=$(wildcard Classes/*.cpp)
 DIAF=Common/LoadTexture.cpp \
      Classes/Particle.cpp \
      Binaries/raytracer1.cpp \
-     SpelchkCommon/KinectInator.cpp
+     Classes/KinectInator.cpp
 
 
 ifndef WII

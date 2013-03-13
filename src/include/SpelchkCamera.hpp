@@ -8,7 +8,10 @@
 #ifndef CAMERA_H_
 #define CAMERA_H_
 
-#include "Angel/Angel.h"
+#include <cmath>
+#include "mat.hpp"
+#include "vec.hpp"
+using namespace Angel;
 
 class Camera2 {
   private:

@@ -5,7 +5,7 @@
  *      Author: Hoanh Nguyen
  */
 
-#include "Camera2.h"
+#include "SpelchkCamera.hpp"
 
 Camera2::Camera2(vec4 _initialTranslationVector) {
   timeRef = 0;

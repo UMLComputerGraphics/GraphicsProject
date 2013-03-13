@@ -1,11 +1,11 @@
 #include <cmath>
 #include <iostream>
-#include <stdio.h>
+#include <cstdio>
 #include <SOIL/SOIL.h>
-#include <string.h>
+#include <cstring>
 
-#include "Angel/Angel.h"
-#include "SpelchkCommon/Camera2.h"
+#include "SpelchkCamera.hpp"
+#include "InitShader.hpp"
 
 GLuint program;
 
@@ -182,7 +182,7 @@ void init(void) {
   glBindVertexArray(vao);
 
   // Load shaders and use the resulting shader program
-  GLuint program = InitShader("shaders/vShaderOrgAndDir.glsl", "shaders/fShaderSpheres2.glsl");
+  GLuint program = Angel::InitShader("shaders/vShaderOrgAndDir.glsl", "shaders/fShaderSpheres2.glsl");
   glUseProgram(program);
 
   modelView = glGetUniformLocation(program, "ModelView");

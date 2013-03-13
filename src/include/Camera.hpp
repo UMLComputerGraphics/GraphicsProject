@@ -74,6 +74,12 @@ public:
   virtual ~Camera ( void );
 
   /* Set positionals: forcibly move the camera */
+  /**
+     Sets the X coordinate of the camera.
+     @param in     The new X coordinate of the camera.
+     @param update Whether or not to update the shader with the new coordinates.
+     @return Void.
+  **/
   void X ( const float &in, const bool &update = true );
   void Y ( const float &in, const bool &update = true );
   void Z ( const float &in, const bool &update = true );
