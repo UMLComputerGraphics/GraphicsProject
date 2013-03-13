@@ -21,8 +21,8 @@ void keylift( unsigned char key, int x, int y ) {
 
   Cameras *camList = Engine::Instance()->Cams();
 
-  if (camList->NumCameras() < 1) return;
-  Camera &cam = *(camList->Active());
+  if (camList->numCameras() < 1) return;
+  Camera &cam = *(camList->active());
 
   switch( key ) {
   case 'w':
@@ -80,7 +80,7 @@ void keyboard( unsigned char key, int x, int y ) {
 
   case ';': // Print Info
     fprintf( stderr, "Active Object: %s\n",
-	     theScene->Active()->Name().c_str() );
+	     theScene->active()->Name().c_str() );
     break;
 
   case '~':
@@ -93,19 +93,19 @@ void keyboard( unsigned char key, int x, int y ) {
     
   case '+':
     std::stringstream camName;
-    camName << "AutoCamera" << camList->NumCameras() + 1;
-    camList->AddCamera( camName.str() );
+    camName << "AutoCamera" << camList->numCameras() + 1;
+    camList->addCamera( camName.str() );
     break;
   }
 
-  if (camList->NumCameras() < 1) return;
+  if (camList->numCameras() < 1) return;
 
-  /* A shorthand variable with local scope that refers to "The Active Camera." */
-  Camera &cam = *(camList->Active());
+  /* A shorthand variable with local scope that refers to "The active Camera." */
+  Camera &cam = *(camList->active());
   
   switch( key ) {
   case '-':
-    camList->PopCamera();
+    camList->popCamera();
     break;
   case ';':
     fprintf( stderr, "Camera Position: (%f,%f,%f)\n", cam.x(), cam.y(), cam.z() );
@@ -157,39 +157,39 @@ void keyboard_ctrl( int key, int x, int y ) {
   Cameras *camList = Engine::Instance()->Cams();
   
   switch (key) {
-    //Cycle between Active Objects ...
+    //Cycle between active Objects ...
   case GLUT_KEY_LEFT:
-    theScene->Prev();
+    theScene->prev();
     break;
   case GLUT_KEY_RIGHT:
-    theScene->Next();
+    theScene->next();
     break;
 
     //Change the Draw Mode ...
   case GLUT_KEY_F1:
-    theScene->Active()->Mode( GL_POINTS );
+    theScene->active()->Mode( GL_POINTS );
     break;
   case GLUT_KEY_F2:
-    theScene->Active()->Mode( GL_LINE_STRIP );
+    theScene->active()->Mode( GL_LINE_STRIP );
     break;
   case GLUT_KEY_F3:
-    theScene->Active()->Mode( GL_TRIANGLE_STRIP );
+    theScene->active()->Mode( GL_TRIANGLE_STRIP );
     break;
   case GLUT_KEY_F4:
-    theScene->Active()->Mode( GL_TRIANGLES );
+    theScene->active()->Mode( GL_TRIANGLES );
     break;
   }
 
   // If there are no Cameras, don't muck around with this section.
-  if (camList->NumCameras() < 1) return;
+  if (camList->numCameras() < 1) return;
 
   switch( key ) {
   case GLUT_KEY_PAGE_UP:
-    camList->Prev();
+    camList->prev();
     break;
 
   case GLUT_KEY_PAGE_DOWN:
-    camList->Next();
+    camList->next();
     break;
   }
 }
@@ -197,12 +197,12 @@ void keyboard_ctrl( int key, int x, int y ) {
 void mouse( int button, int state, int x, int y ) {
 
   static Cameras *camList = Engine::Instance()->Cams();
-  if (camList->NumCameras() < 1) return;
+  if (camList->numCameras() < 1) return;
 
   if ( state == GLUT_DOWN ) {
     switch( button ) {
-    case 3: camList->Active()->adjustFieldOfView( 1 ); break;
-    case 4: camList->Active()->adjustFieldOfView( -1 ); break;
+    case 3: camList->active()->adjustFieldOfView( 1 ); break;
+    case 4: camList->active()->adjustFieldOfView( -1 ); break;
     }
   }
 
@@ -214,8 +214,8 @@ void mouseroll( int x, int y ) {
   static Screen *myScreen = Engine::Instance()->MainScreen();
 
   if ((x != myScreen->MidpointX()) || (y != myScreen->MidpointY())) {
-    if (myScreen->_camList.NumCameras() > 0)
-      myScreen->_camList.Active()->roll( x - myScreen->MidpointX() );
+    if (myScreen->_camList.numCameras() > 0)
+      myScreen->_camList.active()->roll( x - myScreen->MidpointX() );
     glutWarpPointer( myScreen->MidpointX(), myScreen->MidpointY() );
   }
 
@@ -230,9 +230,9 @@ void mouselook( int x, int y ) {
 
     if ((abs(dx) > 100) || (abs(dy) > 100)) return;
 
-    if (myScreen->_camList.NumCameras() > 0) {
-      myScreen->_camList.Active()->pitch( dy );
-      myScreen->_camList.Active()->yaw( dx, Engine::Instance()->Opt("fixed_yaw") );
+    if (myScreen->_camList.numCameras() > 0) {
+      myScreen->_camList.active()->pitch( dy );
+      myScreen->_camList.active()->yaw( dx, Engine::Instance()->Opt("fixed_yaw") );
     }
 
     glutWarpPointer( myScreen->MidpointX(), myScreen->MidpointY() );

@@ -35,9 +35,9 @@ using std::string;
  automatically move along the x, y, or z axes.
  **/
 class Camera : public Object {
-
+  
 public:
-
+  
   /**
    The Direction enumeration lists all of the possible directions
    the camera may travel in. 'BEGIN' and 'END' are special sentinel
@@ -82,8 +82,8 @@ public:
    @param y The initial y coordinate.
    @param z The initial z coordinate.
    **/
-  Camera ( const std::string &name, GLuint gShader, float x = 0.0,
-           float y = 0.0, float z = 0.0 );
+  Camera( const std::string &name, GLuint gShader, float x = 0.0, float y = 0.0,
+          float z = 0.0 );
 
   /**
    Initialization Constructor, uses a vec3 as its initial coordinates.
@@ -91,7 +91,7 @@ public:
    @param gShader A handle to this camera's associated shader object.
    @param in A vec3 representing the initial coordinates.
    **/
-  Camera ( const std::string &name, GLuint gShader, vec3 &in );
+  Camera( const std::string &name, GLuint gShader, vec3 &in );
 
   /**
    Initialization Constructor, uses a vec4 as its initial coordinates.
@@ -99,12 +99,12 @@ public:
    @param gShader A handle to this camera's associated shader object.
    @param in A vec4 representing the initial coordinates. The w component is ignored.
    **/
-  Camera ( const std::string &name, GLuint gShader, vec4 &in );
+  Camera( const std::string &name, GLuint gShader, vec4 &in );
 
   /**
    Default destructor. Defined only to allow inheritance.
    **/
-  virtual ~Camera ( void );
+  virtual ~Camera( void );
 
   /* Set positionals: forcibly move the camera */
   /**
@@ -113,21 +113,21 @@ public:
    @param update Whether or not to update the shader with the new coordinates.
    @return Void.
    **/
-  void x ( const float &in, const bool &update = true );
+  void x( const float &in, const bool &update = true );
   /**
    Sets the y coordinate of the camera.
    @param in     The new y coordinate of the camera.
    @param update Whether or not to update the shader with the new coordinates.
    @return Void.
    **/
-  void y ( const float &in, const bool &update = true );
+  void y( const float &in, const bool &update = true );
   /**
    Sets the z coordinate of the camera.
    @param in     The new z coordinate of the camera.
    @param update Whether or not to update the shader with the new coordinates.
    @return Void.
    **/
-  void z ( const float &in, const bool &update = true );
+  void z( const float &in, const bool &update = true );
 
   /**
    Sets the absolute position of the camera.
@@ -137,8 +137,8 @@ public:
    @param update Whether or not to update the shader with the new coordinates.
    @return Void.
    **/
-  void pos ( const float &x, const float &y, const float &z,
-             const bool &update = true );
+  void pos( const float &x, const float &y, const float &z, const bool &update =
+                true );
 
   /**
    Sets the absolute position of the camera.
@@ -146,7 +146,7 @@ public:
    @param update Whether or not to update the shader with the new coordinates.
    @return Void.
    **/
-  void pos ( const vec3 &in, const bool &update = true );
+  void pos( const vec3 &in, const bool &update = true );
 
   /**
    Sets the absolute position of the camera.
@@ -154,7 +154,7 @@ public:
    @param update Whether or not to update the shader with the new coordinates.
    @return Void.
    **/
-  void pos ( const vec4 &in, const bool &update = true );
+  void pos( const vec4 &in, const bool &update = true );
 
   /* Adjust positionals: move the camera by an offset */
   /**
@@ -164,7 +164,7 @@ public:
    update defaults to true.
    @return void.
    **/
-  void dX ( const float &by, const bool &update = true );
+  void dX( const float &by, const bool &update = true );
 
   /**
    Moves the camera along the y axis.
@@ -173,7 +173,7 @@ public:
    update defaults to true.
    @return Void.
    **/
-  void dY ( const float &by, const bool &update = true );
+  void dY( const float &by, const bool &update = true );
 
   /**
    Moves the camera along the z axis.
@@ -182,7 +182,7 @@ public:
    update defaults to true.
    @return Void.
    **/
-  void dZ ( const float &by, const bool &update = true );
+  void dZ( const float &by, const bool &update = true );
 
   /**
    Moves the camera along the x, y, and z axes.
@@ -191,21 +191,21 @@ public:
    @param z the z-axis displacement.
    @return Void.
    **/
-  void dPos ( const float &x, const float &y, const float &z );
+  void dPos( const float &x, const float &y, const float &z );
 
   /**
    Moves the camera along the x, y, and z axes.
    @param by A vec3 containing the x, y, and z axis displacements.
    @return Void.
    **/
-  void dPos ( const vec3 &by );
+  void dPos( const vec3 &by );
 
   /**
    Moves the camera along the x, y, and z axes.
    @param by A vec4 containing the x, y, and z axis displacements. The w component is ignored.
    @return Void.
    **/
-  void dPos ( const vec4 &by );
+  void dPos( const vec4 &by );
 
   /* Field-of-view */
   /**
@@ -214,30 +214,30 @@ public:
    @param fovy The new field of view angle.
    @return Void.
    **/
-  void fieldOfView ( const float &fovy );
+  void fieldOfView( const float &fovy );
   /**
    fieldOfView() gets the current camera Field-of-view angle.
    @return A float that is the y axis viewing angle.
    **/
-  float fieldOfView ( void ) const;
+  float fieldOfView( void ) const;
   /**
    adjustFieldOfView adjusts the field of view angle up or down by an amount.
    @param by The float to adjust the fieldOfView angle by.
    @return Void.
    **/
-  void adjustFieldOfView ( const float &by );
+  void adjustFieldOfView( const float &by );
   /**
    changePerspective changes the current perspective of the camera.
    @param vType Which perspective to use. see enum ViewType for possibilities.
    @return Void.
    **/
-  void changePerspective ( const ViewType &vType );
+  void changePerspective( const ViewType &vType );
   /**
    refreshPerspective re-generates the current view/perspective matrix of the camera.
    This function should be called after physical or virtual (viewport) screen resizes.
    @return Void.
    **/
-  void refreshPerspective ( void );
+  void refreshPerspective( void );
   /**
    viewport instructs this camera what his expected drawing window will be.
    This allows the camera to generate his viewing matrices with the
@@ -248,7 +248,7 @@ public:
    @param _height the height of our viewport.
    @return Void.
    **/
-  void viewport ( size_t _X, size_t _Y, size_t _width, size_t _height );
+  void viewport( size_t _X, size_t _Y, size_t _width, size_t _height );
 
   /* Adjust the camera position with regards to its current vector */
   /**
@@ -258,7 +258,7 @@ public:
    @param by The float to adjust the x coordinate by.
    @return Void.
    **/
-  void sway ( const float &by );
+  void sway( const float &by );
   /**
    Adjusts the camera's z coordinate relative to its current position.
    Positive values move the camera forward,
@@ -268,7 +268,7 @@ public:
    @param by The float to adjust the z coordinate by.
    @return Void.
    **/
-  void surge ( const float &by );
+  void surge( const float &by );
   /**
    Adjusts the camera's y coordinate relative to its current position.
    Positive values move the camera up,
@@ -276,7 +276,7 @@ public:
    @param by The float to adjust the y coordinate by.
    @return Void.
    **/
-  void heave ( const float &by );
+  void heave( const float &by );
 
   /* Adjust the camera's current view angle */
   /**
@@ -287,7 +287,7 @@ public:
    @param fixed Should this rotation be fixed about the origin?
    @return Void.
    **/
-  void pitch ( const float &by, const bool &fixed = false );
+  void pitch( const float &by, const bool &fixed = false );
   /**
    yaw adjusts the y axis rotation; left/right look.
    A positive value represents looking right,
@@ -296,7 +296,7 @@ public:
    @param fixed Should this rotation be fixed about the origin?
    @return Void.
    **/
-  void yaw ( const float &by, const bool &fixed = false );
+  void yaw( const float &by, const bool &fixed = false );
   /**
    roll adjusts the z axis rotation; tilt or lean left/right.
    A positive value represents leaning right,
@@ -305,7 +305,7 @@ public:
    @param fixed Should this rotation be fixed about the origin?
    @return Void.
    **/
-  void roll ( const float &by, const bool &fixed = false );
+  void roll( const float &by, const bool &fixed = false );
 
   /* Instruct the camera to automatically move. */
   /**
@@ -314,19 +314,19 @@ public:
    Can be any direction in the enumerated type Camera::Direction.
    @return Void.
    **/
-  void move ( const Camera::Direction &Dir );
+  void move( const Camera::Direction &Dir );
   /**
    stop instructs the camera to stop moving in the specified direction.
    @param Dir The direction in which to stop moving.
    @return Void.
    **/
-  void stop ( const Camera::Direction &Dir );
+  void stop( const Camera::Direction &Dir );
   /**
    idle moves the camera forward in whichever directions it is
    configured to move in. Call it in the glut idle function.
    @return Void.
    **/
-  void idle ( void );
+  void idle( void );
   /**
    accel takes an input vec2 which represents an acceleration,
    and applies it to the motion vectors with regards to
@@ -334,29 +334,29 @@ public:
    @param accel The vec3 which represents the (x,y,z) acceleration, where x,y,z are [-1,1].
    @return Void.
    **/
-  void accel ( const vec3 &accel );
+  void accel( const vec3 &accel );
 
   /* Get Position */
   /**
    x() returns the current position of the camera in model coordinates.
    @return The current x coordinate of the camera in model coordinates.
    **/
-  float x ( void ) const;
+  float x( void ) const;
   /**
    y() returns the current position of the camera in model coordinates.
    @return The current y coordinate of the camera in model coordinates.
    **/
-  float y ( void ) const;
+  float y( void ) const;
   /**
    z() returns the current position of the camera in model coordinates.
    @return The current z coordinate of the camera in model coordinates.
    **/
-  float z ( void ) const;
+  float z( void ) const;
   /**
    pos() gets the current camera position in model coordinates.
    @return A vec4 that represents the current camera coordinates.
    **/
-  vec4 pos ( void ) const;
+  vec4 pos( void ) const;
 
   /* OpenGL Methods */
   /**
@@ -364,13 +364,13 @@ public:
    @param which The parameter to send. Can be any from enum glsl_var.
    @return Void.
    **/
-  virtual void send ( Object::UniformEnum which );
+  virtual void send( Object::UniformEnum which );
   /**
    view will instruct OpenGL of the viewport we want, and then send all of our
    current matrices to the shader for rendering.
    @return Void.
    **/
-  void view ( void );
+  void view( void );
 
   /**
    resetRotation adjusts the camera's rotational state back to
@@ -378,10 +378,10 @@ public:
 
    @return void.
    **/
-  void resetRotation ( void );
+  void resetRotation( void );
 
 private:
-
+  
   /**
    adjustRotation is an internal function that rotates the camera.
    Technically, any transformation, not just a rotation, is possible.
@@ -389,13 +389,13 @@ private:
    @param fixed Should this rotation be fixed about the origin?
    @return Void.
    **/
-  void adjustRotation ( const mat4 &adjustment, const bool &fixed = false );
+  void adjustRotation( const mat4 &adjustment, const bool &fixed = false );
   /**
    commonInit is a private function that initializes local object attributes.
    It should be called by all available constructors.
    @return Void.
    **/
-  void commonInit ( void );
+  void commonInit( void );
 
   /** The current view matrix (defaultly perspective) for this camera. **/
   mat4 _view;
@@ -435,7 +435,7 @@ private:
 
   /** Camera's Drawbox x,y Coordinate (Upper-Left Pixel) **/
   Angel::vec2 _viewportPosition; // XPos and YPos
-
+  
   /** Booleans correlating to the different motion directions. **/
   bool _motion[Camera::DIR_END];
   

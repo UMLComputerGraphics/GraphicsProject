@@ -102,8 +102,8 @@ void init() {
   myScreen->_camList.Shader( gShader );
 
   // Cameras must be added after setting a shader.
-  myScreen->_camList.AddCamera( "Camera1" );
-  myScreen->_camList.Next();
+  myScreen->_camList.addCamera( "Camera1" );
+  myScreen->_camList.next();
 
   /*
     NOTE:
@@ -202,7 +202,7 @@ void init() {
   glClearColor( 0.3, 0.5, 0.9, 1.0 );
 
   //Attach a model to the Camera.
-  Object *cam = myScreen->_camList.Active();
+  Object *cam = myScreen->_camList.active();
   loadModelFromFile( cam, "../models/rainbow_dashT.obj" );
   // http://kp-shadowsquirrel.deviantart.com/		
   //   art/Pony-Model-Download-Center-215266264
@@ -257,7 +257,7 @@ void display( void ) {
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
   // Tell camList to draw using our displayViewport rendering function.
-  Engine::Instance()->Cams()->View( displayViewport );
+  Engine::Instance()->Cams()->view( displayViewport );
 
   // Utilize multi-buffering.
   glutSwapBuffers();
@@ -463,7 +463,7 @@ void idle( void ) {
 #endif
   
   // Move all camera(s).
-  Engine::Instance()->Cams()->IdleMotion();
+  Engine::Instance()->Cams()->idleMotion();
   glutPostRedisplay();
 
 }

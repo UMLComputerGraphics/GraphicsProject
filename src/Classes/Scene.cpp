@@ -75,7 +75,7 @@ GLuint Scene::Shader(void) {
  **/
 void Scene::DeleteObject(Object *obj) {
 
-  if (obj == Active()) Prev() ;
+  if (obj == active()) prev() ;
 
   _list.remove(obj) ;
   _map.erase(obj->Name()) ;
@@ -108,7 +108,7 @@ void Scene::PopObject(void) {
   DeleteObject(*(--_list.end())) ;
 }
 
-Object *Scene::Next(void) {
+Object *Scene::next(void) {
 
   // If the list is empty, we can't cycle.
   if (_list.size() == 0)
@@ -122,7 +122,7 @@ Object *Scene::Next(void) {
 
 }
 
-Object *Scene::Prev(void) {
+Object *Scene::prev(void) {
 
   if (_list.size() == 0)
     throw std::logic_error("Prev() called, but there are no objects"
@@ -136,7 +136,7 @@ Object *Scene::Prev(void) {
 
 }
 
-Object *Scene::Active(void) {
+Object *Scene::active(void) const {
 
   if (_list.size() == 0)
     throw std::logic_error("Active() called, but the object list is empty.") ;

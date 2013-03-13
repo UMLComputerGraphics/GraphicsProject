@@ -38,9 +38,9 @@ void init() {
   rootScene->Shader( gShader );
   primScreen->_camList.Shader( gShader );
 
-  // We start with no cameras, by default. Add one and set it "active" by using Next().
-  primScreen->_camList.AddCamera( "Camera1" );
-  primScreen->_camList.Next();
+  // We start with no cameras, by default. Add one and set it "active" by using next().
+  primScreen->_camList.addCamera( "Camera1" );
+  primScreen->_camList.next();
 
   // Create an object and add it to the scene with the name "bottle".
   Object *bottle = rootScene->AddObject( "bottle" );
@@ -102,7 +102,7 @@ void display( void ) {
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
   // Tell camList to draw using our 'draw' rendering function.
-  camList->View( draw );
+  camList->view( draw );
 
   // Swap to the next buffer.
   glutSwapBuffers();
@@ -131,7 +131,7 @@ void idle( void ) {
 
   // Move all cameras: Apply velocity and acceleration adjustments.
   // If no cameras are currently moving, this will do nothing ;)
-  camList->IdleMotion();
+  camList->idleMotion();
 
   // Inform GLUT we'd like to render a new frame.
   glutPostRedisplay();

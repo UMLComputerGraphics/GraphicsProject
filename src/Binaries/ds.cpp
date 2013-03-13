@@ -36,9 +36,9 @@ void init() {
   shader[2] = Angel::InitShader( "shaders/vtex.glsl", "shaders/ftex.glsl" );
 
   //camList->Shader( shader[0] );
-  camList->AddCamera( "Camera1" );
-  camList->Next();
-  camList->Active()->changePerspective( Camera::IDENTITY );
+  camList->addCamera( "Camera1" );
+  camList->next();
+  camList->active()->changePerspective( Camera::IDENTITY );
 
   // Adding objects without a default shader:
   Object *A = rootScene->AddObject( "Object A (RED)", shader[0] );
@@ -94,7 +94,7 @@ void display( void ) {
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
   // Tell camList to draw using our 'draw' rendering function.
-  camList->View( draw );
+  camList->view( draw );
 
   glutSwapBuffers();
 }
@@ -107,7 +107,7 @@ void idle( void ) {
   Tick.Tock();
 
   // Move all camera(s).
-  camList->IdleMotion();
+  camList->idleMotion();
   glutPostRedisplay();
   
 }

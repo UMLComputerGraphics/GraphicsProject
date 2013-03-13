@@ -18,7 +18,7 @@ void Screen::Size(int x, int y) {
 void Screen::Size(const vec2 &newSize) {
   _size = newSize ;
   _center = newSize / 2 ;
-  _camList.Resize(_size.x, _size.y) ;
+  _camList.resize(_size.x, _size.y) ;
 }
 
 const vec2 &Screen::Size(void) {
