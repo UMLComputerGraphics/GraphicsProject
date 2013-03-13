@@ -1,13 +1,48 @@
+/**
+ * @file InitShader.cpp
+ * @authors Ed Angel, Nick St.Pierre
+ * @date 2013-03-13
+ * @brief Provides a wrapper utility for quickly
+ * linking against glsl programs.
+ **/
+
 #include <cstdio>
 #include <iostream>
 #include "platform.h"
 #include "InitShader.hpp"
 
+/**
+ * @def GEOMETRY_VERTICES_OUT_EXT
+ * GEOMETRY_VERTICES_OUT_EXT is a Magic OpenGL constant.
+ * On some systems, we might need to define this manually.
+ * It is normally provided by OpenGL directly.
+ * FIXME: This seems hacky!
+ */
+#ifndef GEOMETRY_VERTICES_OUT_EXT
+#define GEOMETRY_VERTICES_OUT_EXT 0x8DDA
+#endif
+
+/**
+ * @def GL_GEOMETRY_SHADER
+ * GEOMETRY_VERTICES_OUT_EXT is a Magic OpenGL constant.
+ * On some systems, we might need to define this manually.
+ * It is normally provided by OpenGL directly.
+ * FIXME: This seems hacky!
+ */
+#ifndef GL_GEOMETRY_SHADER
+#define GL_GEOMETRY_SHADER 0x8DD9
+#endif
+
 namespace Angel {
 
-// Create a NULL-terminated string by reading the provided file
-  static char*
-  readShaderSource ( const char* shaderFile ) {
+  /**
+   * Read in a shader file into a NULL-terminated string.
+   *
+   * @param shaderFile The file to read.
+   *
+   * @return A pointer to the NULL terminated string.
+   */
+  static char *readShaderSource( const char* shaderFile ) {
     FILE* fp = fopen( shaderFile, "r" );
 
     if ( fp == NULL ) {
@@ -26,8 +61,16 @@ namespace Angel {
     return buf;
   }
 
-// Create a GLSL program object from vertex and fragment shader files
-  GLuint InitShader ( const char* vShaderFile, const char* fShaderFile ) {
+  /**
+   * InitShader takes two shader sourcefiles and compiles them into a
+   * shader program.
+   *
+   * @param vShaderFile the vertex shader source file
+   * @param fShaderFile the fragment shader source file
+   *
+   * @return A handle to the compiled glsl program.
+   */
+  GLuint InitShader( const char* vShaderFile, const char* fShaderFile ) {
     struct Shader {
       const char* filename;
       GLenum type;
@@ -89,16 +132,18 @@ namespace Angel {
     return program;
   }
 
-  /* This may be completely goofy, but by god let's give it a go.
-   #followingMyDreams
+  /**
+   * InitShader takes three shader sourcefiles and compiles them into a
+   * shader program.
+   *
+   * @param vShaderFile the vertex shader source file
+   * @param gShaderFile the geometry shader source file
+   * @param fShaderFile the fragment shader source file
+   *
+   * @return A handle to the compiled glsl program.
    */
-
-  GLuint InitShader ( const char* vShaderFile, const char* gShaderFile,
-                      const char* fShaderFile ) {
-
-    //#ifndef GL_GEOMETRY_SHADER
-    //#define GL_GEOMETRY_SHADER 0x8DD9
-    //#endif
+  GLuint InitShader( const char* vShaderFile, const char* gShaderFile,
+                     const char* fShaderFile ) {
 
     struct Shader {
       const char* filename;
@@ -141,14 +186,8 @@ namespace Angel {
 
       if ( s.type == GL_GEOMETRY_SHADER ) {// Gshader init requires a few extra things
 
-#ifndef GEOMETRY_VERTICES_OUT_EXT
-#define GEOMETRY_VERTICES_OUT_EXT 0x8DDA
-#endif
-
-        /*
-         GLint n;
-         glGetIntegerv( GL_MAX_GEOMETRY_OUTPUT_COMPONENTS, &n );
-         */
+        //GLint n;
+        //glGetIntegerv( GL_MAX_GEOMETRY_OUTPUT_COMPONENTS, &n );
 
         glProgramParameteriEXT( shader, GL_GEOMETRY_INPUT_TYPE_EXT,
                                 GL_TRIANGLES );

@@ -298,7 +298,7 @@ void TerrainGenerationAnimation( TransCache &obj ) {
 
   case SHRINKING:
     obj.scale.Set(1.0,
-		  ((1.0+cos(CurrentScale*DegreesToRadians))/2.0),
+		  ((1.0+cos(CurrentScale*DEGREES_TO_RADIANS))/2.0),
 		  1.0);
     
     CurrentScale += 1.0 * Tick.Scale() ;
@@ -316,7 +316,7 @@ void TerrainGenerationAnimation( TransCache &obj ) {
 
   case GROWING:
     obj.scale.Set(1.0,
-		  ((1.0+cos(CurrentScale*DegreesToRadians))/2.0),
+		  ((1.0+cos(CurrentScale*DEGREES_TO_RADIANS))/2.0),
 		  1.0);
 
     CurrentScale += 1.0 * Tick.Scale() ;
