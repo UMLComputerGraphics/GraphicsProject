@@ -33,11 +33,11 @@ public:
   typedef std::map< Object::UniformEnum, std::string > UniformMap;
 
   typedef enum Uniforms {
-    Begin,
-    IsTextured = Begin,
+    BEGIN,
+    IsTextured = BEGIN,
     ObjectCTM,
     MorphPercentage,
-    End
+    END
   } Uniform;
 
   Object( const std::string &name, GLuint gShader );
@@ -51,7 +51,7 @@ public:
 
   /* OpenGL Methods */
   virtual void Link( UniformEnum which, const std::string &name );
-  virtual void Send( UniformEnum which );
+  virtual void send( UniformEnum which );
   virtual GLuint Shader( void );
   virtual void Shader( GLuint newShader );
 

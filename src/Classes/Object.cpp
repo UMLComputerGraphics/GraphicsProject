@@ -26,8 +26,8 @@ Object::Object( const std::string &name, GLuint gShader )
 
   // Create room for our GLUniform handles
   if (DEBUG)
-    fprintf( stderr, "\nCreating %d handles for uniforms\n", Object::End );
-  handles.resize( Object::End );
+    fprintf( stderr, "\nCreating %d handles for uniforms\n", Object::END );
+  handles.resize( Object::END );
 
   // Associate this Object with the Shader.
   Shader( gShader );
@@ -378,7 +378,7 @@ void Object::Texture( const char** filename ) {
 }
 
 
-void Object::Send( Object::UniformEnum which ) {
+void Object::send( Object::UniformEnum which ) {
   switch (which) {
     
   case Object::IsTextured:
@@ -423,15 +423,15 @@ void Object::Draw( void ) {
     // Set the Active Camera's shader to the Object's Shader.
     activeCamera->Shader( Shader() );
 
-    // Send the Camera's info to the new shader.
-    activeCamera->View();
+    // send the Camera's info to the new shader.
+    activeCamera->view();
   }  
 
-  Send( Object::IsTextured ) ;
-  Send( Object::ObjectCTM  ) ;
-  Send( Object::MorphPercentage );
+  send( Object::IsTextured ) ;
+  send( Object::ObjectCTM  ) ;
+  send( Object::MorphPercentage );
 
-  //  this->getMorphPercentage() == -1.0 ? ; : Send( Object::MorphPercentage );
+  //  this->getMorphPercentage() == -1.0 ? ; : send( Object::MorphPercentage );
 
   /* Are we using a draw order? */
   if (indices.size() > 1)
@@ -475,7 +475,7 @@ void Object::Propagate( void ) {
   //Update my Object's CTM...
   this->trans.CalcCTM();
 
-  //Send my OTM as the PTM to all of my children.
+  //send my OTM as the PTM to all of my children.
   for ( it = _list.begin(); it != _list.end(); ++it ) {
     (*it)->trans.PTM( this->trans.OTM() );
     //Tell that child to update his CTM and propegate.

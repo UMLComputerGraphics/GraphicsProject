@@ -72,27 +72,27 @@ Camera *Cameras::Active( void ) {
 
 Camera *Cameras::Prev( void ) {
   Scene::Prev();
-  Active()->Send( Camera::CTM );
+  Active()->send( Camera::CTM );
   return Active();
 }
 
 Camera *Cameras::Next( void ) {
   Scene::Next();
-  Active()->Send( Camera::CTM );
+  Active()->send( Camera::CTM );
   return Active();
 }
 
 void Cameras::IdleMotion( void ) {
   std::list<Object*>::iterator it;
   for (it = _list.begin(); it != _list.end(); ++it) {
-    Obj2Cam(it)->Idle();
+    Obj2Cam(it)->idle();
   }
 }
 
 void Cameras::View(void (*draw_func)(void)) {
   std::list< Object* >::iterator it;
   for (it = _list.begin(); it != _list.end(); ++it) {
-    Obj2Cam(it)->View();
+    Obj2Cam(it)->view();
     (*draw_func)();
   }
 }

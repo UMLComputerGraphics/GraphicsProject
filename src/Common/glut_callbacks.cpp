@@ -26,22 +26,22 @@ void keylift( unsigned char key, int x, int y ) {
 
   switch( key ) {
   case 'w':
-    cam.Stop( Camera::Forward );
+    cam.stop( Camera::DIR_FORWARD );
     break;
   case 's':
-    cam.Stop( Camera::Backward );
+    cam.stop( Camera::DIR_BACKWARD );
     break;
   case 'a':
-    cam.Stop( Camera::Left );
+    cam.stop( Camera::DIR_LEFT );
     break;
   case 'd':
-    cam.Stop( Camera::Right );
+    cam.stop( Camera::DIR_RIGHT );
     break;
   case 'q':
-    cam.Stop( Camera::Up );
+    cam.stop( Camera::DIR_UP );
     break;
   case 'e':
-    cam.Stop( Camera::Down );
+    cam.stop( Camera::DIR_DOWN );
     break;
   }
 }
@@ -52,8 +52,8 @@ void keylift( unsigned char key, int x, int y ) {
    It handles keyboard input.
 
    @param key The key pressed by the user.
-   @param x The X coordinate of the mouse when the key was pressed.
-   @param y The Y coordinate of the mouse when the key was pressed.
+   @param x The x coordinate of the mouse when the key was pressed.
+   @param y The y coordinate of the mouse when the key was pressed.
    
    @return void.
 **/
@@ -108,26 +108,26 @@ void keyboard( unsigned char key, int x, int y ) {
     camList->PopCamera();
     break;
   case ';':
-    fprintf( stderr, "Camera Position: (%f,%f,%f)\n", cam.X(), cam.Y(), cam.Z() );
+    fprintf( stderr, "Camera Position: (%f,%f,%f)\n", cam.x(), cam.y(), cam.z() );
     break;
     
   case 'w':
-    cam.Move( Camera::Forward );
+    cam.move( Camera::DIR_FORWARD );
     break;
   case 's':
-    cam.Move( Camera::Backward );
+    cam.move( Camera::DIR_BACKWARD );
     break;
   case 'a':
-    cam.Move( Camera::Left );
+    cam.move( Camera::DIR_LEFT );
     break;
   case 'd':
-    cam.Move( Camera::Right );
+    cam.move( Camera::DIR_RIGHT );
     break;
   case 'q':
-    cam.Move( Camera::Up );
+    cam.move( Camera::DIR_UP );
     break;
   case 'e':
-    cam.Move( Camera::Down );
+    cam.move( Camera::DIR_DOWN );
     break;
     
     //Perspectives
@@ -146,8 +146,8 @@ void keyboard( unsigned char key, int x, int y ) {
    It is responsible for catching when special keys are pressed.
 
    @param key The key pressed.
-   @param x The X coordinate of the mouse when the key was pressed.
-   @param y The Y coordinate of the mouse when the key was pressed.
+   @param x The x coordinate of the mouse when the key was pressed.
+   @param y The y coordinate of the mouse when the key was pressed.
 
    @return void.
 **/
@@ -201,8 +201,8 @@ void mouse( int button, int state, int x, int y ) {
 
   if ( state == GLUT_DOWN ) {
     switch( button ) {
-    case 3: camList->Active()->dFOV( 1 ); break;
-    case 4: camList->Active()->dFOV( -1 ); break;
+    case 3: camList->Active()->adjustFieldOfView( 1 ); break;
+    case 4: camList->Active()->adjustFieldOfView( -1 ); break;
     }
   }
 
@@ -262,7 +262,7 @@ void resizeEvent( int width, int height ) {
   // Update the size, which propagates changes to cameras and viewports.
   scr->Size( width, height );
 
-  // Move the pointer so that there isn't a big jump next time we move it.
+  // move the pointer so that there isn't a big jump next time we move it.
   glutWarpPointer( scr->MidpointX(), scr->MidpointY() );
 
 }
