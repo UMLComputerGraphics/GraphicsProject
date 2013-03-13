@@ -28,8 +28,8 @@
 void init() {
 
   GLuint shader[3];
-  Cameras *camList = Engine::Instance()->Cams();
-  Scene *rootScene = Engine::Instance()->RootScene();
+  Cameras *camList = Engine::instance()->cams();
+  Scene *rootScene = Engine::instance()->rootScene();
 
   shader[0] = Angel::InitShader( "shaders/vred.glsl", "shaders/fragment.glsl" );
   shader[1] = Angel::InitShader( "shaders/vblu.glsl", "shaders/fragment.glsl" );
@@ -72,15 +72,15 @@ void init() {
 }
 
 void cleanup( void ) {
-  Engine::Instance()->RootScene()->DestroyObject();
+  Engine::instance()->rootScene()->DestroyObject();
 }
 
 //--------------------------------------------------------------------
 
 // Implementation of drawing the display with regards to a single viewport.
 void draw( void ) {
-  static Scene *theScene = Engine::Instance()->RootScene();
-  static Cameras *camList = Engine::Instance()->Cams();
+  static Scene *theScene = Engine::instance()->rootScene();
+  static Cameras *camList = Engine::instance()->cams();
 
 
   theScene->Draw();
@@ -89,7 +89,7 @@ void draw( void ) {
 
 // Display/Render the entire screen.
 void display( void ) {
-  static Cameras *camList = Engine::Instance()->Cams();
+  static Cameras *camList = Engine::instance()->cams();
 
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
@@ -101,7 +101,7 @@ void display( void ) {
 
 void idle( void ) {
 
-  static Cameras *camList = Engine::Instance()->Cams();
+  static Cameras *camList = Engine::instance()->cams();
 
   // Compute the time since last idle().
   Tick.Tock();

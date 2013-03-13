@@ -71,7 +71,7 @@ void randomize_terrain() {
   
   srand(time(NULL));
 
-  Object *Terrain = (*Engine::Instance()->RootScene())["terrain"];
+  Object *Terrain = (*Engine::instance()->rootScene())["terrain"];
   double magnitude = landGen( Terrain, terrain_size, H );
   Terrain->Buffer();
   GLint handle = glGetUniformLocation( Terrain->Shader(), "terrainMag" );
@@ -89,13 +89,13 @@ void randomize_terrain() {
 **/
 void init() {
 
-  Scene *theScene = Engine::Instance()->RootScene();
-  Screen *myScreen = Engine::Instance()->MainScreen();
+  Scene *theScene = Engine::instance()->rootScene();
+  Screen *myScreen = Engine::instance()->mainScreen();
 
   // Load the shaders.
   GLuint gShader = Angel::InitShader( "shaders/vterrain.glsl", "shaders/fterrain.glsl" );
   // Initialize engine setting: Enable "fixed yaw"... disable free-Y rotation.
-  Engine::Instance()->Opt( "fixed_yaw", true );
+  Engine::instance()->opt( "fixed_yaw", true );
 
   // Give the Shader handle to the Scene Graph and the Camera List.
   theScene->Shader( gShader );
@@ -229,7 +229,7 @@ void init() {
 **/
 void cleanup( void ) {
 
-  Engine::Instance()->RootScene()->DestroyObject();
+  Engine::instance()->rootScene()->DestroyObject();
 
 }
 
@@ -241,9 +241,9 @@ void cleanup( void ) {
 void displayViewport( void ) {  
 
   // Draw free-floating objects
-  Engine::Instance()->RootScene()->Draw();
+  Engine::instance()->rootScene()->Draw();
   // Draw camera-attached objects
-  Engine::Instance()->Cams()->Draw();
+  Engine::instance()->cams()->Draw();
 
 }
 
@@ -257,7 +257,7 @@ void display( void ) {
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
   // Tell camList to draw using our displayViewport rendering function.
-  Engine::Instance()->Cams()->view( displayViewport );
+  Engine::instance()->cams()->view( displayViewport );
 
   // Utilize multi-buffering.
   glutSwapBuffers();
@@ -358,7 +358,7 @@ void wiilook( Camera &WiiCamera, const Angel::vec3 &NewTheta,
 
   if (abs(yaw) >= 0.1)
     WiiCamera.yaw( -MovementRates.y / 20, 
-		   Engine::Instance()->Opt( "fixed_yaw" ) );
+		   Engine::instance()->opt( "fixed_yaw" ) );
   if (abs(pitch) >= 0.1)
     WiiCamera.pitch( -MovementRates.x / 20 );
   if (abs(roll) >= 0.1)
@@ -415,7 +415,7 @@ float ticker = 0.0;
 
 void idle( void ) {
 
-  Scene &theScene = (*Engine::Instance()->RootScene());
+  Scene &theScene = (*Engine::instance()->rootScene());
 
   Tick.Tock();
 
@@ -463,7 +463,7 @@ void idle( void ) {
 #endif
   
   // Move all camera(s).
-  Engine::Instance()->Cams()->idleMotion();
+  Engine::instance()->cams()->idleMotion();
   glutPostRedisplay();
 
 }
@@ -473,8 +473,8 @@ void idle( void ) {
 
 void menufunc( int value ) {
 
-  Engine *EN = Engine::Instance();
-  Scene *theScene = EN->RootScene();
+  Engine *EN = Engine::instance();
+  Scene *theScene = EN->rootScene();
 
   switch (value) {
   case 0:
@@ -482,7 +482,7 @@ void menufunc( int value ) {
     (*theScene)["terrain"]->Buffer();
     break;
   case 1:
-    EN->Flip( "fixed_yaw" );
+    EN->flip( "fixed_yaw" );
     break;
   }
 

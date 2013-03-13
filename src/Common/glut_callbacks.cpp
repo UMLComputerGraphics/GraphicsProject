@@ -19,7 +19,7 @@
 **/
 void keylift( unsigned char key, int x, int y ) {
 
-  Cameras *camList = Engine::Instance()->Cams();
+  Cameras *camList = Engine::instance()->cams();
 
   if (camList->numCameras() < 1) return;
   Camera &cam = *(camList->active());
@@ -59,8 +59,8 @@ void keylift( unsigned char key, int x, int y ) {
 **/
 void keyboard( unsigned char key, int x, int y ) {
 
-  Scene *theScene = Engine::Instance()->RootScene();
-  Cameras *camList = Engine::Instance()->Cams();
+  Scene *theScene = Engine::instance()->rootScene();
+  Cameras *camList = Engine::instance()->cams();
 
 #ifdef WII
   // Hacky, for the wii reset, below.
@@ -153,8 +153,8 @@ void keyboard( unsigned char key, int x, int y ) {
 **/
 void keyboard_ctrl( int key, int x, int y ) {
 
-  Scene *theScene = Engine::Instance()->RootScene();
-  Cameras *camList = Engine::Instance()->Cams();
+  Scene *theScene = Engine::instance()->rootScene();
+  Cameras *camList = Engine::instance()->cams();
   
   switch (key) {
     //Cycle between active Objects ...
@@ -196,7 +196,7 @@ void keyboard_ctrl( int key, int x, int y ) {
 
 void mouse( int button, int state, int x, int y ) {
 
-  static Cameras *camList = Engine::Instance()->Cams();
+  static Cameras *camList = Engine::instance()->cams();
   if (camList->numCameras() < 1) return;
 
   if ( state == GLUT_DOWN ) {
@@ -211,7 +211,7 @@ void mouse( int button, int state, int x, int y ) {
 
 void mouseroll( int x, int y ) {
 
-  static Screen *myScreen = Engine::Instance()->MainScreen();
+  static Screen *myScreen = Engine::instance()->mainScreen();
 
   if ((x != myScreen->MidpointX()) || (y != myScreen->MidpointY())) {
     if (myScreen->_camList.numCameras() > 0)
@@ -223,7 +223,7 @@ void mouseroll( int x, int y ) {
 
 void mouselook( int x, int y ) {
 
-  static Screen *myScreen = Engine::Instance()->MainScreen();
+  static Screen *myScreen = Engine::instance()->mainScreen();
   if ((x != myScreen->MidpointX()) || (y != myScreen->MidpointY())) {
     const double dx = ((double)x - myScreen->MidpointX());
     const double dy = ((double)y - myScreen->MidpointY());
@@ -232,7 +232,7 @@ void mouselook( int x, int y ) {
 
     if (myScreen->_camList.numCameras() > 0) {
       myScreen->_camList.active()->pitch( dy );
-      myScreen->_camList.active()->yaw( dx, Engine::Instance()->Opt("fixed_yaw") );
+      myScreen->_camList.active()->yaw( dx, Engine::instance()->opt("fixed_yaw") );
     }
 
     glutWarpPointer( myScreen->MidpointX(), myScreen->MidpointY() );
@@ -257,7 +257,7 @@ void mouselook( int x, int y ) {
 void resizeEvent( int width, int height ) {
 
   // Get a handle to the screen object
-  Screen *scr = Engine::Instance()->MainScreen();
+  Screen *scr = Engine::instance()->mainScreen();
 
   // Update the size, which propagates changes to cameras and viewports.
   scr->Size( width, height );

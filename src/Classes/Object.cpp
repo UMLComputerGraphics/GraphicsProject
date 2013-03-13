@@ -413,7 +413,7 @@ void Object::Draw( void ) {
   glGetIntegerv(GL_CURRENT_PROGRAM, &currShader);
   if ((GLuint)currShader != Shader()) {
 
-    Camera *activeCamera = Engine::Instance()->Cams()->active();
+    Camera *activeCamera = Engine::instance()->cams()->active();
     
     //if (DEBUG) std::cerr << "Switching shading context.\n";
 

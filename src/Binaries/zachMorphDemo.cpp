@@ -33,8 +33,8 @@
 void init() {
   
   // Get handles to the Scene and the Screen.
-  Scene *rootScene = Engine::Instance()->RootScene();
-  Screen *primScreen = Engine::Instance()->MainScreen();
+  Scene *rootScene = Engine::instance()->rootScene();
+  Screen *primScreen = Engine::instance()->mainScreen();
 
   // Load shaders and use the resulting shader program. 
   GLuint gShader = Angel::InitShader( "shaders/vmorph.glsl", "shaders/fmorph.glsl" );
@@ -84,15 +84,15 @@ void init() {
 }
 
 void cleanup( void ) {
-  Engine::Instance()->RootScene()->DestroyObject();
+  Engine::instance()->rootScene()->DestroyObject();
 }
 
 //--------------------------------------------------------------------
 
 // Implementation of drawing the display with regards to a single viewport.
 void draw( void ) {
-  static Scene *theScene = Engine::Instance()->RootScene();
-  static Cameras *camList = Engine::Instance()->Cams();
+  static Scene *theScene = Engine::instance()->rootScene();
+  static Cameras *camList = Engine::instance()->cams();
 
   theScene->Draw();
   camList->Draw();
@@ -100,7 +100,7 @@ void draw( void ) {
 
 // GLUT display callback. Effectively calls displayViewport per-each Camera.
 void display( void ) {
-  static Cameras *camList = Engine::Instance()->Cams();
+  static Cameras *camList = Engine::instance()->cams();
 
   // Clear the buffer.
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
@@ -126,8 +126,8 @@ void simpleRotateAnim( TransCache &obj ) {
 
 void idle( void ) {
 
-  static Cameras *camList = Engine::Instance()->Cams();
-  static Scene *rootScene = Engine::Instance()->RootScene();
+  static Cameras *camList = Engine::instance()->cams();
+  static Scene *rootScene = Engine::instance()->rootScene();
   Tick.Tock();
 
   //zach m  - in order to eventually allow for user specified equations,
