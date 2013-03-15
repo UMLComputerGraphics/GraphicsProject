@@ -20,7 +20,7 @@ namespace Angel {
    * @return A handle to the compiled glsl program.
    */
   GLuint InitShader( const char* vShaderFile, const char* fShaderFile );
-
+  
   /**
    * InitShader takes three shader sourcefiles and compiles them into a
    * shader program.

@@ -27,12 +27,12 @@
  * @param y The y coordinate of the mouse at the time the key was released.
  */
 void keylift( unsigned char key, int x, int y ) {
-
+  
   Cameras *camList = Engine::instance()->cams();
-
+  
   if ( camList->numCameras() < 1 ) return;
   Camera &cam = *(camList->active());
-
+  
   switch ( key ) {
   case 'w':
     cam.stop( Camera::DIR_FORWARD );
@@ -64,17 +64,17 @@ void keylift( unsigned char key, int x, int y ) {
  * @param y The y coordinate of the mouse when the key was pressed.
  */
 void keyboard( unsigned char key, int x, int y ) {
-
+  
   Scene *theScene = Engine::instance()->rootScene();
   Cameras *camList = Engine::instance()->cams();
-
+  
 #ifdef WII
   // Hacky, for the wii reset, below.
   Camera *camptr = dynamic_cast< Camera* >( (*_camList)["AutoCamera2"] );
 #endif
-
+  
   switch ( key ) {
-
+  
   case 033: // Escape Key	  
     /*
      cleanup();
@@ -83,12 +83,12 @@ void keyboard( unsigned char key, int x, int y ) {
      */
     glutLeaveMainLoop();
     break;
-
+    
   case ';': // Print Info
     fprintf( stderr, "Active Object: %s\n",
-             theScene->active()->Name().c_str() );
+             theScene->active()->name().c_str() );
     break;
-
+    
   case '~':
 #ifdef WII
     CalibrateGyro( Wii );
@@ -102,9 +102,9 @@ void keyboard( unsigned char key, int x, int y ) {
     camList->addCamera( camName.str() );
     break;
   }
-
+  
   if ( camList->numCameras() < 1 ) return;
-
+  
   /* A shorthand variable with local scope that refers to "The active Camera." */
   Camera &cam = *(camList->active());
   
@@ -152,7 +152,7 @@ void keyboard( unsigned char key, int x, int y ) {
   case 'b':
     cam.changePerspective( Camera::IDENTITY );
     break;
-
+    
   }
 }
 
@@ -165,7 +165,7 @@ void keyboard( unsigned char key, int x, int y ) {
  * @param y The y coordinate of the mouse when the key was pressed.
  */
 void keyboard_ctrl( int key, int x, int y ) {
-
+  
   Scene *theScene = Engine::instance()->rootScene();
   Cameras *camList = Engine::instance()->cams();
   
@@ -177,30 +177,30 @@ void keyboard_ctrl( int key, int x, int y ) {
   case GLUT_KEY_RIGHT:
     theScene->next();
     break;
-
-    //Change the Draw Mode ...
+    
+    //Change the Draw drawMode ...
   case GLUT_KEY_F1:
-    theScene->active()->Mode( GL_POINTS );
+    theScene->active()->drawMode( GL_POINTS );
     break;
   case GLUT_KEY_F2:
-    theScene->active()->Mode( GL_LINE_STRIP );
+    theScene->active()->drawMode( GL_LINE_STRIP );
     break;
   case GLUT_KEY_F3:
-    theScene->active()->Mode( GL_TRIANGLE_STRIP );
+    theScene->active()->drawMode( GL_TRIANGLE_STRIP );
     break;
   case GLUT_KEY_F4:
-    theScene->active()->Mode( GL_TRIANGLES );
+    theScene->active()->drawMode( GL_TRIANGLES );
     break;
   }
-
+  
   // If there are no Cameras, don't muck around with this section.
   if ( camList->numCameras() < 1 ) return;
-
+  
   switch ( key ) {
   case GLUT_KEY_PAGE_UP:
     camList->prev();
     break;
-
+    
   case GLUT_KEY_PAGE_DOWN:
     camList->next();
     break;
@@ -217,10 +217,10 @@ void keyboard_ctrl( int key, int x, int y ) {
  * @param y the y coordinate of the mouse.
  */
 void mouse( int button, int state, int x, int y ) {
-
+  
   static Cameras *camList = Engine::instance()->cams();
   if ( camList->numCameras() < 1 ) return;
-
+  
   if ( state == GLUT_DOWN ) {
     switch ( button ) {
     case 3:
@@ -231,7 +231,7 @@ void mouse( int button, int state, int x, int y ) {
       break;
     }
   }
-
+  
 }
 
 /**
@@ -243,15 +243,15 @@ void mouse( int button, int state, int x, int y ) {
  * @param y the y coordinate of the mouse pointer.
  */
 void mouseroll( int x, int y ) {
-
+  
   static Screen *myScreen = Engine::instance()->mainScreen();
-
+  
   if ( (x != myScreen->MidpointX()) || (y != myScreen->MidpointY()) ) {
     if ( myScreen->_camList.numCameras() > 0 )
       myScreen->_camList.active()->roll( x - myScreen->MidpointX() );
     glutWarpPointer( myScreen->MidpointX(), myScreen->MidpointY() );
   }
-
+  
 }
 
 /**
@@ -263,20 +263,20 @@ void mouseroll( int x, int y ) {
  * @param y the y coordinate of the mouse pointer.
  */
 void mouselook( int x, int y ) {
-
+  
   static Screen *myScreen = Engine::instance()->mainScreen();
   if ( (x != myScreen->MidpointX()) || (y != myScreen->MidpointY()) ) {
     const double dx = ((double) x - myScreen->MidpointX());
     const double dy = ((double) y - myScreen->MidpointY());
-
+    
     if ( (abs( dx ) > 100) || (abs( dy ) > 100) ) return;
-
+    
     if ( myScreen->_camList.numCameras() > 0 ) {
       myScreen->_camList.active()->pitch( dy );
       myScreen->_camList.active()->yaw(
           dx, Engine::instance()->opt( "fixed_yaw" ) );
     }
-
+    
     glutWarpPointer( myScreen->MidpointX(), myScreen->MidpointY() );
   }
   
@@ -297,14 +297,14 @@ void mouselook( int x, int y ) {
  * @return void.
  */
 void resizeEvent( int width, int height ) {
-
+  
   // Get a handle to the screen object
   Screen *scr = Engine::instance()->mainScreen();
-
+  
   // Update the size, which propagates changes to cameras and viewports.
   scr->Size( width, height );
-
+  
   // move the pointer so that there isn't a big jump next time we move it.
   glutWarpPointer( scr->MidpointX(), scr->MidpointY() );
-
+  
 }

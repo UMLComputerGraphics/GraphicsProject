@@ -29,9 +29,9 @@ Engine *Engine::_engineSingleton = NULL;
 Engine *Engine::instance( void ) {
   
   if ( _engineSingleton == NULL ) _engineSingleton = new Engine();
-
+  
   return _engineSingleton;
-
+  
 }
 
 /**
@@ -74,9 +74,9 @@ Engine &Engine::operator=( Engine &assign ) {
  * @return A pointer to the Camera List.
  */
 Cameras *Engine::cams( void ) {
-
+  
   return &(_screen._camList);
-
+  
 }
 
 /**
@@ -84,9 +84,9 @@ Cameras *Engine::cams( void ) {
  * @return A pointer to the Root-level Scene graph.
  */
 Scene *Engine::rootScene( void ) {
-
+  
   return &_scene;
-
+  
 }
 
 /**
@@ -94,9 +94,9 @@ Scene *Engine::rootScene( void ) {
  * @return A pointer to the core 'Screen' object.
  */
 Screen *Engine::mainScreen( void ) {
-
+  
   return &_screen;
-
+  
 }
 
 /**

@@ -9,9 +9,6 @@
 
 GLuint program;
 
-typedef Angel::vec4 color4;
-typedef Angel::vec4 point4;
-
 GLuint modelView = -1;  // model-view matrix uniform shader variable location
 
 GLint vRayPosition = -1;

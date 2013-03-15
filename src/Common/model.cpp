@@ -12,11 +12,6 @@
 #include <cmath>
 using namespace Angel;
 
-/** Simple alias of Angel::vec4 to emphasize semantic meaning. */
-typedef Angel::vec4 color4;
-/** Simple alias of Angel::vec4 to emphasize semantic meaning. */
-typedef Angel::vec4 point4;
-
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -41,11 +36,11 @@ using std::endl;
  */
 void createPoint( Object *obj, point4 const &the_point, color4 const &the_color,
                   vec3 const &the_normal ) {
-
-  obj->points.push_back( the_point );
-  obj->colors.push_back( the_color );
-  obj->normals.push_back( the_normal );
-
+  
+  obj->_vertices.push_back( the_point );
+  obj->_colors.push_back( the_color );
+  obj->_normals.push_back( the_normal );
+  
 }
 
 /**
@@ -60,7 +55,7 @@ void createPoint( Object *obj, point4 const &the_point, color4 const &the_color,
  */
 void triangle( Object *obj, const point4& a, const point4& b, const point4& c,
                const int color ) {
-
+  
   static vec4 base_colors[] = { vec4( 1.0, 0.0, 0.0, 1.0 ), /* R */
                                 vec4( 0.0, 1.0, 0.0, 1.0 ), /* G */
                                 vec4( 0.0, 0.0, 1.0, 1.0 ), /* B */
@@ -68,19 +63,19 @@ void triangle( Object *obj, const point4& a, const point4& b, const point4& c,
                                 vec4( 0.4, 0.1, 0.8, 1.0 ), /* P */
                                 vec4( 1.0, 1.0, 1.0, 1.0 ) /* W */
   };
-
+  
   // Initialize temporary vectors along the quad's edge to
   //   compute its face normal
-
+  
   vec3 u = normalize( vec3( b.x - a.x, b.y - a.y, b.z - a.z ) );
   vec3 v = normalize( vec3( c.x - b.x, c.y - b.y, c.z - b.z ) );
-
+  
   vec3 normal = normalize( cross( u, v ) );
-
+  
   createPoint( obj, a, base_colors[color], normal );
   createPoint( obj, b, base_colors[color], normal );
   createPoint( obj, c, base_colors[color], normal );
-
+  
 }
 
 /**
@@ -93,19 +88,19 @@ void triangle( Object *obj, const point4& a, const point4& b, const point4& c,
 point4 unit( const point4 &p ) {
   point4 c;
   double d = 0.0;
-
+  
   for ( int i = 0; i < 3; i++ )
     d += p[i] * p[i];
-
+  
   d = sqrt( d );
-
+  
   if ( d > 0.0 ) for ( int i = 0; i < 3; i++ )
     c[i] = p[i] / d;
-
+  
   c[3] = 1.0;
-
+  
   return c;
-
+  
 }
 
 /**
@@ -121,15 +116,15 @@ point4 unit( const point4 &p ) {
  * { Red, Green, Blue, Yellow, Pink, White }
  */
 void divideTriangle( Object *obj, const point4& a, const point4& b,
-                      const point4& c, int timesToRecurse, int color ) {
-
+                     const point4& c, int timesToRecurse, int color ) {
+  
   point4 v1, v2, v3;
-
+  
   if ( timesToRecurse > 0 ) {
     v1 = unit( a + b );
     v2 = unit( a + c );
     v3 = unit( b + c );
-
+    
     divideTriangle( obj, a, v2, v1, timesToRecurse - 1, color );
     divideTriangle( obj, c, v3, v2, timesToRecurse - 1, color );
     divideTriangle( obj, b, v1, v3, timesToRecurse - 1, color );
@@ -148,16 +143,16 @@ void divideTriangle( Object *obj, const point4& a, const point4& b,
  */
 void tetra( Object *obj, const point4& a, const point4& b, const point4& c,
             const point4& d ) {
-
+  
   triangle( obj, a, b, c, 0 );
   triangle( obj, a, c, d, 1 );
   triangle( obj, a, d, b, 2 );  // old   triangle( a, d, b, 2 );
   triangle( obj, d, c, b, 3 );
-
+  
 }
 
 /**
- * Forms a Sierpinski Pyramid object given four 4D points in space.
+ * Forms a Sierpinski Pyramid object given four 4D _vertices in space.
  * @param obj The object to add the geometry to.
  * @param a The first coordinate.
  * @param b The second coordinate.
@@ -200,7 +195,7 @@ void sierpinskiPyramid( Object *obj, const point4& a, const point4& b,
 void recursiveModelGen( Object *obj, const point4& a, const point4& b,
                         const point4& c, const point4& d, int timesToRecurse,
                         int color ) {
-
+  
   divideTriangle( obj, a, b, c, timesToRecurse, color );
   divideTriangle( obj, d, c, b, timesToRecurse, color );
   divideTriangle( obj, a, d, b, timesToRecurse, color );
@@ -213,7 +208,7 @@ void recursiveModelGen( Object *obj, const point4& a, const point4& b,
  * @param obj The object to add the geometry to.
  */
 void sphere( Object *obj ) {
-
+  
   static const point4 initialSpherePoints[4] = { point4( 0.0, 0.0, 1.0, 1.0 ),
                                                  point4( 0.0, 0.942809,
                                                          -0.333333, 1.0 ),
@@ -221,14 +216,14 @@ void sphere( Object *obj ) {
                                                          -0.333333, 1.0 ),
                                                  point4( 0.816497, -0.471405,
                                                          -0.333333, 1.0 ) };
-
+  
   recursiveModelGen( obj, initialSpherePoints[0], initialSpherePoints[1],
                      initialSpherePoints[2], initialSpherePoints[3], 4, 5 );
-
+  
 }
 
 /**
- * Create a quadrilateral from four points and four colors.
+ * Create a quadrilateral from four _vertices and four _colors.
  * @param obj The object to add the geometry to.
  * @param a The first spatial point.
  * @param b The second spatial point.
@@ -242,22 +237,22 @@ void sphere( Object *obj ) {
 void quad( Object *obj, const point4 &a, const point4 &b, const point4 &c,
            const point4 &d, const color4 &A, const color4 &B, const color4 &C,
            const color4 &D ) {
-
+  
   // Initialize temporary vectors along the quad's edge to                                                                                 
   //   compute its face normal                                                                                                             
   vec4 u = b - a;
   vec4 v = c - b;
-
+  
   vec3 normal = normalize( cross( u, v ) );
-
+  
   createPoint( obj, a, A, normal );
   createPoint( obj, b, B, normal );
   createPoint( obj, c, C, normal );
-
+  
   createPoint( obj, a, A, normal );
   createPoint( obj, c, C, normal );
   createPoint( obj, d, D, normal );
-
+  
 }
 
 /**
@@ -271,17 +266,17 @@ void quad( Object *obj, const point4 &a, const point4 &b, const point4 &c,
 
 /**
  * Create a cube of a given size fixed at the origin, using the
- * eight colors specified.
+ * eight _colors specified.
  *
  * @param obj The object to add the geometry to.
  * @param size The size of the cube to create.
- * @param colors An array of eight colors for the vertices.
+ * @param colors An array of eight _colors for the vertices.
  */
 void cube( Object *obj, const GLfloat &size, const color4 colors[8] ) {
   
   const GLfloat lower = -(size / 2);
   const GLfloat upper = (size / 2);
-
+  
   const point4 vertices[8] = { point4( lower, lower, upper, 1.0 ), point4(
       lower, upper, upper, 1.0 ),
                                point4( upper, upper, upper, 1.0 ), point4(
@@ -290,7 +285,7 @@ void cube( Object *obj, const GLfloat &size, const color4 colors[8] ) {
                                    lower, upper, lower, 1.0 ),
                                point4( upper, upper, lower, 1.0 ), point4(
                                    upper, lower, lower, 1.0 ) };
-
+  
   QUAD( 1, 0, 3, 2 );
   QUAD( 2, 3, 7, 6 );
   QUAD( 3, 0, 4, 7 );
@@ -302,13 +297,13 @@ void cube( Object *obj, const GLfloat &size, const color4 colors[8] ) {
 
 /**
  * Creates a cube of a given size fixed at the origin,
- * using all eight primary colors.
+ * using all eight primary _colors.
  *
  * @param obj The object to add the geometry to.
  * @param size The size of the cube to create.
  */
 void colorCube( Object *obj, GLfloat size ) {
-
+  
   static const color4 vertex_colors[8] = { color4( 0.0, 0.0, 0.0, 1.0 ),// black
                                            color4( 1.0, 0.0, 0.0, 1.0 ),  // red
                                            color4( 1.0, 1.0, 0.0, 1.0 ),// yellow
@@ -318,9 +313,9 @@ void colorCube( Object *obj, GLfloat size ) {
                                            color4( 1.0, 1.0, 1.0, 1.0 ),// white
                                            color4( 0.0, 1.0, 1.0, 1.0 ) // cyan
       };
-
+  
   cube( obj, size, vertex_colors );
-
+  
 }
 
 /**
@@ -342,7 +337,7 @@ double jitter( double H ) {
 }
 
 /**
- * Calculate the vector normal to the triangle formed by three points.
+ * Calculate the vector normal to the triangle formed by three _vertices.
  * @param a First vertex.
  * @param b Second vertex.
  * @param c Third vertex.
@@ -400,15 +395,15 @@ vec3 calcNormal( point4 &a, point4 &b, point4 &c ) {
  * @return The maximum height actually achieved in this terrain generation.
  */
 double landGen( Object *obj, int N, float H ) {
-
+  
   Timer Tick;
   const int S = pow( 2, N ) + 1;
-  std::vector< point4 > &vec = obj->points;
-  std::vector< point4 > &col = obj->colors;
-  //std::vector< vec3 > &nor = obj->normals;
-  std::vector< unsigned int > &drawIndex = obj->indices;
-  std::vector< Angel::vec2 > &txy = obj->texcoords;
-
+  std::vector< point4 > &vec = obj->_vertices;
+  std::vector< point4 > &col = obj->_colors;
+  //std::vector< vec3 > &nor = obj->_normals;
+  std::vector< unsigned int > &drawIndex = obj->_indices;
+  std::vector< Angel::vec2 > &txy = obj->_texUVs;
+  
   if ( DEBUG ) printf( "\nEntering landGen()...\n" );
   // the range (-h -> h) for the average offset
   // This determines the jaggedness of the peaks and valleys.
@@ -418,21 +413,21 @@ double landGen( Object *obj, int N, float H ) {
   double magnitude = (H * (2 - pow( 2, -(N) )));
   if ( DEBUG )
     fprintf( stderr, "landGen theoretical magnitude: %f\n", magnitude );
-
-  /* Initialize all points in the vector to have their X,Z (and w) coordinates. */
+  
+  /* Initialize all _vertices in the vector to have their X,Z (and w) coordinates. */
   if ( vec.size() ) vec.clear();
   vec.reserve( S * S );
   for ( int i = 0; i < S; ++i )
     for ( int j = 0; j < S; ++j )
       vec.push_back( vec4( j - (S / 2), 0, i - (S / 2), 1 ) );
-
+  
   /* Initialize our color vectors. */
   if ( col.size() ) col.clear();
   col.reserve( S * S );
   for ( int i = 0; i < S; ++i )
     for ( int j = 0; j < S; ++j )
       col.push_back( vec4( 0.5, 0.5, 0.5, 1.0 ) );
-
+  
   if ( txy.size() ) txy.clear();
   txy.reserve( S * S );
   for ( int z = 0; z < S; ++z )
@@ -449,7 +444,7 @@ double landGen( Object *obj, int N, float H ) {
   HEIGHT_AT( S-1, 0 ) = 0;
   HEIGHT_AT( 0, S-1 ) = 0;
   HEIGHT_AT( S-1, S-1 ) = 0;
-
+  
   // Populate the (x, y, z) values of vec4 according to the
   // Diamond-Square algorithm
   // sideLength is the distance of a single square side or
@@ -465,42 +460,43 @@ double landGen( Object *obj, int N, float H ) {
                       + HEIGHT_AT( x, z + sideLength )
                       + HEIGHT_AT( x + sideLength, z + sideLength ))
                      / 4.0;
-
+        
         vec4 color_avg = (COLOR_AT(x,z) + COLOR_AT(x+sideLength,z)
                           + COLOR_AT(x,z+sideLength)
                           + COLOR_AT(x+sideLength,z+sideLength))
                          / 4.0;
         vec4 color_jitter = vec4( jitter( CH ), jitter( CH ), jitter( CH ), 0 );
-
+        
         HEIGHT_AT( x + halfSide, z + halfSide ) = avg + jitter( H );
         COLOR_AT( x + halfSide, z + halfSide ) = color_avg + color_jitter;
       } // for z
     } // for x
-
+    
     // Generate the diamond values
     // Since diamonds are staggered, we only move x by half side
     // NOTE: If the data shouldn't wrap the x < SIZE and y < SIZE
     for ( int x = 0; x < S - 1; x += halfSide ) {
       for ( int z = (x + halfSide) % sideLength; z < S - 1; z += sideLength ) {
-
+        
         // x,z is center of diamond
         // We must use mod and add SIZE for subtraction
         // so that we can wrap around the array to find the corners
-
+        
         double avg = (HEIGHT_AT( (x-halfSide + S) % S, z )
-            + HEIGHT_AT( x + halfSide % S, z ) + HEIGHT_AT( x, z + halfSide % S )
+            + HEIGHT_AT( x + halfSide % S, z )
+            + HEIGHT_AT( x, z + halfSide % S )
             + HEIGHT_AT( x, (z - halfSide + S) % S ))
                      / 4.0;
-
+        
         vec4 color_avg = (COLOR_AT( (x-halfSide + S) % S, z )
             + COLOR_AT( x + halfSide % S, z ) + COLOR_AT( x, z + halfSide % S )
             + COLOR_AT( x, (z - halfSide + S) % S ))
                          / 4.0;
         vec4 color_jitter = vec4( jitter( CH ), jitter( CH ), jitter( CH ), 0 );
-
+        
         HEIGHT_AT( x, z ) = avg + jitter( H );
         COLOR_AT( x, z ) = color_avg + color_jitter;
-
+        
         // Wrapping:
         if ( x == 0 ) {
           HEIGHT_AT( S-1, z ) = HEIGHT_AT( x, z );
@@ -513,7 +509,7 @@ double landGen( Object *obj, int N, float H ) {
       } // for z
     } // for x
   } // for sideLength
-
+  
   //vec.reserve(2*S*S - 2*S);
   // Convert 2D array into 1D array to pass to shaders
   // Size of 1D array is 2*SIZE^2 - 2SIZE for
@@ -525,16 +521,16 @@ double landGen( Object *obj, int N, float H ) {
       drawIndex.push_back( OFFSET_AT(i,j));
       drawIndex.push_back( OFFSET_AT(i+1,j));
     }
-
+    
     /* If we're out of rows to serialize, give up. */
     if ( ++i == S ) break;
-
+    
     for ( ; j > 0; j-- ) {
       drawIndex.push_back( OFFSET_AT(i,j-1));
       drawIndex.push_back( OFFSET_AT(i+1,j-1));
     }
   }
-
+  
   /*
    for ( int i = 0; i < S*S; i++ ) {
    col.push_back(vec4(randFloat(),randFloat(),randFloat(),1.0));
@@ -547,7 +543,7 @@ double landGen( Object *obj, int N, float H ) {
         stderr,
         "Landgen took %lu usec, %f msec, %f sec to generate %d vertices.\n",
         Tick.Delta(), Tick.Delta() / 1000.0, Tick.Delta() / 1000000.0, S * S );
-
+  
   return magnitude;
 }
 
@@ -559,30 +555,30 @@ double landGen( Object *obj, int N, float H ) {
  * @param agua_obj
  */
 void makeAgua( Object *land_obj, Object *agua_obj ) {
-
+  
   /// What should the water's height be?
   float wh = 0.1;
-
+  
   // What should the water's color be?
   const vec4 wc( 0.0, 0.0, 0.8, 0.6 );
-
+  
   // Ensure that the size of agua_obj == land_obj
-  int S = sqrt( land_obj->points.size() );
-
+  int S = sqrt( land_obj->_vertices.size() );
+  
   // Push the vertices
-  agua_obj->points.push_back( vec4( -S / 2, wh, S / 2, 1 ) );
-  agua_obj->points.push_back( vec4( -S / 2, wh, -S / 2, 1 ) );
-  agua_obj->points.push_back( vec4( S / 2, wh, S / 2, 1 ) );
-  agua_obj->points.push_back( vec4( S / 2, wh, S / 2, 1 ) );
-  agua_obj->points.push_back( vec4( -S / 2, wh, -S / 2, 1 ) );
-  agua_obj->points.push_back( vec4( S / 2, wh, -S / 2, 1 ) );
-
-  agua_obj->colors.push_back( wc );
-  agua_obj->colors.push_back( wc );
-  agua_obj->colors.push_back( wc );
-  agua_obj->colors.push_back( wc );
-  agua_obj->colors.push_back( wc );
-  agua_obj->colors.push_back( wc );
-
+  agua_obj->_vertices.push_back( vec4( -S / 2, wh, S / 2, 1 ) );
+  agua_obj->_vertices.push_back( vec4( -S / 2, wh, -S / 2, 1 ) );
+  agua_obj->_vertices.push_back( vec4( S / 2, wh, S / 2, 1 ) );
+  agua_obj->_vertices.push_back( vec4( S / 2, wh, S / 2, 1 ) );
+  agua_obj->_vertices.push_back( vec4( -S / 2, wh, -S / 2, 1 ) );
+  agua_obj->_vertices.push_back( vec4( S / 2, wh, -S / 2, 1 ) );
+  
+  agua_obj->_colors.push_back( wc );
+  agua_obj->_colors.push_back( wc );
+  agua_obj->_colors.push_back( wc );
+  agua_obj->_colors.push_back( wc );
+  agua_obj->_colors.push_back( wc );
+  agua_obj->_colors.push_back( wc );
+  
   return;
 }

@@ -15,7 +15,7 @@ public:
   Scene();
   virtual ~Scene();
 
-  virtual void Shader( GLuint gShader );
+  virtual void shader( GLuint gShader );
   GLuint Shader( void );
 
   Object *AddObject( const std::string &objName, GLuint Object_Shader = 0 );

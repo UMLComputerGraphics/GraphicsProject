@@ -33,13 +33,13 @@ Cameras::~Cameras( void ) {
  * @return A Pointer to a newly created Camera object.
  */
 Camera *Cameras::addCamera( const std::string &name ) {
-
+  
   Camera *cam = new Camera( name, _gShader );
   Scene::InsertObject( name, cam );
   calculateViewports();
   return cam;
   //Set active Camera?
-
+  
 }
 
 /**
@@ -84,13 +84,13 @@ Camera *Cameras::prev( void ) {
  * @return A pointer to the currently selected, active Camera.
  */
 Camera *Cameras::active( void ) const {
-
+  
   // Use the base method to retrieve the active object.
   Object *camptr = Scene::active();
   
   // Convert it to a Camera pointer.
   return dynamic_cast< Camera* >( camptr );
-
+  
 }
 
 /**
@@ -139,10 +139,10 @@ void Cameras::resize( int width, int height ) {
  * @return void.
  */
 void Cameras::calculateViewports( void ) {
-
+  
   unsigned Width = _size.x;
   unsigned Height = _size.y;
-
+  
   /*
    * This function is a little confusing.
    * Ultimately, we see how many virtual cameras we have,
@@ -161,18 +161,18 @@ void Cameras::calculateViewports( void ) {
   
   // How many cameras do we have?
   size_t numCameras = Cameras::numCameras();
-
+  
   // Let's not try to resize zero cameras.
   if ( numCameras == 0 ) return;
-
+  
   // How many virtual rows will we need to display this many?
   size_t numRows = ceil( sqrt( numCameras ) );
-
+  
   // How many columns will we need (average) in general to display this many?
   double numCols = (double) numCameras / (double) numRows;
   size_t numMaxCols = ceil( numCols );
   size_t numMinCols = floor( numCols );
-
+  
   // How many rows do we need to draw with MinCols?
   // (By extension: drawMaxRows = (numRows-drawMinRows))
   size_t drawMinRows =
@@ -180,9 +180,9 @@ void Cameras::calculateViewports( void ) {
           ((int) (numCameras - (numRows * numMaxCols)) / (int) (numMinCols
               - numMaxCols)) :
           0;
-
+  
   std::list< Object * >::iterator it = _list.begin();
-
+  
   /* This is confusing as hell. Good luck! */
   for ( size_t allocHeight = 0, row = 0; (row < numRows) || (it != _list.end());
       ++row ) {
@@ -192,7 +192,7 @@ void Cameras::calculateViewports( void ) {
     size_t colsThisRow = (row < drawMinRows) ? numMinCols : numMaxCols;
     if ( 0 )
       fprintf( stderr, "Row: %lu; Columns this row: %lu\n", row, colsThisRow );
-
+    
     for ( size_t col = 0; col < colsThisRow; ++col, ++it ) {
       // Is this the last column? Use the remaining width.
       if ( col + 1 == colsThisRow ) myWidth = (Width) - allocWidth;
@@ -200,7 +200,7 @@ void Cameras::calculateViewports( void ) {
       // Is this the last row? Use the remaining height.
       if ( row + 1 == numRows ) myHeight = (Height) - allocHeight;
       else myHeight = (Height) / numRows;
-
+      
       // Tell this camera his new viewport.
       // height looks a little goofy because we are allocating height
       // from the top of the coordinate system and working down,
@@ -211,7 +211,7 @@ void Cameras::calculateViewports( void ) {
       if ( 0 )
         fprintf( stderr, "Camera: (%lu x %lu) @ (%lu,%lu)\n", myWidth, myHeight,
                  allocWidth, ((Height) - (allocHeight + myHeight)) );
-
+      
       // Increment our allocated width counter.
       allocWidth += myWidth;
     }

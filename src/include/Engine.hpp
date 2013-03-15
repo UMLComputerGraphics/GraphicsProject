@@ -30,9 +30,9 @@ typedef std::map< std::string, bool > SettingsMap;
  * clog up global namespace.
  */
 class Engine {
-
+  
 public:
-
+  
   /**
    * instance returns, or creates and then returns,
    * a pointer to the Engine object.
@@ -98,7 +98,7 @@ public:
   ~Engine( void );
 
 private:
-
+  
   /**
    * static, stateful variable that is our singleton pointer.
    */
@@ -144,7 +144,7 @@ private:
    * @throw Will always throw std::logic_error.
    */
   Engine &operator=( Engine &assign );
-
+  
 };
 
 #endif

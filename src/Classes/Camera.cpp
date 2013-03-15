@@ -21,13 +21,13 @@ void Camera::commonInit( void ) {
   // Extend the Uniforms array.
   if ( DEBUG )
     fprintf( stderr, "Extending Uniforms Array to %d\n", Camera::END );
-  this->handles.resize( Camera::END, -1 );
+  this->_handles.resize( Camera::END, -1 );
   
   /* Default Variable Links */
-  Link( Camera::TRANSLATION, "T" );
-  Link( Camera::ROTATION, "R" );
-  Link( Camera::VIEW, "P" );
-  Link( Camera::CTM, "CTM" );
+  link( Camera::TRANSLATION, "T" );
+  link( Camera::ROTATION, "R" );
+  link( Camera::VIEW, "P" );
+  link( Camera::CTM, "CTM" );
   
   for ( size_t i = (size_t) Camera::DIR_BEGIN; i != (size_t) DIR_END; ++i )
     _motion[i] = false;
@@ -68,29 +68,29 @@ Camera::~Camera( void ) {
 void Camera::x( const float &in, const bool &update ) {
   
   _ctm.offset.SetX( -in );
-  trans.offset.SetX( in );
+  _trans.offset.SetX( in );
   if ( update ) {
     _ctm.CalcCTM();
-    trans.CalcCTM();
+    _trans.CalcCTM();
     send( TRANSLATION );
   }
 }
 
 void Camera::y( const float &in, const bool &update ) {
   _ctm.offset.SetY( -in );
-  trans.offset.SetY( in );
+  _trans.offset.SetY( in );
   if ( update ) {
     _ctm.CalcCTM();
-    trans.CalcCTM();
+    _trans.CalcCTM();
     send( TRANSLATION );
   }
 }
 
 void Camera::z( const float &in, const bool &update ) {
   _ctm.offset.SetZ( -in );
-  trans.offset.SetZ( in );
+  _trans.offset.SetZ( in );
   if ( update ) {
-    trans.CalcCTM();
+    _trans.CalcCTM();
     _ctm.CalcCTM();
     send( TRANSLATION );
   }
@@ -102,7 +102,7 @@ void Camera::pos( const float &newX, const float &newY, const float &newZ,
   y( newY, false );
   z( newZ, false );
   if ( update ) {
-    trans.CalcCTM();
+    _trans.CalcCTM();
     _ctm.CalcCTM();
     send( TRANSLATION );
   }
@@ -132,7 +132,7 @@ void Camera::dPos( const float &x, const float &y, const float &z ) {
   dX( x, false );
   dY( y, false );
   dZ( z, false );
-  trans.CalcCTM();
+  _trans.CalcCTM();
   _ctm.CalcCTM();
   send( TRANSLATION );
 }
@@ -166,10 +166,10 @@ void Camera::adjustRotation( const mat4 &adjustment, const bool &fixed ) {
    We need to apply the OPPOSITE rotations,
    So Transpose the Adjustment to obtain that.
    */
-  trans.rotation.Adjust( transpose( adjustment ), !order );
+  _trans.rotation.Adjust( transpose( adjustment ), !order );
   
   // Update our state.
-  trans.CalcCTM();
+  _trans.CalcCTM();
   _ctm.CalcCTM();
   send( ROTATION );
 }
@@ -404,24 +404,24 @@ void Camera::send( Object::UniformEnum which ) {
   
   switch ( which ) {
   case TRANSLATION:
-    if ( handles[which] != -1 )
-    glUniformMatrix4fv( handles[which], 1, GL_TRUE, _ctm.offset.Matrix() );
+    if ( _handles[which] != -1 )
+    glUniformMatrix4fv( _handles[which], 1, GL_TRUE, _ctm.offset.Matrix() );
     send( CTM );
     break;
   case ROTATION:
-    if ( handles[which] != -1 )
-    glUniformMatrix4fv( handles[which], 1, GL_TRUE, _ctm.orbit.Matrix() );
+    if ( _handles[which] != -1 )
+    glUniformMatrix4fv( _handles[which], 1, GL_TRUE, _ctm.orbit.Matrix() );
     send( CTM );
     break;
   case VIEW:
-    if ( handles[which] != -1 )
-    glUniformMatrix4fv( handles[which], 1, GL_TRUE, _view );
+    if ( _handles[which] != -1 )
+    glUniformMatrix4fv( _handles[which], 1, GL_TRUE, _view );
     send( CTM );
     break;
   case CTM:
     _ctm.CalcCTM( POSTMULT );
-    if ( handles[which] != -1 )
-    glUniformMatrix4fv( handles[which], 1, GL_TRUE, _ctm.OTM() );
+    if ( _handles[which] != -1 )
+    glUniformMatrix4fv( _handles[which], 1, GL_TRUE, _ctm.OTM() );
     break;
   default:
     // If we don't know which variable this is,

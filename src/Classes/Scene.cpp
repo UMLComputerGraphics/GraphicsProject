@@ -51,7 +51,7 @@ Object *Scene::AddObject(const std::string &objName, GLuint shader) {
  @return void.
  **/
 
-void Scene::Shader(GLuint gShader) {
+void Scene::shader(GLuint gShader) {
   this->_gShader = gShader ;
 }
 
@@ -78,7 +78,7 @@ void Scene::DeleteObject(Object *obj) {
   if (obj == active()) prev() ;
 
   _list.remove(obj) ;
-  _map.erase(obj->Name()) ;
+  _map.erase(obj->name()) ;
   delete obj ;
 
 }
@@ -150,7 +150,7 @@ Object *Scene::active(void) const {
 void Scene::Draw(void) {
   std::list<Object*>::iterator it ;
   for (it = _list.begin() ; it != _list.end(); ++it) {
-    (*it)->Draw() ;
+    (*it)->draw() ;
   }
 }
 

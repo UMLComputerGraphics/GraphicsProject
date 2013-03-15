@@ -20,8 +20,9 @@
 using Angel::vec3;
 using Angel::vec4;
 
-void makeModelsSameSize(Object* model1, Object* model2);
-int findTriangleWithMinimumDistance(Object* largerModel, Object* smallerModel, int index);
-float threeDimensionalDistance(vec4 points1, vec4 points2);
+void makeModelsSameSize( Object* model1, Object* model2 );
+int findTriangleWithMinimumDistance( Object* largerModel, Object* smallerModel,
+                                     int index );
+float threeDimensionalDistance( vec4 points1, vec4 points2 );
 
 #endif

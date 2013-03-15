@@ -29,7 +29,7 @@ Particle::Particle(vec4 initPos, vec3 initScale, vec3 initVel, float initAlpha,
   setTexFile( initTex );
 
   loadModelFromFile( this, "../models/particle.obj" );
-  this->Buffer();
+  this->_buffer();
   
 }
 

@@ -19,61 +19,61 @@
 #include "globals.h" /* Constants, etc. */
 
 namespace Angel {
-
+  
 ////////////////////////////////////////////////////////////////////////////
 // Class: mat2
 ////////////////////////////////////////////////////////////////////////////
-
+  
 // Constructors
 ////////////////////////////////////////////////////////////////////////////
-
+  
   mat2::mat2( const GLfloat d ) {
     _m[0].x = d;
     _m[1].y = d;
   }
-
+  
   mat2::mat2( const vec2 &a, const vec2 &b ) {
     _m[0] = a;
     _m[1] = b;
   }
-
+  
   mat2::mat2( GLfloat m00, GLfloat m10, GLfloat m01, GLfloat m11 ) {
     _m[0] = vec2( m00, m01 );
     _m[1] = vec2( m10, m11 );
   }
-
+  
   mat2::mat2( const mat2& m ) {
     if ( *this != m ) {
       _m[0] = m._m[0];
       _m[1] = m._m[1];
     }
   }
-
+  
 // Operators
 ////////////////////////////////////////////////////////////////////////////
-
+  
   vec2 &mat2::operator[]( int i ) {
     return _m[i];
   }
-
+  
   const vec2 &mat2::operator[]( int i ) const {
     return _m[i];
   }
-
+  
   mat2 mat2::operator+( const mat2 &m ) const {
     return mat2( _m[0] + m[0], _m[1] + m[1] );
   }
-
+  
   mat2 mat2::operator-( const mat2 &m ) const {
     return mat2( _m[0] - m[0], _m[1] - m[1] );
   }
-
+  
   mat2 mat2::operator*( const GLfloat s ) const {
     return mat2( s * _m[0], s * _m[1] );
   }
-
+  
   mat2 mat2::operator/( const GLfloat s ) const {
-
+    
 #ifdef DEBUG
     {
       if ( std::fabs( s ) < DIVIDE_BY_ZERO_TOLERANCE ) {
@@ -86,10 +86,10 @@ namespace Angel {
     GLfloat r = GLfloat( 1.0 ) / s;
     return *this * r;
   }
-
+  
   mat2 mat2::operator*( const mat2 &m ) const {
     mat2 a( 0.0 );
-
+    
     for ( int i = 0; i < 2; ++i ) {
       for ( int j = 0; j < 2; ++j ) {
         for ( int k = 0; k < 2; ++k ) {
@@ -97,31 +97,31 @@ namespace Angel {
         }
       }
     }
-
+    
     return a;
   }
-
+  
   mat2 &mat2::operator+=( const mat2 &m ) {
     _m[0] += m[0];
     _m[1] += m[1];
     return *this;
   }
-
+  
   mat2 &mat2::operator-=( const mat2 &m ) {
     _m[0] -= m[0];
     _m[1] -= m[1];
     return *this;
   }
-
+  
   mat2 &mat2::operator*=( const GLfloat s ) {
     _m[0] *= s;
     _m[1] *= s;
     return *this;
   }
-
+  
   mat2 &mat2::operator*=( const mat2 &m ) {
     mat2 a( 0.0 );
-
+    
     for ( int i = 0; i < 2; ++i ) {
       for ( int j = 0; j < 2; ++j ) {
         for ( int k = 0; k < 2; ++k ) {
@@ -129,10 +129,10 @@ namespace Angel {
         }
       }
     }
-
+    
     return *this = a;
   }
-
+  
   mat2 &mat2::operator/=( const GLfloat s ) {
 #ifdef DEBUG
     {
@@ -146,13 +146,13 @@ namespace Angel {
     GLfloat r = GLfloat( 1.0 ) / s;
     return *this *= r;
   }
-
+  
   /**
    Returns the result of the operation M*v.
    Assumes v is a one column, two row matrix.
    **/
   vec2 mat2::operator*( const vec2 &v ) const {
-
+    
     return vec2( _m[0][0] * v.x + _m[0][1] * v.y,
                  _m[1][0] * v.x + _m[1][1] * v.y );
   }
@@ -160,14 +160,14 @@ namespace Angel {
   mat2::operator const GLfloat*() const {
     return static_cast< const GLfloat* >( &_m[0].x );
   }
-
+  
   mat2::operator GLfloat*() {
     return static_cast< GLfloat* >( &_m[0].x );
   }
-
+  
 // Non-class mat2 Methods ---
 ////////////////////////////////////////////////////////////////////////////
-
+  
   mat2 operator*( const GLfloat s, const mat2 &m ) {
     return m * s;
   }
@@ -192,29 +192,29 @@ namespace Angel {
 ////////////////////////////////////////////////////////////////////////////
 // Class: mat3
 ////////////////////////////////////////////////////////////////////////////
-
+  
 // Constructors and Destructors
 ////////////////////////////////////////////////////////////////////////////
-
+  
   mat3::mat3( const GLfloat d ) {
     _m[0].x = d;
     _m[1].y = d;
     _m[2].z = d;
   }
-
+  
   mat3::mat3( const vec3 &a, const vec3 &b, const vec3 &c ) {
     _m[0] = a;
     _m[1] = b;
     _m[2] = c;
   }
-
+  
   mat3::mat3( GLfloat m00, GLfloat m10, GLfloat m20, GLfloat m01, GLfloat m11,
               GLfloat m21, GLfloat m02, GLfloat m12, GLfloat m22 ) {
     _m[0] = vec3( m00, m01, m02 );
     _m[1] = vec3( m10, m11, m12 );
     _m[2] = vec3( m20, m21, m22 );
   }
-
+  
   mat3::mat3( const mat3 &m ) {
     if ( *this != m ) {
       _m[0] = m._m[0];
@@ -222,30 +222,30 @@ namespace Angel {
       _m[2] = m._m[2];
     }
   }
-
+  
 // Operators
 ////////////////////////////////////////////////////////////////////////////
-
+  
   vec3 &mat3::operator[]( int i ) {
     return _m[i];
   }
-
+  
   const vec3 &mat3::operator[]( int i ) const {
     return _m[i];
   }
-
+  
   mat3 mat3::operator+( const mat3 &m ) const {
     return mat3( _m[0] + m[0], _m[1] + m[1], _m[2] + m[2] );
   }
-
+  
   mat3 mat3::operator-( const mat3 &m ) const {
     return mat3( _m[0] - m[0], _m[1] - m[1], _m[2] - m[2] );
   }
-
+  
   mat3 mat3::operator*( const GLfloat s ) const {
     return mat3( s * _m[0], s * _m[1], s * _m[2] );
   }
-
+  
   mat3 mat3::operator/( const GLfloat s ) const {
 #ifdef DEBUG
     {
@@ -259,10 +259,10 @@ namespace Angel {
     GLfloat r = GLfloat( 1.0 ) / s;
     return *this * r;
   }
-
+  
   mat3 mat3::operator*( const mat3 &m ) const {
     mat3 a( 0.0 );
-
+    
     for ( int i = 0; i < 3; ++i ) {
       for ( int j = 0; j < 3; ++j ) {
         for ( int k = 0; k < 3; ++k ) {
@@ -270,34 +270,34 @@ namespace Angel {
         }
       }
     }
-
+    
     return a;
   }
-
+  
   mat3 &mat3::operator+=( const mat3 &m ) {
     _m[0] += m[0];
     _m[1] += m[1];
     _m[2] += m[2];
     return *this;
   }
-
+  
   mat3 &mat3::operator-=( const mat3 &m ) {
     _m[0] -= m[0];
     _m[1] -= m[1];
     _m[2] -= m[2];
     return *this;
   }
-
+  
   mat3 &mat3::operator*=( const GLfloat s ) {
     _m[0] *= s;
     _m[1] *= s;
     _m[2] *= s;
     return *this;
   }
-
+  
   mat3 &mat3::operator*=( const mat3 &m ) {
     mat3 a( 0.0 );
-
+    
     for ( int i = 0; i < 3; ++i ) {
       for ( int j = 0; j < 3; ++j ) {
         for ( int k = 0; k < 3; ++k ) {
@@ -305,10 +305,10 @@ namespace Angel {
         }
       }
     }
-
+    
     return *this = a;
   }
-
+  
   mat3 &mat3::operator/=( const GLfloat s ) {
 #ifdef DEBUG
     if ( std::fabs( s ) < DIVIDE_BY_ZERO_TOLERANCE ) {
@@ -320,43 +320,43 @@ namespace Angel {
     GLfloat r = GLfloat( 1.0 ) / s;
     return *this *= r;
   }
-
+  
   vec3 mat3::operator*( const vec3 &v ) const {  // m * v
     return vec3( _m[0][0] * v.x + _m[0][1] * v.y + _m[0][2] * v.z,
                  _m[1][0] * v.x + _m[1][1] * v.y + _m[1][2] * v.z,
                  _m[2][0] * v.x + _m[2][1] * v.y + _m[2][2] * v.z );
   }
-
+  
   mat3::operator const GLfloat*() const {
     return static_cast< const GLfloat* >( &_m[0].x );
   }
-
+  
   mat3::operator GLfloat*() {
     return static_cast< GLfloat* >( &_m[0].x );
   }
-
+  
 // Non-class mat3 Methods
 ////////////////////////////////////////////////////////////////////////////
-
+  
   mat3 operator*( const GLfloat s, const mat3 &m ) {
     return m * s;
   }
-
+  
   std::ostream &operator<<( std::ostream &os, const mat3 &m ) {
     return os << std::endl << m[0] << std::endl << m[1] << std::endl << m[2]
               << std::endl;
   }
-
+  
   std::istream &operator>>( std::istream &is, mat3 &m ) {
     return is >> m._m[0] >> m._m[1] >> m._m[2];
   }
-
+  
   mat3 matrixCompMult( const mat3 &A, const mat3 &B ) {
     return mat3( A[0][0] * B[0][0], A[0][1] * B[0][1], A[0][2] * B[0][2],
                  A[1][0] * B[1][0], A[1][1] * B[1][1], A[1][2] * B[1][2],
                  A[2][0] * B[2][0], A[2][1] * B[2][1], A[2][2] * B[2][2] );
   }
-
+  
   mat3 transpose( const mat3 &A ) {
     return mat3( A[0][0], A[1][0], A[2][0], A[0][1], A[1][1], A[2][1], A[0][2],
                  A[1][2], A[2][2] );
@@ -365,7 +365,7 @@ namespace Angel {
 ////////////////////////////////////////////////////////////////////////////
 // Class: mat4
 ////////////////////////////////////////////////////////////////////////////
-
+  
   // Constructors and Destructors
   mat4::mat4( const GLfloat d ) {
     _m[0].x = d;
@@ -399,30 +399,30 @@ namespace Angel {
       _m[3] = m._m[3];
     }
   }
-
+  
   // Indexing Operator
   //////////////////////////////////////////////////////////////////////////
-
+  
   vec4 &mat4::operator[]( int i ) {
     return _m[i];
   }
-
+  
   const vec4 &mat4::operator[]( int i ) const {
     return _m[i];
   }
-
+  
   mat4 mat4::operator+( const mat4 &m ) const {
     return mat4( _m[0] + m[0], _m[1] + m[1], _m[2] + m[2], _m[3] + m[3] );
   }
-
+  
   mat4 mat4::operator-( const mat4 &m ) const {
     return mat4( _m[0] - m[0], _m[1] - m[1], _m[2] - m[2], _m[3] - m[3] );
   }
-
+  
   mat4 mat4::operator*( const GLfloat s ) const {
     return mat4( s * _m[0], s * _m[1], s * _m[2], s * _m[3] );
   }
-
+  
   mat4 mat4::operator/( const GLfloat s ) const {
 #ifdef DEBUG
     if ( std::fabs( s ) < DIVIDE_BY_ZERO_TOLERANCE ) {
@@ -434,10 +434,10 @@ namespace Angel {
     GLfloat r = GLfloat( 1.0 ) / s;
     return *this * r;
   }
-
+  
   mat4 mat4::operator*( const mat4 &m ) const {
     mat4 a( 0.0 );
-
+    
     for ( int i = 0; i < 4; ++i ) {
       for ( int j = 0; j < 4; ++j ) {
         for ( int k = 0; k < 4; ++k ) {
@@ -456,7 +456,7 @@ namespace Angel {
     _m[3] += m[3];
     return *this;
   }
-
+  
   mat4 &mat4::operator-=( const mat4 &m ) {
     _m[0] -= m[0];
     _m[1] -= m[1];
@@ -464,7 +464,7 @@ namespace Angel {
     _m[3] -= m[3];
     return *this;
   }
-
+  
   mat4 &mat4::operator*=( const GLfloat s ) {
     _m[0] *= s;
     _m[1] *= s;
@@ -472,7 +472,7 @@ namespace Angel {
     _m[3] *= s;
     return *this;
   }
-
+  
   mat4 &mat4::operator*=( const mat4 &m ) {
     mat4 a( 0.0 );
     
@@ -506,15 +506,15 @@ namespace Angel {
         _m[2][0] * v.x + _m[2][1] * v.y + _m[2][2] * v.z + _m[2][3] * v.w,
         _m[3][0] * v.x + _m[3][1] * v.y + _m[3][2] * v.z + _m[3][3] * v.w );
   }
-
+  
   mat4::operator const GLfloat*() const {
     return static_cast< const GLfloat* >( &_m[0].x );
   }
-
+  
   mat4::operator GLfloat*() {
     return static_cast< GLfloat* >( &_m[0].x );
   }
-
+  
   // Non-class mat4 Methods
   ///////////////////////////////////////////////////////////////////
   
@@ -563,7 +563,7 @@ namespace Angel {
     c[1][2] = -c[2][1];
     return c;
   }
-
+  
   mat4 RotateY( const GLfloat theta ) {
     GLfloat angle = DEGREES_TO_RADIANS * theta;
     
@@ -573,7 +573,7 @@ namespace Angel {
     c[2][0] = -c[0][2];
     return c;
   }
-
+  
   mat4 RotateZ( const GLfloat theta ) {
     GLfloat angle = DEGREES_TO_RADIANS * theta;
     
@@ -595,7 +595,7 @@ namespace Angel {
   mat4 Translate( const vec3& v ) {
     return Translate( v.x, v.y, v.z );
   }
-
+  
   mat4 Translate( const vec4& v ) {
     return Translate( v.x, v.y, v.z );
   }
@@ -607,11 +607,11 @@ namespace Angel {
     c[2][2] = z;
     return c;
   }
-
+  
   mat4 Scale( const vec3& v ) {
     return Scale( v.x, v.y, v.z );
   }
-
+  
   //------------------------------------------------------------------------
   //
   //  Projection transformation matrix geneartors
@@ -620,7 +620,7 @@ namespace Angel {
   //          order to avoid any name conflicts, we use the variable names
   //          "zNear" to reprsent "near", and "zFar" to reprsent "far".
   //
-
+  
   mat4 Ortho( const GLfloat left, const GLfloat right, const GLfloat bottom,
               const GLfloat top, const GLfloat zNear, const GLfloat zFar ) {
     mat4 c;
@@ -665,7 +665,7 @@ namespace Angel {
     c[3][2] = -1.0;
     return c;
   }
-
+  
   mat4 LookAt( const vec4& eye, const vec4& at, const vec4& up ) {
     vec4 n = normalize( eye - at );
     vec4 u = normalize( cross( up, n ) );

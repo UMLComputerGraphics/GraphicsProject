@@ -21,7 +21,7 @@
 #include "vec.hpp"
 
 namespace Angel {
-
+  
   //  mat2 - 2D square matrix
   /**
    * mat2 - 2D square matrix.
@@ -74,13 +74,13 @@ namespace Angel {
     //  --- Conversion Operators ---
     operator const GLfloat*() const;
     operator GLfloat*();
-
+    
   };
   
   //  --- Non-class mat2 Methods ---
   mat2 matrixCompMult( const mat2& A, const mat2& B );
   mat2 transpose( const mat2& A );
-
+  
   /**
    * mat3 - 3D square matrix.
    * @author Ed Angel
@@ -94,7 +94,7 @@ namespace Angel {
   class mat3 {
     vec3 _m[3];
   public:
-
+    
     //  --- Constructors and Destructors ---
     mat3( const GLfloat d = GLfloat( 1.0 ) );  // Create a diagional matrix
     mat3( const vec3& a, const vec3& b, const vec3& c );
@@ -132,11 +132,11 @@ namespace Angel {
     operator const GLfloat*() const;
     operator GLfloat*();
   };
-
+  
   //  --- Non-class mat3 Methods ---
   mat3 matrixCompMult( const mat3& A, const mat3& B );
   mat3 transpose( const mat3& A );
-
+  
   /**
    * mat4 - 4D square matrix.
    * @author Ed Angel
@@ -148,11 +148,11 @@ namespace Angel {
    * A Top-Down Approach with OpenGL, Sixth Edition
    */
   class mat4 {
-
+    
     vec4 _m[4];
 
   public:
-
+    
     //  --- Constructors and Destructors ---
     mat4( const GLfloat d = GLfloat( 1.0 ) );  // Create a diagional matrix
     mat4( const vec4& a, const vec4& b, const vec4& c, const vec4& d );
@@ -192,13 +192,13 @@ namespace Angel {
     //  --- Conversion Operators ---
     operator const GLfloat*() const;
     operator GLfloat*();
-
+    
   };
-
+  
   //  --- Non-class mat4 Methods ---
   mat4 matrixCompMult( const mat4& A, const mat4& B );
   mat4 transpose( const mat4& A );
-
+  
   /************************************************************************/
   //  Helpful Matrix Methods
   /************************************************************************/
@@ -206,7 +206,7 @@ namespace Angel {
 #define Error( str ) do {				\
     std::cerr << "[" __FILE__ ":" << __LINE__ << "] "	\
 	      << str << std::endl; } while(0)
-
+  
   mat4 RotateX( const GLfloat theta );
   mat4 RotateY( const GLfloat theta );
   mat4 RotateZ( const GLfloat theta );
