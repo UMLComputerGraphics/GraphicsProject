@@ -2,8 +2,7 @@
  * @file KinectInator.cpp
  * @date 2013-03-13
  * @authors PrimeSense Ltd, Eric McCann
- * @brief TODO
- * @license FIXME
+ * @brief FIXME: Documentation needed from Eric.
  */
 
 /**************************************************

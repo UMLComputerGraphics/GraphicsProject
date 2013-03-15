@@ -3,8 +3,7 @@
  * @date 2013-03-13
  * @author PrimeSense Ltd.
  * @authors PrimeSense Ltd., Eric McCann
- * @brief TODO
- * @license FIXME
+ * @brief FIXME: Documentation needed from Eric.
  */
 
 /****************************************************************************

@@ -1,3 +1,10 @@
+/**
+ * @file Object.cpp
+ * @author John Huston
+ * @authors Nick St.Pierre, Nick VerVoort, Chris Compton
+ * @date 2013-03-15
+ * @brief Implementation for the Object class.
+ */
 #include <string>
 #include <vector>
 #include <SOIL.h>
