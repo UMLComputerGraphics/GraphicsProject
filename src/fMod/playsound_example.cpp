@@ -52,16 +52,16 @@ int main(int argc, char *argv[])
     result = system->init(32, FMOD_INIT_NORMAL, NULL);
     ERRCHECK(result);
 
-    result = system->createSound("../media/drumloop.wav", FMOD_SOFTWARE, 0, &sound1);
+    result = system->createSound("../sounds/ding1.wav", FMOD_SOFTWARE, 0, &sound1);
     ERRCHECK(result);
 
     result = sound1->setMode(FMOD_LOOP_OFF);
     ERRCHECK(result);
 
-    result = system->createSound("../media/jaguar.wav", FMOD_SOFTWARE, 0, &sound2);
+    result = system->createSound("../sounds/ding2.wav", FMOD_SOFTWARE, 0, &sound2);
     ERRCHECK(result);
 
-    result = system->createSound("../media/swish.wav", FMOD_SOFTWARE, 0, &sound3);
+    result = system->createSound("../sounds/heavy_yell9.wav", FMOD_SOFTWARE, 0, &sound3);
     ERRCHECK(result);
 
     printf("===================================================================\n");

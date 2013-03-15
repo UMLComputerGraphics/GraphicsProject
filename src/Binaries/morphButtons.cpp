@@ -13,7 +13,7 @@
 #endif
 
 #include "globals.h"
-/* System Headers */
+/* FSystem Headers */
 #include <cmath>
 #include <cstdio>
 #include <sstream>
@@ -84,7 +84,7 @@ bool pause_morph = false ;
 
 /* begin fMod globals blob */
 
-FMOD::System     *system ;
+FMOD::System     *fSystem ;
 FMOD::Sound      *sound1, *sound2, *sound3 ;
 //FMOD::Sound      *heavy_channel, *ding_channel;
 FMOD::Channel    *channel = 0 ;
@@ -230,7 +230,7 @@ void keyboard( unsigned char key, int x, int y ) {
 
   /* A shorthand variable with local scope that refers to "The Active Camera." */
   Camera &cam = *(myScreen.camList.Active());
-  
+
   switch( key ) {
   case '-':
     myScreen.camList.PopCamera();
@@ -482,7 +482,7 @@ float driveTheMorph(void){
 
       if ( (timer -= 0.05 ) <= 0.0 ) {
 	// play a glass 'ding' sound before going to the DONE state:
-	result = system->playSound(FMOD_CHANNEL_FREE, sound1, 0, &channel1);
+	result = fSystem->playSound(FMOD_CHANNEL_FREE, sound1, 0, &channel1);
 	ERRCHECK(result);
 	timer   = 0.0 ;
 	percent = 0.0 ;
@@ -495,7 +495,7 @@ float driveTheMorph(void){
     case TO_B_LINEAR:
 
       if ( (timer += 0.05 ) >= 180.0 ) {
-	result = system->playSound(FMOD_CHANNEL_FREE, sound2, 0, &channel2);
+	result = fSystem->playSound(FMOD_CHANNEL_FREE, sound2, 0, &channel2);
 	ERRCHECK(result);
 	timer   = 180.0 ;
 	percent =   1.0 ;
@@ -509,7 +509,7 @@ float driveTheMorph(void){
     case TO_A_SMOOTH:
 
       if ( (timer -= 0.05 ) <= 0.0 ) {
-	result = system->playSound(FMOD_CHANNEL_FREE, sound1, 0, &channel1);
+	result = fSystem->playSound(FMOD_CHANNEL_FREE, sound1, 0, &channel1);
 	ERRCHECK(result);
 	timer   = 0.0 ;
 	percent = 0.0 ;
@@ -524,7 +524,7 @@ float driveTheMorph(void){
     case TO_B_SMOOTH:
 
       if ( (timer += 0.05 ) >= 180.0 ) {
-	result = system->playSound(FMOD_CHANNEL_FREE, sound2, 0, &channel2);
+	result = fSystem->playSound(FMOD_CHANNEL_FREE, sound2, 0, &channel2);
 	ERRCHECK(result);
 	timer   = 180.0 ;
 	percent =   1.0 ;
@@ -611,13 +611,13 @@ void updateListener( void ) {
     // store pos for next time
     //lastpos = listenerpos;
 
-    result = system->set3DListenerAttributes(0, &listenerpos, &vel, &forward, &up);
+    result = fSystem->set3DListenerAttributes(0, &listenerpos, &vel, &forward, &up);
     ERRCHECK(result);
 
     // don't know what the point of this variable was.
     //t += (30 * (1.0f / (float)INTERFACE_UPDATETIME));    // t is just a time value .. it increments in 30m/s steps in this example
 
-  system->update();
+  fSystem->update();
 
 
 //Sleep(INTERFACE_UPDATETIME - 1);
@@ -670,7 +670,7 @@ void idle( void ) {
 
   updateListener();  // update the 3d sound stuff
 
-  result = system->set3DListenerAttributes(0, &listenerpos, &vel, &forward, &up);
+  result = fSystem->set3DListenerAttributes(0, &listenerpos, &vel, &forward, &up);
   ERRCHECK(result);
 
 
@@ -731,52 +731,52 @@ void fModInit(void){
 
   FMOD_RESULT result ; // used to hold the result value
 
-  result = FMOD::System_Create(&system);
+  result = FMOD::FSystem_Create(&fSystem);
   ERRCHECK(result);
 
-  result = system->getDriverCaps(0, &caps, 0, &speakermode);
+  result = fSystem->getDriverCaps(0, &caps, 0, &speakermode);
   ERRCHECK(result);
 
-  result = system->setSpeakerMode(speakermode);       /* Set the user selected speaker mode. */
+  result = fSystem->setSpeakerMode(speakermode);       /* Set the user selected speaker mode. */
   ERRCHECK(result);
 
   // copied from the example code, not sure what it does yet.
   if (caps & FMOD_CAPS_HARDWARE_EMULATED)
     /* The user has the 'Acceleration' slider set to off!  This is really bad for latency!. */
     {                                                   /* You might want to warn the user about this. */
-      result = system->setDSPBufferSize(1024, 10);
+      result = fSystem->setDSPBufferSize(1024, 10);
       ERRCHECK(result);
     }
 
-  result = system->getDriverInfo(0, name, 256, 0);
+  result = fSystem->getDriverInfo(0, name, 256, 0);
   ERRCHECK(result);
 
   if (strstr(name, "SigmaTel"))   /* Sigmatel sound devices crackle for some reason if the format is PCM 16bit.
 				     PCM floating point output seems to solve it. */
     {
-      result = system->setSoftwareFormat(48000, FMOD_SOUND_FORMAT_PCMFLOAT, 0,0, FMOD_DSP_RESAMPLER_LINEAR);
+      result = fSystem->setSoftwareFormat(48000, FMOD_SOUND_FORMAT_PCMFLOAT, 0,0, FMOD_DSP_RESAMPLER_LINEAR);
       ERRCHECK(result);
     }
 
-  result = system->init(100, FMOD_INIT_NORMAL, 0);
+  result = fSystem->init(100, FMOD_INIT_NORMAL, 0);
   if (result == FMOD_ERR_OUTPUT_CREATEBUFFER)         /* Ok, the speaker mode selected isn't supported by this soundcard.  
 							 Switch it back to stereo... */
     {
-      result = system->setSpeakerMode(FMOD_SPEAKERMODE_STEREO);
+      result = fSystem->setSpeakerMode(FMOD_SPEAKERMODE_STEREO);
       ERRCHECK(result);
                 
-      result = system->init(100, FMOD_INIT_NORMAL, 0);/* ... and re-init. */
+      result = fSystem->init(100, FMOD_INIT_NORMAL, 0);/* ... and re-init. */
       ERRCHECK(result);
     }
 
 
   //  Set the distance units. (meters/feet etc).
 
-  result = system->set3DSettings(1.0, DISTANCEFACTOR, 1.0f);
+  result = fSystem->set3DSettings(1.0, DISTANCEFACTOR, 1.0f);
   ERRCHECK(result);
 
   // load some sounds
-  result = system->createSound("../sounds/ding1.wav", FMOD_3D, 0, &sound1);
+  result = fSystem->createSound("../sounds/ding1.wav", FMOD_3D, 0, &sound1);
   ERRCHECK(result);
   result = sound1->set3DMinMaxDistance(0.5f * DISTANCEFACTOR, 5000.0f * DISTANCEFACTOR);
   ERRCHECK(result);
@@ -784,14 +784,14 @@ void fModInit(void){
   ERRCHECK(result);
 
 
-  result = system->createSound("../sounds/ding2.wav", FMOD_3D, 0, &sound2);
+  result = fSystem->createSound("../sounds/ding2.wav", FMOD_3D, 0, &sound2);
   ERRCHECK(result);
   result = sound1->set3DMinMaxDistance(0.5f * DISTANCEFACTOR, 5000.0f * DISTANCEFACTOR);
   ERRCHECK(result);
   result = sound1->setMode(FMOD_LOOP_OFF);
   ERRCHECK(result);
 
-  result = system->createSound("../sounds/heavy_yell9.wav", FMOD_3D, 0, &sound3);
+  result = fSystem->createSound("../sounds/heavy_yell9.wav", FMOD_3D, 0, &sound3);
   ERRCHECK(result);
   result = sound1->set3DMinMaxDistance(0.5f * DISTANCEFACTOR, 5000.0f * DISTANCEFACTOR);
   ERRCHECK(result);
@@ -805,7 +805,7 @@ void fModInit(void){
     FMOD_VECTOR pos = { -10.0f * DISTANCEFACTOR, 0.0f, 0.0f };
     FMOD_VECTOR vel = {  0.0f, 0.0f, 0.0f };
 
-    result = system->playSound(FMOD_CHANNEL_FREE, sound1, true, &channel1);
+    result = fSystem->playSound(FMOD_CHANNEL_FREE, sound1, true, &channel1);
     ERRCHECK(result);
     result = channel1->set3DAttributes(&pos, &vel);
     ERRCHECK(result);
@@ -817,7 +817,7 @@ void fModInit(void){
     FMOD_VECTOR pos = { 15.0f * DISTANCEFACTOR, 0.0f, 0.0f };
     FMOD_VECTOR vel = { 0.0f, 0.0f, 0.0f };
 
-    result = system->playSound(FMOD_CHANNEL_FREE, sound2, true, &channel2);
+    result = fSystem->playSound(FMOD_CHANNEL_FREE, sound2, true, &channel2);
     ERRCHECK(result);
     result = channel2->set3DAttributes(&pos, &vel);
     ERRCHECK(result);
@@ -829,7 +829,7 @@ void fModInit(void){
     FMOD_VECTOR pos = { 45.0f * DISTANCEFACTOR, 0.0f, 0.0f };
     FMOD_VECTOR vel = { 0.0f, 0.0f, 0.0f };
 
-    result = system->playSound(FMOD_CHANNEL_FREE, sound3, true, &channel3);
+    result = fSystem->playSound(FMOD_CHANNEL_FREE, sound3, true, &channel3);
     ERRCHECK(result);
     result = channel3->set3DAttributes(&pos, &vel);
     ERRCHECK(result);
@@ -910,8 +910,8 @@ int main( int argc, char **argv ) {
   ERRCHECK(sound2->release());
   ERRCHECK(sound3->release());
 
-  ERRCHECK(system->close()  );
-  ERRCHECK(system->release());
+  ERRCHECK(fSystem->close()  );
+  ERRCHECK(fSystem->release());
 
 
   return EXIT_SUCCESS;
