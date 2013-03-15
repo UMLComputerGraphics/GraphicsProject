@@ -26,3 +26,6 @@
 .DS_Store
 .cproject
 .project
+Binaries/ds
+Binaries/raytrace1
+Binaries/zachMorphDemo

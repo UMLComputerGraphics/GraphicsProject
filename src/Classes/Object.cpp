@@ -29,11 +29,11 @@ Object::Object( const std::string &name, GLuint gShader )
 
   // Create room for our GLUniform handles
   if (DEBUG)
-    fprintf( stderr, "\nCreating %d handles for uniforms\n", Object::End );
-  handles.resize( Object::End );
+    fprintf( stderr, "\nCreating %d handles for uniforms\n", Object::END );
+  handles.resize( Object::END );
 
   // Associate this Object with the Shader.
-  SetShader( gShader );
+  Shader( gShader );
 
   // Set our name from the constructor...
   this->name = name;
@@ -60,9 +60,9 @@ Object::Object( const std::string &name, GLuint gShader )
   glBindVertexArray( vao );
   GLuint glsl_uniform;
 
-  /* Create five VBOs: One each for Positions, Colors, Normals, 
-     Textures and Draw Order. */
-  glGenBuffers( 8, buffer );
+  /* Create (Eight) VBOs: One each for Positions, Colors, Normals, 
+     Textures, Draw Order; Three for Morphing (Position,Colors,Normals.) */
+  glGenBuffers( NUM_BUFFERS, buffer );
 
   /* Create the Vertex buffer and link it with the shader. */
   glBindBuffer( GL_ARRAY_BUFFER, buffer[VERTICES] );
@@ -111,10 +111,11 @@ Object::Object( const std::string &name, GLuint gShader )
 
   if (DEBUG) 
     fprintf( stderr,
-	     "buffhandles: %u %u %u %u %u\n",
+	     "buffhandles: %u %u %u %u %u %u %u %u\n",
 	     buffer[VERTICES], buffer[NORMALS],
 	     buffer[COLORS], buffer[TEXCOORDS],
-	     buffer[INDICES] );
+	     buffer[INDICES], buffer[VERTICES_MORPH],
+	     buffer[NORMALS_MORPH], buffer[COLORS_MORPH] );
 
   /* Create the Drawing Order buffer, but we don't need to link it 
      with any uniform,
@@ -222,16 +223,58 @@ void Object::Link( UniformEnum which, const std::string &name ) {
     return;
   }
 
-  handles[which] = glGetUniformLocation( GetShader(), name.c_str() );
+  // Save the link between the Uniform and the Variable Name.
+  _uniformMap[ which ] = name;
+  
+  fprintf( stderr, "Linking enum[%u] with %s for object %s\n",
+	   which, name.c_str(), this->name.c_str() );
+
+  handles[which] = glGetUniformLocation( Shader(), name.c_str() );
   if (DEBUG)
     fprintf( stderr, "Linking handles[%d] to %s; got %d.\n",
 	     which, name.c_str(), handles[which] );
 
 }
 
-// This function is specific to texturing the terrain in terrain.cpp
-// It will need to be generalized for individual objects, or a new
-// function will need to be designed.
+/**
+   Sets the shader to be used by this object.
+   Triggers a query of the shader program,
+   for the locations of the Uniform locations
+   that the object needs.
+
+   @param newShader a GLuint handle to the shader program to use.
+   
+   @return None.
+**/
+void Object::Shader( GLuint newShader ) {
+  
+  // Cache the shader handle for later.
+  Scene::Shader( newShader );
+
+  // We have to use the program to query the glUniform locations.
+  glUseProgram( newShader );
+
+  // Re-Link our Uniforms to this shader.
+  UniformMap::iterator it;
+  for (it = _uniformMap.begin(); it != _uniformMap.end(); ++it) {
+    Link( it->first, it->second );
+  }
+
+}
+
+/**
+   Returns the Object's current Shader.
+   Defined because C++ will not let you overload an overrided function,
+   without re-overloading it in the derived class.
+
+   @return a GLuint handle to the shader program used by this Object.
+**/
+GLuint Object::Shader( void ) {
+
+  return Scene::Shader();
+
+}
+
 void Object::Texture( const char** filename ) {
 
   Tick.Tock();
@@ -280,15 +323,15 @@ void Object::Texture( const char** filename ) {
   fprintf( stderr, "took %lu usec to load textures.\n", Tick.Delta() );
 
   
-  GLuint gSampler0 = glGetUniformLocation( GetShader(), "gSampler0" );
+  GLuint gSampler0 = glGetUniformLocation( Shader(), "gSampler0" );
   glUniform1i( gSampler0, 0 );
-  GLuint gSampler1 = glGetUniformLocation( GetShader(), "gSampler1" );
+  GLuint gSampler1 = glGetUniformLocation( Shader(), "gSampler1" );
   glUniform1i( gSampler1, 1 );
-  GLuint gSampler2 = glGetUniformLocation( GetShader(), "gSampler2" );
+  GLuint gSampler2 = glGetUniformLocation( Shader(), "gSampler2" );
   glUniform1i( gSampler2, 2 );
-  GLuint gSampler3 = glGetUniformLocation( GetShader(), "gSampler3" );
+  GLuint gSampler3 = glGetUniformLocation( Shader(), "gSampler3" );
   glUniform1i( gSampler3, 3 );
-  GLuint gSampler4 = glGetUniformLocation( GetShader(), "gSampler4" );
+  GLuint gSampler4 = glGetUniformLocation( Shader(), "gSampler4" );
   glUniform1i( gSampler4, 4 );
 
   glActiveTexture( GL_TEXTURE0 );
@@ -338,7 +381,7 @@ void Object::Texture( const char** filename ) {
 }
 
 
-void Object::Send( Object::UniformEnum which ) {
+void Object::send( Object::UniformEnum which ) {
   switch (which) {
     
   case Object::IsTextured:
@@ -371,27 +414,27 @@ void Object::Draw( void ) {
   // Check to see if the correct shader program is engaged.
   GLint currShader;
   glGetIntegerv(GL_CURRENT_PROGRAM, &currShader);
-  if ((GLuint)currShader != GetShader()) {
+  if ((GLuint)currShader != Shader()) {
 
-    Camera *activeCamera = Engine::Instance()->Cams()->Active();
+    Camera *activeCamera = Engine::instance()->cams()->active();
     
-    if (DEBUG) std::cerr << "Switching shading context.\n";
+    //if (DEBUG) std::cerr << "Switching shading context.\n";
 
     // Set OpenGL to use this object's shader.
-    glUseProgram( GetShader() );
+    glUseProgram( Shader() );
 
     // Set the Active Camera's shader to the Object's Shader.
-    activeCamera->SetShader( GetShader() );
+    activeCamera->Shader( Shader() );
 
-    // Send the Camera's info to the new shader.
-    activeCamera->View();
+    // send the Camera's info to the new shader.
+    activeCamera->view();
   }  
 
-  Send( Object::IsTextured ) ;
-  Send( Object::ObjectCTM  ) ;
-  Send( Object::MorphPercentage );
+  send( Object::IsTextured ) ;
+  send( Object::ObjectCTM  ) ;
+  send( Object::MorphPercentage );
 
-  //  this->getMorphPercentage() == -1.0 ? ; : Send( Object::MorphPercentage );
+  //  this->getMorphPercentage() == -1.0 ? ; : send( Object::MorphPercentage );
 
   /* Are we using a draw order? */
   if (indices.size() > 1)
@@ -399,7 +442,7 @@ void Object::Draw( void ) {
   else
     glDrawArrays( draw_mode, 0, points.size() );
 
-  glBindVertexArray(0);
+  glBindVertexArray( 0 );
 
   // Draw all of our Children.
   // (With clothes on, pervert.)
@@ -421,13 +464,13 @@ const std::string &Object::Name( void ) const {
 
 void Object::Animation(void (*anim_func)( TransCache &arg )) {
   anim_func( this->trans );
-  Object::Propegate();
+  Object::Propagate();
 }
 
-void Object::Propegate( void ) {
+void Object::Propagate( void ) {
 
   //fprintf( stderr, "\n" );
-  //fprintf( stderr, "Propegate called on %s\n", name.c_str() );
+  //fprintf( stderr, "Propagate called on %s\n", name.c_str() );
 
   std::list<Object*>::iterator it;
   
@@ -435,11 +478,11 @@ void Object::Propegate( void ) {
   //Update my Object's CTM...
   this->trans.CalcCTM();
 
-  //Send my OTM as the PTM to all of my children.
-  for ( it = list.begin(); it != list.end(); ++it ) {
+  //send my OTM as the PTM to all of my children.
+  for ( it = _list.begin(); it != _list.end(); ++it ) {
     (*it)->trans.PTM( this->trans.OTM() );
     //Tell that child to update his CTM and propegate.
-    (*it)->Propegate();
+    (*it)->Propagate();
   }
 
   //std::cerr << "{" << name << "::OTM:" << this->trans.OTM() << "}\n";
@@ -489,4 +532,8 @@ Object* Object::genMorphTarget(GLuint gShader) {
   this->morphTarget = obj ;
   return obj ;
 
+}
+
+int Object::getNumberPoints(){
+	return points.size();
 }

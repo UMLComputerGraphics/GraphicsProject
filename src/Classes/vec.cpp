@@ -64,7 +64,7 @@ namespace Angel {
 
     vec2 vec2::operator / ( const GLfloat s ) const {
 #ifdef DEBUG
-	if ( std::fabs(s) < DivideByZeroTolerance ) {
+	if ( std::fabs(s) < DIVIDE_BY_ZERO_TOLERANCE ) {
 	    std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] "
 		      << "Division by zero" << std::endl;
 	    return vec2();
@@ -93,7 +93,7 @@ namespace Angel {
 
     vec2& vec2::operator /= ( const GLfloat s ) {
 #ifdef DEBUG
-	if ( std::fabs(s) < DivideByZeroTolerance ) {
+	if ( std::fabs(s) < DIVIDE_BY_ZERO_TOLERANCE ) {
 	    std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] "
 		      << "Division by zero" << std::endl;
 	}
@@ -194,7 +194,7 @@ vec2 normalize( const vec2& v ) {
 
     vec3 vec3::operator / ( const GLfloat s ) const {
 #ifdef DEBUG
-	if ( std::fabs(s) < DivideByZeroTolerance ) {
+	if ( std::fabs(s) < DIVIDE_BY_ZERO_TOLERANCE ) {
 	    std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] "
 		      << "Division by zero" << std::endl;
 	    return vec3();
@@ -223,7 +223,7 @@ vec2 normalize( const vec2& v ) {
 
     vec3& vec3::operator /= ( const GLfloat s ) {
 #ifdef DEBUG
-	if ( std::fabs(s) < DivideByZeroTolerance ) {
+	if ( std::fabs(s) < DIVIDE_BY_ZERO_TOLERANCE ) {
 	    std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] "
 		      << "Division by zero" << std::endl;
 	}
@@ -339,7 +339,7 @@ vec3 cross(const vec3& a, const vec3& b )
 
     vec4 vec4::operator / ( const GLfloat s ) const {
 #ifdef DEBUG
-	if ( std::fabs(s) < DivideByZeroTolerance ) {
+	if ( std::fabs(s) < DIVIDE_BY_ZERO_TOLERANCE ) {
 	    std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] "
 		      << "Division by zero" << std::endl;
 	    return vec4();
@@ -368,7 +368,7 @@ vec3 cross(const vec3& a, const vec3& b )
 
     vec4& vec4::operator /= ( const GLfloat s ) {
 #ifdef DEBUG
-	if ( std::fabs(s) < DivideByZeroTolerance ) {
+	if ( std::fabs(s) < DIVIDE_BY_ZERO_TOLERANCE ) {
 	    std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] "
 		      << "Division by zero" << std::endl;
 	}

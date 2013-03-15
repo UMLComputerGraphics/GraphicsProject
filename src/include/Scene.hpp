@@ -5,21 +5,20 @@
 #include <map>
 #include <list>
 #include "platform.h" // for GLuint
-
 /* Forward reference so that our scene can return
-   pointers to Objects, and not more scenes. */
+ pointers to Objects, and not more scenes. */
 class Object;
 
 class Scene {
 
- public:
-  Scene( );
-  virtual ~Scene( );
+public:
+  Scene();
+  virtual ~Scene();
 
   enum ObjectType { OBJECT, PARTICLESYSTEM };
 
-  void SetShader( GLuint gShader );
-  GLuint GetShader( void );
+  virtual void Shader( GLuint gShader );
+  GLuint Shader( void );
 
   Object *AddObject( const std::string &objName, GLuint Object_Shader = 0, ObjectType oType = OBJECT );
   void InsertObject( Object *obj );
@@ -28,10 +27,10 @@ class Scene {
   void PopObject( void );
   void DestroyObject( void );
 
-  Object *Next( void );
-  Object *Prev( void );
-  Object *Active( void );
-  
+  Object *next( void );
+  Object *prev( void );
+  Object *active( void ) const;
+
   void Draw( void );
 
   Object *operator[]( const std::string &objname );
@@ -41,13 +40,13 @@ class Scene {
   Scene &operator=( const Scene &copy );
 
 protected:
-  std::list< Object* > list;
-  std::map< std::string, Object* > map;
-  std::list< Object* >::iterator currentObj;
-  
+  std::list< Object* > _list;
+  std::map< std::string, Object* > _map;
+  std::list< Object* >::iterator _currentObj;
+
   /* Handle to the shader ... */
-  GLuint gShader;
-  
+  GLuint _gShader;
+
   /* Internal use */
   void DeleteObject( Object *obj );
 
