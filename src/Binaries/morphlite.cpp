@@ -1,11 +1,13 @@
 /**
- @file morph.cpp
+ @file morphlite.cpp
  @author Nicholas St.Pierre
  @authors John Huston, Nicholas VerVoort, Chris Compton
  @date 2012-12-06
- @brief This is a derivative of our main project file, fly.cpp.
+ @brief This is a derivative of HSC's Fall 2012 project.
  @details This is a tech demo for morphing two objects back and forth.
- This is mostly based on ed angel's code from his book.
+ Original engine based on Ed Angel's book code.
+ This file features a severely reduced linecount for demo purposes.
+ @see terrain.cpp for a fully-featured example.
  **/
 
 /* Multi-platform support and OpenGL headers. */
@@ -25,7 +27,9 @@
 #include "glut_callbacks.h"
 #include "ObjLoader.hpp"
 
-// Initialization: load and compile shaders, initialize camera(s), load models.
+/**
+ * Initialization: load and compile shaders, initialize camera(s), load models.
+ */
 void init() {
   
   // Get handles to the Scene and the Screen.
@@ -81,13 +85,16 @@ void init() {
 
 }
 
+/**
+ * Cleans up our scene graph.
+ */
 void cleanup( void ) {
   Engine::instance()->rootScene()->DestroyObject();
 }
 
-//--------------------------------------------------------------------
-
-// Implementation of drawing the display with regards to a single viewport.
+/**
+ * Implementation of drawing the display with regards to a single viewport.
+ */
 void draw( void ) {
   static Scene *theScene = Engine::instance()->rootScene();
   static Cameras *camList = Engine::instance()->cams();
@@ -96,7 +103,9 @@ void draw( void ) {
   camList->Draw();
 }
 
-// GLUT display callback. Effectively calls displayViewport per-each Camera.
+/**
+ * Display/Render the entire screen.
+ */
 void display( void ) {
   static Cameras *camList = Engine::instance()->cams();
 
@@ -111,6 +120,10 @@ void display( void ) {
 
 }
 
+/**
+ * Compute time since last idle, update camera positions, redisplay.
+ * Apply new animations.
+ */
 void idle( void ) {
 
   static Cameras *camList = Engine::instance()->cams();
@@ -140,6 +153,15 @@ void idle( void ) {
   
 }
 
+/**
+ * This is a bottle morphing demo!
+ * It illustrates simply how to do a simple linear interpolation morph.
+ *
+ * @param argc Not used.
+ * @param argv Not used.
+ * @return EXIT_SUCCESS.
+ *
+ */
 int main( int argc, char **argv ) {
 
   // OS X suppresses events after mouse warp.  This resets the suppression 

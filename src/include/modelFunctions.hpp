@@ -1,3 +1,11 @@
+/**
+ * @file modelFunctions.hpp
+ * @date 2013-03-15
+ * @author Zach Maybury
+ * @brief FIXME: Documentation needed from Zach.
+ * @details Headers for functions related to morphing.
+ */
+
 #ifndef __MODELFUNCTIONS_HPP
 #define __MODELFUNCTIONS_HPP
 
