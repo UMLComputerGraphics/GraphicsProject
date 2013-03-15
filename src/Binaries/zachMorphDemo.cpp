@@ -28,6 +28,7 @@
 #include "model.hpp"
 #include "InitShader.hpp"
 #include "glut_callbacks.h"
+#include "ObjLoader.hpp"
 
 // Initialization: load and compile shaders, initialize camera(s), load models.
 void init() {
@@ -51,14 +52,14 @@ void init() {
   Object *bottle = rootScene->AddObject( "bottle" );
 
   // Use the object loader to actually fill out the vertices and-so-on of the bottle.
-  loadModelFromFile( bottle, "../models/bottle-b.obj" );
+  ObjLoader::loadModelFromFile( bottle, "../models/bottle-b.obj" );
 
   // Objects has-a pointer to an object which is their "morph target."
   // they are created and buffered as follows:
 
   bottle->genMorphTarget( gShader ) ; // this makes a new object and links it to the source object. it returns the addr of the new obj..
   Object *bottleMorphTarget = bottle->getMorphTargetPtr() ; // we can get the addr of the morph object like this, also.
-  loadModelFromFile( bottleMorphTarget, "../models/bottle-a.obj" ); // with this model, we can use all the preexisting Object class functionality
+  ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle-a.obj" ); // with this model, we can use all the preexisting Object class functionality
   //loadModelFromFile( bottle->getMorphTargetPtr(), "../models/bottle-b.obj" ); // with this model, we can use all the preexisting Object class functionality
 
   printf("Number Vertices: %d\n",bottle->getNumberPoints());

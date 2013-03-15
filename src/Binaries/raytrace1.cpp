@@ -17,7 +17,7 @@ GLuint modelView = -1;  // model-view matrix uniform shader variable location
 GLint vRayPosition = -1;
 GLint uCameraPosition = -1;
 
-Camera2 camera(vec4(0.0, 0.0, 0.0, 0.0));
+SpelchkCamera camera(vec4(0.0, 0.0, 0.0, 0.0));
 vec3 cameraPositionVec = vec3(0.0, 0.0, 0.0);
 
 //----------------------------------------------------------------------------

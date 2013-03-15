@@ -1,3 +1,11 @@
+/**
+ * @file KinectInator.cpp
+ * @date 2013-03-13
+ * @authors PrimeSense Ltd, Eric McCann
+ * @brief TODO
+ * @license FIXME
+ */
+
 /**************************************************
 *  ERIC MCCANN WAS HERE AND TURNED THIS INSIDE OUT.
 *  IT WAS ORIGINALY NiSimpleSkeleton.cpp FROM PRIMESENSE SAMPLES

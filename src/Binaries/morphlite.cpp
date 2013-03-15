@@ -1,12 +1,12 @@
 /**
-   @file morph.cpp
-   @author Nicholas St.Pierre
-   @authors John Huston, Nicholas VerVoort, Chris Compton
-   @date 2012-12-06
-   @brief This is a derivative of our main project file, fly.cpp.
-   @details This is a tech demo for morphing two objects back and forth.
-   This is mostly based on ed angel's code from his book.
-**/
+ @file morph.cpp
+ @author Nicholas St.Pierre
+ @authors John Huston, Nicholas VerVoort, Chris Compton
+ @date 2012-12-06
+ @brief This is a derivative of our main project file, fly.cpp.
+ @details This is a tech demo for morphing two objects back and forth.
+ This is mostly based on ed angel's code from his book.
+ **/
 
 /* Multi-platform support and OpenGL headers. */
 #include "globals.h"
@@ -23,6 +23,7 @@
 #include "model.hpp"
 #include "InitShader.hpp"
 #include "glut_callbacks.h"
+#include "ObjLoader.hpp"
 
 // Initialization: load and compile shaders, initialize camera(s), load models.
 void init() {
@@ -32,7 +33,8 @@ void init() {
   Screen *primScreen = Engine::instance()->mainScreen();
 
   // Load shaders and use the resulting shader program. 
-  GLuint gShader = Angel::InitShader( "shaders/vmorph.glsl", "shaders/fmorph.glsl" );
+  GLuint gShader = Angel::InitShader( "shaders/vmorph.glsl",
+                                      "shaders/fmorph.glsl" );
 
   // Let the other objects know which shader to use by default.
   rootScene->Shader( gShader );
@@ -46,7 +48,7 @@ void init() {
   Object *bottle = rootScene->AddObject( "bottle" );
 
   // Use the object loader to actually fill out the vertices and-so-on of the bottle.
-  loadModelFromFile( bottle, "../models/bottle-a.obj" );
+  ObjLoader::loadModelFromFile( bottle, "../models/bottle-a.obj" );
 
   // Scale the bottle down!
   bottle->trans.scale.Set( 0.01 );
@@ -60,18 +62,18 @@ void init() {
   // they are created and buffered as follows:
 
   // this makes a new object and links it to the source object. it returns the addr of the new obj..
-  bottle->genMorphTarget( gShader ) ; 
+  bottle->genMorphTarget( gShader );
 
   // we can get the addr of the morph object like this, also.
-  Object *bottleMorphTarget = bottle->getMorphTargetPtr() ; 
+  Object *bottleMorphTarget = bottle->getMorphTargetPtr();
 
   // with this model, we can use all the preexisting Object class functionality
-  loadModelFromFile( bottleMorphTarget, "../models/bottle-b.obj" ); 
+  ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle-b.obj" );
   bottleMorphTarget->trans.scale.Set( 0.01 );
 
   // YES THIS IS THE REAL OBJECT, NOT THE TARGET. 
   // IT SENDS THE MORPH VERTICES TO THE SHADER, NOT TO THE DRAW LIST TO BE DRAWN!
-  bottle->BufferMorphOnly(); 
+  bottle->BufferMorphOnly();
 
   // Generic OpenGL setup: Enable the depth buffer and set a nice background color.
   glEnable( GL_DEPTH_TEST );
@@ -119,14 +121,14 @@ void idle( void ) {
   Tick.Tock();
 
   // Animation variables.
-  static double timer = 0.0 ;
-  if ( (timer += 0.005 ) > 360.0 ) timer = 0.0 ;
-  float percent = ( sin(timer) + 1 ) / 2 ;
+  static double timer = 0.0;
+  if ( (timer += 0.005) > 360.0 ) timer = 0.0;
+  float percent = (sin( timer ) + 1) / 2;
 
   // Update the morph percentage.
-  (*rootScene)["bottle"]->setMorphPercentage(percent);
+  (*rootScene)["bottle"]->setMorphPercentage( percent );
 
-  if (DEBUG_MOTION) 
+  if ( DEBUG_MOTION)
     fprintf( stderr, "Time since last idle: %lu\n", Tick.Delta() );
 
   // Move all cameras: Apply velocity and acceleration adjustments.
@@ -155,7 +157,8 @@ int main( int argc, char **argv ) {
   glutFullScreen();
   glutSetCursor( GLUT_CURSOR_NONE );
 
-  GLEW_INIT();
+  GLEW_INIT()
+  ;
   init();
 
   /* Register our Callbacks */

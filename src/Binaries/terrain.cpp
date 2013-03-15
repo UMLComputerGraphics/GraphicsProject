@@ -31,6 +31,7 @@
 #include "model.hpp"
 #include "InitShader.hpp"
 #include "glut_callbacks.h"
+#include "ObjLoader.hpp"
 
 // Type Aliases
 using Angel::vec3;
@@ -132,7 +133,7 @@ void init() {
   box->Buffer();
 */
 
-  Sierpinski_Pyramid( pyramid,
+  sierpinskiPyramid( pyramid,
 		      vec4(  0,      1,  0, 1 ),
 		      vec4( -1, -0.999,  1, 1 ),
 		      vec4(  1, -0.999,  1, 1 ),
@@ -141,31 +142,31 @@ void init() {
   pyramid->Buffer();
 
   Object *cube_base = theScene->AddObject( "basecube" );
-  colorcube( cube_base, 1.0 );
+  colorCube( cube_base, 1.0 );
   cube_base->Buffer();
   
   Object *moon_cube = pyramid->AddObject( "moon" );
-  colorcube( moon_cube, 0.5 );
+  colorCube( moon_cube, 0.5 );
   moon_cube->Buffer();
 
   // These models came from VALVE,
   // From their game "Team Fortress 2."
   // The model processing was done in Blender.
   Object *heavy = theScene->AddObject( "heavy" );
-  loadModelFromFile( heavy, "../models/heavyT.obj" );
+  ObjLoader::loadModelFromFile( heavy, "../models/heavyT.obj" );
   heavy->Buffer();
   heavy->trans.scale.Set( 0.10 );
   heavy->trans.offset.Set( 0, 2, 0 );
 
   // Valve's TF2 Medic
   Object *medic = heavy->AddObject( "medic" );
-  loadModelFromFile( medic, "../models/medicT.obj" );
+  ObjLoader::loadModelFromFile( medic, "../models/medicT.obj" );
   medic->trans.offset.Set( 0, 20, 0 );
   medic->Buffer();
 
   // Valve's TF2 Spy
   Object *spy = medic->AddObject( "spy" );
-  loadModelFromFile( spy, "../models/spyT.obj" );
+  ObjLoader::loadModelFromFile( spy, "../models/spyT.obj" );
   spy->trans.offset.Set( 0, 20, 0 );
   spy->Buffer();
 
@@ -203,19 +204,18 @@ void init() {
 
   //Attach a model to the Camera.
   Object *cam = myScreen->_camList.active();
-  loadModelFromFile( cam, "../models/rainbow_dashT.obj" );
+  ObjLoader::loadModelFromFile( cam, "../models/rainbow_dashT.obj" );
   // http://kp-shadowsquirrel.deviantart.com/		
   //   art/Pony-Model-Download-Center-215266264
   cam->Buffer();
   cam->Mode( GL_TRIANGLES );
   cam->trans.scale.Set( 0.05 );
   cam->trans.PreRotation.RotateY( 180 );
-  cam->Propagate(); 
+  cam->Propagate();
 
   // Add the Propagate method to the Scene Graph directly, instead of this:
   // Note: Terrain doesn't/shouldn't have children ...
   terrain->Propagate();
-
 
 }
 
