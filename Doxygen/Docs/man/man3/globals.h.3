@@ -1,0 +1,118 @@
+.TH "globals.h" 3 "Fri Mar 15 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+globals.h \- 
+.PP
+Useful global constants, macros, debugging utilities and preprocessor settings\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <cmath>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBDEGREES_TO_RADIANS\fP   (M_PI/180)"
+.br
+.RI "\fIA constant factor of conversion for Degrees to Radians\&. \fP"
+.ti -1c
+.RI "#define \fBSQRT2\fP   (1\&.41421356237)"
+.br
+.RI "\fIA constant for the square root of 2\&. \fP"
+.ti -1c
+.RI "#define \fBSQRT3\fP   (1\&.73205080757)"
+.br
+.RI "\fIA constant for the square root of 3\&. \fP"
+.ti -1c
+.RI "#define \fBPOW5\fP(X)   ((X)*(X)*(X)*(X)*(X))"
+.br
+.RI "\fI\fBPOW5(X)\fP returns X^5\&. \fP"
+.ti -1c
+.RI "#define \fBDEBUG\fP   false"
+.br
+.RI "\fIDEBUG Controls whether or not extra DEBUG messages are printed out\&. \fP"
+.ti -1c
+.RI "#define \fBDEBUG_MOTION\fP   (false)"
+.br
+.RI "\fIDEBUG_MOTION controls some additional debug messages for acceleration/velocity\&. \fP"
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "const float \fBDIVIDE_BY_ZERO_TOLERANCE\fP = float( 1\&.0e-07 )"
+.br
+.RI "\fIHow close can a number be to zero before it should be considered 'zero'? \fP"
+.ti -1c
+.RI "static const bool \fBPOSTMULT\fP = true"
+.br
+.RI "\fIdefines if we are, or are not using a Post-Multiplication system\&. \fP"
+.ti -1c
+.RI "static const bool \fBPREMULT\fP = false"
+.br
+.RI "\fIdefines if we are, or are not using a Pre-Multiplication system\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Useful global constants, macros, debugging utilities and preprocessor settings\&. 
+
+\fBAuthor:\fP
+.RS 4
+John Huston 
+.RE
+.PP
+\fBDate:\fP
+.RS 4
+2013-03-13 
+.RE
+.PP
+
+.PP
+Definition in file \fBglobals\&.h\fP\&.
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define DEGREES_TO_RADIANS   (M_PI/180)"
+
+.PP
+A constant factor of conversion for Degrees to Radians\&. 
+.PP
+Definition at line 14 of file globals\&.h\&.
+.SS "#define POW5(X)   ((X)*(X)*(X)*(X)*(X))"
+
+.PP
+\fBPOW5(X)\fP returns X^5\&. It's quicker than pow(x,5)! 
+.PP
+Definition at line 20 of file globals\&.h\&.
+.SS "#define SQRT2   (1\&.41421356237)"
+
+.PP
+A constant for the square root of 2\&. 
+.PP
+Definition at line 16 of file globals\&.h\&.
+.SS "#define SQRT3   (1\&.73205080757)"
+
+.PP
+A constant for the square root of 3\&. 
+.PP
+Definition at line 18 of file globals\&.h\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const bool POSTMULT = true\fC [static]\fP"
+
+.PP
+defines if we are, or are not using a Post-Multiplication system\&. 
+.PP
+Definition at line 43 of file globals\&.h\&.
+.SS "const bool PREMULT = false\fC [static]\fP"
+
+.PP
+defines if we are, or are not using a Pre-Multiplication system\&. 
+.PP
+Definition at line 45 of file globals\&.h\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for HyperGrafx from the source code\&.

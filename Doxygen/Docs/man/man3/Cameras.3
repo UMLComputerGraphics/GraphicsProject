@@ -1,0 +1,371 @@
+.TH "Cameras" 3 "Fri Mar 15 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Cameras \- 
+.PP
+The \fBCameras\fP class represents a group of logical cameras for a model view\&. Each camera possesses its own current viewing angle, and an absolute position in space\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <Cameras\&.hpp>\fP
+.PP
+Inherits \fBScene\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBCameras\fP (void)"
+.br
+.RI "\fIDefault constructor\&. \fP"
+.ti -1c
+.RI "\fB~Cameras\fP (void)"
+.br
+.RI "\fIDefault destructor\&. \fP"
+.ti -1c
+.RI "\fBCamera\fP * \fBaddCamera\fP (const std::string &name)"
+.br
+.RI "\fIaddCamera takes a name for a camera and returns a handle to a newly created camera\&. \fP"
+.ti -1c
+.RI "void \fBpopCamera\fP (void)"
+.br
+.RI "\fIpopCamera removes the most recently added \fBCamera\fP from the scene\&. \fP"
+.ti -1c
+.RI "\fBCamera\fP * \fBnext\fP (void)"
+.br
+.RI "\fISets the active camera to the next available one in the collection\&. \fP"
+.ti -1c
+.RI "\fBCamera\fP * \fBprev\fP (void)"
+.br
+.RI "\fISets the active \fBCamera\fP to the previous available one in the collection\&. \fP"
+.ti -1c
+.RI "\fBCamera\fP * \fBactive\fP (void) const "
+.br
+.RI "\fIactive returns the \fBCamera\fP in the collection that is considered 'active'\&. \fP"
+.ti -1c
+.RI "size_t \fBnumCameras\fP (void) const "
+.br
+.RI "\fInumCameras fetches the number of \fBCameras\fP in the collection\&. \fP"
+.ti -1c
+.RI "void \fBidleMotion\fP (void)"
+.br
+.RI "\fIidleMotion calls the idle method on all child cameras\&. \fP"
+.ti -1c
+.RI "void \fBresize\fP (int width, int height)"
+.br
+.RI "\fIresize informs the \fBCameras\fP collection of the new window size\&. \fP"
+.ti -1c
+.RI "void \fBcalculateViewports\fP (void)"
+.br
+.RI "\fIFor each \fBCamera\fP in the collection, computes the position and size of that \fBCamera\fP's viewport in a split-screen, single-window configuration\&. \fP"
+.ti -1c
+.RI "void \fBview\fP (void(*draw_func)(void))"
+.br
+.RI "\fIview calls the view method on all child cameras, followed by the provided draw function\&. \fP"
+.ti -1c
+.RI "\fBCamera\fP * \fBobj2Cam\fP (std::list< \fBObject\fP * >::iterator &it)"
+.br
+.RI "\fIobj2Cam is a gross hack; the function is used as a utility to convert \fBObject\fP pointers to \fBCamera\fP pointers safely\&. \fP"
+.ti -1c
+.RI "virtual void \fBShader\fP (GLuint gShader)"
+.br
+.RI "\fISets the Default shader for the scene\&. \fP"
+.ti -1c
+.RI "GLuint \fBShader\fP (void)"
+.br
+.RI "\fIRetrieves the handle for the default shader for the scene\&. \fP"
+.ti -1c
+.RI "\fBObject\fP * \fBAddObject\fP (const std::string &objName, GLuint Object_Shader=0)"
+.br
+.ti -1c
+.RI "void \fBDelObject\fP (const std::string &objName)"
+.br
+.ti -1c
+.RI "void \fBDelObject\fP (void)"
+.br
+.ti -1c
+.RI "void \fBPopObject\fP (void)"
+.br
+.ti -1c
+.RI "void \fBDestroyObject\fP (void)"
+.br
+.RI "\fICompletely remove this object and all his children\&. \fP"
+.ti -1c
+.RI "void \fBDraw\fP (void)"
+.br
+.ti -1c
+.RI "\fBObject\fP * \fBoperator[]\fP (const std::string &objname)"
+.br
+.in -1c
+.SS "Protected Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBDeleteObject\fP (\fBObject\fP *obj)"
+.br
+.RI "\fIDeleteObject is the actual implementation function that will remove an \fBObject\fP from the \fBScene\fP list and \fBScene\fP map, then free the object\&. \fP"
+.ti -1c
+.RI "void \fBInsertObject\fP (const std::string name, \fBObject\fP *obj)"
+.br
+.in -1c
+.SS "Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "std::list< \fBObject\fP * > \fB_list\fP"
+.br
+.ti -1c
+.RI "std::map< std::string, \fBObject\fP * > \fB_map\fP"
+.br
+.ti -1c
+.RI "std::list< \fBObject\fP * >::iterator \fB_currentObj\fP"
+.br
+.ti -1c
+.RI "GLuint \fB_gShader\fP"
+.br
+.in -1c
+.SS "Private Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBAngel::vec2\fP \fB_size\fP"
+.br
+.RI "\fI_size is a simple vec2 (x,y) that contains the size of the screen\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+The \fBCameras\fP class represents a group of logical cameras for a model view\&. Each camera possesses its own current viewing angle, and an absolute position in space\&. 
+
+\fBAuthor:\fP
+.RS 4
+John Huston, jhuston@cs.uml.edu 
+.RE
+.PP
+\fBSince:\fP
+.RS 4
+28 Nov 2012
+.RE
+.PP
+Each \fBCamera\fP possesses its own CTM which can be resent to the GPU at will\&. 
+.PP
+Definition at line 29 of file Cameras\&.hpp\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Cameras::Cameras (void)"
+
+.PP
+Default constructor\&. Nothing special\&. 
+.PP
+Definition at line 19 of file Cameras\&.cpp\&.
+.SS "Cameras::~Cameras (void)"
+
+.PP
+Default destructor\&. Nothing special here, either\&. 
+.PP
+Definition at line 26 of file Cameras\&.cpp\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "\fBCamera\fP * Cameras::active (void) const"
+
+.PP
+active returns the \fBCamera\fP in the collection that is considered 'active'\&. \fBReturns:\fP
+.RS 4
+A pointer to the currently selected, active \fBCamera\fP\&. 
+.RE
+.PP
+
+.PP
+Definition at line 86 of file Cameras\&.cpp\&.
+.SS "\fBCamera\fP * Cameras::addCamera (const std::string &name)"
+
+.PP
+addCamera takes a name for a camera and returns a handle to a newly created camera\&. \fBParameters:\fP
+.RS 4
+\fIname\fP The name of the new camera to create\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A Pointer to a newly created \fBCamera\fP object\&. 
+.RE
+.PP
+
+.PP
+Definition at line 35 of file Cameras\&.cpp\&.
+.SS "void Cameras::calculateViewports (void)"
+
+.PP
+For each \fBCamera\fP in the collection, computes the position and size of that \fBCamera\fP's viewport in a split-screen, single-window configuration\&. The \fBCamera\fP object is updated with the new information\&.
+.PP
+\fBReturns:\fP
+.RS 4
+void\&.
+.PP
+void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 141 of file Cameras\&.cpp\&.
+.SS "void Scene::DeleteObject (\fBObject\fP *obj)\fC [protected]\fP, \fC [inherited]\fP"
+
+.PP
+DeleteObject is the actual implementation function that will remove an \fBObject\fP from the \fBScene\fP list and \fBScene\fP map, then free the object\&. \fBParameters:\fP
+.RS 4
+\fIobj\fP The pointer to the object to free\&. 
+.RE
+.PP
+
+.PP
+Definition at line 76 of file Scene\&.cpp\&.
+.SS "void Cameras::idleMotion (void)"
+
+.PP
+idleMotion calls the idle method on all child cameras\&. Intended to be called during the \fBidle()\fP loop in GLUT\&.
+.PP
+\fBReturns:\fP
+.RS 4
+void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 111 of file Cameras\&.cpp\&.
+.SS "\fBCamera\fP * Cameras::next (void)"
+
+.PP
+Sets the active camera to the next available one in the collection\&. Sets the active \fBCamera\fP to the next available one in the collection\&.
+.PP
+\fBReturns:\fP
+.RS 4
+A pointer to the newly active \fBCamera\fP\&. 
+.RE
+.PP
+
+.PP
+Definition at line 64 of file Cameras\&.cpp\&.
+.SS "size_t Cameras::numCameras (void) const"
+
+.PP
+numCameras fetches the number of \fBCameras\fP in the collection\&. \fBReturns:\fP
+.RS 4
+an unsigned integer, the number of \fBCameras\fP in the collection\&. 
+.RE
+.PP
+
+.PP
+Definition at line 101 of file Cameras\&.cpp\&.
+.SS "\fBCamera\fP * Cameras::obj2Cam (std::list< \fBObject\fP * >::iterator &it)"
+
+.PP
+obj2Cam is a gross hack; the function is used as a utility to convert \fBObject\fP pointers to \fBCamera\fP pointers safely\&. FIXME: Refactor the inheritance here to make this less hacky\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIit\fP A list<Object*> iterator that points to the \fBObject\fP\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A pointer to a \fBCamera\fP object\&. 
+.RE
+.PP
+
+.PP
+Definition at line 249 of file Cameras\&.cpp\&.
+.SS "void Cameras::popCamera (void)"
+
+.PP
+popCamera removes the most recently added \fBCamera\fP from the scene\&. \fBReturns:\fP
+.RS 4
+void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 50 of file Cameras\&.cpp\&.
+.SS "\fBCamera\fP * Cameras::prev (void)"
+
+.PP
+Sets the active \fBCamera\fP to the previous available one in the collection\&. \fBReturns:\fP
+.RS 4
+A pointer to the newly active \fBCamera\fP\&. 
+.RE
+.PP
+
+.PP
+Definition at line 75 of file Cameras\&.cpp\&.
+.SS "void Cameras::resize (intwidth, intheight)"
+
+.PP
+resize informs the \fBCameras\fP collection of the new window size\&. Intended to be called from the GLUT main loop\&. This method also invokes \fBCameras::calculateViewports\fP\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIwidth\fP The new window width\&. 
+.br
+\fIheight\fP The new window height\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 128 of file Cameras\&.cpp\&.
+.SS "void Scene::Shader (GLuintgShader)\fC [virtual]\fP, \fC [inherited]\fP"
+
+.PP
+Sets the Default shader for the scene\&. In the context of inheritance by objects, This sets the shader to use to render the physical object\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIgShader\fP The GLuint handle to the shader to use\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+void\&. 
+.RE
+.PP
+
+.PP
+Reimplemented in \fBObject\fP\&.
+.PP
+Definition at line 54 of file Scene\&.cpp\&.
+.SS "GLuint Scene::Shader (void)\fC [inherited]\fP"
+
+.PP
+Retrieves the handle for the default shader for the scene\&. In the context of inheritance by objects, This retrieves the shader handle to use to draw the object\&.
+.PP
+\fBReturns:\fP
+.RS 4
+A GLuint handle to the shader program\&. 
+.RE
+.PP
+
+.PP
+Definition at line 66 of file Scene\&.cpp\&.
+.SS "void Cameras::view (void(*)(void)draw_func)"
+
+.PP
+view calls the view method on all child cameras, followed by the provided draw function\&. Intended to be called during the \fBdisplay()\fP portion of the GLUT main loop\&.
+.PP
+\fBview()\fP is intended to 'set up' the object, but not actually draw it\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdraw_func\fP A pointer to a function that will actually draw the object\&. 
+.RE
+.PP
+
+.PP
+Definition at line 232 of file Cameras\&.cpp\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for HyperGrafx from the source code\&.

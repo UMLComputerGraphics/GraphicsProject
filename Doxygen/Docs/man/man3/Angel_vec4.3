@@ -1,0 +1,108 @@
+.TH "Angel::vec4" 3 "Fri Mar 15 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Angel::vec4 \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvec4\fP (GLfloat s=GLfloat(0\&.0))"
+.br
+.ti -1c
+.RI "\fBvec4\fP (GLfloat x, GLfloat y, GLfloat z, GLfloat w)"
+.br
+.ti -1c
+.RI "\fBvec4\fP (const \fBvec4\fP &v)"
+.br
+.ti -1c
+.RI "\fBvec4\fP (const \fBvec3\fP &v, const float w=1\&.0)"
+.br
+.ti -1c
+.RI "\fBvec4\fP (const \fBvec2\fP &v, const float z, const float w)"
+.br
+.ti -1c
+.RI "GLfloat & \fBoperator[]\fP (int i)"
+.br
+.ti -1c
+.RI "const GLfloat \fBoperator[]\fP (int i) const "
+.br
+.ti -1c
+.RI "\fBvec4\fP \fBoperator-\fP () const "
+.br
+.ti -1c
+.RI "\fBvec4\fP \fBoperator+\fP (const \fBvec4\fP &v) const "
+.br
+.ti -1c
+.RI "\fBvec4\fP \fBoperator-\fP (const \fBvec4\fP &v) const "
+.br
+.ti -1c
+.RI "\fBvec4\fP \fBoperator*\fP (const GLfloat s) const "
+.br
+.ti -1c
+.RI "\fBvec4\fP \fBoperator*\fP (const \fBvec4\fP &v) const "
+.br
+.ti -1c
+.RI "\fBvec4\fP \fBoperator/\fP (const GLfloat s) const "
+.br
+.ti -1c
+.RI "\fBvec4\fP & \fBoperator+=\fP (const \fBvec4\fP &v)"
+.br
+.ti -1c
+.RI "\fBvec4\fP & \fBoperator-=\fP (const \fBvec4\fP &v)"
+.br
+.ti -1c
+.RI "\fBvec4\fP & \fBoperator*=\fP (const GLfloat s)"
+.br
+.ti -1c
+.RI "\fBvec4\fP & \fBoperator*=\fP (const \fBvec4\fP &v)"
+.br
+.ti -1c
+.RI "\fBvec4\fP & \fBoperator/=\fP (const GLfloat s)"
+.br
+.ti -1c
+.RI "\fBoperator const GLfloat *\fP () const "
+.br
+.ti -1c
+.RI "\fBoperator GLfloat *\fP ()"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "GLfloat \fBx\fP"
+.br
+.ti -1c
+.RI "GLfloat \fBy\fP"
+.br
+.ti -1c
+.RI "GLfloat \fBz\fP"
+.br
+.ti -1c
+.RI "GLfloat \fBw\fP"
+.br
+.in -1c
+.SS "Friends"
+
+.in +1c
+.ti -1c
+.RI "\fBvec4\fP \fBoperator*\fP (const GLfloat s, const \fBvec4\fP &v)"
+.br
+.ti -1c
+.RI "std::ostream & \fBoperator<<\fP (std::ostream &os, const \fBvec4\fP &v)"
+.br
+.ti -1c
+.RI "std::istream & \fBoperator>>\fP (std::istream &is, \fBvec4\fP &v)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 111 of file vec\&.hpp\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for HyperGrafx from the source code\&.

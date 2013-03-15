@@ -1,0 +1,111 @@
+.TH "KinectInator.cpp" 3 "Fri Mar 15 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+KinectInator.cpp \- 
+.PP
+TODO  FIXME\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'KinectInator\&.hpp'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBCHECK_RC\fP(nRetVal, what)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "XnBool \fBfileExists\fP (const char *fn)"
+.br
+.ti -1c
+.RI "void \fBprinthead\fP (int user, double x, double y, double z)"
+.br
+.ti -1c
+.RI "void \fBnoop\fP (int user, double x, double y, double z)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "boost::function< void 
+.br
+XN_CALLBACK_TYPE(xn::UserGenerator 
+.br
+&, XnUserID, void *)> \fBTiemSpelchk::_new_user\fP"
+.br
+.ti -1c
+.RI "boost::function< void 
+.br
+XN_CALLBACK_TYPE(xn::UserGenerator 
+.br
+&, XnUserID, void *)> \fBTiemSpelchk::_lost_user\fP"
+.br
+.ti -1c
+.RI "boost::function< void 
+.br
+XN_CALLBACK_TYPE(xn::PoseDetectionCapability 
+.br
+&, const XnChar *, XnUserID, 
+.br
+void *)> \fBTiemSpelchk::_pose\fP"
+.br
+.ti -1c
+.RI "boost::function< void 
+.br
+XN_CALLBACK_TYPE(xn::SkeletonCapability 
+.br
+&, XnUserID, void *)> \fBTiemSpelchk::_cal_start\fP"
+.br
+.ti -1c
+.RI "boost::function< void 
+.br
+XN_CALLBACK_TYPE(xn::SkeletonCapability 
+.br
+&, XnUserID, 
+.br
+XnCalibrationStatus, void *)> \fBTiemSpelchk::_cal_complete\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+TODO  FIXME\&. 
+
+\fBDate:\fP
+.RS 4
+2013-03-13 
+.RE
+.PP
+\fBAuthors:\fP
+.RS 4
+PrimeSense Ltd, Eric McCann 
+.RE
+.PP
+
+.PP
+Definition in file \fBKinectInator\&.cpp\fP\&.
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define CHECK_RC(nRetVal, what)"
+\fBValue:\fP
+.PP
+.nf
+if (nRetVal != XN_STATUS_OK)                  \
+{                                   \
+    printf('%s failed: %s\n', what, xnGetStatusString(nRetVal));    \
+    return nRetVal;                         \
+}
+.fi
+.PP
+Definition at line 104 of file KinectInator\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for HyperGrafx from the source code\&.

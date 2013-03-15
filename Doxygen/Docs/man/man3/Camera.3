@@ -1,0 +1,1309 @@
+.TH "Camera" 3 "Fri Mar 15 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Camera \- 
+.PP
+The \fBCamera\fP class represents a logical camera in a model view, which posesses a current viewing angle and an absolute position in space as its state\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <Camera\&.hpp>\fP
+.PP
+Inherits \fBObject\fP\&.
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "enum \fBDirection\fP { \fBDIR_FORWARD\fP, \fBDIR_BACKWARD\fP, \fBDIR_LEFT\fP, \fBDIR_RIGHT\fP, \fBDIR_UP\fP, \fBDIR_DOWN\fP, \fBDIR_END\fP, \fBDIR_BEGIN\fP = DIR_FORWARD }"
+.br
+.RI "\fIThe Direction enumeration lists all of the possible directions the camera may travel in\&. \fP"
+.ti -1c
+.RI "enum \fBViewType\fP { \fBPERSPECTIVE\fP, \fBORTHO\fP, \fBORTHO2D\fP, \fBIDENTITY\fP, \fBFRUSTUM\fP }"
+.br
+.RI "\fIThe ViewType enumeration lists the various possibilities for the current viewing mode that can be switched between\&. \fP"
+.ti -1c
+.RI "enum \fBUniforms\fP { \fBBEGIN\fP = Object::END, \fBTRANSLATION\fP = BEGIN, \fBROTATION\fP, \fBVIEW\fP, \fBCTM\fP, \fBEND\fP }"
+.br
+.RI "\fIThe glsl_var enumeration lists the various variables the \fBCamera\fP class is capable of sending to the shader\&. \fP"
+.ti -1c
+.RI "typedef enum \fBCamera::Direction\fP \fBDirection\fP"
+.br
+.RI "\fIThe Direction enumeration lists all of the possible directions the camera may travel in\&. \fP"
+.ti -1c
+.RI "typedef enum \fBCamera::ViewType\fP \fBViewType\fP"
+.br
+.RI "\fIThe ViewType enumeration lists the various possibilities for the current viewing mode that can be switched between\&. \fP"
+.ti -1c
+.RI "typedef enum \fBCamera::Uniforms\fP \fBUniform\fP"
+.br
+.RI "\fIThe glsl_var enumeration lists the various variables the \fBCamera\fP class is capable of sending to the shader\&. \fP"
+.ti -1c
+.RI "typedef const unsigned int \fBUniformEnum\fP"
+.br
+.ti -1c
+.RI "typedef std::map
+.br
+< Object::UniformEnum, 
+.br
+std::string > \fBUniformMap\fP"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBCamera\fP (const std::string &\fBname\fP, GLuint gShader, float \fBx\fP=0\&.0, float \fBy\fP=0\&.0, float \fBz\fP=0\&.0)"
+.br
+.RI "\fIInitialization Constructor; sets the x,y,z coordinates explicitly\&. \fP"
+.ti -1c
+.RI "\fBCamera\fP (const std::string &\fBname\fP, GLuint gShader, \fBvec3\fP &in)"
+.br
+.RI "\fIInitialization Constructor, uses a vec3 as its initial coordinates\&. \fP"
+.ti -1c
+.RI "\fBCamera\fP (const std::string &\fBname\fP, GLuint gShader, \fBvec4\fP &in)"
+.br
+.RI "\fIInitialization Constructor, uses a vec4 as its initial coordinates\&. \fP"
+.ti -1c
+.RI "virtual \fB~Camera\fP (void)"
+.br
+.RI "\fIDefault destructor\&. \fP"
+.ti -1c
+.RI "void \fBx\fP (const float &in, const bool &update=true)"
+.br
+.RI "\fISets the x coordinate of the camera\&. \fP"
+.ti -1c
+.RI "void \fBy\fP (const float &in, const bool &update=true)"
+.br
+.RI "\fISets the y coordinate of the camera\&. \fP"
+.ti -1c
+.RI "void \fBz\fP (const float &in, const bool &update=true)"
+.br
+.RI "\fISets the z coordinate of the camera\&. \fP"
+.ti -1c
+.RI "void \fBpos\fP (const float &\fBx\fP, const float &\fBy\fP, const float &\fBz\fP, const bool &update=true)"
+.br
+.RI "\fISets the absolute position of the camera\&. \fP"
+.ti -1c
+.RI "void \fBpos\fP (const \fBvec3\fP &in, const bool &update=true)"
+.br
+.RI "\fISets the absolute position of the camera\&. \fP"
+.ti -1c
+.RI "void \fBpos\fP (const \fBvec4\fP &in, const bool &update=true)"
+.br
+.RI "\fISets the absolute position of the camera\&. \fP"
+.ti -1c
+.RI "void \fBdX\fP (const float &by, const bool &update=true)"
+.br
+.RI "\fIMoves the camera along the x axis\&. \fP"
+.ti -1c
+.RI "void \fBdY\fP (const float &by, const bool &update=true)"
+.br
+.RI "\fIMoves the camera along the y axis\&. \fP"
+.ti -1c
+.RI "void \fBdZ\fP (const float &by, const bool &update=true)"
+.br
+.RI "\fIMoves the camera along the z axis\&. \fP"
+.ti -1c
+.RI "void \fBdPos\fP (const float &\fBx\fP, const float &\fBy\fP, const float &\fBz\fP)"
+.br
+.RI "\fIMoves the camera along the x, y, and z axes\&. \fP"
+.ti -1c
+.RI "void \fBdPos\fP (const \fBvec3\fP &by)"
+.br
+.RI "\fIMoves the camera along the x, y, and z axes\&. \fP"
+.ti -1c
+.RI "void \fBdPos\fP (const \fBvec4\fP &by)"
+.br
+.RI "\fIMoves the camera along the x, y, and z axes\&. \fP"
+.ti -1c
+.RI "void \fBfieldOfView\fP (const float &fovy)"
+.br
+.RI "\fIfieldOfView sets the current camera Field-of-view angle\&. \fP"
+.ti -1c
+.RI "float \fBfieldOfView\fP (void) const "
+.br
+.RI "\fI\fBfieldOfView()\fP gets the current camera Field-of-view angle\&. \fP"
+.ti -1c
+.RI "void \fBadjustFieldOfView\fP (const float &by)"
+.br
+.RI "\fIadjustFieldOfView adjusts the field of view angle up or down by an amount\&. \fP"
+.ti -1c
+.RI "void \fBchangePerspective\fP (const \fBViewType\fP &vType)"
+.br
+.RI "\fIchangePerspective changes the current perspective of the camera\&. \fP"
+.ti -1c
+.RI "void \fBrefreshPerspective\fP (void)"
+.br
+.RI "\fIrefreshPerspective re-generates the current view/perspective matrix of the camera\&. \fP"
+.ti -1c
+.RI "void \fBviewport\fP (size_t _X, size_t _Y, size_t _width, size_t _height)"
+.br
+.RI "\fIviewport instructs this camera what his expected drawing window will be\&. \fP"
+.ti -1c
+.RI "void \fBsway\fP (const float &by)"
+.br
+.RI "\fIAdjusts the camera's x coordinate relative to its current position\&. \fP"
+.ti -1c
+.RI "void \fBsurge\fP (const float &by)"
+.br
+.RI "\fIAdjusts the camera's z coordinate relative to its current position\&. \fP"
+.ti -1c
+.RI "void \fBheave\fP (const float &by)"
+.br
+.RI "\fIAdjusts the camera's y coordinate relative to its current position\&. \fP"
+.ti -1c
+.RI "void \fBpitch\fP (const float &by, const bool &fixed=false)"
+.br
+.RI "\fIpitch adjusts the x axis rotation; up/down look\&. \fP"
+.ti -1c
+.RI "void \fByaw\fP (const float &by, const bool &fixed=false)"
+.br
+.RI "\fIyaw adjusts the y axis rotation; left/right look\&. \fP"
+.ti -1c
+.RI "void \fBroll\fP (const float &by, const bool &fixed=false)"
+.br
+.RI "\fIroll adjusts the z axis rotation; tilt or lean left/right\&. \fP"
+.ti -1c
+.RI "void \fBmove\fP (const \fBCamera::Direction\fP &Dir)"
+.br
+.RI "\fImove instructs the camera to begin moving in the specified direction\&. \fP"
+.ti -1c
+.RI "void \fBstop\fP (const \fBCamera::Direction\fP &Dir)"
+.br
+.RI "\fIstop instructs the camera to stop moving in the specified direction\&. \fP"
+.ti -1c
+.RI "void \fBidle\fP (void)"
+.br
+.RI "\fIidle moves the camera forward in whichever directions it is configured to move in\&. \fP"
+.ti -1c
+.RI "void \fBaccel\fP (const \fBvec3\fP &accel)"
+.br
+.RI "\fIaccel takes an input vec2 which represents an acceleration, and applies it to the motion vectors with regards to the maximum acceleration and the maximum speed of the camera\&. \fP"
+.ti -1c
+.RI "float \fBx\fP (void) const "
+.br
+.RI "\fI\fBx()\fP returns the current position of the camera in model coordinates\&. \fP"
+.ti -1c
+.RI "float \fBy\fP (void) const "
+.br
+.RI "\fI\fBy()\fP returns the current position of the camera in model coordinates\&. \fP"
+.ti -1c
+.RI "float \fBz\fP (void) const "
+.br
+.RI "\fI\fBz()\fP returns the current position of the camera in model coordinates\&. \fP"
+.ti -1c
+.RI "\fBvec4\fP \fBpos\fP (void) const "
+.br
+.RI "\fI\fBpos()\fP gets the current camera position in model coordinates\&. \fP"
+.ti -1c
+.RI "virtual void \fBsend\fP (Object::UniformEnum which)"
+.br
+.RI "\fIsend will send a glsl variable to the shader\&. \fP"
+.ti -1c
+.RI "void \fBview\fP (void)"
+.br
+.RI "\fIview will instruct OpenGL of the viewport we want, and then send all of our current matrices to the shader for rendering\&. \fP"
+.ti -1c
+.RI "void \fBresetRotation\fP (void)"
+.br
+.RI "\fIresetRotation adjusts the camera's rotational state back to its default state (The Identity Matrix\&.) \fP"
+.ti -1c
+.RI "void \fBDraw\fP (void)"
+.br
+.ti -1c
+.RI "void \fBBuffer\fP (void)"
+.br
+.ti -1c
+.RI "void \fBBufferMorphOnly\fP (void)"
+.br
+.ti -1c
+.RI "void \fBMode\fP (GLenum new_node)"
+.br
+.ti -1c
+.RI "void \fBTexture\fP (const char **filename)"
+.br
+.ti -1c
+.RI "const std::string & \fBName\fP (void) const "
+.br
+.ti -1c
+.RI "virtual void \fBLink\fP (UniformEnum which, const std::string &\fBname\fP)"
+.br
+.ti -1c
+.RI "virtual GLuint \fBShader\fP (void)"
+.br
+.RI "\fIReturns the \fBObject\fP's current Shader\&. \fP"
+.ti -1c
+.RI "virtual void \fBShader\fP (GLuint newShader)"
+.br
+.RI "\fISets the shader to be used by this object\&. \fP"
+.ti -1c
+.RI "void \fBAnimation\fP (void(*anim_func)(\fBTransCache\fP &arg))"
+.br
+.ti -1c
+.RI "void \fBPropagate\fP (void)"
+.br
+.ti -1c
+.RI "\fBvec4\fP \fBGetPosition\fP () const "
+.br
+.RI "\fIreturns the position of the object this makes the lighting implementation much easier\&.\&.\&. \fP"
+.ti -1c
+.RI "\fBObject\fP * \fBgetMorphTargetPtr\fP () const "
+.br
+.ti -1c
+.RI "\fBObject\fP * \fBgenMorphTarget\fP (GLuint)"
+.br
+.ti -1c
+.RI "float \fBgetMorphPercentage\fP () const "
+.br
+.ti -1c
+.RI "void \fBsetMorphPercentage\fP (const float)"
+.br
+.ti -1c
+.RI "void \fBdestroyMorphTarget\fP ()"
+.br
+.ti -1c
+.RI "int \fBgetNumberPoints\fP ()"
+.br
+.ti -1c
+.RI "\fBObject\fP * \fBAddObject\fP (const std::string &objName, GLuint Object_Shader=0)"
+.br
+.ti -1c
+.RI "void \fBDelObject\fP (const std::string &objName)"
+.br
+.ti -1c
+.RI "void \fBDelObject\fP (void)"
+.br
+.ti -1c
+.RI "void \fBPopObject\fP (void)"
+.br
+.ti -1c
+.RI "void \fBDestroyObject\fP (void)"
+.br
+.RI "\fICompletely remove this object and all his children\&. \fP"
+.ti -1c
+.RI "\fBObject\fP * \fBnext\fP (void)"
+.br
+.ti -1c
+.RI "\fBObject\fP * \fBprev\fP (void)"
+.br
+.ti -1c
+.RI "\fBObject\fP * \fBactive\fP (void) const "
+.br
+.ti -1c
+.RI "\fBObject\fP * \fBoperator[]\fP (const std::string &objname)"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "std::vector< \fBAngel::vec4\fP > \fBpoints\fP"
+.br
+.ti -1c
+.RI "std::vector< \fBAngel::vec3\fP > \fBnormals\fP"
+.br
+.ti -1c
+.RI "std::vector< unsigned int > \fBindices\fP"
+.br
+.ti -1c
+.RI "std::vector< \fBAngel::vec4\fP > \fBcolors\fP"
+.br
+.ti -1c
+.RI "std::vector< \fBAngel::vec2\fP > \fBtexcoords\fP"
+.br
+.ti -1c
+.RI "\fBTransCache\fP \fBtrans\fP"
+.br
+.in -1c
+.SS "Protected Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBDeleteObject\fP (\fBObject\fP *obj)"
+.br
+.RI "\fIDeleteObject is the actual implementation function that will remove an \fBObject\fP from the \fBScene\fP list and \fBScene\fP map, then free the object\&. \fP"
+.ti -1c
+.RI "void \fBInsertObject\fP (const std::string \fBname\fP, \fBObject\fP *obj)"
+.br
+.in -1c
+.SS "Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "std::string \fBname\fP"
+.br
+.RI "\fIname is used as an identifying handle for the object\&. \fP"
+.ti -1c
+.RI "GLuint \fBvao\fP"
+.br
+.RI "\fIVertex Array \fBObject\fP handle identifying our buffers/object\&. \fP"
+.ti -1c
+.RI "GLuint \fBbuffer\fP [NUM_BUFFERS]"
+.br
+.RI "\fIHandles to our buffers (Vertices, TexUVs, etc\&.) \fP"
+.ti -1c
+.RI "GLenum \fBdraw_mode\fP"
+.br
+.RI "\fIDrawing mode for this object\&. \fP"
+.ti -1c
+.RI "bool \fBisTextured\fP"
+.br
+.RI "\fIIs this object textured? \fP"
+.ti -1c
+.RI "float \fBmorphPercentage\fP"
+.br
+.RI "\fIMorphing/Tweening Things\&. \fP"
+.ti -1c
+.RI "\fBObject\fP * \fBmorphTarget\fP"
+.br
+.ti -1c
+.RI "std::map< Object::UniformEnum, 
+.br
+std::string > \fB_uniformMap\fP"
+.br
+.ti -1c
+.RI "std::vector< GLint > \fBhandles\fP"
+.br
+.RI "\fIHandles to Uniforms on the shader\&. \fP"
+.ti -1c
+.RI "std::list< \fBObject\fP * > \fB_list\fP"
+.br
+.ti -1c
+.RI "std::map< std::string, \fBObject\fP * > \fB_map\fP"
+.br
+.ti -1c
+.RI "std::list< \fBObject\fP * >::iterator \fB_currentObj\fP"
+.br
+.ti -1c
+.RI "GLuint \fB_gShader\fP"
+.br
+.in -1c
+.SS "Private Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBadjustRotation\fP (const \fBmat4\fP &adjustment, const bool &fixed=false)"
+.br
+.RI "\fIadjustRotation is an internal function that rotates the camera\&. \fP"
+.ti -1c
+.RI "void \fBcommonInit\fP (void)"
+.br
+.RI "\fIcommonInit is a private function that initializes local object attributes\&. \fP"
+.in -1c
+.SS "Private Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBmat4\fP \fB_view\fP"
+.br
+.RI "\fIThe current view matrix (defaultly perspective) for this camera\&. \fP"
+.ti -1c
+.RI "\fBTransCache\fP \fB_ctm\fP"
+.br
+.RI "\fIThe Current \fBTransformation\fP state for this \fBCamera\fP\&. \fP"
+.ti -1c
+.RI "\fBViewType\fP \fB_currentView\fP"
+.br
+.RI "\fIThe current viewing mode type\&. \fP"
+.ti -1c
+.RI "GLfloat \fB_speed\fP"
+.br
+.RI "\fICurrent Speed of camera motion\&. \fP"
+.ti -1c
+.RI "\fBvec3\fP \fB_velocity\fP"
+.br
+.RI "\fICurrent Velocity of camera motion\&. \fP"
+.ti -1c
+.RI "GLfloat \fB_speed_cap\fP"
+.br
+.RI "\fICurrent Speed Capacity: (speed/MaxSpeed) \fP"
+.ti -1c
+.RI "GLfloat \fB_maxAccel\fP"
+.br
+.RI "\fIMaximum Acceleration Magnitude\&. \fP"
+.ti -1c
+.RI "GLfloat \fB_maxSpeed\fP"
+.br
+.RI "\fIMaximum Speed\&. \fP"
+.ti -1c
+.RI "GLfloat \fB_frictionMagnitude\fP"
+.br
+.RI "\fIFriction\&. \fP"
+.ti -1c
+.RI "GLfloat \fB_aspectRatio\fP"
+.br
+.RI "\fICurrent aspect ratio for certain perspectives\&. \fP"
+.ti -1c
+.RI "GLfloat \fB_fovy\fP"
+.br
+.RI "\fICurrent field-of-view angle for perspective view\&. \fP"
+.ti -1c
+.RI "\fBAngel::vec2\fP \fB_viewportSize\fP"
+.br
+.RI "\fI\fBCamera\fP's Drawbox Width and Height\&. \fP"
+.ti -1c
+.RI "\fBAngel::vec2\fP \fB_viewportPosition\fP"
+.br
+.RI "\fI\fBCamera\fP's Drawbox x,y Coordinate (Upper-Left Pixel) \fP"
+.ti -1c
+.RI "bool \fB_motion\fP [Camera::DIR_END]"
+.br
+.RI "\fIBooleans correlating to the different motion directions\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+The \fBCamera\fP class represents a logical camera in a model view, which posesses a current viewing angle and an absolute position in space as its state\&. 
+
+\fBAuthor:\fP
+.RS 4
+John Huston, jhuston@cs.uml.edu 
+.RE
+.PP
+\fBSince:\fP
+.RS 4
+16 Nov 2012
+.RE
+.PP
+Functions are provided to adjust the rotation according to \fBpitch()\fP, \fByaw()\fP and \fBroll()\fP motions; \fBsurge()\fP, \fBsway()\fP, and \fBheave()\fP are provided to adjust position in space\&.
+.PP
+\fBmove()\fP, \fBstop()\fP, and \fBidle()\fP are provided to help the camera automatically move along the x, y, or z axes\&. 
+.PP
+Definition at line 37 of file Camera\&.hpp\&.
+.SH "Member Typedef Documentation"
+.PP 
+.SS "typedef enum \fBCamera::Direction\fP  \fBCamera::Direction\fP"
+
+.PP
+The Direction enumeration lists all of the possible directions the camera may travel in\&. 'BEGIN' and 'END' are special sentinel directions for the purposes of iteration, and are ignored by any functions that accept a Direction\&. 
+.SS "typedef enum \fBCamera::Uniforms\fP  \fBCamera::Uniform\fP"
+
+.PP
+The glsl_var enumeration lists the various variables the \fBCamera\fP class is capable of sending to the shader\&. The NumGlslVars variable is a sentinel value that is ignored by any functions that accept a glsl_var\&. 
+.SS "typedef enum \fBCamera::ViewType\fP  \fBCamera::ViewType\fP"
+
+.PP
+The ViewType enumeration lists the various possibilities for the current viewing mode that can be switched between\&. The default is PERSPECTIVE\&. 
+.SH "Member Enumeration Documentation"
+.PP 
+.SS "enum \fBCamera::Direction\fP"
+
+.PP
+The Direction enumeration lists all of the possible directions the camera may travel in\&. 'BEGIN' and 'END' are special sentinel directions for the purposes of iteration, and are ignored by any functions that accept a Direction\&. 
+.PP
+Definition at line 47 of file Camera\&.hpp\&.
+.SS "enum \fBCamera::Uniforms\fP"
+
+.PP
+The glsl_var enumeration lists the various variables the \fBCamera\fP class is capable of sending to the shader\&. The NumGlslVars variable is a sentinel value that is ignored by any functions that accept a glsl_var\&. 
+.PP
+Definition at line 73 of file Camera\&.hpp\&.
+.SS "enum \fBCamera::ViewType\fP"
+
+.PP
+The ViewType enumeration lists the various possibilities for the current viewing mode that can be switched between\&. The default is PERSPECTIVE\&. 
+.PP
+Definition at line 63 of file Camera\&.hpp\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Camera::Camera (const std::string &name, GLuintgShader, floatx = \fC0\&.0\fP, floaty = \fC0\&.0\fP, floatz = \fC0\&.0\fP)"
+
+.PP
+Initialization Constructor; sets the x,y,z coordinates explicitly\&. \fBParameters:\fP
+.RS 4
+\fIname\fP The name of this Camera/Object\&. 
+.br
+\fIgShader\fP A handle to this camera's associated shader object\&. 
+.br
+\fIx\fP The initial x coordinate\&. 
+.br
+\fIy\fP The initial y coordinate\&. 
+.br
+\fIz\fP The initial z coordinate\&. 
+.RE
+.PP
+
+.PP
+Definition at line 45 of file Camera\&.cpp\&.
+.SS "Camera::Camera (const std::string &name, GLuintgShader, \fBvec3\fP &in)"
+
+.PP
+Initialization Constructor, uses a vec3 as its initial coordinates\&. \fBParameters:\fP
+.RS 4
+\fIname\fP The name of this Camera/Object\&. 
+.br
+\fIgShader\fP A handle to this camera's associated shader object\&. 
+.br
+\fIin\fP A vec3 representing the initial coordinates\&. 
+.RE
+.PP
+
+.PP
+Definition at line 52 of file Camera\&.cpp\&.
+.SS "Camera::Camera (const std::string &name, GLuintgShader, \fBvec4\fP &in)"
+
+.PP
+Initialization Constructor, uses a vec4 as its initial coordinates\&. \fBParameters:\fP
+.RS 4
+\fIname\fP The name of this Camera/Object\&. 
+.br
+\fIgShader\fP A handle to this camera's associated shader object\&. 
+.br
+\fIin\fP A vec4 representing the initial coordinates\&. The w component is ignored\&. 
+.RE
+.PP
+
+.PP
+Definition at line 58 of file Camera\&.cpp\&.
+.SS "Camera::~Camera (void)\fC [virtual]\fP"
+
+.PP
+Default destructor\&. Defined only to allow inheritance\&. 
+.PP
+Definition at line 64 of file Camera\&.cpp\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "void Camera::accel (const \fBvec3\fP &accel)"
+
+.PP
+accel takes an input vec2 which represents an acceleration, and applies it to the motion vectors with regards to the maximum acceleration and the maximum speed of the camera\&. \fBParameters:\fP
+.RS 4
+\fIaccel\fP The vec3 which represents the (x,y,z) acceleration, where x,y,z are [-1,1]\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 223 of file Camera\&.cpp\&.
+.SS "void Camera::adjustFieldOfView (const float &by)"
+
+.PP
+adjustFieldOfView adjusts the field of view angle up or down by an amount\&. \fBParameters:\fP
+.RS 4
+\fIby\fP The float to adjust the fieldOfView angle by\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 392 of file Camera\&.cpp\&.
+.SS "void Camera::adjustRotation (const \fBmat4\fP &adjustment, const bool &fixed = \fCfalse\fP)\fC [private]\fP"
+
+.PP
+adjustRotation is an internal function that rotates the camera\&. Technically, any transformation, not just a rotation, is possible\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIadjustment\fP The 4x4 matrix to transform the CTM by\&. 
+.br
+\fIfixed\fP Should this rotation be fixed about the origin? 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 148 of file Camera\&.cpp\&.
+.SS "void Camera::changePerspective (const \fBViewType\fP &vType)"
+
+.PP
+changePerspective changes the current perspective of the camera\&. \fBParameters:\fP
+.RS 4
+\fIvType\fP Which perspective to use\&. see enum ViewType for possibilities\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 359 of file Camera\&.cpp\&.
+.SS "void Camera::commonInit (void)\fC [private]\fP"
+
+.PP
+commonInit is a private function that initializes local object attributes\&. It should be called by all available constructors\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+Void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 19 of file Camera\&.cpp\&.
+.SS "void Scene::DeleteObject (\fBObject\fP *obj)\fC [protected]\fP, \fC [inherited]\fP"
+
+.PP
+DeleteObject is the actual implementation function that will remove an \fBObject\fP from the \fBScene\fP list and \fBScene\fP map, then free the object\&. \fBParameters:\fP
+.RS 4
+\fIobj\fP The pointer to the object to free\&. 
+.RE
+.PP
+
+.PP
+Definition at line 76 of file Scene\&.cpp\&.
+.SS "void Camera::dPos (const float &x, const float &y, const float &z)"
+
+.PP
+Moves the camera along the x, y, and z axes\&. \fBParameters:\fP
+.RS 4
+\fIx\fP the x-axis displacement\&. 
+.br
+\fIy\fP the y-axis displacement\&. 
+.br
+\fIz\fP the z-axis displacement\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 131 of file Camera\&.cpp\&.
+.SS "void Camera::dPos (const \fBvec3\fP &by)"
+
+.PP
+Moves the camera along the x, y, and z axes\&. \fBParameters:\fP
+.RS 4
+\fIby\fP A vec3 containing the x, y, and z axis displacements\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 140 of file Camera\&.cpp\&.
+.SS "void Camera::dPos (const \fBvec4\fP &by)"
+
+.PP
+Moves the camera along the x, y, and z axes\&. \fBParameters:\fP
+.RS 4
+\fIby\fP A vec4 containing the x, y, and z axis displacements\&. The w component is ignored\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 144 of file Camera\&.cpp\&.
+.SS "void Camera::dX (const float &by, const bool &update = \fCtrue\fP)"
+
+.PP
+Moves the camera along the x axis\&. \fBParameters:\fP
+.RS 4
+\fIby\fP The float value of the x-axis displacement\&. 
+.br
+\fIupdate\fP A boolean indicating whether or not to update the shader\&. update defaults to true\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 119 of file Camera\&.cpp\&.
+.SS "void Camera::dY (const float &by, const bool &update = \fCtrue\fP)"
+
+.PP
+Moves the camera along the y axis\&. \fBParameters:\fP
+.RS 4
+\fIby\fP The float value of the y-axis displacement\&. 
+.br
+\fIupdate\fP A boolean indicating whether or not to update the shader\&. update defaults to true\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 123 of file Camera\&.cpp\&.
+.SS "void Camera::dZ (const float &by, const bool &update = \fCtrue\fP)"
+
+.PP
+Moves the camera along the z axis\&. \fBParameters:\fP
+.RS 4
+\fIby\fP The float value of the z-axis displacement\&. 
+.br
+\fIupdate\fP A boolean indicating whether or not to update the shader\&. update defaults to true\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 127 of file Camera\&.cpp\&.
+.SS "void Camera::fieldOfView (const float &fovy)"
+
+.PP
+fieldOfView sets the current camera Field-of-view angle\&. This function will send the new perspective matrix to the shader\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfovy\fP The new field of view angle\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 354 of file Camera\&.cpp\&.
+.SS "float Camera::fieldOfView (void) const"
+
+.PP
+\fBfieldOfView()\fP gets the current camera Field-of-view angle\&. \fBReturns:\fP
+.RS 4
+A float that is the y axis viewing angle\&. 
+.RE
+.PP
+
+.PP
+Definition at line 350 of file Camera\&.cpp\&.
+.SS "\fBvec4\fP Object::GetPosition () const\fC [inherited]\fP"
+
+.PP
+returns the position of the object this makes the lighting implementation much easier\&.\&.\&. for this semester\&. 
+.PP
+Definition at line 497 of file Object\&.cpp\&.
+.SS "void Camera::heave (const float &by)"
+
+.PP
+Adjusts the camera's y coordinate relative to its current position\&. Positive values move the camera up, and negative values move the camera down\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIby\fP The float to adjust the y coordinate by\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 194 of file Camera\&.cpp\&.
+.SS "void Camera::idle (void)"
+
+.PP
+idle moves the camera forward in whichever directions it is configured to move in\&. Call it in the glut idle function\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+Void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 280 of file Camera\&.cpp\&.
+.SS "void Camera::move (const \fBCamera::Direction\fP &Dir)"
+
+.PP
+move instructs the camera to begin moving in the specified direction\&. \fBParameters:\fP
+.RS 4
+\fIDir\fP The direction in which to move\&. Can be any direction in the enumerated type \fBCamera::Direction\fP\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 272 of file Camera\&.cpp\&.
+.SS "void Camera::pitch (const float &by, const bool &fixed = \fCfalse\fP)"
+
+.PP
+pitch adjusts the x axis rotation; up/down look\&. A positive value represents looking up, while a negative value represents looking down\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIby\fP A float, in degrees, to adjust the pitch by\&. 
+.br
+\fIfixed\fP Should this rotation be fixed about the origin? 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 198 of file Camera\&.cpp\&.
+.SS "void Camera::pos (const float &x, const float &y, const float &z, const bool &update = \fCtrue\fP)"
+
+.PP
+Sets the absolute position of the camera\&. \fBParameters:\fP
+.RS 4
+\fIx\fP The new x coordinate of the camera\&. 
+.br
+\fIy\fP The new y coordinate of the camera\&. 
+.br
+\fIz\fP The new z coordinate of the camera\&. 
+.br
+\fIupdate\fP Whether or not to update the shader with the new coordinates\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 99 of file Camera\&.cpp\&.
+.SS "void Camera::pos (const \fBvec3\fP &in, const bool &update = \fCtrue\fP)"
+
+.PP
+Sets the absolute position of the camera\&. \fBParameters:\fP
+.RS 4
+\fIin\fP A vec3 containing the x, y, and z coordinates to set the camera to\&. 
+.br
+\fIupdate\fP Whether or not to update the shader with the new coordinates\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 115 of file Camera\&.cpp\&.
+.SS "void Camera::pos (const \fBvec4\fP &in, const bool &update = \fCtrue\fP)"
+
+.PP
+Sets the absolute position of the camera\&. \fBParameters:\fP
+.RS 4
+\fIin\fP A vec4 containing the x, y, and z coordinates to set the camera to\&. The w coordinate is ignored\&. 
+.br
+\fIupdate\fP Whether or not to update the shader with the new coordinates\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 111 of file Camera\&.cpp\&.
+.SS "\fBvec4\fP Camera::pos (void) const"
+
+.PP
+\fBpos()\fP gets the current camera position in model coordinates\&. \fBReturns:\fP
+.RS 4
+A vec4 that represents the current camera coordinates\&. 
+.RE
+.PP
+
+.PP
+Definition at line 346 of file Camera\&.cpp\&.
+.SS "void Camera::refreshPerspective (void)"
+
+.PP
+refreshPerspective re-generates the current view/perspective matrix of the camera\&. This function should be called after physical or virtual (viewport) screen resizes\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+Void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 366 of file Camera\&.cpp\&.
+.SS "void Camera::resetRotation (void)"
+
+.PP
+resetRotation adjusts the camera's rotational state back to its default state (The Identity Matrix\&.) \fBReturns:\fP
+.RS 4
+void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 446 of file Camera\&.cpp\&.
+.SS "void Camera::roll (const float &by, const bool &fixed = \fCfalse\fP)"
+
+.PP
+roll adjusts the z axis rotation; tilt or lean left/right\&. A positive value represents leaning right, while a negative value represents leaning left\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIby\fP A float, in degrees, to adjust the roll by\&. 
+.br
+\fIfixed\fP Should this rotation be fixed about the origin? 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 219 of file Camera\&.cpp\&.
+.SS "void Camera::send (Object::UniformEnumwhich)\fC [virtual]\fP"
+
+.PP
+send will send a glsl variable to the shader\&. \fBParameters:\fP
+.RS 4
+\fIwhich\fP The parameter to send\&. Can be any from enum glsl_var\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Void\&. 
+.RE
+.PP
+
+.PP
+Reimplemented from \fBObject\fP\&.
+.PP
+Definition at line 403 of file Camera\&.cpp\&.
+.SS "GLuint Object::Shader (void)\fC [virtual]\fP, \fC [inherited]\fP"
+
+.PP
+Returns the \fBObject\fP's current Shader\&. Defined because C++ will not let you overload an overrided function, without re-overloading it in the derived class\&.
+.PP
+\fBReturns:\fP
+.RS 4
+a GLuint handle to the shader program used by this \fBObject\fP\&. 
+.RE
+.PP
+
+.PP
+Definition at line 269 of file Object\&.cpp\&.
+.SS "void Object::Shader (GLuintnewShader)\fC [virtual]\fP, \fC [inherited]\fP"
+
+.PP
+Sets the shader to be used by this object\&. Triggers a query of the shader program, for the locations of the Uniform locations that the object needs\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fInewShader\fP a GLuint handle to the shader program to use\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+None\&. 
+.RE
+.PP
+
+.PP
+Reimplemented from \fBScene\fP\&.
+.PP
+Definition at line 246 of file Object\&.cpp\&.
+.SS "void Camera::stop (const \fBCamera::Direction\fP &Dir)"
+
+.PP
+stop instructs the camera to stop moving in the specified direction\&. \fBParameters:\fP
+.RS 4
+\fIDir\fP The direction in which to stop moving\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 276 of file Camera\&.cpp\&.
+.SS "void Camera::surge (const float &by)"
+
+.PP
+Adjusts the camera's z coordinate relative to its current position\&. Positive values move the camera forward, and negative values move the camera backward\&. Note that the camera uses model coordinates internally, so moving forward will increase the camera's z position negatively\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIby\fP The float to adjust the z coordinate by\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 190 of file Camera\&.cpp\&.
+.SS "void Camera::sway (const float &by)"
+
+.PP
+Adjusts the camera's x coordinate relative to its current position\&. Negative values move the camera left, and positive values move the camera right\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIby\fP The float to adjust the x coordinate by\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 186 of file Camera\&.cpp\&.
+.SS "void Camera::view (void)"
+
+.PP
+view will instruct OpenGL of the viewport we want, and then send all of our current matrices to the shader for rendering\&. \fBReturns:\fP
+.RS 4
+Void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 434 of file Camera\&.cpp\&.
+.SS "void Camera::viewport (size_t_X, size_t_Y, size_t_width, size_t_height)"
+
+.PP
+viewport instructs this camera what his expected drawing window will be\&. This allows the camera to generate his viewing matrices with the correct aspect ratio\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fI_X\fP The x coordinate of the lower-left corner of our viewport\&. 
+.br
+\fI_Y\fP the y coordinate of the lower-left corner of our viewport\&. 
+.br
+\fI_width\fP The width of our viewport\&. 
+.br
+\fI_height\fP the height of our viewport\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 396 of file Camera\&.cpp\&.
+.SS "void Camera::x (const float &in, const bool &update = \fCtrue\fP)"
+
+.PP
+Sets the x coordinate of the camera\&. \fBParameters:\fP
+.RS 4
+\fIin\fP The new x coordinate of the camera\&. 
+.br
+\fIupdate\fP Whether or not to update the shader with the new coordinates\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 68 of file Camera\&.cpp\&.
+.SS "float Camera::x (void) const"
+
+.PP
+\fBx()\fP returns the current position of the camera in model coordinates\&. \fBReturns:\fP
+.RS 4
+The current x coordinate of the camera in model coordinates\&. 
+.RE
+.PP
+
+.PP
+Definition at line 334 of file Camera\&.cpp\&.
+.SS "void Camera::y (const float &in, const bool &update = \fCtrue\fP)"
+
+.PP
+Sets the y coordinate of the camera\&. \fBParameters:\fP
+.RS 4
+\fIin\fP The new y coordinate of the camera\&. 
+.br
+\fIupdate\fP Whether or not to update the shader with the new coordinates\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 79 of file Camera\&.cpp\&.
+.SS "float Camera::y (void) const"
+
+.PP
+\fBy()\fP returns the current position of the camera in model coordinates\&. \fBReturns:\fP
+.RS 4
+The current y coordinate of the camera in model coordinates\&. 
+.RE
+.PP
+
+.PP
+Definition at line 338 of file Camera\&.cpp\&.
+.SS "void Camera::yaw (const float &by, const bool &fixed = \fCfalse\fP)"
+
+.PP
+yaw adjusts the y axis rotation; left/right look\&. A positive value represents looking right, while a negative value represents looking left\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIby\fP A float, in degrees, to adjust the yaw by\&. 
+.br
+\fIfixed\fP Should this rotation be fixed about the origin? 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 209 of file Camera\&.cpp\&.
+.SS "void Camera::z (const float &in, const bool &update = \fCtrue\fP)"
+
+.PP
+Sets the z coordinate of the camera\&. \fBParameters:\fP
+.RS 4
+\fIin\fP The new z coordinate of the camera\&. 
+.br
+\fIupdate\fP Whether or not to update the shader with the new coordinates\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 89 of file Camera\&.cpp\&.
+.SS "float Camera::z (void) const"
+
+.PP
+\fBz()\fP returns the current position of the camera in model coordinates\&. \fBReturns:\fP
+.RS 4
+The current z coordinate of the camera in model coordinates\&. 
+.RE
+.PP
+
+.PP
+Definition at line 342 of file Camera\&.cpp\&.
+.SH "Member Data Documentation"
+.PP 
+.SS "GLfloat Camera::_aspectRatio\fC [private]\fP"
+
+.PP
+Current aspect ratio for certain perspectives\&. 
+.PP
+Definition at line 428 of file Camera\&.hpp\&.
+.SS "\fBTransCache\fP Camera::_ctm\fC [private]\fP"
+
+.PP
+The Current \fBTransformation\fP state for this \fBCamera\fP\&. 
+.PP
+Definition at line 404 of file Camera\&.hpp\&.
+.SS "\fBViewType\fP Camera::_currentView\fC [private]\fP"
+
+.PP
+The current viewing mode type\&. 
+.PP
+Definition at line 407 of file Camera\&.hpp\&.
+.SS "GLfloat Camera::_fovy\fC [private]\fP"
+
+.PP
+Current field-of-view angle for perspective view\&. 
+.PP
+Definition at line 431 of file Camera\&.hpp\&.
+.SS "GLfloat Camera::_frictionMagnitude\fC [private]\fP"
+
+.PP
+Friction\&. Should be less than MaxAccel\&. 
+.PP
+Definition at line 425 of file Camera\&.hpp\&.
+.SS "bool Camera::_motion[Camera::DIR_END]\fC [private]\fP"
+
+.PP
+Booleans correlating to the different motion directions\&. 
+.PP
+Definition at line 440 of file Camera\&.hpp\&.
+.SS "GLfloat Camera::_speed\fC [private]\fP"
+
+.PP
+Current Speed of camera motion\&. 
+.PP
+Definition at line 410 of file Camera\&.hpp\&.
+.SS "\fBvec3\fP Camera::_velocity\fC [private]\fP"
+
+.PP
+Current Velocity of camera motion\&. 
+.PP
+Definition at line 413 of file Camera\&.hpp\&.
+.SS "\fBmat4\fP Camera::_view\fC [private]\fP"
+
+.PP
+The current view matrix (defaultly perspective) for this camera\&. 
+.PP
+Definition at line 401 of file Camera\&.hpp\&.
+.SS "GLenum Object::draw_mode\fC [protected]\fP, \fC [inherited]\fP"
+
+.PP
+Drawing mode for this object\&. GL_TRIANGLES, GL_LINE_LOOP, etc\&. 
+.PP
+Definition at line 95 of file Object\&.hpp\&.
+.SS "std::vector< GLint > Object::handles\fC [protected]\fP, \fC [inherited]\fP"
+
+.PP
+Handles to Uniforms on the shader\&. Private to allow derived classes to extend it as needed\&. 
+.PP
+Definition at line 114 of file Object\&.hpp\&.
+.SS "std::string Object::name\fC [protected]\fP, \fC [inherited]\fP"
+
+.PP
+name is used as an identifying handle for the object\&. 
+.PP
+Definition at line 86 of file Object\&.hpp\&.
+.SS "GLuint Object::vao\fC [protected]\fP, \fC [inherited]\fP"
+
+.PP
+Vertex Array \fBObject\fP handle identifying our buffers/object\&. 
+.PP
+Definition at line 89 of file Object\&.hpp\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for HyperGrafx from the source code\&.

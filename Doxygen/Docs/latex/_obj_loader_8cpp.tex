@@ -1,0 +1,67 @@
+\hypertarget{_obj_loader_8cpp}{\section{Obj\-Loader.\-cpp File Reference}
+\label{_obj_loader_8cpp}\index{Obj\-Loader.\-cpp@{Obj\-Loader.\-cpp}}
+}
+
+
+Implementation for reading in geometry from .O\-B\-J files.  
+
+
+{\ttfamily \#include $<$vector$>$}\\*
+{\ttfamily \#include $<$string$>$}\\*
+{\ttfamily \#include $<$sstream$>$}\\*
+{\ttfamily \#include $<$fstream$>$}\\*
+{\ttfamily \#include $<$stdexcept$>$}\\*
+{\ttfamily \#include $<$cstdio$>$}\\*
+{\ttfamily \#include \char`\"{}vec.\-hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Obj\-Loader.\-hpp\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_obj_loader_8cpp_a5fc5a76891a19debb9aa8e2557e3d26a}{R\-A\-N\-D\-\_\-\-F\-L\-O\-A\-T}~(rand() / (float) R\-A\-N\-D\-\_\-\-M\-A\-X)
+\begin{DoxyCompactList}\small\item\em R\-A\-N\-D\-\_\-\-F\-L\-O\-A\-T returns a random float from (0,1). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+const vector$<$ string $>$ {\bfseries Obj\-Loader\-::split} (const string \&str, const char delim)
+\begin{DoxyCompactList}\small\item\em Split a string by an arbitrary delimiter. \end{DoxyCompactList}\item 
+\hyperlink{struct_angel_1_1vec4}{vec4} {\bfseries Obj\-Loader\-::parse\-Vertex} (string line)
+\begin{DoxyCompactList}\small\item\em Obtain a vertex from a std\-::string line. \end{DoxyCompactList}\item 
+\hyperlink{struct_angel_1_1vec2}{vec2} {\bfseries Obj\-Loader\-::parse\-Texture\-U\-V} (string line)
+\begin{DoxyCompactList}\small\item\em Obtain a 2\-D Tex\-U\-V coordinate from a std\-::string line. \end{DoxyCompactList}\item 
+\hyperlink{struct_angel_1_1vec3}{vec3} {\bfseries Obj\-Loader\-::parse\-Normal} (string line)
+\begin{DoxyCompactList}\small\item\em Obtain a 3\-D normal vector from a std\-::string line. \end{DoxyCompactList}\item 
+vector$<$ vector$<$ int $>$ $>$ {\bfseries Obj\-Loader\-::parse\-Face\-Elements} (string line)
+\begin{DoxyCompactList}\small\item\em parses face elements into a vector of 3 vectors of 3 ints from an .obj line \end{DoxyCompactList}\item 
+void {\bfseries Obj\-Loader\-::parse\-Element\-Triple} (string triple, vector$<$ int $>$ \&v\-\_\-elements, vector$<$ int $>$ \&uv\-\_\-elements, vector$<$ int $>$ \&n\-\_\-elements)
+\begin{DoxyCompactList}\small\item\em Helper function that splits an obj element listing (x/y/z) into their proper components (vertices, U\-Vs, normals.) \end{DoxyCompactList}\item 
+\hyperlink{class_object}{Object} $\ast$ {\bfseries Obj\-Loader\-::load\-Obj} (\hyperlink{class_scene}{Scene} \&scene, const char $\ast$filename, const char $\ast$default\-Obj\-Name)
+\begin{DoxyCompactList}\small\item\em load\-Obj loads all available objects from a .obj file into the provided scene. \end{DoxyCompactList}\item 
+void {\bfseries Obj\-Loader\-::load\-Model\-From\-File} (\hyperlink{class_object}{Object} $\ast$object, const char $\ast$filename)
+\begin{DoxyCompactList}\small\item\em Legacy function until I make everything suck less\-: Loads a single model from an O\-B\-J and stores it into a single \hyperlink{class_object}{Object} instance. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Implementation for reading in geometry from .O\-B\-J files. \begin{DoxyDate}{Date}
+2013-\/03-\/14 
+\end{DoxyDate}
+\begin{DoxyAuthor}{Authors}
+Greg Giannone, Nick Ver\-Voort, John Huston 
+\end{DoxyAuthor}
+
+
+Definition in file \hyperlink{_obj_loader_8cpp_source}{Obj\-Loader.\-cpp}.
+
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{_obj_loader_8cpp_a5fc5a76891a19debb9aa8e2557e3d26a}{\index{Obj\-Loader.\-cpp@{Obj\-Loader.\-cpp}!R\-A\-N\-D\-\_\-\-F\-L\-O\-A\-T@{R\-A\-N\-D\-\_\-\-F\-L\-O\-A\-T}}
+\index{R\-A\-N\-D\-\_\-\-F\-L\-O\-A\-T@{R\-A\-N\-D\-\_\-\-F\-L\-O\-A\-T}!ObjLoader.cpp@{Obj\-Loader.\-cpp}}
+\subsubsection[{R\-A\-N\-D\-\_\-\-F\-L\-O\-A\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\-A\-N\-D\-\_\-\-F\-L\-O\-A\-T~(rand() / (float) R\-A\-N\-D\-\_\-\-M\-A\-X)}}\label{_obj_loader_8cpp_a5fc5a76891a19debb9aa8e2557e3d26a}
+
+
+R\-A\-N\-D\-\_\-\-F\-L\-O\-A\-T returns a random float from (0,1). 
+
+
+
+Definition at line 287 of file Obj\-Loader.\-cpp.
+

@@ -1,0 +1,369 @@
+.TH "Particle" 3 "Fri Mar 15 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Particle \- 
+.PP
+todo  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <Particle\&.hpp>\fP
+.PP
+Inherits \fBObject\fP\&.
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "enum \fBUniforms\fP { \fBBEGIN\fP, \fBIsTextured\fP = BEGIN, \fBObjectCTM\fP, \fBMorphPercentage\fP, \fBEND\fP }"
+.br
+.ti -1c
+.RI "typedef const unsigned int \fBUniformEnum\fP"
+.br
+.ti -1c
+.RI "typedef std::map
+.br
+< Object::UniformEnum, 
+.br
+std::string > \fBUniformMap\fP"
+.br
+.ti -1c
+.RI "typedef enum Object::Uniforms \fBUniform\fP"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBParticle\fP (\fBvec4\fP initPos, \fBvec3\fP initScale, \fBvec3\fP initVel, float initAlpha, \fBvec4\fP initColor, float initLifespan, float initSpin, string initTex)"
+.br
+.ti -1c
+.RI "void \fBupdate\fP ()"
+.br
+.ti -1c
+.RI "void \fBsetPos\fP (\fBvec4\fP newPos)"
+.br
+.ti -1c
+.RI "void \fBsetScale\fP (\fBvec3\fP newScale)"
+.br
+.ti -1c
+.RI "void \fBsetVel\fP (\fBvec3\fP newVel)"
+.br
+.ti -1c
+.RI "void \fBsetAlpha\fP (float newAlpha)"
+.br
+.ti -1c
+.RI "void \fBsetColor\fP (\fBvec4\fP newColor)"
+.br
+.ti -1c
+.RI "void \fBsetLifespan\fP (float newLifespan)"
+.br
+.ti -1c
+.RI "void \fBsetSpin\fP (float newSpin)"
+.br
+.ti -1c
+.RI "void \fBsetTexFile\fP (string newFilename)"
+.br
+.ti -1c
+.RI "void \fBDraw\fP (void)"
+.br
+.ti -1c
+.RI "void \fBBuffer\fP (void)"
+.br
+.ti -1c
+.RI "void \fBBufferMorphOnly\fP (void)"
+.br
+.ti -1c
+.RI "void \fBMode\fP (GLenum new_node)"
+.br
+.ti -1c
+.RI "void \fBTexture\fP (const char **filename)"
+.br
+.ti -1c
+.RI "const std::string & \fBName\fP (void) const "
+.br
+.ti -1c
+.RI "virtual void \fBLink\fP (UniformEnum which, const std::string &\fBname\fP)"
+.br
+.ti -1c
+.RI "virtual void \fBsend\fP (UniformEnum which)"
+.br
+.ti -1c
+.RI "virtual GLuint \fBShader\fP (void)"
+.br
+.RI "\fIReturns the \fBObject\fP's current Shader\&. \fP"
+.ti -1c
+.RI "virtual void \fBShader\fP (GLuint newShader)"
+.br
+.RI "\fISets the shader to be used by this object\&. \fP"
+.ti -1c
+.RI "void \fBAnimation\fP (void(*anim_func)(\fBTransCache\fP &arg))"
+.br
+.ti -1c
+.RI "void \fBPropagate\fP (void)"
+.br
+.ti -1c
+.RI "\fBvec4\fP \fBGetPosition\fP () const "
+.br
+.RI "\fIreturns the position of the object this makes the lighting implementation much easier\&.\&.\&. \fP"
+.ti -1c
+.RI "\fBObject\fP * \fBgetMorphTargetPtr\fP () const "
+.br
+.ti -1c
+.RI "\fBObject\fP * \fBgenMorphTarget\fP (GLuint)"
+.br
+.ti -1c
+.RI "float \fBgetMorphPercentage\fP () const "
+.br
+.ti -1c
+.RI "void \fBsetMorphPercentage\fP (const float)"
+.br
+.ti -1c
+.RI "void \fBdestroyMorphTarget\fP ()"
+.br
+.ti -1c
+.RI "int \fBgetNumberPoints\fP ()"
+.br
+.ti -1c
+.RI "\fBObject\fP * \fBAddObject\fP (const std::string &objName, GLuint Object_Shader=0)"
+.br
+.ti -1c
+.RI "void \fBDelObject\fP (const std::string &objName)"
+.br
+.ti -1c
+.RI "void \fBDelObject\fP (void)"
+.br
+.ti -1c
+.RI "void \fBPopObject\fP (void)"
+.br
+.ti -1c
+.RI "void \fBDestroyObject\fP (void)"
+.br
+.RI "\fICompletely remove this object and all his children\&. \fP"
+.ti -1c
+.RI "\fBObject\fP * \fBnext\fP (void)"
+.br
+.ti -1c
+.RI "\fBObject\fP * \fBprev\fP (void)"
+.br
+.ti -1c
+.RI "\fBObject\fP * \fBactive\fP (void) const "
+.br
+.ti -1c
+.RI "\fBObject\fP * \fBoperator[]\fP (const std::string &objname)"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "std::vector< \fBAngel::vec4\fP > \fBpoints\fP"
+.br
+.ti -1c
+.RI "std::vector< \fBAngel::vec3\fP > \fBnormals\fP"
+.br
+.ti -1c
+.RI "std::vector< unsigned int > \fBindices\fP"
+.br
+.ti -1c
+.RI "std::vector< \fBAngel::vec4\fP > \fBcolors\fP"
+.br
+.ti -1c
+.RI "std::vector< \fBAngel::vec2\fP > \fBtexcoords\fP"
+.br
+.ti -1c
+.RI "\fBTransCache\fP \fBtrans\fP"
+.br
+.in -1c
+.SS "Protected Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBDeleteObject\fP (\fBObject\fP *obj)"
+.br
+.RI "\fIDeleteObject is the actual implementation function that will remove an \fBObject\fP from the \fBScene\fP list and \fBScene\fP map, then free the object\&. \fP"
+.ti -1c
+.RI "void \fBInsertObject\fP (const std::string \fBname\fP, \fBObject\fP *obj)"
+.br
+.in -1c
+.SS "Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "std::string \fBname\fP"
+.br
+.RI "\fIname is used as an identifying handle for the object\&. \fP"
+.ti -1c
+.RI "GLuint \fBvao\fP"
+.br
+.RI "\fIVertex Array \fBObject\fP handle identifying our buffers/object\&. \fP"
+.ti -1c
+.RI "GLuint \fBbuffer\fP [NUM_BUFFERS]"
+.br
+.RI "\fIHandles to our buffers (Vertices, TexUVs, etc\&.) \fP"
+.ti -1c
+.RI "GLenum \fBdraw_mode\fP"
+.br
+.RI "\fIDrawing mode for this object\&. \fP"
+.ti -1c
+.RI "bool \fBisTextured\fP"
+.br
+.RI "\fIIs this object textured? \fP"
+.ti -1c
+.RI "float \fBmorphPercentage\fP"
+.br
+.RI "\fIMorphing/Tweening Things\&. \fP"
+.ti -1c
+.RI "\fBObject\fP * \fBmorphTarget\fP"
+.br
+.ti -1c
+.RI "std::map< Object::UniformEnum, 
+.br
+std::string > \fB_uniformMap\fP"
+.br
+.ti -1c
+.RI "std::vector< GLint > \fBhandles\fP"
+.br
+.RI "\fIHandles to Uniforms on the shader\&. \fP"
+.ti -1c
+.RI "std::list< \fBObject\fP * > \fB_list\fP"
+.br
+.ti -1c
+.RI "std::map< std::string, \fBObject\fP * > \fB_map\fP"
+.br
+.ti -1c
+.RI "std::list< \fBObject\fP * >::iterator \fB_currentObj\fP"
+.br
+.ti -1c
+.RI "GLuint \fB_gShader\fP"
+.br
+.in -1c
+.SS "Private Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBvec4\fP \fBmPos\fP"
+.br
+.ti -1c
+.RI "\fBvec3\fP \fBmScale\fP"
+.br
+.ti -1c
+.RI "\fBvec3\fP \fBmVel\fP"
+.br
+.ti -1c
+.RI "float \fBalpha\fP"
+.br
+.ti -1c
+.RI "\fBvec4\fP \fBblendColor\fP"
+.br
+.ti -1c
+.RI "float \fBlifespan\fP"
+.br
+.ti -1c
+.RI "float \fBspin\fP"
+.br
+.ti -1c
+.RI "string \fBtexFilename\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+todo 
+
+\fBAuthor:\fP
+.RS 4
+Nick Ver Voort, nicholas_vervoort@student.uml.edu 
+.RE
+.PP
+\fBSince:\fP
+.RS 4
+23 Feb 2013 
+.RE
+.PP
+
+.PP
+Definition at line 22 of file Particle\&.hpp\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "void Scene::DeleteObject (\fBObject\fP *obj)\fC [protected]\fP, \fC [inherited]\fP"
+
+.PP
+DeleteObject is the actual implementation function that will remove an \fBObject\fP from the \fBScene\fP list and \fBScene\fP map, then free the object\&. \fBParameters:\fP
+.RS 4
+\fIobj\fP The pointer to the object to free\&. 
+.RE
+.PP
+
+.PP
+Definition at line 76 of file Scene\&.cpp\&.
+.SS "\fBvec4\fP Object::GetPosition () const\fC [inherited]\fP"
+
+.PP
+returns the position of the object this makes the lighting implementation much easier\&.\&.\&. for this semester\&. 
+.PP
+Definition at line 497 of file Object\&.cpp\&.
+.SS "GLuint Object::Shader (void)\fC [virtual]\fP, \fC [inherited]\fP"
+
+.PP
+Returns the \fBObject\fP's current Shader\&. Defined because C++ will not let you overload an overrided function, without re-overloading it in the derived class\&.
+.PP
+\fBReturns:\fP
+.RS 4
+a GLuint handle to the shader program used by this \fBObject\fP\&. 
+.RE
+.PP
+
+.PP
+Definition at line 269 of file Object\&.cpp\&.
+.SS "void Object::Shader (GLuintnewShader)\fC [virtual]\fP, \fC [inherited]\fP"
+
+.PP
+Sets the shader to be used by this object\&. Triggers a query of the shader program, for the locations of the Uniform locations that the object needs\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fInewShader\fP a GLuint handle to the shader program to use\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+None\&. 
+.RE
+.PP
+
+.PP
+Reimplemented from \fBScene\fP\&.
+.PP
+Definition at line 246 of file Object\&.cpp\&.
+.SH "Member Data Documentation"
+.PP 
+.SS "GLenum Object::draw_mode\fC [protected]\fP, \fC [inherited]\fP"
+
+.PP
+Drawing mode for this object\&. GL_TRIANGLES, GL_LINE_LOOP, etc\&. 
+.PP
+Definition at line 95 of file Object\&.hpp\&.
+.SS "std::vector< GLint > Object::handles\fC [protected]\fP, \fC [inherited]\fP"
+
+.PP
+Handles to Uniforms on the shader\&. Private to allow derived classes to extend it as needed\&. 
+.PP
+Definition at line 114 of file Object\&.hpp\&.
+.SS "std::string Object::name\fC [protected]\fP, \fC [inherited]\fP"
+
+.PP
+name is used as an identifying handle for the object\&. 
+.PP
+Definition at line 86 of file Object\&.hpp\&.
+.SS "GLuint Object::vao\fC [protected]\fP, \fC [inherited]\fP"
+
+.PP
+Vertex Array \fBObject\fP handle identifying our buffers/object\&. 
+.PP
+Definition at line 89 of file Object\&.hpp\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for HyperGrafx from the source code\&.

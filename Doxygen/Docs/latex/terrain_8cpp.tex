@@ -1,0 +1,270 @@
+\hypertarget{terrain_8cpp}{\section{terrain.\-cpp File Reference}
+\label{terrain_8cpp}\index{terrain.\-cpp@{terrain.\-cpp}}
+}
+
+
+This is a trimmed version of our Fall 2012 project.  
+
+
+{\ttfamily \#include $<$cmath$>$}\\*
+{\ttfamily \#include $<$cstdio$>$}\\*
+{\ttfamily \#include $<$sstream$>$}\\*
+{\ttfamily \#include $<$cstdlib$>$}\\*
+{\ttfamily \#include $<$time.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}platform.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}globals.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}vec.\-hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}mat.\-hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Engine.\-hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Camera.\-hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Cameras.\-hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Screen.\-hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Object.\-hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Timer.\-hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Scene.\-hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}model.\-hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Init\-Shader.\-hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}glut\-\_\-callbacks.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Obj\-Loader.\-hpp\char`\"{}}\\*
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{terrain_8cpp_a5c48af6a06eb70709fe4ce950c3015e3}{typedef \hyperlink{struct_angel_1_1vec4}{Angel\-::vec4} {\bfseries color4}}\label{terrain_8cpp_a5c48af6a06eb70709fe4ce950c3015e3}
+
+\item 
+\hypertarget{terrain_8cpp_acd96474ea1ee15dc164c05371abfd25b}{typedef \hyperlink{struct_angel_1_1vec4}{Angel\-::vec4} {\bfseries point4}}\label{terrain_8cpp_acd96474ea1ee15dc164c05371abfd25b}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{terrain_8cpp_a43d76d6460eea14cbfac57f649c4ccc9}{randomize\-\_\-terrain} ()
+\begin{DoxyCompactList}\small\item\em randomize\-\_\-terrain is called to regenerate the terrain in this application. \end{DoxyCompactList}\item 
+void \hyperlink{terrain_8cpp_a02fd73d861ef2e4aabb38c0c9ff82947}{init} ()
+\begin{DoxyCompactList}\small\item\em init will initialize this particular flythrough, by creating and instantiating a shader, a camera, and a number of initial objects. \end{DoxyCompactList}\item 
+void \hyperlink{terrain_8cpp_aeb94fbd457627182ceee7e505f432541}{cleanup} (void)
+\begin{DoxyCompactList}\small\item\em cleanup is a routine to call at exit time that will free up the resources the application is using. \end{DoxyCompactList}\item 
+void \hyperlink{terrain_8cpp_af3c12d5391e754508338373c5071b2ed}{display\-Viewport} (void)
+\begin{DoxyCompactList}\small\item\em display\-Viewport is responsible for drawing a single viewport. \end{DoxyCompactList}\item 
+void \hyperlink{terrain_8cpp_a4ea013001a5fb47853d0fab8f8de35cd}{display} (void)
+\begin{DoxyCompactList}\small\item\em display is responsible for drawing an entire screen. \end{DoxyCompactList}\item 
+void \hyperlink{terrain_8cpp_a19cc2bcd83a4740c8ab847f391229f09}{Terrain\-Generation\-Animation} (\hyperlink{class_trans_cache}{Trans\-Cache} \&obj)
+\begin{DoxyCompactList}\small\item\em Terrain\-Generation\-Animation is an animation callback that will\-: (A) If triggered, begin to shrink the object into a flat plane, (B) Order a re-\/generation of the terrain data (C) will grow the object back into its new, final shape. \end{DoxyCompactList}\item 
+void \hyperlink{terrain_8cpp_a3db6770b4d2fa9a7566e01c68880d49c}{wiilook} (\hyperlink{class_camera}{Camera} \&Wii\-Camera, const \hyperlink{struct_angel_1_1vec3}{Angel\-::vec3} \&New\-Theta, const \hyperlink{struct_angel_1_1vec3}{Angel\-::vec3} \&Movement\-Rates)
+\begin{DoxyCompactList}\small\item\em wiilook is an analog of mouselook, for wii remote controls. \end{DoxyCompactList}\item 
+\hypertarget{terrain_8cpp_ac3134fe01754f597b75b29b29523cde7}{void {\bfseries simple\-Rotate\-Y} (\hyperlink{class_trans_cache}{Trans\-Cache} \&obj)}\label{terrain_8cpp_ac3134fe01754f597b75b29b29523cde7}
+
+\item 
+\hypertarget{terrain_8cpp_a15a9a530111780e1374765468f99b92e}{void {\bfseries simple\-Rotate\-Anim} (\hyperlink{class_trans_cache}{Trans\-Cache} \&obj)}\label{terrain_8cpp_a15a9a530111780e1374765468f99b92e}
+
+\item 
+\hypertarget{terrain_8cpp_ab42e9609dfaf48294321a6b821095be9}{void {\bfseries animation\-Test} (\hyperlink{class_trans_cache}{Trans\-Cache} \&obj)}\label{terrain_8cpp_ab42e9609dfaf48294321a6b821095be9}
+
+\item 
+\hypertarget{terrain_8cpp_a01131b63acf241e9db91704d89ce15d2}{void {\bfseries idle} (void)}\label{terrain_8cpp_a01131b63acf241e9db91704d89ce15d2}
+
+\item 
+\hypertarget{terrain_8cpp_af6531069cfd120c9bc890b2c187b6917}{void {\bfseries menufunc} (int value)}\label{terrain_8cpp_af6531069cfd120c9bc890b2c187b6917}
+
+\item 
+\hypertarget{terrain_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{int {\bfseries main} (int argc, char $\ast$$\ast$argv)}\label{terrain_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}
+
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const char $\ast$ {\bfseries terrain\-Tex} \mbox{[}$\,$\mbox{]}
+\item 
+\hypertarget{terrain_8cpp_af584a969caa5b22fa5a7b6a0cc1af88f}{bool {\bfseries switching\-Terrain} = false}\label{terrain_8cpp_af584a969caa5b22fa5a7b6a0cc1af88f}
+
+\item 
+\hypertarget{terrain_8cpp_abf93e1e5ae2f6baff49c75741529f033}{float \hyperlink{terrain_8cpp_abf93e1e5ae2f6baff49c75741529f033}{height\-Scale} = 0.\-0}\label{terrain_8cpp_abf93e1e5ae2f6baff49c75741529f033}
+
+\begin{DoxyCompactList}\small\item\em hackity hack hack hackey doo! \end{DoxyCompactList}\item 
+\hypertarget{terrain_8cpp_ae1114139c8bdb00ddef13127a2fe5b8b}{float {\bfseries ticker} = 0.\-0}\label{terrain_8cpp_ae1114139c8bdb00ddef13127a2fe5b8b}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This is a trimmed version of our Fall 2012 project. \begin{DoxyAuthor}{Authors}
+John Huston, Nicholas St\-Pierre, Chris Compton 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2013-\/02-\/23
+\end{DoxyDate}
+This is a tech demo for terrain generation using an udpated engine derived from Ed Angel's code from his book. 
+
+Definition in file \hyperlink{terrain_8cpp_source}{terrain.\-cpp}.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{terrain_8cpp_aeb94fbd457627182ceee7e505f432541}{\index{terrain.\-cpp@{terrain.\-cpp}!cleanup@{cleanup}}
+\index{cleanup@{cleanup}!terrain.cpp@{terrain.\-cpp}}
+\subsubsection[{cleanup}]{\setlength{\rightskip}{0pt plus 5cm}void cleanup (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{terrain_8cpp_aeb94fbd457627182ceee7e505f432541}
+
+
+cleanup is a routine to call at exit time that will free up the resources the application is using. 
+
+While not critical, it does aid in using debuggers to not have any memory leaks at exit time.
+
+\begin{DoxyReturn}{Returns}
+void. 
+\end{DoxyReturn}
+
+
+Definition at line 230 of file terrain.\-cpp.
+
+\hypertarget{terrain_8cpp_a4ea013001a5fb47853d0fab8f8de35cd}{\index{terrain.\-cpp@{terrain.\-cpp}!display@{display}}
+\index{display@{display}!terrain.cpp@{terrain.\-cpp}}
+\subsubsection[{display}]{\setlength{\rightskip}{0pt plus 5cm}void display (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{terrain_8cpp_a4ea013001a5fb47853d0fab8f8de35cd}
+
+
+display is responsible for drawing an entire screen. 
+
+\begin{DoxyReturn}{Returns}
+void. 
+\end{DoxyReturn}
+
+
+Definition at line 255 of file terrain.\-cpp.
+
+\hypertarget{terrain_8cpp_af3c12d5391e754508338373c5071b2ed}{\index{terrain.\-cpp@{terrain.\-cpp}!display\-Viewport@{display\-Viewport}}
+\index{display\-Viewport@{display\-Viewport}!terrain.cpp@{terrain.\-cpp}}
+\subsubsection[{display\-Viewport}]{\setlength{\rightskip}{0pt plus 5cm}void display\-Viewport (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{terrain_8cpp_af3c12d5391e754508338373c5071b2ed}
+
+
+display\-Viewport is responsible for drawing a single viewport. 
+
+\begin{DoxyReturn}{Returns}
+void. 
+\end{DoxyReturn}
+
+
+Definition at line 241 of file terrain.\-cpp.
+
+\hypertarget{terrain_8cpp_a02fd73d861ef2e4aabb38c0c9ff82947}{\index{terrain.\-cpp@{terrain.\-cpp}!init@{init}}
+\index{init@{init}!terrain.cpp@{terrain.\-cpp}}
+\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}void init (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{terrain_8cpp_a02fd73d861ef2e4aabb38c0c9ff82947}
+
+
+init will initialize this particular flythrough, by creating and instantiating a shader, a camera, and a number of initial objects. 
+
+\begin{DoxyReturn}{Returns}
+void. 
+\end{DoxyReturn}
+
+
+Definition at line 91 of file terrain.\-cpp.
+
+\hypertarget{terrain_8cpp_a43d76d6460eea14cbfac57f649c4ccc9}{\index{terrain.\-cpp@{terrain.\-cpp}!randomize\-\_\-terrain@{randomize\-\_\-terrain}}
+\index{randomize\-\_\-terrain@{randomize\-\_\-terrain}!terrain.cpp@{terrain.\-cpp}}
+\subsubsection[{randomize\-\_\-terrain}]{\setlength{\rightskip}{0pt plus 5cm}void randomize\-\_\-terrain (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{terrain_8cpp_a43d76d6460eea14cbfac57f649c4ccc9}
+
+
+randomize\-\_\-terrain is called to regenerate the terrain in this application. 
+
+It assumes the terrain is named \char`\"{}terrain\char`\"{} and is located as a direct child of the main scene graph.
+
+\begin{DoxyReturn}{Returns}
+void. 
+\end{DoxyReturn}
+
+
+Definition at line 67 of file terrain.\-cpp.
+
+\hypertarget{terrain_8cpp_a19cc2bcd83a4740c8ab847f391229f09}{\index{terrain.\-cpp@{terrain.\-cpp}!Terrain\-Generation\-Animation@{Terrain\-Generation\-Animation}}
+\index{Terrain\-Generation\-Animation@{Terrain\-Generation\-Animation}!terrain.cpp@{terrain.\-cpp}}
+\subsubsection[{Terrain\-Generation\-Animation}]{\setlength{\rightskip}{0pt plus 5cm}void Terrain\-Generation\-Animation (
+\begin{DoxyParamCaption}
+\item[{{\bf Trans\-Cache} \&}]{obj}
+\end{DoxyParamCaption}
+)}}\label{terrain_8cpp_a19cc2bcd83a4740c8ab847f391229f09}
+
+
+Terrain\-Generation\-Animation is an animation callback that will\-: (A) If triggered, begin to shrink the object into a flat plane, (B) Order a re-\/generation of the terrain data (C) will grow the object back into its new, final shape. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & A reference to an object's transformation state.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void. 
+\end{DoxyReturn}
+
+
+Definition at line 279 of file terrain.\-cpp.
+
+\hypertarget{terrain_8cpp_a3db6770b4d2fa9a7566e01c68880d49c}{\index{terrain.\-cpp@{terrain.\-cpp}!wiilook@{wiilook}}
+\index{wiilook@{wiilook}!terrain.cpp@{terrain.\-cpp}}
+\subsubsection[{wiilook}]{\setlength{\rightskip}{0pt plus 5cm}void wiilook (
+\begin{DoxyParamCaption}
+\item[{{\bf Camera} \&}]{Wii\-Camera, }
+\item[{const {\bf Angel\-::vec3} \&}]{New\-Theta, }
+\item[{const {\bf Angel\-::vec3} \&}]{Movement\-Rates}
+\end{DoxyParamCaption}
+)}}\label{terrain_8cpp_a3db6770b4d2fa9a7566e01c68880d49c}
+
+
+wiilook is an analog of mouselook, for wii remote controls. 
+
+It takes a reference to a \hyperlink{class_camera}{Camera}, and two vec3s, and uses the information to adjust the \hyperlink{class_camera}{Camera}'s rotation.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Wii\-Camera} & The camera to adjust the rotation of. \\
+\hline
+{\em New\-Theta} & The X,Y,Z angles of the Wii Remote. \\
+\hline
+{\em Movement\-Rates} & The X, Y, Z angular velocities of the Wii Remote.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Void. 
+\end{DoxyReturn}
+
+
+Definition at line 346 of file terrain.\-cpp.
+
+
+
+\subsection{Variable Documentation}
+\hypertarget{terrain_8cpp_abc581addfa7e463bdc14d275fe30f412}{\index{terrain.\-cpp@{terrain.\-cpp}!terrain\-Tex@{terrain\-Tex}}
+\index{terrain\-Tex@{terrain\-Tex}!terrain.cpp@{terrain.\-cpp}}
+\subsubsection[{terrain\-Tex}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ terrain\-Tex\mbox{[}$\,$\mbox{]}}}\label{terrain_8cpp_abc581addfa7e463bdc14d275fe30f412}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+= \{
+  \textcolor{stringliteral}{"../Textures/GoodTextures\_0013423.jpg"},  
+  \textcolor{stringliteral}{"../Textures/GoodTextures\_0013779.jpg"},  
+  \textcolor{stringliteral}{"../Textures/GrassGreenTexture0002.jpg"}, 
+  \textcolor{stringliteral}{"../Textures/GoodTextures\_0013418.jpg"},  
+  \textcolor{stringliteral}{"../Textures/GoodTextures\_0013291.jpg"}   
+\}
+\end{DoxyCode}
+
+
+Definition at line 52 of file terrain.\-cpp.
+

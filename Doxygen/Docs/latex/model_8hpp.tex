@@ -1,0 +1,455 @@
+\hypertarget{model_8hpp}{\section{model.\-hpp File Reference}
+\label{model_8hpp}\index{model.\-hpp@{model.\-hpp}}
+}
+
+
+Headers for Functions related to constructing simple geometry.  
+
+
+{\ttfamily \#include \char`\"{}vec.\-hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Object.\-hpp\char`\"{}}\\*
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{struct_angel_1_1vec4}{Angel\-::vec4} \hyperlink{model_8hpp_a5c48af6a06eb70709fe4ce950c3015e3}{color4}
+\begin{DoxyCompactList}\small\item\em Simple alias of \hyperlink{struct_angel_1_1vec4}{Angel\-::vec4} to emphasize semantic meaning. \end{DoxyCompactList}\item 
+typedef \hyperlink{struct_angel_1_1vec4}{Angel\-::vec4} \hyperlink{model_8hpp_acd96474ea1ee15dc164c05371abfd25b}{point4}
+\begin{DoxyCompactList}\small\item\em Simple alias of \hyperlink{struct_angel_1_1vec4}{Angel\-::vec4} to emphasize semantic meaning. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{model_8hpp_aba8f9938a331f36ea0d3a4a3a777b44f}{create\-Point} (\hyperlink{class_object}{Object} $\ast$obj, \hyperlink{struct_angel_1_1vec4}{point4} const \&the\-\_\-point, \hyperlink{struct_angel_1_1vec4}{color4} const \&the\-\_\-color, \hyperlink{struct_angel_1_1vec3}{vec3} const \&the\-\_\-normal)
+\begin{DoxyCompactList}\small\item\em Adds another vertex to the specified object. \end{DoxyCompactList}\item 
+void \hyperlink{model_8hpp_ac0240797ef8ab9bece7689d5fe3e3b01}{triangle} (\hyperlink{class_object}{Object} $\ast$obj, const \hyperlink{struct_angel_1_1vec4}{point4} \&a, const \hyperlink{struct_angel_1_1vec4}{point4} \&b, const \hyperlink{struct_angel_1_1vec4}{point4} \&c, const int color)
+\begin{DoxyCompactList}\small\item\em Creates a triangle primitive from three spatial coordinates. \end{DoxyCompactList}\item 
+void \hyperlink{model_8hpp_a854158bca43c59081f73298fe6ccd314}{divide\-Triangle} (\hyperlink{class_object}{Object} $\ast$obj, const \hyperlink{struct_angel_1_1vec4}{point4} \&a, const \hyperlink{struct_angel_1_1vec4}{point4} \&b, const \hyperlink{struct_angel_1_1vec4}{point4} \&c, int times\-To\-Recurse, int color)
+\begin{DoxyCompactList}\small\item\em Used in building the Sierpinski gasket\-: Takes the coordinate for a triangle and splits it into several smaller triangles. \end{DoxyCompactList}\item 
+void \hyperlink{model_8hpp_ace1e82de848a81de1a680505d08ebbb4}{tetra} (\hyperlink{class_object}{Object} $\ast$obj, const \hyperlink{struct_angel_1_1vec4}{point4} \&a, const \hyperlink{struct_angel_1_1vec4}{point4} \&b, const \hyperlink{struct_angel_1_1vec4}{point4} \&c, const \hyperlink{struct_angel_1_1vec4}{point4} \&d)
+\begin{DoxyCompactList}\small\item\em Creates a tetrahedron using four triangles. \end{DoxyCompactList}\item 
+void \hyperlink{model_8hpp_a9ffe1e1f6d0168397c34286260d36562}{sierpinski\-Pyramid} (\hyperlink{class_object}{Object} $\ast$obj, const \hyperlink{struct_angel_1_1vec4}{point4} \&a, const \hyperlink{struct_angel_1_1vec4}{point4} \&b, const \hyperlink{struct_angel_1_1vec4}{point4} \&c, const \hyperlink{struct_angel_1_1vec4}{point4} \&d, int count)
+\begin{DoxyCompactList}\small\item\em Forms a Sierpinski Pyramid object given four 4\-D points in space. \end{DoxyCompactList}\item 
+void \hyperlink{model_8hpp_a0afb276b9c3c6051187d5dbfa5a18e6a}{recursive\-Model\-Gen} (\hyperlink{class_object}{Object} $\ast$obj, const \hyperlink{struct_angel_1_1vec4}{point4} \&a, const \hyperlink{struct_angel_1_1vec4}{point4} \&b, const \hyperlink{struct_angel_1_1vec4}{point4} \&c, const \hyperlink{struct_angel_1_1vec4}{point4} \&d, int times\-To\-Recurse, int color)
+\begin{DoxyCompactList}\small\item\em Given a quadrilateral, splits it up into smaller quadrilaterals. \end{DoxyCompactList}\item 
+void \hyperlink{model_8hpp_a152e6c0e91107b949df03ca399251fd8}{sphere} (\hyperlink{class_object}{Object} $\ast$obj)
+\begin{DoxyCompactList}\small\item\em Creates a white sphere. \end{DoxyCompactList}\item 
+void \hyperlink{model_8hpp_afc0ea166029aab7e030ba43b4633a778}{quad} (\hyperlink{class_object}{Object} $\ast$obj, const \hyperlink{struct_angel_1_1vec4}{point4} \&a, const \hyperlink{struct_angel_1_1vec4}{point4} \&b, const \hyperlink{struct_angel_1_1vec4}{point4} \&c, const \hyperlink{struct_angel_1_1vec4}{point4} \&d, const \hyperlink{struct_angel_1_1vec4}{color4} \&A, const \hyperlink{struct_angel_1_1vec4}{color4} \&B, const \hyperlink{struct_angel_1_1vec4}{color4} \&C, const \hyperlink{struct_angel_1_1vec4}{color4} \&D)
+\begin{DoxyCompactList}\small\item\em Create a quadrilateral from four points and four colors. \end{DoxyCompactList}\item 
+void \hyperlink{model_8hpp_aef25b2740b9cd274d269b8ac69bd7cdd}{cube} (\hyperlink{class_object}{Object} $\ast$obj, const G\-Lfloat \&size, const \hyperlink{struct_angel_1_1vec4}{color4} colors\mbox{[}8\mbox{]})
+\begin{DoxyCompactList}\small\item\em Create a cube of a given size fixed at the origin, using the eight colors specified. \end{DoxyCompactList}\item 
+void \hyperlink{model_8hpp_a9aeb9d305a36f39f25137645d75eaa95}{color\-Cube} (\hyperlink{class_object}{Object} $\ast$obj, G\-Lfloat size)
+\begin{DoxyCompactList}\small\item\em Creates a cube of a given size fixed at the origin, using all eight primary colors. \end{DoxyCompactList}\item 
+double \hyperlink{model_8hpp_a578108fa151d2df77af6ae4585c4bccc}{land\-Gen} (\hyperlink{class_object}{Object} $\ast$obj, int N, float H)
+\begin{DoxyCompactList}\small\item\em Use the diamond-\/square terrain generation algorithm to generate a triangle strip that resembles terrain with oceans, mountains, etc. \end{DoxyCompactList}\item 
+void \hyperlink{model_8hpp_ad759245db436eebefc9a921e882bca3b}{make\-Agua} (\hyperlink{class_object}{Object} $\ast$land\-\_\-obj, \hyperlink{class_object}{Object} $\ast$agua\-\_\-obj)
+\begin{DoxyCompactList}\small\item\em Adds a blue quadrilateral to an already-\/generated terrain object to create the appearance of water. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Headers for Functions related to constructing simple geometry. \begin{DoxyAuthor}{Authors}
+Ed Angel, John Huston, Chris Compton, Nick St.\-Pierre 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2013-\/03-\/14 
+\end{DoxyDate}
+
+
+Definition in file \hyperlink{model_8hpp_source}{model.\-hpp}.
+
+
+
+\subsection{Typedef Documentation}
+\hypertarget{model_8hpp_a5c48af6a06eb70709fe4ce950c3015e3}{\index{model.\-hpp@{model.\-hpp}!color4@{color4}}
+\index{color4@{color4}!model.hpp@{model.\-hpp}}
+\subsubsection[{color4}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Angel\-::vec4} {\bf color4}}}\label{model_8hpp_a5c48af6a06eb70709fe4ce950c3015e3}
+
+
+Simple alias of \hyperlink{struct_angel_1_1vec4}{Angel\-::vec4} to emphasize semantic meaning. 
+
+
+
+Definition at line 17 of file model.\-hpp.
+
+\hypertarget{model_8hpp_acd96474ea1ee15dc164c05371abfd25b}{\index{model.\-hpp@{model.\-hpp}!point4@{point4}}
+\index{point4@{point4}!model.hpp@{model.\-hpp}}
+\subsubsection[{point4}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Angel\-::vec4} {\bf point4}}}\label{model_8hpp_acd96474ea1ee15dc164c05371abfd25b}
+
+
+Simple alias of \hyperlink{struct_angel_1_1vec4}{Angel\-::vec4} to emphasize semantic meaning. 
+
+
+
+Definition at line 19 of file model.\-hpp.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{model_8hpp_a9aeb9d305a36f39f25137645d75eaa95}{\index{model.\-hpp@{model.\-hpp}!color\-Cube@{color\-Cube}}
+\index{color\-Cube@{color\-Cube}!model.hpp@{model.\-hpp}}
+\subsubsection[{color\-Cube}]{\setlength{\rightskip}{0pt plus 5cm}void color\-Cube (
+\begin{DoxyParamCaption}
+\item[{{\bf Object} $\ast$}]{obj, }
+\item[{G\-Lfloat}]{size}
+\end{DoxyParamCaption}
+)}}\label{model_8hpp_a9aeb9d305a36f39f25137645d75eaa95}
+
+
+Creates a cube of a given size fixed at the origin, using all eight primary colors. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & The object to add the geometry to. \\
+\hline
+{\em size} & The size of the cube to create. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 310 of file model.\-cpp.
+
+\hypertarget{model_8hpp_aba8f9938a331f36ea0d3a4a3a777b44f}{\index{model.\-hpp@{model.\-hpp}!create\-Point@{create\-Point}}
+\index{create\-Point@{create\-Point}!model.hpp@{model.\-hpp}}
+\subsubsection[{create\-Point}]{\setlength{\rightskip}{0pt plus 5cm}void create\-Point (
+\begin{DoxyParamCaption}
+\item[{{\bf Object} $\ast$}]{obj, }
+\item[{{\bf point4} const \&}]{the\-\_\-point, }
+\item[{{\bf color4} const \&}]{the\-\_\-color, }
+\item[{{\bf vec3} const \&}]{the\-\_\-normal}
+\end{DoxyParamCaption}
+)}}\label{model_8hpp_aba8f9938a331f36ea0d3a4a3a777b44f}
+
+
+Adds another vertex to the specified object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & The object to add the vertex to. \\
+\hline
+{\em the\-\_\-point} & The 4d spatial coordinate of the vertex. \\
+\hline
+{\em the\-\_\-color} & The vec4 specifying the R\-G\-B\-A color value of the vertex. \\
+\hline
+{\em the\-\_\-normal} & The vec3 that specifies the normal for this vertex. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 42 of file model.\-cpp.
+
+\hypertarget{model_8hpp_aef25b2740b9cd274d269b8ac69bd7cdd}{\index{model.\-hpp@{model.\-hpp}!cube@{cube}}
+\index{cube@{cube}!model.hpp@{model.\-hpp}}
+\subsubsection[{cube}]{\setlength{\rightskip}{0pt plus 5cm}void cube (
+\begin{DoxyParamCaption}
+\item[{{\bf Object} $\ast$}]{obj, }
+\item[{const G\-Lfloat \&}]{size, }
+\item[{const {\bf color4}}]{colors\mbox{[}8\mbox{]}}
+\end{DoxyParamCaption}
+)}}\label{model_8hpp_aef25b2740b9cd274d269b8ac69bd7cdd}
+
+
+Create a cube of a given size fixed at the origin, using the eight colors specified. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & The object to add the geometry to. \\
+\hline
+{\em size} & The size of the cube to create. \\
+\hline
+{\em colors} & An array of eight colors for the vertices. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 280 of file model.\-cpp.
+
+\hypertarget{model_8hpp_a854158bca43c59081f73298fe6ccd314}{\index{model.\-hpp@{model.\-hpp}!divide\-Triangle@{divide\-Triangle}}
+\index{divide\-Triangle@{divide\-Triangle}!model.hpp@{model.\-hpp}}
+\subsubsection[{divide\-Triangle}]{\setlength{\rightskip}{0pt plus 5cm}void divide\-Triangle (
+\begin{DoxyParamCaption}
+\item[{{\bf Object} $\ast$}]{obj, }
+\item[{const {\bf point4} \&}]{a, }
+\item[{const {\bf point4} \&}]{b, }
+\item[{const {\bf point4} \&}]{c, }
+\item[{int}]{times\-To\-Recurse, }
+\item[{int}]{color}
+\end{DoxyParamCaption}
+)}}\label{model_8hpp_a854158bca43c59081f73298fe6ccd314}
+
+
+Used in building the Sierpinski gasket\-: Takes the coordinate for a triangle and splits it into several smaller triangles. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & The object to add the triangles to. \\
+\hline
+{\em a} & The first spatial coordinate for the triangle. \\
+\hline
+{\em b} & The second spatial coordinate for the triangle. \\
+\hline
+{\em c} & The third spatial coordinate for the triangle. \\
+\hline
+{\em times\-To\-Recurse} & The number of times to subdivide. \\
+\hline
+{\em color} & An index for the color to use for the triangle\-: \{ Red, Green, Blue, Yellow, Pink, White \} \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 123 of file model.\-cpp.
+
+\hypertarget{model_8hpp_a578108fa151d2df77af6ae4585c4bccc}{\index{model.\-hpp@{model.\-hpp}!land\-Gen@{land\-Gen}}
+\index{land\-Gen@{land\-Gen}!model.hpp@{model.\-hpp}}
+\subsubsection[{land\-Gen}]{\setlength{\rightskip}{0pt plus 5cm}double land\-Gen (
+\begin{DoxyParamCaption}
+\item[{{\bf Object} $\ast$}]{obj, }
+\item[{int}]{N, }
+\item[{float}]{H}
+\end{DoxyParamCaption}
+)}}\label{model_8hpp_a578108fa151d2df77af6ae4585c4bccc}
+
+
+Use the diamond-\/square terrain generation algorithm to generate a triangle strip that resembles terrain with oceans, mountains, etc. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & The object to add the geometry to. \\
+\hline
+{\em N} & The size of the terrain\-: Will be n$^\wedge$2 x n$^\wedge$2 evenly spaced vertices. \\
+\hline
+{\em H} & The height 'randomness' factor.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The maximum height actually achieved in this terrain generation. 
+\end{DoxyReturn}
+
+
+Definition at line 402 of file model.\-cpp.
+
+\hypertarget{model_8hpp_ad759245db436eebefc9a921e882bca3b}{\index{model.\-hpp@{model.\-hpp}!make\-Agua@{make\-Agua}}
+\index{make\-Agua@{make\-Agua}!model.hpp@{model.\-hpp}}
+\subsubsection[{make\-Agua}]{\setlength{\rightskip}{0pt plus 5cm}void make\-Agua (
+\begin{DoxyParamCaption}
+\item[{{\bf Object} $\ast$}]{land\-\_\-obj, }
+\item[{{\bf Object} $\ast$}]{agua\-\_\-obj}
+\end{DoxyParamCaption}
+)}}\label{model_8hpp_ad759245db436eebefc9a921e882bca3b}
+
+
+Adds a blue quadrilateral to an already-\/generated terrain object to create the appearance of water. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em land\-\_\-obj} & \\
+\hline
+{\em agua\-\_\-obj} & \\
+\hline
+\end{DoxyParams}
+What should the water's height be? 
+
+Definition at line 561 of file model.\-cpp.
+
+\hypertarget{model_8hpp_afc0ea166029aab7e030ba43b4633a778}{\index{model.\-hpp@{model.\-hpp}!quad@{quad}}
+\index{quad@{quad}!model.hpp@{model.\-hpp}}
+\subsubsection[{quad}]{\setlength{\rightskip}{0pt plus 5cm}void quad (
+\begin{DoxyParamCaption}
+\item[{{\bf Object} $\ast$}]{obj, }
+\item[{const {\bf point4} \&}]{a, }
+\item[{const {\bf point4} \&}]{b, }
+\item[{const {\bf point4} \&}]{c, }
+\item[{const {\bf point4} \&}]{d, }
+\item[{const {\bf color4} \&}]{A, }
+\item[{const {\bf color4} \&}]{B, }
+\item[{const {\bf color4} \&}]{C, }
+\item[{const {\bf color4} \&}]{D}
+\end{DoxyParamCaption}
+)}}\label{model_8hpp_afc0ea166029aab7e030ba43b4633a778}
+
+
+Create a quadrilateral from four points and four colors. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & The object to add the geometry to. \\
+\hline
+{\em a} & The first spatial point. \\
+\hline
+{\em b} & The second spatial point. \\
+\hline
+{\em c} & The third spatial point. \\
+\hline
+{\em d} & The fourth spatial point. \\
+\hline
+{\em A} & The color of the first point. \\
+\hline
+{\em B} & The color of the second point. \\
+\hline
+{\em C} & The color of the third point. \\
+\hline
+{\em D} & The color of the fourth point. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 242 of file model.\-cpp.
+
+\hypertarget{model_8hpp_a0afb276b9c3c6051187d5dbfa5a18e6a}{\index{model.\-hpp@{model.\-hpp}!recursive\-Model\-Gen@{recursive\-Model\-Gen}}
+\index{recursive\-Model\-Gen@{recursive\-Model\-Gen}!model.hpp@{model.\-hpp}}
+\subsubsection[{recursive\-Model\-Gen}]{\setlength{\rightskip}{0pt plus 5cm}void recursive\-Model\-Gen (
+\begin{DoxyParamCaption}
+\item[{{\bf Object} $\ast$}]{obj, }
+\item[{const {\bf point4} \&}]{a, }
+\item[{const {\bf point4} \&}]{b, }
+\item[{const {\bf point4} \&}]{c, }
+\item[{const {\bf point4} \&}]{d, }
+\item[{int}]{times\-To\-Recurse, }
+\item[{int}]{color}
+\end{DoxyParamCaption}
+)}}\label{model_8hpp_a0afb276b9c3c6051187d5dbfa5a18e6a}
+
+
+Given a quadrilateral, splits it up into smaller quadrilaterals. 
+
+Used in the generation of spheres! F\-I\-X\-M\-E\-: Nick St.\-Pierre (Documentation!)
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & The object to add the geometry to. \\
+\hline
+{\em a} & The first spatial coordinate. \\
+\hline
+{\em b} & The second spatial coordinate. \\
+\hline
+{\em c} & The third spatial coordinate. \\
+\hline
+{\em d} & The fourth spatial coordinate. \\
+\hline
+{\em times\-To\-Recurse} & The number of subdivisions to make. \\
+\hline
+{\em color} & An index for the color to use for the triangle\-: \{ Red, Green, Blue, Yellow, Pink, White \} \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 200 of file model.\-cpp.
+
+\hypertarget{model_8hpp_a9ffe1e1f6d0168397c34286260d36562}{\index{model.\-hpp@{model.\-hpp}!sierpinski\-Pyramid@{sierpinski\-Pyramid}}
+\index{sierpinski\-Pyramid@{sierpinski\-Pyramid}!model.hpp@{model.\-hpp}}
+\subsubsection[{sierpinski\-Pyramid}]{\setlength{\rightskip}{0pt plus 5cm}void sierpinski\-Pyramid (
+\begin{DoxyParamCaption}
+\item[{{\bf Object} $\ast$}]{obj, }
+\item[{const {\bf point4} \&}]{a, }
+\item[{const {\bf point4} \&}]{b, }
+\item[{const {\bf point4} \&}]{c, }
+\item[{const {\bf point4} \&}]{d, }
+\item[{int}]{count}
+\end{DoxyParamCaption}
+)}}\label{model_8hpp_a9ffe1e1f6d0168397c34286260d36562}
+
+
+Forms a Sierpinski Pyramid object given four 4\-D points in space. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & The object to add the geometry to. \\
+\hline
+{\em a} & The first coordinate. \\
+\hline
+{\em b} & The second coordinate. \\
+\hline
+{\em c} & The third coordinate. \\
+\hline
+{\em d} & The fourth coordinate. \\
+\hline
+{\em count} & The number of recursions to perform to construct the gasket. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 168 of file model.\-cpp.
+
+\hypertarget{model_8hpp_a152e6c0e91107b949df03ca399251fd8}{\index{model.\-hpp@{model.\-hpp}!sphere@{sphere}}
+\index{sphere@{sphere}!model.hpp@{model.\-hpp}}
+\subsubsection[{sphere}]{\setlength{\rightskip}{0pt plus 5cm}void sphere (
+\begin{DoxyParamCaption}
+\item[{{\bf Object} $\ast$}]{obj}
+\end{DoxyParamCaption}
+)}}\label{model_8hpp_a152e6c0e91107b949df03ca399251fd8}
+
+
+Creates a white sphere. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & The object to add the geometry to. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 215 of file model.\-cpp.
+
+\hypertarget{model_8hpp_ace1e82de848a81de1a680505d08ebbb4}{\index{model.\-hpp@{model.\-hpp}!tetra@{tetra}}
+\index{tetra@{tetra}!model.hpp@{model.\-hpp}}
+\subsubsection[{tetra}]{\setlength{\rightskip}{0pt plus 5cm}void tetra (
+\begin{DoxyParamCaption}
+\item[{{\bf Object} $\ast$}]{obj, }
+\item[{const {\bf point4} \&}]{a, }
+\item[{const {\bf point4} \&}]{b, }
+\item[{const {\bf point4} \&}]{c, }
+\item[{const {\bf point4} \&}]{d}
+\end{DoxyParamCaption}
+)}}\label{model_8hpp_ace1e82de848a81de1a680505d08ebbb4}
+
+
+Creates a tetrahedron using four triangles. 
+
+(12 vertices.)
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & The object to add the Tetrahedron to/ \\
+\hline
+{\em a} & The first spatial coordinate for the tetrahedron. \\
+\hline
+{\em b} & The second spatial coordinate for the tetrahedron. \\
+\hline
+{\em c} & The third spatial coordinate for the tetrahedron. \\
+\hline
+{\em d} & The fourth spatial coordinate for the tetrahedron. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 149 of file model.\-cpp.
+
+\hypertarget{model_8hpp_ac0240797ef8ab9bece7689d5fe3e3b01}{\index{model.\-hpp@{model.\-hpp}!triangle@{triangle}}
+\index{triangle@{triangle}!model.hpp@{model.\-hpp}}
+\subsubsection[{triangle}]{\setlength{\rightskip}{0pt plus 5cm}void triangle (
+\begin{DoxyParamCaption}
+\item[{{\bf Object} $\ast$}]{obj, }
+\item[{const {\bf point4} \&}]{a, }
+\item[{const {\bf point4} \&}]{b, }
+\item[{const {\bf point4} \&}]{c, }
+\item[{const int}]{color}
+\end{DoxyParamCaption}
+)}}\label{model_8hpp_ac0240797ef8ab9bece7689d5fe3e3b01}
+
+
+Creates a triangle primitive from three spatial coordinates. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & The object to add the triangle to. \\
+\hline
+{\em a} & The location of the first vertex. \\
+\hline
+{\em b} & The location of the second vertex. \\
+\hline
+{\em c} & The location of the third vertex. \\
+\hline
+{\em color} & An index for the color to use for the triangle\-: \{ Red, Green, Blue, Yellow, Pink, White \} \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 61 of file model.\-cpp.
+

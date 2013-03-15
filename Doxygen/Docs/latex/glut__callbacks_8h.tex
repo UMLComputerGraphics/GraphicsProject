@@ -1,0 +1,237 @@
+\hypertarget{glut__callbacks_8h}{\section{glut\-\_\-callbacks.\-h File Reference}
+\label{glut__callbacks_8h}\index{glut\-\_\-callbacks.\-h@{glut\-\_\-callbacks.\-h}}
+}
+
+
+\hyperlink{glut__callbacks_8h}{glut\-\_\-callbacks.\-h} provides function declarations for a set of functions commonly used across multiple binaries for keyboard, mouse and other G\-L\-U\-T callback functions.  
+
+
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{glut__callbacks_8h_a254e97178a2df1da3e435a01f778e475}{keylift} (unsigned char key, int x, int y)
+\begin{DoxyCompactList}\small\item\em keylift is registered as a G\-L\-U\-T callback for when a user releases a depressed key. \end{DoxyCompactList}\item 
+void \hyperlink{glut__callbacks_8h_aef7ba2f69afb2d954545f64c7fe24b14}{keyboard} (unsigned char key, int x, int y)
+\begin{DoxyCompactList}\small\item\em keyboard is a callback registered with G\-L\-U\-T. \end{DoxyCompactList}\item 
+void \hyperlink{glut__callbacks_8h_a6f3a97ed034be467bc035242d2486e00}{keyboard\-\_\-ctrl} (int key, int x, int y)
+\begin{DoxyCompactList}\small\item\em keyboard\-\_\-ctrl is registered as a G\-L\-U\-T callback. \end{DoxyCompactList}\item 
+void \hyperlink{glut__callbacks_8h_ac76a5d78172a826cd6ee9512b89a86c0}{mouse} (int button, int state, int x, int y)
+\begin{DoxyCompactList}\small\item\em mouse is registered as a G\-L\-U\-T callback. \end{DoxyCompactList}\item 
+void \hyperlink{glut__callbacks_8h_ad373689e6b9dcfe1b99692b43a759d40}{mouseroll} (int x, int y)
+\begin{DoxyCompactList}\small\item\em mouseroll is registered as a G\-L\-U\-T callback. \end{DoxyCompactList}\item 
+void \hyperlink{glut__callbacks_8h_af04567427614c77718ed14b8450a3438}{mouselook} (int x, int y)
+\begin{DoxyCompactList}\small\item\em mouselook is registered as a G\-L\-U\-T callback. \end{DoxyCompactList}\item 
+void \hyperlink{glut__callbacks_8h_ace248343c050c709b645c42012d68f18}{resize\-Event} (int width, int height)
+\begin{DoxyCompactList}\small\item\em resize\-Event is registered as a glut callback for when the screen is resized. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{glut__callbacks_8h}{glut\-\_\-callbacks.\-h} provides function declarations for a set of functions commonly used across multiple binaries for keyboard, mouse and other G\-L\-U\-T callback functions. \begin{DoxyAuthor}{Author}
+John Huston 
+\end{DoxyAuthor}
+\begin{DoxyAuthor}{Authors}
+John Huston, Nick St.\-Pierre, Chris Compton 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2013-\/03-\/13 
+\end{DoxyDate}
+
+
+Definition in file \hyperlink{glut__callbacks_8h_source}{glut\-\_\-callbacks.\-h}.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{glut__callbacks_8h_aef7ba2f69afb2d954545f64c7fe24b14}{\index{glut\-\_\-callbacks.\-h@{glut\-\_\-callbacks.\-h}!keyboard@{keyboard}}
+\index{keyboard@{keyboard}!glut_callbacks.h@{glut\-\_\-callbacks.\-h}}
+\subsubsection[{keyboard}]{\setlength{\rightskip}{0pt plus 5cm}void keyboard (
+\begin{DoxyParamCaption}
+\item[{unsigned char}]{key, }
+\item[{int}]{x, }
+\item[{int}]{y}
+\end{DoxyParamCaption}
+)}}\label{glut__callbacks_8h_aef7ba2f69afb2d954545f64c7fe24b14}
+
+
+keyboard is a callback registered with G\-L\-U\-T. 
+
+It handles (surprise!) keyboard input.
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & The key pressed by the user. \\
+\hline
+{\em x} & The x coordinate of the mouse when the key was pressed. \\
+\hline
+{\em y} & The y coordinate of the mouse when the key was pressed. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 66 of file glut\-\_\-callbacks.\-cpp.
+
+\hypertarget{glut__callbacks_8h_a6f3a97ed034be467bc035242d2486e00}{\index{glut\-\_\-callbacks.\-h@{glut\-\_\-callbacks.\-h}!keyboard\-\_\-ctrl@{keyboard\-\_\-ctrl}}
+\index{keyboard\-\_\-ctrl@{keyboard\-\_\-ctrl}!glut_callbacks.h@{glut\-\_\-callbacks.\-h}}
+\subsubsection[{keyboard\-\_\-ctrl}]{\setlength{\rightskip}{0pt plus 5cm}void keyboard\-\_\-ctrl (
+\begin{DoxyParamCaption}
+\item[{int}]{key, }
+\item[{int}]{x, }
+\item[{int}]{y}
+\end{DoxyParamCaption}
+)}}\label{glut__callbacks_8h_a6f3a97ed034be467bc035242d2486e00}
+
+
+keyboard\-\_\-ctrl is registered as a G\-L\-U\-T callback. 
+
+It is responsible for catching when special keys are pressed.
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & The key pressed. \\
+\hline
+{\em x} & The x coordinate of the mouse when the key was pressed. \\
+\hline
+{\em y} & The y coordinate of the mouse when the key was pressed. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 167 of file glut\-\_\-callbacks.\-cpp.
+
+\hypertarget{glut__callbacks_8h_a254e97178a2df1da3e435a01f778e475}{\index{glut\-\_\-callbacks.\-h@{glut\-\_\-callbacks.\-h}!keylift@{keylift}}
+\index{keylift@{keylift}!glut_callbacks.h@{glut\-\_\-callbacks.\-h}}
+\subsubsection[{keylift}]{\setlength{\rightskip}{0pt plus 5cm}void keylift (
+\begin{DoxyParamCaption}
+\item[{unsigned char}]{key, }
+\item[{int}]{x, }
+\item[{int}]{y}
+\end{DoxyParamCaption}
+)}}\label{glut__callbacks_8h_a254e97178a2df1da3e435a01f778e475}
+
+
+keylift is registered as a G\-L\-U\-T callback for when a user releases a depressed key. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & The key that was lifted. \\
+\hline
+{\em x} & The x coordinate of the mouse at the time the key was released. \\
+\hline
+{\em y} & The y coordinate of the mouse at the time the key was released. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 29 of file glut\-\_\-callbacks.\-cpp.
+
+\hypertarget{glut__callbacks_8h_ac76a5d78172a826cd6ee9512b89a86c0}{\index{glut\-\_\-callbacks.\-h@{glut\-\_\-callbacks.\-h}!mouse@{mouse}}
+\index{mouse@{mouse}!glut_callbacks.h@{glut\-\_\-callbacks.\-h}}
+\subsubsection[{mouse}]{\setlength{\rightskip}{0pt plus 5cm}void mouse (
+\begin{DoxyParamCaption}
+\item[{int}]{button, }
+\item[{int}]{state, }
+\item[{int}]{x, }
+\item[{int}]{y}
+\end{DoxyParamCaption}
+)}}\label{glut__callbacks_8h_ac76a5d78172a826cd6ee9512b89a86c0}
+
+
+mouse is registered as a G\-L\-U\-T callback. 
+
+It handles input from, primarily, the scrollwheel.
+
+
+\begin{DoxyParams}{Parameters}
+{\em button} & The mouse button being pressed. \\
+\hline
+{\em state} & the state of the aforementioned mouse button. \\
+\hline
+{\em x} & the x coordinate of the mouse. \\
+\hline
+{\em y} & the y coordinate of the mouse. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 219 of file glut\-\_\-callbacks.\-cpp.
+
+\hypertarget{glut__callbacks_8h_af04567427614c77718ed14b8450a3438}{\index{glut\-\_\-callbacks.\-h@{glut\-\_\-callbacks.\-h}!mouselook@{mouselook}}
+\index{mouselook@{mouselook}!glut_callbacks.h@{glut\-\_\-callbacks.\-h}}
+\subsubsection[{mouselook}]{\setlength{\rightskip}{0pt plus 5cm}void mouselook (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y}
+\end{DoxyParamCaption}
+)}}\label{glut__callbacks_8h_af04567427614c77718ed14b8450a3438}
+
+
+mouselook is registered as a G\-L\-U\-T callback. 
+
+mouselook implements F\-P\-S-\/like controls where the camera moves proportional to the direction of the mouse.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & the x coordinate of the mouse pointer. \\
+\hline
+{\em y} & the y coordinate of the mouse pointer. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 265 of file glut\-\_\-callbacks.\-cpp.
+
+\hypertarget{glut__callbacks_8h_ad373689e6b9dcfe1b99692b43a759d40}{\index{glut\-\_\-callbacks.\-h@{glut\-\_\-callbacks.\-h}!mouseroll@{mouseroll}}
+\index{mouseroll@{mouseroll}!glut_callbacks.h@{glut\-\_\-callbacks.\-h}}
+\subsubsection[{mouseroll}]{\setlength{\rightskip}{0pt plus 5cm}void mouseroll (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y}
+\end{DoxyParamCaption}
+)}}\label{glut__callbacks_8h_ad373689e6b9dcfe1b99692b43a759d40}
+
+
+mouseroll is registered as a G\-L\-U\-T callback. 
+
+mouseroll is called when the mouse is moved while a button is depressed. It is used here to implement barrel-\/rolls while left-\/clicking.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & the x coordinate of the mouse pointer. \\
+\hline
+{\em y} & the y coordinate of the mouse pointer. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 245 of file glut\-\_\-callbacks.\-cpp.
+
+\hypertarget{glut__callbacks_8h_ace248343c050c709b645c42012d68f18}{\index{glut\-\_\-callbacks.\-h@{glut\-\_\-callbacks.\-h}!resize\-Event@{resize\-Event}}
+\index{resize\-Event@{resize\-Event}!glut_callbacks.h@{glut\-\_\-callbacks.\-h}}
+\subsubsection[{resize\-Event}]{\setlength{\rightskip}{0pt plus 5cm}void resize\-Event (
+\begin{DoxyParamCaption}
+\item[{int}]{width, }
+\item[{int}]{height}
+\end{DoxyParamCaption}
+)}}\label{glut__callbacks_8h_ace248343c050c709b645c42012d68f18}
+
+
+resize\-Event is registered as a glut callback for when the screen is resized. 
+
+It instructs the screen object of the new size, which informs all of the children cameras to recompute their aspect ratios, viewport positions, and so on.
+
+We also warp the pointer to the center of the screen, for compatibility with mouselook( void ).
+
+
+\begin{DoxyParams}{Parameters}
+{\em width} & The new width of the window. \\
+\hline
+{\em height} & The new height of the window.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void. 
+\end{DoxyReturn}
+
+
+Definition at line 299 of file glut\-\_\-callbacks.\-cpp.
+

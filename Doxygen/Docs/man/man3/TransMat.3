@@ -1,0 +1,65 @@
+.TH "TransMat" 3 "Fri Mar 15 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+TransMat \- 
+.PP
+Translations\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <Transformation\&.hpp>\fP
+.PP
+Inherits \fBTransformation\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "const \fBTransMat\fP & \fBSetX\fP (const float x)"
+.br
+.ti -1c
+.RI "const \fBTransMat\fP & \fBSetY\fP (const float y)"
+.br
+.ti -1c
+.RI "const \fBTransMat\fP & \fBSetZ\fP (const float z)"
+.br
+.ti -1c
+.RI "const \fBTransMat\fP & \fBSet\fP (const float x, const float y, const float z)"
+.br
+.ti -1c
+.RI "const \fBTransMat\fP & \fBSet\fP (const \fBAngel::vec3\fP &arg)"
+.br
+.ti -1c
+.RI "const \fBTransMat\fP & \fBDelta\fP (const float x, const float y, const float z)"
+.br
+.ti -1c
+.RI "const \fBTransMat\fP & \fBDelta\fP (const \fBAngel::vec3\fP &arg)"
+.br
+.ti -1c
+.RI "const \fBAngel::mat4\fP & \fBMatrix\fP (void) const "
+.br
+.ti -1c
+.RI "\fBAngel::mat4\fP \fBoperator*\fP (const \fBAngel::mat4\fP &rhs) const "
+.br
+.ti -1c
+.RI "\fBAngel::mat4\fP \fBoperator*\fP (const \fBTransformation\fP &rhs) const "
+.br
+.in -1c
+.SS "Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBAngel::mat4\fP \fBmat\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Translations\&. 
+.PP
+Definition at line 47 of file Transformation\&.hpp\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for HyperGrafx from the source code\&.

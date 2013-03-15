@@ -1,0 +1,351 @@
+\hypertarget{class_object}{\section{Object Class Reference}
+\label{class_object}\index{Object@{Object}}
+}
+Inheritance diagram for Object\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_object}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum {\bfseries Uniforms} \{ \\*
+{\bfseries B\-E\-G\-I\-N}, 
+{\bfseries Is\-Textured} = B\-E\-G\-I\-N, 
+{\bfseries Object\-C\-T\-M}, 
+{\bfseries Morph\-Percentage}, 
+\\*
+{\bfseries E\-N\-D}
+ \}
+\item 
+\hypertarget{class_object_a79b74057dbc5182b85c9c3ba8480fcf2}{typedef const unsigned int {\bfseries Uniform\-Enum}}\label{class_object_a79b74057dbc5182b85c9c3ba8480fcf2}
+
+\item 
+\hypertarget{class_object_a6e19bd8516360bff956408cbae33b878}{typedef std\-::map\\*
+$<$ Object\-::\-Uniform\-Enum, \\*
+std\-::string $>$ {\bfseries Uniform\-Map}}\label{class_object_a6e19bd8516360bff956408cbae33b878}
+
+\item 
+\hypertarget{class_object_ae6a2969ddca87d2c54b7cb1c131a7d60}{typedef enum Object\-::\-Uniforms {\bfseries Uniform}}\label{class_object_ae6a2969ddca87d2c54b7cb1c131a7d60}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_object_aacf42e81415f32f1f2a105ce29c7c1b9}{{\bfseries Object} (const std\-::string \&\hyperlink{class_object_a24457e0a387492c80594aec7681a2277}{name}, G\-Luint g\-Shader)}\label{class_object_aacf42e81415f32f1f2a105ce29c7c1b9}
+
+\item 
+\hypertarget{class_object_a3afa1b9af32b78d81b5de0836c511aeb}{void {\bfseries Draw} (void)}\label{class_object_a3afa1b9af32b78d81b5de0836c511aeb}
+
+\item 
+\hypertarget{class_object_a35c89a8eb8a5b742a9025331119bfc7c}{void {\bfseries Buffer} (void)}\label{class_object_a35c89a8eb8a5b742a9025331119bfc7c}
+
+\item 
+\hypertarget{class_object_a754f9f36a528f050b25d053ed43015f0}{void {\bfseries Buffer\-Morph\-Only} (void)}\label{class_object_a754f9f36a528f050b25d053ed43015f0}
+
+\item 
+\hypertarget{class_object_ac6ccf69d21c4c902c62829c48ef6cf5b}{void {\bfseries Mode} (G\-Lenum new\-\_\-node)}\label{class_object_ac6ccf69d21c4c902c62829c48ef6cf5b}
+
+\item 
+\hypertarget{class_object_aa104adfbcc2cae4bd68c053cc3dab721}{void {\bfseries Texture} (const char $\ast$$\ast$filename)}\label{class_object_aa104adfbcc2cae4bd68c053cc3dab721}
+
+\item 
+\hypertarget{class_object_a890760dff9df547454112ff84510040c}{const std\-::string \& {\bfseries Name} (void) const }\label{class_object_a890760dff9df547454112ff84510040c}
+
+\item 
+\hypertarget{class_object_accde5aa6e8d0d582719e94c414c2341c}{virtual void {\bfseries Link} (Uniform\-Enum which, const std\-::string \&\hyperlink{class_object_a24457e0a387492c80594aec7681a2277}{name})}\label{class_object_accde5aa6e8d0d582719e94c414c2341c}
+
+\item 
+\hypertarget{class_object_a34258ee199342d785c29d18c49d54e71}{virtual void {\bfseries send} (Uniform\-Enum which)}\label{class_object_a34258ee199342d785c29d18c49d54e71}
+
+\item 
+virtual G\-Luint \hyperlink{class_object_a3dc857b837e8b77ba8a2727233400a5e}{Shader} (void)
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{class_object}{Object}'s current Shader. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_object_aa52c30bca96800cecba55f446e147859}{Shader} (G\-Luint new\-Shader)
+\begin{DoxyCompactList}\small\item\em Sets the shader to be used by this object. \end{DoxyCompactList}\item 
+\hypertarget{class_object_ae3226b31c80c9f276ffdee65101c8fa6}{void {\bfseries Animation} (void($\ast$anim\-\_\-func)(\hyperlink{class_trans_cache}{Trans\-Cache} \&arg))}\label{class_object_ae3226b31c80c9f276ffdee65101c8fa6}
+
+\item 
+\hypertarget{class_object_ae09449132d3853e179d07d4d6bc0b695}{void {\bfseries Propagate} (void)}\label{class_object_ae09449132d3853e179d07d4d6bc0b695}
+
+\item 
+\hyperlink{struct_angel_1_1vec4}{vec4} \hyperlink{class_object_ae10497fea640753a3cb63f739aacc540}{Get\-Position} () const 
+\begin{DoxyCompactList}\small\item\em returns the position of the object this makes the lighting implementation much easier... \end{DoxyCompactList}\item 
+\hypertarget{class_object_aa60771518c07a0edf5aeee5584a571e0}{\hyperlink{class_object}{Object} $\ast$ {\bfseries get\-Morph\-Target\-Ptr} () const }\label{class_object_aa60771518c07a0edf5aeee5584a571e0}
+
+\item 
+\hypertarget{class_object_af4d40010633d77ff47e75d40e3129894}{\hyperlink{class_object}{Object} $\ast$ {\bfseries gen\-Morph\-Target} (G\-Luint)}\label{class_object_af4d40010633d77ff47e75d40e3129894}
+
+\item 
+\hypertarget{class_object_a275903685e300433a5120b5558eb9aa1}{float {\bfseries get\-Morph\-Percentage} () const }\label{class_object_a275903685e300433a5120b5558eb9aa1}
+
+\item 
+\hypertarget{class_object_aea00114a91aeb779b4f03c7bebaa326e}{void {\bfseries set\-Morph\-Percentage} (const float)}\label{class_object_aea00114a91aeb779b4f03c7bebaa326e}
+
+\item 
+\hypertarget{class_object_a98d3f1b9ebb61c3b21e2a59ed267480a}{void {\bfseries destroy\-Morph\-Target} ()}\label{class_object_a98d3f1b9ebb61c3b21e2a59ed267480a}
+
+\item 
+\hypertarget{class_object_aae9b55b35a69ba78aa2803b4c8a681b7}{int {\bfseries get\-Number\-Points} ()}\label{class_object_aae9b55b35a69ba78aa2803b4c8a681b7}
+
+\item 
+\hypertarget{class_scene_a366b5dec1ecf66a887b4d0dedcd1aa3b}{\hyperlink{class_object}{Object} $\ast$ {\bfseries Add\-Object} (const std\-::string \&obj\-Name, G\-Luint Object\-\_\-\-Shader=0)}\label{class_scene_a366b5dec1ecf66a887b4d0dedcd1aa3b}
+
+\item 
+\hypertarget{class_scene_a3bd9fa1058f506c04162b9283e97d20e}{void {\bfseries Del\-Object} (const std\-::string \&obj\-Name)}\label{class_scene_a3bd9fa1058f506c04162b9283e97d20e}
+
+\item 
+\hypertarget{class_scene_a43fd3c56db5dc940d1724b9573c9a360}{void {\bfseries Del\-Object} (void)}\label{class_scene_a43fd3c56db5dc940d1724b9573c9a360}
+
+\item 
+\hypertarget{class_scene_abdfd15e7987aa261840d5ecc265170df}{void {\bfseries Pop\-Object} (void)}\label{class_scene_abdfd15e7987aa261840d5ecc265170df}
+
+\item 
+\hypertarget{class_scene_a82759ded1f6f87a91b8d10ed87501958}{void \hyperlink{class_scene_a82759ded1f6f87a91b8d10ed87501958}{Destroy\-Object} (void)}\label{class_scene_a82759ded1f6f87a91b8d10ed87501958}
+
+\begin{DoxyCompactList}\small\item\em Completely remove this object and all his children. \end{DoxyCompactList}\item 
+\hypertarget{class_scene_a70fcdad192a4c6ff508125de8af6cf4d}{\hyperlink{class_object}{Object} $\ast$ {\bfseries next} (void)}\label{class_scene_a70fcdad192a4c6ff508125de8af6cf4d}
+
+\item 
+\hypertarget{class_scene_ac852d5d763eb35b4908c9aa7ea54d1ae}{\hyperlink{class_object}{Object} $\ast$ {\bfseries prev} (void)}\label{class_scene_ac852d5d763eb35b4908c9aa7ea54d1ae}
+
+\item 
+\hypertarget{class_scene_ad0ea1a6bcf7815c63988bd937f06eb23}{\hyperlink{class_object}{Object} $\ast$ {\bfseries active} (void) const }\label{class_scene_ad0ea1a6bcf7815c63988bd937f06eb23}
+
+\item 
+\hypertarget{class_scene_ae9b69d8db8a46991017635f22e45baad}{\hyperlink{class_object}{Object} $\ast$ {\bfseries operator\mbox{[}$\,$\mbox{]}} (const std\-::string \&objname)}\label{class_scene_ae9b69d8db8a46991017635f22e45baad}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_object_a8dec70177d147f59ba10c9eba8e9191b}{std\-::vector$<$ \hyperlink{struct_angel_1_1vec4}{Angel\-::vec4} $>$ {\bfseries points}}\label{class_object_a8dec70177d147f59ba10c9eba8e9191b}
+
+\item 
+\hypertarget{class_object_ad541a7bb180e24f59d752cc6d7f8c7e8}{std\-::vector$<$ \hyperlink{struct_angel_1_1vec3}{Angel\-::vec3} $>$ {\bfseries normals}}\label{class_object_ad541a7bb180e24f59d752cc6d7f8c7e8}
+
+\item 
+\hypertarget{class_object_a9b2fb19d129ad79407f9af0eea05b96c}{std\-::vector$<$ unsigned int $>$ {\bfseries indices}}\label{class_object_a9b2fb19d129ad79407f9af0eea05b96c}
+
+\item 
+\hypertarget{class_object_a4de4c1e2c4b621efb6f5d1b398ac6835}{std\-::vector$<$ \hyperlink{struct_angel_1_1vec4}{Angel\-::vec4} $>$ {\bfseries colors}}\label{class_object_a4de4c1e2c4b621efb6f5d1b398ac6835}
+
+\item 
+\hypertarget{class_object_a6d6c58ccb93f7a2bd7439d081134aaa0}{std\-::vector$<$ \hyperlink{struct_angel_1_1vec2}{Angel\-::vec2} $>$ {\bfseries texcoords}}\label{class_object_a6d6c58ccb93f7a2bd7439d081134aaa0}
+
+\item 
+\hypertarget{class_object_a1bb011587e4fa6e69984d5679546b1cb}{\hyperlink{class_trans_cache}{Trans\-Cache} {\bfseries trans}}\label{class_object_a1bb011587e4fa6e69984d5679546b1cb}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_scene_a8bbe0e5b1bfc71034b18e240e86aa285}{Delete\-Object} (\hyperlink{class_object}{Object} $\ast$obj)
+\begin{DoxyCompactList}\small\item\em Delete\-Object is the actual implementation function that will remove an \hyperlink{class_object}{Object} from the \hyperlink{class_scene}{Scene} list and \hyperlink{class_scene}{Scene} map, then free the object. \end{DoxyCompactList}\item 
+\hypertarget{class_scene_ae8d51ddc196248a7cbd1f3640851dbd4}{void {\bfseries Insert\-Object} (const std\-::string \hyperlink{class_object_a24457e0a387492c80594aec7681a2277}{name}, \hyperlink{class_object}{Object} $\ast$obj)}\label{class_scene_ae8d51ddc196248a7cbd1f3640851dbd4}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\-::string \hyperlink{class_object_a24457e0a387492c80594aec7681a2277}{name}
+\begin{DoxyCompactList}\small\item\em name is used as an identifying handle for the object. \end{DoxyCompactList}\item 
+G\-Luint \hyperlink{class_object_a66190fee29d03d6478516686cbd01eb8}{vao}
+\begin{DoxyCompactList}\small\item\em Vertex Array \hyperlink{class_object}{Object} handle identifying our buffers/object. \end{DoxyCompactList}\item 
+\hypertarget{class_object_a29de966ce95d96e19262c4f10f0b4276}{G\-Luint \hyperlink{class_object_a29de966ce95d96e19262c4f10f0b4276}{buffer} \mbox{[}N\-U\-M\-\_\-\-B\-U\-F\-F\-E\-R\-S\mbox{]}}\label{class_object_a29de966ce95d96e19262c4f10f0b4276}
+
+\begin{DoxyCompactList}\small\item\em Handles to our buffers (Vertices, Tex\-U\-Vs, etc.) \end{DoxyCompactList}\item 
+G\-Lenum \hyperlink{class_object_a82764b385767d989f27d301ab206acb8}{draw\-\_\-mode}
+\begin{DoxyCompactList}\small\item\em Drawing mode for this object. \end{DoxyCompactList}\item 
+\hypertarget{class_object_a2bbbe3a5b33cbcfc4c536b49d470a6b8}{bool \hyperlink{class_object_a2bbbe3a5b33cbcfc4c536b49d470a6b8}{is\-Textured}}\label{class_object_a2bbbe3a5b33cbcfc4c536b49d470a6b8}
+
+\begin{DoxyCompactList}\small\item\em Is this object textured? \end{DoxyCompactList}\item 
+\hypertarget{class_object_ac5ca00d03136434b93ae7d00808554c7}{float \hyperlink{class_object_ac5ca00d03136434b93ae7d00808554c7}{morph\-Percentage}}\label{class_object_ac5ca00d03136434b93ae7d00808554c7}
+
+\begin{DoxyCompactList}\small\item\em Morphing/\-Tweening Things. \end{DoxyCompactList}\item 
+\hypertarget{class_object_acfc4dec49d5d273910c3a1af2b3adfcd}{\hyperlink{class_object}{Object} $\ast$ {\bfseries morph\-Target}}\label{class_object_acfc4dec49d5d273910c3a1af2b3adfcd}
+
+\item 
+\hypertarget{class_object_a6378d0b0eeec23045ae2a5245e42bf13}{std\-::map$<$ Object\-::\-Uniform\-Enum, \\*
+std\-::string $>$ {\bfseries \-\_\-uniform\-Map}}\label{class_object_a6378d0b0eeec23045ae2a5245e42bf13}
+
+\item 
+std\-::vector$<$ G\-Lint $>$ \hyperlink{class_object_acd6c7021617ea334915a1525f9519bc5}{handles}
+\begin{DoxyCompactList}\small\item\em Handles to Uniforms on the shader. \end{DoxyCompactList}\item 
+\hypertarget{class_scene_acdd0123ca6b2d64d8d447bb485b235fc}{std\-::list$<$ \hyperlink{class_object}{Object} $\ast$ $>$ {\bfseries \-\_\-list}}\label{class_scene_acdd0123ca6b2d64d8d447bb485b235fc}
+
+\item 
+\hypertarget{class_scene_a8bd5d86484a12255b26b92b6cbf8d29a}{std\-::map$<$ std\-::string, \hyperlink{class_object}{Object} $\ast$ $>$ {\bfseries \-\_\-map}}\label{class_scene_a8bd5d86484a12255b26b92b6cbf8d29a}
+
+\item 
+\hypertarget{class_scene_ae87ca5350fcc595f3f15a4fd3c39f3d9}{std\-::list$<$ \hyperlink{class_object}{Object} $\ast$ $>$\-::iterator {\bfseries \-\_\-current\-Obj}}\label{class_scene_ae87ca5350fcc595f3f15a4fd3c39f3d9}
+
+\item 
+\hypertarget{class_scene_a8f9bdd8ec5edb1f414fbd314a36e2724}{G\-Luint {\bfseries \-\_\-g\-Shader}}\label{class_scene_a8f9bdd8ec5edb1f414fbd314a36e2724}
+
+\end{DoxyCompactItemize}
+\subsection*{Private Types}
+\begin{DoxyCompactItemize}
+\item 
+enum {\bfseries buffer\-Type} \{ \\*
+{\bfseries V\-E\-R\-T\-I\-C\-E\-S}, 
+{\bfseries N\-O\-R\-M\-A\-L\-S}, 
+{\bfseries I\-N\-D\-I\-C\-E\-S}, 
+{\bfseries C\-O\-L\-O\-R\-S}, 
+\\*
+{\bfseries T\-E\-X\-C\-O\-O\-R\-D\-S}, 
+{\bfseries V\-E\-R\-T\-I\-C\-E\-S\-\_\-\-M\-O\-R\-P\-H}, 
+{\bfseries N\-O\-R\-M\-A\-L\-S\-\_\-\-M\-O\-R\-P\-H}, 
+{\bfseries C\-O\-L\-O\-R\-S\-\_\-\-M\-O\-R\-P\-H}, 
+\\*
+{\bfseries N\-U\-M\-\_\-\-B\-U\-F\-F\-E\-R\-S}
+ \}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 16 of file Object.\-hpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_scene_a8bbe0e5b1bfc71034b18e240e86aa285}{\index{Object@{Object}!Delete\-Object@{Delete\-Object}}
+\index{Delete\-Object@{Delete\-Object}!Object@{Object}}
+\subsubsection[{Delete\-Object}]{\setlength{\rightskip}{0pt plus 5cm}void Scene\-::\-Delete\-Object (
+\begin{DoxyParamCaption}
+\item[{{\bf Object} $\ast$}]{obj}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}}\label{class_scene_a8bbe0e5b1bfc71034b18e240e86aa285}
+
+
+Delete\-Object is the actual implementation function that will remove an \hyperlink{class_object}{Object} from the \hyperlink{class_scene}{Scene} list and \hyperlink{class_scene}{Scene} map, then free the object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & The pointer to the object to free. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 76 of file Scene.\-cpp.
+
+\hypertarget{class_object_ae10497fea640753a3cb63f739aacc540}{\index{Object@{Object}!Get\-Position@{Get\-Position}}
+\index{Get\-Position@{Get\-Position}!Object@{Object}}
+\subsubsection[{Get\-Position}]{\setlength{\rightskip}{0pt plus 5cm}{\bf vec4} Object\-::\-Get\-Position (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_object_ae10497fea640753a3cb63f739aacc540}
+
+
+returns the position of the object this makes the lighting implementation much easier... 
+
+for this semester. 
+
+Definition at line 497 of file Object.\-cpp.
+
+\hypertarget{class_object_a3dc857b837e8b77ba8a2727233400a5e}{\index{Object@{Object}!Shader@{Shader}}
+\index{Shader@{Shader}!Object@{Object}}
+\subsubsection[{Shader}]{\setlength{\rightskip}{0pt plus 5cm}G\-Luint Object\-::\-Shader (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_object_a3dc857b837e8b77ba8a2727233400a5e}
+
+
+Returns the \hyperlink{class_object}{Object}'s current Shader. 
+
+Defined because C++ will not let you overload an overrided function, without re-\/overloading it in the derived class.
+
+\begin{DoxyReturn}{Returns}
+a G\-Luint handle to the shader program used by this \hyperlink{class_object}{Object}. 
+\end{DoxyReturn}
+
+
+Definition at line 269 of file Object.\-cpp.
+
+\hypertarget{class_object_aa52c30bca96800cecba55f446e147859}{\index{Object@{Object}!Shader@{Shader}}
+\index{Shader@{Shader}!Object@{Object}}
+\subsubsection[{Shader}]{\setlength{\rightskip}{0pt plus 5cm}void Object\-::\-Shader (
+\begin{DoxyParamCaption}
+\item[{G\-Luint}]{new\-Shader}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_object_aa52c30bca96800cecba55f446e147859}
+
+
+Sets the shader to be used by this object. 
+
+Triggers a query of the shader program, for the locations of the Uniform locations that the object needs.
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\-Shader} & a G\-Luint handle to the shader program to use.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None. 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{class_scene_a7137a7302c21ac4dd44e746bfb6f7cf8}{Scene}.
+
+
+
+Definition at line 246 of file Object.\-cpp.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{class_object_a82764b385767d989f27d301ab206acb8}{\index{Object@{Object}!draw\-\_\-mode@{draw\-\_\-mode}}
+\index{draw\-\_\-mode@{draw\-\_\-mode}!Object@{Object}}
+\subsubsection[{draw\-\_\-mode}]{\setlength{\rightskip}{0pt plus 5cm}G\-Lenum Object\-::draw\-\_\-mode\hspace{0.3cm}{\ttfamily [protected]}}}\label{class_object_a82764b385767d989f27d301ab206acb8}
+
+
+Drawing mode for this object. 
+
+G\-L\-\_\-\-T\-R\-I\-A\-N\-G\-L\-E\-S, G\-L\-\_\-\-L\-I\-N\-E\-\_\-\-L\-O\-O\-P, etc. 
+
+Definition at line 95 of file Object.\-hpp.
+
+\hypertarget{class_object_acd6c7021617ea334915a1525f9519bc5}{\index{Object@{Object}!handles@{handles}}
+\index{handles@{handles}!Object@{Object}}
+\subsubsection[{handles}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ G\-Lint $>$ Object\-::handles\hspace{0.3cm}{\ttfamily [protected]}}}\label{class_object_acd6c7021617ea334915a1525f9519bc5}
+
+
+Handles to Uniforms on the shader. 
+
+Private to allow derived classes to extend it as needed. 
+
+Definition at line 114 of file Object.\-hpp.
+
+\hypertarget{class_object_a24457e0a387492c80594aec7681a2277}{\index{Object@{Object}!name@{name}}
+\index{name@{name}!Object@{Object}}
+\subsubsection[{name}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string Object\-::name\hspace{0.3cm}{\ttfamily [protected]}}}\label{class_object_a24457e0a387492c80594aec7681a2277}
+
+
+name is used as an identifying handle for the object. 
+
+
+
+Definition at line 86 of file Object.\-hpp.
+
+\hypertarget{class_object_a66190fee29d03d6478516686cbd01eb8}{\index{Object@{Object}!vao@{vao}}
+\index{vao@{vao}!Object@{Object}}
+\subsubsection[{vao}]{\setlength{\rightskip}{0pt plus 5cm}G\-Luint Object\-::vao\hspace{0.3cm}{\ttfamily [protected]}}}\label{class_object_a66190fee29d03d6478516686cbd01eb8}
+
+
+Vertex Array \hyperlink{class_object}{Object} handle identifying our buffers/object. 
+
+
+
+Definition at line 89 of file Object.\-hpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+Object.\-hpp\item 
+Object.\-cpp\end{DoxyCompactItemize}

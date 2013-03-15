@@ -1,0 +1,125 @@
+\hypertarget{globals_8h}{\section{globals.\-h File Reference}
+\label{globals_8h}\index{globals.\-h@{globals.\-h}}
+}
+
+
+Useful global constants, macros, debugging utilities and preprocessor settings.  
+
+
+{\ttfamily \#include $<$cmath$>$}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{globals_8h_a7bf0b4b8b3cf2f13f25573b3e151ed88}{D\-E\-G\-R\-E\-E\-S\-\_\-\-T\-O\-\_\-\-R\-A\-D\-I\-A\-N\-S}~(M\-\_\-\-P\-I/180)
+\begin{DoxyCompactList}\small\item\em A constant factor of conversion for Degrees to Radians. \end{DoxyCompactList}\item 
+\#define \hyperlink{globals_8h_a514396dd60fa0621c83072091fb2a0cd}{S\-Q\-R\-T2}~(1.\-41421356237)
+\begin{DoxyCompactList}\small\item\em A constant for the square root of 2. \end{DoxyCompactList}\item 
+\#define \hyperlink{globals_8h_ae42978afd835c3a1f70d409a1b5f5a39}{S\-Q\-R\-T3}~(1.\-73205080757)
+\begin{DoxyCompactList}\small\item\em A constant for the square root of 3. \end{DoxyCompactList}\item 
+\#define \hyperlink{globals_8h_a7bbc032e1437a7a73f8d3eb2d93d9c6d}{P\-O\-W5}(X)~((X)$\ast$(X)$\ast$(X)$\ast$(X)$\ast$(X))
+\begin{DoxyCompactList}\small\item\em \hyperlink{globals_8h_a7bbc032e1437a7a73f8d3eb2d93d9c6d}{P\-O\-W5(\-X)} returns X$^\wedge$5. \end{DoxyCompactList}\item 
+\hypertarget{globals_8h_ad72dbcf6d0153db1b8d8a58001feed83}{\#define \hyperlink{globals_8h_ad72dbcf6d0153db1b8d8a58001feed83}{D\-E\-B\-U\-G}~false}\label{globals_8h_ad72dbcf6d0153db1b8d8a58001feed83}
+
+\begin{DoxyCompactList}\small\item\em D\-E\-B\-U\-G Controls whether or not extra D\-E\-B\-U\-G messages are printed out. \end{DoxyCompactList}\item 
+\hypertarget{globals_8h_ab5f638ed0890579dbe0522227610af64}{\#define \hyperlink{globals_8h_ab5f638ed0890579dbe0522227610af64}{D\-E\-B\-U\-G\-\_\-\-M\-O\-T\-I\-O\-N}~(false)}\label{globals_8h_ab5f638ed0890579dbe0522227610af64}
+
+\begin{DoxyCompactList}\small\item\em D\-E\-B\-U\-G\-\_\-\-M\-O\-T\-I\-O\-N controls some additional debug messages for acceleration/velocity. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{globals_8h_ad90a072ea1667bc81e21b726aefbcff1}{const float \hyperlink{globals_8h_ad90a072ea1667bc81e21b726aefbcff1}{D\-I\-V\-I\-D\-E\-\_\-\-B\-Y\-\_\-\-Z\-E\-R\-O\-\_\-\-T\-O\-L\-E\-R\-A\-N\-C\-E} = float( 1.\-0e-\/07 )}\label{globals_8h_ad90a072ea1667bc81e21b726aefbcff1}
+
+\begin{DoxyCompactList}\small\item\em How close can a number be to zero before it should be considered 'zero'? \end{DoxyCompactList}\item 
+static const bool \hyperlink{globals_8h_afbd48522ecf2a24bf2adca81f5a0e616}{P\-O\-S\-T\-M\-U\-L\-T} = true
+\begin{DoxyCompactList}\small\item\em defines if we are, or are not using a Post-\/\-Multiplication system. \end{DoxyCompactList}\item 
+static const bool \hyperlink{globals_8h_a6606f2e98acd846ae52f6cd2f7585d22}{P\-R\-E\-M\-U\-L\-T} = false
+\begin{DoxyCompactList}\small\item\em defines if we are, or are not using a Pre-\/\-Multiplication system. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Useful global constants, macros, debugging utilities and preprocessor settings. \begin{DoxyAuthor}{Author}
+John Huston 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2013-\/03-\/13 
+\end{DoxyDate}
+
+
+Definition in file \hyperlink{globals_8h_source}{globals.\-h}.
+
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{globals_8h_a7bf0b4b8b3cf2f13f25573b3e151ed88}{\index{globals.\-h@{globals.\-h}!D\-E\-G\-R\-E\-E\-S\-\_\-\-T\-O\-\_\-\-R\-A\-D\-I\-A\-N\-S@{D\-E\-G\-R\-E\-E\-S\-\_\-\-T\-O\-\_\-\-R\-A\-D\-I\-A\-N\-S}}
+\index{D\-E\-G\-R\-E\-E\-S\-\_\-\-T\-O\-\_\-\-R\-A\-D\-I\-A\-N\-S@{D\-E\-G\-R\-E\-E\-S\-\_\-\-T\-O\-\_\-\-R\-A\-D\-I\-A\-N\-S}!globals.h@{globals.\-h}}
+\subsubsection[{D\-E\-G\-R\-E\-E\-S\-\_\-\-T\-O\-\_\-\-R\-A\-D\-I\-A\-N\-S}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\-E\-G\-R\-E\-E\-S\-\_\-\-T\-O\-\_\-\-R\-A\-D\-I\-A\-N\-S~(M\-\_\-\-P\-I/180)}}\label{globals_8h_a7bf0b4b8b3cf2f13f25573b3e151ed88}
+
+
+A constant factor of conversion for Degrees to Radians. 
+
+
+
+Definition at line 14 of file globals.\-h.
+
+\hypertarget{globals_8h_a7bbc032e1437a7a73f8d3eb2d93d9c6d}{\index{globals.\-h@{globals.\-h}!P\-O\-W5@{P\-O\-W5}}
+\index{P\-O\-W5@{P\-O\-W5}!globals.h@{globals.\-h}}
+\subsubsection[{P\-O\-W5}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\-O\-W5(
+\begin{DoxyParamCaption}
+\item[{}]{X}
+\end{DoxyParamCaption}
+)~((X)$\ast$(X)$\ast$(X)$\ast$(X)$\ast$(X))}}\label{globals_8h_a7bbc032e1437a7a73f8d3eb2d93d9c6d}
+
+
+\hyperlink{globals_8h_a7bbc032e1437a7a73f8d3eb2d93d9c6d}{P\-O\-W5(\-X)} returns X$^\wedge$5. 
+
+It's quicker than pow(x,5)! 
+
+Definition at line 20 of file globals.\-h.
+
+\hypertarget{globals_8h_a514396dd60fa0621c83072091fb2a0cd}{\index{globals.\-h@{globals.\-h}!S\-Q\-R\-T2@{S\-Q\-R\-T2}}
+\index{S\-Q\-R\-T2@{S\-Q\-R\-T2}!globals.h@{globals.\-h}}
+\subsubsection[{S\-Q\-R\-T2}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\-Q\-R\-T2~(1.\-41421356237)}}\label{globals_8h_a514396dd60fa0621c83072091fb2a0cd}
+
+
+A constant for the square root of 2. 
+
+
+
+Definition at line 16 of file globals.\-h.
+
+\hypertarget{globals_8h_ae42978afd835c3a1f70d409a1b5f5a39}{\index{globals.\-h@{globals.\-h}!S\-Q\-R\-T3@{S\-Q\-R\-T3}}
+\index{S\-Q\-R\-T3@{S\-Q\-R\-T3}!globals.h@{globals.\-h}}
+\subsubsection[{S\-Q\-R\-T3}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\-Q\-R\-T3~(1.\-73205080757)}}\label{globals_8h_ae42978afd835c3a1f70d409a1b5f5a39}
+
+
+A constant for the square root of 3. 
+
+
+
+Definition at line 18 of file globals.\-h.
+
+
+
+\subsection{Variable Documentation}
+\hypertarget{globals_8h_afbd48522ecf2a24bf2adca81f5a0e616}{\index{globals.\-h@{globals.\-h}!P\-O\-S\-T\-M\-U\-L\-T@{P\-O\-S\-T\-M\-U\-L\-T}}
+\index{P\-O\-S\-T\-M\-U\-L\-T@{P\-O\-S\-T\-M\-U\-L\-T}!globals.h@{globals.\-h}}
+\subsubsection[{P\-O\-S\-T\-M\-U\-L\-T}]{\setlength{\rightskip}{0pt plus 5cm}const bool P\-O\-S\-T\-M\-U\-L\-T = true\hspace{0.3cm}{\ttfamily [static]}}}\label{globals_8h_afbd48522ecf2a24bf2adca81f5a0e616}
+
+
+defines if we are, or are not using a Post-\/\-Multiplication system. 
+
+
+
+Definition at line 43 of file globals.\-h.
+
+\hypertarget{globals_8h_a6606f2e98acd846ae52f6cd2f7585d22}{\index{globals.\-h@{globals.\-h}!P\-R\-E\-M\-U\-L\-T@{P\-R\-E\-M\-U\-L\-T}}
+\index{P\-R\-E\-M\-U\-L\-T@{P\-R\-E\-M\-U\-L\-T}!globals.h@{globals.\-h}}
+\subsubsection[{P\-R\-E\-M\-U\-L\-T}]{\setlength{\rightskip}{0pt plus 5cm}const bool P\-R\-E\-M\-U\-L\-T = false\hspace{0.3cm}{\ttfamily [static]}}}\label{globals_8h_a6606f2e98acd846ae52f6cd2f7585d22}
+
+
+defines if we are, or are not using a Pre-\/\-Multiplication system. 
+
+
+
+Definition at line 45 of file globals.\-h.
+

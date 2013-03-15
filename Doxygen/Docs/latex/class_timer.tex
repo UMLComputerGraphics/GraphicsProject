@@ -1,0 +1,117 @@
+\hypertarget{class_timer}{\section{Timer Class Reference}
+\label{class_timer}\index{Timer@{Timer}}
+}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+unsigned long \hyperlink{class_timer_a4e69d3c5a312d1b29d1735b2c5bccefb}{Tick} ()
+\begin{DoxyCompactList}\small\item\em Tick is an alias for Tock. \end{DoxyCompactList}\item 
+unsigned long \hyperlink{class_timer_a2c58a2e04e1e30926805aa4e82d2a0a5}{Tock} ()
+\begin{DoxyCompactList}\small\item\em Tock returns the time elapsed since the last Tock. \end{DoxyCompactList}\item 
+unsigned long \hyperlink{class_timer_a4f68da5b62cb1d1b2dd0c8549eb6286d}{Delta} () const 
+\begin{DoxyCompactList}\small\item\em Delta returns the time elapsed between the last Tick and the last Tock. \end{DoxyCompactList}\item 
+double \hyperlink{class_timer_a25ed035b0da5b177050c922660acf864}{Scale} () const 
+\begin{DoxyCompactList}\small\item\em Scale returns the relative lateness or eagerness of the \hyperlink{class_timer}{Timer}, Relative to a benchmark or Key Frame Rate (The default is 60\-F\-P\-S, or 16667 msec.) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_timer_a384a34d671fa58160f0ea13713645462}{struct timeval {\bfseries \-\_\-\-T1}}\label{class_timer_a384a34d671fa58160f0ea13713645462}
+
+\item 
+\hypertarget{class_timer_a22691ac7f27eed709461091c1125d931}{struct timeval {\bfseries \-\_\-\-T2}}\label{class_timer_a22691ac7f27eed709461091c1125d931}
+
+\item 
+\hypertarget{class_timer_a2a80ef1463e87f63e6ccc45a3fbe5ac2}{unsigned long {\bfseries \-\_\-delta}}\label{class_timer_a2a80ef1463e87f63e6ccc45a3fbe5ac2}
+
+\item 
+\hypertarget{class_timer_a02c5ec526c6bad4f0f2352325b4ac4f3}{double {\bfseries \-\_\-scale}}\label{class_timer_a02c5ec526c6bad4f0f2352325b4ac4f3}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 6 of file Timer.\-hpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_timer_a4f68da5b62cb1d1b2dd0c8549eb6286d}{\index{Timer@{Timer}!Delta@{Delta}}
+\index{Delta@{Delta}!Timer@{Timer}}
+\subsubsection[{Delta}]{\setlength{\rightskip}{0pt plus 5cm}unsigned long Timer\-::\-Delta (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+) const}}\label{class_timer_a4f68da5b62cb1d1b2dd0c8549eb6286d}
+
+
+Delta returns the time elapsed between the last Tick and the last Tock. 
+
+Does not start a new timer. \begin{DoxyReturn}{Returns}
+Time elapsed in Microseconds, or Nanoseconds if \-\_\-\-R\-T was enabled. 
+\end{DoxyReturn}
+
+
+Definition at line 59 of file Timer.\-cpp.
+
+\hypertarget{class_timer_a25ed035b0da5b177050c922660acf864}{\index{Timer@{Timer}!Scale@{Scale}}
+\index{Scale@{Scale}!Timer@{Timer}}
+\subsubsection[{Scale}]{\setlength{\rightskip}{0pt plus 5cm}double Timer\-::\-Scale (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+) const}}\label{class_timer_a25ed035b0da5b177050c922660acf864}
+
+
+Scale returns the relative lateness or eagerness of the \hyperlink{class_timer}{Timer}, Relative to a benchmark or Key Frame Rate (The default is 60\-F\-P\-S, or 16667 msec.) 
+
+\begin{DoxyReturn}{Returns}
+A non-\/zero float that ranges from (0,1) indicating that the program is rendering faster than 60\-F\-P\-S, or from the range \mbox{[}1,+inf) indicating that the program is rendering slower than 60\-F\-P\-S. 
+\end{DoxyReturn}
+
+
+Definition at line 72 of file Timer.\-cpp.
+
+\hypertarget{class_timer_a4e69d3c5a312d1b29d1735b2c5bccefb}{\index{Timer@{Timer}!Tick@{Tick}}
+\index{Tick@{Tick}!Timer@{Timer}}
+\subsubsection[{Tick}]{\setlength{\rightskip}{0pt plus 5cm}unsigned long Timer\-::\-Tick (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{class_timer_a4e69d3c5a312d1b29d1735b2c5bccefb}
+
+
+Tick is an alias for Tock. 
+
+Ha, Ha, Ha. \begin{DoxyReturn}{Returns}
+An unsigned long corresponding to how much time has passed since the last Tick. Microseconds normally, Nanoseconds if \-\_\-\-R\-T was enabled. 
+\end{DoxyReturn}
+
+
+Definition at line 29 of file Timer.\-cpp.
+
+\hypertarget{class_timer_a2c58a2e04e1e30926805aa4e82d2a0a5}{\index{Timer@{Timer}!Tock@{Tock}}
+\index{Tock@{Tock}!Timer@{Timer}}
+\subsubsection[{Tock}]{\setlength{\rightskip}{0pt plus 5cm}unsigned long Timer\-::\-Tock (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{class_timer_a2c58a2e04e1e30926805aa4e82d2a0a5}
+
+
+Tock returns the time elapsed since the last Tock. 
+
+\begin{DoxyReturn}{Returns}
+An unsigned long corresponding to how much time has passed since the last Tock. Microseconds normally, Nanoseconds if \-\_\-\-R\-T was enabled. 
+\end{DoxyReturn}
+
+
+Definition at line 39 of file Timer.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+Timer.\-hpp\item 
+Timer.\-cpp\end{DoxyCompactItemize}

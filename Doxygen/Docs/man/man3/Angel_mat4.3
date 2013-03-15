@@ -1,0 +1,113 @@
+.TH "Angel::mat4" 3 "Fri Mar 15 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Angel::mat4 \- 
+.PP
+\fBmat4\fP - 4D square matrix\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <mat\&.hpp>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBmat4\fP (const GLfloat d=GLfloat(1\&.0))"
+.br
+.ti -1c
+.RI "\fBmat4\fP (const \fBvec4\fP &a, const \fBvec4\fP &b, const \fBvec4\fP &c, const \fBvec4\fP &d)"
+.br
+.ti -1c
+.RI "\fBmat4\fP (GLfloat m00, GLfloat m01, GLfloat m02, GLfloat m03, GLfloat m10, GLfloat m11, GLfloat m12, GLfloat m13, GLfloat m20, GLfloat m21, GLfloat m22, GLfloat m23, GLfloat m30, GLfloat m31, GLfloat m32, GLfloat m33)"
+.br
+.ti -1c
+.RI "\fBmat4\fP (const \fBmat4\fP &m)"
+.br
+.ti -1c
+.RI "\fBvec4\fP & \fBoperator[]\fP (int i)"
+.br
+.ti -1c
+.RI "const \fBvec4\fP & \fBoperator[]\fP (int i) const "
+.br
+.ti -1c
+.RI "\fBmat4\fP \fBoperator+\fP (const \fBmat4\fP &m) const "
+.br
+.ti -1c
+.RI "\fBmat4\fP \fBoperator-\fP (const \fBmat4\fP &m) const "
+.br
+.ti -1c
+.RI "\fBmat4\fP \fBoperator*\fP (const GLfloat s) const "
+.br
+.ti -1c
+.RI "\fBmat4\fP \fBoperator/\fP (const GLfloat s) const "
+.br
+.ti -1c
+.RI "\fBmat4\fP \fBoperator*\fP (const \fBmat4\fP &m) const "
+.br
+.ti -1c
+.RI "\fBmat4\fP & \fBoperator+=\fP (const \fBmat4\fP &m)"
+.br
+.ti -1c
+.RI "\fBmat4\fP & \fBoperator-=\fP (const \fBmat4\fP &m)"
+.br
+.ti -1c
+.RI "\fBmat4\fP & \fBoperator*=\fP (const GLfloat s)"
+.br
+.ti -1c
+.RI "\fBmat4\fP & \fBoperator*=\fP (const \fBmat4\fP &m)"
+.br
+.ti -1c
+.RI "\fBmat4\fP & \fBoperator/=\fP (const GLfloat s)"
+.br
+.ti -1c
+.RI "\fBvec4\fP \fBoperator*\fP (const \fBvec4\fP &v) const "
+.br
+.ti -1c
+.RI "\fBoperator const GLfloat *\fP () const "
+.br
+.ti -1c
+.RI "\fBoperator GLfloat *\fP ()"
+.br
+.in -1c
+.SS "Private Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBvec4\fP \fB_m\fP [4]"
+.br
+.in -1c
+.SS "Friends"
+
+.in +1c
+.ti -1c
+.RI "\fBmat4\fP \fBoperator*\fP (const GLfloat s, const \fBmat4\fP &m)"
+.br
+.ti -1c
+.RI "\fBvec4\fP \fBoperator*\fP (const \fBvec4\fP &v, const \fBmat4\fP &_m)"
+.br
+.ti -1c
+.RI "std::ostream & \fBoperator<<\fP (std::ostream &os, const \fBmat4\fP &m)"
+.br
+.ti -1c
+.RI "std::istream & \fBoperator>>\fP (std::istream &is, \fBmat4\fP &m)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+\fBmat4\fP - 4D square matrix\&. 
+
+\fBAuthor:\fP
+.RS 4
+Ed Angel Class for a 2x2 matrix\&. Modified from code available from Ed Angel's website, http://www.cs.unm.edu/~angel/BOOK/INTERACTIVE_COMPUTER_GRAPHICS/SIXTH_EDITION/ Published from his book, Interactive Computer Graphics A Top-Down Approach with OpenGL, Sixth Edition 
+.RE
+.PP
+
+.PP
+Definition at line 150 of file mat\&.hpp\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for HyperGrafx from the source code\&.

@@ -1,0 +1,120 @@
+\hypertarget{mat_8hpp}{\section{mat.\-hpp File Reference}
+\label{mat_8hpp}\index{mat.\-hpp@{mat.\-hpp}}
+}
+
+
+Headers for the mat2, mat3, and mat4 classes and related utilities.  
+
+
+{\ttfamily \#include $<$cstdio$>$}\\*
+{\ttfamily \#include \char`\"{}vec.\-hpp\char`\"{}}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_angel_1_1mat2}{Angel\-::mat2}
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_angel_1_1mat2}{mat2} -\/ 2\-D square matrix. \end{DoxyCompactList}\item 
+class \hyperlink{class_angel_1_1mat3}{Angel\-::mat3}
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_angel_1_1mat3}{mat3} -\/ 3\-D square matrix. \end{DoxyCompactList}\item 
+class \hyperlink{class_angel_1_1mat4}{Angel\-::mat4}
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_angel_1_1mat4}{mat4} -\/ 4\-D square matrix. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bfseries Error}(str)
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{namespace_angel_a14b1d7bed352f45380d7fc26e2553627}{mat2 {\bfseries Angel\-::matrix\-Comp\-Mult} (const mat2 \&A, const mat2 \&B)}\label{namespace_angel_a14b1d7bed352f45380d7fc26e2553627}
+
+\item 
+\hypertarget{namespace_angel_a13237552df8019e7c7c041491185a5b7}{mat2 {\bfseries Angel\-::transpose} (const mat2 \&A)}\label{namespace_angel_a13237552df8019e7c7c041491185a5b7}
+
+\item 
+\hypertarget{namespace_angel_a9eeab51adba3f19cca17e5007844f2a1}{mat3 {\bfseries Angel\-::matrix\-Comp\-Mult} (const mat3 \&A, const mat3 \&B)}\label{namespace_angel_a9eeab51adba3f19cca17e5007844f2a1}
+
+\item 
+\hypertarget{namespace_angel_abea2dfb557c756bfb69c596852e6b096}{mat3 {\bfseries Angel\-::transpose} (const mat3 \&A)}\label{namespace_angel_abea2dfb557c756bfb69c596852e6b096}
+
+\item 
+\hypertarget{namespace_angel_a3cc32f2aec8c1c7e609c31183eebf2e6}{mat4 {\bfseries Angel\-::matrix\-Comp\-Mult} (const mat4 \&A, const mat4 \&B)}\label{namespace_angel_a3cc32f2aec8c1c7e609c31183eebf2e6}
+
+\item 
+\hypertarget{namespace_angel_a1a4a07580fa9c63f32cca223177496dd}{mat4 {\bfseries Angel\-::transpose} (const mat4 \&A)}\label{namespace_angel_a1a4a07580fa9c63f32cca223177496dd}
+
+\item 
+\hypertarget{namespace_angel_a96a871db89bb8218473c75b8070d2a04}{mat4 {\bfseries Angel\-::\-Rotate\-X} (const G\-Lfloat theta)}\label{namespace_angel_a96a871db89bb8218473c75b8070d2a04}
+
+\item 
+\hypertarget{namespace_angel_aa8ddbf81e6fa21bd53c5d5ce840a7403}{mat4 {\bfseries Angel\-::\-Rotate\-Y} (const G\-Lfloat theta)}\label{namespace_angel_aa8ddbf81e6fa21bd53c5d5ce840a7403}
+
+\item 
+\hypertarget{namespace_angel_a564ee33689e28c95aedcc5a77aed1d33}{mat4 {\bfseries Angel\-::\-Rotate\-Z} (const G\-Lfloat theta)}\label{namespace_angel_a564ee33689e28c95aedcc5a77aed1d33}
+
+\item 
+\hypertarget{namespace_angel_a4dabf5bcf7d7332f54e66178feab9c16}{mat4 {\bfseries Angel\-::\-Translate} (const G\-Lfloat x, const G\-Lfloat y, const G\-Lfloat z)}\label{namespace_angel_a4dabf5bcf7d7332f54e66178feab9c16}
+
+\item 
+\hypertarget{namespace_angel_ae9591a5b2e2e59fa0534460a16520a42}{mat4 {\bfseries Angel\-::\-Translate} (const vec3 \&v)}\label{namespace_angel_ae9591a5b2e2e59fa0534460a16520a42}
+
+\item 
+\hypertarget{namespace_angel_af51ee9500415015b6ba400cea2ab757f}{mat4 {\bfseries Angel\-::\-Translate} (const vec4 \&v)}\label{namespace_angel_af51ee9500415015b6ba400cea2ab757f}
+
+\item 
+\hypertarget{namespace_angel_a6ca60025898ba656cd588541df87f310}{mat4 {\bfseries Angel\-::\-Scale} (const G\-Lfloat x, const G\-Lfloat y, const G\-Lfloat z)}\label{namespace_angel_a6ca60025898ba656cd588541df87f310}
+
+\item 
+\hypertarget{namespace_angel_a57bd024e120ad05fe0c00081286eeb18}{mat4 {\bfseries Angel\-::\-Scale} (const vec3 \&v)}\label{namespace_angel_a57bd024e120ad05fe0c00081286eeb18}
+
+\item 
+\hypertarget{namespace_angel_a65a39c6b9bbbce0463d958e58cdf8a3c}{mat4 {\bfseries Angel\-::\-Ortho} (const G\-Lfloat left, const G\-Lfloat right, const G\-Lfloat bottom, const G\-Lfloat top, const G\-Lfloat z\-Near, const G\-Lfloat z\-Far)}\label{namespace_angel_a65a39c6b9bbbce0463d958e58cdf8a3c}
+
+\item 
+\hypertarget{namespace_angel_a8db02bcc2094985f2a168ab3f0dce68e}{mat4 {\bfseries Angel\-::\-Ortho2\-D} (const G\-Lfloat left, const G\-Lfloat right, const G\-Lfloat bottom, const G\-Lfloat top)}\label{namespace_angel_a8db02bcc2094985f2a168ab3f0dce68e}
+
+\item 
+\hypertarget{namespace_angel_a5775b27ec156cd2166a59bf038dc8efc}{mat4 {\bfseries Angel\-::\-Frustum} (const G\-Lfloat left, const G\-Lfloat right, const G\-Lfloat bottom, const G\-Lfloat top, const G\-Lfloat z\-Near, const G\-Lfloat z\-Far)}\label{namespace_angel_a5775b27ec156cd2166a59bf038dc8efc}
+
+\item 
+\hypertarget{namespace_angel_ad20afa7adfcc4d26d4be0c322548549a}{mat4 {\bfseries Angel\-::\-Perspective} (const G\-Lfloat fovy, const G\-Lfloat aspect, const G\-Lfloat z\-Near, const G\-Lfloat z\-Far)}\label{namespace_angel_ad20afa7adfcc4d26d4be0c322548549a}
+
+\item 
+\hypertarget{namespace_angel_aee52b8fa583cbbe460e2e80c05b59f8b}{mat4 {\bfseries Angel\-::\-Look\-At} (const vec4 \&eye, const vec4 \&at, const vec4 \&up)}\label{namespace_angel_aee52b8fa583cbbe460e2e80c05b59f8b}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Headers for the mat2, mat3, and mat4 classes and related utilities. \begin{DoxyAuthor}{Author}
+Ed Angel 
+\end{DoxyAuthor}
+\begin{DoxyAuthor}{Authors}
+Ed Angel, John Huston 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2012-\/12-\/04
+\end{DoxyDate}
+Modified from code available from Ed Angel's website, \href{http://www.cs.unm.edu/~angel/BOOK/INTERACTIVE_COMPUTER_GRAPHICS/SIXTH_EDITION/}{\tt http\-://www.\-cs.\-unm.\-edu/$\sim$angel/\-B\-O\-O\-K/\-I\-N\-T\-E\-R\-A\-C\-T\-I\-V\-E\-\_\-\-C\-O\-M\-P\-U\-T\-E\-R\-\_\-\-G\-R\-A\-P\-H\-I\-C\-S/\-S\-I\-X\-T\-H\-\_\-\-E\-D\-I\-T\-I\-O\-N/} Published from his book, Interactive Computer Graphics A Top-\/\-Down Approach with Open\-G\-L, Sixth Edition Addison-\/\-Wesley 2012 
+
+Definition in file \hyperlink{mat_8hpp_source}{mat.\-hpp}.
+
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{mat_8hpp_a3d2a1a300dfa6254ba95a4abfa0e7575}{\index{mat.\-hpp@{mat.\-hpp}!Error@{Error}}
+\index{Error@{Error}!mat.hpp@{mat.\-hpp}}
+\subsubsection[{Error}]{\setlength{\rightskip}{0pt plus 5cm}\#define Error(
+\begin{DoxyParamCaption}
+\item[{}]{str}
+\end{DoxyParamCaption}
+)}}\label{mat_8hpp_a3d2a1a300dfa6254ba95a4abfa0e7575}
+{\bfseries Value\-:}
+\begin{DoxyCode}
+\textcolor{keywordflow}{do} \{                \(\backslash\)
+    std::cerr << \textcolor{stringliteral}{"["} \_\_FILE\_\_ \textcolor{stringliteral}{":"} << \_\_LINE\_\_ << \textcolor{stringliteral}{"] "}   \(\backslash\)
+          << str << std::endl; \} \textcolor{keywordflow}{while}(0)
+\end{DoxyCode}
+
+
+Definition at line 206 of file mat.\-hpp.
+

@@ -1,0 +1,101 @@
+.TH "Timer" 3 "Fri Mar 15 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Timer \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "unsigned long \fBTick\fP ()"
+.br
+.RI "\fITick is an alias for Tock\&. \fP"
+.ti -1c
+.RI "unsigned long \fBTock\fP ()"
+.br
+.RI "\fITock returns the time elapsed since the last Tock\&. \fP"
+.ti -1c
+.RI "unsigned long \fBDelta\fP () const "
+.br
+.RI "\fIDelta returns the time elapsed between the last Tick and the last Tock\&. \fP"
+.ti -1c
+.RI "double \fBScale\fP () const "
+.br
+.RI "\fIScale returns the relative lateness or eagerness of the \fBTimer\fP, Relative to a benchmark or Key Frame Rate (The default is 60FPS, or 16667 msec\&.) \fP"
+.in -1c
+.SS "Private Attributes"
+
+.in +1c
+.ti -1c
+.RI "struct timeval \fB_T1\fP"
+.br
+.ti -1c
+.RI "struct timeval \fB_T2\fP"
+.br
+.ti -1c
+.RI "unsigned long \fB_delta\fP"
+.br
+.ti -1c
+.RI "double \fB_scale\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 6 of file Timer\&.hpp\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "unsigned long Timer::Delta (void) const"
+
+.PP
+Delta returns the time elapsed between the last Tick and the last Tock\&. Does not start a new timer\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+Time elapsed in Microseconds, or Nanoseconds if _RT was enabled\&. 
+.RE
+.PP
+
+.PP
+Definition at line 59 of file Timer\&.cpp\&.
+.SS "double Timer::Scale (void) const"
+
+.PP
+Scale returns the relative lateness or eagerness of the \fBTimer\fP, Relative to a benchmark or Key Frame Rate (The default is 60FPS, or 16667 msec\&.) \fBReturns:\fP
+.RS 4
+A non-zero float that ranges from (0,1) indicating that the program is rendering faster than 60FPS, or from the range [1,+inf) indicating that the program is rendering slower than 60FPS\&. 
+.RE
+.PP
+
+.PP
+Definition at line 72 of file Timer\&.cpp\&.
+.SS "unsigned long Timer::Tick (void)"
+
+.PP
+Tick is an alias for Tock\&. Ha, Ha, Ha\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+An unsigned long corresponding to how much time has passed since the last Tick\&. Microseconds normally, Nanoseconds if _RT was enabled\&. 
+.RE
+.PP
+
+.PP
+Definition at line 29 of file Timer\&.cpp\&.
+.SS "unsigned long Timer::Tock (void)"
+
+.PP
+Tock returns the time elapsed since the last Tock\&. \fBReturns:\fP
+.RS 4
+An unsigned long corresponding to how much time has passed since the last Tock\&. Microseconds normally, Nanoseconds if _RT was enabled\&. 
+.RE
+.PP
+
+.PP
+Definition at line 39 of file Timer\&.cpp\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for HyperGrafx from the source code\&.

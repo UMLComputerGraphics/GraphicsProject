@@ -1,0 +1,66 @@
+\hypertarget{_init_shader_8cpp}{\section{Init\-Shader.\-cpp File Reference}
+\label{_init_shader_8cpp}\index{Init\-Shader.\-cpp@{Init\-Shader.\-cpp}}
+}
+
+
+Provides a wrapper utility for quickly linking against glsl programs.  
+
+
+{\ttfamily \#include $<$cstdio$>$}\\*
+{\ttfamily \#include $<$iostream$>$}\\*
+{\ttfamily \#include \char`\"{}platform.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Init\-Shader.\-hpp\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_init_shader_8cpp_aa848a95e858e08d3718ccb1ecce0a05a}{G\-E\-O\-M\-E\-T\-R\-Y\-\_\-\-V\-E\-R\-T\-I\-C\-E\-S\-\_\-\-O\-U\-T\-\_\-\-E\-X\-T}~0x8\-D\-D\-A
+\begin{DoxyCompactList}\small\item\em G\-E\-O\-M\-E\-T\-R\-Y\-\_\-\-V\-E\-R\-T\-I\-C\-E\-S\-\_\-\-O\-U\-T\-\_\-\-E\-X\-T is a Magic Open\-G\-L constant. \end{DoxyCompactList}\item 
+\#define \hyperlink{_init_shader_8cpp_a1e0c2d7120ea4f2e30000d134a9dc335}{G\-L\-\_\-\-G\-E\-O\-M\-E\-T\-R\-Y\-\_\-\-S\-H\-A\-D\-E\-R}~0x8\-D\-D9
+\begin{DoxyCompactList}\small\item\em G\-E\-O\-M\-E\-T\-R\-Y\-\_\-\-V\-E\-R\-T\-I\-C\-E\-S\-\_\-\-O\-U\-T\-\_\-\-E\-X\-T is a Magic Open\-G\-L constant. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+static char $\ast$ {\bfseries Angel\-::read\-Shader\-Source} (const char $\ast$shader\-File)
+\begin{DoxyCompactList}\small\item\em Read in a shader file into a N\-U\-L\-L-\/terminated string. \end{DoxyCompactList}\item 
+G\-Luint {\bfseries Angel\-::\-Init\-Shader} (const char $\ast$v\-Shader\-File, const char $\ast$f\-Shader\-File)
+\begin{DoxyCompactList}\small\item\em Init\-Shader takes two shader sourcefiles and compiles them into a shader program. \end{DoxyCompactList}\item 
+G\-Luint {\bfseries Angel\-::\-Init\-Shader} (const char $\ast$v\-Shader\-File, const char $\ast$g\-Shader\-File, const char $\ast$f\-Shader\-File)
+\begin{DoxyCompactList}\small\item\em Init\-Shader takes three shader sourcefiles and compiles them into a shader program. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Provides a wrapper utility for quickly linking against glsl programs. \begin{DoxyAuthor}{Authors}
+Ed Angel, Nick St.\-Pierre 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2013-\/03-\/13 
+\end{DoxyDate}
+
+
+Definition in file \hyperlink{_init_shader_8cpp_source}{Init\-Shader.\-cpp}.
+
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{_init_shader_8cpp_aa848a95e858e08d3718ccb1ecce0a05a}{\index{Init\-Shader.\-cpp@{Init\-Shader.\-cpp}!G\-E\-O\-M\-E\-T\-R\-Y\-\_\-\-V\-E\-R\-T\-I\-C\-E\-S\-\_\-\-O\-U\-T\-\_\-\-E\-X\-T@{G\-E\-O\-M\-E\-T\-R\-Y\-\_\-\-V\-E\-R\-T\-I\-C\-E\-S\-\_\-\-O\-U\-T\-\_\-\-E\-X\-T}}
+\index{G\-E\-O\-M\-E\-T\-R\-Y\-\_\-\-V\-E\-R\-T\-I\-C\-E\-S\-\_\-\-O\-U\-T\-\_\-\-E\-X\-T@{G\-E\-O\-M\-E\-T\-R\-Y\-\_\-\-V\-E\-R\-T\-I\-C\-E\-S\-\_\-\-O\-U\-T\-\_\-\-E\-X\-T}!InitShader.cpp@{Init\-Shader.\-cpp}}
+\subsubsection[{G\-E\-O\-M\-E\-T\-R\-Y\-\_\-\-V\-E\-R\-T\-I\-C\-E\-S\-\_\-\-O\-U\-T\-\_\-\-E\-X\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\-E\-O\-M\-E\-T\-R\-Y\-\_\-\-V\-E\-R\-T\-I\-C\-E\-S\-\_\-\-O\-U\-T\-\_\-\-E\-X\-T~0x8\-D\-D\-A}}\label{_init_shader_8cpp_aa848a95e858e08d3718ccb1ecce0a05a}
+
+
+G\-E\-O\-M\-E\-T\-R\-Y\-\_\-\-V\-E\-R\-T\-I\-C\-E\-S\-\_\-\-O\-U\-T\-\_\-\-E\-X\-T is a Magic Open\-G\-L constant. 
+
+On some systems, we might need to define this manually. It is normally provided by Open\-G\-L directly. F\-I\-X\-M\-E\-: This seems hacky! 
+
+Definition at line 22 of file Init\-Shader.\-cpp.
+
+\hypertarget{_init_shader_8cpp_a1e0c2d7120ea4f2e30000d134a9dc335}{\index{Init\-Shader.\-cpp@{Init\-Shader.\-cpp}!G\-L\-\_\-\-G\-E\-O\-M\-E\-T\-R\-Y\-\_\-\-S\-H\-A\-D\-E\-R@{G\-L\-\_\-\-G\-E\-O\-M\-E\-T\-R\-Y\-\_\-\-S\-H\-A\-D\-E\-R}}
+\index{G\-L\-\_\-\-G\-E\-O\-M\-E\-T\-R\-Y\-\_\-\-S\-H\-A\-D\-E\-R@{G\-L\-\_\-\-G\-E\-O\-M\-E\-T\-R\-Y\-\_\-\-S\-H\-A\-D\-E\-R}!InitShader.cpp@{Init\-Shader.\-cpp}}
+\subsubsection[{G\-L\-\_\-\-G\-E\-O\-M\-E\-T\-R\-Y\-\_\-\-S\-H\-A\-D\-E\-R}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\-L\-\_\-\-G\-E\-O\-M\-E\-T\-R\-Y\-\_\-\-S\-H\-A\-D\-E\-R~0x8\-D\-D9}}\label{_init_shader_8cpp_a1e0c2d7120ea4f2e30000d134a9dc335}
+
+
+G\-E\-O\-M\-E\-T\-R\-Y\-\_\-\-V\-E\-R\-T\-I\-C\-E\-S\-\_\-\-O\-U\-T\-\_\-\-E\-X\-T is a Magic Open\-G\-L constant. 
+
+On some systems, we might need to define this manually. It is normally provided by Open\-G\-L directly. F\-I\-X\-M\-E\-: This seems hacky! 
+
+Definition at line 33 of file Init\-Shader.\-cpp.
+

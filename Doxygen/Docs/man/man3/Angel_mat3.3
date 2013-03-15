@@ -1,0 +1,110 @@
+.TH "Angel::mat3" 3 "Fri Mar 15 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Angel::mat3 \- 
+.PP
+\fBmat3\fP - 3D square matrix\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <mat\&.hpp>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBmat3\fP (const GLfloat d=GLfloat(1\&.0))"
+.br
+.ti -1c
+.RI "\fBmat3\fP (const \fBvec3\fP &a, const \fBvec3\fP &b, const \fBvec3\fP &c)"
+.br
+.ti -1c
+.RI "\fBmat3\fP (GLfloat m00, GLfloat m10, GLfloat m20, GLfloat m01, GLfloat m11, GLfloat m21, GLfloat m02, GLfloat m12, GLfloat m22)"
+.br
+.ti -1c
+.RI "\fBmat3\fP (const \fBmat3\fP &m)"
+.br
+.ti -1c
+.RI "\fBvec3\fP & \fBoperator[]\fP (int i)"
+.br
+.ti -1c
+.RI "const \fBvec3\fP & \fBoperator[]\fP (int i) const "
+.br
+.ti -1c
+.RI "\fBmat3\fP \fBoperator+\fP (const \fBmat3\fP &m) const "
+.br
+.ti -1c
+.RI "\fBmat3\fP \fBoperator-\fP (const \fBmat3\fP &m) const "
+.br
+.ti -1c
+.RI "\fBmat3\fP \fBoperator*\fP (const GLfloat s) const "
+.br
+.ti -1c
+.RI "\fBmat3\fP \fBoperator/\fP (const GLfloat s) const "
+.br
+.ti -1c
+.RI "\fBmat3\fP \fBoperator*\fP (const \fBmat3\fP &m) const "
+.br
+.ti -1c
+.RI "\fBmat3\fP & \fBoperator+=\fP (const \fBmat3\fP &m)"
+.br
+.ti -1c
+.RI "\fBmat3\fP & \fBoperator-=\fP (const \fBmat3\fP &m)"
+.br
+.ti -1c
+.RI "\fBmat3\fP & \fBoperator*=\fP (const GLfloat s)"
+.br
+.ti -1c
+.RI "\fBmat3\fP & \fBoperator*=\fP (const \fBmat3\fP &m)"
+.br
+.ti -1c
+.RI "\fBmat3\fP & \fBoperator/=\fP (const GLfloat s)"
+.br
+.ti -1c
+.RI "\fBvec3\fP \fBoperator*\fP (const \fBvec3\fP &v) const "
+.br
+.ti -1c
+.RI "\fBoperator const GLfloat *\fP () const "
+.br
+.ti -1c
+.RI "\fBoperator GLfloat *\fP ()"
+.br
+.in -1c
+.SS "Private Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBvec3\fP \fB_m\fP [3]"
+.br
+.in -1c
+.SS "Friends"
+
+.in +1c
+.ti -1c
+.RI "\fBmat3\fP \fBoperator*\fP (const GLfloat s, const \fBmat3\fP &m)"
+.br
+.ti -1c
+.RI "std::ostream & \fBoperator<<\fP (std::ostream &os, const \fBmat3\fP &m)"
+.br
+.ti -1c
+.RI "std::istream & \fBoperator>>\fP (std::istream &is, \fBmat3\fP &m)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+\fBmat3\fP - 3D square matrix\&. 
+
+\fBAuthor:\fP
+.RS 4
+Ed Angel Class for a 2x2 matrix\&. Modified from code available from Ed Angel's website, http://www.cs.unm.edu/~angel/BOOK/INTERACTIVE_COMPUTER_GRAPHICS/SIXTH_EDITION/ Published from his book, Interactive Computer Graphics A Top-Down Approach with OpenGL, Sixth Edition 
+.RE
+.PP
+
+.PP
+Definition at line 94 of file mat\&.hpp\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for HyperGrafx from the source code\&.

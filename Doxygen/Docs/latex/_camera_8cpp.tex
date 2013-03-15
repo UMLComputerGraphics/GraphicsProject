@@ -1,0 +1,62 @@
+\hypertarget{_camera_8cpp}{\section{Camera.\-cpp File Reference}
+\label{_camera_8cpp}\index{Camera.\-cpp@{Camera.\-cpp}}
+}
+
+
+Implementation for the \hyperlink{class_camera}{Camera} class.  
+
+
+{\ttfamily \#include $<$stdexcept$>$}\\*
+{\ttfamily \#include $<$iostream$>$}\\*
+{\ttfamily \#include \char`\"{}mat.\-hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}vec.\-hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Camera.\-hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}globals.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Timer.\-hpp\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_camera_8cpp_a00e96bcc90e768c724477dbd2a3d9291}{R\-O\-T\-A\-T\-E\-\_\-\-O\-F\-F\-S\-E\-T}(V)~(V $\ast$ \-\_\-ctm.\-orbit.\-Matrix())
+\begin{DoxyCompactList}\small\item\em R\-O\-T\-A\-T\-E\-\_\-\-O\-F\-F\-S\-E\-T is a macro which is used to normalize the six camera motion directions with respect to the current camera rotation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Implementation for the \hyperlink{class_camera}{Camera} class. \begin{DoxyAuthor}{Author}
+John Huston 
+\end{DoxyAuthor}
+\begin{DoxyAuthor}{Authors}
+John Huston, Nicholas St\-Pierre, Chris Compton 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2012-\/12-\/20 
+\end{DoxyDate}
+
+
+Definition in file \hyperlink{_camera_8cpp_source}{Camera.\-cpp}.
+
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{_camera_8cpp_a00e96bcc90e768c724477dbd2a3d9291}{\index{Camera.\-cpp@{Camera.\-cpp}!R\-O\-T\-A\-T\-E\-\_\-\-O\-F\-F\-S\-E\-T@{R\-O\-T\-A\-T\-E\-\_\-\-O\-F\-F\-S\-E\-T}}
+\index{R\-O\-T\-A\-T\-E\-\_\-\-O\-F\-F\-S\-E\-T@{R\-O\-T\-A\-T\-E\-\_\-\-O\-F\-F\-S\-E\-T}!Camera.cpp@{Camera.\-cpp}}
+\subsubsection[{R\-O\-T\-A\-T\-E\-\_\-\-O\-F\-F\-S\-E\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\-O\-T\-A\-T\-E\-\_\-\-O\-F\-F\-S\-E\-T(
+\begin{DoxyParamCaption}
+\item[{}]{V}
+\end{DoxyParamCaption}
+)~(V $\ast$ \-\_\-ctm.\-orbit.\-Matrix())}}\label{_camera_8cpp_a00e96bcc90e768c724477dbd2a3d9291}
+
+
+R\-O\-T\-A\-T\-E\-\_\-\-O\-F\-F\-S\-E\-T is a macro which is used to normalize the six camera motion directions with respect to the current camera rotation. 
+
+It is used in heave(), sway() and surge(). 
+\begin{DoxyParams}{Parameters}
+{\em V} & a vec4 representing the movement offset vector. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A rotated vec4. 
+\end{DoxyReturn}
+
+
+Definition at line 184 of file Camera.\-cpp.
+

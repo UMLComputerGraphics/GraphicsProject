@@ -1,0 +1,315 @@
+\contentsline {chapter}{\numberline {1}Hierarchical Index}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}Class Hierarchy}{1}{section.1.1}
+\contentsline {chapter}{\numberline {2}Class Index}{3}{chapter.2}
+\contentsline {section}{\numberline {2.1}Class List}{3}{section.2.1}
+\contentsline {chapter}{\numberline {3}File Index}{5}{chapter.3}
+\contentsline {section}{\numberline {3.1}File List}{5}{section.3.1}
+\contentsline {chapter}{\numberline {4}Class Documentation}{7}{chapter.4}
+\contentsline {section}{\numberline {4.1}Camera Class Reference}{7}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Detailed Description}{11}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}Member Typedef Documentation}{12}{subsection.4.1.2}
+\contentsline {subsubsection}{\numberline {4.1.2.1}Direction}{12}{subsubsection.4.1.2.1}
+\contentsline {subsubsection}{\numberline {4.1.2.2}Uniform}{12}{subsubsection.4.1.2.2}
+\contentsline {subsubsection}{\numberline {4.1.2.3}View\discretionary {-}{}{}Type}{12}{subsubsection.4.1.2.3}
+\contentsline {subsection}{\numberline {4.1.3}Member Enumeration Documentation}{12}{subsection.4.1.3}
+\contentsline {subsubsection}{\numberline {4.1.3.1}Direction}{12}{subsubsection.4.1.3.1}
+\contentsline {subsubsection}{\numberline {4.1.3.2}Uniforms}{12}{subsubsection.4.1.3.2}
+\contentsline {subsubsection}{\numberline {4.1.3.3}View\discretionary {-}{}{}Type}{12}{subsubsection.4.1.3.3}
+\contentsline {subsection}{\numberline {4.1.4}Constructor \& Destructor Documentation}{12}{subsection.4.1.4}
+\contentsline {subsubsection}{\numberline {4.1.4.1}Camera}{12}{subsubsection.4.1.4.1}
+\contentsline {subsubsection}{\numberline {4.1.4.2}Camera}{13}{subsubsection.4.1.4.2}
+\contentsline {subsubsection}{\numberline {4.1.4.3}Camera}{13}{subsubsection.4.1.4.3}
+\contentsline {subsubsection}{\numberline {4.1.4.4}$\sim $\discretionary {-}{}{}Camera}{13}{subsubsection.4.1.4.4}
+\contentsline {subsection}{\numberline {4.1.5}Member Function Documentation}{13}{subsection.4.1.5}
+\contentsline {subsubsection}{\numberline {4.1.5.1}accel}{13}{subsubsection.4.1.5.1}
+\contentsline {subsubsection}{\numberline {4.1.5.2}adjust\discretionary {-}{}{}Field\discretionary {-}{}{}Of\discretionary {-}{}{}View}{14}{subsubsection.4.1.5.2}
+\contentsline {subsubsection}{\numberline {4.1.5.3}adjust\discretionary {-}{}{}Rotation}{14}{subsubsection.4.1.5.3}
+\contentsline {subsubsection}{\numberline {4.1.5.4}change\discretionary {-}{}{}Perspective}{14}{subsubsection.4.1.5.4}
+\contentsline {subsubsection}{\numberline {4.1.5.5}common\discretionary {-}{}{}Init}{14}{subsubsection.4.1.5.5}
+\contentsline {subsubsection}{\numberline {4.1.5.6}Delete\discretionary {-}{}{}Object}{15}{subsubsection.4.1.5.6}
+\contentsline {subsubsection}{\numberline {4.1.5.7}d\discretionary {-}{}{}Pos}{15}{subsubsection.4.1.5.7}
+\contentsline {subsubsection}{\numberline {4.1.5.8}d\discretionary {-}{}{}Pos}{15}{subsubsection.4.1.5.8}
+\contentsline {subsubsection}{\numberline {4.1.5.9}d\discretionary {-}{}{}Pos}{15}{subsubsection.4.1.5.9}
+\contentsline {subsubsection}{\numberline {4.1.5.10}d\discretionary {-}{}{}X}{16}{subsubsection.4.1.5.10}
+\contentsline {subsubsection}{\numberline {4.1.5.11}d\discretionary {-}{}{}Y}{16}{subsubsection.4.1.5.11}
+\contentsline {subsubsection}{\numberline {4.1.5.12}d\discretionary {-}{}{}Z}{16}{subsubsection.4.1.5.12}
+\contentsline {subsubsection}{\numberline {4.1.5.13}field\discretionary {-}{}{}Of\discretionary {-}{}{}View}{16}{subsubsection.4.1.5.13}
+\contentsline {subsubsection}{\numberline {4.1.5.14}field\discretionary {-}{}{}Of\discretionary {-}{}{}View}{17}{subsubsection.4.1.5.14}
+\contentsline {subsubsection}{\numberline {4.1.5.15}Get\discretionary {-}{}{}Position}{17}{subsubsection.4.1.5.15}
+\contentsline {subsubsection}{\numberline {4.1.5.16}heave}{17}{subsubsection.4.1.5.16}
+\contentsline {subsubsection}{\numberline {4.1.5.17}idle}{17}{subsubsection.4.1.5.17}
+\contentsline {subsubsection}{\numberline {4.1.5.18}move}{17}{subsubsection.4.1.5.18}
+\contentsline {subsubsection}{\numberline {4.1.5.19}pitch}{18}{subsubsection.4.1.5.19}
+\contentsline {subsubsection}{\numberline {4.1.5.20}pos}{18}{subsubsection.4.1.5.20}
+\contentsline {subsubsection}{\numberline {4.1.5.21}pos}{18}{subsubsection.4.1.5.21}
+\contentsline {subsubsection}{\numberline {4.1.5.22}pos}{19}{subsubsection.4.1.5.22}
+\contentsline {subsubsection}{\numberline {4.1.5.23}pos}{19}{subsubsection.4.1.5.23}
+\contentsline {subsubsection}{\numberline {4.1.5.24}refresh\discretionary {-}{}{}Perspective}{19}{subsubsection.4.1.5.24}
+\contentsline {subsubsection}{\numberline {4.1.5.25}reset\discretionary {-}{}{}Rotation}{19}{subsubsection.4.1.5.25}
+\contentsline {subsubsection}{\numberline {4.1.5.26}roll}{20}{subsubsection.4.1.5.26}
+\contentsline {subsubsection}{\numberline {4.1.5.27}send}{20}{subsubsection.4.1.5.27}
+\contentsline {subsubsection}{\numberline {4.1.5.28}Shader}{20}{subsubsection.4.1.5.28}
+\contentsline {subsubsection}{\numberline {4.1.5.29}Shader}{20}{subsubsection.4.1.5.29}
+\contentsline {subsubsection}{\numberline {4.1.5.30}stop}{21}{subsubsection.4.1.5.30}
+\contentsline {subsubsection}{\numberline {4.1.5.31}surge}{21}{subsubsection.4.1.5.31}
+\contentsline {subsubsection}{\numberline {4.1.5.32}sway}{21}{subsubsection.4.1.5.32}
+\contentsline {subsubsection}{\numberline {4.1.5.33}view}{21}{subsubsection.4.1.5.33}
+\contentsline {subsubsection}{\numberline {4.1.5.34}viewport}{22}{subsubsection.4.1.5.34}
+\contentsline {subsubsection}{\numberline {4.1.5.35}x}{22}{subsubsection.4.1.5.35}
+\contentsline {subsubsection}{\numberline {4.1.5.36}x}{22}{subsubsection.4.1.5.36}
+\contentsline {subsubsection}{\numberline {4.1.5.37}y}{22}{subsubsection.4.1.5.37}
+\contentsline {subsubsection}{\numberline {4.1.5.38}y}{23}{subsubsection.4.1.5.38}
+\contentsline {subsubsection}{\numberline {4.1.5.39}yaw}{23}{subsubsection.4.1.5.39}
+\contentsline {subsubsection}{\numberline {4.1.5.40}z}{23}{subsubsection.4.1.5.40}
+\contentsline {subsubsection}{\numberline {4.1.5.41}z}{23}{subsubsection.4.1.5.41}
+\contentsline {subsection}{\numberline {4.1.6}Member Data Documentation}{24}{subsection.4.1.6}
+\contentsline {subsubsection}{\numberline {4.1.6.1}\discretionary {-}{}{}\_\discretionary {-}{}{}aspect\discretionary {-}{}{}Ratio}{24}{subsubsection.4.1.6.1}
+\contentsline {subsubsection}{\numberline {4.1.6.2}\discretionary {-}{}{}\_\discretionary {-}{}{}ctm}{24}{subsubsection.4.1.6.2}
+\contentsline {subsubsection}{\numberline {4.1.6.3}\discretionary {-}{}{}\_\discretionary {-}{}{}current\discretionary {-}{}{}View}{24}{subsubsection.4.1.6.3}
+\contentsline {subsubsection}{\numberline {4.1.6.4}\discretionary {-}{}{}\_\discretionary {-}{}{}fovy}{24}{subsubsection.4.1.6.4}
+\contentsline {subsubsection}{\numberline {4.1.6.5}\discretionary {-}{}{}\_\discretionary {-}{}{}friction\discretionary {-}{}{}Magnitude}{24}{subsubsection.4.1.6.5}
+\contentsline {subsubsection}{\numberline {4.1.6.6}\discretionary {-}{}{}\_\discretionary {-}{}{}motion}{24}{subsubsection.4.1.6.6}
+\contentsline {subsubsection}{\numberline {4.1.6.7}\discretionary {-}{}{}\_\discretionary {-}{}{}speed}{24}{subsubsection.4.1.6.7}
+\contentsline {subsubsection}{\numberline {4.1.6.8}\discretionary {-}{}{}\_\discretionary {-}{}{}velocity}{24}{subsubsection.4.1.6.8}
+\contentsline {subsubsection}{\numberline {4.1.6.9}\discretionary {-}{}{}\_\discretionary {-}{}{}view}{24}{subsubsection.4.1.6.9}
+\contentsline {subsubsection}{\numberline {4.1.6.10}draw\discretionary {-}{}{}\_\discretionary {-}{}{}mode}{25}{subsubsection.4.1.6.10}
+\contentsline {subsubsection}{\numberline {4.1.6.11}handles}{25}{subsubsection.4.1.6.11}
+\contentsline {subsubsection}{\numberline {4.1.6.12}name}{25}{subsubsection.4.1.6.12}
+\contentsline {subsubsection}{\numberline {4.1.6.13}vao}{25}{subsubsection.4.1.6.13}
+\contentsline {section}{\numberline {4.2}Cameras Class Reference}{25}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Detailed Description}{27}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}Constructor \& Destructor Documentation}{27}{subsection.4.2.2}
+\contentsline {subsubsection}{\numberline {4.2.2.1}Cameras}{27}{subsubsection.4.2.2.1}
+\contentsline {subsubsection}{\numberline {4.2.2.2}$\sim $\discretionary {-}{}{}Cameras}{27}{subsubsection.4.2.2.2}
+\contentsline {subsection}{\numberline {4.2.3}Member Function Documentation}{27}{subsection.4.2.3}
+\contentsline {subsubsection}{\numberline {4.2.3.1}active}{27}{subsubsection.4.2.3.1}
+\contentsline {subsubsection}{\numberline {4.2.3.2}add\discretionary {-}{}{}Camera}{27}{subsubsection.4.2.3.2}
+\contentsline {subsubsection}{\numberline {4.2.3.3}calculate\discretionary {-}{}{}Viewports}{28}{subsubsection.4.2.3.3}
+\contentsline {subsubsection}{\numberline {4.2.3.4}Delete\discretionary {-}{}{}Object}{28}{subsubsection.4.2.3.4}
+\contentsline {subsubsection}{\numberline {4.2.3.5}idle\discretionary {-}{}{}Motion}{28}{subsubsection.4.2.3.5}
+\contentsline {subsubsection}{\numberline {4.2.3.6}next}{28}{subsubsection.4.2.3.6}
+\contentsline {subsubsection}{\numberline {4.2.3.7}num\discretionary {-}{}{}Cameras}{28}{subsubsection.4.2.3.7}
+\contentsline {subsubsection}{\numberline {4.2.3.8}obj2\discretionary {-}{}{}Cam}{29}{subsubsection.4.2.3.8}
+\contentsline {subsubsection}{\numberline {4.2.3.9}pop\discretionary {-}{}{}Camera}{29}{subsubsection.4.2.3.9}
+\contentsline {subsubsection}{\numberline {4.2.3.10}prev}{29}{subsubsection.4.2.3.10}
+\contentsline {subsubsection}{\numberline {4.2.3.11}resize}{29}{subsubsection.4.2.3.11}
+\contentsline {subsubsection}{\numberline {4.2.3.12}Shader}{30}{subsubsection.4.2.3.12}
+\contentsline {subsubsection}{\numberline {4.2.3.13}Shader}{30}{subsubsection.4.2.3.13}
+\contentsline {subsubsection}{\numberline {4.2.3.14}view}{30}{subsubsection.4.2.3.14}
+\contentsline {section}{\numberline {4.3}Engine Class Reference}{30}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Detailed Description}{32}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}Constructor \& Destructor Documentation}{32}{subsection.4.3.2}
+\contentsline {subsubsection}{\numberline {4.3.2.1}Engine}{32}{subsubsection.4.3.2.1}
+\contentsline {subsubsection}{\numberline {4.3.2.2}Engine}{32}{subsubsection.4.3.2.2}
+\contentsline {subsection}{\numberline {4.3.3}Member Function Documentation}{32}{subsection.4.3.3}
+\contentsline {subsubsection}{\numberline {4.3.3.1}cams}{32}{subsubsection.4.3.3.1}
+\contentsline {subsubsection}{\numberline {4.3.3.2}flip}{33}{subsubsection.4.3.3.2}
+\contentsline {subsubsection}{\numberline {4.3.3.3}instance}{33}{subsubsection.4.3.3.3}
+\contentsline {subsubsection}{\numberline {4.3.3.4}main\discretionary {-}{}{}Screen}{33}{subsubsection.4.3.3.4}
+\contentsline {subsubsection}{\numberline {4.3.3.5}operator=}{33}{subsubsection.4.3.3.5}
+\contentsline {subsubsection}{\numberline {4.3.3.6}opt}{34}{subsubsection.4.3.3.6}
+\contentsline {subsubsection}{\numberline {4.3.3.7}opt}{34}{subsubsection.4.3.3.7}
+\contentsline {subsubsection}{\numberline {4.3.3.8}root\discretionary {-}{}{}Scene}{34}{subsubsection.4.3.3.8}
+\contentsline {subsubsection}{\numberline {4.3.3.9}set}{34}{subsubsection.4.3.3.9}
+\contentsline {section}{\numberline {4.4}Tiem\discretionary {-}{}{}Spelchk\discretionary {-}{}{}:\discretionary {-}{}{}:Lurn2\discretionary {-}{}{}Spiel\discretionary {-}{}{}Nub Class Reference}{35}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Detailed Description}{35}{subsection.4.4.1}
+\contentsline {section}{\numberline {4.5}Angel\discretionary {-}{}{}:\discretionary {-}{}{}:mat2 Class Reference}{36}{section.4.5}
+\contentsline {subsection}{\numberline {4.5.1}Detailed Description}{36}{subsection.4.5.1}
+\contentsline {subsection}{\numberline {4.5.2}Member Function Documentation}{37}{subsection.4.5.2}
+\contentsline {subsubsection}{\numberline {4.5.2.1}operator$\ast $}{37}{subsubsection.4.5.2.1}
+\contentsline {subsection}{\numberline {4.5.3}Member Data Documentation}{37}{subsection.4.5.3}
+\contentsline {subsubsection}{\numberline {4.5.3.1}\discretionary {-}{}{}\_\discretionary {-}{}{}m}{37}{subsubsection.4.5.3.1}
+\contentsline {section}{\numberline {4.6}Angel\discretionary {-}{}{}:\discretionary {-}{}{}:mat3 Class Reference}{37}{section.4.6}
+\contentsline {subsection}{\numberline {4.6.1}Detailed Description}{38}{subsection.4.6.1}
+\contentsline {section}{\numberline {4.7}Angel\discretionary {-}{}{}:\discretionary {-}{}{}:mat4 Class Reference}{38}{section.4.7}
+\contentsline {subsection}{\numberline {4.7.1}Detailed Description}{39}{subsection.4.7.1}
+\contentsline {section}{\numberline {4.8}Object Class Reference}{39}{section.4.8}
+\contentsline {subsection}{\numberline {4.8.1}Detailed Description}{41}{subsection.4.8.1}
+\contentsline {subsection}{\numberline {4.8.2}Member Function Documentation}{41}{subsection.4.8.2}
+\contentsline {subsubsection}{\numberline {4.8.2.1}Delete\discretionary {-}{}{}Object}{41}{subsubsection.4.8.2.1}
+\contentsline {subsubsection}{\numberline {4.8.2.2}Get\discretionary {-}{}{}Position}{41}{subsubsection.4.8.2.2}
+\contentsline {subsubsection}{\numberline {4.8.2.3}Shader}{42}{subsubsection.4.8.2.3}
+\contentsline {subsubsection}{\numberline {4.8.2.4}Shader}{42}{subsubsection.4.8.2.4}
+\contentsline {subsection}{\numberline {4.8.3}Member Data Documentation}{42}{subsection.4.8.3}
+\contentsline {subsubsection}{\numberline {4.8.3.1}draw\discretionary {-}{}{}\_\discretionary {-}{}{}mode}{42}{subsubsection.4.8.3.1}
+\contentsline {subsubsection}{\numberline {4.8.3.2}handles}{42}{subsubsection.4.8.3.2}
+\contentsline {subsubsection}{\numberline {4.8.3.3}name}{42}{subsubsection.4.8.3.3}
+\contentsline {subsubsection}{\numberline {4.8.3.4}vao}{42}{subsubsection.4.8.3.4}
+\contentsline {section}{\numberline {4.9}Particle Class Reference}{43}{section.4.9}
+\contentsline {subsection}{\numberline {4.9.1}Detailed Description}{45}{subsection.4.9.1}
+\contentsline {subsection}{\numberline {4.9.2}Member Function Documentation}{45}{subsection.4.9.2}
+\contentsline {subsubsection}{\numberline {4.9.2.1}Delete\discretionary {-}{}{}Object}{45}{subsubsection.4.9.2.1}
+\contentsline {subsubsection}{\numberline {4.9.2.2}Get\discretionary {-}{}{}Position}{46}{subsubsection.4.9.2.2}
+\contentsline {subsubsection}{\numberline {4.9.2.3}Shader}{46}{subsubsection.4.9.2.3}
+\contentsline {subsubsection}{\numberline {4.9.2.4}Shader}{46}{subsubsection.4.9.2.4}
+\contentsline {subsection}{\numberline {4.9.3}Member Data Documentation}{46}{subsection.4.9.3}
+\contentsline {subsubsection}{\numberline {4.9.3.1}draw\discretionary {-}{}{}\_\discretionary {-}{}{}mode}{46}{subsubsection.4.9.3.1}
+\contentsline {subsubsection}{\numberline {4.9.3.2}handles}{46}{subsubsection.4.9.3.2}
+\contentsline {subsubsection}{\numberline {4.9.3.3}name}{46}{subsubsection.4.9.3.3}
+\contentsline {subsubsection}{\numberline {4.9.3.4}vao}{47}{subsubsection.4.9.3.4}
+\contentsline {section}{\numberline {4.10}Rot\discretionary {-}{}{}Mat Class Reference}{47}{section.4.10}
+\contentsline {subsection}{\numberline {4.10.1}Detailed Description}{47}{subsection.4.10.1}
+\contentsline {section}{\numberline {4.11}Scale\discretionary {-}{}{}Mat Class Reference}{48}{section.4.11}
+\contentsline {subsection}{\numberline {4.11.1}Detailed Description}{48}{subsection.4.11.1}
+\contentsline {section}{\numberline {4.12}Scene Class Reference}{48}{section.4.12}
+\contentsline {subsection}{\numberline {4.12.1}Detailed Description}{49}{subsection.4.12.1}
+\contentsline {subsection}{\numberline {4.12.2}Member Function Documentation}{49}{subsection.4.12.2}
+\contentsline {subsubsection}{\numberline {4.12.2.1}Delete\discretionary {-}{}{}Object}{49}{subsubsection.4.12.2.1}
+\contentsline {subsubsection}{\numberline {4.12.2.2}Shader}{49}{subsubsection.4.12.2.2}
+\contentsline {subsubsection}{\numberline {4.12.2.3}Shader}{50}{subsubsection.4.12.2.3}
+\contentsline {section}{\numberline {4.13}Screen Class Reference}{50}{section.4.13}
+\contentsline {subsection}{\numberline {4.13.1}Detailed Description}{51}{subsection.4.13.1}
+\contentsline {section}{\numberline {4.14}Spelchk\discretionary {-}{}{}Camera Class Reference}{51}{section.4.14}
+\contentsline {subsection}{\numberline {4.14.1}Detailed Description}{52}{subsection.4.14.1}
+\contentsline {section}{\numberline {4.15}Timer Class Reference}{52}{section.4.15}
+\contentsline {subsection}{\numberline {4.15.1}Detailed Description}{52}{subsection.4.15.1}
+\contentsline {subsection}{\numberline {4.15.2}Member Function Documentation}{53}{subsection.4.15.2}
+\contentsline {subsubsection}{\numberline {4.15.2.1}Delta}{53}{subsubsection.4.15.2.1}
+\contentsline {subsubsection}{\numberline {4.15.2.2}Scale}{53}{subsubsection.4.15.2.2}
+\contentsline {subsubsection}{\numberline {4.15.2.3}Tick}{53}{subsubsection.4.15.2.3}
+\contentsline {subsubsection}{\numberline {4.15.2.4}Tock}{53}{subsubsection.4.15.2.4}
+\contentsline {section}{\numberline {4.16}Trans\discretionary {-}{}{}Cache Class Reference}{54}{section.4.16}
+\contentsline {subsection}{\numberline {4.16.1}Detailed Description}{54}{subsection.4.16.1}
+\contentsline {section}{\numberline {4.17}Transformation Class Reference}{54}{section.4.17}
+\contentsline {subsection}{\numberline {4.17.1}Detailed Description}{55}{subsection.4.17.1}
+\contentsline {section}{\numberline {4.18}Trans\discretionary {-}{}{}Mat Class Reference}{55}{section.4.18}
+\contentsline {subsection}{\numberline {4.18.1}Detailed Description}{55}{subsection.4.18.1}
+\contentsline {section}{\numberline {4.19}Angel\discretionary {-}{}{}:\discretionary {-}{}{}:vec2 Struct Reference}{56}{section.4.19}
+\contentsline {subsection}{\numberline {4.19.1}Detailed Description}{56}{subsection.4.19.1}
+\contentsline {section}{\numberline {4.20}Angel\discretionary {-}{}{}:\discretionary {-}{}{}:vec3 Struct Reference}{56}{section.4.20}
+\contentsline {subsection}{\numberline {4.20.1}Detailed Description}{57}{subsection.4.20.1}
+\contentsline {section}{\numberline {4.21}Angel\discretionary {-}{}{}:\discretionary {-}{}{}:vec4 Struct Reference}{57}{section.4.21}
+\contentsline {subsection}{\numberline {4.21.1}Detailed Description}{58}{subsection.4.21.1}
+\contentsline {section}{\numberline {4.22}wii\discretionary {-}{}{}Poll\discretionary {-}{}{}Data Struct Reference}{58}{section.4.22}
+\contentsline {subsection}{\numberline {4.22.1}Detailed Description}{58}{subsection.4.22.1}
+\contentsline {chapter}{\numberline {5}File Documentation}{59}{chapter.5}
+\contentsline {section}{\numberline {5.1}Camera.\discretionary {-}{}{}cpp File Reference}{59}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}Detailed Description}{59}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.2}Macro Definition Documentation}{60}{subsection.5.1.2}
+\contentsline {subsubsection}{\numberline {5.1.2.1}R\discretionary {-}{}{}O\discretionary {-}{}{}T\discretionary {-}{}{}A\discretionary {-}{}{}T\discretionary {-}{}{}E\discretionary {-}{}{}\_\discretionary {-}{}{}\discretionary {-}{}{}O\discretionary {-}{}{}F\discretionary {-}{}{}F\discretionary {-}{}{}S\discretionary {-}{}{}E\discretionary {-}{}{}T}{60}{subsubsection.5.1.2.1}
+\contentsline {section}{\numberline {5.2}Camera.\discretionary {-}{}{}hpp File Reference}{60}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}Detailed Description}{60}{subsection.5.2.1}
+\contentsline {section}{\numberline {5.3}Cameras.\discretionary {-}{}{}cpp File Reference}{61}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}Detailed Description}{61}{subsection.5.3.1}
+\contentsline {section}{\numberline {5.4}Cameras.\discretionary {-}{}{}hpp File Reference}{61}{section.5.4}
+\contentsline {subsection}{\numberline {5.4.1}Detailed Description}{61}{subsection.5.4.1}
+\contentsline {section}{\numberline {5.5}ds.\discretionary {-}{}{}cpp File Reference}{62}{section.5.5}
+\contentsline {subsection}{\numberline {5.5.1}Detailed Description}{62}{subsection.5.5.1}
+\contentsline {subsection}{\numberline {5.5.2}Function Documentation}{63}{subsection.5.5.2}
+\contentsline {subsubsection}{\numberline {5.5.2.1}main}{63}{subsubsection.5.5.2.1}
+\contentsline {section}{\numberline {5.6}Engine.\discretionary {-}{}{}cpp File Reference}{63}{section.5.6}
+\contentsline {subsection}{\numberline {5.6.1}Detailed Description}{63}{subsection.5.6.1}
+\contentsline {section}{\numberline {5.7}Engine.\discretionary {-}{}{}hpp File Reference}{64}{section.5.7}
+\contentsline {subsection}{\numberline {5.7.1}Detailed Description}{64}{subsection.5.7.1}
+\contentsline {section}{\numberline {5.8}globals.\discretionary {-}{}{}h File Reference}{64}{section.5.8}
+\contentsline {subsection}{\numberline {5.8.1}Detailed Description}{65}{subsection.5.8.1}
+\contentsline {subsection}{\numberline {5.8.2}Macro Definition Documentation}{65}{subsection.5.8.2}
+\contentsline {subsubsection}{\numberline {5.8.2.1}D\discretionary {-}{}{}E\discretionary {-}{}{}G\discretionary {-}{}{}R\discretionary {-}{}{}E\discretionary {-}{}{}E\discretionary {-}{}{}S\discretionary {-}{}{}\_\discretionary {-}{}{}\discretionary {-}{}{}T\discretionary {-}{}{}O\discretionary {-}{}{}\_\discretionary {-}{}{}\discretionary {-}{}{}R\discretionary {-}{}{}A\discretionary {-}{}{}D\discretionary {-}{}{}I\discretionary {-}{}{}A\discretionary {-}{}{}N\discretionary {-}{}{}S}{65}{subsubsection.5.8.2.1}
+\contentsline {subsubsection}{\numberline {5.8.2.2}P\discretionary {-}{}{}O\discretionary {-}{}{}W5}{65}{subsubsection.5.8.2.2}
+\contentsline {subsubsection}{\numberline {5.8.2.3}S\discretionary {-}{}{}Q\discretionary {-}{}{}R\discretionary {-}{}{}T2}{65}{subsubsection.5.8.2.3}
+\contentsline {subsubsection}{\numberline {5.8.2.4}S\discretionary {-}{}{}Q\discretionary {-}{}{}R\discretionary {-}{}{}T3}{66}{subsubsection.5.8.2.4}
+\contentsline {subsection}{\numberline {5.8.3}Variable Documentation}{66}{subsection.5.8.3}
+\contentsline {subsubsection}{\numberline {5.8.3.1}P\discretionary {-}{}{}O\discretionary {-}{}{}S\discretionary {-}{}{}T\discretionary {-}{}{}M\discretionary {-}{}{}U\discretionary {-}{}{}L\discretionary {-}{}{}T}{66}{subsubsection.5.8.3.1}
+\contentsline {subsubsection}{\numberline {5.8.3.2}P\discretionary {-}{}{}R\discretionary {-}{}{}E\discretionary {-}{}{}M\discretionary {-}{}{}U\discretionary {-}{}{}L\discretionary {-}{}{}T}{66}{subsubsection.5.8.3.2}
+\contentsline {section}{\numberline {5.9}glut\discretionary {-}{}{}\_\discretionary {-}{}{}callbacks.\discretionary {-}{}{}cpp File Reference}{66}{section.5.9}
+\contentsline {subsection}{\numberline {5.9.1}Detailed Description}{67}{subsection.5.9.1}
+\contentsline {subsection}{\numberline {5.9.2}Function Documentation}{67}{subsection.5.9.2}
+\contentsline {subsubsection}{\numberline {5.9.2.1}keyboard}{67}{subsubsection.5.9.2.1}
+\contentsline {subsubsection}{\numberline {5.9.2.2}keyboard\discretionary {-}{}{}\_\discretionary {-}{}{}ctrl}{67}{subsubsection.5.9.2.2}
+\contentsline {subsubsection}{\numberline {5.9.2.3}keylift}{67}{subsubsection.5.9.2.3}
+\contentsline {subsubsection}{\numberline {5.9.2.4}mouse}{68}{subsubsection.5.9.2.4}
+\contentsline {subsubsection}{\numberline {5.9.2.5}mouselook}{68}{subsubsection.5.9.2.5}
+\contentsline {subsubsection}{\numberline {5.9.2.6}mouseroll}{68}{subsubsection.5.9.2.6}
+\contentsline {subsubsection}{\numberline {5.9.2.7}resize\discretionary {-}{}{}Event}{68}{subsubsection.5.9.2.7}
+\contentsline {section}{\numberline {5.10}glut\discretionary {-}{}{}\_\discretionary {-}{}{}callbacks.\discretionary {-}{}{}h File Reference}{69}{section.5.10}
+\contentsline {subsection}{\numberline {5.10.1}Detailed Description}{69}{subsection.5.10.1}
+\contentsline {subsection}{\numberline {5.10.2}Function Documentation}{70}{subsection.5.10.2}
+\contentsline {subsubsection}{\numberline {5.10.2.1}keyboard}{70}{subsubsection.5.10.2.1}
+\contentsline {subsubsection}{\numberline {5.10.2.2}keyboard\discretionary {-}{}{}\_\discretionary {-}{}{}ctrl}{70}{subsubsection.5.10.2.2}
+\contentsline {subsubsection}{\numberline {5.10.2.3}keylift}{70}{subsubsection.5.10.2.3}
+\contentsline {subsubsection}{\numberline {5.10.2.4}mouse}{70}{subsubsection.5.10.2.4}
+\contentsline {subsubsection}{\numberline {5.10.2.5}mouselook}{71}{subsubsection.5.10.2.5}
+\contentsline {subsubsection}{\numberline {5.10.2.6}mouseroll}{71}{subsubsection.5.10.2.6}
+\contentsline {subsubsection}{\numberline {5.10.2.7}resize\discretionary {-}{}{}Event}{71}{subsubsection.5.10.2.7}
+\contentsline {section}{\numberline {5.11}Init\discretionary {-}{}{}Shader.\discretionary {-}{}{}cpp File Reference}{71}{section.5.11}
+\contentsline {subsection}{\numberline {5.11.1}Detailed Description}{72}{subsection.5.11.1}
+\contentsline {subsection}{\numberline {5.11.2}Macro Definition Documentation}{72}{subsection.5.11.2}
+\contentsline {subsubsection}{\numberline {5.11.2.1}G\discretionary {-}{}{}E\discretionary {-}{}{}O\discretionary {-}{}{}M\discretionary {-}{}{}E\discretionary {-}{}{}T\discretionary {-}{}{}R\discretionary {-}{}{}Y\discretionary {-}{}{}\_\discretionary {-}{}{}\discretionary {-}{}{}V\discretionary {-}{}{}E\discretionary {-}{}{}R\discretionary {-}{}{}T\discretionary {-}{}{}I\discretionary {-}{}{}C\discretionary {-}{}{}E\discretionary {-}{}{}S\discretionary {-}{}{}\_\discretionary {-}{}{}\discretionary {-}{}{}O\discretionary {-}{}{}U\discretionary {-}{}{}T\discretionary {-}{}{}\_\discretionary {-}{}{}\discretionary {-}{}{}E\discretionary {-}{}{}X\discretionary {-}{}{}T}{72}{subsubsection.5.11.2.1}
+\contentsline {subsubsection}{\numberline {5.11.2.2}G\discretionary {-}{}{}L\discretionary {-}{}{}\_\discretionary {-}{}{}\discretionary {-}{}{}G\discretionary {-}{}{}E\discretionary {-}{}{}O\discretionary {-}{}{}M\discretionary {-}{}{}E\discretionary {-}{}{}T\discretionary {-}{}{}R\discretionary {-}{}{}Y\discretionary {-}{}{}\_\discretionary {-}{}{}\discretionary {-}{}{}S\discretionary {-}{}{}H\discretionary {-}{}{}A\discretionary {-}{}{}D\discretionary {-}{}{}E\discretionary {-}{}{}R}{72}{subsubsection.5.11.2.2}
+\contentsline {section}{\numberline {5.12}Init\discretionary {-}{}{}Shader.\discretionary {-}{}{}hpp File Reference}{72}{section.5.12}
+\contentsline {subsection}{\numberline {5.12.1}Detailed Description}{73}{subsection.5.12.1}
+\contentsline {section}{\numberline {5.13}Kinect\discretionary {-}{}{}Inator.\discretionary {-}{}{}cpp File Reference}{73}{section.5.13}
+\contentsline {subsection}{\numberline {5.13.1}Detailed Description}{74}{subsection.5.13.1}
+\contentsline {subsection}{\numberline {5.13.2}Macro Definition Documentation}{74}{subsection.5.13.2}
+\contentsline {subsubsection}{\numberline {5.13.2.1}C\discretionary {-}{}{}H\discretionary {-}{}{}E\discretionary {-}{}{}C\discretionary {-}{}{}K\discretionary {-}{}{}\_\discretionary {-}{}{}\discretionary {-}{}{}R\discretionary {-}{}{}C}{74}{subsubsection.5.13.2.1}
+\contentsline {section}{\numberline {5.14}Kinect\discretionary {-}{}{}Inator.\discretionary {-}{}{}hpp File Reference}{74}{section.5.14}
+\contentsline {subsection}{\numberline {5.14.1}Detailed Description}{75}{subsection.5.14.1}
+\contentsline {section}{\numberline {5.15}mat.\discretionary {-}{}{}cpp File Reference}{75}{section.5.15}
+\contentsline {subsection}{\numberline {5.15.1}Detailed Description}{76}{subsection.5.15.1}
+\contentsline {section}{\numberline {5.16}mat.\discretionary {-}{}{}hpp File Reference}{76}{section.5.16}
+\contentsline {subsection}{\numberline {5.16.1}Detailed Description}{77}{subsection.5.16.1}
+\contentsline {subsection}{\numberline {5.16.2}Macro Definition Documentation}{77}{subsection.5.16.2}
+\contentsline {subsubsection}{\numberline {5.16.2.1}Error}{77}{subsubsection.5.16.2.1}
+\contentsline {section}{\numberline {5.17}model.\discretionary {-}{}{}cpp File Reference}{78}{section.5.17}
+\contentsline {subsection}{\numberline {5.17.1}Detailed Description}{79}{subsection.5.17.1}
+\contentsline {subsection}{\numberline {5.17.2}Macro Definition Documentation}{79}{subsection.5.17.2}
+\contentsline {subsubsection}{\numberline {5.17.2.1}Q\discretionary {-}{}{}U\discretionary {-}{}{}A\discretionary {-}{}{}D}{79}{subsubsection.5.17.2.1}
+\contentsline {subsection}{\numberline {5.17.3}Typedef Documentation}{80}{subsection.5.17.3}
+\contentsline {subsubsection}{\numberline {5.17.3.1}color4}{80}{subsubsection.5.17.3.1}
+\contentsline {subsubsection}{\numberline {5.17.3.2}point4}{80}{subsubsection.5.17.3.2}
+\contentsline {subsection}{\numberline {5.17.4}Function Documentation}{80}{subsection.5.17.4}
+\contentsline {subsubsection}{\numberline {5.17.4.1}calc\discretionary {-}{}{}Normal}{80}{subsubsection.5.17.4.1}
+\contentsline {subsubsection}{\numberline {5.17.4.2}color\discretionary {-}{}{}Cube}{80}{subsubsection.5.17.4.2}
+\contentsline {subsubsection}{\numberline {5.17.4.3}create\discretionary {-}{}{}Point}{80}{subsubsection.5.17.4.3}
+\contentsline {subsubsection}{\numberline {5.17.4.4}cube}{81}{subsubsection.5.17.4.4}
+\contentsline {subsubsection}{\numberline {5.17.4.5}divide\discretionary {-}{}{}Triangle}{81}{subsubsection.5.17.4.5}
+\contentsline {subsubsection}{\numberline {5.17.4.6}jitter}{81}{subsubsection.5.17.4.6}
+\contentsline {subsubsection}{\numberline {5.17.4.7}land\discretionary {-}{}{}Gen}{81}{subsubsection.5.17.4.7}
+\contentsline {subsubsection}{\numberline {5.17.4.8}make\discretionary {-}{}{}Agua}{82}{subsubsection.5.17.4.8}
+\contentsline {subsubsection}{\numberline {5.17.4.9}quad}{82}{subsubsection.5.17.4.9}
+\contentsline {subsubsection}{\numberline {5.17.4.10}rand\discretionary {-}{}{}Float}{82}{subsubsection.5.17.4.10}
+\contentsline {subsubsection}{\numberline {5.17.4.11}recursive\discretionary {-}{}{}Model\discretionary {-}{}{}Gen}{82}{subsubsection.5.17.4.11}
+\contentsline {subsubsection}{\numberline {5.17.4.12}sierpinski\discretionary {-}{}{}Pyramid}{83}{subsubsection.5.17.4.12}
+\contentsline {subsubsection}{\numberline {5.17.4.13}sphere}{83}{subsubsection.5.17.4.13}
+\contentsline {subsubsection}{\numberline {5.17.4.14}tetra}{83}{subsubsection.5.17.4.14}
+\contentsline {subsubsection}{\numberline {5.17.4.15}triangle}{83}{subsubsection.5.17.4.15}
+\contentsline {subsubsection}{\numberline {5.17.4.16}unit}{84}{subsubsection.5.17.4.16}
+\contentsline {section}{\numberline {5.18}model.\discretionary {-}{}{}hpp File Reference}{84}{section.5.18}
+\contentsline {subsection}{\numberline {5.18.1}Detailed Description}{85}{subsection.5.18.1}
+\contentsline {subsection}{\numberline {5.18.2}Typedef Documentation}{85}{subsection.5.18.2}
+\contentsline {subsubsection}{\numberline {5.18.2.1}color4}{85}{subsubsection.5.18.2.1}
+\contentsline {subsubsection}{\numberline {5.18.2.2}point4}{85}{subsubsection.5.18.2.2}
+\contentsline {subsection}{\numberline {5.18.3}Function Documentation}{85}{subsection.5.18.3}
+\contentsline {subsubsection}{\numberline {5.18.3.1}color\discretionary {-}{}{}Cube}{85}{subsubsection.5.18.3.1}
+\contentsline {subsubsection}{\numberline {5.18.3.2}create\discretionary {-}{}{}Point}{86}{subsubsection.5.18.3.2}
+\contentsline {subsubsection}{\numberline {5.18.3.3}cube}{86}{subsubsection.5.18.3.3}
+\contentsline {subsubsection}{\numberline {5.18.3.4}divide\discretionary {-}{}{}Triangle}{86}{subsubsection.5.18.3.4}
+\contentsline {subsubsection}{\numberline {5.18.3.5}land\discretionary {-}{}{}Gen}{86}{subsubsection.5.18.3.5}
+\contentsline {subsubsection}{\numberline {5.18.3.6}make\discretionary {-}{}{}Agua}{87}{subsubsection.5.18.3.6}
+\contentsline {subsubsection}{\numberline {5.18.3.7}quad}{87}{subsubsection.5.18.3.7}
+\contentsline {subsubsection}{\numberline {5.18.3.8}recursive\discretionary {-}{}{}Model\discretionary {-}{}{}Gen}{87}{subsubsection.5.18.3.8}
+\contentsline {subsubsection}{\numberline {5.18.3.9}sierpinski\discretionary {-}{}{}Pyramid}{88}{subsubsection.5.18.3.9}
+\contentsline {subsubsection}{\numberline {5.18.3.10}sphere}{88}{subsubsection.5.18.3.10}
+\contentsline {subsubsection}{\numberline {5.18.3.11}tetra}{88}{subsubsection.5.18.3.11}
+\contentsline {subsubsection}{\numberline {5.18.3.12}triangle}{88}{subsubsection.5.18.3.12}
+\contentsline {section}{\numberline {5.19}Obj\discretionary {-}{}{}Loader.\discretionary {-}{}{}cpp File Reference}{89}{section.5.19}
+\contentsline {subsection}{\numberline {5.19.1}Detailed Description}{89}{subsection.5.19.1}
+\contentsline {subsection}{\numberline {5.19.2}Macro Definition Documentation}{90}{subsection.5.19.2}
+\contentsline {subsubsection}{\numberline {5.19.2.1}R\discretionary {-}{}{}A\discretionary {-}{}{}N\discretionary {-}{}{}D\discretionary {-}{}{}\_\discretionary {-}{}{}\discretionary {-}{}{}F\discretionary {-}{}{}L\discretionary {-}{}{}O\discretionary {-}{}{}A\discretionary {-}{}{}T}{90}{subsubsection.5.19.2.1}
+\contentsline {section}{\numberline {5.20}Obj\discretionary {-}{}{}Loader.\discretionary {-}{}{}hpp File Reference}{90}{section.5.20}
+\contentsline {subsection}{\numberline {5.20.1}Detailed Description}{90}{subsection.5.20.1}
+\contentsline {section}{\numberline {5.21}terrain.\discretionary {-}{}{}cpp File Reference}{91}{section.5.21}
+\contentsline {subsection}{\numberline {5.21.1}Detailed Description}{92}{subsection.5.21.1}
+\contentsline {subsection}{\numberline {5.21.2}Function Documentation}{92}{subsection.5.21.2}
+\contentsline {subsubsection}{\numberline {5.21.2.1}cleanup}{92}{subsubsection.5.21.2.1}
+\contentsline {subsubsection}{\numberline {5.21.2.2}display}{92}{subsubsection.5.21.2.2}
+\contentsline {subsubsection}{\numberline {5.21.2.3}display\discretionary {-}{}{}Viewport}{92}{subsubsection.5.21.2.3}
+\contentsline {subsubsection}{\numberline {5.21.2.4}init}{93}{subsubsection.5.21.2.4}
+\contentsline {subsubsection}{\numberline {5.21.2.5}randomize\discretionary {-}{}{}\_\discretionary {-}{}{}terrain}{93}{subsubsection.5.21.2.5}
+\contentsline {subsubsection}{\numberline {5.21.2.6}Terrain\discretionary {-}{}{}Generation\discretionary {-}{}{}Animation}{93}{subsubsection.5.21.2.6}
+\contentsline {subsubsection}{\numberline {5.21.2.7}wiilook}{93}{subsubsection.5.21.2.7}
+\contentsline {subsection}{\numberline {5.21.3}Variable Documentation}{94}{subsection.5.21.3}
+\contentsline {subsubsection}{\numberline {5.21.3.1}terrain\discretionary {-}{}{}Tex}{94}{subsubsection.5.21.3.1}
+\contentsline {section}{\numberline {5.22}vec.\discretionary {-}{}{}cpp File Reference}{94}{section.5.22}
+\contentsline {subsection}{\numberline {5.22.1}Detailed Description}{94}{subsection.5.22.1}
+\contentsline {part}{Index}{95}{subsection.5.22.1}

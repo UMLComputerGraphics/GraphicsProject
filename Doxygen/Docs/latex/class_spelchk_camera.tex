@@ -1,0 +1,166 @@
+\hypertarget{class_spelchk_camera}{\section{Spelchk\-Camera Class Reference}
+\label{class_spelchk_camera}\index{Spelchk\-Camera@{Spelchk\-Camera}}
+}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_spelchk_camera_a1d894472ef9e588ddeb56434e549cd0a}{{\bfseries Spelchk\-Camera} (\hyperlink{struct_angel_1_1vec4}{vec4} initial\-Translation\-Vector)}\label{class_spelchk_camera_a1d894472ef9e588ddeb56434e549cd0a}
+
+\item 
+\hypertarget{class_spelchk_camera_a2a9aa83f6e5d3d2371dd00ae162aef30}{\hyperlink{class_angel_1_1mat4}{mat4} {\bfseries get\-Projection\-Matrix} ()}\label{class_spelchk_camera_a2a9aa83f6e5d3d2371dd00ae162aef30}
+
+\item 
+\hypertarget{class_spelchk_camera_af702dfbd3c3719e4b738440bb2269922}{\hyperlink{class_angel_1_1mat4}{mat4} {\bfseries get\-Model\-View\-Matrix} ()}\label{class_spelchk_camera_af702dfbd3c3719e4b738440bb2269922}
+
+\item 
+\hypertarget{class_spelchk_camera_a4ad8fbfe69914453580c02406bffc501}{\hyperlink{struct_angel_1_1vec4}{vec4} {\bfseries get\-Translation\-Vector} ()}\label{class_spelchk_camera_a4ad8fbfe69914453580c02406bffc501}
+
+\item 
+\hypertarget{class_spelchk_camera_a1396d6aa2a3e85d9ed8b90c17751da41}{void {\bfseries move\-Camera} (float x\-Depth, float y\-Depth, float z\-Depth)}\label{class_spelchk_camera_a1396d6aa2a3e85d9ed8b90c17751da41}
+
+\item 
+\hypertarget{class_spelchk_camera_aa012e2d10f196ae007a8f8b4ac8471c3}{void {\bfseries rotate\-Camera} (float x\-Angle, float y\-Angle, float z\-Angle)}\label{class_spelchk_camera_aa012e2d10f196ae007a8f8b4ac8471c3}
+
+\item 
+\hypertarget{class_spelchk_camera_a24f5fe7d296bcd7ec9d70b25b6a92fe5}{void {\bfseries set\-Screen\-Size} (int width, int height)}\label{class_spelchk_camera_a24f5fe7d296bcd7ec9d70b25b6a92fe5}
+
+\item 
+\hypertarget{class_spelchk_camera_a95b87c80007941d85d26c43d30fa7f87}{void {\bfseries set\-Projection} (int projection\-Type)}\label{class_spelchk_camera_a95b87c80007941d85d26c43d30fa7f87}
+
+\item 
+\hypertarget{class_spelchk_camera_a29d4ba987d9f3e1c47e1103fcea0ae2b}{void {\bfseries reset} ()}\label{class_spelchk_camera_a29d4ba987d9f3e1c47e1103fcea0ae2b}
+
+\item 
+\hypertarget{class_spelchk_camera_a20436fee96b0d6a1279d10b88e20f520}{void {\bfseries set\-Light\-Movement\-Ref} (G\-Luint ref)}\label{class_spelchk_camera_a20436fee96b0d6a1279d10b88e20f520}
+
+\item 
+\hypertarget{class_spelchk_camera_aed5d76d2de23473dec034161efe29275}{void {\bfseries set\-Light\-Movement\-Time} (float elapsed)}\label{class_spelchk_camera_aed5d76d2de23473dec034161efe29275}
+
+\item 
+\hypertarget{class_spelchk_camera_a90aa5e06ba61d44e63535acf2cc3e373}{void {\bfseries get\-Ready\-For\-Zero} (int usernum)}\label{class_spelchk_camera_a90aa5e06ba61d44e63535acf2cc3e373}
+
+\item 
+\hypertarget{class_spelchk_camera_afc39db6b4eab85070aa5d7494d0c5198}{void {\bfseries head\-Movement} (int usernum, double x, double y, double z)}\label{class_spelchk_camera_afc39db6b4eab85070aa5d7494d0c5198}
+
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_spelchk_camera_a539230ff6d91932526666d4eee9d6c0d}{void {\bfseries calculate\-Translation\-Vector} ()}\label{class_spelchk_camera_a539230ff6d91932526666d4eee9d6c0d}
+
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_spelchk_camera_a56626b721de172eed34cd008db1e3cfe}{int {\bfseries projection\-Type}}\label{class_spelchk_camera_a56626b721de172eed34cd008db1e3cfe}
+
+\item 
+\hypertarget{class_spelchk_camera_a7100656d4105997c30736993767a31f9}{G\-Lfloat {\bfseries fovy}}\label{class_spelchk_camera_a7100656d4105997c30736993767a31f9}
+
+\item 
+\hypertarget{class_spelchk_camera_a70d9a9d5f6176a0c9d26bd645536085c}{G\-Lfloat {\bfseries aspect}}\label{class_spelchk_camera_a70d9a9d5f6176a0c9d26bd645536085c}
+
+\item 
+\hypertarget{class_spelchk_camera_ae8f0c6ccfef8af60b4e4b7178ed79ddd}{G\-Lfloat {\bfseries left}}\label{class_spelchk_camera_ae8f0c6ccfef8af60b4e4b7178ed79ddd}
+
+\item 
+\hypertarget{class_spelchk_camera_a7c0c8e4ef77ab6235b764099c4178ac9}{G\-Lfloat {\bfseries right}}\label{class_spelchk_camera_a7c0c8e4ef77ab6235b764099c4178ac9}
+
+\item 
+\hypertarget{class_spelchk_camera_ac63e0cb41beb7ba21b4a93411057fb11}{G\-Lfloat {\bfseries bottom}}\label{class_spelchk_camera_ac63e0cb41beb7ba21b4a93411057fb11}
+
+\item 
+\hypertarget{class_spelchk_camera_a91da81606e111b5346b9ff01b8ee51e4}{G\-Lfloat {\bfseries top}}\label{class_spelchk_camera_a91da81606e111b5346b9ff01b8ee51e4}
+
+\item 
+\hypertarget{class_spelchk_camera_a5ff79a52200bff0010dec68f6f2fc81f}{G\-Lfloat {\bfseries z\-Near}}\label{class_spelchk_camera_a5ff79a52200bff0010dec68f6f2fc81f}
+
+\item 
+\hypertarget{class_spelchk_camera_a5e346a9b0f4513cd73e8c662d9b68ce8}{G\-Lfloat {\bfseries z\-Far}}\label{class_spelchk_camera_a5e346a9b0f4513cd73e8c662d9b68ce8}
+
+\item 
+\hypertarget{class_spelchk_camera_a95814c7cdb0c22f786c550f0be15d861}{G\-Luint {\bfseries time\-Ref}}\label{class_spelchk_camera_a95814c7cdb0c22f786c550f0be15d861}
+
+\item 
+\hypertarget{class_spelchk_camera_a151379f37af88e08c6d8cb8e68c803f5}{int {\bfseries screen\-Width}}\label{class_spelchk_camera_a151379f37af88e08c6d8cb8e68c803f5}
+
+\item 
+\hypertarget{class_spelchk_camera_ac8c840647d7f35bb118b289793ff5454}{int {\bfseries screen\-Height}}\label{class_spelchk_camera_ac8c840647d7f35bb118b289793ff5454}
+
+\item 
+\hypertarget{class_spelchk_camera_a36003c28aa94824059381841d4f0081f}{G\-Lfloat {\bfseries x\-Depth}}\label{class_spelchk_camera_a36003c28aa94824059381841d4f0081f}
+
+\item 
+\hypertarget{class_spelchk_camera_a47c24171c6228b32362160990725f52e}{G\-Lfloat {\bfseries y\-Depth}}\label{class_spelchk_camera_a47c24171c6228b32362160990725f52e}
+
+\item 
+\hypertarget{class_spelchk_camera_ad70aebd6b7292aa9ad917e1bc264b5bd}{G\-Lfloat {\bfseries z\-Depth}}\label{class_spelchk_camera_ad70aebd6b7292aa9ad917e1bc264b5bd}
+
+\item 
+\hypertarget{class_spelchk_camera_a96902d7291fd719ae0d5630fc1966cab}{G\-Lfloat {\bfseries x\-Angle}}\label{class_spelchk_camera_a96902d7291fd719ae0d5630fc1966cab}
+
+\item 
+\hypertarget{class_spelchk_camera_a1a2a01ff4bf6ed7e0aea35baf64c52d3}{G\-Lfloat {\bfseries y\-Angle}}\label{class_spelchk_camera_a1a2a01ff4bf6ed7e0aea35baf64c52d3}
+
+\item 
+\hypertarget{class_spelchk_camera_a22de39eb2216ae32f2aefbdd06d26670}{G\-Lfloat {\bfseries z\-Angle}}\label{class_spelchk_camera_a22de39eb2216ae32f2aefbdd06d26670}
+
+\item 
+\hypertarget{class_spelchk_camera_ad681727f16e8864332beb03a8d56f38c}{G\-Lfloat {\bfseries x\-Head}}\label{class_spelchk_camera_ad681727f16e8864332beb03a8d56f38c}
+
+\item 
+\hypertarget{class_spelchk_camera_aab34b46f554bd49958e22deb1dfcdfc1}{G\-Lfloat {\bfseries y\-Head}}\label{class_spelchk_camera_aab34b46f554bd49958e22deb1dfcdfc1}
+
+\item 
+\hypertarget{class_spelchk_camera_a900decac3d9387e3a90f9a363f171241}{G\-Lfloat {\bfseries z\-Head}}\label{class_spelchk_camera_a900decac3d9387e3a90f9a363f171241}
+
+\item 
+\hypertarget{class_spelchk_camera_a96a0eaa30df58f418b62dd32a87aacdd}{float {\bfseries x\-Head\-Start}}\label{class_spelchk_camera_a96a0eaa30df58f418b62dd32a87aacdd}
+
+\item 
+\hypertarget{class_spelchk_camera_a6160bf79c12028d38e3a722f47b73689}{float {\bfseries y\-Head\-Start}}\label{class_spelchk_camera_a6160bf79c12028d38e3a722f47b73689}
+
+\item 
+\hypertarget{class_spelchk_camera_a2d4ff9d44d319beae940893c13cd6d23}{float {\bfseries z\-Head\-Start}}\label{class_spelchk_camera_a2d4ff9d44d319beae940893c13cd6d23}
+
+\item 
+\hypertarget{class_spelchk_camera_a4e29677cebaa80d8559eaa5b97f67a9d}{G\-Lfloat {\bfseries x\-Head\-Angle}}\label{class_spelchk_camera_a4e29677cebaa80d8559eaa5b97f67a9d}
+
+\item 
+\hypertarget{class_spelchk_camera_a6cbc7eb6281d9b5d3e52f9cc368e099e}{G\-Lfloat {\bfseries y\-Head\-Angle}}\label{class_spelchk_camera_a6cbc7eb6281d9b5d3e52f9cc368e099e}
+
+\item 
+\hypertarget{class_spelchk_camera_adadeec344d21294df061f66f184c0dda}{G\-Lfloat {\bfseries z\-Head\-Angle}}\label{class_spelchk_camera_adadeec344d21294df061f66f184c0dda}
+
+\item 
+\hypertarget{class_spelchk_camera_afc4abd0c3662dc3808cb073650547d36}{\hyperlink{struct_angel_1_1vec4}{vec4} {\bfseries initial\-Translation\-Vector}}\label{class_spelchk_camera_afc4abd0c3662dc3808cb073650547d36}
+
+\item 
+\hypertarget{class_spelchk_camera_aef04e503f7376447684b6594a9cd79eb}{\hyperlink{struct_angel_1_1vec4}{vec4} {\bfseries translation\-Vector}}\label{class_spelchk_camera_aef04e503f7376447684b6594a9cd79eb}
+
+\item 
+\hypertarget{class_spelchk_camera_a30c3cde28c3d5c137b784e15d58233c4}{\hyperlink{struct_angel_1_1vec4}{vec4} {\bfseries old\-Translation\-Vector}}\label{class_spelchk_camera_a30c3cde28c3d5c137b784e15d58233c4}
+
+\item 
+\hypertarget{class_spelchk_camera_a733c3b94be2ec8b25c69f124fba72294}{\hyperlink{class_angel_1_1mat4}{mat4} {\bfseries model\-View\-Matrix}}\label{class_spelchk_camera_a733c3b94be2ec8b25c69f124fba72294}
+
+\item 
+\hypertarget{class_spelchk_camera_abf7dde00eb7354162a80b4675b0b1b96}{int {\bfseries inbound\-Head\-Data}}\label{class_spelchk_camera_abf7dde00eb7354162a80b4675b0b1b96}
+
+\item 
+\hypertarget{class_spelchk_camera_afa0999e81fc3478d2791fd7febc845bf}{\hyperlink{struct_angel_1_1vec4}{vec4} {\bfseries initial\-Head\-Position}}\label{class_spelchk_camera_afa0999e81fc3478d2791fd7febc845bf}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 16 of file Spelchk\-Camera.\-hpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+Spelchk\-Camera.\-hpp\item 
+Spelchk\-Camera.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,168 @@
+.TH "SpelchkCamera" 3 "Fri Mar 15 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+SpelchkCamera \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBSpelchkCamera\fP (\fBvec4\fP initialTranslationVector)"
+.br
+.ti -1c
+.RI "\fBmat4\fP \fBgetProjectionMatrix\fP ()"
+.br
+.ti -1c
+.RI "\fBmat4\fP \fBgetModelViewMatrix\fP ()"
+.br
+.ti -1c
+.RI "\fBvec4\fP \fBgetTranslationVector\fP ()"
+.br
+.ti -1c
+.RI "void \fBmoveCamera\fP (float xDepth, float yDepth, float zDepth)"
+.br
+.ti -1c
+.RI "void \fBrotateCamera\fP (float xAngle, float yAngle, float zAngle)"
+.br
+.ti -1c
+.RI "void \fBsetScreenSize\fP (int width, int height)"
+.br
+.ti -1c
+.RI "void \fBsetProjection\fP (int projectionType)"
+.br
+.ti -1c
+.RI "void \fBreset\fP ()"
+.br
+.ti -1c
+.RI "void \fBsetLightMovementRef\fP (GLuint ref)"
+.br
+.ti -1c
+.RI "void \fBsetLightMovementTime\fP (float elapsed)"
+.br
+.ti -1c
+.RI "void \fBgetReadyForZero\fP (int usernum)"
+.br
+.ti -1c
+.RI "void \fBheadMovement\fP (int usernum, double x, double y, double z)"
+.br
+.in -1c
+.SS "Private Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBcalculateTranslationVector\fP ()"
+.br
+.in -1c
+.SS "Private Attributes"
+
+.in +1c
+.ti -1c
+.RI "int \fBprojectionType\fP"
+.br
+.ti -1c
+.RI "GLfloat \fBfovy\fP"
+.br
+.ti -1c
+.RI "GLfloat \fBaspect\fP"
+.br
+.ti -1c
+.RI "GLfloat \fBleft\fP"
+.br
+.ti -1c
+.RI "GLfloat \fBright\fP"
+.br
+.ti -1c
+.RI "GLfloat \fBbottom\fP"
+.br
+.ti -1c
+.RI "GLfloat \fBtop\fP"
+.br
+.ti -1c
+.RI "GLfloat \fBzNear\fP"
+.br
+.ti -1c
+.RI "GLfloat \fBzFar\fP"
+.br
+.ti -1c
+.RI "GLuint \fBtimeRef\fP"
+.br
+.ti -1c
+.RI "int \fBscreenWidth\fP"
+.br
+.ti -1c
+.RI "int \fBscreenHeight\fP"
+.br
+.ti -1c
+.RI "GLfloat \fBxDepth\fP"
+.br
+.ti -1c
+.RI "GLfloat \fByDepth\fP"
+.br
+.ti -1c
+.RI "GLfloat \fBzDepth\fP"
+.br
+.ti -1c
+.RI "GLfloat \fBxAngle\fP"
+.br
+.ti -1c
+.RI "GLfloat \fByAngle\fP"
+.br
+.ti -1c
+.RI "GLfloat \fBzAngle\fP"
+.br
+.ti -1c
+.RI "GLfloat \fBxHead\fP"
+.br
+.ti -1c
+.RI "GLfloat \fByHead\fP"
+.br
+.ti -1c
+.RI "GLfloat \fBzHead\fP"
+.br
+.ti -1c
+.RI "float \fBxHeadStart\fP"
+.br
+.ti -1c
+.RI "float \fByHeadStart\fP"
+.br
+.ti -1c
+.RI "float \fBzHeadStart\fP"
+.br
+.ti -1c
+.RI "GLfloat \fBxHeadAngle\fP"
+.br
+.ti -1c
+.RI "GLfloat \fByHeadAngle\fP"
+.br
+.ti -1c
+.RI "GLfloat \fBzHeadAngle\fP"
+.br
+.ti -1c
+.RI "\fBvec4\fP \fBinitialTranslationVector\fP"
+.br
+.ti -1c
+.RI "\fBvec4\fP \fBtranslationVector\fP"
+.br
+.ti -1c
+.RI "\fBvec4\fP \fBoldTranslationVector\fP"
+.br
+.ti -1c
+.RI "\fBmat4\fP \fBmodelViewMatrix\fP"
+.br
+.ti -1c
+.RI "int \fBinboundHeadData\fP"
+.br
+.ti -1c
+.RI "\fBvec4\fP \fBinitialHeadPosition\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 16 of file SpelchkCamera\&.hpp\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for HyperGrafx from the source code\&.

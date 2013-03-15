@@ -1,0 +1,116 @@
+\hypertarget{mat_8cpp}{\section{mat.\-cpp File Reference}
+\label{mat_8cpp}\index{mat.\-cpp@{mat.\-cpp}}
+}
+
+
+Implementation for the mat2, mat3, and mat4 classes.  
+
+
+{\ttfamily \#include \char`\"{}platform.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}vec.\-hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}mat.\-hpp\char`\"{}}\\*
+{\ttfamily \#include $<$cmath$>$}\\*
+{\ttfamily \#include \char`\"{}globals.\-h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{namespace_angel_ad98858d30ccb39de45a34e4693fd9ef5}{mat2 {\bfseries Angel\-::operator$\ast$} (const G\-Lfloat s, const mat2 \&m)}\label{namespace_angel_ad98858d30ccb39de45a34e4693fd9ef5}
+
+\item 
+\hypertarget{namespace_angel_ac414aafc0c30f61e35042b50146b5340}{std\-::ostream \& {\bfseries Angel\-::operator$<$$<$} (std\-::ostream \&os, const mat2 \&m)}\label{namespace_angel_ac414aafc0c30f61e35042b50146b5340}
+
+\item 
+\hypertarget{namespace_angel_aa5aed3e76e6cd1d2de93503630d13132}{std\-::istream \& {\bfseries Angel\-::operator$>$$>$} (std\-::istream \&is, mat2 \&m)}\label{namespace_angel_aa5aed3e76e6cd1d2de93503630d13132}
+
+\item 
+\hypertarget{namespace_angel_a14b1d7bed352f45380d7fc26e2553627}{mat2 {\bfseries Angel\-::matrix\-Comp\-Mult} (const mat2 \&A, const mat2 \&B)}\label{namespace_angel_a14b1d7bed352f45380d7fc26e2553627}
+
+\item 
+\hypertarget{namespace_angel_a13237552df8019e7c7c041491185a5b7}{mat2 {\bfseries Angel\-::transpose} (const mat2 \&A)}\label{namespace_angel_a13237552df8019e7c7c041491185a5b7}
+
+\item 
+\hypertarget{namespace_angel_a14d8b4ab9eeb4075155867871c6d60f6}{mat3 {\bfseries Angel\-::operator$\ast$} (const G\-Lfloat s, const mat3 \&m)}\label{namespace_angel_a14d8b4ab9eeb4075155867871c6d60f6}
+
+\item 
+\hypertarget{namespace_angel_aebfe9ee1ffa4286f7697c7323ea83dd0}{std\-::ostream \& {\bfseries Angel\-::operator$<$$<$} (std\-::ostream \&os, const mat3 \&m)}\label{namespace_angel_aebfe9ee1ffa4286f7697c7323ea83dd0}
+
+\item 
+\hypertarget{namespace_angel_a0f2b9ea30d90fee6f42c49adc31afbd5}{std\-::istream \& {\bfseries Angel\-::operator$>$$>$} (std\-::istream \&is, mat3 \&m)}\label{namespace_angel_a0f2b9ea30d90fee6f42c49adc31afbd5}
+
+\item 
+\hypertarget{namespace_angel_a9eeab51adba3f19cca17e5007844f2a1}{mat3 {\bfseries Angel\-::matrix\-Comp\-Mult} (const mat3 \&A, const mat3 \&B)}\label{namespace_angel_a9eeab51adba3f19cca17e5007844f2a1}
+
+\item 
+\hypertarget{namespace_angel_abea2dfb557c756bfb69c596852e6b096}{mat3 {\bfseries Angel\-::transpose} (const mat3 \&A)}\label{namespace_angel_abea2dfb557c756bfb69c596852e6b096}
+
+\item 
+\hypertarget{namespace_angel_acc567058b4586de296af2ce0ad767b18}{mat4 {\bfseries Angel\-::operator$\ast$} (const G\-Lfloat s, const mat4 \&m)}\label{namespace_angel_acc567058b4586de296af2ce0ad767b18}
+
+\item 
+\hypertarget{namespace_angel_a8f927d4bf85202f4e96a1a4a9733da27}{vec4 {\bfseries Angel\-::operator$\ast$} (const vec4 \&v, const mat4 \&\-\_\-m)}\label{namespace_angel_a8f927d4bf85202f4e96a1a4a9733da27}
+
+\item 
+\hypertarget{namespace_angel_a694f07e56f9b1501ade53204f63f9eaa}{std\-::ostream \& {\bfseries Angel\-::operator$<$$<$} (std\-::ostream \&os, const mat4 \&m)}\label{namespace_angel_a694f07e56f9b1501ade53204f63f9eaa}
+
+\item 
+\hypertarget{namespace_angel_a23656ccbbf90b1935a4072ef3ca248e0}{std\-::istream \& {\bfseries Angel\-::operator$>$$>$} (std\-::istream \&is, mat4 \&m)}\label{namespace_angel_a23656ccbbf90b1935a4072ef3ca248e0}
+
+\item 
+\hypertarget{namespace_angel_a3cc32f2aec8c1c7e609c31183eebf2e6}{mat4 {\bfseries Angel\-::matrix\-Comp\-Mult} (const mat4 \&A, const mat4 \&B)}\label{namespace_angel_a3cc32f2aec8c1c7e609c31183eebf2e6}
+
+\item 
+\hypertarget{namespace_angel_a1a4a07580fa9c63f32cca223177496dd}{mat4 {\bfseries Angel\-::transpose} (const mat4 \&A)}\label{namespace_angel_a1a4a07580fa9c63f32cca223177496dd}
+
+\item 
+\hypertarget{namespace_angel_a96a871db89bb8218473c75b8070d2a04}{mat4 {\bfseries Angel\-::\-Rotate\-X} (const G\-Lfloat theta)}\label{namespace_angel_a96a871db89bb8218473c75b8070d2a04}
+
+\item 
+\hypertarget{namespace_angel_aa8ddbf81e6fa21bd53c5d5ce840a7403}{mat4 {\bfseries Angel\-::\-Rotate\-Y} (const G\-Lfloat theta)}\label{namespace_angel_aa8ddbf81e6fa21bd53c5d5ce840a7403}
+
+\item 
+\hypertarget{namespace_angel_a564ee33689e28c95aedcc5a77aed1d33}{mat4 {\bfseries Angel\-::\-Rotate\-Z} (const G\-Lfloat theta)}\label{namespace_angel_a564ee33689e28c95aedcc5a77aed1d33}
+
+\item 
+\hypertarget{namespace_angel_a4dabf5bcf7d7332f54e66178feab9c16}{mat4 {\bfseries Angel\-::\-Translate} (const G\-Lfloat x, const G\-Lfloat y, const G\-Lfloat z)}\label{namespace_angel_a4dabf5bcf7d7332f54e66178feab9c16}
+
+\item 
+\hypertarget{namespace_angel_ae9591a5b2e2e59fa0534460a16520a42}{mat4 {\bfseries Angel\-::\-Translate} (const vec3 \&v)}\label{namespace_angel_ae9591a5b2e2e59fa0534460a16520a42}
+
+\item 
+\hypertarget{namespace_angel_af51ee9500415015b6ba400cea2ab757f}{mat4 {\bfseries Angel\-::\-Translate} (const vec4 \&v)}\label{namespace_angel_af51ee9500415015b6ba400cea2ab757f}
+
+\item 
+\hypertarget{namespace_angel_a6ca60025898ba656cd588541df87f310}{mat4 {\bfseries Angel\-::\-Scale} (const G\-Lfloat x, const G\-Lfloat y, const G\-Lfloat z)}\label{namespace_angel_a6ca60025898ba656cd588541df87f310}
+
+\item 
+\hypertarget{namespace_angel_a57bd024e120ad05fe0c00081286eeb18}{mat4 {\bfseries Angel\-::\-Scale} (const vec3 \&v)}\label{namespace_angel_a57bd024e120ad05fe0c00081286eeb18}
+
+\item 
+\hypertarget{namespace_angel_a65a39c6b9bbbce0463d958e58cdf8a3c}{mat4 {\bfseries Angel\-::\-Ortho} (const G\-Lfloat left, const G\-Lfloat right, const G\-Lfloat bottom, const G\-Lfloat top, const G\-Lfloat z\-Near, const G\-Lfloat z\-Far)}\label{namespace_angel_a65a39c6b9bbbce0463d958e58cdf8a3c}
+
+\item 
+\hypertarget{namespace_angel_a8db02bcc2094985f2a168ab3f0dce68e}{mat4 {\bfseries Angel\-::\-Ortho2\-D} (const G\-Lfloat left, const G\-Lfloat right, const G\-Lfloat bottom, const G\-Lfloat top)}\label{namespace_angel_a8db02bcc2094985f2a168ab3f0dce68e}
+
+\item 
+\hypertarget{namespace_angel_a5775b27ec156cd2166a59bf038dc8efc}{mat4 {\bfseries Angel\-::\-Frustum} (const G\-Lfloat left, const G\-Lfloat right, const G\-Lfloat bottom, const G\-Lfloat top, const G\-Lfloat z\-Near, const G\-Lfloat z\-Far)}\label{namespace_angel_a5775b27ec156cd2166a59bf038dc8efc}
+
+\item 
+\hypertarget{namespace_angel_ad20afa7adfcc4d26d4be0c322548549a}{mat4 {\bfseries Angel\-::\-Perspective} (const G\-Lfloat fovy, const G\-Lfloat aspect, const G\-Lfloat z\-Near, const G\-Lfloat z\-Far)}\label{namespace_angel_ad20afa7adfcc4d26d4be0c322548549a}
+
+\item 
+\hypertarget{namespace_angel_aee52b8fa583cbbe460e2e80c05b59f8b}{mat4 {\bfseries Angel\-::\-Look\-At} (const vec4 \&eye, const vec4 \&at, const vec4 \&up)}\label{namespace_angel_aee52b8fa583cbbe460e2e80c05b59f8b}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Implementation for the mat2, mat3, and mat4 classes. \begin{DoxyAuthor}{Author}
+Ed Angel 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2012-\/12-\/04
+\end{DoxyDate}
+Modified heavily from code available from Ed Angel's website, \href{http://www.cs.unm.edu/~angel/BOOK/INTERACTIVE_COMPUTER_GRAPHICS/SIXTH_EDITION/}{\tt http\-://www.\-cs.\-unm.\-edu/$\sim$angel/\-B\-O\-O\-K/\-I\-N\-T\-E\-R\-A\-C\-T\-I\-V\-E\-\_\-\-C\-O\-M\-P\-U\-T\-E\-R\-\_\-\-G\-R\-A\-P\-H\-I\-C\-S/\-S\-I\-X\-T\-H\-\_\-\-E\-D\-I\-T\-I\-O\-N/} Published from his book, Interactive Computer Graphics A Top-\/\-Down Approach with Open\-G\-L, Sixth Edition Addison-\/\-Wesley 2012 
+
+Definition in file \hyperlink{mat_8cpp_source}{mat.\-cpp}.
+

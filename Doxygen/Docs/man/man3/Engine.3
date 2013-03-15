@@ -1,0 +1,286 @@
+.TH "Engine" 3 "Fri Mar 15 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Engine \- 
+.PP
+The \fBEngine\fP class is a singleton-style class which helps keep track of instances of important objects (for \fBCameras\fP, Objects, etc) as well as some settings and variables that would otherwise clog up global namespace\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <Engine\&.hpp>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBCameras\fP * \fBcams\fP (void)"
+.br
+.RI "\fIRetrieves a pointer to the \fBCamera\fP List\&. \fP"
+.ti -1c
+.RI "\fBScene\fP * \fBrootScene\fP (void)"
+.br
+.RI "\fIRetrieves a pointer to the Root, top-level \fBScene\fP graph\&. \fP"
+.ti -1c
+.RI "\fBScreen\fP * \fBmainScreen\fP (void)"
+.br
+.RI "\fIRetrieves a pointer to the core '\fBScreen\fP' object\&. \fP"
+.ti -1c
+.RI "bool \fBopt\fP (const std::string &Option)"
+.br
+.RI "\fIopt retrieves the current setting of an option in the \fBEngine\fP\&. \fP"
+.ti -1c
+.RI "void \fBopt\fP (const std::string &Option, bool setting)"
+.br
+.RI "\fIopt, with a second parameter, sets an \fBEngine\fP option\&. \fP"
+.ti -1c
+.RI "bool \fBset\fP (const std::string &Option)"
+.br
+.RI "\fIset checks to see if an option has been explicitly set to either True/False\&. \fP"
+.ti -1c
+.RI "bool \fBflip\fP (const std::string &Option)"
+.br
+.RI "\fIflip changes a setting from its current value to its negated form\&. \fP"
+.ti -1c
+.RI "\fB~Engine\fP (void)"
+.br
+.RI "\fIDefault, non-virtual destructor\&. \fP"
+.in -1c
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static \fBEngine\fP * \fBinstance\fP (void)"
+.br
+.RI "\fIinstance returns, or creates and then returns, a pointer to the \fBEngine\fP object\&. \fP"
+.in -1c
+.SS "Private Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBEngine\fP (void)"
+.br
+.RI "\fIDefault constructor\&. \fP"
+.ti -1c
+.RI "\fBEngine\fP (const \fBEngine\fP &copy)"
+.br
+.RI "\fICopy constructor\&. \fP"
+.ti -1c
+.RI "\fBEngine\fP & \fBoperator=\fP (\fBEngine\fP &assign)"
+.br
+.RI "\fIAssignment operator\&. \fP"
+.in -1c
+.SS "Private Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBScene\fP \fB_scene\fP"
+.br
+.RI "\fIThe root \fBScene\fP graph for the \fBEngine\fP\&. \fP"
+.ti -1c
+.RI "\fBScreen\fP \fB_screen\fP"
+.br
+.RI "\fIThe core 'Screen' object for the \fBEngine\fP\&. \fP"
+.ti -1c
+.RI "\fBSettingsMap\fP \fB_engineSettings\fP"
+.br
+.RI "\fI_engineSettings is a std::map that contains a series of <std::string, bool> pairs that represent our \fBEngine\fP options\&. \fP"
+.in -1c
+.SS "Static Private Attributes"
+
+.in +1c
+.ti -1c
+.RI "static \fBEngine\fP * \fB_engineSingleton\fP = NULL"
+.br
+.RI "\fIstatic, stateful variable that is our singleton pointer\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+The \fBEngine\fP class is a singleton-style class which helps keep track of instances of important objects (for \fBCameras\fP, Objects, etc) as well as some settings and variables that would otherwise clog up global namespace\&. 
+
+\fBAuthor:\fP
+.RS 4
+John Huston, jhuston@cs.uml.edu 
+.RE
+.PP
+\fBDate:\fP
+.RS 4
+2013-03-13 
+.RE
+.PP
+
+.PP
+Definition at line 32 of file Engine\&.hpp\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Engine::Engine (void)\fC [private]\fP"
+
+.PP
+Default constructor\&. Cannot be called, this is a singleton class\&. 
+.PP
+Definition at line 40 of file Engine\&.cpp\&.
+.SS "Engine::Engine (const \fBEngine\fP &copy)\fC [private]\fP"
+
+.PP
+Copy constructor\&. Cannot be called\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIcopy\fP Not used\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Will always throw an exception\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIWill\fP always throw std::logic_error\&. 
+.RE
+.PP
+
+.PP
+Definition at line 57 of file Engine\&.cpp\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "\fBCameras\fP * Engine::cams (void)"
+
+.PP
+Retrieves a pointer to the \fBCamera\fP List\&. \fBReturns:\fP
+.RS 4
+A pointer to the \fBCamera\fP List\&. 
+.RE
+.PP
+
+.PP
+Definition at line 76 of file Engine\&.cpp\&.
+.SS "bool Engine::flip (const std::string &Option)"
+
+.PP
+flip changes a setting from its current value to its negated form\&. \fBParameters:\fP
+.RS 4
+\fIOption\fP The option to toggle\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The new, current value of the option\&. 
+.RE
+.PP
+
+.PP
+Definition at line 139 of file Engine\&.cpp\&.
+.SS "\fBEngine\fP * Engine::instance (void)\fC [static]\fP"
+
+.PP
+instance returns, or creates and then returns, a pointer to the \fBEngine\fP object\&. All hail the singleton!
+.PP
+\fBReturns:\fP
+.RS 4
+A pointer to the \fBEngine\fP object\&. 
+.RE
+.PP
+
+.PP
+Definition at line 29 of file Engine\&.cpp\&.
+.SS "\fBScreen\fP * Engine::mainScreen (void)"
+
+.PP
+Retrieves a pointer to the core '\fBScreen\fP' object\&. \fBReturns:\fP
+.RS 4
+A pointer to the core '\fBScreen\fP' object\&. 
+.RE
+.PP
+
+.PP
+Definition at line 96 of file Engine\&.cpp\&.
+.SS "\fBEngine\fP & Engine::operator= (\fBEngine\fP &assign)\fC [private]\fP"
+
+.PP
+Assignment operator\&. Cannot be used\&. This is a singleton class\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIassign\fP Not used\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Will always throw an exception\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fIWill\fP always throw std::logic_error\&. 
+.RE
+.PP
+
+.PP
+Definition at line 67 of file Engine\&.cpp\&.
+.SS "bool Engine::opt (const std::string &Option)"
+
+.PP
+opt retrieves the current setting of an option in the \fBEngine\fP\&. \fBParameters:\fP
+.RS 4
+\fIOption\fP The name of the option to access\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A bool: the current value of the setting\&. 
+.RE
+.PP
+
+.PP
+Definition at line 107 of file Engine\&.cpp\&.
+.SS "void Engine::opt (const std::string &Option, boolsetting)"
+
+.PP
+opt, with a second parameter, sets an \fBEngine\fP option\&. \fBParameters:\fP
+.RS 4
+\fIOption\fP The name of the option to set\&. 
+.br
+\fIsetting\fP The value to give the option\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 117 of file Engine\&.cpp\&.
+.SS "\fBScene\fP * Engine::rootScene (void)"
+
+.PP
+Retrieves a pointer to the Root, top-level \fBScene\fP graph\&. \fBReturns:\fP
+.RS 4
+A pointer to the Root-level \fBScene\fP graph\&. 
+.RE
+.PP
+
+.PP
+Definition at line 86 of file Engine\&.cpp\&.
+.SS "bool Engine::set (const std::string &Option)"
+
+.PP
+set checks to see if an option has been explicitly set to either True/False\&. \fBParameters:\fP
+.RS 4
+\fIOption\fP The option to check the existence of 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A boolean: True if the option has been set, False otherwise\&. 
+.RE
+.PP
+
+.PP
+Definition at line 127 of file Engine\&.cpp\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for HyperGrafx from the source code\&.

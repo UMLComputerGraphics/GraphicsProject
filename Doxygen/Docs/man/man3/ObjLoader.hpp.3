@@ -1,0 +1,80 @@
+.TH "ObjLoader.hpp" 3 "Fri Mar 15 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ObjLoader.hpp \- 
+.PP
+Headers for functions for reading in geometry from \&.OBJ files\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <vector>\fP
+.br
+\fC#include <string>\fP
+.br
+\fC#include <exception>\fP
+.br
+\fC#include <sstream>\fP
+.br
+\fC#include 'vec\&.hpp'\fP
+.br
+\fC#include 'Object\&.hpp'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "const vector< string > \fBObjLoader::split\fP (const string &str, const char delim)"
+.br
+.RI "\fISplit a string by an arbitrary delimiter\&. \fP"
+.ti -1c
+.RI "\fBObject\fP * \fBObjLoader::loadObj\fP (\fBScene\fP &scene, const char *filename, const char *defaultObjName)"
+.br
+.RI "\fIloadObj loads all available objects from a \&.obj file into the provided scene\&. \fP"
+.ti -1c
+.RI "\fBvec4\fP \fBObjLoader::parseVertex\fP (string line)"
+.br
+.RI "\fIObtain a vertex from a std::string line\&. \fP"
+.ti -1c
+.RI "\fBvec2\fP \fBObjLoader::parseTextureUV\fP (string line)"
+.br
+.RI "\fIObtain a 2D TexUV coordinate from a std::string line\&. \fP"
+.ti -1c
+.RI "\fBvec3\fP \fBObjLoader::parseNormal\fP (string line)"
+.br
+.RI "\fIObtain a 3D normal vector from a std::string line\&. \fP"
+.ti -1c
+.RI "vector< vector< int > > \fBObjLoader::parseFaceElements\fP (string line)"
+.br
+.RI "\fIparses face elements into a vector of 3 vectors of 3 ints from an \&.obj line \fP"
+.ti -1c
+.RI "void \fBObjLoader::parseElementTriple\fP (string triple, vector< int > &v_elements, vector< int > &uv_elements, vector< int > &n_elements)"
+.br
+.RI "\fIHelper function that splits an obj element listing (x/y/z) into their proper components (vertices, UVs, normals\&.) \fP"
+.ti -1c
+.RI "void \fBObjLoader::loadModelFromFile\fP (\fBObject\fP *object, const char *filename)"
+.br
+.RI "\fILegacy function until I make everything suck less: Loads a single model from an OBJ and stores it into a single \fBObject\fP instance\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Headers for functions for reading in geometry from \&.OBJ files\&. 
+
+\fBDate:\fP
+.RS 4
+2013-03-14 
+.RE
+.PP
+\fBAuthors:\fP
+.RS 4
+Greg Giannone, Nick VerVoort, John Huston 
+.RE
+.PP
+
+.PP
+Definition in file \fBObjLoader\&.hpp\fP\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for HyperGrafx from the source code\&.

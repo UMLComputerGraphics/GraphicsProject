@@ -1,0 +1,190 @@
+.TH "glut_callbacks.h" 3 "Fri Mar 15 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+glut_callbacks.h \- 
+.PP
+\fBglut_callbacks\&.h\fP provides function declarations for a set of functions commonly used across multiple binaries for keyboard, mouse and other GLUT callback functions\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBkeylift\fP (unsigned char key, int x, int y)"
+.br
+.RI "\fIkeylift is registered as a GLUT callback for when a user releases a depressed key\&. \fP"
+.ti -1c
+.RI "void \fBkeyboard\fP (unsigned char key, int x, int y)"
+.br
+.RI "\fIkeyboard is a callback registered with GLUT\&. \fP"
+.ti -1c
+.RI "void \fBkeyboard_ctrl\fP (int key, int x, int y)"
+.br
+.RI "\fIkeyboard_ctrl is registered as a GLUT callback\&. \fP"
+.ti -1c
+.RI "void \fBmouse\fP (int button, int state, int x, int y)"
+.br
+.RI "\fImouse is registered as a GLUT callback\&. \fP"
+.ti -1c
+.RI "void \fBmouseroll\fP (int x, int y)"
+.br
+.RI "\fImouseroll is registered as a GLUT callback\&. \fP"
+.ti -1c
+.RI "void \fBmouselook\fP (int x, int y)"
+.br
+.RI "\fImouselook is registered as a GLUT callback\&. \fP"
+.ti -1c
+.RI "void \fBresizeEvent\fP (int width, int height)"
+.br
+.RI "\fIresizeEvent is registered as a glut callback for when the screen is resized\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+\fBglut_callbacks\&.h\fP provides function declarations for a set of functions commonly used across multiple binaries for keyboard, mouse and other GLUT callback functions\&. 
+
+\fBAuthor:\fP
+.RS 4
+John Huston 
+.RE
+.PP
+\fBAuthors:\fP
+.RS 4
+John Huston, Nick St\&.Pierre, Chris Compton 
+.RE
+.PP
+\fBDate:\fP
+.RS 4
+2013-03-13 
+.RE
+.PP
+
+.PP
+Definition in file \fBglut_callbacks\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "void keyboard (unsigned charkey, intx, inty)"
+
+.PP
+keyboard is a callback registered with GLUT\&. It handles (surprise!) keyboard input\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIkey\fP The key pressed by the user\&. 
+.br
+\fIx\fP The x coordinate of the mouse when the key was pressed\&. 
+.br
+\fIy\fP The y coordinate of the mouse when the key was pressed\&. 
+.RE
+.PP
+
+.PP
+Definition at line 66 of file glut_callbacks\&.cpp\&.
+.SS "void keyboard_ctrl (intkey, intx, inty)"
+
+.PP
+keyboard_ctrl is registered as a GLUT callback\&. It is responsible for catching when special keys are pressed\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIkey\fP The key pressed\&. 
+.br
+\fIx\fP The x coordinate of the mouse when the key was pressed\&. 
+.br
+\fIy\fP The y coordinate of the mouse when the key was pressed\&. 
+.RE
+.PP
+
+.PP
+Definition at line 167 of file glut_callbacks\&.cpp\&.
+.SS "void keylift (unsigned charkey, intx, inty)"
+
+.PP
+keylift is registered as a GLUT callback for when a user releases a depressed key\&. \fBParameters:\fP
+.RS 4
+\fIkey\fP The key that was lifted\&. 
+.br
+\fIx\fP The x coordinate of the mouse at the time the key was released\&. 
+.br
+\fIy\fP The y coordinate of the mouse at the time the key was released\&. 
+.RE
+.PP
+
+.PP
+Definition at line 29 of file glut_callbacks\&.cpp\&.
+.SS "void mouse (intbutton, intstate, intx, inty)"
+
+.PP
+mouse is registered as a GLUT callback\&. It handles input from, primarily, the scrollwheel\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIbutton\fP The mouse button being pressed\&. 
+.br
+\fIstate\fP the state of the aforementioned mouse button\&. 
+.br
+\fIx\fP the x coordinate of the mouse\&. 
+.br
+\fIy\fP the y coordinate of the mouse\&. 
+.RE
+.PP
+
+.PP
+Definition at line 219 of file glut_callbacks\&.cpp\&.
+.SS "void mouselook (intx, inty)"
+
+.PP
+mouselook is registered as a GLUT callback\&. mouselook implements FPS-like controls where the camera moves proportional to the direction of the mouse\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP the x coordinate of the mouse pointer\&. 
+.br
+\fIy\fP the y coordinate of the mouse pointer\&. 
+.RE
+.PP
+
+.PP
+Definition at line 265 of file glut_callbacks\&.cpp\&.
+.SS "void mouseroll (intx, inty)"
+
+.PP
+mouseroll is registered as a GLUT callback\&. mouseroll is called when the mouse is moved while a button is depressed\&. It is used here to implement barrel-rolls while left-clicking\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP the x coordinate of the mouse pointer\&. 
+.br
+\fIy\fP the y coordinate of the mouse pointer\&. 
+.RE
+.PP
+
+.PP
+Definition at line 245 of file glut_callbacks\&.cpp\&.
+.SS "void resizeEvent (intwidth, intheight)"
+
+.PP
+resizeEvent is registered as a glut callback for when the screen is resized\&. It instructs the screen object of the new size, which informs all of the children cameras to recompute their aspect ratios, viewport positions, and so on\&.
+.PP
+We also warp the pointer to the center of the screen, for compatibility with mouselook( void )\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIwidth\fP The new width of the window\&. 
+.br
+\fIheight\fP The new height of the window\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 299 of file glut_callbacks\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for HyperGrafx from the source code\&.

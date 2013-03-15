@@ -1,0 +1,72 @@
+.TH "TransCache" 3 "Fri Mar 15 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+TransCache \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBPTM\fP (const \fBAngel::mat4\fP &ptm_in, bool postmult=true)"
+.br
+.ti -1c
+.RI "const \fBAngel::mat4\fP & \fBPTM\fP (void) const "
+.br
+.ti -1c
+.RI "const \fBAngel::mat4\fP & \fBCTM\fP (void) const "
+.br
+.ti -1c
+.RI "const \fBAngel::mat4\fP & \fBOTM\fP (void) const "
+.br
+.ti -1c
+.RI "void \fBCalcCTM\fP (bool postmult=true)"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBTransMat\fP \fBPreOffset\fP"
+.br
+.ti -1c
+.RI "\fBRotMat\fP \fBPreRotation\fP"
+.br
+.ti -1c
+.RI "\fBScaleMat\fP \fBscale\fP"
+.br
+.ti -1c
+.RI "\fBRotMat\fP \fBrotation\fP"
+.br
+.ti -1c
+.RI "\fBTransMat\fP \fBoffset\fP"
+.br
+.ti -1c
+.RI "\fBRotMat\fP \fBorbit\fP"
+.br
+.ti -1c
+.RI "\fBTransMat\fP \fBdisplacement\fP"
+.br
+.in -1c
+.SS "Private Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBAngel::mat4\fP \fBptm\fP"
+.br
+.ti -1c
+.RI "\fBAngel::mat4\fP \fBctm\fP"
+.br
+.ti -1c
+.RI "\fBAngel::mat4\fP \fBotm\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 4 of file TransCache\&.hpp\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for HyperGrafx from the source code\&.

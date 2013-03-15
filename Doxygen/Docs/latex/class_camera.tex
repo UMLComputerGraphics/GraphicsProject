@@ -1,0 +1,1619 @@
+\hypertarget{class_camera}{\section{Camera Class Reference}
+\label{class_camera}\index{Camera@{Camera}}
+}
+
+
+The \hyperlink{class_camera}{Camera} class represents a logical camera in a model view, which posesses a current viewing angle and an absolute position in space as its state.  
+
+
+
+
+{\ttfamily \#include $<$Camera.\-hpp$>$}
+
+Inheritance diagram for Camera\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_camera}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{class_camera_a80cb65605322d27ad3b6d973484509ec}{Direction} \{ \\*
+{\bfseries D\-I\-R\-\_\-\-F\-O\-R\-W\-A\-R\-D}, 
+{\bfseries D\-I\-R\-\_\-\-B\-A\-C\-K\-W\-A\-R\-D}, 
+{\bfseries D\-I\-R\-\_\-\-L\-E\-F\-T}, 
+{\bfseries D\-I\-R\-\_\-\-R\-I\-G\-H\-T}, 
+\\*
+{\bfseries D\-I\-R\-\_\-\-U\-P}, 
+{\bfseries D\-I\-R\-\_\-\-D\-O\-W\-N}, 
+{\bfseries D\-I\-R\-\_\-\-E\-N\-D}, 
+{\bfseries D\-I\-R\-\_\-\-B\-E\-G\-I\-N} = D\-I\-R\-\_\-\-F\-O\-R\-W\-A\-R\-D
+ \}
+\begin{DoxyCompactList}\small\item\em The Direction enumeration lists all of the possible directions the camera may travel in. \end{DoxyCompactList}\item 
+enum \hyperlink{class_camera_aaa256acd50a2fa143d9f8d9456e2802f}{View\-Type} \{ \\*
+{\bfseries P\-E\-R\-S\-P\-E\-C\-T\-I\-V\-E}, 
+{\bfseries O\-R\-T\-H\-O}, 
+{\bfseries O\-R\-T\-H\-O2\-D}, 
+{\bfseries I\-D\-E\-N\-T\-I\-T\-Y}, 
+\\*
+{\bfseries F\-R\-U\-S\-T\-U\-M}
+ \}
+\begin{DoxyCompactList}\small\item\em The View\-Type enumeration lists the various possibilities for the current viewing mode that can be switched between. \end{DoxyCompactList}\item 
+enum \hyperlink{class_camera_a630738fd23098d44c0d15ee28d5649dd}{Uniforms} \{ \\*
+{\bfseries B\-E\-G\-I\-N} = Object\-:\-:E\-N\-D, 
+{\bfseries T\-R\-A\-N\-S\-L\-A\-T\-I\-O\-N} = B\-E\-G\-I\-N, 
+{\bfseries R\-O\-T\-A\-T\-I\-O\-N}, 
+{\bfseries V\-I\-E\-W}, 
+\\*
+{\bfseries C\-T\-M}, 
+{\bfseries E\-N\-D}
+ \}
+\begin{DoxyCompactList}\small\item\em The glsl\-\_\-var enumeration lists the various variables the \hyperlink{class_camera}{Camera} class is capable of sending to the shader. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{class_camera_a80cb65605322d27ad3b6d973484509ec}{Camera\-::\-Direction} \hyperlink{class_camera_a94bb7ceb1c7a05e54cf638924f228baf}{Direction}
+\begin{DoxyCompactList}\small\item\em The Direction enumeration lists all of the possible directions the camera may travel in. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{class_camera_aaa256acd50a2fa143d9f8d9456e2802f}{Camera\-::\-View\-Type} \hyperlink{class_camera_a5b2dc5eaed6cbaabee0eea3f2714acd7}{View\-Type}
+\begin{DoxyCompactList}\small\item\em The View\-Type enumeration lists the various possibilities for the current viewing mode that can be switched between. \end{DoxyCompactList}\item 
+typedef enum \hyperlink{class_camera_a630738fd23098d44c0d15ee28d5649dd}{Camera\-::\-Uniforms} \hyperlink{class_camera_a0ed19c96505cbb70625938d1e883af24}{Uniform}
+\begin{DoxyCompactList}\small\item\em The glsl\-\_\-var enumeration lists the various variables the \hyperlink{class_camera}{Camera} class is capable of sending to the shader. \end{DoxyCompactList}\item 
+\hypertarget{class_object_a79b74057dbc5182b85c9c3ba8480fcf2}{typedef const unsigned int {\bfseries Uniform\-Enum}}\label{class_object_a79b74057dbc5182b85c9c3ba8480fcf2}
+
+\item 
+\hypertarget{class_object_a6e19bd8516360bff956408cbae33b878}{typedef std\-::map\\*
+$<$ Object\-::\-Uniform\-Enum, \\*
+std\-::string $>$ {\bfseries Uniform\-Map}}\label{class_object_a6e19bd8516360bff956408cbae33b878}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_camera_a16516fa8c830cecef5c8eb43eff12783}{Camera} (const std\-::string \&\hyperlink{class_object_a24457e0a387492c80594aec7681a2277}{name}, G\-Luint g\-Shader, float \hyperlink{class_camera_a14d59ca64bf258adacbed4e0e70ba701}{x}=0.\-0, float \hyperlink{class_camera_a5021b8379a853f306851837178856db0}{y}=0.\-0, float \hyperlink{class_camera_a4acfa20291c83f13c98781c0d53cdbd8}{z}=0.\-0)
+\begin{DoxyCompactList}\small\item\em Initialization Constructor; sets the x,y,z coordinates explicitly. \end{DoxyCompactList}\item 
+\hyperlink{class_camera_a24329612384948d2b64f78094fe84e75}{Camera} (const std\-::string \&\hyperlink{class_object_a24457e0a387492c80594aec7681a2277}{name}, G\-Luint g\-Shader, \hyperlink{struct_angel_1_1vec3}{vec3} \&in)
+\begin{DoxyCompactList}\small\item\em Initialization Constructor, uses a vec3 as its initial coordinates. \end{DoxyCompactList}\item 
+\hyperlink{class_camera_aa131bc7f1bad2cc8baea463714c4485d}{Camera} (const std\-::string \&\hyperlink{class_object_a24457e0a387492c80594aec7681a2277}{name}, G\-Luint g\-Shader, \hyperlink{struct_angel_1_1vec4}{vec4} \&in)
+\begin{DoxyCompactList}\small\item\em Initialization Constructor, uses a vec4 as its initial coordinates. \end{DoxyCompactList}\item 
+virtual \hyperlink{class_camera_a06211f202c145b3ec8253f96e1e654a6}{$\sim$\-Camera} (void)
+\begin{DoxyCompactList}\small\item\em Default destructor. \end{DoxyCompactList}\item 
+void \hyperlink{class_camera_a14d59ca64bf258adacbed4e0e70ba701}{x} (const float \&in, const bool \&update=true)
+\begin{DoxyCompactList}\small\item\em Sets the x coordinate of the camera. \end{DoxyCompactList}\item 
+void \hyperlink{class_camera_a5021b8379a853f306851837178856db0}{y} (const float \&in, const bool \&update=true)
+\begin{DoxyCompactList}\small\item\em Sets the y coordinate of the camera. \end{DoxyCompactList}\item 
+void \hyperlink{class_camera_a4acfa20291c83f13c98781c0d53cdbd8}{z} (const float \&in, const bool \&update=true)
+\begin{DoxyCompactList}\small\item\em Sets the z coordinate of the camera. \end{DoxyCompactList}\item 
+void \hyperlink{class_camera_a432e03c15d63f8839fe4731016d907a4}{pos} (const float \&\hyperlink{class_camera_a14d59ca64bf258adacbed4e0e70ba701}{x}, const float \&\hyperlink{class_camera_a5021b8379a853f306851837178856db0}{y}, const float \&\hyperlink{class_camera_a4acfa20291c83f13c98781c0d53cdbd8}{z}, const bool \&update=true)
+\begin{DoxyCompactList}\small\item\em Sets the absolute position of the camera. \end{DoxyCompactList}\item 
+void \hyperlink{class_camera_ae9dc2206b71b25cf320a05d148cb8b56}{pos} (const \hyperlink{struct_angel_1_1vec3}{vec3} \&in, const bool \&update=true)
+\begin{DoxyCompactList}\small\item\em Sets the absolute position of the camera. \end{DoxyCompactList}\item 
+void \hyperlink{class_camera_aec2115038562e514193bb2b67f5da153}{pos} (const \hyperlink{struct_angel_1_1vec4}{vec4} \&in, const bool \&update=true)
+\begin{DoxyCompactList}\small\item\em Sets the absolute position of the camera. \end{DoxyCompactList}\item 
+void \hyperlink{class_camera_ac7985a6cb48f4e1e74fda17e5213dd74}{d\-X} (const float \&by, const bool \&update=true)
+\begin{DoxyCompactList}\small\item\em Moves the camera along the x axis. \end{DoxyCompactList}\item 
+void \hyperlink{class_camera_a59570a88e3ff2d277c9e995372fcadfe}{d\-Y} (const float \&by, const bool \&update=true)
+\begin{DoxyCompactList}\small\item\em Moves the camera along the y axis. \end{DoxyCompactList}\item 
+void \hyperlink{class_camera_ab94ed9b3c7e12f484d6bfa5f827b59ff}{d\-Z} (const float \&by, const bool \&update=true)
+\begin{DoxyCompactList}\small\item\em Moves the camera along the z axis. \end{DoxyCompactList}\item 
+void \hyperlink{class_camera_a2ac5f89b4f9f012dead66980925143c0}{d\-Pos} (const float \&\hyperlink{class_camera_a14d59ca64bf258adacbed4e0e70ba701}{x}, const float \&\hyperlink{class_camera_a5021b8379a853f306851837178856db0}{y}, const float \&\hyperlink{class_camera_a4acfa20291c83f13c98781c0d53cdbd8}{z})
+\begin{DoxyCompactList}\small\item\em Moves the camera along the x, y, and z axes. \end{DoxyCompactList}\item 
+void \hyperlink{class_camera_a928de59670f0b31264307a8a0888b99d}{d\-Pos} (const \hyperlink{struct_angel_1_1vec3}{vec3} \&by)
+\begin{DoxyCompactList}\small\item\em Moves the camera along the x, y, and z axes. \end{DoxyCompactList}\item 
+void \hyperlink{class_camera_a4ec2e3d2a66826aedb1ac1eee7da0b96}{d\-Pos} (const \hyperlink{struct_angel_1_1vec4}{vec4} \&by)
+\begin{DoxyCompactList}\small\item\em Moves the camera along the x, y, and z axes. \end{DoxyCompactList}\item 
+void \hyperlink{class_camera_a36ec0e0e832f789e27d42e7bd4f6d174}{field\-Of\-View} (const float \&fovy)
+\begin{DoxyCompactList}\small\item\em field\-Of\-View sets the current camera Field-\/of-\/view angle. \end{DoxyCompactList}\item 
+float \hyperlink{class_camera_a9b3675bf6866a67f8fa802bb4aecba89}{field\-Of\-View} (void) const 
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_camera_a9b3675bf6866a67f8fa802bb4aecba89}{field\-Of\-View()} gets the current camera Field-\/of-\/view angle. \end{DoxyCompactList}\item 
+void \hyperlink{class_camera_a717f5d58bb0a73f8c5513a3520d98203}{adjust\-Field\-Of\-View} (const float \&by)
+\begin{DoxyCompactList}\small\item\em adjust\-Field\-Of\-View adjusts the field of view angle up or down by an amount. \end{DoxyCompactList}\item 
+void \hyperlink{class_camera_a8463a19c9e1e7a1c51cd97051e937230}{change\-Perspective} (const \hyperlink{class_camera_aaa256acd50a2fa143d9f8d9456e2802f}{View\-Type} \&v\-Type)
+\begin{DoxyCompactList}\small\item\em change\-Perspective changes the current perspective of the camera. \end{DoxyCompactList}\item 
+void \hyperlink{class_camera_a24c5346fc0dfaa93257b6716fe0f2421}{refresh\-Perspective} (void)
+\begin{DoxyCompactList}\small\item\em refresh\-Perspective re-\/generates the current view/perspective matrix of the camera. \end{DoxyCompactList}\item 
+void \hyperlink{class_camera_adda458a9212825164b52019597f2e9c8}{viewport} (size\-\_\-t \-\_\-\-X, size\-\_\-t \-\_\-\-Y, size\-\_\-t \-\_\-width, size\-\_\-t \-\_\-height)
+\begin{DoxyCompactList}\small\item\em viewport instructs this camera what his expected drawing window will be. \end{DoxyCompactList}\item 
+void \hyperlink{class_camera_abbe6fe82ed05e64e35b0c4ed2001b34e}{sway} (const float \&by)
+\begin{DoxyCompactList}\small\item\em Adjusts the camera's x coordinate relative to its current position. \end{DoxyCompactList}\item 
+void \hyperlink{class_camera_abb2251df65445bf8efd3fe0074fb5033}{surge} (const float \&by)
+\begin{DoxyCompactList}\small\item\em Adjusts the camera's z coordinate relative to its current position. \end{DoxyCompactList}\item 
+void \hyperlink{class_camera_a2148d751f104d8e39c9832e2372df2d9}{heave} (const float \&by)
+\begin{DoxyCompactList}\small\item\em Adjusts the camera's y coordinate relative to its current position. \end{DoxyCompactList}\item 
+void \hyperlink{class_camera_aac7dbb6201be7f17e014fc6fdf915560}{pitch} (const float \&by, const bool \&fixed=false)
+\begin{DoxyCompactList}\small\item\em pitch adjusts the x axis rotation; up/down look. \end{DoxyCompactList}\item 
+void \hyperlink{class_camera_a0ce7d12edbe47d9a8915d8af98d8f524}{yaw} (const float \&by, const bool \&fixed=false)
+\begin{DoxyCompactList}\small\item\em yaw adjusts the y axis rotation; left/right look. \end{DoxyCompactList}\item 
+void \hyperlink{class_camera_a1ba0979fe0b2ec58085d5f9721858e5e}{roll} (const float \&by, const bool \&fixed=false)
+\begin{DoxyCompactList}\small\item\em roll adjusts the z axis rotation; tilt or lean left/right. \end{DoxyCompactList}\item 
+void \hyperlink{class_camera_aaa9706527438bd5bd323dd018bb34fcf}{move} (const \hyperlink{class_camera_a80cb65605322d27ad3b6d973484509ec}{Camera\-::\-Direction} \&Dir)
+\begin{DoxyCompactList}\small\item\em move instructs the camera to begin moving in the specified direction. \end{DoxyCompactList}\item 
+void \hyperlink{class_camera_ae7414c6ae83c3c9392ab90e957daf2b9}{stop} (const \hyperlink{class_camera_a80cb65605322d27ad3b6d973484509ec}{Camera\-::\-Direction} \&Dir)
+\begin{DoxyCompactList}\small\item\em stop instructs the camera to stop moving in the specified direction. \end{DoxyCompactList}\item 
+void \hyperlink{class_camera_a9c620bd05c119791c080e479ee71abc2}{idle} (void)
+\begin{DoxyCompactList}\small\item\em idle moves the camera forward in whichever directions it is configured to move in. \end{DoxyCompactList}\item 
+void \hyperlink{class_camera_abee6a36602b8044478739cea9221ed41}{accel} (const \hyperlink{struct_angel_1_1vec3}{vec3} \&accel)
+\begin{DoxyCompactList}\small\item\em accel takes an input vec2 which represents an acceleration, and applies it to the motion vectors with regards to the maximum acceleration and the maximum speed of the camera. \end{DoxyCompactList}\item 
+float \hyperlink{class_camera_ab84abdd525581fbaf0462595d0a087d6}{x} (void) const 
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_camera_ab84abdd525581fbaf0462595d0a087d6}{x()} returns the current position of the camera in model coordinates. \end{DoxyCompactList}\item 
+float \hyperlink{class_camera_a68d0865ed19510ee41c6477511d70185}{y} (void) const 
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_camera_a68d0865ed19510ee41c6477511d70185}{y()} returns the current position of the camera in model coordinates. \end{DoxyCompactList}\item 
+float \hyperlink{class_camera_ab1167495c547046c57b1c417e53c39f6}{z} (void) const 
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_camera_ab1167495c547046c57b1c417e53c39f6}{z()} returns the current position of the camera in model coordinates. \end{DoxyCompactList}\item 
+\hyperlink{struct_angel_1_1vec4}{vec4} \hyperlink{class_camera_a9982ac5f48fe0af97fefa725080d6da6}{pos} (void) const 
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_camera_a9982ac5f48fe0af97fefa725080d6da6}{pos()} gets the current camera position in model coordinates. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_camera_a401decef27b59d6485b4ab9762f5b9e6}{send} (Object\-::\-Uniform\-Enum which)
+\begin{DoxyCompactList}\small\item\em send will send a glsl variable to the shader. \end{DoxyCompactList}\item 
+void \hyperlink{class_camera_ae845a36306bba6b6e359cbdddce65f7f}{view} (void)
+\begin{DoxyCompactList}\small\item\em view will instruct Open\-G\-L of the viewport we want, and then send all of our current matrices to the shader for rendering. \end{DoxyCompactList}\item 
+void \hyperlink{class_camera_a8ec7938c5e25068e5bff25aeb7038af4}{reset\-Rotation} (void)
+\begin{DoxyCompactList}\small\item\em reset\-Rotation adjusts the camera's rotational state back to its default state (The Identity Matrix.) \end{DoxyCompactList}\item 
+\hypertarget{class_object_a3afa1b9af32b78d81b5de0836c511aeb}{void {\bfseries Draw} (void)}\label{class_object_a3afa1b9af32b78d81b5de0836c511aeb}
+
+\item 
+\hypertarget{class_object_a35c89a8eb8a5b742a9025331119bfc7c}{void {\bfseries Buffer} (void)}\label{class_object_a35c89a8eb8a5b742a9025331119bfc7c}
+
+\item 
+\hypertarget{class_object_a754f9f36a528f050b25d053ed43015f0}{void {\bfseries Buffer\-Morph\-Only} (void)}\label{class_object_a754f9f36a528f050b25d053ed43015f0}
+
+\item 
+\hypertarget{class_object_ac6ccf69d21c4c902c62829c48ef6cf5b}{void {\bfseries Mode} (G\-Lenum new\-\_\-node)}\label{class_object_ac6ccf69d21c4c902c62829c48ef6cf5b}
+
+\item 
+\hypertarget{class_object_aa104adfbcc2cae4bd68c053cc3dab721}{void {\bfseries Texture} (const char $\ast$$\ast$filename)}\label{class_object_aa104adfbcc2cae4bd68c053cc3dab721}
+
+\item 
+\hypertarget{class_object_a890760dff9df547454112ff84510040c}{const std\-::string \& {\bfseries Name} (void) const }\label{class_object_a890760dff9df547454112ff84510040c}
+
+\item 
+\hypertarget{class_object_accde5aa6e8d0d582719e94c414c2341c}{virtual void {\bfseries Link} (Uniform\-Enum which, const std\-::string \&\hyperlink{class_object_a24457e0a387492c80594aec7681a2277}{name})}\label{class_object_accde5aa6e8d0d582719e94c414c2341c}
+
+\item 
+virtual G\-Luint \hyperlink{class_object_a3dc857b837e8b77ba8a2727233400a5e}{Shader} (void)
+\begin{DoxyCompactList}\small\item\em Returns the \hyperlink{class_object}{Object}'s current Shader. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_object_aa52c30bca96800cecba55f446e147859}{Shader} (G\-Luint new\-Shader)
+\begin{DoxyCompactList}\small\item\em Sets the shader to be used by this object. \end{DoxyCompactList}\item 
+\hypertarget{class_object_ae3226b31c80c9f276ffdee65101c8fa6}{void {\bfseries Animation} (void($\ast$anim\-\_\-func)(\hyperlink{class_trans_cache}{Trans\-Cache} \&arg))}\label{class_object_ae3226b31c80c9f276ffdee65101c8fa6}
+
+\item 
+\hypertarget{class_object_ae09449132d3853e179d07d4d6bc0b695}{void {\bfseries Propagate} (void)}\label{class_object_ae09449132d3853e179d07d4d6bc0b695}
+
+\item 
+\hyperlink{struct_angel_1_1vec4}{vec4} \hyperlink{class_object_ae10497fea640753a3cb63f739aacc540}{Get\-Position} () const 
+\begin{DoxyCompactList}\small\item\em returns the position of the object this makes the lighting implementation much easier... \end{DoxyCompactList}\item 
+\hypertarget{class_object_aa60771518c07a0edf5aeee5584a571e0}{\hyperlink{class_object}{Object} $\ast$ {\bfseries get\-Morph\-Target\-Ptr} () const }\label{class_object_aa60771518c07a0edf5aeee5584a571e0}
+
+\item 
+\hypertarget{class_object_af4d40010633d77ff47e75d40e3129894}{\hyperlink{class_object}{Object} $\ast$ {\bfseries gen\-Morph\-Target} (G\-Luint)}\label{class_object_af4d40010633d77ff47e75d40e3129894}
+
+\item 
+\hypertarget{class_object_a275903685e300433a5120b5558eb9aa1}{float {\bfseries get\-Morph\-Percentage} () const }\label{class_object_a275903685e300433a5120b5558eb9aa1}
+
+\item 
+\hypertarget{class_object_aea00114a91aeb779b4f03c7bebaa326e}{void {\bfseries set\-Morph\-Percentage} (const float)}\label{class_object_aea00114a91aeb779b4f03c7bebaa326e}
+
+\item 
+\hypertarget{class_object_a98d3f1b9ebb61c3b21e2a59ed267480a}{void {\bfseries destroy\-Morph\-Target} ()}\label{class_object_a98d3f1b9ebb61c3b21e2a59ed267480a}
+
+\item 
+\hypertarget{class_object_aae9b55b35a69ba78aa2803b4c8a681b7}{int {\bfseries get\-Number\-Points} ()}\label{class_object_aae9b55b35a69ba78aa2803b4c8a681b7}
+
+\item 
+\hypertarget{class_scene_a366b5dec1ecf66a887b4d0dedcd1aa3b}{\hyperlink{class_object}{Object} $\ast$ {\bfseries Add\-Object} (const std\-::string \&obj\-Name, G\-Luint Object\-\_\-\-Shader=0)}\label{class_scene_a366b5dec1ecf66a887b4d0dedcd1aa3b}
+
+\item 
+\hypertarget{class_scene_a3bd9fa1058f506c04162b9283e97d20e}{void {\bfseries Del\-Object} (const std\-::string \&obj\-Name)}\label{class_scene_a3bd9fa1058f506c04162b9283e97d20e}
+
+\item 
+\hypertarget{class_scene_a43fd3c56db5dc940d1724b9573c9a360}{void {\bfseries Del\-Object} (void)}\label{class_scene_a43fd3c56db5dc940d1724b9573c9a360}
+
+\item 
+\hypertarget{class_scene_abdfd15e7987aa261840d5ecc265170df}{void {\bfseries Pop\-Object} (void)}\label{class_scene_abdfd15e7987aa261840d5ecc265170df}
+
+\item 
+\hypertarget{class_scene_a82759ded1f6f87a91b8d10ed87501958}{void \hyperlink{class_scene_a82759ded1f6f87a91b8d10ed87501958}{Destroy\-Object} (void)}\label{class_scene_a82759ded1f6f87a91b8d10ed87501958}
+
+\begin{DoxyCompactList}\small\item\em Completely remove this object and all his children. \end{DoxyCompactList}\item 
+\hypertarget{class_scene_a70fcdad192a4c6ff508125de8af6cf4d}{\hyperlink{class_object}{Object} $\ast$ {\bfseries next} (void)}\label{class_scene_a70fcdad192a4c6ff508125de8af6cf4d}
+
+\item 
+\hypertarget{class_scene_ac852d5d763eb35b4908c9aa7ea54d1ae}{\hyperlink{class_object}{Object} $\ast$ {\bfseries prev} (void)}\label{class_scene_ac852d5d763eb35b4908c9aa7ea54d1ae}
+
+\item 
+\hypertarget{class_scene_ad0ea1a6bcf7815c63988bd937f06eb23}{\hyperlink{class_object}{Object} $\ast$ {\bfseries active} (void) const }\label{class_scene_ad0ea1a6bcf7815c63988bd937f06eb23}
+
+\item 
+\hypertarget{class_scene_ae9b69d8db8a46991017635f22e45baad}{\hyperlink{class_object}{Object} $\ast$ {\bfseries operator\mbox{[}$\,$\mbox{]}} (const std\-::string \&objname)}\label{class_scene_ae9b69d8db8a46991017635f22e45baad}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_object_a8dec70177d147f59ba10c9eba8e9191b}{std\-::vector$<$ \hyperlink{struct_angel_1_1vec4}{Angel\-::vec4} $>$ {\bfseries points}}\label{class_object_a8dec70177d147f59ba10c9eba8e9191b}
+
+\item 
+\hypertarget{class_object_ad541a7bb180e24f59d752cc6d7f8c7e8}{std\-::vector$<$ \hyperlink{struct_angel_1_1vec3}{Angel\-::vec3} $>$ {\bfseries normals}}\label{class_object_ad541a7bb180e24f59d752cc6d7f8c7e8}
+
+\item 
+\hypertarget{class_object_a9b2fb19d129ad79407f9af0eea05b96c}{std\-::vector$<$ unsigned int $>$ {\bfseries indices}}\label{class_object_a9b2fb19d129ad79407f9af0eea05b96c}
+
+\item 
+\hypertarget{class_object_a4de4c1e2c4b621efb6f5d1b398ac6835}{std\-::vector$<$ \hyperlink{struct_angel_1_1vec4}{Angel\-::vec4} $>$ {\bfseries colors}}\label{class_object_a4de4c1e2c4b621efb6f5d1b398ac6835}
+
+\item 
+\hypertarget{class_object_a6d6c58ccb93f7a2bd7439d081134aaa0}{std\-::vector$<$ \hyperlink{struct_angel_1_1vec2}{Angel\-::vec2} $>$ {\bfseries texcoords}}\label{class_object_a6d6c58ccb93f7a2bd7439d081134aaa0}
+
+\item 
+\hypertarget{class_object_a1bb011587e4fa6e69984d5679546b1cb}{\hyperlink{class_trans_cache}{Trans\-Cache} {\bfseries trans}}\label{class_object_a1bb011587e4fa6e69984d5679546b1cb}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_scene_a8bbe0e5b1bfc71034b18e240e86aa285}{Delete\-Object} (\hyperlink{class_object}{Object} $\ast$obj)
+\begin{DoxyCompactList}\small\item\em Delete\-Object is the actual implementation function that will remove an \hyperlink{class_object}{Object} from the \hyperlink{class_scene}{Scene} list and \hyperlink{class_scene}{Scene} map, then free the object. \end{DoxyCompactList}\item 
+\hypertarget{class_scene_ae8d51ddc196248a7cbd1f3640851dbd4}{void {\bfseries Insert\-Object} (const std\-::string \hyperlink{class_object_a24457e0a387492c80594aec7681a2277}{name}, \hyperlink{class_object}{Object} $\ast$obj)}\label{class_scene_ae8d51ddc196248a7cbd1f3640851dbd4}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\-::string \hyperlink{class_object_a24457e0a387492c80594aec7681a2277}{name}
+\begin{DoxyCompactList}\small\item\em name is used as an identifying handle for the object. \end{DoxyCompactList}\item 
+G\-Luint \hyperlink{class_object_a66190fee29d03d6478516686cbd01eb8}{vao}
+\begin{DoxyCompactList}\small\item\em Vertex Array \hyperlink{class_object}{Object} handle identifying our buffers/object. \end{DoxyCompactList}\item 
+\hypertarget{class_object_a29de966ce95d96e19262c4f10f0b4276}{G\-Luint \hyperlink{class_object_a29de966ce95d96e19262c4f10f0b4276}{buffer} \mbox{[}N\-U\-M\-\_\-\-B\-U\-F\-F\-E\-R\-S\mbox{]}}\label{class_object_a29de966ce95d96e19262c4f10f0b4276}
+
+\begin{DoxyCompactList}\small\item\em Handles to our buffers (Vertices, Tex\-U\-Vs, etc.) \end{DoxyCompactList}\item 
+G\-Lenum \hyperlink{class_object_a82764b385767d989f27d301ab206acb8}{draw\-\_\-mode}
+\begin{DoxyCompactList}\small\item\em Drawing mode for this object. \end{DoxyCompactList}\item 
+\hypertarget{class_object_a2bbbe3a5b33cbcfc4c536b49d470a6b8}{bool \hyperlink{class_object_a2bbbe3a5b33cbcfc4c536b49d470a6b8}{is\-Textured}}\label{class_object_a2bbbe3a5b33cbcfc4c536b49d470a6b8}
+
+\begin{DoxyCompactList}\small\item\em Is this object textured? \end{DoxyCompactList}\item 
+\hypertarget{class_object_ac5ca00d03136434b93ae7d00808554c7}{float \hyperlink{class_object_ac5ca00d03136434b93ae7d00808554c7}{morph\-Percentage}}\label{class_object_ac5ca00d03136434b93ae7d00808554c7}
+
+\begin{DoxyCompactList}\small\item\em Morphing/\-Tweening Things. \end{DoxyCompactList}\item 
+\hypertarget{class_object_acfc4dec49d5d273910c3a1af2b3adfcd}{\hyperlink{class_object}{Object} $\ast$ {\bfseries morph\-Target}}\label{class_object_acfc4dec49d5d273910c3a1af2b3adfcd}
+
+\item 
+\hypertarget{class_object_a6378d0b0eeec23045ae2a5245e42bf13}{std\-::map$<$ Object\-::\-Uniform\-Enum, \\*
+std\-::string $>$ {\bfseries \-\_\-uniform\-Map}}\label{class_object_a6378d0b0eeec23045ae2a5245e42bf13}
+
+\item 
+std\-::vector$<$ G\-Lint $>$ \hyperlink{class_object_acd6c7021617ea334915a1525f9519bc5}{handles}
+\begin{DoxyCompactList}\small\item\em Handles to Uniforms on the shader. \end{DoxyCompactList}\item 
+\hypertarget{class_scene_acdd0123ca6b2d64d8d447bb485b235fc}{std\-::list$<$ \hyperlink{class_object}{Object} $\ast$ $>$ {\bfseries \-\_\-list}}\label{class_scene_acdd0123ca6b2d64d8d447bb485b235fc}
+
+\item 
+\hypertarget{class_scene_a8bd5d86484a12255b26b92b6cbf8d29a}{std\-::map$<$ std\-::string, \hyperlink{class_object}{Object} $\ast$ $>$ {\bfseries \-\_\-map}}\label{class_scene_a8bd5d86484a12255b26b92b6cbf8d29a}
+
+\item 
+\hypertarget{class_scene_ae87ca5350fcc595f3f15a4fd3c39f3d9}{std\-::list$<$ \hyperlink{class_object}{Object} $\ast$ $>$\-::iterator {\bfseries \-\_\-current\-Obj}}\label{class_scene_ae87ca5350fcc595f3f15a4fd3c39f3d9}
+
+\item 
+\hypertarget{class_scene_a8f9bdd8ec5edb1f414fbd314a36e2724}{G\-Luint {\bfseries \-\_\-g\-Shader}}\label{class_scene_a8f9bdd8ec5edb1f414fbd314a36e2724}
+
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_camera_aba32f195cdb5bfcfd05c2ce74315b6c3}{adjust\-Rotation} (const \hyperlink{class_angel_1_1mat4}{mat4} \&adjustment, const bool \&fixed=false)
+\begin{DoxyCompactList}\small\item\em adjust\-Rotation is an internal function that rotates the camera. \end{DoxyCompactList}\item 
+void \hyperlink{class_camera_a20243a7e3eb06ab1265118c5fb9cce9b}{common\-Init} (void)
+\begin{DoxyCompactList}\small\item\em common\-Init is a private function that initializes local object attributes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_angel_1_1mat4}{mat4} \hyperlink{class_camera_a28f6e710df6db726568cd0f2bbd3643a}{\-\_\-view}
+\begin{DoxyCompactList}\small\item\em The current view matrix (defaultly perspective) for this camera. \end{DoxyCompactList}\item 
+\hyperlink{class_trans_cache}{Trans\-Cache} \hyperlink{class_camera_a6c1e31c8470b923f9f872f73597cb95b}{\-\_\-ctm}
+\begin{DoxyCompactList}\small\item\em The Current \hyperlink{class_transformation}{Transformation} state for this \hyperlink{class_camera}{Camera}. \end{DoxyCompactList}\item 
+\hyperlink{class_camera_aaa256acd50a2fa143d9f8d9456e2802f}{View\-Type} \hyperlink{class_camera_ac9062d9bb891aa81d163076738451081}{\-\_\-current\-View}
+\begin{DoxyCompactList}\small\item\em The current viewing mode type. \end{DoxyCompactList}\item 
+G\-Lfloat \hyperlink{class_camera_a21f8eb53e5369018e39add0453ae626d}{\-\_\-speed}
+\begin{DoxyCompactList}\small\item\em Current Speed of camera motion. \end{DoxyCompactList}\item 
+\hyperlink{struct_angel_1_1vec3}{vec3} \hyperlink{class_camera_aa15577ff9e67c81699ee86d4d20a7ee7}{\-\_\-velocity}
+\begin{DoxyCompactList}\small\item\em Current Velocity of camera motion. \end{DoxyCompactList}\item 
+\hypertarget{class_camera_a4d875d29a43bdfed4eac4c76747939d3}{G\-Lfloat \hyperlink{class_camera_a4d875d29a43bdfed4eac4c76747939d3}{\-\_\-speed\-\_\-cap}}\label{class_camera_a4d875d29a43bdfed4eac4c76747939d3}
+
+\begin{DoxyCompactList}\small\item\em Current Speed Capacity\-: (speed/\-Max\-Speed) \end{DoxyCompactList}\item 
+\hypertarget{class_camera_acbfae99c73c118ca92be9a6ba664b303}{G\-Lfloat \hyperlink{class_camera_acbfae99c73c118ca92be9a6ba664b303}{\-\_\-max\-Accel}}\label{class_camera_acbfae99c73c118ca92be9a6ba664b303}
+
+\begin{DoxyCompactList}\small\item\em Maximum Acceleration Magnitude. \end{DoxyCompactList}\item 
+\hypertarget{class_camera_a83cab43f9ccc3d5f4c7db8543a806745}{G\-Lfloat \hyperlink{class_camera_a83cab43f9ccc3d5f4c7db8543a806745}{\-\_\-max\-Speed}}\label{class_camera_a83cab43f9ccc3d5f4c7db8543a806745}
+
+\begin{DoxyCompactList}\small\item\em Maximum Speed. \end{DoxyCompactList}\item 
+G\-Lfloat \hyperlink{class_camera_a66fb66da0ccd400c4986dc19276b6716}{\-\_\-friction\-Magnitude}
+\begin{DoxyCompactList}\small\item\em Friction. \end{DoxyCompactList}\item 
+G\-Lfloat \hyperlink{class_camera_a42082e8f2d80a13674ce163d8e720bfb}{\-\_\-aspect\-Ratio}
+\begin{DoxyCompactList}\small\item\em Current aspect ratio for certain perspectives. \end{DoxyCompactList}\item 
+G\-Lfloat \hyperlink{class_camera_a82542bb76347e2a2bb66b3bb7842945b}{\-\_\-fovy}
+\begin{DoxyCompactList}\small\item\em Current field-\/of-\/view angle for perspective view. \end{DoxyCompactList}\item 
+\hypertarget{class_camera_a67c7600162abef1d2cddfce8cc75c33b}{\hyperlink{struct_angel_1_1vec2}{Angel\-::vec2} \hyperlink{class_camera_a67c7600162abef1d2cddfce8cc75c33b}{\-\_\-viewport\-Size}}\label{class_camera_a67c7600162abef1d2cddfce8cc75c33b}
+
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_camera}{Camera}'s Drawbox Width and Height. \end{DoxyCompactList}\item 
+\hypertarget{class_camera_adb7506be3632abc2d33e77a5783f5be8}{\hyperlink{struct_angel_1_1vec2}{Angel\-::vec2} \hyperlink{class_camera_adb7506be3632abc2d33e77a5783f5be8}{\-\_\-viewport\-Position}}\label{class_camera_adb7506be3632abc2d33e77a5783f5be8}
+
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_camera}{Camera}'s Drawbox x,y Coordinate (Upper-\/\-Left Pixel) \end{DoxyCompactList}\item 
+bool \hyperlink{class_camera_abec7e2becbad5a692a54a69b6a5f6d75}{\-\_\-motion} \mbox{[}Camera\-::\-D\-I\-R\-\_\-\-E\-N\-D\mbox{]}
+\begin{DoxyCompactList}\small\item\em Booleans correlating to the different motion directions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The \hyperlink{class_camera}{Camera} class represents a logical camera in a model view, which posesses a current viewing angle and an absolute position in space as its state. 
+
+\begin{DoxyAuthor}{Author}
+John Huston, \href{mailto:jhuston@cs.uml.edu}{\tt jhuston@cs.\-uml.\-edu} 
+\end{DoxyAuthor}
+\begin{DoxySince}{Since}
+16 Nov 2012
+\end{DoxySince}
+Functions are provided to adjust the rotation according to \hyperlink{class_camera_aac7dbb6201be7f17e014fc6fdf915560}{pitch()}, \hyperlink{class_camera_a0ce7d12edbe47d9a8915d8af98d8f524}{yaw()} and \hyperlink{class_camera_a1ba0979fe0b2ec58085d5f9721858e5e}{roll()} motions; \hyperlink{class_camera_abb2251df65445bf8efd3fe0074fb5033}{surge()}, \hyperlink{class_camera_abbe6fe82ed05e64e35b0c4ed2001b34e}{sway()}, and \hyperlink{class_camera_a2148d751f104d8e39c9832e2372df2d9}{heave()} are provided to adjust position in space.
+
+\hyperlink{class_camera_aaa9706527438bd5bd323dd018bb34fcf}{move()}, \hyperlink{class_camera_ae7414c6ae83c3c9392ab90e957daf2b9}{stop()}, and \hyperlink{class_camera_a9c620bd05c119791c080e479ee71abc2}{idle()} are provided to help the camera automatically move along the x, y, or z axes. 
+
+Definition at line 37 of file Camera.\-hpp.
+
+
+
+\subsection{Member Typedef Documentation}
+\hypertarget{class_camera_a94bb7ceb1c7a05e54cf638924f228baf}{\index{Camera@{Camera}!Direction@{Direction}}
+\index{Direction@{Direction}!Camera@{Camera}}
+\subsubsection[{Direction}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf Camera\-::\-Direction}  {\bf Camera\-::\-Direction}}}\label{class_camera_a94bb7ceb1c7a05e54cf638924f228baf}
+
+
+The Direction enumeration lists all of the possible directions the camera may travel in. 
+
+'B\-E\-G\-I\-N' and 'E\-N\-D' are special sentinel directions for the purposes of iteration, and are ignored by any functions that accept a Direction. \hypertarget{class_camera_a0ed19c96505cbb70625938d1e883af24}{\index{Camera@{Camera}!Uniform@{Uniform}}
+\index{Uniform@{Uniform}!Camera@{Camera}}
+\subsubsection[{Uniform}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf Camera\-::\-Uniforms}  {\bf Camera\-::\-Uniform}}}\label{class_camera_a0ed19c96505cbb70625938d1e883af24}
+
+
+The glsl\-\_\-var enumeration lists the various variables the \hyperlink{class_camera}{Camera} class is capable of sending to the shader. 
+
+The Num\-Glsl\-Vars variable is a sentinel value that is ignored by any functions that accept a glsl\-\_\-var. \hypertarget{class_camera_a5b2dc5eaed6cbaabee0eea3f2714acd7}{\index{Camera@{Camera}!View\-Type@{View\-Type}}
+\index{View\-Type@{View\-Type}!Camera@{Camera}}
+\subsubsection[{View\-Type}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf Camera\-::\-View\-Type}  {\bf Camera\-::\-View\-Type}}}\label{class_camera_a5b2dc5eaed6cbaabee0eea3f2714acd7}
+
+
+The View\-Type enumeration lists the various possibilities for the current viewing mode that can be switched between. 
+
+The default is P\-E\-R\-S\-P\-E\-C\-T\-I\-V\-E. 
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{class_camera_a80cb65605322d27ad3b6d973484509ec}{\index{Camera@{Camera}!Direction@{Direction}}
+\index{Direction@{Direction}!Camera@{Camera}}
+\subsubsection[{Direction}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Camera\-::\-Direction}}}\label{class_camera_a80cb65605322d27ad3b6d973484509ec}
+
+
+The Direction enumeration lists all of the possible directions the camera may travel in. 
+
+'B\-E\-G\-I\-N' and 'E\-N\-D' are special sentinel directions for the purposes of iteration, and are ignored by any functions that accept a Direction. 
+
+Definition at line 47 of file Camera.\-hpp.
+
+\hypertarget{class_camera_a630738fd23098d44c0d15ee28d5649dd}{\index{Camera@{Camera}!Uniforms@{Uniforms}}
+\index{Uniforms@{Uniforms}!Camera@{Camera}}
+\subsubsection[{Uniforms}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Camera\-::\-Uniforms}}}\label{class_camera_a630738fd23098d44c0d15ee28d5649dd}
+
+
+The glsl\-\_\-var enumeration lists the various variables the \hyperlink{class_camera}{Camera} class is capable of sending to the shader. 
+
+The Num\-Glsl\-Vars variable is a sentinel value that is ignored by any functions that accept a glsl\-\_\-var. 
+
+Definition at line 73 of file Camera.\-hpp.
+
+\hypertarget{class_camera_aaa256acd50a2fa143d9f8d9456e2802f}{\index{Camera@{Camera}!View\-Type@{View\-Type}}
+\index{View\-Type@{View\-Type}!Camera@{Camera}}
+\subsubsection[{View\-Type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Camera\-::\-View\-Type}}}\label{class_camera_aaa256acd50a2fa143d9f8d9456e2802f}
+
+
+The View\-Type enumeration lists the various possibilities for the current viewing mode that can be switched between. 
+
+The default is P\-E\-R\-S\-P\-E\-C\-T\-I\-V\-E. 
+
+Definition at line 63 of file Camera.\-hpp.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_camera_a16516fa8c830cecef5c8eb43eff12783}{\index{Camera@{Camera}!Camera@{Camera}}
+\index{Camera@{Camera}!Camera@{Camera}}
+\subsubsection[{Camera}]{\setlength{\rightskip}{0pt plus 5cm}Camera\-::\-Camera (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{name, }
+\item[{G\-Luint}]{g\-Shader, }
+\item[{float}]{x = {\ttfamily 0.0}, }
+\item[{float}]{y = {\ttfamily 0.0}, }
+\item[{float}]{z = {\ttfamily 0.0}}
+\end{DoxyParamCaption}
+)}}\label{class_camera_a16516fa8c830cecef5c8eb43eff12783}
+
+
+Initialization Constructor; sets the x,y,z coordinates explicitly. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of this Camera/\-Object. \\
+\hline
+{\em g\-Shader} & A handle to this camera's associated shader object. \\
+\hline
+{\em x} & The initial x coordinate. \\
+\hline
+{\em y} & The initial y coordinate. \\
+\hline
+{\em z} & The initial z coordinate. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 45 of file Camera.\-cpp.
+
+\hypertarget{class_camera_a24329612384948d2b64f78094fe84e75}{\index{Camera@{Camera}!Camera@{Camera}}
+\index{Camera@{Camera}!Camera@{Camera}}
+\subsubsection[{Camera}]{\setlength{\rightskip}{0pt plus 5cm}Camera\-::\-Camera (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{name, }
+\item[{G\-Luint}]{g\-Shader, }
+\item[{{\bf vec3} \&}]{in}
+\end{DoxyParamCaption}
+)}}\label{class_camera_a24329612384948d2b64f78094fe84e75}
+
+
+Initialization Constructor, uses a vec3 as its initial coordinates. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of this Camera/\-Object. \\
+\hline
+{\em g\-Shader} & A handle to this camera's associated shader object. \\
+\hline
+{\em in} & A vec3 representing the initial coordinates. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 52 of file Camera.\-cpp.
+
+\hypertarget{class_camera_aa131bc7f1bad2cc8baea463714c4485d}{\index{Camera@{Camera}!Camera@{Camera}}
+\index{Camera@{Camera}!Camera@{Camera}}
+\subsubsection[{Camera}]{\setlength{\rightskip}{0pt plus 5cm}Camera\-::\-Camera (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{name, }
+\item[{G\-Luint}]{g\-Shader, }
+\item[{{\bf vec4} \&}]{in}
+\end{DoxyParamCaption}
+)}}\label{class_camera_aa131bc7f1bad2cc8baea463714c4485d}
+
+
+Initialization Constructor, uses a vec4 as its initial coordinates. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of this Camera/\-Object. \\
+\hline
+{\em g\-Shader} & A handle to this camera's associated shader object. \\
+\hline
+{\em in} & A vec4 representing the initial coordinates. The w component is ignored. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 58 of file Camera.\-cpp.
+
+\hypertarget{class_camera_a06211f202c145b3ec8253f96e1e654a6}{\index{Camera@{Camera}!$\sim$\-Camera@{$\sim$\-Camera}}
+\index{$\sim$\-Camera@{$\sim$\-Camera}!Camera@{Camera}}
+\subsubsection[{$\sim$\-Camera}]{\setlength{\rightskip}{0pt plus 5cm}Camera\-::$\sim$\-Camera (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_camera_a06211f202c145b3ec8253f96e1e654a6}
+
+
+Default destructor. 
+
+Defined only to allow inheritance. 
+
+Definition at line 64 of file Camera.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_camera_abee6a36602b8044478739cea9221ed41}{\index{Camera@{Camera}!accel@{accel}}
+\index{accel@{accel}!Camera@{Camera}}
+\subsubsection[{accel}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::accel (
+\begin{DoxyParamCaption}
+\item[{const {\bf vec3} \&}]{accel}
+\end{DoxyParamCaption}
+)}}\label{class_camera_abee6a36602b8044478739cea9221ed41}
+
+
+accel takes an input vec2 which represents an acceleration, and applies it to the motion vectors with regards to the maximum acceleration and the maximum speed of the camera. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em accel} & The vec3 which represents the (x,y,z) acceleration, where x,y,z are \mbox{[}-\/1,1\mbox{]}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Void. 
+\end{DoxyReturn}
+
+
+Definition at line 223 of file Camera.\-cpp.
+
+\hypertarget{class_camera_a717f5d58bb0a73f8c5513a3520d98203}{\index{Camera@{Camera}!adjust\-Field\-Of\-View@{adjust\-Field\-Of\-View}}
+\index{adjust\-Field\-Of\-View@{adjust\-Field\-Of\-View}!Camera@{Camera}}
+\subsubsection[{adjust\-Field\-Of\-View}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::adjust\-Field\-Of\-View (
+\begin{DoxyParamCaption}
+\item[{const float \&}]{by}
+\end{DoxyParamCaption}
+)}}\label{class_camera_a717f5d58bb0a73f8c5513a3520d98203}
+
+
+adjust\-Field\-Of\-View adjusts the field of view angle up or down by an amount. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em by} & The float to adjust the field\-Of\-View angle by. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Void. 
+\end{DoxyReturn}
+
+
+Definition at line 392 of file Camera.\-cpp.
+
+\hypertarget{class_camera_aba32f195cdb5bfcfd05c2ce74315b6c3}{\index{Camera@{Camera}!adjust\-Rotation@{adjust\-Rotation}}
+\index{adjust\-Rotation@{adjust\-Rotation}!Camera@{Camera}}
+\subsubsection[{adjust\-Rotation}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::adjust\-Rotation (
+\begin{DoxyParamCaption}
+\item[{const {\bf mat4} \&}]{adjustment, }
+\item[{const bool \&}]{fixed = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}}\label{class_camera_aba32f195cdb5bfcfd05c2ce74315b6c3}
+
+
+adjust\-Rotation is an internal function that rotates the camera. 
+
+Technically, any transformation, not just a rotation, is possible. 
+\begin{DoxyParams}{Parameters}
+{\em adjustment} & The 4x4 matrix to transform the C\-T\-M by. \\
+\hline
+{\em fixed} & Should this rotation be fixed about the origin? \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Void. 
+\end{DoxyReturn}
+
+
+Definition at line 148 of file Camera.\-cpp.
+
+\hypertarget{class_camera_a8463a19c9e1e7a1c51cd97051e937230}{\index{Camera@{Camera}!change\-Perspective@{change\-Perspective}}
+\index{change\-Perspective@{change\-Perspective}!Camera@{Camera}}
+\subsubsection[{change\-Perspective}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::change\-Perspective (
+\begin{DoxyParamCaption}
+\item[{const {\bf View\-Type} \&}]{v\-Type}
+\end{DoxyParamCaption}
+)}}\label{class_camera_a8463a19c9e1e7a1c51cd97051e937230}
+
+
+change\-Perspective changes the current perspective of the camera. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em v\-Type} & Which perspective to use. see enum View\-Type for possibilities. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Void. 
+\end{DoxyReturn}
+
+
+Definition at line 359 of file Camera.\-cpp.
+
+\hypertarget{class_camera_a20243a7e3eb06ab1265118c5fb9cce9b}{\index{Camera@{Camera}!common\-Init@{common\-Init}}
+\index{common\-Init@{common\-Init}!Camera@{Camera}}
+\subsubsection[{common\-Init}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::common\-Init (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}}\label{class_camera_a20243a7e3eb06ab1265118c5fb9cce9b}
+
+
+common\-Init is a private function that initializes local object attributes. 
+
+It should be called by all available constructors. \begin{DoxyReturn}{Returns}
+Void. 
+\end{DoxyReturn}
+
+
+Definition at line 19 of file Camera.\-cpp.
+
+\hypertarget{class_scene_a8bbe0e5b1bfc71034b18e240e86aa285}{\index{Camera@{Camera}!Delete\-Object@{Delete\-Object}}
+\index{Delete\-Object@{Delete\-Object}!Camera@{Camera}}
+\subsubsection[{Delete\-Object}]{\setlength{\rightskip}{0pt plus 5cm}void Scene\-::\-Delete\-Object (
+\begin{DoxyParamCaption}
+\item[{{\bf Object} $\ast$}]{obj}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}}\label{class_scene_a8bbe0e5b1bfc71034b18e240e86aa285}
+
+
+Delete\-Object is the actual implementation function that will remove an \hyperlink{class_object}{Object} from the \hyperlink{class_scene}{Scene} list and \hyperlink{class_scene}{Scene} map, then free the object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & The pointer to the object to free. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 76 of file Scene.\-cpp.
+
+\hypertarget{class_camera_a2ac5f89b4f9f012dead66980925143c0}{\index{Camera@{Camera}!d\-Pos@{d\-Pos}}
+\index{d\-Pos@{d\-Pos}!Camera@{Camera}}
+\subsubsection[{d\-Pos}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::d\-Pos (
+\begin{DoxyParamCaption}
+\item[{const float \&}]{x, }
+\item[{const float \&}]{y, }
+\item[{const float \&}]{z}
+\end{DoxyParamCaption}
+)}}\label{class_camera_a2ac5f89b4f9f012dead66980925143c0}
+
+
+Moves the camera along the x, y, and z axes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & the x-\/axis displacement. \\
+\hline
+{\em y} & the y-\/axis displacement. \\
+\hline
+{\em z} & the z-\/axis displacement. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Void. 
+\end{DoxyReturn}
+
+
+Definition at line 131 of file Camera.\-cpp.
+
+\hypertarget{class_camera_a928de59670f0b31264307a8a0888b99d}{\index{Camera@{Camera}!d\-Pos@{d\-Pos}}
+\index{d\-Pos@{d\-Pos}!Camera@{Camera}}
+\subsubsection[{d\-Pos}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::d\-Pos (
+\begin{DoxyParamCaption}
+\item[{const {\bf vec3} \&}]{by}
+\end{DoxyParamCaption}
+)}}\label{class_camera_a928de59670f0b31264307a8a0888b99d}
+
+
+Moves the camera along the x, y, and z axes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em by} & A vec3 containing the x, y, and z axis displacements. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Void. 
+\end{DoxyReturn}
+
+
+Definition at line 140 of file Camera.\-cpp.
+
+\hypertarget{class_camera_a4ec2e3d2a66826aedb1ac1eee7da0b96}{\index{Camera@{Camera}!d\-Pos@{d\-Pos}}
+\index{d\-Pos@{d\-Pos}!Camera@{Camera}}
+\subsubsection[{d\-Pos}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::d\-Pos (
+\begin{DoxyParamCaption}
+\item[{const {\bf vec4} \&}]{by}
+\end{DoxyParamCaption}
+)}}\label{class_camera_a4ec2e3d2a66826aedb1ac1eee7da0b96}
+
+
+Moves the camera along the x, y, and z axes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em by} & A vec4 containing the x, y, and z axis displacements. The w component is ignored. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Void. 
+\end{DoxyReturn}
+
+
+Definition at line 144 of file Camera.\-cpp.
+
+\hypertarget{class_camera_ac7985a6cb48f4e1e74fda17e5213dd74}{\index{Camera@{Camera}!d\-X@{d\-X}}
+\index{d\-X@{d\-X}!Camera@{Camera}}
+\subsubsection[{d\-X}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::d\-X (
+\begin{DoxyParamCaption}
+\item[{const float \&}]{by, }
+\item[{const bool \&}]{update = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}\label{class_camera_ac7985a6cb48f4e1e74fda17e5213dd74}
+
+
+Moves the camera along the x axis. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em by} & The float value of the x-\/axis displacement. \\
+\hline
+{\em update} & A boolean indicating whether or not to update the shader. update defaults to true. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void. 
+\end{DoxyReturn}
+
+
+Definition at line 119 of file Camera.\-cpp.
+
+\hypertarget{class_camera_a59570a88e3ff2d277c9e995372fcadfe}{\index{Camera@{Camera}!d\-Y@{d\-Y}}
+\index{d\-Y@{d\-Y}!Camera@{Camera}}
+\subsubsection[{d\-Y}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::d\-Y (
+\begin{DoxyParamCaption}
+\item[{const float \&}]{by, }
+\item[{const bool \&}]{update = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}\label{class_camera_a59570a88e3ff2d277c9e995372fcadfe}
+
+
+Moves the camera along the y axis. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em by} & The float value of the y-\/axis displacement. \\
+\hline
+{\em update} & A boolean indicating whether or not to update the shader. update defaults to true. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Void. 
+\end{DoxyReturn}
+
+
+Definition at line 123 of file Camera.\-cpp.
+
+\hypertarget{class_camera_ab94ed9b3c7e12f484d6bfa5f827b59ff}{\index{Camera@{Camera}!d\-Z@{d\-Z}}
+\index{d\-Z@{d\-Z}!Camera@{Camera}}
+\subsubsection[{d\-Z}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::d\-Z (
+\begin{DoxyParamCaption}
+\item[{const float \&}]{by, }
+\item[{const bool \&}]{update = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}\label{class_camera_ab94ed9b3c7e12f484d6bfa5f827b59ff}
+
+
+Moves the camera along the z axis. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em by} & The float value of the z-\/axis displacement. \\
+\hline
+{\em update} & A boolean indicating whether or not to update the shader. update defaults to true. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Void. 
+\end{DoxyReturn}
+
+
+Definition at line 127 of file Camera.\-cpp.
+
+\hypertarget{class_camera_a36ec0e0e832f789e27d42e7bd4f6d174}{\index{Camera@{Camera}!field\-Of\-View@{field\-Of\-View}}
+\index{field\-Of\-View@{field\-Of\-View}!Camera@{Camera}}
+\subsubsection[{field\-Of\-View}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::field\-Of\-View (
+\begin{DoxyParamCaption}
+\item[{const float \&}]{fovy}
+\end{DoxyParamCaption}
+)}}\label{class_camera_a36ec0e0e832f789e27d42e7bd4f6d174}
+
+
+field\-Of\-View sets the current camera Field-\/of-\/view angle. 
+
+This function will send the new perspective matrix to the shader. 
+\begin{DoxyParams}{Parameters}
+{\em fovy} & The new field of view angle. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Void. 
+\end{DoxyReturn}
+
+
+Definition at line 354 of file Camera.\-cpp.
+
+\hypertarget{class_camera_a9b3675bf6866a67f8fa802bb4aecba89}{\index{Camera@{Camera}!field\-Of\-View@{field\-Of\-View}}
+\index{field\-Of\-View@{field\-Of\-View}!Camera@{Camera}}
+\subsubsection[{field\-Of\-View}]{\setlength{\rightskip}{0pt plus 5cm}float Camera\-::field\-Of\-View (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+) const}}\label{class_camera_a9b3675bf6866a67f8fa802bb4aecba89}
+
+
+\hyperlink{class_camera_a9b3675bf6866a67f8fa802bb4aecba89}{field\-Of\-View()} gets the current camera Field-\/of-\/view angle. 
+
+\begin{DoxyReturn}{Returns}
+A float that is the y axis viewing angle. 
+\end{DoxyReturn}
+
+
+Definition at line 350 of file Camera.\-cpp.
+
+\hypertarget{class_object_ae10497fea640753a3cb63f739aacc540}{\index{Camera@{Camera}!Get\-Position@{Get\-Position}}
+\index{Get\-Position@{Get\-Position}!Camera@{Camera}}
+\subsubsection[{Get\-Position}]{\setlength{\rightskip}{0pt plus 5cm}{\bf vec4} Object\-::\-Get\-Position (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inherited]}}}\label{class_object_ae10497fea640753a3cb63f739aacc540}
+
+
+returns the position of the object this makes the lighting implementation much easier... 
+
+for this semester. 
+
+Definition at line 497 of file Object.\-cpp.
+
+\hypertarget{class_camera_a2148d751f104d8e39c9832e2372df2d9}{\index{Camera@{Camera}!heave@{heave}}
+\index{heave@{heave}!Camera@{Camera}}
+\subsubsection[{heave}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::heave (
+\begin{DoxyParamCaption}
+\item[{const float \&}]{by}
+\end{DoxyParamCaption}
+)}}\label{class_camera_a2148d751f104d8e39c9832e2372df2d9}
+
+
+Adjusts the camera's y coordinate relative to its current position. 
+
+Positive values move the camera up, and negative values move the camera down. 
+\begin{DoxyParams}{Parameters}
+{\em by} & The float to adjust the y coordinate by. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Void. 
+\end{DoxyReturn}
+
+
+Definition at line 194 of file Camera.\-cpp.
+
+\hypertarget{class_camera_a9c620bd05c119791c080e479ee71abc2}{\index{Camera@{Camera}!idle@{idle}}
+\index{idle@{idle}!Camera@{Camera}}
+\subsubsection[{idle}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::idle (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{class_camera_a9c620bd05c119791c080e479ee71abc2}
+
+
+idle moves the camera forward in whichever directions it is configured to move in. 
+
+Call it in the glut idle function. \begin{DoxyReturn}{Returns}
+Void. 
+\end{DoxyReturn}
+
+
+Definition at line 280 of file Camera.\-cpp.
+
+\hypertarget{class_camera_aaa9706527438bd5bd323dd018bb34fcf}{\index{Camera@{Camera}!move@{move}}
+\index{move@{move}!Camera@{Camera}}
+\subsubsection[{move}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::move (
+\begin{DoxyParamCaption}
+\item[{const {\bf Camera\-::\-Direction} \&}]{Dir}
+\end{DoxyParamCaption}
+)}}\label{class_camera_aaa9706527438bd5bd323dd018bb34fcf}
+
+
+move instructs the camera to begin moving in the specified direction. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Dir} & The direction in which to move. Can be any direction in the enumerated type \hyperlink{class_camera_a80cb65605322d27ad3b6d973484509ec}{Camera\-::\-Direction}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Void. 
+\end{DoxyReturn}
+
+
+Definition at line 272 of file Camera.\-cpp.
+
+\hypertarget{class_camera_aac7dbb6201be7f17e014fc6fdf915560}{\index{Camera@{Camera}!pitch@{pitch}}
+\index{pitch@{pitch}!Camera@{Camera}}
+\subsubsection[{pitch}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::pitch (
+\begin{DoxyParamCaption}
+\item[{const float \&}]{by, }
+\item[{const bool \&}]{fixed = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{class_camera_aac7dbb6201be7f17e014fc6fdf915560}
+
+
+pitch adjusts the x axis rotation; up/down look. 
+
+A positive value represents looking up, while a negative value represents looking down. 
+\begin{DoxyParams}{Parameters}
+{\em by} & A float, in degrees, to adjust the pitch by. \\
+\hline
+{\em fixed} & Should this rotation be fixed about the origin? \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Void. 
+\end{DoxyReturn}
+
+
+Definition at line 198 of file Camera.\-cpp.
+
+\hypertarget{class_camera_a432e03c15d63f8839fe4731016d907a4}{\index{Camera@{Camera}!pos@{pos}}
+\index{pos@{pos}!Camera@{Camera}}
+\subsubsection[{pos}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::pos (
+\begin{DoxyParamCaption}
+\item[{const float \&}]{x, }
+\item[{const float \&}]{y, }
+\item[{const float \&}]{z, }
+\item[{const bool \&}]{update = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}\label{class_camera_a432e03c15d63f8839fe4731016d907a4}
+
+
+Sets the absolute position of the camera. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The new x coordinate of the camera. \\
+\hline
+{\em y} & The new y coordinate of the camera. \\
+\hline
+{\em z} & The new z coordinate of the camera. \\
+\hline
+{\em update} & Whether or not to update the shader with the new coordinates. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Void. 
+\end{DoxyReturn}
+
+
+Definition at line 99 of file Camera.\-cpp.
+
+\hypertarget{class_camera_ae9dc2206b71b25cf320a05d148cb8b56}{\index{Camera@{Camera}!pos@{pos}}
+\index{pos@{pos}!Camera@{Camera}}
+\subsubsection[{pos}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::pos (
+\begin{DoxyParamCaption}
+\item[{const {\bf vec3} \&}]{in, }
+\item[{const bool \&}]{update = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}\label{class_camera_ae9dc2206b71b25cf320a05d148cb8b56}
+
+
+Sets the absolute position of the camera. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em in} & A vec3 containing the x, y, and z coordinates to set the camera to. \\
+\hline
+{\em update} & Whether or not to update the shader with the new coordinates. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Void. 
+\end{DoxyReturn}
+
+
+Definition at line 115 of file Camera.\-cpp.
+
+\hypertarget{class_camera_aec2115038562e514193bb2b67f5da153}{\index{Camera@{Camera}!pos@{pos}}
+\index{pos@{pos}!Camera@{Camera}}
+\subsubsection[{pos}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::pos (
+\begin{DoxyParamCaption}
+\item[{const {\bf vec4} \&}]{in, }
+\item[{const bool \&}]{update = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}\label{class_camera_aec2115038562e514193bb2b67f5da153}
+
+
+Sets the absolute position of the camera. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em in} & A vec4 containing the x, y, and z coordinates to set the camera to. The w coordinate is ignored. \\
+\hline
+{\em update} & Whether or not to update the shader with the new coordinates. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Void. 
+\end{DoxyReturn}
+
+
+Definition at line 111 of file Camera.\-cpp.
+
+\hypertarget{class_camera_a9982ac5f48fe0af97fefa725080d6da6}{\index{Camera@{Camera}!pos@{pos}}
+\index{pos@{pos}!Camera@{Camera}}
+\subsubsection[{pos}]{\setlength{\rightskip}{0pt plus 5cm}{\bf vec4} Camera\-::pos (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+) const}}\label{class_camera_a9982ac5f48fe0af97fefa725080d6da6}
+
+
+\hyperlink{class_camera_a9982ac5f48fe0af97fefa725080d6da6}{pos()} gets the current camera position in model coordinates. 
+
+\begin{DoxyReturn}{Returns}
+A vec4 that represents the current camera coordinates. 
+\end{DoxyReturn}
+
+
+Definition at line 346 of file Camera.\-cpp.
+
+\hypertarget{class_camera_a24c5346fc0dfaa93257b6716fe0f2421}{\index{Camera@{Camera}!refresh\-Perspective@{refresh\-Perspective}}
+\index{refresh\-Perspective@{refresh\-Perspective}!Camera@{Camera}}
+\subsubsection[{refresh\-Perspective}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::refresh\-Perspective (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{class_camera_a24c5346fc0dfaa93257b6716fe0f2421}
+
+
+refresh\-Perspective re-\/generates the current view/perspective matrix of the camera. 
+
+This function should be called after physical or virtual (viewport) screen resizes. \begin{DoxyReturn}{Returns}
+Void. 
+\end{DoxyReturn}
+
+
+Definition at line 366 of file Camera.\-cpp.
+
+\hypertarget{class_camera_a8ec7938c5e25068e5bff25aeb7038af4}{\index{Camera@{Camera}!reset\-Rotation@{reset\-Rotation}}
+\index{reset\-Rotation@{reset\-Rotation}!Camera@{Camera}}
+\subsubsection[{reset\-Rotation}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::reset\-Rotation (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{class_camera_a8ec7938c5e25068e5bff25aeb7038af4}
+
+
+reset\-Rotation adjusts the camera's rotational state back to its default state (The Identity Matrix.) 
+
+\begin{DoxyReturn}{Returns}
+void. 
+\end{DoxyReturn}
+
+
+Definition at line 446 of file Camera.\-cpp.
+
+\hypertarget{class_camera_a1ba0979fe0b2ec58085d5f9721858e5e}{\index{Camera@{Camera}!roll@{roll}}
+\index{roll@{roll}!Camera@{Camera}}
+\subsubsection[{roll}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::roll (
+\begin{DoxyParamCaption}
+\item[{const float \&}]{by, }
+\item[{const bool \&}]{fixed = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{class_camera_a1ba0979fe0b2ec58085d5f9721858e5e}
+
+
+roll adjusts the z axis rotation; tilt or lean left/right. 
+
+A positive value represents leaning right, while a negative value represents leaning left. 
+\begin{DoxyParams}{Parameters}
+{\em by} & A float, in degrees, to adjust the roll by. \\
+\hline
+{\em fixed} & Should this rotation be fixed about the origin? \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Void. 
+\end{DoxyReturn}
+
+
+Definition at line 219 of file Camera.\-cpp.
+
+\hypertarget{class_camera_a401decef27b59d6485b4ab9762f5b9e6}{\index{Camera@{Camera}!send@{send}}
+\index{send@{send}!Camera@{Camera}}
+\subsubsection[{send}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::send (
+\begin{DoxyParamCaption}
+\item[{Object\-::\-Uniform\-Enum}]{which}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_camera_a401decef27b59d6485b4ab9762f5b9e6}
+
+
+send will send a glsl variable to the shader. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em which} & The parameter to send. Can be any from enum glsl\-\_\-var. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Void. 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{class_object}{Object}.
+
+
+
+Definition at line 403 of file Camera.\-cpp.
+
+\hypertarget{class_object_a3dc857b837e8b77ba8a2727233400a5e}{\index{Camera@{Camera}!Shader@{Shader}}
+\index{Shader@{Shader}!Camera@{Camera}}
+\subsubsection[{Shader}]{\setlength{\rightskip}{0pt plus 5cm}G\-Luint Object\-::\-Shader (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [inherited]}}}\label{class_object_a3dc857b837e8b77ba8a2727233400a5e}
+
+
+Returns the \hyperlink{class_object}{Object}'s current Shader. 
+
+Defined because C++ will not let you overload an overrided function, without re-\/overloading it in the derived class.
+
+\begin{DoxyReturn}{Returns}
+a G\-Luint handle to the shader program used by this \hyperlink{class_object}{Object}. 
+\end{DoxyReturn}
+
+
+Definition at line 269 of file Object.\-cpp.
+
+\hypertarget{class_object_aa52c30bca96800cecba55f446e147859}{\index{Camera@{Camera}!Shader@{Shader}}
+\index{Shader@{Shader}!Camera@{Camera}}
+\subsubsection[{Shader}]{\setlength{\rightskip}{0pt plus 5cm}void Object\-::\-Shader (
+\begin{DoxyParamCaption}
+\item[{G\-Luint}]{new\-Shader}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [inherited]}}}\label{class_object_aa52c30bca96800cecba55f446e147859}
+
+
+Sets the shader to be used by this object. 
+
+Triggers a query of the shader program, for the locations of the Uniform locations that the object needs.
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\-Shader} & a G\-Luint handle to the shader program to use.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None. 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{class_scene_a7137a7302c21ac4dd44e746bfb6f7cf8}{Scene}.
+
+
+
+Definition at line 246 of file Object.\-cpp.
+
+\hypertarget{class_camera_ae7414c6ae83c3c9392ab90e957daf2b9}{\index{Camera@{Camera}!stop@{stop}}
+\index{stop@{stop}!Camera@{Camera}}
+\subsubsection[{stop}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::stop (
+\begin{DoxyParamCaption}
+\item[{const {\bf Camera\-::\-Direction} \&}]{Dir}
+\end{DoxyParamCaption}
+)}}\label{class_camera_ae7414c6ae83c3c9392ab90e957daf2b9}
+
+
+stop instructs the camera to stop moving in the specified direction. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Dir} & The direction in which to stop moving. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Void. 
+\end{DoxyReturn}
+
+
+Definition at line 276 of file Camera.\-cpp.
+
+\hypertarget{class_camera_abb2251df65445bf8efd3fe0074fb5033}{\index{Camera@{Camera}!surge@{surge}}
+\index{surge@{surge}!Camera@{Camera}}
+\subsubsection[{surge}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::surge (
+\begin{DoxyParamCaption}
+\item[{const float \&}]{by}
+\end{DoxyParamCaption}
+)}}\label{class_camera_abb2251df65445bf8efd3fe0074fb5033}
+
+
+Adjusts the camera's z coordinate relative to its current position. 
+
+Positive values move the camera forward, and negative values move the camera backward. Note that the camera uses model coordinates internally, so moving forward will increase the camera's z position negatively. 
+\begin{DoxyParams}{Parameters}
+{\em by} & The float to adjust the z coordinate by. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Void. 
+\end{DoxyReturn}
+
+
+Definition at line 190 of file Camera.\-cpp.
+
+\hypertarget{class_camera_abbe6fe82ed05e64e35b0c4ed2001b34e}{\index{Camera@{Camera}!sway@{sway}}
+\index{sway@{sway}!Camera@{Camera}}
+\subsubsection[{sway}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::sway (
+\begin{DoxyParamCaption}
+\item[{const float \&}]{by}
+\end{DoxyParamCaption}
+)}}\label{class_camera_abbe6fe82ed05e64e35b0c4ed2001b34e}
+
+
+Adjusts the camera's x coordinate relative to its current position. 
+
+Negative values move the camera left, and positive values move the camera right. 
+\begin{DoxyParams}{Parameters}
+{\em by} & The float to adjust the x coordinate by. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Void. 
+\end{DoxyReturn}
+
+
+Definition at line 186 of file Camera.\-cpp.
+
+\hypertarget{class_camera_ae845a36306bba6b6e359cbdddce65f7f}{\index{Camera@{Camera}!view@{view}}
+\index{view@{view}!Camera@{Camera}}
+\subsubsection[{view}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::view (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{class_camera_ae845a36306bba6b6e359cbdddce65f7f}
+
+
+view will instruct Open\-G\-L of the viewport we want, and then send all of our current matrices to the shader for rendering. 
+
+\begin{DoxyReturn}{Returns}
+Void. 
+\end{DoxyReturn}
+
+
+Definition at line 434 of file Camera.\-cpp.
+
+\hypertarget{class_camera_adda458a9212825164b52019597f2e9c8}{\index{Camera@{Camera}!viewport@{viewport}}
+\index{viewport@{viewport}!Camera@{Camera}}
+\subsubsection[{viewport}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::viewport (
+\begin{DoxyParamCaption}
+\item[{size\-\_\-t}]{\-\_\-\-X, }
+\item[{size\-\_\-t}]{\-\_\-\-Y, }
+\item[{size\-\_\-t}]{\-\_\-width, }
+\item[{size\-\_\-t}]{\-\_\-height}
+\end{DoxyParamCaption}
+)}}\label{class_camera_adda458a9212825164b52019597f2e9c8}
+
+
+viewport instructs this camera what his expected drawing window will be. 
+
+This allows the camera to generate his viewing matrices with the correct aspect ratio. 
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-\-X} & The x coordinate of the lower-\/left corner of our viewport. \\
+\hline
+{\em \-\_\-\-Y} & the y coordinate of the lower-\/left corner of our viewport. \\
+\hline
+{\em \-\_\-width} & The width of our viewport. \\
+\hline
+{\em \-\_\-height} & the height of our viewport. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Void. 
+\end{DoxyReturn}
+
+
+Definition at line 396 of file Camera.\-cpp.
+
+\hypertarget{class_camera_a14d59ca64bf258adacbed4e0e70ba701}{\index{Camera@{Camera}!x@{x}}
+\index{x@{x}!Camera@{Camera}}
+\subsubsection[{x}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::x (
+\begin{DoxyParamCaption}
+\item[{const float \&}]{in, }
+\item[{const bool \&}]{update = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}\label{class_camera_a14d59ca64bf258adacbed4e0e70ba701}
+
+
+Sets the x coordinate of the camera. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em in} & The new x coordinate of the camera. \\
+\hline
+{\em update} & Whether or not to update the shader with the new coordinates. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Void. 
+\end{DoxyReturn}
+
+
+Definition at line 68 of file Camera.\-cpp.
+
+\hypertarget{class_camera_ab84abdd525581fbaf0462595d0a087d6}{\index{Camera@{Camera}!x@{x}}
+\index{x@{x}!Camera@{Camera}}
+\subsubsection[{x}]{\setlength{\rightskip}{0pt plus 5cm}float Camera\-::x (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+) const}}\label{class_camera_ab84abdd525581fbaf0462595d0a087d6}
+
+
+\hyperlink{class_camera_ab84abdd525581fbaf0462595d0a087d6}{x()} returns the current position of the camera in model coordinates. 
+
+\begin{DoxyReturn}{Returns}
+The current x coordinate of the camera in model coordinates. 
+\end{DoxyReturn}
+
+
+Definition at line 334 of file Camera.\-cpp.
+
+\hypertarget{class_camera_a5021b8379a853f306851837178856db0}{\index{Camera@{Camera}!y@{y}}
+\index{y@{y}!Camera@{Camera}}
+\subsubsection[{y}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::y (
+\begin{DoxyParamCaption}
+\item[{const float \&}]{in, }
+\item[{const bool \&}]{update = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}\label{class_camera_a5021b8379a853f306851837178856db0}
+
+
+Sets the y coordinate of the camera. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em in} & The new y coordinate of the camera. \\
+\hline
+{\em update} & Whether or not to update the shader with the new coordinates. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Void. 
+\end{DoxyReturn}
+
+
+Definition at line 79 of file Camera.\-cpp.
+
+\hypertarget{class_camera_a68d0865ed19510ee41c6477511d70185}{\index{Camera@{Camera}!y@{y}}
+\index{y@{y}!Camera@{Camera}}
+\subsubsection[{y}]{\setlength{\rightskip}{0pt plus 5cm}float Camera\-::y (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+) const}}\label{class_camera_a68d0865ed19510ee41c6477511d70185}
+
+
+\hyperlink{class_camera_a68d0865ed19510ee41c6477511d70185}{y()} returns the current position of the camera in model coordinates. 
+
+\begin{DoxyReturn}{Returns}
+The current y coordinate of the camera in model coordinates. 
+\end{DoxyReturn}
+
+
+Definition at line 338 of file Camera.\-cpp.
+
+\hypertarget{class_camera_a0ce7d12edbe47d9a8915d8af98d8f524}{\index{Camera@{Camera}!yaw@{yaw}}
+\index{yaw@{yaw}!Camera@{Camera}}
+\subsubsection[{yaw}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::yaw (
+\begin{DoxyParamCaption}
+\item[{const float \&}]{by, }
+\item[{const bool \&}]{fixed = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{class_camera_a0ce7d12edbe47d9a8915d8af98d8f524}
+
+
+yaw adjusts the y axis rotation; left/right look. 
+
+A positive value represents looking right, while a negative value represents looking left. 
+\begin{DoxyParams}{Parameters}
+{\em by} & A float, in degrees, to adjust the yaw by. \\
+\hline
+{\em fixed} & Should this rotation be fixed about the origin? \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Void. 
+\end{DoxyReturn}
+
+
+Definition at line 209 of file Camera.\-cpp.
+
+\hypertarget{class_camera_a4acfa20291c83f13c98781c0d53cdbd8}{\index{Camera@{Camera}!z@{z}}
+\index{z@{z}!Camera@{Camera}}
+\subsubsection[{z}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::z (
+\begin{DoxyParamCaption}
+\item[{const float \&}]{in, }
+\item[{const bool \&}]{update = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}\label{class_camera_a4acfa20291c83f13c98781c0d53cdbd8}
+
+
+Sets the z coordinate of the camera. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em in} & The new z coordinate of the camera. \\
+\hline
+{\em update} & Whether or not to update the shader with the new coordinates. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Void. 
+\end{DoxyReturn}
+
+
+Definition at line 89 of file Camera.\-cpp.
+
+\hypertarget{class_camera_ab1167495c547046c57b1c417e53c39f6}{\index{Camera@{Camera}!z@{z}}
+\index{z@{z}!Camera@{Camera}}
+\subsubsection[{z}]{\setlength{\rightskip}{0pt plus 5cm}float Camera\-::z (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+) const}}\label{class_camera_ab1167495c547046c57b1c417e53c39f6}
+
+
+\hyperlink{class_camera_ab1167495c547046c57b1c417e53c39f6}{z()} returns the current position of the camera in model coordinates. 
+
+\begin{DoxyReturn}{Returns}
+The current z coordinate of the camera in model coordinates. 
+\end{DoxyReturn}
+
+
+Definition at line 342 of file Camera.\-cpp.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{class_camera_a42082e8f2d80a13674ce163d8e720bfb}{\index{Camera@{Camera}!\-\_\-aspect\-Ratio@{\-\_\-aspect\-Ratio}}
+\index{\-\_\-aspect\-Ratio@{\-\_\-aspect\-Ratio}!Camera@{Camera}}
+\subsubsection[{\-\_\-aspect\-Ratio}]{\setlength{\rightskip}{0pt plus 5cm}G\-Lfloat Camera\-::\-\_\-aspect\-Ratio\hspace{0.3cm}{\ttfamily [private]}}}\label{class_camera_a42082e8f2d80a13674ce163d8e720bfb}
+
+
+Current aspect ratio for certain perspectives. 
+
+
+
+Definition at line 428 of file Camera.\-hpp.
+
+\hypertarget{class_camera_a6c1e31c8470b923f9f872f73597cb95b}{\index{Camera@{Camera}!\-\_\-ctm@{\-\_\-ctm}}
+\index{\-\_\-ctm@{\-\_\-ctm}!Camera@{Camera}}
+\subsubsection[{\-\_\-ctm}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Trans\-Cache} Camera\-::\-\_\-ctm\hspace{0.3cm}{\ttfamily [private]}}}\label{class_camera_a6c1e31c8470b923f9f872f73597cb95b}
+
+
+The Current \hyperlink{class_transformation}{Transformation} state for this \hyperlink{class_camera}{Camera}. 
+
+
+
+Definition at line 404 of file Camera.\-hpp.
+
+\hypertarget{class_camera_ac9062d9bb891aa81d163076738451081}{\index{Camera@{Camera}!\-\_\-current\-View@{\-\_\-current\-View}}
+\index{\-\_\-current\-View@{\-\_\-current\-View}!Camera@{Camera}}
+\subsubsection[{\-\_\-current\-View}]{\setlength{\rightskip}{0pt plus 5cm}{\bf View\-Type} Camera\-::\-\_\-current\-View\hspace{0.3cm}{\ttfamily [private]}}}\label{class_camera_ac9062d9bb891aa81d163076738451081}
+
+
+The current viewing mode type. 
+
+
+
+Definition at line 407 of file Camera.\-hpp.
+
+\hypertarget{class_camera_a82542bb76347e2a2bb66b3bb7842945b}{\index{Camera@{Camera}!\-\_\-fovy@{\-\_\-fovy}}
+\index{\-\_\-fovy@{\-\_\-fovy}!Camera@{Camera}}
+\subsubsection[{\-\_\-fovy}]{\setlength{\rightskip}{0pt plus 5cm}G\-Lfloat Camera\-::\-\_\-fovy\hspace{0.3cm}{\ttfamily [private]}}}\label{class_camera_a82542bb76347e2a2bb66b3bb7842945b}
+
+
+Current field-\/of-\/view angle for perspective view. 
+
+
+
+Definition at line 431 of file Camera.\-hpp.
+
+\hypertarget{class_camera_a66fb66da0ccd400c4986dc19276b6716}{\index{Camera@{Camera}!\-\_\-friction\-Magnitude@{\-\_\-friction\-Magnitude}}
+\index{\-\_\-friction\-Magnitude@{\-\_\-friction\-Magnitude}!Camera@{Camera}}
+\subsubsection[{\-\_\-friction\-Magnitude}]{\setlength{\rightskip}{0pt plus 5cm}G\-Lfloat Camera\-::\-\_\-friction\-Magnitude\hspace{0.3cm}{\ttfamily [private]}}}\label{class_camera_a66fb66da0ccd400c4986dc19276b6716}
+
+
+Friction. 
+
+Should be less than Max\-Accel. 
+
+Definition at line 425 of file Camera.\-hpp.
+
+\hypertarget{class_camera_abec7e2becbad5a692a54a69b6a5f6d75}{\index{Camera@{Camera}!\-\_\-motion@{\-\_\-motion}}
+\index{\-\_\-motion@{\-\_\-motion}!Camera@{Camera}}
+\subsubsection[{\-\_\-motion}]{\setlength{\rightskip}{0pt plus 5cm}bool Camera\-::\-\_\-motion\mbox{[}Camera\-::\-D\-I\-R\-\_\-\-E\-N\-D\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{class_camera_abec7e2becbad5a692a54a69b6a5f6d75}
+
+
+Booleans correlating to the different motion directions. 
+
+
+
+Definition at line 440 of file Camera.\-hpp.
+
+\hypertarget{class_camera_a21f8eb53e5369018e39add0453ae626d}{\index{Camera@{Camera}!\-\_\-speed@{\-\_\-speed}}
+\index{\-\_\-speed@{\-\_\-speed}!Camera@{Camera}}
+\subsubsection[{\-\_\-speed}]{\setlength{\rightskip}{0pt plus 5cm}G\-Lfloat Camera\-::\-\_\-speed\hspace{0.3cm}{\ttfamily [private]}}}\label{class_camera_a21f8eb53e5369018e39add0453ae626d}
+
+
+Current Speed of camera motion. 
+
+
+
+Definition at line 410 of file Camera.\-hpp.
+
+\hypertarget{class_camera_aa15577ff9e67c81699ee86d4d20a7ee7}{\index{Camera@{Camera}!\-\_\-velocity@{\-\_\-velocity}}
+\index{\-\_\-velocity@{\-\_\-velocity}!Camera@{Camera}}
+\subsubsection[{\-\_\-velocity}]{\setlength{\rightskip}{0pt plus 5cm}{\bf vec3} Camera\-::\-\_\-velocity\hspace{0.3cm}{\ttfamily [private]}}}\label{class_camera_aa15577ff9e67c81699ee86d4d20a7ee7}
+
+
+Current Velocity of camera motion. 
+
+
+
+Definition at line 413 of file Camera.\-hpp.
+
+\hypertarget{class_camera_a28f6e710df6db726568cd0f2bbd3643a}{\index{Camera@{Camera}!\-\_\-view@{\-\_\-view}}
+\index{\-\_\-view@{\-\_\-view}!Camera@{Camera}}
+\subsubsection[{\-\_\-view}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mat4} Camera\-::\-\_\-view\hspace{0.3cm}{\ttfamily [private]}}}\label{class_camera_a28f6e710df6db726568cd0f2bbd3643a}
+
+
+The current view matrix (defaultly perspective) for this camera. 
+
+
+
+Definition at line 401 of file Camera.\-hpp.
+
+\hypertarget{class_object_a82764b385767d989f27d301ab206acb8}{\index{Camera@{Camera}!draw\-\_\-mode@{draw\-\_\-mode}}
+\index{draw\-\_\-mode@{draw\-\_\-mode}!Camera@{Camera}}
+\subsubsection[{draw\-\_\-mode}]{\setlength{\rightskip}{0pt plus 5cm}G\-Lenum Object\-::draw\-\_\-mode\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}}\label{class_object_a82764b385767d989f27d301ab206acb8}
+
+
+Drawing mode for this object. 
+
+G\-L\-\_\-\-T\-R\-I\-A\-N\-G\-L\-E\-S, G\-L\-\_\-\-L\-I\-N\-E\-\_\-\-L\-O\-O\-P, etc. 
+
+Definition at line 95 of file Object.\-hpp.
+
+\hypertarget{class_object_acd6c7021617ea334915a1525f9519bc5}{\index{Camera@{Camera}!handles@{handles}}
+\index{handles@{handles}!Camera@{Camera}}
+\subsubsection[{handles}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ G\-Lint $>$ Object\-::handles\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}}\label{class_object_acd6c7021617ea334915a1525f9519bc5}
+
+
+Handles to Uniforms on the shader. 
+
+Private to allow derived classes to extend it as needed. 
+
+Definition at line 114 of file Object.\-hpp.
+
+\hypertarget{class_object_a24457e0a387492c80594aec7681a2277}{\index{Camera@{Camera}!name@{name}}
+\index{name@{name}!Camera@{Camera}}
+\subsubsection[{name}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string Object\-::name\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}}\label{class_object_a24457e0a387492c80594aec7681a2277}
+
+
+name is used as an identifying handle for the object. 
+
+
+
+Definition at line 86 of file Object.\-hpp.
+
+\hypertarget{class_object_a66190fee29d03d6478516686cbd01eb8}{\index{Camera@{Camera}!vao@{vao}}
+\index{vao@{vao}!Camera@{Camera}}
+\subsubsection[{vao}]{\setlength{\rightskip}{0pt plus 5cm}G\-Luint Object\-::vao\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}}\label{class_object_a66190fee29d03d6478516686cbd01eb8}
+
+
+Vertex Array \hyperlink{class_object}{Object} handle identifying our buffers/object. 
+
+
+
+Definition at line 89 of file Object.\-hpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_camera_8hpp}{Camera.\-hpp}\item 
+\hyperlink{_camera_8cpp}{Camera.\-cpp}\end{DoxyCompactItemize}

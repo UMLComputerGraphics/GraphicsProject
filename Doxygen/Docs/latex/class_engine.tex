@@ -1,0 +1,331 @@
+\hypertarget{class_engine}{\section{Engine Class Reference}
+\label{class_engine}\index{Engine@{Engine}}
+}
+
+
+The \hyperlink{class_engine}{Engine} class is a singleton-\/style class which helps keep track of instances of important objects (for \hyperlink{class_cameras}{Cameras}, Objects, etc) as well as some settings and variables that would otherwise clog up global namespace.  
+
+
+
+
+{\ttfamily \#include $<$Engine.\-hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_cameras}{Cameras} $\ast$ \hyperlink{class_engine_a2b2c1cd59c9a5c903bf466284012ce4c}{cams} (void)
+\begin{DoxyCompactList}\small\item\em Retrieves a pointer to the \hyperlink{class_camera}{Camera} List. \end{DoxyCompactList}\item 
+\hyperlink{class_scene}{Scene} $\ast$ \hyperlink{class_engine_a782cf288c161986d0ac0eb48cd187c4d}{root\-Scene} (void)
+\begin{DoxyCompactList}\small\item\em Retrieves a pointer to the Root, top-\/level \hyperlink{class_scene}{Scene} graph. \end{DoxyCompactList}\item 
+\hyperlink{class_screen}{Screen} $\ast$ \hyperlink{class_engine_ad4429218b5aed162269094c6571a2520}{main\-Screen} (void)
+\begin{DoxyCompactList}\small\item\em Retrieves a pointer to the core '\hyperlink{class_screen}{Screen}' object. \end{DoxyCompactList}\item 
+bool \hyperlink{class_engine_ae3658976c5ab1f0c912d2c7d5747cb67}{opt} (const std\-::string \&Option)
+\begin{DoxyCompactList}\small\item\em opt retrieves the current setting of an option in the \hyperlink{class_engine}{Engine}. \end{DoxyCompactList}\item 
+void \hyperlink{class_engine_a797b0b934a94cd2ea7ab1c11083e425c}{opt} (const std\-::string \&Option, bool setting)
+\begin{DoxyCompactList}\small\item\em opt, with a second parameter, sets an \hyperlink{class_engine}{Engine} option. \end{DoxyCompactList}\item 
+bool \hyperlink{class_engine_a81f16979bc330c46675e4d7ffab5eff9}{set} (const std\-::string \&Option)
+\begin{DoxyCompactList}\small\item\em set checks to see if an option has been explicitly set to either True/\-False. \end{DoxyCompactList}\item 
+bool \hyperlink{class_engine_a0e6265ae2700bda2f21abd308430637a}{flip} (const std\-::string \&Option)
+\begin{DoxyCompactList}\small\item\em flip changes a setting from its current value to its negated form. \end{DoxyCompactList}\item 
+\hypertarget{class_engine_a4850643b0f929d8021115cf37d7ab608}{\hyperlink{class_engine_a4850643b0f929d8021115cf37d7ab608}{$\sim$\-Engine} (void)}\label{class_engine_a4850643b0f929d8021115cf37d7ab608}
+
+\begin{DoxyCompactList}\small\item\em Default, non-\/virtual destructor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_engine}{Engine} $\ast$ \hyperlink{class_engine_a6cbf9ec80a4a3bb245355ff70498dba0}{instance} (void)
+\begin{DoxyCompactList}\small\item\em instance returns, or creates and then returns, a pointer to the \hyperlink{class_engine}{Engine} object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_engine_a9ad87e382195a05d5d310a2fb3e357fd}{Engine} (void)
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\hyperlink{class_engine_a8e027119a62020acddedd0a14fb44033}{Engine} (const \hyperlink{class_engine}{Engine} \&copy)
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+\hyperlink{class_engine}{Engine} \& \hyperlink{class_engine_a09761dabaae6f48bd5c612acea76a9bf}{operator=} (\hyperlink{class_engine}{Engine} \&assign)
+\begin{DoxyCompactList}\small\item\em Assignment operator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_engine_afc244649d4b31f59f2ef91754472b281}{\hyperlink{class_scene}{Scene} \hyperlink{class_engine_afc244649d4b31f59f2ef91754472b281}{\-\_\-scene}}\label{class_engine_afc244649d4b31f59f2ef91754472b281}
+
+\begin{DoxyCompactList}\small\item\em The root \hyperlink{class_scene}{Scene} graph for the \hyperlink{class_engine}{Engine}. \end{DoxyCompactList}\item 
+\hypertarget{class_engine_a181e11b6fd26698bc173647ab2471c8c}{\hyperlink{class_screen}{Screen} \hyperlink{class_engine_a181e11b6fd26698bc173647ab2471c8c}{\-\_\-screen}}\label{class_engine_a181e11b6fd26698bc173647ab2471c8c}
+
+\begin{DoxyCompactList}\small\item\em The core \char`\"{}\-Screen\char`\"{} object for the \hyperlink{class_engine}{Engine}. \end{DoxyCompactList}\item 
+\hypertarget{class_engine_a467d917952b89ef23f7a045e4f87218a}{\hyperlink{_engine_8hpp_a35f3ec1606bb0642e48d2e62fea0d6a6}{Settings\-Map} \hyperlink{class_engine_a467d917952b89ef23f7a045e4f87218a}{\-\_\-engine\-Settings}}\label{class_engine_a467d917952b89ef23f7a045e4f87218a}
+
+\begin{DoxyCompactList}\small\item\em \-\_\-engine\-Settings is a std\-::map that contains a series of $<$std\-::string, bool$>$ pairs that represent our \hyperlink{class_engine}{Engine} options. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_engine_ae494a590056c4594f1f3cb39e4d18994}{static \hyperlink{class_engine}{Engine} $\ast$ \hyperlink{class_engine_ae494a590056c4594f1f3cb39e4d18994}{\-\_\-engine\-Singleton} = N\-U\-L\-L}\label{class_engine_ae494a590056c4594f1f3cb39e4d18994}
+
+\begin{DoxyCompactList}\small\item\em static, stateful variable that is our singleton pointer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The \hyperlink{class_engine}{Engine} class is a singleton-\/style class which helps keep track of instances of important objects (for \hyperlink{class_cameras}{Cameras}, Objects, etc) as well as some settings and variables that would otherwise clog up global namespace. 
+
+\begin{DoxyAuthor}{Author}
+John Huston, \href{mailto:jhuston@cs.uml.edu}{\tt jhuston@cs.\-uml.\-edu} 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2013-\/03-\/13 
+\end{DoxyDate}
+
+
+Definition at line 32 of file Engine.\-hpp.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_engine_a9ad87e382195a05d5d310a2fb3e357fd}{\index{Engine@{Engine}!Engine@{Engine}}
+\index{Engine@{Engine}!Engine@{Engine}}
+\subsubsection[{Engine}]{\setlength{\rightskip}{0pt plus 5cm}Engine\-::\-Engine (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}}\label{class_engine_a9ad87e382195a05d5d310a2fb3e357fd}
+
+
+Default constructor. 
+
+Cannot be called, this is a singleton class. 
+
+Definition at line 40 of file Engine.\-cpp.
+
+\hypertarget{class_engine_a8e027119a62020acddedd0a14fb44033}{\index{Engine@{Engine}!Engine@{Engine}}
+\index{Engine@{Engine}!Engine@{Engine}}
+\subsubsection[{Engine}]{\setlength{\rightskip}{0pt plus 5cm}Engine\-::\-Engine (
+\begin{DoxyParamCaption}
+\item[{const {\bf Engine} \&}]{copy}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}}\label{class_engine_a8e027119a62020acddedd0a14fb44033}
+
+
+Copy constructor. 
+
+Cannot be called. 
+\begin{DoxyParams}{Parameters}
+{\em copy} & Not used. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Will always throw an exception. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Will} & always throw std\-::logic\-\_\-error. \\
+\hline
+\end{DoxyExceptions}
+
+
+Definition at line 57 of file Engine.\-cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_engine_a2b2c1cd59c9a5c903bf466284012ce4c}{\index{Engine@{Engine}!cams@{cams}}
+\index{cams@{cams}!Engine@{Engine}}
+\subsubsection[{cams}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Cameras} $\ast$ Engine\-::cams (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{class_engine_a2b2c1cd59c9a5c903bf466284012ce4c}
+
+
+Retrieves a pointer to the \hyperlink{class_camera}{Camera} List. 
+
+\begin{DoxyReturn}{Returns}
+A pointer to the \hyperlink{class_camera}{Camera} List. 
+\end{DoxyReturn}
+
+
+Definition at line 76 of file Engine.\-cpp.
+
+\hypertarget{class_engine_a0e6265ae2700bda2f21abd308430637a}{\index{Engine@{Engine}!flip@{flip}}
+\index{flip@{flip}!Engine@{Engine}}
+\subsubsection[{flip}]{\setlength{\rightskip}{0pt plus 5cm}bool Engine\-::flip (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{Option}
+\end{DoxyParamCaption}
+)}}\label{class_engine_a0e6265ae2700bda2f21abd308430637a}
+
+
+flip changes a setting from its current value to its negated form. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Option} & The option to toggle. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The new, current value of the option. 
+\end{DoxyReturn}
+
+
+Definition at line 139 of file Engine.\-cpp.
+
+\hypertarget{class_engine_a6cbf9ec80a4a3bb245355ff70498dba0}{\index{Engine@{Engine}!instance@{instance}}
+\index{instance@{instance}!Engine@{Engine}}
+\subsubsection[{instance}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Engine} $\ast$ Engine\-::instance (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_engine_a6cbf9ec80a4a3bb245355ff70498dba0}
+
+
+instance returns, or creates and then returns, a pointer to the \hyperlink{class_engine}{Engine} object. 
+
+All hail the singleton!
+
+\begin{DoxyReturn}{Returns}
+A pointer to the \hyperlink{class_engine}{Engine} object. 
+\end{DoxyReturn}
+
+
+Definition at line 29 of file Engine.\-cpp.
+
+\hypertarget{class_engine_ad4429218b5aed162269094c6571a2520}{\index{Engine@{Engine}!main\-Screen@{main\-Screen}}
+\index{main\-Screen@{main\-Screen}!Engine@{Engine}}
+\subsubsection[{main\-Screen}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Screen} $\ast$ Engine\-::main\-Screen (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{class_engine_ad4429218b5aed162269094c6571a2520}
+
+
+Retrieves a pointer to the core '\hyperlink{class_screen}{Screen}' object. 
+
+\begin{DoxyReturn}{Returns}
+A pointer to the core '\hyperlink{class_screen}{Screen}' object. 
+\end{DoxyReturn}
+
+
+Definition at line 96 of file Engine.\-cpp.
+
+\hypertarget{class_engine_a09761dabaae6f48bd5c612acea76a9bf}{\index{Engine@{Engine}!operator=@{operator=}}
+\index{operator=@{operator=}!Engine@{Engine}}
+\subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Engine} \& Engine\-::operator= (
+\begin{DoxyParamCaption}
+\item[{{\bf Engine} \&}]{assign}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}}\label{class_engine_a09761dabaae6f48bd5c612acea76a9bf}
+
+
+Assignment operator. 
+
+Cannot be used. This is a singleton class. 
+\begin{DoxyParams}{Parameters}
+{\em assign} & Not used. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Will always throw an exception. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Will} & always throw std\-::logic\-\_\-error. \\
+\hline
+\end{DoxyExceptions}
+
+
+Definition at line 67 of file Engine.\-cpp.
+
+\hypertarget{class_engine_ae3658976c5ab1f0c912d2c7d5747cb67}{\index{Engine@{Engine}!opt@{opt}}
+\index{opt@{opt}!Engine@{Engine}}
+\subsubsection[{opt}]{\setlength{\rightskip}{0pt plus 5cm}bool Engine\-::opt (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{Option}
+\end{DoxyParamCaption}
+)}}\label{class_engine_ae3658976c5ab1f0c912d2c7d5747cb67}
+
+
+opt retrieves the current setting of an option in the \hyperlink{class_engine}{Engine}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Option} & The name of the option to access. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A bool\-: the current value of the setting. 
+\end{DoxyReturn}
+
+
+Definition at line 107 of file Engine.\-cpp.
+
+\hypertarget{class_engine_a797b0b934a94cd2ea7ab1c11083e425c}{\index{Engine@{Engine}!opt@{opt}}
+\index{opt@{opt}!Engine@{Engine}}
+\subsubsection[{opt}]{\setlength{\rightskip}{0pt plus 5cm}void Engine\-::opt (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{Option, }
+\item[{bool}]{setting}
+\end{DoxyParamCaption}
+)}}\label{class_engine_a797b0b934a94cd2ea7ab1c11083e425c}
+
+
+opt, with a second parameter, sets an \hyperlink{class_engine}{Engine} option. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Option} & The name of the option to set. \\
+\hline
+{\em setting} & The value to give the option. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void. 
+\end{DoxyReturn}
+
+
+Definition at line 117 of file Engine.\-cpp.
+
+\hypertarget{class_engine_a782cf288c161986d0ac0eb48cd187c4d}{\index{Engine@{Engine}!root\-Scene@{root\-Scene}}
+\index{root\-Scene@{root\-Scene}!Engine@{Engine}}
+\subsubsection[{root\-Scene}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Scene} $\ast$ Engine\-::root\-Scene (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{class_engine_a782cf288c161986d0ac0eb48cd187c4d}
+
+
+Retrieves a pointer to the Root, top-\/level \hyperlink{class_scene}{Scene} graph. 
+
+\begin{DoxyReturn}{Returns}
+A pointer to the Root-\/level \hyperlink{class_scene}{Scene} graph. 
+\end{DoxyReturn}
+
+
+Definition at line 86 of file Engine.\-cpp.
+
+\hypertarget{class_engine_a81f16979bc330c46675e4d7ffab5eff9}{\index{Engine@{Engine}!set@{set}}
+\index{set@{set}!Engine@{Engine}}
+\subsubsection[{set}]{\setlength{\rightskip}{0pt plus 5cm}bool Engine\-::set (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{Option}
+\end{DoxyParamCaption}
+)}}\label{class_engine_a81f16979bc330c46675e4d7ffab5eff9}
+
+
+set checks to see if an option has been explicitly set to either True/\-False. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Option} & The option to check the existence of \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A boolean\-: True if the option has been set, False otherwise. 
+\end{DoxyReturn}
+
+
+Definition at line 127 of file Engine.\-cpp.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_engine_8hpp}{Engine.\-hpp}\item 
+\hyperlink{_engine_8cpp}{Engine.\-cpp}\end{DoxyCompactItemize}

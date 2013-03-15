@@ -1,0 +1,102 @@
+.TH "TiemSpelchk::Lurn2SpielNub" 3 "Fri Mar 15 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+TiemSpelchk::Lurn2SpielNub \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBsetCallback\fP (boost::function< void(int, double, double, double)> headCB)"
+.br
+.ti -1c
+.RI "int \fBStart\fP ()"
+.br
+.ti -1c
+.RI "void \fBShutdown\fP ()"
+.br
+.in -1c
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static void XN_CALLBACK_TYPE \fBnew_user\fP (xn::UserGenerator &, XnUserID, void *)"
+.br
+.ti -1c
+.RI "static void XN_CALLBACK_TYPE \fBlost_user\fP (xn::UserGenerator &, XnUserID, void *)"
+.br
+.ti -1c
+.RI "static void XN_CALLBACK_TYPE \fBpose\fP (xn::PoseDetectionCapability &, const XnChar *, XnUserID, void *)"
+.br
+.ti -1c
+.RI "static void XN_CALLBACK_TYPE \fBcal_start\fP (xn::SkeletonCapability &, XnUserID, void *)"
+.br
+.ti -1c
+.RI "static void XN_CALLBACK_TYPE \fBcal_complete\fP (xn::SkeletonCapability &, XnUserID, XnCalibrationStatus, void *)"
+.br
+.in -1c
+.SS "Private Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBFUNKMASTER_thread_func\fP ()"
+.br
+.ti -1c
+.RI "void XN_CALLBACK_TYPE \fBUser_NewUser\fP (xn::UserGenerator &, XnUserID nId, void *)"
+.br
+.ti -1c
+.RI "void XN_CALLBACK_TYPE \fBUser_LostUser\fP (xn::UserGenerator &, XnUserID nId, void *)"
+.br
+.ti -1c
+.RI "void XN_CALLBACK_TYPE \fBUserPose_PoseDetected\fP (xn::PoseDetectionCapability &, const XnChar *strPose, XnUserID nId, void *)"
+.br
+.ti -1c
+.RI "void XN_CALLBACK_TYPE \fBUserCalibration_CalibrationStart\fP (xn::SkeletonCapability &, XnUserID nId, void *)"
+.br
+.ti -1c
+.RI "void XN_CALLBACK_TYPE \fBUserCalibration_CalibrationComplete\fP (xn::SkeletonCapability &, XnUserID nId, XnCalibrationStatus eStatus, void *)"
+.br
+.in -1c
+.SS "Private Attributes"
+
+.in +1c
+.ti -1c
+.RI "boost::function< void(int, 
+.br
+double, double, double)> \fB_cb\fP"
+.br
+.ti -1c
+.RI "boost::thread \fB_thread\fP"
+.br
+.ti -1c
+.RI "bool \fBneedsToSeppuku\fP"
+.br
+.ti -1c
+.RI "xn::Context \fBg_Context\fP"
+.br
+.ti -1c
+.RI "xn::ScriptNode \fBg_scriptNode\fP"
+.br
+.ti -1c
+.RI "xn::DepthGenerator \fBg_DepthGenerator\fP"
+.br
+.ti -1c
+.RI "xn::UserGenerator \fBg_UserGenerator\fP"
+.br
+.ti -1c
+.RI "XnBool \fBg_bNeedPose\fP"
+.br
+.ti -1c
+.RI "XnChar \fBg_strPose\fP [20]"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 58 of file KinectInator\&.hpp\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for HyperGrafx from the source code\&.

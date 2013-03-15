@@ -1,0 +1,264 @@
+.TH "terrain.cpp" 3 "Fri Mar 15 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+terrain.cpp \- 
+.PP
+This is a trimmed version of our Fall 2012 project\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <cmath>\fP
+.br
+\fC#include <cstdio>\fP
+.br
+\fC#include <sstream>\fP
+.br
+\fC#include <cstdlib>\fP
+.br
+\fC#include <time\&.h>\fP
+.br
+\fC#include 'platform\&.h'\fP
+.br
+\fC#include 'globals\&.h'\fP
+.br
+\fC#include 'vec\&.hpp'\fP
+.br
+\fC#include 'mat\&.hpp'\fP
+.br
+\fC#include 'Engine\&.hpp'\fP
+.br
+\fC#include 'Camera\&.hpp'\fP
+.br
+\fC#include 'Cameras\&.hpp'\fP
+.br
+\fC#include 'Screen\&.hpp'\fP
+.br
+\fC#include 'Object\&.hpp'\fP
+.br
+\fC#include 'Timer\&.hpp'\fP
+.br
+\fC#include 'Scene\&.hpp'\fP
+.br
+\fC#include 'model\&.hpp'\fP
+.br
+\fC#include 'InitShader\&.hpp'\fP
+.br
+\fC#include 'glut_callbacks\&.h'\fP
+.br
+\fC#include 'ObjLoader\&.hpp'\fP
+.br
+
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef \fBAngel::vec4\fP \fBcolor4\fP"
+.br
+.ti -1c
+.RI "typedef \fBAngel::vec4\fP \fBpoint4\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBrandomize_terrain\fP ()"
+.br
+.RI "\fIrandomize_terrain is called to regenerate the terrain in this application\&. \fP"
+.ti -1c
+.RI "void \fBinit\fP ()"
+.br
+.RI "\fIinit will initialize this particular flythrough, by creating and instantiating a shader, a camera, and a number of initial objects\&. \fP"
+.ti -1c
+.RI "void \fBcleanup\fP (void)"
+.br
+.RI "\fIcleanup is a routine to call at exit time that will free up the resources the application is using\&. \fP"
+.ti -1c
+.RI "void \fBdisplayViewport\fP (void)"
+.br
+.RI "\fIdisplayViewport is responsible for drawing a single viewport\&. \fP"
+.ti -1c
+.RI "void \fBdisplay\fP (void)"
+.br
+.RI "\fIdisplay is responsible for drawing an entire screen\&. \fP"
+.ti -1c
+.RI "void \fBTerrainGenerationAnimation\fP (\fBTransCache\fP &obj)"
+.br
+.RI "\fITerrainGenerationAnimation is an animation callback that will: (A) If triggered, begin to shrink the object into a flat plane, (B) Order a re-generation of the terrain data (C) will grow the object back into its new, final shape\&. \fP"
+.ti -1c
+.RI "void \fBwiilook\fP (\fBCamera\fP &WiiCamera, const \fBAngel::vec3\fP &NewTheta, const \fBAngel::vec3\fP &MovementRates)"
+.br
+.RI "\fIwiilook is an analog of mouselook, for wii remote controls\&. \fP"
+.ti -1c
+.RI "void \fBsimpleRotateY\fP (\fBTransCache\fP &obj)"
+.br
+.ti -1c
+.RI "void \fBsimpleRotateAnim\fP (\fBTransCache\fP &obj)"
+.br
+.ti -1c
+.RI "void \fBanimationTest\fP (\fBTransCache\fP &obj)"
+.br
+.ti -1c
+.RI "void \fBidle\fP (void)"
+.br
+.ti -1c
+.RI "void \fBmenufunc\fP (int value)"
+.br
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "const char * \fBterrainTex\fP []"
+.br
+.ti -1c
+.RI "bool \fBswitchingTerrain\fP = false"
+.br
+.ti -1c
+.RI "float \fBheightScale\fP = 0\&.0"
+.br
+.RI "\fIhackity hack hack hackey doo! \fP"
+.ti -1c
+.RI "float \fBticker\fP = 0\&.0"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+This is a trimmed version of our Fall 2012 project\&. 
+
+\fBAuthors:\fP
+.RS 4
+John Huston, Nicholas StPierre, Chris Compton 
+.RE
+.PP
+\fBDate:\fP
+.RS 4
+2013-02-23
+.RE
+.PP
+This is a tech demo for terrain generation using an udpated engine derived from Ed Angel's code from his book\&. 
+.PP
+Definition in file \fBterrain\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "void cleanup (void)"
+
+.PP
+cleanup is a routine to call at exit time that will free up the resources the application is using\&. While not critical, it does aid in using debuggers to not have any memory leaks at exit time\&.
+.PP
+\fBReturns:\fP
+.RS 4
+void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 230 of file terrain\&.cpp\&.
+.SS "void display (void)"
+
+.PP
+display is responsible for drawing an entire screen\&. \fBReturns:\fP
+.RS 4
+void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 255 of file terrain\&.cpp\&.
+.SS "void displayViewport (void)"
+
+.PP
+displayViewport is responsible for drawing a single viewport\&. \fBReturns:\fP
+.RS 4
+void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 241 of file terrain\&.cpp\&.
+.SS "void init (void)"
+
+.PP
+init will initialize this particular flythrough, by creating and instantiating a shader, a camera, and a number of initial objects\&. \fBReturns:\fP
+.RS 4
+void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 91 of file terrain\&.cpp\&.
+.SS "void randomize_terrain ()"
+
+.PP
+randomize_terrain is called to regenerate the terrain in this application\&. It assumes the terrain is named 'terrain' and is located as a direct child of the main scene graph\&.
+.PP
+\fBReturns:\fP
+.RS 4
+void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 67 of file terrain\&.cpp\&.
+.SS "void TerrainGenerationAnimation (\fBTransCache\fP &obj)"
+
+.PP
+TerrainGenerationAnimation is an animation callback that will: (A) If triggered, begin to shrink the object into a flat plane, (B) Order a re-generation of the terrain data (C) will grow the object back into its new, final shape\&. \fBParameters:\fP
+.RS 4
+\fIobj\fP A reference to an object's transformation state\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 279 of file terrain\&.cpp\&.
+.SS "void wiilook (\fBCamera\fP &WiiCamera, const \fBAngel::vec3\fP &NewTheta, const \fBAngel::vec3\fP &MovementRates)"
+
+.PP
+wiilook is an analog of mouselook, for wii remote controls\&. It takes a reference to a \fBCamera\fP, and two vec3s, and uses the information to adjust the \fBCamera\fP's rotation\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIWiiCamera\fP The camera to adjust the rotation of\&. 
+.br
+\fINewTheta\fP The X,Y,Z angles of the Wii Remote\&. 
+.br
+\fIMovementRates\fP The X, Y, Z angular velocities of the Wii Remote\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Void\&. 
+.RE
+.PP
+
+.PP
+Definition at line 346 of file terrain\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const char* terrainTex[]"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+  '\&.\&./Textures/GoodTextures_0013423\&.jpg',  
+  '\&.\&./Textures/GoodTextures_0013779\&.jpg',  
+  '\&.\&./Textures/GrassGreenTexture0002\&.jpg', 
+  '\&.\&./Textures/GoodTextures_0013418\&.jpg',  
+  '\&.\&./Textures/GoodTextures_0013291\&.jpg'   
+}
+.fi
+.PP
+Definition at line 52 of file terrain\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for HyperGrafx from the source code\&.
