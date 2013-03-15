@@ -169,15 +169,15 @@ namespace ObjLoader {
   }
 
   /**
-   * load_obj loads all available objects from a .obj file into the provided scene.
+   * loadObj loads all available objects from a .obj file into the provided scene.
    *
    * @param scene The scene to add objects into.
    * @param filename The filename to load objects from.
    * @param defaultObjName The name to use for any objects that are found.
    * @return A pointer to the most recently created object.
    */
-  Object *load_obj( Scene &scene, const char* filename,
-                    const char *defaultObjName ) {
+  Object *loadObj( Scene &scene, const char* filename,
+                   const char *defaultObjName ) {
     // file input stream
     std::ifstream in( filename, std::ios::in );
 
@@ -283,6 +283,9 @@ namespace ObjLoader {
 
   }
 
+  /** RAND_FLOAT returns a random float from (0,1). */
+#define RAND_FLOAT (rand() / (float) RAND_MAX)
+
   /**
    * Legacy function until I make everything suck less:
    * Loads a single model from an OBJ and stores it into
@@ -359,13 +362,11 @@ namespace ObjLoader {
       }
     }
 
-    if (object->texcoords.size() < object->points.size())
-      fprintf( stderr, "WARNING: No colors set for untextured object!" );
-
-
-    for (size_t i = 0; i < object->points.size(); ++i) {
-      object->colors.push_back( vec4( 1.0, 0.0, 0.0, 1.0 ));
-    }
+    if ( object->texcoords.size() < object->points.size() )
+      for ( size_t i = 0; i < object->points.size(); ++i ) {
+        object->colors.push_back(
+            vec4( RAND_FLOAT, RAND_FLOAT, RAND_FLOAT, 1.0 ) );
+      }
 
   }
 }

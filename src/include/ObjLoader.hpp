@@ -30,15 +30,15 @@ namespace ObjLoader {
   const vector< string > split( const string &str, const char delim );
 
   /**
-   * load_obj loads all available objects from a .obj file into the provided scene.
+   * loadObj loads all available objects from a .obj file into the provided scene.
    *
    * @param scene The scene to add objects into.
    * @param filename The filename to load objects from.
    * @param defaultObjName The name to use for any objects that are found.
    * @return A pointer to the most recently created object.
    */
-  Object *load_obj( Scene &scene, const char* filename, const char *objName =
-                        NULL );
+  Object *loadObj( Scene &scene, const char* filename, const char *objName =
+                       NULL );
 
   /**
    * Split a string by an arbitrary delimeter.

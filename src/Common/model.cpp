@@ -120,7 +120,7 @@ point4 unit( const point4 &p ) {
  * @param color An index for the color to use for the triangle:
  * { Red, Green, Blue, Yellow, Pink, White }
  */
-void divide_triangle( Object *obj, const point4& a, const point4& b,
+void divideTriangle( Object *obj, const point4& a, const point4& b,
                       const point4& c, int timesToRecurse, int color ) {
 
   point4 v1, v2, v3;
@@ -130,10 +130,10 @@ void divide_triangle( Object *obj, const point4& a, const point4& b,
     v2 = unit( a + c );
     v3 = unit( b + c );
 
-    divide_triangle( obj, a, v2, v1, timesToRecurse - 1, color );
-    divide_triangle( obj, c, v3, v2, timesToRecurse - 1, color );
-    divide_triangle( obj, b, v1, v3, timesToRecurse - 1, color );
-    divide_triangle( obj, v1, v2, v3, timesToRecurse - 1, color );
+    divideTriangle( obj, a, v2, v1, timesToRecurse - 1, color );
+    divideTriangle( obj, c, v3, v2, timesToRecurse - 1, color );
+    divideTriangle( obj, b, v1, v3, timesToRecurse - 1, color );
+    divideTriangle( obj, v1, v2, v3, timesToRecurse - 1, color );
   } else triangle( obj, a, b, c, color );
 }
 
@@ -201,10 +201,10 @@ void recursiveModelGen( Object *obj, const point4& a, const point4& b,
                         const point4& c, const point4& d, int timesToRecurse,
                         int color ) {
 
-  divide_triangle( obj, a, b, c, timesToRecurse, color );
-  divide_triangle( obj, d, c, b, timesToRecurse, color );
-  divide_triangle( obj, a, d, b, timesToRecurse, color );
-  divide_triangle( obj, a, d, c, timesToRecurse, color );
+  divideTriangle( obj, a, b, c, timesToRecurse, color );
+  divideTriangle( obj, d, c, b, timesToRecurse, color );
+  divideTriangle( obj, a, d, b, timesToRecurse, color );
+  divideTriangle( obj, a, d, c, timesToRecurse, color );
 }
 
 /**
@@ -328,7 +328,7 @@ void colorCube( Object *obj, GLfloat size ) {
  *
  * @return A random float, just for you!
  */
-float rand_float( void ) {
+float randFloat( void ) {
   return rand() / (float) RAND_MAX;
 }
 
@@ -363,31 +363,31 @@ vec3 calcNormal( point4 &a, point4 &b, point4 &c ) {
 // They help you simulate a 2D array of height values
 // inside of a 1D array.
 /**
- * @def OffsetAt(X, Z)
+ * @def OFFSET_AT(X, Z)
  * Gives the one-dimensional index offset for
  * a buffer given the terrain's X,Z coordinates.
  */
-#define OffsetAt(X,Z) ((X)*S+(Z))
+#define OFFSET_AT(X,Z) ((X)*S+(Z))
 /**
  * Gives the vertex for the terrain data at (X,Z).
  */
-#define VertexAt(X,Z) (vec.at(OffsetAt(X,Z)))
+#define VERTEX_AT(X,Z) (vec.at(OFFSET_AT(X,Z)))
 /**
  * Returns the height as a float for these terrain coordinates.
  */
-#define HeightAt(X,Z) (VertexAt(X,Z).y)
+#define HEIGHT_AT(X,Z) (VERTEX_AT(X,Z).y)
 /**
  * Returns the color vector for the terrain data at (X,Z).
  */
-#define ColorAt(X,Z) (col.at(OffsetAt(X,Z)))
+#define COLOR_AT(X,Z) (col.at(OFFSET_AT(X,Z)))
 /**
  * Returns the Texture UV (vec2) for the terrain at (X,Z).
  */
-#define TXYAt(X,Z) (txy.at(OffsetAt(X,Z)))
+#define TEX_UV_AT(X,Z) (txy.at(OFFSET_AT(X,Z)))
 /**
  * Returns the Normal vec3 for the terrain at (X,Z).
  */
-#define NormalAt(X,Z) (nor.at(OffsetAt(X,Z)))
+#define NORMAL_AT(X,Z) (nor.at(OFFSET_AT(X,Z)))
 
 /**
  * Use the diamond-square terrain generation algorithm to generate a
@@ -445,10 +445,10 @@ double landGen( Object *obj, int N, float H ) {
                 fmod( 100 * (float) z / (float) S, 100 ) ) );
   
   // Initialize the corners of the grid
-  HeightAt( 0, 0 ) = 0;
-  HeightAt( S-1, 0 ) = 0;
-  HeightAt( 0, S-1 ) = 0;
-  HeightAt( S-1, S-1 ) = 0;
+  HEIGHT_AT( 0, 0 ) = 0;
+  HEIGHT_AT( S-1, 0 ) = 0;
+  HEIGHT_AT( 0, S-1 ) = 0;
+  HEIGHT_AT( S-1, S-1 ) = 0;
 
   // Populate the (x, y, z) values of vec4 according to the
   // Diamond-Square algorithm
@@ -461,19 +461,19 @@ double landGen( Object *obj, int N, float H ) {
     // generate new square values
     for ( int x = 0; x < S - 1; x += sideLength ) {
       for ( int z = 0; z < S - 1; z += sideLength ) {
-        double avg = (HeightAt( x, z ) + HeightAt( x + sideLength, z )
-                      + HeightAt( x, z + sideLength )
-                      + HeightAt( x + sideLength, z + sideLength ))
+        double avg = (HEIGHT_AT( x, z ) + HEIGHT_AT( x + sideLength, z )
+                      + HEIGHT_AT( x, z + sideLength )
+                      + HEIGHT_AT( x + sideLength, z + sideLength ))
                      / 4.0;
 
-        vec4 color_avg = (ColorAt(x,z) + ColorAt(x+sideLength,z)
-                          + ColorAt(x,z+sideLength)
-                          + ColorAt(x+sideLength,z+sideLength))
+        vec4 color_avg = (COLOR_AT(x,z) + COLOR_AT(x+sideLength,z)
+                          + COLOR_AT(x,z+sideLength)
+                          + COLOR_AT(x+sideLength,z+sideLength))
                          / 4.0;
         vec4 color_jitter = vec4( jitter( CH ), jitter( CH ), jitter( CH ), 0 );
 
-        HeightAt( x + halfSide, z + halfSide ) = avg + jitter( H );
-        ColorAt( x + halfSide, z + halfSide ) = color_avg + color_jitter;
+        HEIGHT_AT( x + halfSide, z + halfSide ) = avg + jitter( H );
+        COLOR_AT( x + halfSide, z + halfSide ) = color_avg + color_jitter;
       } // for z
     } // for x
 
@@ -487,28 +487,28 @@ double landGen( Object *obj, int N, float H ) {
         // We must use mod and add SIZE for subtraction
         // so that we can wrap around the array to find the corners
 
-        double avg = (HeightAt( (x-halfSide + S) % S, z )
-            + HeightAt( x + halfSide % S, z ) + HeightAt( x, z + halfSide % S )
-            + HeightAt( x, (z - halfSide + S) % S ))
+        double avg = (HEIGHT_AT( (x-halfSide + S) % S, z )
+            + HEIGHT_AT( x + halfSide % S, z ) + HEIGHT_AT( x, z + halfSide % S )
+            + HEIGHT_AT( x, (z - halfSide + S) % S ))
                      / 4.0;
 
-        vec4 color_avg = (ColorAt( (x-halfSide + S) % S, z )
-            + ColorAt( x + halfSide % S, z ) + ColorAt( x, z + halfSide % S )
-            + ColorAt( x, (z - halfSide + S) % S ))
+        vec4 color_avg = (COLOR_AT( (x-halfSide + S) % S, z )
+            + COLOR_AT( x + halfSide % S, z ) + COLOR_AT( x, z + halfSide % S )
+            + COLOR_AT( x, (z - halfSide + S) % S ))
                          / 4.0;
         vec4 color_jitter = vec4( jitter( CH ), jitter( CH ), jitter( CH ), 0 );
 
-        HeightAt( x, z ) = avg + jitter( H );
-        ColorAt( x, z ) = color_avg + color_jitter;
+        HEIGHT_AT( x, z ) = avg + jitter( H );
+        COLOR_AT( x, z ) = color_avg + color_jitter;
 
         // Wrapping:
         if ( x == 0 ) {
-          HeightAt( S-1, z ) = HeightAt( x, z );
-          ColorAt( S-1, z ) = ColorAt( x, z );
+          HEIGHT_AT( S-1, z ) = HEIGHT_AT( x, z );
+          COLOR_AT( S-1, z ) = COLOR_AT( x, z );
         }
         if ( z == 0 ) {
-          HeightAt( x, S-1 ) = HeightAt( x, z );
-          ColorAt( x, S-1 ) = ColorAt( x, z );
+          HEIGHT_AT( x, S-1 ) = HEIGHT_AT( x, z );
+          COLOR_AT( x, S-1 ) = COLOR_AT( x, z );
         }
       } // for z
     } // for x
@@ -522,22 +522,22 @@ double landGen( Object *obj, int N, float H ) {
   drawIndex.reserve( 2 * S * S - 2 * S );
   for ( int i = 0, j = 0; i + 1 < S; i++ ) {
     for ( j = 0; j < S; j++ ) {
-      drawIndex.push_back( OffsetAt(i,j));
-      drawIndex.push_back( OffsetAt(i+1,j));
+      drawIndex.push_back( OFFSET_AT(i,j));
+      drawIndex.push_back( OFFSET_AT(i+1,j));
     }
 
     /* If we're out of rows to serialize, give up. */
     if ( ++i == S ) break;
 
     for ( ; j > 0; j-- ) {
-      drawIndex.push_back( OffsetAt(i,j-1));
-      drawIndex.push_back( OffsetAt(i+1,j-1));
+      drawIndex.push_back( OFFSET_AT(i,j-1));
+      drawIndex.push_back( OFFSET_AT(i+1,j-1));
     }
   }
 
   /*
    for ( int i = 0; i < S*S; i++ ) {
-   col.push_back(vec4(rand_float(),rand_float(),rand_float(),1.0));
+   col.push_back(vec4(randFloat(),randFloat(),randFloat(),1.0));
    }
    */
 

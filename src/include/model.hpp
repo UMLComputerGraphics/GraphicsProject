@@ -54,8 +54,8 @@ void triangle( Object *obj, const point4& a, const point4& b, const point4& c,
  * @param color An index for the color to use for the triangle:
  * { Red, Green, Blue, Yellow, Pink, White }
  */
-void divide_triangle( Object *obj, const point4& a, const point4& b,
-                      const point4& c, int timesToRecurse, int color );
+void divideTriangle( Object *obj, const point4& a, const point4& b,
+                     const point4& c, int timesToRecurse, int color );
 
 /**
  * Creates a tetrahedron using four triangles. (12 vertices.)
