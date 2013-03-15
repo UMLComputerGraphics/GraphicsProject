@@ -4,11 +4,14 @@ var searchData=
   ['terraingenerationanimation',['TerrainGenerationAnimation',['../terrain_8cpp.html#a19cc2bcd83a4740c8ab847f391229f09',1,'terrain.cpp']]],
   ['tetra',['tetra',['../model_8cpp.html#ace1e82de848a81de1a680505d08ebbb4',1,'tetra(Object *obj, const point4 &amp;a, const point4 &amp;b, const point4 &amp;c, const point4 &amp;d):&#160;model.cpp'],['../model_8hpp.html#ace1e82de848a81de1a680505d08ebbb4',1,'tetra(Object *obj, const point4 &amp;a, const point4 &amp;b, const point4 &amp;c, const point4 &amp;d):&#160;model.cpp']]],
   ['tex_5fuv_5fat',['TEX_UV_AT',['../model_8cpp.html#a4535f7729a3c0127c4bb32caa100d2cf',1,'model.cpp']]],
+  ['texcoords',['TEXCOORDS',['../class_object.html#a74a39247838865244defd0ae9712df9badc601b2ac4ff7f3e455faa35208e431f',1,'Object']]],
+  ['texture',['texture',['../class_object.html#afebb27ddb10daed8e2c5085b76cbc500',1,'Object']]],
   ['tick',['Tick',['../class_timer.html#a4e69d3c5a312d1b29d1735b2c5bccefb',1,'Timer']]],
   ['timer',['Timer',['../class_timer.html',1,'']]],
   ['tock',['Tock',['../class_timer.html#a2c58a2e04e1e30926805aa4e82d2a0a5',1,'Timer']]],
   ['transcache',['TransCache',['../class_trans_cache.html',1,'']]],
   ['transformation',['Transformation',['../class_transformation.html',1,'']]],
+  ['translationfactor',['translationFactor',['../raytrace1_8cpp.html#a4ebc11e7a5ba3738d580c7e764782aff',1,'raytrace1.cpp']]],
   ['transmat',['TransMat',['../class_trans_mat.html',1,'']]],
   ['triangle',['triangle',['../model_8cpp.html#ac0240797ef8ab9bece7689d5fe3e3b01',1,'triangle(Object *obj, const point4 &amp;a, const point4 &amp;b, const point4 &amp;c, const int color):&#160;model.cpp'],['../model_8hpp.html#ac0240797ef8ab9bece7689d5fe3e3b01',1,'triangle(Object *obj, const point4 &amp;a, const point4 &amp;b, const point4 &amp;c, const int color):&#160;model.cpp']]]
 ];

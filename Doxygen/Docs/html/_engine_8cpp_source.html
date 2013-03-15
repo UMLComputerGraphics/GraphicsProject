@@ -92,7 +92,7 @@ $(document).ready(function(){initNavTree('_engine_8cpp_source.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -121,9 +121,9 @@ $(document).ready(function(){initNavTree('_engine_8cpp_source.html','');});
 <div class="line"><a name="l00029"></a><span class="lineno"><a class="code" href="class_engine.html#a6cbf9ec80a4a3bb245355ff70498dba0">   29</a></span>&#160;<a class="code" href="class_engine.html" title="The Engine class is a singleton-style class which helps keep track of instances of important objects ...">Engine</a> *<a class="code" href="class_engine.html#a6cbf9ec80a4a3bb245355ff70498dba0" title="instance returns, or creates and then returns, a pointer to the Engine object.">Engine::instance</a>( <span class="keywordtype">void</span> ) {</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  </div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  <span class="keywordflow">if</span> ( <a class="code" href="class_engine.html#ae494a590056c4594f1f3cb39e4d18994" title="static, stateful variable that is our singleton pointer.">_engineSingleton</a> == NULL ) <a class="code" href="class_engine.html#ae494a590056c4594f1f3cb39e4d18994" title="static, stateful variable that is our singleton pointer.">_engineSingleton</a> = <span class="keyword">new</span> <a class="code" href="class_engine.html#a9ad87e382195a05d5d310a2fb3e357fd" title="Default constructor.">Engine</a>();</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  </div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="class_engine.html#ae494a590056c4594f1f3cb39e4d18994" title="static, stateful variable that is our singleton pointer.">_engineSingleton</a>;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  </div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;}</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
 <div class="line"><a name="l00040"></a><span class="lineno"><a class="code" href="class_engine.html#a9ad87e382195a05d5d310a2fb3e357fd">   40</a></span>&#160;<a class="code" href="class_engine.html#a9ad87e382195a05d5d310a2fb3e357fd" title="Default constructor.">Engine::Engine</a>( <span class="keywordtype">void</span> ) {</div>
@@ -144,21 +144,21 @@ $(document).ready(function(){initNavTree('_engine_8cpp_source.html','');});
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;}</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
 <div class="line"><a name="l00076"></a><span class="lineno"><a class="code" href="class_engine.html#a2b2c1cd59c9a5c903bf466284012ce4c">   76</a></span>&#160;<a class="code" href="class_cameras.html" title="The Cameras class represents a group of logical cameras for a model view. Each camera possesses its o...">Cameras</a> *<a class="code" href="class_engine.html#a2b2c1cd59c9a5c903bf466284012ce4c" title="Retrieves a pointer to the Camera List.">Engine::cams</a>( <span class="keywordtype">void</span> ) {</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  </div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <span class="keywordflow">return</span> &amp;(<a class="code" href="class_engine.html#a181e11b6fd26698bc173647ab2471c8c" title="The core &quot;Screen&quot; object for the Engine.">_screen</a>._camList);</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  </div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;}</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
 <div class="line"><a name="l00086"></a><span class="lineno"><a class="code" href="class_engine.html#a782cf288c161986d0ac0eb48cd187c4d">   86</a></span>&#160;<a class="code" href="class_scene.html">Scene</a> *<a class="code" href="class_engine.html#a782cf288c161986d0ac0eb48cd187c4d" title="Retrieves a pointer to the Root, top-level Scene graph.">Engine::rootScene</a>( <span class="keywordtype">void</span> ) {</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  </div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  <span class="keywordflow">return</span> &amp;<a class="code" href="class_engine.html#afc244649d4b31f59f2ef91754472b281" title="The root Scene graph for the Engine.">_scene</a>;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  </div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;}</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
 <div class="line"><a name="l00096"></a><span class="lineno"><a class="code" href="class_engine.html#ad4429218b5aed162269094c6571a2520">   96</a></span>&#160;<a class="code" href="class_screen.html">Screen</a> *<a class="code" href="class_engine.html#ad4429218b5aed162269094c6571a2520" title="Retrieves a pointer to the core &#39;Screen&#39; object.">Engine::mainScreen</a>( <span class="keywordtype">void</span> ) {</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  </div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  <span class="keywordflow">return</span> &amp;<a class="code" href="class_engine.html#a181e11b6fd26698bc173647ab2471c8c" title="The core &quot;Screen&quot; object for the Engine.">_screen</a>;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  </div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;}</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
 <div class="line"><a name="l00107"></a><span class="lineno"><a class="code" href="class_engine.html#ae3658976c5ab1f0c912d2c7d5747cb67">  107</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_engine.html#ae3658976c5ab1f0c912d2c7d5747cb67" title="opt retrieves the current setting of an option in the Engine.">Engine::opt</a>( <span class="keyword">const</span> std::string &amp;Option ) {</div>
@@ -185,7 +185,7 @@ $(document).ready(function(){initNavTree('_engine_8cpp_source.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_afec2d0f263cd02a2f4d5f4df058549c.html">Classes</a></li><li class="navelem"><a class="el" href="_engine_8cpp.html">Engine.cpp</a></li>
-    <li class="footer">Generated on Fri Mar 15 2013 00:47:38 for HyperGrafx by
+    <li class="footer">Generated on Fri Mar 15 2013 19:22:37 for HyperGrafx by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

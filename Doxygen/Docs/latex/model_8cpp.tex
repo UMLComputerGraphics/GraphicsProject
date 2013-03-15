@@ -38,13 +38,6 @@ Functions related to constructing simple geometry.
 \hypertarget{model_8cpp_a6087c247abe3d7f3a87c6121a25f3bb9}{\#define \hyperlink{model_8cpp_a6087c247abe3d7f3a87c6121a25f3bb9}{N\-O\-R\-M\-A\-L\-\_\-\-A\-T}(X, Z)~(nor.\-at(\hyperlink{model_8cpp_a3ad4ef4bd3a5cf6b3327c8c935ee78e8}{O\-F\-F\-S\-E\-T\-\_\-\-A\-T}(X,Z)))}\label{model_8cpp_a6087c247abe3d7f3a87c6121a25f3bb9}
 
 \begin{DoxyCompactList}\small\item\em Returns the Normal vec3 for the terrain at (X,Z). \end{DoxyCompactList}\end{DoxyCompactItemize}
-\subsection*{Typedefs}
-\begin{DoxyCompactItemize}
-\item 
-typedef \hyperlink{struct_angel_1_1vec4}{Angel\-::vec4} \hyperlink{model_8cpp_a5c48af6a06eb70709fe4ce950c3015e3}{color4}
-\begin{DoxyCompactList}\small\item\em Simple alias of \hyperlink{struct_angel_1_1vec4}{Angel\-::vec4} to emphasize semantic meaning. \end{DoxyCompactList}\item 
-typedef \hyperlink{struct_angel_1_1vec4}{Angel\-::vec4} \hyperlink{model_8cpp_acd96474ea1ee15dc164c05371abfd25b}{point4}
-\begin{DoxyCompactList}\small\item\em Simple alias of \hyperlink{struct_angel_1_1vec4}{Angel\-::vec4} to emphasize semantic meaning. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -59,23 +52,23 @@ void \hyperlink{model_8cpp_a854158bca43c59081f73298fe6ccd314}{divide\-Triangle} 
 void \hyperlink{model_8cpp_ace1e82de848a81de1a680505d08ebbb4}{tetra} (\hyperlink{class_object}{Object} $\ast$obj, const \hyperlink{struct_angel_1_1vec4}{point4} \&a, const \hyperlink{struct_angel_1_1vec4}{point4} \&b, const \hyperlink{struct_angel_1_1vec4}{point4} \&c, const \hyperlink{struct_angel_1_1vec4}{point4} \&d)
 \begin{DoxyCompactList}\small\item\em Creates a tetrahedron using four triangles. \end{DoxyCompactList}\item 
 void \hyperlink{model_8cpp_a9ffe1e1f6d0168397c34286260d36562}{sierpinski\-Pyramid} (\hyperlink{class_object}{Object} $\ast$obj, const \hyperlink{struct_angel_1_1vec4}{point4} \&a, const \hyperlink{struct_angel_1_1vec4}{point4} \&b, const \hyperlink{struct_angel_1_1vec4}{point4} \&c, const \hyperlink{struct_angel_1_1vec4}{point4} \&d, int count)
-\begin{DoxyCompactList}\small\item\em Forms a Sierpinski Pyramid object given four 4\-D points in space. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Forms a Sierpinski Pyramid object given four 4\-D \-\_\-vertices in space. \end{DoxyCompactList}\item 
 void \hyperlink{model_8cpp_a0afb276b9c3c6051187d5dbfa5a18e6a}{recursive\-Model\-Gen} (\hyperlink{class_object}{Object} $\ast$obj, const \hyperlink{struct_angel_1_1vec4}{point4} \&a, const \hyperlink{struct_angel_1_1vec4}{point4} \&b, const \hyperlink{struct_angel_1_1vec4}{point4} \&c, const \hyperlink{struct_angel_1_1vec4}{point4} \&d, int times\-To\-Recurse, int color)
 \begin{DoxyCompactList}\small\item\em Given a quadrilateral, splits it up into smaller quadrilaterals. \end{DoxyCompactList}\item 
 void \hyperlink{model_8cpp_a152e6c0e91107b949df03ca399251fd8}{sphere} (\hyperlink{class_object}{Object} $\ast$obj)
 \begin{DoxyCompactList}\small\item\em Creates a white sphere. \end{DoxyCompactList}\item 
 void \hyperlink{model_8cpp_afc0ea166029aab7e030ba43b4633a778}{quad} (\hyperlink{class_object}{Object} $\ast$obj, const \hyperlink{struct_angel_1_1vec4}{point4} \&a, const \hyperlink{struct_angel_1_1vec4}{point4} \&b, const \hyperlink{struct_angel_1_1vec4}{point4} \&c, const \hyperlink{struct_angel_1_1vec4}{point4} \&d, const \hyperlink{struct_angel_1_1vec4}{color4} \&A, const \hyperlink{struct_angel_1_1vec4}{color4} \&B, const \hyperlink{struct_angel_1_1vec4}{color4} \&C, const \hyperlink{struct_angel_1_1vec4}{color4} \&D)
-\begin{DoxyCompactList}\small\item\em Create a quadrilateral from four points and four colors. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Create a quadrilateral from four \-\_\-vertices and four \-\_\-colors. \end{DoxyCompactList}\item 
 void \hyperlink{model_8cpp_aef25b2740b9cd274d269b8ac69bd7cdd}{cube} (\hyperlink{class_object}{Object} $\ast$obj, const G\-Lfloat \&size, const \hyperlink{struct_angel_1_1vec4}{color4} colors\mbox{[}8\mbox{]})
-\begin{DoxyCompactList}\small\item\em Create a cube of a given size fixed at the origin, using the eight colors specified. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Create a cube of a given size fixed at the origin, using the eight \-\_\-colors specified. \end{DoxyCompactList}\item 
 void \hyperlink{model_8cpp_a9aeb9d305a36f39f25137645d75eaa95}{color\-Cube} (\hyperlink{class_object}{Object} $\ast$obj, G\-Lfloat size)
-\begin{DoxyCompactList}\small\item\em Creates a cube of a given size fixed at the origin, using all eight primary colors. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Creates a cube of a given size fixed at the origin, using all eight primary \-\_\-colors. \end{DoxyCompactList}\item 
 float \hyperlink{model_8cpp_a476a380b7a6a48dc7d762716b041def8}{rand\-Float} (void)
 \begin{DoxyCompactList}\small\item\em Return a randomized float value! \end{DoxyCompactList}\item 
 double \hyperlink{model_8cpp_a1c53f4777590deb64c28e8ebb64a321d}{jitter} (double H)
 \begin{DoxyCompactList}\small\item\em Returns a random float between \mbox{[}-\/\-H,H\mbox{]}. \end{DoxyCompactList}\item 
 \hyperlink{struct_angel_1_1vec3}{vec3} \hyperlink{model_8cpp_a8ba442e2661e9055749548f56cb9f2bc}{calc\-Normal} (\hyperlink{struct_angel_1_1vec4}{point4} \&a, \hyperlink{struct_angel_1_1vec4}{point4} \&b, \hyperlink{struct_angel_1_1vec4}{point4} \&c)
-\begin{DoxyCompactList}\small\item\em Calculate the vector normal to the triangle formed by three points. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Calculate the vector normal to the triangle formed by three \-\_\-vertices. \end{DoxyCompactList}\item 
 double \hyperlink{model_8cpp_a578108fa151d2df77af6ae4585c4bccc}{land\-Gen} (\hyperlink{class_object}{Object} $\ast$obj, int N, float H)
 \begin{DoxyCompactList}\small\item\em Use the diamond-\/square terrain generation algorithm to generate a triangle strip that resembles terrain with oceans, mountains, etc. \end{DoxyCompactList}\item 
 void \hyperlink{model_8cpp_ad759245db436eebefc9a921e882bca3b}{make\-Agua} (\hyperlink{class_object}{Object} $\ast$land\-\_\-obj, \hyperlink{class_object}{Object} $\ast$agua\-\_\-obj)
@@ -120,32 +113,7 @@ A macro to help quickly call \hyperlink{model_8cpp_afc0ea166029aab7e030ba43b4633
 \end{DoxySeeAlso}
 
 
-Definition at line 268 of file model.\-cpp.
-
-
-
-\subsection{Typedef Documentation}
-\hypertarget{model_8cpp_a5c48af6a06eb70709fe4ce950c3015e3}{\index{model.\-cpp@{model.\-cpp}!color4@{color4}}
-\index{color4@{color4}!model.cpp@{model.\-cpp}}
-\subsubsection[{color4}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Angel\-::vec4} {\bf color4}}}\label{model_8cpp_a5c48af6a06eb70709fe4ce950c3015e3}
-
-
-Simple alias of \hyperlink{struct_angel_1_1vec4}{Angel\-::vec4} to emphasize semantic meaning. 
-
-
-
-Definition at line 16 of file model.\-cpp.
-
-\hypertarget{model_8cpp_acd96474ea1ee15dc164c05371abfd25b}{\index{model.\-cpp@{model.\-cpp}!point4@{point4}}
-\index{point4@{point4}!model.cpp@{model.\-cpp}}
-\subsubsection[{point4}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Angel\-::vec4} {\bf point4}}}\label{model_8cpp_acd96474ea1ee15dc164c05371abfd25b}
-
-
-Simple alias of \hyperlink{struct_angel_1_1vec4}{Angel\-::vec4} to emphasize semantic meaning. 
-
-
-
-Definition at line 18 of file model.\-cpp.
+Definition at line 263 of file model.\-cpp.
 
 
 
@@ -161,7 +129,7 @@ Definition at line 18 of file model.\-cpp.
 )}}\label{model_8cpp_a8ba442e2661e9055749548f56cb9f2bc}
 
 
-Calculate the vector normal to the triangle formed by three points. 
+Calculate the vector normal to the triangle formed by three \-\_\-vertices. 
 
 
 \begin{DoxyParams}{Parameters}
@@ -177,7 +145,7 @@ The vector normal to the plane formed by the triangle a,b,c.
 \end{DoxyReturn}
 
 
-Definition at line 352 of file model.\-cpp.
+Definition at line 347 of file model.\-cpp.
 
 \hypertarget{model_8cpp_a9aeb9d305a36f39f25137645d75eaa95}{\index{model.\-cpp@{model.\-cpp}!color\-Cube@{color\-Cube}}
 \index{color\-Cube@{color\-Cube}!model.cpp@{model.\-cpp}}
@@ -189,7 +157,9 @@ Definition at line 352 of file model.\-cpp.
 )}}\label{model_8cpp_a9aeb9d305a36f39f25137645d75eaa95}
 
 
-Creates a cube of a given size fixed at the origin, using all eight primary colors. 
+Creates a cube of a given size fixed at the origin, using all eight primary \-\_\-colors. 
+
+Creates a cube of a given size fixed at the origin, using all eight primary colors.
 
 
 \begin{DoxyParams}{Parameters}
@@ -200,7 +170,7 @@ Creates a cube of a given size fixed at the origin, using all eight primary colo
 \end{DoxyParams}
 
 
-Definition at line 310 of file model.\-cpp.
+Definition at line 305 of file model.\-cpp.
 
 \hypertarget{model_8cpp_aba8f9938a331f36ea0d3a4a3a777b44f}{\index{model.\-cpp@{model.\-cpp}!create\-Point@{create\-Point}}
 \index{create\-Point@{create\-Point}!model.cpp@{model.\-cpp}}
@@ -229,7 +199,7 @@ Adds another vertex to the specified object.
 \end{DoxyParams}
 
 
-Definition at line 42 of file model.\-cpp.
+Definition at line 37 of file model.\-cpp.
 
 \hypertarget{model_8cpp_aef25b2740b9cd274d269b8ac69bd7cdd}{\index{model.\-cpp@{model.\-cpp}!cube@{cube}}
 \index{cube@{cube}!model.cpp@{model.\-cpp}}
@@ -242,7 +212,9 @@ Definition at line 42 of file model.\-cpp.
 )}}\label{model_8cpp_aef25b2740b9cd274d269b8ac69bd7cdd}
 
 
-Create a cube of a given size fixed at the origin, using the eight colors specified. 
+Create a cube of a given size fixed at the origin, using the eight \-\_\-colors specified. 
+
+Create a cube of a given size fixed at the origin, using the eight colors specified.
 
 
 \begin{DoxyParams}{Parameters}
@@ -250,12 +222,12 @@ Create a cube of a given size fixed at the origin, using the eight colors specif
 \hline
 {\em size} & The size of the cube to create. \\
 \hline
-{\em colors} & An array of eight colors for the vertices. \\
+{\em colors} & An array of eight \-\_\-colors for the vertices. \\
 \hline
 \end{DoxyParams}
 
 
-Definition at line 280 of file model.\-cpp.
+Definition at line 275 of file model.\-cpp.
 
 \hypertarget{model_8cpp_a854158bca43c59081f73298fe6ccd314}{\index{model.\-cpp@{model.\-cpp}!divide\-Triangle@{divide\-Triangle}}
 \index{divide\-Triangle@{divide\-Triangle}!model.cpp@{model.\-cpp}}
@@ -290,7 +262,7 @@ Used in building the Sierpinski gasket\-: Takes the coordinate for a triangle an
 \end{DoxyParams}
 
 
-Definition at line 123 of file model.\-cpp.
+Definition at line 118 of file model.\-cpp.
 
 \hypertarget{model_8cpp_a1c53f4777590deb64c28e8ebb64a321d}{\index{model.\-cpp@{model.\-cpp}!jitter@{jitter}}
 \index{jitter@{jitter}!model.cpp@{model.\-cpp}}
@@ -313,7 +285,7 @@ a random float between \mbox{[}-\/\-H,H\mbox{]}.
 \end{DoxyReturn}
 
 
-Definition at line 340 of file model.\-cpp.
+Definition at line 335 of file model.\-cpp.
 
 \hypertarget{model_8cpp_a578108fa151d2df77af6ae4585c4bccc}{\index{model.\-cpp@{model.\-cpp}!land\-Gen@{land\-Gen}}
 \index{land\-Gen@{land\-Gen}!model.cpp@{model.\-cpp}}
@@ -342,7 +314,7 @@ The maximum height actually achieved in this terrain generation.
 \end{DoxyReturn}
 
 
-Definition at line 402 of file model.\-cpp.
+Definition at line 397 of file model.\-cpp.
 
 \hypertarget{model_8cpp_ad759245db436eebefc9a921e882bca3b}{\index{model.\-cpp@{model.\-cpp}!make\-Agua@{make\-Agua}}
 \index{make\-Agua@{make\-Agua}!model.cpp@{model.\-cpp}}
@@ -365,7 +337,7 @@ Adds a blue quadrilateral to an already-\/generated terrain object to create the
 \end{DoxyParams}
 What should the water's height be? 
 
-Definition at line 561 of file model.\-cpp.
+Definition at line 557 of file model.\-cpp.
 
 \hypertarget{model_8cpp_afc0ea166029aab7e030ba43b4633a778}{\index{model.\-cpp@{model.\-cpp}!quad@{quad}}
 \index{quad@{quad}!model.cpp@{model.\-cpp}}
@@ -384,7 +356,9 @@ Definition at line 561 of file model.\-cpp.
 )}}\label{model_8cpp_afc0ea166029aab7e030ba43b4633a778}
 
 
-Create a quadrilateral from four points and four colors. 
+Create a quadrilateral from four \-\_\-vertices and four \-\_\-colors. 
+
+Create a quadrilateral from four points and four colors.
 
 
 \begin{DoxyParams}{Parameters}
@@ -409,7 +383,7 @@ Create a quadrilateral from four points and four colors.
 \end{DoxyParams}
 
 
-Definition at line 242 of file model.\-cpp.
+Definition at line 237 of file model.\-cpp.
 
 \hypertarget{model_8cpp_a476a380b7a6a48dc7d762716b041def8}{\index{model.\-cpp@{model.\-cpp}!rand\-Float@{rand\-Float}}
 \index{rand\-Float@{rand\-Float}!model.cpp@{model.\-cpp}}
@@ -427,7 +401,7 @@ A random float, just for you!
 \end{DoxyReturn}
 
 
-Definition at line 331 of file model.\-cpp.
+Definition at line 326 of file model.\-cpp.
 
 \hypertarget{model_8cpp_a0afb276b9c3c6051187d5dbfa5a18e6a}{\index{model.\-cpp@{model.\-cpp}!recursive\-Model\-Gen@{recursive\-Model\-Gen}}
 \index{recursive\-Model\-Gen@{recursive\-Model\-Gen}!model.cpp@{model.\-cpp}}
@@ -467,7 +441,7 @@ Used in the generation of spheres! F\-I\-X\-M\-E\-: Nick St.\-Pierre (Documentat
 \end{DoxyParams}
 
 
-Definition at line 200 of file model.\-cpp.
+Definition at line 195 of file model.\-cpp.
 
 \hypertarget{model_8cpp_a9ffe1e1f6d0168397c34286260d36562}{\index{model.\-cpp@{model.\-cpp}!sierpinski\-Pyramid@{sierpinski\-Pyramid}}
 \index{sierpinski\-Pyramid@{sierpinski\-Pyramid}!model.cpp@{model.\-cpp}}
@@ -483,7 +457,9 @@ Definition at line 200 of file model.\-cpp.
 )}}\label{model_8cpp_a9ffe1e1f6d0168397c34286260d36562}
 
 
-Forms a Sierpinski Pyramid object given four 4\-D points in space. 
+Forms a Sierpinski Pyramid object given four 4\-D \-\_\-vertices in space. 
+
+Forms a Sierpinski Pyramid object given four 4\-D points in space.
 
 
 \begin{DoxyParams}{Parameters}
@@ -502,7 +478,7 @@ Forms a Sierpinski Pyramid object given four 4\-D points in space.
 \end{DoxyParams}
 
 
-Definition at line 168 of file model.\-cpp.
+Definition at line 163 of file model.\-cpp.
 
 \hypertarget{model_8cpp_a152e6c0e91107b949df03ca399251fd8}{\index{model.\-cpp@{model.\-cpp}!sphere@{sphere}}
 \index{sphere@{sphere}!model.cpp@{model.\-cpp}}
@@ -522,7 +498,7 @@ Creates a white sphere.
 \end{DoxyParams}
 
 
-Definition at line 215 of file model.\-cpp.
+Definition at line 210 of file model.\-cpp.
 
 \hypertarget{model_8cpp_ace1e82de848a81de1a680505d08ebbb4}{\index{model.\-cpp@{model.\-cpp}!tetra@{tetra}}
 \index{tetra@{tetra}!model.cpp@{model.\-cpp}}
@@ -556,7 +532,7 @@ Creates a tetrahedron using four triangles.
 \end{DoxyParams}
 
 
-Definition at line 149 of file model.\-cpp.
+Definition at line 144 of file model.\-cpp.
 
 \hypertarget{model_8cpp_ac0240797ef8ab9bece7689d5fe3e3b01}{\index{model.\-cpp@{model.\-cpp}!triangle@{triangle}}
 \index{triangle@{triangle}!model.cpp@{model.\-cpp}}
@@ -588,7 +564,7 @@ Creates a triangle primitive from three spatial coordinates.
 \end{DoxyParams}
 
 
-Definition at line 61 of file model.\-cpp.
+Definition at line 56 of file model.\-cpp.
 
 \hypertarget{model_8cpp_ab245eec74a0117de8609d4fabd23402b}{\index{model.\-cpp@{model.\-cpp}!unit@{unit}}
 \index{unit@{unit}!model.cpp@{model.\-cpp}}
@@ -613,5 +589,5 @@ T\-O\-D\-O\-: Is this a redundant version of Angel\-::normalize?
 \end{DoxyReturn}
 
 
-Definition at line 93 of file model.\-cpp.
+Definition at line 88 of file model.\-cpp.
 

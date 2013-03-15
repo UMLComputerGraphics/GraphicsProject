@@ -1,7 +1,5 @@
 var terrain_8cpp =
 [
-    [ "color4", "terrain_8cpp.html#a5c48af6a06eb70709fe4ce950c3015e3", null ],
-    [ "point4", "terrain_8cpp.html#acd96474ea1ee15dc164c05371abfd25b", null ],
     [ "animationTest", "terrain_8cpp.html#ab42e9609dfaf48294321a6b821095be9", null ],
     [ "cleanup", "terrain_8cpp.html#aeb94fbd457627182ceee7e505f432541", null ],
     [ "display", "terrain_8cpp.html#a4ea013001a5fb47853d0fab8f8de35cd", null ],

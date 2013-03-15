@@ -92,7 +92,7 @@ $(document).ready(function(){initNavTree('zach_morph_demo_8cpp_source.html','');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -115,11 +115,11 @@ $(document).ready(function(){initNavTree('zach_morph_demo_8cpp_source.html','');
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;cstdlib&gt;</span></div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &lt;time.h&gt;</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">/* Multi-platform support and OpenGL headers. */</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;platform.h&quot;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="platform_8h.html" title="Covertly re-defines functions that conflict between Linux and OSX.">platform.h</a>&quot;</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_camera_8hpp.html" title="Header for the Camera class.">Camera.hpp</a>&quot;</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_cameras_8hpp.html" title="Header for the &#39;Cameras&#39; class, a collection of Camera objects.">Cameras.hpp</a>&quot;</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;Screen.hpp&quot;</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &quot;Object.hpp&quot;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_object_8hpp.html" title="Header for the Object class.">Object.hpp</a>&quot;</span></div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &quot;Timer.hpp&quot;</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &quot;Scene.hpp&quot;</span></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_engine_8hpp.html" title="Header for the Engine class.">Engine.hpp</a>&quot;</span></div>
@@ -140,15 +140,15 @@ $(document).ready(function(){initNavTree('zach_morph_demo_8cpp_source.html','');
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  GLuint gShader = Angel::InitShader( <span class="stringliteral">&quot;shaders/vmorph.glsl&quot;</span>, <span class="stringliteral">&quot;shaders/fmorph.glsl&quot;</span> );</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="comment">// Let the other objects know which shader to use by default.</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  rootScene-&gt;<a class="code" href="class_scene.html#a7137a7302c21ac4dd44e746bfb6f7cf8" title="Sets the Default shader for the scene.">Shader</a>( gShader );</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  primScreen-&gt;_camList.<a class="code" href="class_scene.html#a7137a7302c21ac4dd44e746bfb6f7cf8" title="Sets the Default shader for the scene.">Shader</a>( gShader );</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  rootScene-&gt;<a class="code" href="class_scene.html#a3ea7e92935755c776c235a9872f53394" title="Sets the Default shader for the scene.">shader</a>( gShader );</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  primScreen-&gt;_camList.<a class="code" href="class_scene.html#a3ea7e92935755c776c235a9872f53394" title="Sets the Default shader for the scene.">shader</a>( gShader );</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="comment">// We start with no cameras, by default. Add one and set it &quot;active&quot; by using next().</span></div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  primScreen-&gt;_camList.<a class="code" href="class_cameras.html#a436b481bf293ec6dfa09d2f89054c54b" title="addCamera takes a name for a camera and returns a handle to a newly created camera.">addCamera</a>( <span class="stringliteral">&quot;Camera1&quot;</span> );</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  primScreen-&gt;_camList.<a class="code" href="class_cameras.html#a971e1ffd27ff38d58f83996f87700e82" title="Sets the active camera to the next available one in the collection.">next</a>();</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <span class="comment">// Create an object and add it to the scene with the name &quot;bottle&quot;.</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <a class="code" href="class_object.html">Object</a> *bottle = rootScene-&gt;AddObject( <span class="stringliteral">&quot;bottle&quot;</span> );</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <a class="code" href="class_object.html" title="Object Class: Renderable Object Implementation.">Object</a> *bottle = rootScene-&gt;addObject( <span class="stringliteral">&quot;bottle&quot;</span> );</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="comment">// Use the object loader to actually fill out the vertices and-so-on of the bottle.</span></div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  ObjLoader::loadModelFromFile( bottle, <span class="stringliteral">&quot;../models/bottle-b.obj&quot;</span> );</div>
@@ -156,35 +156,35 @@ $(document).ready(function(){initNavTree('zach_morph_demo_8cpp_source.html','');
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <span class="comment">// Objects has-a pointer to an object which is their &quot;morph target.&quot;</span></div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  <span class="comment">// they are created and buffered as follows:</span></div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  bottle-&gt;genMorphTarget( gShader ) ; <span class="comment">// this makes a new object and links it to the source object. it returns the addr of the new obj..</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  <a class="code" href="class_object.html">Object</a> *bottleMorphTarget = bottle-&gt;getMorphTargetPtr() ; <span class="comment">// we can get the addr of the morph object like this, also.</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  bottle-&gt;<a class="code" href="class_object.html#ab0ba603904f8f7de15dc0450e2d9b30e" title="Instantiate a new morphing target.">genMorphTarget</a>( gShader ) ; <span class="comment">// this makes a new object and links it to the source object. it returns the addr of the new obj..</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  <a class="code" href="class_object.html" title="Object Class: Renderable Object Implementation.">Object</a> *bottleMorphTarget = bottle-&gt;<a class="code" href="class_object.html#a7694c9cfe445c3d5b993a38e3f8badd9" title="Retrieve a pointer to this object&#39;s morph target.">morphTarget</a>() ; <span class="comment">// we can get the addr of the morph object like this, also.</span></div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  ObjLoader::loadModelFromFile( bottleMorphTarget, <span class="stringliteral">&quot;../models/bottle-a.obj&quot;</span> ); <span class="comment">// with this model, we can use all the preexisting Object class functionality</span></div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  <span class="comment">//loadModelFromFile( bottle-&gt;getMorphTargetPtr(), &quot;../models/bottle-b.obj&quot; ); // with this model, we can use all the preexisting Object class functionality</span></div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  printf(<span class="stringliteral">&quot;Number Vertices: %d\n&quot;</span>,bottle-&gt;getNumberPoints());</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  printf(<span class="stringliteral">&quot;Number Vertices: %d\n&quot;</span>,bottleMorphTarget-&gt;getNumberPoints());</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  printf(<span class="stringliteral">&quot;Colors: %lu\n&quot;</span>,bottle-&gt;colors.size());</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  printf(<span class="stringliteral">&quot;Normals: %lu\n&quot;</span>,bottle-&gt;normals.size());</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  printf(<span class="stringliteral">&quot;Indices: %lu\n&quot;</span>,bottle-&gt;indices.size());</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  printf(<span class="stringliteral">&quot;Number Vertices: %d\n&quot;</span>,bottle-&gt;<a class="code" href="class_object.html#a73f1a6210bacf504de9a808009479b81" title="Retrieve the number of _vertices this object has.">numberOfPoints</a>());</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  printf(<span class="stringliteral">&quot;Number Vertices: %d\n&quot;</span>,bottleMorphTarget-&gt;<a class="code" href="class_object.html#a73f1a6210bacf504de9a808009479b81" title="Retrieve the number of _vertices this object has.">numberOfPoints</a>());</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  printf(<span class="stringliteral">&quot;Colors: %lu\n&quot;</span>,bottle-&gt;<a class="code" href="class_object.html#a29a0e9959c490067db69378bf57a17ba" title="Colors buffer.">_colors</a>.size());</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  printf(<span class="stringliteral">&quot;Normals: %lu\n&quot;</span>,bottle-&gt;<a class="code" href="class_object.html#a20bb786cb5915934853855aab9d1a1b3" title="Normals buffer.">_normals</a>.size());</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  printf(<span class="stringliteral">&quot;Indices: %lu\n&quot;</span>,bottle-&gt;<a class="code" href="class_object.html#ab85adc7a2d3b891051c096593982653d" title="Draw Order Index buffer.">_indices</a>.size());</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  <span class="comment">//makeModelsSameSize(bottle, bottleMorphTarget);</span></div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  printf(<span class="stringliteral">&quot;Number Vertices: %d\n&quot;</span>,bottle-&gt;getNumberPoints());</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  printf(<span class="stringliteral">&quot;Number Vertices: %d\n&quot;</span>,bottleMorphTarget-&gt;getNumberPoints());</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  printf(<span class="stringliteral">&quot;Number Vertices: %d\n&quot;</span>,bottle-&gt;<a class="code" href="class_object.html#a73f1a6210bacf504de9a808009479b81" title="Retrieve the number of _vertices this object has.">numberOfPoints</a>());</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  printf(<span class="stringliteral">&quot;Number Vertices: %d\n&quot;</span>,bottleMorphTarget-&gt;<a class="code" href="class_object.html#a73f1a6210bacf504de9a808009479b81" title="Retrieve the number of _vertices this object has.">numberOfPoints</a>());</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  bottle-&gt;trans.scale.Set( 0.01 );</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  bottleMorphTarget-&gt;trans.scale.Set( 0.01 );</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  bottle-&gt;Buffer();</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  bottle-&gt;BufferMorphOnly(); <span class="comment">// YES THIS IS THE REAL OBJECT, NOT THE TARGET. IT SENDS THE MORPH VERTICES TO THE SHADER, NOT TO THE DRAW LIST TO BE DRAWN!</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  bottle-&gt;<a class="code" href="class_object.html#af17d57ea2dab64e21112e8949d50d85f" title="The _trans cache encompasses the current transformational state of this object.">_trans</a>.scale.Set( 0.01 );</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  bottleMorphTarget-&gt;<a class="code" href="class_object.html#af17d57ea2dab64e21112e8949d50d85f" title="The _trans cache encompasses the current transformational state of this object.">_trans</a>.scale.Set( 0.01 );</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  bottle-&gt;<a class="code" href="class_object.html#a7edb92c30d86b6479b0ff2a5e9f06e13" title="buffer all of our data: Vertices, TexUVs, Normals, Indices, Colors and Morph Buffers.">buffer</a>();</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  bottle-&gt;<a class="code" href="class_object.html#a293792abfe0671e00a0ec10e85ea9d9e" title="buffer only the Morph-related buffers.">bufferMorphOnly</a>(); <span class="comment">// YES THIS IS THE REAL OBJECT, NOT THE TARGET. IT SENDS THE MORPH VERTICES TO THE SHADER, NOT TO THE DRAW LIST TO BE DRAWN!</span></div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  <span class="comment">// Generic OpenGL setup: Enable the depth buffer and set a nice background color.</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  <span class="comment">// Generic OpenGL setup: Enable the depth _buffer and set a nice background color.</span></div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  glEnable( GL_DEPTH_TEST );</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  glClearColor( 0.3, 0.5, 0.9, 1.0 );</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;}</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="keywordtype">void</span> <a class="code" href="ds_8cpp.html#aeb94fbd457627182ceee7e505f432541" title="Cleans up our scene graph.">cleanup</a>( <span class="keywordtype">void</span> ) {</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  <a class="code" href="class_engine.html#a6cbf9ec80a4a3bb245355ff70498dba0" title="instance returns, or creates and then returns, a pointer to the Engine object.">Engine::instance</a>()-&gt;<a class="code" href="class_engine.html#a782cf288c161986d0ac0eb48cd187c4d" title="Retrieves a pointer to the Root, top-level Scene graph.">rootScene</a>()-&gt;<a class="code" href="class_scene.html#a82759ded1f6f87a91b8d10ed87501958" title="Completely remove this object and all his children.">DestroyObject</a>();</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  <a class="code" href="class_engine.html#a6cbf9ec80a4a3bb245355ff70498dba0" title="instance returns, or creates and then returns, a pointer to the Engine object.">Engine::instance</a>()-&gt;<a class="code" href="class_engine.html#a782cf288c161986d0ac0eb48cd187c4d" title="Retrieves a pointer to the Root, top-level Scene graph.">rootScene</a>()-&gt;<a class="code" href="class_scene.html#a8c57e1cebc39586c7928225d1e25de39" title="Completely remove this object and all his children.">destroyObject</a>();</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;}</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="comment">//--------------------------------------------------------------------</span></div>
@@ -194,21 +194,21 @@ $(document).ready(function(){initNavTree('zach_morph_demo_8cpp_source.html','');
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  <span class="keyword">static</span> <a class="code" href="class_scene.html">Scene</a> *theScene = <a class="code" href="class_engine.html#a6cbf9ec80a4a3bb245355ff70498dba0" title="instance returns, or creates and then returns, a pointer to the Engine object.">Engine::instance</a>()-&gt;<a class="code" href="class_engine.html#a782cf288c161986d0ac0eb48cd187c4d" title="Retrieves a pointer to the Root, top-level Scene graph.">rootScene</a>();</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  <span class="keyword">static</span> <a class="code" href="class_cameras.html" title="The Cameras class represents a group of logical cameras for a model view. Each camera possesses its o...">Cameras</a> *camList = <a class="code" href="class_engine.html#a6cbf9ec80a4a3bb245355ff70498dba0" title="instance returns, or creates and then returns, a pointer to the Engine object.">Engine::instance</a>()-&gt;<a class="code" href="class_engine.html#a2b2c1cd59c9a5c903bf466284012ce4c" title="Retrieves a pointer to the Camera List.">cams</a>();</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  theScene-&gt;Draw();</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  camList-&gt;Draw();</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  theScene-&gt;draw();</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  camList-&gt;draw();</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;}</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="comment">// GLUT display callback. Effectively calls displayViewport per-each Camera.</span></div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="keywordtype">void</span> <a class="code" href="ds_8cpp.html#a4ea013001a5fb47853d0fab8f8de35cd" title="Display/Render the entire screen.">display</a>( <span class="keywordtype">void</span> ) {</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  <span class="keyword">static</span> <a class="code" href="class_cameras.html" title="The Cameras class represents a group of logical cameras for a model view. Each camera possesses its o...">Cameras</a> *camList = <a class="code" href="class_engine.html#a6cbf9ec80a4a3bb245355ff70498dba0" title="instance returns, or creates and then returns, a pointer to the Engine object.">Engine::instance</a>()-&gt;<a class="code" href="class_engine.html#a2b2c1cd59c9a5c903bf466284012ce4c" title="Retrieves a pointer to the Camera List.">cams</a>();</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  <span class="comment">// Clear the buffer.</span></div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  <span class="comment">// Clear the _buffer.</span></div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );</div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  <span class="comment">// Tell camList to draw using our &#39;draw&#39; rendering function.</span></div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  camList-&gt;<a class="code" href="class_cameras.html#adeb29c1d639fcfbae4c68017bc8ef4d4" title="view calls the view method on all child cameras, followed by the provided draw function.">view</a>( <a class="code" href="ds_8cpp.html#ad2e97e7b54d0bf35e406b91fbdd2f256" title="Implementation of drawing the display with regards to a single viewport.">draw</a> );</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  <span class="comment">// Swap to the next buffer.</span></div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  <span class="comment">// Swap to the next _buffer.</span></div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  glutSwapBuffers();</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;}</div>
@@ -254,7 +254,7 @@ $(document).ready(function(){initNavTree('zach_morph_demo_8cpp_source.html','');
 <div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;</div>
 <div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;  <span class="comment">//if ( (timer += 0.05 ) &gt; 360.0 ) timer = 0.0 ;</span></div>
 <div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;  <span class="comment">//float percent = ( sin(timer) + 1 ) / 2 ;</span></div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;  (*rootScene)[<span class="stringliteral">&quot;bottle&quot;</span>]-&gt;setMorphPercentage(percent);</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;  (*rootScene)[<span class="stringliteral">&quot;bottle&quot;</span>]-&gt;morphPercentage(percent);</div>
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;</div>
 <div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="globals_8h.html#ab5f638ed0890579dbe0522227610af64" title="DEBUG_MOTION controls some additional debug messages for acceleration/velocity.">DEBUG_MOTION</a>) </div>
 <div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    fprintf( stderr, <span class="stringliteral">&quot;Time since last idle: %lu\n&quot;</span>, Tick.<a class="code" href="class_timer.html#a4f68da5b62cb1d1b2dd0c8549eb6286d" title="Delta returns the time elapsed between the last Tick and the last Tock.">Delta</a>() );</div>
@@ -285,7 +285,7 @@ $(document).ready(function(){initNavTree('zach_morph_demo_8cpp_source.html','');
 <div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;  glutFullScreen();</div>
 <div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;  glutSetCursor( GLUT_CURSOR_NONE );</div>
 <div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;  GLEW_INIT();</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;  <a class="code" href="platform_8h.html#a42a67a317dc24490016ce3f13b839acf" title="A macro defined to initialize GLEW on Linux, but do nothing on Apple OSX.">GLEW_INIT</a>();</div>
 <div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  <a class="code" href="ds_8cpp.html#a02fd73d861ef2e4aabb38c0c9ff82947" title="Initialization: load and compile shaders, initialize camera(s), load models.">init</a>();</div>
 <div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;</div>
 <div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;  <span class="comment">/* Register our Callbacks */</span></div>
@@ -318,7 +318,7 @@ $(document).ready(function(){initNavTree('zach_morph_demo_8cpp_source.html','');
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_c773cd679a84e10ba93793c9e581b8a0.html">Binaries</a></li><li class="navelem"><b>zachMorphDemo.cpp</b></li>
-    <li class="footer">Generated on Fri Mar 15 2013 00:47:39 for HyperGrafx by
+    <li class="footer">Generated on Fri Mar 15 2013 19:22:37 for HyperGrafx by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

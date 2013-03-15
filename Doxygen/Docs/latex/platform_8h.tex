@@ -1,0 +1,47 @@
+\hypertarget{platform_8h}{\section{platform.\-h File Reference}
+\label{platform_8h}\index{platform.\-h@{platform.\-h}}
+}
+
+
+Covertly re-\/defines functions that conflict between Linux and O\-S\-X.  
+
+
+{\ttfamily \#include \char`\"{}Open\-G\-L.\-h\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{platform_8h_a42a67a317dc24490016ce3f13b839acf}{G\-L\-E\-W\-\_\-\-I\-N\-I\-T}()
+\begin{DoxyCompactList}\small\item\em A macro defined to initialize G\-L\-E\-W on Linux, but do nothing on Apple O\-S\-X. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Covertly re-\/defines functions that conflict between Linux and O\-S\-X. \begin{DoxyAuthor}{Author}
+John Huston, Chris Compton 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2013-\/03-\/15 
+\end{DoxyDate}
+
+
+Definition in file \hyperlink{platform_8h_source}{platform.\-h}.
+
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{platform_8h_a42a67a317dc24490016ce3f13b839acf}{\index{platform.\-h@{platform.\-h}!G\-L\-E\-W\-\_\-\-I\-N\-I\-T@{G\-L\-E\-W\-\_\-\-I\-N\-I\-T}}
+\index{G\-L\-E\-W\-\_\-\-I\-N\-I\-T@{G\-L\-E\-W\-\_\-\-I\-N\-I\-T}!platform.h@{platform.\-h}}
+\subsubsection[{G\-L\-E\-W\-\_\-\-I\-N\-I\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define G\-L\-E\-W\-\_\-\-I\-N\-I\-T(
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{platform_8h_a42a67a317dc24490016ce3f13b839acf}
+{\bfseries Value\-:}
+\begin{DoxyCode}
+glewExperimental = GL\_FALSE;                    \(\backslash\)
+  GLenum rc = glewInit();                   \(\backslash\)
+  if (rc) fprintf( stderr, "%s\(\backslash\)n", glewGetErrorString(rc) );
+\end{DoxyCode}
+
+
+A macro defined to initialize G\-L\-E\-W on Linux, but do nothing on Apple O\-S\-X. 
+

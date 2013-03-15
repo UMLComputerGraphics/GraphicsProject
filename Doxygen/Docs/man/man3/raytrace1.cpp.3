@@ -1,0 +1,261 @@
+.TH "raytrace1.cpp" 3 "Fri Mar 15 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+raytrace1.cpp \- 
+.PP
+Geometric Raytracing Demo\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <cmath>\fP
+.br
+\fC#include <iostream>\fP
+.br
+\fC#include <cstdio>\fP
+.br
+\fC#include <SOIL/SOIL\&.h>\fP
+.br
+\fC#include <cstring>\fP
+.br
+\fC#include 'SpelchkCamera\&.hpp'\fP
+.br
+\fC#include 'InitShader\&.hpp'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBidle\fP (void)"
+.br
+.RI "\fIRedraw the scene\&. \fP"
+.ti -1c
+.RI "void \fBreshape\fP (int width, int height)"
+.br
+.RI "\fI\fBScreen\fP resize handler\&. \fP"
+.ti -1c
+.RI "void \fBcustomkeyboard\fP (unsigned char key, int x, int y)"
+.br
+.RI "\fIKeyboard Conrol Handler\&. \fP"
+.ti -1c
+.RI "void \fBcustommouse\fP (int button, int state, int x, int y)"
+.br
+.RI "\fIMouse click handler\&. \fP"
+.ti -1c
+.RI "void \fBmotion\fP (int x, int y)"
+.br
+.RI "\fIHandle mouse and camera movement\&. \fP"
+.ti -1c
+.RI "void \fBdisplay\fP (void)"
+.br
+.RI "\fIHandle the re-display of the scene\&. \fP"
+.ti -1c
+.RI "void \fBinit\fP (void)"
+.br
+.RI "\fIInitialization of objects and OpenGL state\&. \fP"
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.RI "\fISimple raytracer demo by Hoanh Nguyen\&. \fP"
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "GLuint \fBprogram\fP"
+.br
+.RI "\fIGlobal shader object\&. \fP"
+.ti -1c
+.RI "GLuint \fBmodelView\fP = -1"
+.br
+.RI "\fImodel-view matrix uniform shader variable location \fP"
+.ti -1c
+.RI "GLint \fBvRayPosition\fP = -1"
+.br
+.ti -1c
+.RI "GLint \fBuCameraPosition\fP = -1"
+.br
+.RI "\fIHandle to uniform that will contain the position of the \fBCamera\fP\&. \fP"
+.ti -1c
+.RI "\fBSpelchkCamera\fP \fBcamera\fP (\fBvec4\fP(0\&.0, 0\&.0, 0\&.0, 0\&.0))"
+.br
+.RI "\fILogical camera object\&. \fP"
+.ti -1c
+.RI "\fBvec3\fP \fBcameraPositionVec\fP = \fBvec3\fP( 0\&.0, 0\&.0, 0\&.0 )"
+.br
+.RI "\fISpatial coordinate of camera\&. \fP"
+.ti -1c
+.RI "int \fBscreenHeight\fP"
+.br
+.RI "\fIcurrent Height of the screen\&. \fP"
+.ti -1c
+.RI "int \fBscreenWidth\fP"
+.br
+.RI "\fIcurrent Width of the screen\&. \fP"
+.ti -1c
+.RI "bool \fBleftDown\fP = false"
+.br
+.RI "\fIIs the left mouse button being pressed? \fP"
+.ti -1c
+.RI "bool \fBrightDown\fP = false"
+.br
+.RI "\fIIs the right mouse button being pressed? \fP"
+.ti -1c
+.RI "int \fBmouseDownX\fP"
+.br
+.RI "\fILast known x coordinate of the mouse pointer\&. \fP"
+.ti -1c
+.RI "int \fBmouseDownY\fP"
+.br
+.RI "\fILast known y coordinate of the mouse pointer\&. \fP"
+.ti -1c
+.RI "float \fBrotationFactor\fP = 45\&.0"
+.br
+.RI "\fIMagic constant to adjust the rate of rotation when re-orienting the camera\&. \fP"
+.ti -1c
+.RI "float \fBtranslationFactor\fP = 5\&.0"
+.br
+.RI "\fIMagic constant to adjust the rate of translation when re-orienting the camera\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Geometric Raytracing Demo\&. 
+
+\fBAuthor:\fP
+.RS 4
+Hoanh Nguyen 
+.RE
+.PP
+\fBDate:\fP
+.RS 4
+2013-03-15 
+.RE
+.PP
+
+.PP
+Definition in file \fBraytrace1\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "void customkeyboard (unsigned charkey, intx, inty)"
+
+.PP
+Keyboard Conrol Handler\&. \fBParameters:\fP
+.RS 4
+\fIkey\fP The key that was pressed\&. 
+.br
+\fIx\fP X coordinate of the mouse when a key was pressed\&. 
+.br
+\fIy\fP Y coordinate of the mouse when a key was pressed\&. 
+.RE
+.PP
+
+.PP
+Definition at line 62 of file raytrace1\&.cpp\&.
+.SS "void custommouse (intbutton, intstate, intx, inty)"
+
+.PP
+Mouse click handler\&. \fBParameters:\fP
+.RS 4
+\fIbutton\fP The mouse button that was pressed\&. 
+.br
+\fIstate\fP The current state of that button\&. 
+.br
+\fIx\fP X coordinate of the mouse\&. 
+.br
+\fIy\fP Y coordinate of the mouse\&. 
+.RE
+.PP
+
+.PP
+Definition at line 119 of file raytrace1\&.cpp\&.
+.SS "int main (intargc, char **argv)"
+
+.PP
+Simple raytracer demo by Hoanh Nguyen\&. \fBParameters:\fP
+.RS 4
+\fIargc\fP Not used\&. 
+.br
+\fIargv\fP Not used\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 254 of file raytrace1\&.cpp\&.
+.SS "void motion (intx, inty)"
+
+.PP
+Handle mouse and camera movement\&. \fBParameters:\fP
+.RS 4
+\fIx\fP X coordinate of the mouse\&. 
+.br
+\fIy\fP Y coordinate of the mouse\&. 
+.RE
+.PP
+
+.PP
+Definition at line 159 of file raytrace1\&.cpp\&.
+.SS "void reshape (intwidth, intheight)"
+
+.PP
+\fBScreen\fP resize handler\&. \fBParameters:\fP
+.RS 4
+\fIwidth\fP New screen width\&. 
+.br
+\fIheight\fP New screen height\&. 
+.RE
+.PP
+
+.PP
+Definition at line 51 of file raytrace1\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "\fBSpelchkCamera\fP camera(\fBvec4\fP(0\&.0, 0\&.0, 0\&.0, 0\&.0))"
+
+.PP
+Logical camera object\&. 
+.SS "\fBvec3\fP cameraPositionVec = \fBvec3\fP( 0\&.0, 0\&.0, 0\&.0 )"
+
+.PP
+Spatial coordinate of camera\&. 
+.PP
+Definition at line 30 of file raytrace1\&.cpp\&.
+.SS "float rotationFactor = 45\&.0"
+
+.PP
+Magic constant to adjust the rate of rotation when re-orienting the camera\&. 
+.PP
+Definition at line 150 of file raytrace1\&.cpp\&.
+.SS "int screenHeight"
+
+.PP
+current Height of the screen\&. 
+.PP
+Definition at line 42 of file raytrace1\&.cpp\&.
+.SS "int screenWidth"
+
+.PP
+current Width of the screen\&. 
+.PP
+Definition at line 44 of file raytrace1\&.cpp\&.
+.SS "float translationFactor = 5\&.0"
+
+.PP
+Magic constant to adjust the rate of translation when re-orienting the camera\&. 
+.PP
+Definition at line 152 of file raytrace1\&.cpp\&.
+.SS "GLint uCameraPosition = -1"
+
+.PP
+Handle to uniform that will contain the position of the \fBCamera\fP\&. 
+.PP
+Definition at line 25 of file raytrace1\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for HyperGrafx from the source code\&.

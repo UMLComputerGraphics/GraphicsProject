@@ -1,0 +1,54 @@
+.TH "platform.h" 3 "Fri Mar 15 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+platform.h \- 
+.PP
+Covertly re-defines functions that conflict between Linux and OSX\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'OpenGL\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBGLEW_INIT\fP()"
+.br
+.RI "\fIA macro defined to initialize GLEW on Linux, but do nothing on Apple OSX\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Covertly re-defines functions that conflict between Linux and OSX\&. 
+
+\fBAuthor:\fP
+.RS 4
+John Huston, Chris Compton 
+.RE
+.PP
+\fBDate:\fP
+.RS 4
+2013-03-15 
+.RE
+.PP
+
+.PP
+Definition in file \fBplatform\&.h\fP\&.
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define GLEW_INIT()"
+\fBValue:\fP
+.PP
+.nf
+glewExperimental = GL_FALSE;                    \
+  GLenum rc = glewInit();                   \
+  if (rc) fprintf( stderr, '%s\n', glewGetErrorString(rc) );
+.fi
+.PP
+A macro defined to initialize GLEW on Linux, but do nothing on Apple OSX\&. 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for HyperGrafx from the source code\&.

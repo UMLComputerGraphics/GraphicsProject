@@ -1,7 +1,5 @@
 var model_8hpp =
 [
-    [ "color4", "model_8hpp.html#a5c48af6a06eb70709fe4ce950c3015e3", null ],
-    [ "point4", "model_8hpp.html#acd96474ea1ee15dc164c05371abfd25b", null ],
     [ "colorCube", "model_8hpp.html#a9aeb9d305a36f39f25137645d75eaa95", null ],
     [ "createPoint", "model_8hpp.html#aba8f9938a331f36ea0d3a4a3a777b44f", null ],
     [ "cube", "model_8hpp.html#aef25b2740b9cd274d269b8ac69bd7cdd", null ],

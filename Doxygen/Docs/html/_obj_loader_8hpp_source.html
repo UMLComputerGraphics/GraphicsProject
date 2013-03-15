@@ -92,7 +92,7 @@ $(document).ready(function(){initNavTree('_obj_loader_8hpp_source.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -115,32 +115,32 @@ $(document).ready(function(){initNavTree('_obj_loader_8hpp_source.html','');});
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;exception&gt;</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;sstream&gt;</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;vec.hpp&quot;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;Object.hpp&quot;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_object_8hpp.html" title="Header for the Object class.">Object.hpp</a>&quot;</span></div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">using</span> std::string;</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">using</span> std::vector;</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">using</span> std::exception;</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">namespace </span>ObjLoader {</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  </div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="keyword">const</span> vector&lt; string &gt; split( <span class="keyword">const</span> <span class="keywordtype">string</span> &amp;str, <span class="keyword">const</span> <span class="keywordtype">char</span> delim );</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <a class="code" href="class_object.html">Object</a> *loadObj( <a class="code" href="class_scene.html">Scene</a> &amp;scene, <span class="keyword">const</span> <span class="keywordtype">char</span>* filename, <span class="keyword">const</span> <span class="keywordtype">char</span> *objName =</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <a class="code" href="class_object.html" title="Object Class: Renderable Object Implementation.">Object</a> *loadObj( <a class="code" href="class_scene.html">Scene</a> &amp;scene, <span class="keyword">const</span> <span class="keywordtype">char</span>* filename, <span class="keyword">const</span> <span class="keywordtype">char</span> *objName =</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;                       NULL );</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  </div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <a class="code" href="struct_angel_1_1vec4.html">Angel::vec4</a> parseVertex( <span class="keywordtype">string</span> line );</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  </div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <a class="code" href="struct_angel_1_1vec2.html">Angel::vec2</a> parseTextureUV( <span class="keywordtype">string</span> line );</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  </div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  <a class="code" href="struct_angel_1_1vec3.html">Angel::vec3</a> parseNormal( <span class="keywordtype">string</span> line );</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  </div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  vector&lt; vector&lt; int &gt; &gt; parseFaceElements( <span class="keywordtype">string</span> line );</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  </div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <span class="keywordtype">void</span> parseElementTriple( <span class="keywordtype">string</span> triple, vector&lt; int &gt; &amp;v_elements,</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;                           vector&lt; int &gt; &amp;uv_elements,</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;                           vector&lt; int &gt; &amp;n_elements );</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <span class="keywordtype">void</span> loadModelFromFile( <a class="code" href="class_object.html">Object</a> *<span class="keywordtype">object</span>, <span class="keyword">const</span> <span class="keywordtype">char</span> *filename );</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  </div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <span class="keywordtype">void</span> loadModelFromFile( <a class="code" href="class_object.html" title="Object Class: Renderable Object Implementation.">Object</a> *<span class="keywordtype">object</span>, <span class="keyword">const</span> <span class="keywordtype">char</span> *filename );</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;}</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
@@ -151,7 +151,7 @@ $(document).ready(function(){initNavTree('_obj_loader_8hpp_source.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_b0856f6b0d80ccb263b2f415c91f9e17.html">include</a></li><li class="navelem"><a class="el" href="_obj_loader_8hpp.html">ObjLoader.hpp</a></li>
-    <li class="footer">Generated on Fri Mar 15 2013 00:47:38 for HyperGrafx by
+    <li class="footer">Generated on Fri Mar 15 2013 19:22:37 for HyperGrafx by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

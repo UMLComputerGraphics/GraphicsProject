@@ -1,0 +1,103 @@
+\hypertarget{morphlite_8cpp}{\section{morphlite.\-cpp File Reference}
+\label{morphlite_8cpp}\index{morphlite.\-cpp@{morphlite.\-cpp}}
+}
+
+
+This is a derivative of H\-S\-C's Fall 2012 project.  
+
+
+{\ttfamily \#include \char`\"{}globals.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}platform.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Camera.\-hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Cameras.\-hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Screen.\-hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Object.\-hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Timer.\-hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Scene.\-hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Engine.\-hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}model.\-hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Init\-Shader.\-hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}glut\-\_\-callbacks.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Obj\-Loader.\-hpp\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{morphlite_8cpp_a02fd73d861ef2e4aabb38c0c9ff82947}{void \hyperlink{morphlite_8cpp_a02fd73d861ef2e4aabb38c0c9ff82947}{init} ()}\label{morphlite_8cpp_a02fd73d861ef2e4aabb38c0c9ff82947}
+
+\begin{DoxyCompactList}\small\item\em Initialization\-: load and compile shaders, initialize camera(s), load models. \end{DoxyCompactList}\item 
+\hypertarget{morphlite_8cpp_aeb94fbd457627182ceee7e505f432541}{void \hyperlink{morphlite_8cpp_aeb94fbd457627182ceee7e505f432541}{cleanup} (void)}\label{morphlite_8cpp_aeb94fbd457627182ceee7e505f432541}
+
+\begin{DoxyCompactList}\small\item\em Cleans up our scene graph. \end{DoxyCompactList}\item 
+\hypertarget{morphlite_8cpp_ad2e97e7b54d0bf35e406b91fbdd2f256}{void \hyperlink{morphlite_8cpp_ad2e97e7b54d0bf35e406b91fbdd2f256}{draw} (void)}\label{morphlite_8cpp_ad2e97e7b54d0bf35e406b91fbdd2f256}
+
+\begin{DoxyCompactList}\small\item\em Implementation of drawing the display with regards to a single viewport. \end{DoxyCompactList}\item 
+\hypertarget{morphlite_8cpp_a4ea013001a5fb47853d0fab8f8de35cd}{void \hyperlink{morphlite_8cpp_a4ea013001a5fb47853d0fab8f8de35cd}{display} (void)}\label{morphlite_8cpp_a4ea013001a5fb47853d0fab8f8de35cd}
+
+\begin{DoxyCompactList}\small\item\em Display/\-Render the entire screen. \end{DoxyCompactList}\item 
+void \hyperlink{morphlite_8cpp_a01131b63acf241e9db91704d89ce15d2}{idle} (void)
+\begin{DoxyCompactList}\small\item\em Compute time since last idle, update camera positions, redisplay. \end{DoxyCompactList}\item 
+int \hyperlink{morphlite_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)
+\begin{DoxyCompactList}\small\item\em This is a bottle morphing demo! It illustrates simply how to do a simple linear interpolation morph. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This is a derivative of H\-S\-C's Fall 2012 project. \begin{DoxyAuthor}{Author}
+Nicholas St.\-Pierre 
+\end{DoxyAuthor}
+\begin{DoxyAuthor}{Authors}
+John Huston, Nicholas Ver\-Voort, Chris Compton 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2012-\/12-\/06
+\end{DoxyDate}
+This is a tech demo for morphing two objects back and forth. Original engine based on Ed Angel's book code. This file features a severely reduced linecount for demo purposes. \begin{DoxySeeAlso}{See Also}
+\hyperlink{terrain_8cpp}{terrain.\-cpp} for a fully-\/featured example. 
+\end{DoxySeeAlso}
+
+
+Definition in file \hyperlink{morphlite_8cpp_source}{morphlite.\-cpp}.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{morphlite_8cpp_a01131b63acf241e9db91704d89ce15d2}{\index{morphlite.\-cpp@{morphlite.\-cpp}!idle@{idle}}
+\index{idle@{idle}!morphlite.cpp@{morphlite.\-cpp}}
+\subsubsection[{idle}]{\setlength{\rightskip}{0pt plus 5cm}void idle (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{morphlite_8cpp_a01131b63acf241e9db91704d89ce15d2}
+
+
+Compute time since last idle, update camera positions, redisplay. 
+
+Apply new animations. 
+
+Definition at line 127 of file morphlite.\-cpp.
+
+\hypertarget{morphlite_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{\index{morphlite.\-cpp@{morphlite.\-cpp}!main@{main}}
+\index{main@{main}!morphlite.cpp@{morphlite.\-cpp}}
+\subsubsection[{main}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$$\ast$}]{argv}
+\end{DoxyParamCaption}
+)}}\label{morphlite_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}
+
+
+This is a bottle morphing demo! It illustrates simply how to do a simple linear interpolation morph. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em argc} & Not used. \\
+\hline
+{\em argv} & Not used. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+E\-X\-I\-T\-\_\-\-S\-U\-C\-C\-E\-S\-S. 
+\end{DoxyReturn}
+
+
+Definition at line 165 of file morphlite.\-cpp.
+

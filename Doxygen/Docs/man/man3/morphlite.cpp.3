@@ -1,0 +1,124 @@
+.TH "morphlite.cpp" 3 "Fri Mar 15 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+morphlite.cpp \- 
+.PP
+This is a derivative of HSC's Fall 2012 project\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'globals\&.h'\fP
+.br
+\fC#include 'platform\&.h'\fP
+.br
+\fC#include 'Camera\&.hpp'\fP
+.br
+\fC#include 'Cameras\&.hpp'\fP
+.br
+\fC#include 'Screen\&.hpp'\fP
+.br
+\fC#include 'Object\&.hpp'\fP
+.br
+\fC#include 'Timer\&.hpp'\fP
+.br
+\fC#include 'Scene\&.hpp'\fP
+.br
+\fC#include 'Engine\&.hpp'\fP
+.br
+\fC#include 'model\&.hpp'\fP
+.br
+\fC#include 'InitShader\&.hpp'\fP
+.br
+\fC#include 'glut_callbacks\&.h'\fP
+.br
+\fC#include 'ObjLoader\&.hpp'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBinit\fP ()"
+.br
+.RI "\fIInitialization: load and compile shaders, initialize camera(s), load models\&. \fP"
+.ti -1c
+.RI "void \fBcleanup\fP (void)"
+.br
+.RI "\fICleans up our scene graph\&. \fP"
+.ti -1c
+.RI "void \fBdraw\fP (void)"
+.br
+.RI "\fIImplementation of drawing the display with regards to a single viewport\&. \fP"
+.ti -1c
+.RI "void \fBdisplay\fP (void)"
+.br
+.RI "\fIDisplay/Render the entire screen\&. \fP"
+.ti -1c
+.RI "void \fBidle\fP (void)"
+.br
+.RI "\fICompute time since last idle, update camera positions, redisplay\&. \fP"
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.RI "\fIThis is a bottle morphing demo! It illustrates simply how to do a simple linear interpolation morph\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+This is a derivative of HSC's Fall 2012 project\&. 
+
+\fBAuthor:\fP
+.RS 4
+Nicholas St\&.Pierre 
+.RE
+.PP
+\fBAuthors:\fP
+.RS 4
+John Huston, Nicholas VerVoort, Chris Compton 
+.RE
+.PP
+\fBDate:\fP
+.RS 4
+2012-12-06
+.RE
+.PP
+This is a tech demo for morphing two objects back and forth\&. Original engine based on Ed Angel's book code\&. This file features a severely reduced linecount for demo purposes\&. 
+.PP
+\fBSee Also:\fP
+.RS 4
+\fBterrain\&.cpp\fP for a fully-featured example\&. 
+.RE
+.PP
+
+.PP
+Definition in file \fBmorphlite\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "void idle (void)"
+
+.PP
+Compute time since last idle, update camera positions, redisplay\&. Apply new animations\&. 
+.PP
+Definition at line 127 of file morphlite\&.cpp\&.
+.SS "int main (intargc, char **argv)"
+
+.PP
+This is a bottle morphing demo! It illustrates simply how to do a simple linear interpolation morph\&. \fBParameters:\fP
+.RS 4
+\fIargc\fP Not used\&. 
+.br
+\fIargv\fP Not used\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+EXIT_SUCCESS\&. 
+.RE
+.PP
+
+.PP
+Definition at line 165 of file morphlite\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for HyperGrafx from the source code\&.

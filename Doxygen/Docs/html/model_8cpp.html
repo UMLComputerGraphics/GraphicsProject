@@ -92,7 +92,7 @@ $(document).ready(function(){initNavTree('model_8cpp.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -104,7 +104,6 @@ $(document).ready(function(){initNavTree('model_8cpp.html','');});
 <div class="header">
   <div class="summary">
 <a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">model.cpp File Reference</div>  </div>
@@ -114,7 +113,7 @@ $(document).ready(function(){initNavTree('model_8cpp.html','');});
 <p>Functions related to constructing simple geometry.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="globals_8h_source.html">globals.h</a>&quot;</code><br/>
-<code>#include &quot;Object.hpp&quot;</code><br/>
+<code>#include &quot;<a class="el" href="_object_8hpp_source.html">Object.hpp</a>&quot;</code><br/>
 <code>#include &quot;Timer.hpp&quot;</code><br/>
 <code>#include &quot;vec.hpp&quot;</code><br/>
 <code>#include &lt;cmath&gt;</code><br/>
@@ -128,7 +127,7 @@ $(document).ready(function(){initNavTree('model_8cpp.html','');});
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:a876c92757e616a414576f3183cb49b17"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="model_8cpp.html#a876c92757e616a414576f3183cb49b17">QUAD</a>(A, B, C, D)</td></tr>
-<tr class="memdesc:a876c92757e616a414576f3183cb49b17"><td class="mdescLeft">&#160;</td><td class="mdescRight">A macro to help quickly call <a class="el" href="model_8cpp.html#afc0ea166029aab7e030ba43b4633a778" title="Create a quadrilateral from four points and four colors.">quad()</a> with correct parameters.  <a href="#a876c92757e616a414576f3183cb49b17">More...</a><br/></td></tr>
+<tr class="memdesc:a876c92757e616a414576f3183cb49b17"><td class="mdescLeft">&#160;</td><td class="mdescRight">A macro to help quickly call <a class="el" href="model_8cpp.html#afc0ea166029aab7e030ba43b4633a778" title="Create a quadrilateral from four _vertices and four _colors.">quad()</a> with correct parameters.  <a href="#a876c92757e616a414576f3183cb49b17">More...</a><br/></td></tr>
 <tr class="separator:a876c92757e616a414576f3183cb49b17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3ad4ef4bd3a5cf6b3327c8c935ee78e8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3ad4ef4bd3a5cf6b3327c8c935ee78e8"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="model_8cpp.html#a3ad4ef4bd3a5cf6b3327c8c935ee78e8">OFFSET_AT</a>(X, Z)&#160;&#160;&#160;((X)*S+(Z))</td></tr>
@@ -155,15 +154,6 @@ Macros</h2></td></tr>
 <tr class="memdesc:a6087c247abe3d7f3a87c6121a25f3bb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the Normal vec3 for the terrain at (X,Z). <br/></td></tr>
 <tr class="separator:a6087c247abe3d7f3a87c6121a25f3bb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:a5c48af6a06eb70709fe4ce950c3015e3"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="struct_angel_1_1vec4.html">Angel::vec4</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="model_8cpp.html#a5c48af6a06eb70709fe4ce950c3015e3">color4</a></td></tr>
-<tr class="memdesc:a5c48af6a06eb70709fe4ce950c3015e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple alias of <a class="el" href="struct_angel_1_1vec4.html">Angel::vec4</a> to emphasize semantic meaning.  <a href="#a5c48af6a06eb70709fe4ce950c3015e3">More...</a><br/></td></tr>
-<tr class="separator:a5c48af6a06eb70709fe4ce950c3015e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd96474ea1ee15dc164c05371abfd25b"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="struct_angel_1_1vec4.html">Angel::vec4</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="model_8cpp.html#acd96474ea1ee15dc164c05371abfd25b">point4</a></td></tr>
-<tr class="memdesc:acd96474ea1ee15dc164c05371abfd25b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple alias of <a class="el" href="struct_angel_1_1vec4.html">Angel::vec4</a> to emphasize semantic meaning.  <a href="#acd96474ea1ee15dc164c05371abfd25b">More...</a><br/></td></tr>
-<tr class="separator:acd96474ea1ee15dc164c05371abfd25b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:aba8f9938a331f36ea0d3a4a3a777b44f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="model_8cpp.html#aba8f9938a331f36ea0d3a4a3a777b44f">createPoint</a> (<a class="el" href="class_object.html">Object</a> *obj, <a class="el" href="struct_angel_1_1vec4.html">point4</a> const &amp;the_point, <a class="el" href="struct_angel_1_1vec4.html">color4</a> const &amp;the_color, <a class="el" href="struct_angel_1_1vec3.html">vec3</a> const &amp;the_normal)</td></tr>
@@ -182,7 +172,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:ace1e82de848a81de1a680505d08ebbb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a tetrahedron using four triangles.  <a href="#ace1e82de848a81de1a680505d08ebbb4">More...</a><br/></td></tr>
 <tr class="separator:ace1e82de848a81de1a680505d08ebbb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9ffe1e1f6d0168397c34286260d36562"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="model_8cpp.html#a9ffe1e1f6d0168397c34286260d36562">sierpinskiPyramid</a> (<a class="el" href="class_object.html">Object</a> *obj, const <a class="el" href="struct_angel_1_1vec4.html">point4</a> &amp;a, const <a class="el" href="struct_angel_1_1vec4.html">point4</a> &amp;b, const <a class="el" href="struct_angel_1_1vec4.html">point4</a> &amp;c, const <a class="el" href="struct_angel_1_1vec4.html">point4</a> &amp;d, int count)</td></tr>
-<tr class="memdesc:a9ffe1e1f6d0168397c34286260d36562"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forms a Sierpinski Pyramid object given four 4D points in space.  <a href="#a9ffe1e1f6d0168397c34286260d36562">More...</a><br/></td></tr>
+<tr class="memdesc:a9ffe1e1f6d0168397c34286260d36562"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forms a Sierpinski Pyramid object given four 4D _vertices in space.  <a href="#a9ffe1e1f6d0168397c34286260d36562">More...</a><br/></td></tr>
 <tr class="separator:a9ffe1e1f6d0168397c34286260d36562"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0afb276b9c3c6051187d5dbfa5a18e6a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="model_8cpp.html#a0afb276b9c3c6051187d5dbfa5a18e6a">recursiveModelGen</a> (<a class="el" href="class_object.html">Object</a> *obj, const <a class="el" href="struct_angel_1_1vec4.html">point4</a> &amp;a, const <a class="el" href="struct_angel_1_1vec4.html">point4</a> &amp;b, const <a class="el" href="struct_angel_1_1vec4.html">point4</a> &amp;c, const <a class="el" href="struct_angel_1_1vec4.html">point4</a> &amp;d, int timesToRecurse, int color)</td></tr>
 <tr class="memdesc:a0afb276b9c3c6051187d5dbfa5a18e6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given a quadrilateral, splits it up into smaller quadrilaterals.  <a href="#a0afb276b9c3c6051187d5dbfa5a18e6a">More...</a><br/></td></tr>
@@ -191,13 +181,13 @@ Functions</h2></td></tr>
 <tr class="memdesc:a152e6c0e91107b949df03ca399251fd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a white sphere.  <a href="#a152e6c0e91107b949df03ca399251fd8">More...</a><br/></td></tr>
 <tr class="separator:a152e6c0e91107b949df03ca399251fd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc0ea166029aab7e030ba43b4633a778"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="model_8cpp.html#afc0ea166029aab7e030ba43b4633a778">quad</a> (<a class="el" href="class_object.html">Object</a> *obj, const <a class="el" href="struct_angel_1_1vec4.html">point4</a> &amp;a, const <a class="el" href="struct_angel_1_1vec4.html">point4</a> &amp;b, const <a class="el" href="struct_angel_1_1vec4.html">point4</a> &amp;c, const <a class="el" href="struct_angel_1_1vec4.html">point4</a> &amp;d, const <a class="el" href="struct_angel_1_1vec4.html">color4</a> &amp;A, const <a class="el" href="struct_angel_1_1vec4.html">color4</a> &amp;B, const <a class="el" href="struct_angel_1_1vec4.html">color4</a> &amp;C, const <a class="el" href="struct_angel_1_1vec4.html">color4</a> &amp;D)</td></tr>
-<tr class="memdesc:afc0ea166029aab7e030ba43b4633a778"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a quadrilateral from four points and four colors.  <a href="#afc0ea166029aab7e030ba43b4633a778">More...</a><br/></td></tr>
+<tr class="memdesc:afc0ea166029aab7e030ba43b4633a778"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a quadrilateral from four _vertices and four _colors.  <a href="#afc0ea166029aab7e030ba43b4633a778">More...</a><br/></td></tr>
 <tr class="separator:afc0ea166029aab7e030ba43b4633a778"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aef25b2740b9cd274d269b8ac69bd7cdd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="model_8cpp.html#aef25b2740b9cd274d269b8ac69bd7cdd">cube</a> (<a class="el" href="class_object.html">Object</a> *obj, const GLfloat &amp;size, const <a class="el" href="struct_angel_1_1vec4.html">color4</a> colors[8])</td></tr>
-<tr class="memdesc:aef25b2740b9cd274d269b8ac69bd7cdd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a cube of a given size fixed at the origin, using the eight colors specified.  <a href="#aef25b2740b9cd274d269b8ac69bd7cdd">More...</a><br/></td></tr>
+<tr class="memdesc:aef25b2740b9cd274d269b8ac69bd7cdd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a cube of a given size fixed at the origin, using the eight _colors specified.  <a href="#aef25b2740b9cd274d269b8ac69bd7cdd">More...</a><br/></td></tr>
 <tr class="separator:aef25b2740b9cd274d269b8ac69bd7cdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9aeb9d305a36f39f25137645d75eaa95"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="model_8cpp.html#a9aeb9d305a36f39f25137645d75eaa95">colorCube</a> (<a class="el" href="class_object.html">Object</a> *obj, GLfloat size)</td></tr>
-<tr class="memdesc:a9aeb9d305a36f39f25137645d75eaa95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a cube of a given size fixed at the origin, using all eight primary colors.  <a href="#a9aeb9d305a36f39f25137645d75eaa95">More...</a><br/></td></tr>
+<tr class="memdesc:a9aeb9d305a36f39f25137645d75eaa95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a cube of a given size fixed at the origin, using all eight primary _colors.  <a href="#a9aeb9d305a36f39f25137645d75eaa95">More...</a><br/></td></tr>
 <tr class="separator:a9aeb9d305a36f39f25137645d75eaa95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a476a380b7a6a48dc7d762716b041def8"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="model_8cpp.html#a476a380b7a6a48dc7d762716b041def8">randFloat</a> (void)</td></tr>
 <tr class="memdesc:a476a380b7a6a48dc7d762716b041def8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a randomized float value!  <a href="#a476a380b7a6a48dc7d762716b041def8">More...</a><br/></td></tr>
@@ -206,7 +196,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:a1c53f4777590deb64c28e8ebb64a321d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a random float between [-H,H].  <a href="#a1c53f4777590deb64c28e8ebb64a321d">More...</a><br/></td></tr>
 <tr class="separator:a1c53f4777590deb64c28e8ebb64a321d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8ba442e2661e9055749548f56cb9f2bc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_angel_1_1vec3.html">vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="model_8cpp.html#a8ba442e2661e9055749548f56cb9f2bc">calcNormal</a> (<a class="el" href="struct_angel_1_1vec4.html">point4</a> &amp;a, <a class="el" href="struct_angel_1_1vec4.html">point4</a> &amp;b, <a class="el" href="struct_angel_1_1vec4.html">point4</a> &amp;c)</td></tr>
-<tr class="memdesc:a8ba442e2661e9055749548f56cb9f2bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the vector normal to the triangle formed by three points.  <a href="#a8ba442e2661e9055749548f56cb9f2bc">More...</a><br/></td></tr>
+<tr class="memdesc:a8ba442e2661e9055749548f56cb9f2bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the vector normal to the triangle formed by three _vertices.  <a href="#a8ba442e2661e9055749548f56cb9f2bc">More...</a><br/></td></tr>
 <tr class="separator:a8ba442e2661e9055749548f56cb9f2bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a578108fa151d2df77af6ae4585c4bccc"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="model_8cpp.html#a578108fa151d2df77af6ae4585c4bccc">landGen</a> (<a class="el" href="class_object.html">Object</a> *obj, int N, float H)</td></tr>
 <tr class="memdesc:a578108fa151d2df77af6ae4585c4bccc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the diamond-square terrain generation algorithm to generate a triangle strip that resembles terrain with oceans, mountains, etc.  <a href="#a578108fa151d2df77af6ae4585c4bccc">More...</a><br/></td></tr>
@@ -257,46 +247,13 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="model_8cpp.html#afc0ea166029aab7e030ba43b4633a778" title="Create a quadrilateral from four points and four colors.">quad</a>( obj, vertices[A], vertices[B], vertices[C], vertices[D],  \</div>
+<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="model_8cpp.html#afc0ea166029aab7e030ba43b4633a778" title="Create a quadrilateral from four _vertices and four _colors.">quad</a>( obj, vertices[A], vertices[B], vertices[C], vertices[D],  \</div>
 <div class="line">    colors[A], colors[B], colors[C], colors[D] );</div>
 </div><!-- fragment -->
-<p>A macro to help quickly call <a class="el" href="model_8cpp.html#afc0ea166029aab7e030ba43b4633a778" title="Create a quadrilateral from four points and four colors.">quad()</a> with correct parameters. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="model_8cpp.html#afc0ea166029aab7e030ba43b4633a778" title="Create a quadrilateral from four points and four colors.">quad()</a>. </dd></dl>
+<p>A macro to help quickly call <a class="el" href="model_8cpp.html#afc0ea166029aab7e030ba43b4633a778" title="Create a quadrilateral from four _vertices and four _colors.">quad()</a> with correct parameters. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="model_8cpp.html#afc0ea166029aab7e030ba43b4633a778" title="Create a quadrilateral from four _vertices and four _colors.">quad()</a>. </dd></dl>
 
-<p>Definition at line <a class="el" href="model_8cpp_source.html#l00268">268</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="a5c48af6a06eb70709fe4ce950c3015e3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef <a class="el" href="struct_angel_1_1vec4.html">Angel::vec4</a> <a class="el" href="struct_angel_1_1vec4.html">color4</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Simple alias of <a class="el" href="struct_angel_1_1vec4.html">Angel::vec4</a> to emphasize semantic meaning. </p>
-
-<p>Definition at line <a class="el" href="model_8cpp_source.html#l00016">16</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="acd96474ea1ee15dc164c05371abfd25b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef <a class="el" href="struct_angel_1_1vec4.html">Angel::vec4</a> <a class="el" href="struct_angel_1_1vec4.html">point4</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Simple alias of <a class="el" href="struct_angel_1_1vec4.html">Angel::vec4</a> to emphasize semantic meaning. </p>
-
-<p>Definition at line <a class="el" href="model_8cpp_source.html#l00018">18</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
+<p>Definition at line <a class="el" href="model_8cpp_source.html#l00263">263</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
 
 </div>
 </div>
@@ -331,7 +288,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Calculate the vector normal to the triangle formed by three points. </p>
+<p>Calculate the vector normal to the triangle formed by three _vertices. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">a</td><td>First vertex. </td></tr>
@@ -342,7 +299,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The vector normal to the plane formed by the triangle a,b,c. </dd></dl>
 
-<p>Definition at line <a class="el" href="model_8cpp_source.html#l00352">352</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
+<p>Definition at line <a class="el" href="model_8cpp_source.html#l00347">347</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
 
 </div>
 </div>
@@ -370,7 +327,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Creates a cube of a given size fixed at the origin, using all eight primary colors. </p>
+<p>Creates a cube of a given size fixed at the origin, using all eight primary _colors. </p>
+<p>Creates a cube of a given size fixed at the origin, using all eight primary colors.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">obj</td><td>The object to add the geometry to. </td></tr>
@@ -379,7 +337,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="model_8cpp_source.html#l00310">310</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
+<p>Definition at line <a class="el" href="model_8cpp_source.html#l00305">305</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
 
 </div>
 </div>
@@ -430,7 +388,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="model_8cpp_source.html#l00042">42</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
+<p>Definition at line <a class="el" href="model_8cpp_source.html#l00037">37</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
 
 </div>
 </div>
@@ -464,17 +422,18 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Create a cube of a given size fixed at the origin, using the eight colors specified. </p>
+<p>Create a cube of a given size fixed at the origin, using the eight _colors specified. </p>
+<p>Create a cube of a given size fixed at the origin, using the eight colors specified.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">obj</td><td>The object to add the geometry to. </td></tr>
     <tr><td class="paramname">size</td><td>The size of the cube to create. </td></tr>
-    <tr><td class="paramname">colors</td><td>An array of eight colors for the vertices. </td></tr>
+    <tr><td class="paramname">colors</td><td>An array of eight _colors for the vertices. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="model_8cpp_source.html#l00280">280</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
+<p>Definition at line <a class="el" href="model_8cpp_source.html#l00275">275</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
 
 </div>
 </div>
@@ -539,7 +498,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="model_8cpp_source.html#l00123">123</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
+<p>Definition at line <a class="el" href="model_8cpp_source.html#l00118">118</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
 
 </div>
 </div>
@@ -566,7 +525,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a random float between [-H,H]. </dd></dl>
 
-<p>Definition at line <a class="el" href="model_8cpp_source.html#l00340">340</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
+<p>Definition at line <a class="el" href="model_8cpp_source.html#l00335">335</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
 
 </div>
 </div>
@@ -611,7 +570,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The maximum height actually achieved in this terrain generation. </dd></dl>
 
-<p>Definition at line <a class="el" href="model_8cpp_source.html#l00402">402</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
+<p>Definition at line <a class="el" href="model_8cpp_source.html#l00397">397</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
 
 </div>
 </div>
@@ -649,7 +608,7 @@ Functions</h2></td></tr>
 </dl>
 <p>What should the water's height be? </p>
 
-<p>Definition at line <a class="el" href="model_8cpp_source.html#l00561">561</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
+<p>Definition at line <a class="el" href="model_8cpp_source.html#l00557">557</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
 
 </div>
 </div>
@@ -719,7 +678,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Create a quadrilateral from four points and four colors. </p>
+<p>Create a quadrilateral from four _vertices and four _colors. </p>
+<p>Create a quadrilateral from four points and four colors.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">obj</td><td>The object to add the geometry to. </td></tr>
@@ -735,7 +695,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="model_8cpp_source.html#l00242">242</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
+<p>Definition at line <a class="el" href="model_8cpp_source.html#l00237">237</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
 
 </div>
 </div>
@@ -756,7 +716,7 @@ Functions</h2></td></tr>
 <p>Return a randomized float value! </p>
 <dl class="section return"><dt>Returns</dt><dd>A random float, just for you! </dd></dl>
 
-<p>Definition at line <a class="el" href="model_8cpp_source.html#l00331">331</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
+<p>Definition at line <a class="el" href="model_8cpp_source.html#l00326">326</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
 
 </div>
 </div>
@@ -829,7 +789,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="model_8cpp_source.html#l00200">200</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
+<p>Definition at line <a class="el" href="model_8cpp_source.html#l00195">195</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
 
 </div>
 </div>
@@ -881,7 +841,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Forms a Sierpinski Pyramid object given four 4D points in space. </p>
+<p>Forms a Sierpinski Pyramid object given four 4D _vertices in space. </p>
+<p>Forms a Sierpinski Pyramid object given four 4D points in space.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">obj</td><td>The object to add the geometry to. </td></tr>
@@ -894,7 +855,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="model_8cpp_source.html#l00168">168</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
+<p>Definition at line <a class="el" href="model_8cpp_source.html#l00163">163</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
 
 </div>
 </div>
@@ -920,7 +881,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="model_8cpp_source.html#l00215">215</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
+<p>Definition at line <a class="el" href="model_8cpp_source.html#l00210">210</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
 
 </div>
 </div>
@@ -979,7 +940,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="model_8cpp_source.html#l00149">149</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
+<p>Definition at line <a class="el" href="model_8cpp_source.html#l00144">144</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
 
 </div>
 </div>
@@ -1037,7 +998,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="model_8cpp_source.html#l00061">61</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
+<p>Definition at line <a class="el" href="model_8cpp_source.html#l00056">56</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
 
 </div>
 </div>
@@ -1065,7 +1026,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
-<p>Definition at line <a class="el" href="model_8cpp_source.html#l00093">93</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
+<p>Definition at line <a class="el" href="model_8cpp_source.html#l00088">88</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
 
 </div>
 </div>
@@ -1075,7 +1036,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_ba210d1fa67db7bee1bb22e0a3c11d9f.html">Common</a></li><li class="navelem"><a class="el" href="model_8cpp.html">model.cpp</a></li>
-    <li class="footer">Generated on Fri Mar 15 2013 00:47:39 for HyperGrafx by
+    <li class="footer">Generated on Fri Mar 15 2013 19:22:37 for HyperGrafx by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

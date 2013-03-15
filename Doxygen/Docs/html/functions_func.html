@@ -81,11 +81,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="functions_vars.html"><span>Variables</span></a></li>
       <li><a href="functions_type.html"><span>Typedefs</span></a></li>
       <li><a href="functions_enum.html"><span>Enumerations</span></a></li>
+      <li><a href="functions_eval.html"><span>Enumerator</span></a></li>
     </ul>
   </div>
   <div id="navrow4" class="tabs3">
     <ul class="tablist">
       <li><a href="#index_a"><span>a</span></a></li>
+      <li><a href="#index_b"><span>b</span></a></li>
       <li><a href="#index_c"><span>c</span></a></li>
       <li><a href="#index_d"><span>d</span></a></li>
       <li><a href="#index_e"><span>e</span></a></li>
@@ -93,6 +95,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="#index_g"><span>g</span></a></li>
       <li><a href="#index_h"><span>h</span></a></li>
       <li><a href="#index_i"><span>i</span></a></li>
+      <li><a href="#index_l"><span>l</span></a></li>
       <li><a href="#index_m"><span>m</span></a></li>
       <li><a href="#index_n"><span>n</span></a></li>
       <li><a href="#index_o"><span>o</span></a></li>
@@ -127,7 +130,7 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -155,6 +158,19 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 <li>adjustRotation()
 : <a class="el" href="class_camera.html#aba32f195cdb5bfcfd05c2ce74315b6c3">Camera</a>
 </li>
+<li>animation()
+: <a class="el" href="class_object.html#a0d604a816115c474b9593aeaebda9f8b">Object</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_b"></a>- b -</h3><ul>
+<li>buffer()
+: <a class="el" href="class_object.html#a7edb92c30d86b6479b0ff2a5e9f06e13">Object</a>
+</li>
+<li>bufferMorphOnly()
+: <a class="el" href="class_object.html#a293792abfe0671e00a0ec10e85ea9d9e">Object</a>
+</li>
 </ul>
 
 
@@ -181,17 +197,26 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 
 
 <h3><a class="anchor" id="index_d"></a>- d -</h3><ul>
-<li>DeleteObject()
-: <a class="el" href="class_scene.html#a8bbe0e5b1bfc71034b18e240e86aa285">Scene</a>
+<li>deleteObject()
+: <a class="el" href="class_scene.html#ad3897f8ac658af62c133783b2c4eaee4">Scene</a>
 </li>
 <li>Delta()
 : <a class="el" href="class_timer.html#a4f68da5b62cb1d1b2dd0c8549eb6286d">Timer</a>
 </li>
-<li>DestroyObject()
-: <a class="el" href="class_scene.html#a82759ded1f6f87a91b8d10ed87501958">Scene</a>
+<li>destroyMorphTarget()
+: <a class="el" href="class_object.html#a98d3f1b9ebb61c3b21e2a59ed267480a">Object</a>
+</li>
+<li>destroyObject()
+: <a class="el" href="class_scene.html#a8c57e1cebc39586c7928225d1e25de39">Scene</a>
 </li>
 <li>dPos()
 : <a class="el" href="class_camera.html#a2ac5f89b4f9f012dead66980925143c0">Camera</a>
+</li>
+<li>draw()
+: <a class="el" href="class_object.html#a53e2ee7f548550be014126bed139fe69">Object</a>
+</li>
+<li>drawMode()
+: <a class="el" href="class_object.html#adafdf22583b051b4c61c8eb725fb07d5">Object</a>
 </li>
 <li>dX()
 : <a class="el" href="class_camera.html#ac7985a6cb48f4e1e74fda17e5213dd74">Camera</a>
@@ -223,8 +248,8 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 
 
 <h3><a class="anchor" id="index_g"></a>- g -</h3><ul>
-<li>GetPosition()
-: <a class="el" href="class_object.html#ae10497fea640753a3cb63f739aacc540">Object</a>
+<li>genMorphTarget()
+: <a class="el" href="class_object.html#ab0ba603904f8f7de15dc0450e2d9b30e">Object</a>
 </li>
 </ul>
 
@@ -249,9 +274,22 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 </ul>
 
 
+<h3><a class="anchor" id="index_l"></a>- l -</h3><ul>
+<li>link()
+: <a class="el" href="class_object.html#a11d6063c580331d6af59c8d71b7f3e9f">Object</a>
+</li>
+</ul>
+
+
 <h3><a class="anchor" id="index_m"></a>- m -</h3><ul>
 <li>mainScreen()
 : <a class="el" href="class_engine.html#ad4429218b5aed162269094c6571a2520">Engine</a>
+</li>
+<li>morphPercentage()
+: <a class="el" href="class_object.html#accb051cdc79bc93e8c9c0edb79dd6b30">Object</a>
+</li>
+<li>morphTarget()
+: <a class="el" href="class_object.html#a7694c9cfe445c3d5b993a38e3f8badd9">Object</a>
 </li>
 <li>move()
 : <a class="el" href="class_camera.html#aaa9706527438bd5bd323dd018bb34fcf">Camera</a>
@@ -260,8 +298,14 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 
 
 <h3><a class="anchor" id="index_n"></a>- n -</h3><ul>
+<li>name()
+: <a class="el" href="class_object.html#aafd766fce2598f718cac97a3ac731706">Object</a>
+</li>
 <li>next()
 : <a class="el" href="class_cameras.html#a971e1ffd27ff38d58f83996f87700e82">Cameras</a>
+</li>
+<li>numberOfPoints()
+: <a class="el" href="class_object.html#a73f1a6210bacf504de9a808009479b81">Object</a>
 </li>
 <li>numCameras()
 : <a class="el" href="class_cameras.html#acf7e92b5163efeeb88543e605d436a0e">Cameras</a>
@@ -272,6 +316,9 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 <h3><a class="anchor" id="index_o"></a>- o -</h3><ul>
 <li>obj2Cam()
 : <a class="el" href="class_cameras.html#a8a6c7958396c6b0d07380aa762b15fcc">Cameras</a>
+</li>
+<li>Object()
+: <a class="el" href="class_object.html#aacf42e81415f32f1f2a105ce29c7c1b9">Object</a>
 </li>
 <li>operator*()
 : <a class="el" href="class_angel_1_1mat2.html#a1be53f556f8dd39cc2a95c0168319129">Angel::mat2</a>
@@ -293,10 +340,16 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 : <a class="el" href="class_cameras.html#a9dee7bf1f2c56176c461fa2617ce4549">Cameras</a>
 </li>
 <li>pos()
-: <a class="el" href="class_camera.html#a9982ac5f48fe0af97fefa725080d6da6">Camera</a>
+: <a class="el" href="class_camera.html#ae9dc2206b71b25cf320a05d148cb8b56">Camera</a>
+</li>
+<li>position()
+: <a class="el" href="class_object.html#ac64609eb614aa5974b74000cec6fc95c">Object</a>
 </li>
 <li>prev()
 : <a class="el" href="class_cameras.html#a90eb5a3dda940ed494f592d094580dd8">Cameras</a>
+</li>
+<li>propegate()
+: <a class="el" href="class_object.html#a70a0f93ad9805057c5cc39853ce049c7">Object</a>
 </li>
 </ul>
 
@@ -326,15 +379,14 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 </li>
 <li>send()
 : <a class="el" href="class_camera.html#a401decef27b59d6485b4ab9762f5b9e6">Camera</a>
+, <a class="el" href="class_object.html#a34258ee199342d785c29d18c49d54e71">Object</a>
 </li>
 <li>set()
 : <a class="el" href="class_engine.html#a81f16979bc330c46675e4d7ffab5eff9">Engine</a>
 </li>
-<li>Shader()
-: <a class="el" href="class_object.html#a3dc857b837e8b77ba8a2727233400a5e">Object</a>
-, <a class="el" href="class_scene.html#af1e8ba8802f3bf83cebbfcbf3ed7c333">Scene</a>
-, <a class="el" href="class_object.html#aa52c30bca96800cecba55f446e147859">Object</a>
-, <a class="el" href="class_scene.html#a7137a7302c21ac4dd44e746bfb6f7cf8">Scene</a>
+<li>shader()
+: <a class="el" href="class_scene.html#a9d8a33f0f0a296aba0fb6717ab85cb18">Scene</a>
+, <a class="el" href="class_object.html#a459489106838a1e3a8dbbd13045cd523">Object</a>
 </li>
 <li>stop()
 : <a class="el" href="class_camera.html#ae7414c6ae83c3c9392ab90e957daf2b9">Camera</a>
@@ -349,6 +401,9 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 
 
 <h3><a class="anchor" id="index_t"></a>- t -</h3><ul>
+<li>texture()
+: <a class="el" href="class_object.html#afebb27ddb10daed8e2c5085b76cbc500">Object</a>
+</li>
 <li>Tick()
 : <a class="el" href="class_timer.html#a4e69d3c5a312d1b29d1735b2c5bccefb">Timer</a>
 </li>
@@ -403,13 +458,16 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 <li>~Engine()
 : <a class="el" href="class_engine.html#a4850643b0f929d8021115cf37d7ab608">Engine</a>
 </li>
+<li>~Object()
+: <a class="el" href="class_object.html#ac9ec2177266554587e8ddb40eb72ae1c">Object</a>
+</li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Mar 15 2013 00:47:40 for HyperGrafx by
+    <li class="footer">Generated on Fri Mar 15 2013 19:22:38 for HyperGrafx by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

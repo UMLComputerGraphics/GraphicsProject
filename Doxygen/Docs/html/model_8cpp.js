@@ -7,8 +7,6 @@ var model_8cpp =
     [ "QUAD", "model_8cpp.html#a876c92757e616a414576f3183cb49b17", null ],
     [ "TEX_UV_AT", "model_8cpp.html#a4535f7729a3c0127c4bb32caa100d2cf", null ],
     [ "VERTEX_AT", "model_8cpp.html#a1c8dfc5517ca1ada9923877cfc0783e4", null ],
-    [ "color4", "model_8cpp.html#a5c48af6a06eb70709fe4ce950c3015e3", null ],
-    [ "point4", "model_8cpp.html#acd96474ea1ee15dc164c05371abfd25b", null ],
     [ "calcNormal", "model_8cpp.html#a8ba442e2661e9055749548f56cb9f2bc", null ],
     [ "colorCube", "model_8cpp.html#a9aeb9d305a36f39f25137645d75eaa95", null ],
     [ "createPoint", "model_8cpp.html#aba8f9938a331f36ea0d3a4a3a777b44f", null ],

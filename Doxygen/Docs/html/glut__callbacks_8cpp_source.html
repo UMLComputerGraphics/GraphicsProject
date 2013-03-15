@@ -92,7 +92,7 @@ $(document).ready(function(){initNavTree('glut__callbacks_8cpp_source.html','');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -118,12 +118,12 @@ $(document).ready(function(){initNavTree('glut__callbacks_8cpp_source.html','');
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;sstream&gt;</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
 <div class="line"><a name="l00029"></a><span class="lineno"><a class="code" href="glut__callbacks_8h.html#a254e97178a2df1da3e435a01f778e475">   29</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="glut__callbacks_8cpp.html#a254e97178a2df1da3e435a01f778e475" title="keylift is registered as a GLUT callback for when a user releases a depressed key.">keylift</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> key, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y ) {</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  </div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  <a class="code" href="class_cameras.html" title="The Cameras class represents a group of logical cameras for a model view. Each camera possesses its o...">Cameras</a> *camList = <a class="code" href="class_engine.html#a6cbf9ec80a4a3bb245355ff70498dba0" title="instance returns, or creates and then returns, a pointer to the Engine object.">Engine::instance</a>()-&gt;<a class="code" href="class_engine.html#a2b2c1cd59c9a5c903bf466284012ce4c" title="Retrieves a pointer to the Camera List.">cams</a>();</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  </div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <span class="keywordflow">if</span> ( camList-&gt;<a class="code" href="class_cameras.html#acf7e92b5163efeeb88543e605d436a0e" title="numCameras fetches the number of Cameras in the collection.">numCameras</a>() &lt; 1 ) <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  <a class="code" href="class_camera.html" title="The Camera class represents a logical camera in a model view, which posesses a current viewing angle ...">Camera</a> &amp;cam = *(camList-&gt;<a class="code" href="class_cameras.html#a6002cbceb6a93092a1a029af486349a0" title="active returns the Camera in the collection that is considered &#39;active&#39;.">active</a>());</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  </div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <span class="keywordflow">switch</span> ( key ) {</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <span class="keywordflow">case</span> <span class="charliteral">&#39;w&#39;</span>:</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    cam.<a class="code" href="class_camera.html#ae7414c6ae83c3c9392ab90e957daf2b9" title="stop instructs the camera to stop moving in the specified direction.">stop</a>( Camera::DIR_FORWARD );</div>
@@ -147,17 +147,17 @@ $(document).ready(function(){initNavTree('glut__callbacks_8cpp_source.html','');
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;}</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
 <div class="line"><a name="l00066"></a><span class="lineno"><a class="code" href="glut__callbacks_8h.html#aef7ba2f69afb2d954545f64c7fe24b14">   66</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="glut__callbacks_8cpp.html#aef7ba2f69afb2d954545f64c7fe24b14" title="keyboard is a callback registered with GLUT.">keyboard</a>( <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> key, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y ) {</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  </div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  <a class="code" href="class_scene.html">Scene</a> *theScene = <a class="code" href="class_engine.html#a6cbf9ec80a4a3bb245355ff70498dba0" title="instance returns, or creates and then returns, a pointer to the Engine object.">Engine::instance</a>()-&gt;<a class="code" href="class_engine.html#a782cf288c161986d0ac0eb48cd187c4d" title="Retrieves a pointer to the Root, top-level Scene graph.">rootScene</a>();</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <a class="code" href="class_cameras.html" title="The Cameras class represents a group of logical cameras for a model view. Each camera possesses its o...">Cameras</a> *camList = <a class="code" href="class_engine.html#a6cbf9ec80a4a3bb245355ff70498dba0" title="instance returns, or creates and then returns, a pointer to the Engine object.">Engine::instance</a>()-&gt;<a class="code" href="class_engine.html#a2b2c1cd59c9a5c903bf466284012ce4c" title="Retrieves a pointer to the Camera List.">cams</a>();</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  </div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">#ifdef WII</span></div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor"></span>  <span class="comment">// Hacky, for the wii reset, below.</span></div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  <a class="code" href="class_camera.html" title="The Camera class represents a logical camera in a model view, which posesses a current viewing angle ...">Camera</a> *camptr = <span class="keyword">dynamic_cast&lt;</span> <a class="code" href="class_camera.html" title="The Camera class represents a logical camera in a model view, which posesses a current viewing angle ...">Camera</a>* <span class="keyword">&gt;</span>( (*_camList)[<span class="stringliteral">&quot;AutoCamera2&quot;</span>] );</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor"></span>  </div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <span class="keywordflow">switch</span> ( key ) {</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  </div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <span class="keywordflow">case</span> 033: <span class="comment">// Escape Key     </span></div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="comment">/*</span></div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="comment">     cleanup();</span></div>
@@ -166,12 +166,12 @@ $(document).ready(function(){initNavTree('glut__callbacks_8cpp_source.html','');
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="comment">     */</span></div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    glutLeaveMainLoop();</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    </div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  <span class="keywordflow">case</span> <span class="charliteral">&#39;;&#39;</span>: <span class="comment">// Print Info</span></div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    fprintf( stderr, <span class="stringliteral">&quot;Active Object: %s\n&quot;</span>,</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;             theScene-&gt;active()-&gt;Name().c_str() );</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;             theScene-&gt;active()-&gt;<a class="code" href="class_object.html#aafd766fce2598f718cac97a3ac731706" title="Retrieve the _name of this Object.">name</a>().c_str() );</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    </div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  <span class="keywordflow">case</span> <span class="charliteral">&#39;~&#39;</span>:</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="preprocessor">#ifdef WII</span></div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="preprocessor"></span>    CalibrateGyro( Wii );</div>
@@ -185,9 +185,9 @@ $(document).ready(function(){initNavTree('glut__callbacks_8cpp_source.html','');
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    camList-&gt;<a class="code" href="class_cameras.html#a436b481bf293ec6dfa09d2f89054c54b" title="addCamera takes a name for a camera and returns a handle to a newly created camera.">addCamera</a>( camName.str() );</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  }</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  </div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  <span class="keywordflow">if</span> ( camList-&gt;<a class="code" href="class_cameras.html#acf7e92b5163efeeb88543e605d436a0e" title="numCameras fetches the number of Cameras in the collection.">numCameras</a>() &lt; 1 ) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  </div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  <span class="comment">/* A shorthand variable with local scope that refers to &quot;The active Camera.&quot; */</span></div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  <a class="code" href="class_camera.html" title="The Camera class represents a logical camera in a model view, which posesses a current viewing angle ...">Camera</a> &amp;cam = *(camList-&gt;<a class="code" href="class_cameras.html#a6002cbceb6a93092a1a029af486349a0" title="active returns the Camera in the collection that is considered &#39;active&#39;.">active</a>());</div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  </div>
@@ -235,12 +235,12 @@ $(document).ready(function(){initNavTree('glut__callbacks_8cpp_source.html','');
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;  <span class="keywordflow">case</span> <span class="charliteral">&#39;b&#39;</span>:</div>
 <div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    cam.<a class="code" href="class_camera.html#a8463a19c9e1e7a1c51cd97051e937230" title="changePerspective changes the current perspective of the camera.">changePerspective</a>( Camera::IDENTITY );</div>
 <div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    </div>
 <div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;  }</div>
 <div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;}</div>
 <div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;</div>
 <div class="line"><a name="l00167"></a><span class="lineno"><a class="code" href="glut__callbacks_8h.html#a6f3a97ed034be467bc035242d2486e00">  167</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="glut__callbacks_8cpp.html#a6f3a97ed034be467bc035242d2486e00" title="keyboard_ctrl is registered as a GLUT callback.">keyboard_ctrl</a>( <span class="keywordtype">int</span> key, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y ) {</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;  </div>
 <div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;  <a class="code" href="class_scene.html">Scene</a> *theScene = <a class="code" href="class_engine.html#a6cbf9ec80a4a3bb245355ff70498dba0" title="instance returns, or creates and then returns, a pointer to the Engine object.">Engine::instance</a>()-&gt;<a class="code" href="class_engine.html#a782cf288c161986d0ac0eb48cd187c4d" title="Retrieves a pointer to the Root, top-level Scene graph.">rootScene</a>();</div>
 <div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;  <a class="code" href="class_cameras.html" title="The Cameras class represents a group of logical cameras for a model view. Each camera possesses its o...">Cameras</a> *camList = <a class="code" href="class_engine.html#a6cbf9ec80a4a3bb245355ff70498dba0" title="instance returns, or creates and then returns, a pointer to the Engine object.">Engine::instance</a>()-&gt;<a class="code" href="class_engine.html#a2b2c1cd59c9a5c903bf466284012ce4c" title="Retrieves a pointer to the Camera List.">cams</a>();</div>
 <div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;  </div>
@@ -252,30 +252,30 @@ $(document).ready(function(){initNavTree('glut__callbacks_8cpp_source.html','');
 <div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;  <span class="keywordflow">case</span> GLUT_KEY_RIGHT:</div>
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    theScene-&gt;next();</div>
 <div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    <span class="comment">//Change the Draw Mode ...</span></div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    </div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    <span class="comment">//Change the Draw drawMode ...</span></div>
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  <span class="keywordflow">case</span> GLUT_KEY_F1:</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    theScene-&gt;active()-&gt;Mode( GL_POINTS );</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    theScene-&gt;active()-&gt;<a class="code" href="class_object.html#adafdf22583b051b4c61c8eb725fb07d5" title="Select a new OpenGL draw mode for this Object.">drawMode</a>( GL_POINTS );</div>
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;  <span class="keywordflow">case</span> GLUT_KEY_F2:</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    theScene-&gt;active()-&gt;Mode( GL_LINE_STRIP );</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    theScene-&gt;active()-&gt;<a class="code" href="class_object.html#adafdf22583b051b4c61c8eb725fb07d5" title="Select a new OpenGL draw mode for this Object.">drawMode</a>( GL_LINE_STRIP );</div>
 <div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;  <span class="keywordflow">case</span> GLUT_KEY_F3:</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    theScene-&gt;active()-&gt;Mode( GL_TRIANGLE_STRIP );</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    theScene-&gt;active()-&gt;<a class="code" href="class_object.html#adafdf22583b051b4c61c8eb725fb07d5" title="Select a new OpenGL draw mode for this Object.">drawMode</a>( GL_TRIANGLE_STRIP );</div>
 <div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;  <span class="keywordflow">case</span> GLUT_KEY_F4:</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    theScene-&gt;active()-&gt;Mode( GL_TRIANGLES );</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    theScene-&gt;active()-&gt;<a class="code" href="class_object.html#adafdf22583b051b4c61c8eb725fb07d5" title="Select a new OpenGL draw mode for this Object.">drawMode</a>( GL_TRIANGLES );</div>
 <div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;  }</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;  </div>
 <div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;  <span class="comment">// If there are no Cameras, don&#39;t muck around with this section.</span></div>
 <div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;  <span class="keywordflow">if</span> ( camList-&gt;<a class="code" href="class_cameras.html#acf7e92b5163efeeb88543e605d436a0e" title="numCameras fetches the number of Cameras in the collection.">numCameras</a>() &lt; 1 ) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;  </div>
 <div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;  <span class="keywordflow">switch</span> ( key ) {</div>
 <div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;  <span class="keywordflow">case</span> GLUT_KEY_PAGE_UP:</div>
 <div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    camList-&gt;<a class="code" href="class_cameras.html#a90eb5a3dda940ed494f592d094580dd8" title="Sets the active Camera to the previous available one in the collection.">prev</a>();</div>
 <div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    </div>
 <div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;  <span class="keywordflow">case</span> GLUT_KEY_PAGE_DOWN:</div>
 <div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;    camList-&gt;<a class="code" href="class_cameras.html#a971e1ffd27ff38d58f83996f87700e82" title="Sets the active camera to the next available one in the collection.">next</a>();</div>
 <div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    <span class="keywordflow">break</span>;</div>
@@ -283,10 +283,10 @@ $(document).ready(function(){initNavTree('glut__callbacks_8cpp_source.html','');
 <div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;}</div>
 <div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;</div>
 <div class="line"><a name="l00219"></a><span class="lineno"><a class="code" href="glut__callbacks_8h.html#ac76a5d78172a826cd6ee9512b89a86c0">  219</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="glut__callbacks_8cpp.html#ac76a5d78172a826cd6ee9512b89a86c0" title="mouse is registered as a GLUT callback.">mouse</a>( <span class="keywordtype">int</span> button, <span class="keywordtype">int</span> state, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y ) {</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;  </div>
 <div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;  <span class="keyword">static</span> <a class="code" href="class_cameras.html" title="The Cameras class represents a group of logical cameras for a model view. Each camera possesses its o...">Cameras</a> *camList = <a class="code" href="class_engine.html#a6cbf9ec80a4a3bb245355ff70498dba0" title="instance returns, or creates and then returns, a pointer to the Engine object.">Engine::instance</a>()-&gt;<a class="code" href="class_engine.html#a2b2c1cd59c9a5c903bf466284012ce4c" title="Retrieves a pointer to the Camera List.">cams</a>();</div>
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;  <span class="keywordflow">if</span> ( camList-&gt;<a class="code" href="class_cameras.html#acf7e92b5163efeeb88543e605d436a0e" title="numCameras fetches the number of Cameras in the collection.">numCameras</a>() &lt; 1 ) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;  </div>
 <div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;  <span class="keywordflow">if</span> ( state == GLUT_DOWN ) {</div>
 <div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    <span class="keywordflow">switch</span> ( button ) {</div>
 <div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    <span class="keywordflow">case</span> 3:</div>
@@ -297,52 +297,52 @@ $(document).ready(function(){initNavTree('glut__callbacks_8cpp_source.html','');
 <div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;      <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    }</div>
 <div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;  }</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;  </div>
 <div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;}</div>
 <div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;</div>
 <div class="line"><a name="l00245"></a><span class="lineno"><a class="code" href="glut__callbacks_8h.html#ad373689e6b9dcfe1b99692b43a759d40">  245</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="glut__callbacks_8cpp.html#ad373689e6b9dcfe1b99692b43a759d40" title="mouseroll is registered as a GLUT callback.">mouseroll</a>( <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y ) {</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;  </div>
 <div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;  <span class="keyword">static</span> <a class="code" href="class_screen.html">Screen</a> *myScreen = <a class="code" href="class_engine.html#a6cbf9ec80a4a3bb245355ff70498dba0" title="instance returns, or creates and then returns, a pointer to the Engine object.">Engine::instance</a>()-&gt;<a class="code" href="class_engine.html#ad4429218b5aed162269094c6571a2520" title="Retrieves a pointer to the core &#39;Screen&#39; object.">mainScreen</a>();</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;  </div>
 <div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;  <span class="keywordflow">if</span> ( (x != myScreen-&gt;MidpointX()) || (y != myScreen-&gt;MidpointY()) ) {</div>
 <div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;    <span class="keywordflow">if</span> ( myScreen-&gt;_camList.<a class="code" href="class_cameras.html#acf7e92b5163efeeb88543e605d436a0e" title="numCameras fetches the number of Cameras in the collection.">numCameras</a>() &gt; 0 )</div>
 <div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;      myScreen-&gt;_camList.<a class="code" href="class_cameras.html#a6002cbceb6a93092a1a029af486349a0" title="active returns the Camera in the collection that is considered &#39;active&#39;.">active</a>()-&gt;<a class="code" href="class_camera.html#a1ba0979fe0b2ec58085d5f9721858e5e" title="roll adjusts the z axis rotation; tilt or lean left/right.">roll</a>( x - myScreen-&gt;MidpointX() );</div>
 <div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;    glutWarpPointer( myScreen-&gt;MidpointX(), myScreen-&gt;MidpointY() );</div>
 <div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;  }</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;  </div>
 <div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;}</div>
 <div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;</div>
 <div class="line"><a name="l00265"></a><span class="lineno"><a class="code" href="glut__callbacks_8h.html#af04567427614c77718ed14b8450a3438">  265</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="glut__callbacks_8cpp.html#af04567427614c77718ed14b8450a3438" title="mouselook is registered as a GLUT callback.">mouselook</a>( <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y ) {</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;  </div>
 <div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;  <span class="keyword">static</span> <a class="code" href="class_screen.html">Screen</a> *myScreen = <a class="code" href="class_engine.html#a6cbf9ec80a4a3bb245355ff70498dba0" title="instance returns, or creates and then returns, a pointer to the Engine object.">Engine::instance</a>()-&gt;<a class="code" href="class_engine.html#ad4429218b5aed162269094c6571a2520" title="Retrieves a pointer to the core &#39;Screen&#39; object.">mainScreen</a>();</div>
 <div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;  <span class="keywordflow">if</span> ( (x != myScreen-&gt;MidpointX()) || (y != myScreen-&gt;MidpointY()) ) {</div>
 <div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">double</span> dx = ((double) x - myScreen-&gt;MidpointX());</div>
 <div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">double</span> dy = ((double) y - myScreen-&gt;MidpointY());</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    </div>
 <div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;    <span class="keywordflow">if</span> ( (abs( dx ) &gt; 100) || (abs( dy ) &gt; 100) ) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    </div>
 <div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    <span class="keywordflow">if</span> ( myScreen-&gt;_camList.<a class="code" href="class_cameras.html#acf7e92b5163efeeb88543e605d436a0e" title="numCameras fetches the number of Cameras in the collection.">numCameras</a>() &gt; 0 ) {</div>
 <div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;      myScreen-&gt;_camList.<a class="code" href="class_cameras.html#a6002cbceb6a93092a1a029af486349a0" title="active returns the Camera in the collection that is considered &#39;active&#39;.">active</a>()-&gt;<a class="code" href="class_camera.html#aac7dbb6201be7f17e014fc6fdf915560" title="pitch adjusts the x axis rotation; up/down look.">pitch</a>( dy );</div>
 <div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;      myScreen-&gt;_camList.<a class="code" href="class_cameras.html#a6002cbceb6a93092a1a029af486349a0" title="active returns the Camera in the collection that is considered &#39;active&#39;.">active</a>()-&gt;<a class="code" href="class_camera.html#a0ce7d12edbe47d9a8915d8af98d8f524" title="yaw adjusts the y axis rotation; left/right look.">yaw</a>(</div>
 <div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;          dx, <a class="code" href="class_engine.html#a6cbf9ec80a4a3bb245355ff70498dba0" title="instance returns, or creates and then returns, a pointer to the Engine object.">Engine::instance</a>()-&gt;opt( <span class="stringliteral">&quot;fixed_yaw&quot;</span> ) );</div>
 <div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;    }</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;    </div>
 <div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    glutWarpPointer( myScreen-&gt;MidpointX(), myScreen-&gt;MidpointY() );</div>
 <div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;  }</div>
 <div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;  </div>
 <div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;}</div>
 <div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;</div>
 <div class="line"><a name="l00299"></a><span class="lineno"><a class="code" href="glut__callbacks_8h.html#ace248343c050c709b645c42012d68f18">  299</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="glut__callbacks_8cpp.html#ace248343c050c709b645c42012d68f18" title="resizeEvent is registered as a glut callback for when the screen is resized.">resizeEvent</a>( <span class="keywordtype">int</span> width, <span class="keywordtype">int</span> height ) {</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;  </div>
 <div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;  <span class="comment">// Get a handle to the screen object</span></div>
 <div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;  <a class="code" href="class_screen.html">Screen</a> *scr = <a class="code" href="class_engine.html#a6cbf9ec80a4a3bb245355ff70498dba0" title="instance returns, or creates and then returns, a pointer to the Engine object.">Engine::instance</a>()-&gt;<a class="code" href="class_engine.html#ad4429218b5aed162269094c6571a2520" title="Retrieves a pointer to the core &#39;Screen&#39; object.">mainScreen</a>();</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;  </div>
 <div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;  <span class="comment">// Update the size, which propagates changes to cameras and viewports.</span></div>
 <div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;  scr-&gt;Size( width, height );</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;  </div>
 <div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;  <span class="comment">// move the pointer so that there isn&#39;t a big jump next time we move it.</span></div>
 <div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;  glutWarpPointer( scr-&gt;MidpointX(), scr-&gt;MidpointY() );</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;  </div>
 <div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
@@ -350,7 +350,7 @@ $(document).ready(function(){initNavTree('glut__callbacks_8cpp_source.html','');
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_ba210d1fa67db7bee1bb22e0a3c11d9f.html">Common</a></li><li class="navelem"><a class="el" href="glut__callbacks_8cpp.html">glut_callbacks.cpp</a></li>
-    <li class="footer">Generated on Fri Mar 15 2013 00:47:38 for HyperGrafx by
+    <li class="footer">Generated on Fri Mar 15 2013 19:22:37 for HyperGrafx by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -92,7 +92,7 @@ $(document).ready(function(){initNavTree('model_8hpp.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -103,7 +103,6 @@ $(document).ready(function(){initNavTree('model_8hpp.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">model.hpp File Reference</div>  </div>
@@ -113,19 +112,10 @@ $(document).ready(function(){initNavTree('model_8hpp.html','');});
 <p>Headers for Functions related to constructing simple geometry.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;vec.hpp&quot;</code><br/>
-<code>#include &quot;Object.hpp&quot;</code><br/>
+<code>#include &quot;<a class="el" href="_object_8hpp_source.html">Object.hpp</a>&quot;</code><br/>
 </div>
 <p><a href="model_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:a5c48af6a06eb70709fe4ce950c3015e3"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="struct_angel_1_1vec4.html">Angel::vec4</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="model_8hpp.html#a5c48af6a06eb70709fe4ce950c3015e3">color4</a></td></tr>
-<tr class="memdesc:a5c48af6a06eb70709fe4ce950c3015e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple alias of <a class="el" href="struct_angel_1_1vec4.html">Angel::vec4</a> to emphasize semantic meaning.  <a href="#a5c48af6a06eb70709fe4ce950c3015e3">More...</a><br/></td></tr>
-<tr class="separator:a5c48af6a06eb70709fe4ce950c3015e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd96474ea1ee15dc164c05371abfd25b"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="struct_angel_1_1vec4.html">Angel::vec4</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="model_8hpp.html#acd96474ea1ee15dc164c05371abfd25b">point4</a></td></tr>
-<tr class="memdesc:acd96474ea1ee15dc164c05371abfd25b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple alias of <a class="el" href="struct_angel_1_1vec4.html">Angel::vec4</a> to emphasize semantic meaning.  <a href="#acd96474ea1ee15dc164c05371abfd25b">More...</a><br/></td></tr>
-<tr class="separator:acd96474ea1ee15dc164c05371abfd25b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:aba8f9938a331f36ea0d3a4a3a777b44f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="model_8hpp.html#aba8f9938a331f36ea0d3a4a3a777b44f">createPoint</a> (<a class="el" href="class_object.html">Object</a> *obj, <a class="el" href="struct_angel_1_1vec4.html">point4</a> const &amp;the_point, <a class="el" href="struct_angel_1_1vec4.html">color4</a> const &amp;the_color, <a class="el" href="struct_angel_1_1vec3.html">vec3</a> const &amp;the_normal)</td></tr>
@@ -171,40 +161,7 @@ Functions</h2></td></tr>
 <dl class="section date"><dt>Date</dt><dd>2013-03-14 </dd></dl>
 
 <p>Definition in file <a class="el" href="model_8hpp_source.html">model.hpp</a>.</p>
-</div><h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="a5c48af6a06eb70709fe4ce950c3015e3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef <a class="el" href="struct_angel_1_1vec4.html">Angel::vec4</a> <a class="el" href="struct_angel_1_1vec4.html">color4</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Simple alias of <a class="el" href="struct_angel_1_1vec4.html">Angel::vec4</a> to emphasize semantic meaning. </p>
-
-<p>Definition at line <a class="el" href="model_8hpp_source.html#l00017">17</a> of file <a class="el" href="model_8hpp_source.html">model.hpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="acd96474ea1ee15dc164c05371abfd25b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef <a class="el" href="struct_angel_1_1vec4.html">Angel::vec4</a> <a class="el" href="struct_angel_1_1vec4.html">point4</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Simple alias of <a class="el" href="struct_angel_1_1vec4.html">Angel::vec4</a> to emphasize semantic meaning. </p>
-
-<p>Definition at line <a class="el" href="model_8hpp_source.html#l00019">19</a> of file <a class="el" href="model_8hpp_source.html">model.hpp</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="a9aeb9d305a36f39f25137645d75eaa95"></a>
 <div class="memitem">
 <div class="memproto">
@@ -233,12 +190,20 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">obj</td><td>The object to add the geometry to. </td></tr>
+    <tr><td class="paramname">size</td><td>The size of the cube to create.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Creates a cube of a given size fixed at the origin, using all eight primary colors.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">obj</td><td>The object to add the geometry to. </td></tr>
     <tr><td class="paramname">size</td><td>The size of the cube to create. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="model_8cpp_source.html#l00310">310</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
+<p>Definition at line <a class="el" href="model_8cpp_source.html#l00305">305</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
 
 </div>
 </div>
@@ -289,7 +254,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="model_8cpp_source.html#l00042">42</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
+<p>Definition at line <a class="el" href="model_8cpp_source.html#l00037">37</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
 
 </div>
 </div>
@@ -328,12 +293,21 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">obj</td><td>The object to add the geometry to. </td></tr>
     <tr><td class="paramname">size</td><td>The size of the cube to create. </td></tr>
-    <tr><td class="paramname">colors</td><td>An array of eight colors for the vertices. </td></tr>
+    <tr><td class="paramname">colors</td><td>An array of eight colors for the vertices.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Create a cube of a given size fixed at the origin, using the eight colors specified.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">obj</td><td>The object to add the geometry to. </td></tr>
+    <tr><td class="paramname">size</td><td>The size of the cube to create. </td></tr>
+    <tr><td class="paramname">colors</td><td>An array of eight _colors for the vertices. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="model_8cpp_source.html#l00280">280</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
+<p>Definition at line <a class="el" href="model_8cpp_source.html#l00275">275</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
 
 </div>
 </div>
@@ -398,7 +372,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="model_8cpp_source.html#l00123">123</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
+<p>Definition at line <a class="el" href="model_8cpp_source.html#l00118">118</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
 
 </div>
 </div>
@@ -443,7 +417,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The maximum height actually achieved in this terrain generation. </dd></dl>
 
-<p>Definition at line <a class="el" href="model_8cpp_source.html#l00402">402</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
+<p>Definition at line <a class="el" href="model_8cpp_source.html#l00397">397</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
 
 </div>
 </div>
@@ -481,7 +455,7 @@ Functions</h2></td></tr>
 </dl>
 <p>What should the water's height be? </p>
 
-<p>Definition at line <a class="el" href="model_8cpp_source.html#l00561">561</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
+<p>Definition at line <a class="el" href="model_8cpp_source.html#l00557">557</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
 
 </div>
 </div>
@@ -562,12 +536,27 @@ Functions</h2></td></tr>
     <tr><td class="paramname">A</td><td>The color of the first point. </td></tr>
     <tr><td class="paramname">B</td><td>The color of the second point. </td></tr>
     <tr><td class="paramname">C</td><td>The color of the third point. </td></tr>
+    <tr><td class="paramname">D</td><td>The color of the fourth point.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Create a quadrilateral from four points and four colors.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">obj</td><td>The object to add the geometry to. </td></tr>
+    <tr><td class="paramname">a</td><td>The first spatial point. </td></tr>
+    <tr><td class="paramname">b</td><td>The second spatial point. </td></tr>
+    <tr><td class="paramname">c</td><td>The third spatial point. </td></tr>
+    <tr><td class="paramname">d</td><td>The fourth spatial point. </td></tr>
+    <tr><td class="paramname">A</td><td>The color of the first point. </td></tr>
+    <tr><td class="paramname">B</td><td>The color of the second point. </td></tr>
+    <tr><td class="paramname">C</td><td>The color of the third point. </td></tr>
     <tr><td class="paramname">D</td><td>The color of the fourth point. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="model_8cpp_source.html#l00242">242</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
+<p>Definition at line <a class="el" href="model_8cpp_source.html#l00237">237</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
 
 </div>
 </div>
@@ -640,7 +629,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="model_8cpp_source.html#l00200">200</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
+<p>Definition at line <a class="el" href="model_8cpp_source.html#l00195">195</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
 
 </div>
 </div>
@@ -700,12 +689,24 @@ Functions</h2></td></tr>
     <tr><td class="paramname">b</td><td>The second coordinate. </td></tr>
     <tr><td class="paramname">c</td><td>The third coordinate. </td></tr>
     <tr><td class="paramname">d</td><td>The fourth coordinate. </td></tr>
+    <tr><td class="paramname">count</td><td>The number of recursions to perform to construct the gasket.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Forms a Sierpinski Pyramid object given four 4D points in space.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">obj</td><td>The object to add the geometry to. </td></tr>
+    <tr><td class="paramname">a</td><td>The first coordinate. </td></tr>
+    <tr><td class="paramname">b</td><td>The second coordinate. </td></tr>
+    <tr><td class="paramname">c</td><td>The third coordinate. </td></tr>
+    <tr><td class="paramname">d</td><td>The fourth coordinate. </td></tr>
     <tr><td class="paramname">count</td><td>The number of recursions to perform to construct the gasket. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="model_8cpp_source.html#l00168">168</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
+<p>Definition at line <a class="el" href="model_8cpp_source.html#l00163">163</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
 
 </div>
 </div>
@@ -731,7 +732,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="model_8cpp_source.html#l00215">215</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
+<p>Definition at line <a class="el" href="model_8cpp_source.html#l00210">210</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
 
 </div>
 </div>
@@ -790,7 +791,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="model_8cpp_source.html#l00149">149</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
+<p>Definition at line <a class="el" href="model_8cpp_source.html#l00144">144</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
 
 </div>
 </div>
@@ -848,7 +849,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="model_8cpp_source.html#l00061">61</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
+<p>Definition at line <a class="el" href="model_8cpp_source.html#l00056">56</a> of file <a class="el" href="model_8cpp_source.html">model.cpp</a>.</p>
 
 </div>
 </div>
@@ -858,7 +859,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_b0856f6b0d80ccb263b2f415c91f9e17.html">include</a></li><li class="navelem"><a class="el" href="model_8hpp.html">model.hpp</a></li>
-    <li class="footer">Generated on Fri Mar 15 2013 00:47:39 for HyperGrafx by
+    <li class="footer">Generated on Fri Mar 15 2013 19:22:37 for HyperGrafx by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

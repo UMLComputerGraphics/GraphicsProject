@@ -92,7 +92,7 @@ $(document).ready(function(){initNavTree('_scene_8hpp_source.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -112,10 +112,10 @@ $(document).ready(function(){initNavTree('_scene_8hpp_source.html','');});
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;map&gt;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;list&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;platform.h&quot;</span> <span class="comment">// for GLuint</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="platform_8h.html" title="Covertly re-defines functions that conflict between Linux and OSX.">platform.h</a>&quot;</span> <span class="comment">// for GLuint</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment">/* Forward reference so that our scene can return</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment"> pointers to Objects, and not more scenes. */</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">class </span><a class="code" href="class_object.html">Object</a>;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">class </span><a class="code" href="class_object.html" title="Object Class: Renderable Object Implementation.">Object</a>;</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
 <div class="line"><a name="l00012"></a><span class="lineno"><a class="code" href="class_scene.html">   12</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_scene.html">Scene</a> {</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
@@ -123,22 +123,22 @@ $(document).ready(function(){initNavTree('_scene_8hpp_source.html','');});
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;  <a class="code" href="class_scene.html">Scene</a>();</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;  <span class="keyword">virtual</span> ~<a class="code" href="class_scene.html">Scene</a>();</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_scene.html#af1e8ba8802f3bf83cebbfcbf3ed7c333" title="Retrieves the handle for the default shader for the scene.">Shader</a>( GLuint gShader );</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  GLuint <a class="code" href="class_scene.html#af1e8ba8802f3bf83cebbfcbf3ed7c333" title="Retrieves the handle for the default shader for the scene.">Shader</a>( <span class="keywordtype">void</span> );</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_scene.html#a9d8a33f0f0a296aba0fb6717ab85cb18" title="Retrieves the handle for the default shader for the scene.">shader</a>( GLuint gShader );</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  GLuint <a class="code" href="class_scene.html#a9d8a33f0f0a296aba0fb6717ab85cb18" title="Retrieves the handle for the default shader for the scene.">shader</a>( <span class="keywordtype">void</span> );</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  <a class="code" href="class_object.html">Object</a> *AddObject( <span class="keyword">const</span> std::string &amp;objName, GLuint Object_Shader = 0 );</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <span class="keywordtype">void</span> DelObject( <span class="keyword">const</span> std::string &amp;objName );</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <span class="keywordtype">void</span> DelObject( <span class="keywordtype">void</span> );</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <span class="keywordtype">void</span> PopObject( <span class="keywordtype">void</span> );</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_scene.html#a82759ded1f6f87a91b8d10ed87501958" title="Completely remove this object and all his children.">DestroyObject</a>( <span class="keywordtype">void</span> );</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  <a class="code" href="class_object.html" title="Object Class: Renderable Object Implementation.">Object</a> *addObject( <span class="keyword">const</span> std::string &amp;objName, GLuint Object_Shader = 0 );</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <span class="keywordtype">void</span> delObject( <span class="keyword">const</span> std::string &amp;objName );</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <span class="keywordtype">void</span> delObject( <span class="keywordtype">void</span> );</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <span class="keywordtype">void</span> popObject( <span class="keywordtype">void</span> );</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_scene.html#a8c57e1cebc39586c7928225d1e25de39" title="Completely remove this object and all his children.">destroyObject</a>( <span class="keywordtype">void</span> );</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <a class="code" href="class_object.html">Object</a> *next( <span class="keywordtype">void</span> );</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <a class="code" href="class_object.html">Object</a> *prev( <span class="keywordtype">void</span> );</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <a class="code" href="class_object.html">Object</a> *active( <span class="keywordtype">void</span> ) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <a class="code" href="class_object.html" title="Object Class: Renderable Object Implementation.">Object</a> *next( <span class="keywordtype">void</span> );</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <a class="code" href="class_object.html" title="Object Class: Renderable Object Implementation.">Object</a> *prev( <span class="keywordtype">void</span> );</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <a class="code" href="class_object.html" title="Object Class: Renderable Object Implementation.">Object</a> *active( <span class="keywordtype">void</span> ) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  <span class="keywordtype">void</span> Draw( <span class="keywordtype">void</span> );</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  <span class="keywordtype">void</span> draw( <span class="keywordtype">void</span> );</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <a class="code" href="class_object.html">Object</a> *operator[]( <span class="keyword">const</span> std::string &amp;objname );</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <a class="code" href="class_object.html" title="Object Class: Renderable Object Implementation.">Object</a> *operator[]( <span class="keyword">const</span> std::string &amp;objname );</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <span class="comment">/* WARNING: Copies do NOT copy Children... ! */</span></div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <a class="code" href="class_scene.html">Scene</a>( <span class="keyword">const</span> <a class="code" href="class_scene.html">Scene</a> &amp;copy );</div>
@@ -153,8 +153,8 @@ $(document).ready(function(){initNavTree('_scene_8hpp_source.html','');});
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  GLuint _gShader;</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="comment">/* Internal use */</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_scene.html#a8bbe0e5b1bfc71034b18e240e86aa285" title="DeleteObject is the actual implementation function that will remove an Object from the Scene list and...">DeleteObject</a>( <a class="code" href="class_object.html">Object</a> *obj );</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <span class="keywordtype">void</span> InsertObject( <span class="keyword">const</span> std::string name, <a class="code" href="class_object.html">Object</a> *obj );</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="class_scene.html#ad3897f8ac658af62c133783b2c4eaee4" title="deleteObject is the actual implementation function that will remove an Object from the Scene list and...">deleteObject</a>( <a class="code" href="class_object.html" title="Object Class: Renderable Object Implementation.">Object</a> *obj );</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <span class="keywordtype">void</span> insertObject( <span class="keyword">const</span> std::string name, <a class="code" href="class_object.html" title="Object Class: Renderable Object Implementation.">Object</a> *obj );</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;};</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
@@ -165,7 +165,7 @@ $(document).ready(function(){initNavTree('_scene_8hpp_source.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_b0856f6b0d80ccb263b2f415c91f9e17.html">include</a></li><li class="navelem"><b>Scene.hpp</b></li>
-    <li class="footer">Generated on Fri Mar 15 2013 00:47:38 for HyperGrafx by
+    <li class="footer">Generated on Fri Mar 15 2013 19:22:37 for HyperGrafx by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -43,13 +43,15 @@ Inherits \fBObject\fP\&.
 .ti -1c
 .RI "typedef const unsigned int \fBUniformEnum\fP"
 .br
+.RI "\fIThe \fBObject\fP class takes advantage of child-extendible enumerations\&. \fP"
 .ti -1c
 .RI "typedef std::map
 .br
-< Object::UniformEnum, 
+< \fBObject::UniformEnum\fP, 
 .br
 std::string > \fBUniformMap\fP"
 .br
+.RI "\fIWe store mappings of Uniform Enumerations, The desired function of the var, to strings, the names of the variables\&. \fP"
 .in -1c
 .SS "Public Member Functions"
 
@@ -199,7 +201,7 @@ std::string > \fBUniformMap\fP"
 .br
 .RI "\fI\fBpos()\fP gets the current camera position in model coordinates\&. \fP"
 .ti -1c
-.RI "virtual void \fBsend\fP (Object::UniformEnum which)"
+.RI "virtual void \fBsend\fP (\fBObject::UniformEnum\fP which)"
 .br
 .RI "\fIsend will send a glsl variable to the shader\&. \fP"
 .ti -1c
@@ -211,76 +213,91 @@ std::string > \fBUniformMap\fP"
 .br
 .RI "\fIresetRotation adjusts the camera's rotational state back to its default state (The Identity Matrix\&.) \fP"
 .ti -1c
-.RI "void \fBDraw\fP (void)"
+.RI "void \fBdraw\fP (void)"
 .br
+.RI "\fIdraw method: Render this object to the screen _buffer\&. \fP"
 .ti -1c
-.RI "void \fBBuffer\fP (void)"
+.RI "void \fBbuffer\fP (void)"
 .br
+.RI "\fIbuffer all of our data: Vertices, TexUVs, Normals, Indices, Colors and Morph Buffers\&. \fP"
 .ti -1c
-.RI "void \fBBufferMorphOnly\fP (void)"
+.RI "void \fBbufferMorphOnly\fP (void)"
 .br
+.RI "\fIbuffer only the Morph-related buffers\&. \fP"
 .ti -1c
-.RI "void \fBMode\fP (GLenum new_node)"
+.RI "void \fBdrawMode\fP (GLenum new_mode)"
 .br
+.RI "\fISelect a new OpenGL draw mode for this \fBObject\fP\&. \fP"
 .ti -1c
-.RI "void \fBTexture\fP (const char **filename)"
+.RI "void \fBtexture\fP (const char **filename)"
 .br
+.RI "\fIFIXME: This is a junk, nonflexible method\&. \fP"
 .ti -1c
-.RI "const std::string & \fBName\fP (void) const "
+.RI "const std::string & \fBname\fP (void) const "
 .br
+.RI "\fIRetrieve the _name of this \fBObject\fP\&. \fP"
 .ti -1c
-.RI "virtual void \fBLink\fP (UniformEnum which, const std::string &\fBname\fP)"
+.RI "virtual void \fBlink\fP (\fBUniformEnum\fP which, const std::string &\fBname\fP)"
 .br
+.RI "\fIlink a specified Uniform against the shader's variable _name\&. \fP"
 .ti -1c
-.RI "virtual GLuint \fBShader\fP (void)"
+.RI "virtual GLuint \fBshader\fP (void)"
 .br
-.RI "\fIReturns the \fBObject\fP's current Shader\&. \fP"
+.RI "\fIReturns the \fBObject\fP's current shader\&. \fP"
 .ti -1c
-.RI "virtual void \fBShader\fP (GLuint newShader)"
+.RI "virtual void \fBshader\fP (GLuint newShader)"
 .br
 .RI "\fISets the shader to be used by this object\&. \fP"
 .ti -1c
-.RI "void \fBAnimation\fP (void(*anim_func)(\fBTransCache\fP &arg))"
+.RI "void \fBanimation\fP (void(*anim_func)(\fBTransCache\fP &arg))"
 .br
+.RI "\fIApply an animation callback function to this \fBObject\fP\&. \fP"
 .ti -1c
-.RI "void \fBPropagate\fP (void)"
+.RI "void \fBpropegate\fP (void)"
 .br
+.RI "\fIScene-graph changes are not automatically applied to children\&. \fP"
 .ti -1c
-.RI "\fBvec4\fP \fBGetPosition\fP () const "
+.RI "\fBvec4\fP \fBposition\fP () const "
 .br
-.RI "\fIreturns the position of the object this makes the lighting implementation much easier\&.\&.\&. \fP"
+.RI "\fIObtain the vec4 representative of the \fBObject\fP's current position in space\&. \fP"
 .ti -1c
-.RI "\fBObject\fP * \fBgetMorphTargetPtr\fP () const "
+.RI "\fBObject\fP * \fBmorphTarget\fP () const "
 .br
+.RI "\fIRetrieve a pointer to this object's morph target\&. \fP"
 .ti -1c
-.RI "\fBObject\fP * \fBgenMorphTarget\fP (GLuint)"
+.RI "\fBObject\fP * \fBgenMorphTarget\fP (GLuint \fBshader\fP)"
 .br
+.RI "\fIInstantiate a new morphing target\&. \fP"
 .ti -1c
-.RI "float \fBgetMorphPercentage\fP () const "
+.RI "float \fBmorphPercentage\fP () const "
 .br
+.RI "\fIRetrieve the morph Percentage of this object\&. \fP"
 .ti -1c
-.RI "void \fBsetMorphPercentage\fP (const float)"
+.RI "void \fBmorphPercentage\fP (const float newPercentage)"
 .br
+.RI "\fISet the morph percentage of this \fBObject\fP\&. \fP"
 .ti -1c
 .RI "void \fBdestroyMorphTarget\fP ()"
 .br
+.RI "\fIObliterate the morph target for this object\&. \fP"
 .ti -1c
-.RI "int \fBgetNumberPoints\fP ()"
+.RI "int \fBnumberOfPoints\fP ()"
+.br
+.RI "\fIRetrieve the number of _vertices this object has\&. \fP"
+.ti -1c
+.RI "\fBObject\fP * \fBaddObject\fP (const std::string &objName, GLuint Object_Shader=0)"
 .br
 .ti -1c
-.RI "\fBObject\fP * \fBAddObject\fP (const std::string &objName, GLuint Object_Shader=0)"
+.RI "void \fBdelObject\fP (const std::string &objName)"
 .br
 .ti -1c
-.RI "void \fBDelObject\fP (const std::string &objName)"
+.RI "void \fBdelObject\fP (void)"
 .br
 .ti -1c
-.RI "void \fBDelObject\fP (void)"
+.RI "void \fBpopObject\fP (void)"
 .br
 .ti -1c
-.RI "void \fBPopObject\fP (void)"
-.br
-.ti -1c
-.RI "void \fBDestroyObject\fP (void)"
+.RI "void \fBdestroyObject\fP (void)"
 .br
 .RI "\fICompletely remove this object and all his children\&. \fP"
 .ti -1c
@@ -300,72 +317,80 @@ std::string > \fBUniformMap\fP"
 
 .in +1c
 .ti -1c
-.RI "std::vector< \fBAngel::vec4\fP > \fBpoints\fP"
+.RI "std::vector< \fBAngel::vec4\fP > \fB_vertices\fP"
 .br
+.RI "\fIvertex buffer\&. \fP"
 .ti -1c
-.RI "std::vector< \fBAngel::vec3\fP > \fBnormals\fP"
+.RI "std::vector< \fBAngel::vec3\fP > \fB_normals\fP"
 .br
+.RI "\fINormals buffer\&. \fP"
 .ti -1c
-.RI "std::vector< unsigned int > \fBindices\fP"
+.RI "std::vector< unsigned int > \fB_indices\fP"
 .br
+.RI "\fIDraw Order Index buffer\&. \fP"
 .ti -1c
-.RI "std::vector< \fBAngel::vec4\fP > \fBcolors\fP"
+.RI "std::vector< \fBAngel::vec4\fP > \fB_colors\fP"
 .br
+.RI "\fIColors buffer\&. \fP"
 .ti -1c
-.RI "std::vector< \fBAngel::vec2\fP > \fBtexcoords\fP"
+.RI "std::vector< \fBAngel::vec2\fP > \fB_texUVs\fP"
 .br
+.RI "\fITexture Coordinates buffer\&. \fP"
 .ti -1c
-.RI "\fBTransCache\fP \fBtrans\fP"
+.RI "\fBTransCache\fP \fB_trans\fP"
 .br
+.RI "\fIThe _trans cache encompasses the current transformational state of this object\&. \fP"
 .in -1c
 .SS "Protected Member Functions"
 
 .in +1c
 .ti -1c
-.RI "void \fBDeleteObject\fP (\fBObject\fP *obj)"
+.RI "void \fBdeleteObject\fP (\fBObject\fP *obj)"
 .br
-.RI "\fIDeleteObject is the actual implementation function that will remove an \fBObject\fP from the \fBScene\fP list and \fBScene\fP map, then free the object\&. \fP"
+.RI "\fIdeleteObject is the actual implementation function that will remove an \fBObject\fP from the \fBScene\fP list and \fBScene\fP map, then free the object\&. \fP"
 .ti -1c
-.RI "void \fBInsertObject\fP (const std::string \fBname\fP, \fBObject\fP *obj)"
+.RI "void \fBinsertObject\fP (const std::string \fBname\fP, \fBObject\fP *obj)"
 .br
 .in -1c
 .SS "Protected Attributes"
 
 .in +1c
 .ti -1c
-.RI "std::string \fBname\fP"
+.RI "std::string \fB_name\fP"
 .br
-.RI "\fIname is used as an identifying handle for the object\&. \fP"
+.RI "\fI_name is used as an identifying handle for the object\&. \fP"
 .ti -1c
-.RI "GLuint \fBvao\fP"
+.RI "GLuint \fB_vao\fP"
 .br
 .RI "\fIVertex Array \fBObject\fP handle identifying our buffers/object\&. \fP"
 .ti -1c
-.RI "GLuint \fBbuffer\fP [NUM_BUFFERS]"
+.RI "GLuint \fB_buffer\fP [\fBNUM_BUFFERS\fP]"
 .br
 .RI "\fIHandles to our buffers (Vertices, TexUVs, etc\&.) \fP"
 .ti -1c
-.RI "GLenum \fBdraw_mode\fP"
+.RI "GLenum \fB_drawMode\fP"
 .br
 .RI "\fIDrawing mode for this object\&. \fP"
 .ti -1c
-.RI "bool \fBisTextured\fP"
+.RI "bool \fB_isTextured\fP"
 .br
 .RI "\fIIs this object textured? \fP"
 .ti -1c
-.RI "float \fBmorphPercentage\fP"
+.RI "float \fB_morphPercentage\fP"
 .br
-.RI "\fIMorphing/Tweening Things\&. \fP"
+.RI "\fIThe percentage of the morph\&. \fP"
 .ti -1c
-.RI "\fBObject\fP * \fBmorphTarget\fP"
+.RI "\fBObject\fP * \fB_morphTarget\fP"
 .br
+.RI "\fIA pointer to the object we wish to morph into\&. \fP"
 .ti -1c
-.RI "std::map< Object::UniformEnum, 
+.RI "std::map< \fBObject::UniformEnum\fP, 
 .br
 std::string > \fB_uniformMap\fP"
 .br
+.RI "\fIA map between Uniform variable functions and the actual uniform variable names\&. \fP"
 .ti -1c
-.RI "std::vector< GLint > \fBhandles\fP"
+.RI "std::vector< GLint > \fB_handles\fP"
 .br
 .RI "\fIHandles to Uniforms on the shader\&. \fP"
 .ti -1c
@@ -482,6 +507,18 @@ The Direction enumeration lists all of the possible directions the camera may tr
 
 .PP
 The glsl_var enumeration lists the various variables the \fBCamera\fP class is capable of sending to the shader\&. The NumGlslVars variable is a sentinel value that is ignored by any functions that accept a glsl_var\&. 
+.SS "typedef const unsigned int \fBObject::UniformEnum\fP\fC [inherited]\fP"
+
+.PP
+The \fBObject\fP class takes advantage of child-extendible enumerations\&. We create an alias here for sake of ease\&. 
+.PP
+Definition at line 62 of file Object\&.hpp\&.
+.SS "typedef std::map< \fBObject::UniformEnum\fP, std::string > \fBObject::UniformMap\fP\fC [inherited]\fP"
+
+.PP
+We store mappings of Uniform Enumerations, The desired function of the var, to strings, the names of the variables\&. This is utilized if we ever switch this object's shader, so we can re-associate with the correct uniform locations\&. 
+.PP
+Definition at line 70 of file Object\&.hpp\&.
 .SS "typedef enum \fBCamera::ViewType\fP  \fBCamera::ViewType\fP"
 
 .PP
@@ -617,6 +654,19 @@ Void\&.
 
 .PP
 Definition at line 148 of file Camera\&.cpp\&.
+.SS "void Object::animation (void(*)(\fBTransCache\fP &arg)anim_func)\fC [inherited]\fP"
+
+.PP
+Apply an animation callback function to this \fBObject\fP\&. Works once only: Does not save the function or automatically run on idle\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIanim_func\fP The transformation/animation function to apply\&. 
+.RE
+.PP
+
+.PP
+Definition at line 485 of file Object\&.cpp\&.
 .SS "void Camera::changePerspective (const \fBViewType\fP &vType)"
 
 .PP
@@ -646,10 +696,10 @@ Void\&.
 
 .PP
 Definition at line 19 of file Camera\&.cpp\&.
-.SS "void Scene::DeleteObject (\fBObject\fP *obj)\fC [protected]\fP, \fC [inherited]\fP"
+.SS "void Scene::deleteObject (\fBObject\fP *obj)\fC [protected]\fP, \fC [inherited]\fP"
 
 .PP
-DeleteObject is the actual implementation function that will remove an \fBObject\fP from the \fBScene\fP list and \fBScene\fP map, then free the object\&. \fBParameters:\fP
+deleteObject is the actual implementation function that will remove an \fBObject\fP from the \fBScene\fP list and \fBScene\fP map, then free the object\&. \fBParameters:\fP
 .RS 4
 \fIobj\fP The pointer to the object to free\&. 
 .RE
@@ -709,6 +759,24 @@ Void\&.
 
 .PP
 Definition at line 144 of file Camera\&.cpp\&.
+.SS "void Object::drawMode (GLenumnew_mode)\fC [inherited]\fP"
+
+.PP
+Select a new OpenGL draw mode for this \fBObject\fP\&. Can be GL_LINES, GL_LINE_LOOP, GL_TRIANGLES, etc\&. 
+.PP
+\fBSee Also:\fP
+.RS 4
+http://www.opengl.org/wiki/Primitive 
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fInew_mode\fP The primitive rendering mode to use\&. 
+.RE
+.PP
+
+.PP
+Definition at line 267 of file Object\&.cpp\&.
 .SS "void Camera::dX (const float &by, const bool &update = \fCtrue\fP)"
 
 .PP
@@ -792,12 +860,22 @@ A float that is the y axis viewing angle\&.
 
 .PP
 Definition at line 350 of file Camera\&.cpp\&.
-.SS "\fBvec4\fP Object::GetPosition () const\fC [inherited]\fP"
+.SS "\fBObject\fP * Object::genMorphTarget (GLuintshader)\fC [inherited]\fP"
 
 .PP
-returns the position of the object this makes the lighting implementation much easier\&.\&.\&. for this semester\&. 
+Instantiate a new morphing target\&. \fBParameters:\fP
+.RS 4
+\fIshader\fP The shader to use for the new morphing target\&. NOT USED for rendering the object, but Objects cannot be instantiated without a shader, so here it is\&.
+.RE
 .PP
-Definition at line 497 of file Object\&.cpp\&.
+\fBReturns:\fP
+.RS 4
+A pointer to the newly created target\&. 
+.RE
+.PP
+
+.PP
+Definition at line 545 of file Object\&.cpp\&.
 .SS "void Camera::heave (const float &by)"
 
 .PP
@@ -829,6 +907,52 @@ Void\&.
 
 .PP
 Definition at line 280 of file Camera\&.cpp\&.
+.SS "void Object::link (\fBUniformEnum\fPwhich, const std::string &name)\fC [virtual]\fP, \fC [inherited]\fP"
+
+.PP
+link a specified Uniform against the shader's variable _name\&. \fBParameters:\fP
+.RS 4
+\fIwhich\fP The Uniform to link\&. 
+.br
+\fIname\fP The variable _name on the shader\&. 
+.RE
+.PP
+
+.PP
+Definition at line 392 of file Object\&.cpp\&.
+.SS "float Object::morphPercentage (void) const\fC [inherited]\fP"
+
+.PP
+Retrieve the morph Percentage of this object\&. \fBReturns:\fP
+.RS 4
+The morph percentage, as a float\&. 
+.RE
+.PP
+
+.PP
+Definition at line 557 of file Object\&.cpp\&.
+.SS "void Object::morphPercentage (const floatnewPercentage)\fC [inherited]\fP"
+
+.PP
+Set the morph percentage of this \fBObject\fP\&. \fBParameters:\fP
+.RS 4
+\fInewPercentage\fP The new morphing percentage\&. 
+.RE
+.PP
+
+.PP
+Definition at line 566 of file Object\&.cpp\&.
+.SS "\fBObject\fP * Object::morphTarget (void) const\fC [inherited]\fP"
+
+.PP
+Retrieve a pointer to this object's morph target\&. \fBReturns:\fP
+.RS 4
+An \fBObject\fP pointer to the morph target\&. 
+.RE
+.PP
+
+.PP
+Definition at line 531 of file Object\&.cpp\&.
 .SS "void Camera::move (const \fBCamera::Direction\fP &Dir)"
 
 .PP
@@ -845,6 +969,28 @@ Void\&.
 
 .PP
 Definition at line 272 of file Camera\&.cpp\&.
+.SS "const std::string & Object::name (void) const\fC [inherited]\fP"
+
+.PP
+Retrieve the _name of this \fBObject\fP\&. \fBReturns:\fP
+.RS 4
+The _name of this \fBObject\fP\&. 
+.RE
+.PP
+
+.PP
+Definition at line 380 of file Object\&.cpp\&.
+.SS "int Object::numberOfPoints (void)\fC [inherited]\fP"
+
+.PP
+Retrieve the number of _vertices this object has\&. \fBReturns:\fP
+.RS 4
+An integer representing the number of vertices the object has\&. 
+.RE
+.PP
+
+.PP
+Definition at line 586 of file Object\&.cpp\&.
 .SS "void Camera::pitch (const float &by, const bool &fixed = \fCfalse\fP)"
 
 .PP
@@ -934,6 +1080,23 @@ A vec4 that represents the current camera coordinates\&.
 
 .PP
 Definition at line 346 of file Camera\&.cpp\&.
+.SS "\fBvec4\fP Object::position (void) const\fC [inherited]\fP"
+
+.PP
+Obtain the vec4 representative of the \fBObject\fP's current position in space\&. \fBReturns:\fP
+.RS 4
+vec4 representing the \fBObject\fP's position in space\&. 
+.RE
+.PP
+
+.PP
+Definition at line 520 of file Object\&.cpp\&.
+.SS "void Object::propegate (void)\fC [inherited]\fP"
+
+.PP
+Scene-graph changes are not automatically applied to children\&. For efficiency reasons, you need to call \fBpropegate()\fP manually\&. 
+.PP
+Definition at line 494 of file Object\&.cpp\&.
 .SS "void Camera::refreshPerspective (void)"
 
 .PP
@@ -978,7 +1141,7 @@ Void\&.
 
 .PP
 Definition at line 219 of file Camera\&.cpp\&.
-.SS "void Camera::send (Object::UniformEnumwhich)\fC [virtual]\fP"
+.SS "void Camera::send (\fBObject::UniformEnum\fPwhich)\fC [virtual]\fP"
 
 .PP
 send will send a glsl variable to the shader\&. \fBParameters:\fP
@@ -996,10 +1159,10 @@ Void\&.
 Reimplemented from \fBObject\fP\&.
 .PP
 Definition at line 403 of file Camera\&.cpp\&.
-.SS "GLuint Object::Shader (void)\fC [virtual]\fP, \fC [inherited]\fP"
+.SS "GLuint Object::shader (void)\fC [virtual]\fP, \fC [inherited]\fP"
 
 .PP
-Returns the \fBObject\fP's current Shader\&. Defined because C++ will not let you overload an overrided function, without re-overloading it in the derived class\&.
+Returns the \fBObject\fP's current shader\&. Defined because C++ will not let you overload an overrided function, without re-overloading it in the derived class\&.
 .PP
 \fBReturns:\fP
 .RS 4
@@ -1008,8 +1171,8 @@ a GLuint handle to the shader program used by this \fBObject\fP\&.
 .PP
 
 .PP
-Definition at line 269 of file Object\&.cpp\&.
-.SS "void Object::Shader (GLuintnewShader)\fC [virtual]\fP, \fC [inherited]\fP"
+Definition at line 448 of file Object\&.cpp\&.
+.SS "void Object::shader (GLuintnewShader)\fC [virtual]\fP, \fC [inherited]\fP"
 
 .PP
 Sets the shader to be used by this object\&. Triggers a query of the shader program, for the locations of the Uniform locations that the object needs\&.
@@ -1028,7 +1191,7 @@ None\&.
 .PP
 Reimplemented from \fBScene\fP\&.
 .PP
-Definition at line 246 of file Object\&.cpp\&.
+Definition at line 464 of file Object\&.cpp\&.
 .SS "void Camera::stop (const \fBCamera::Direction\fP &Dir)"
 
 .PP
@@ -1081,6 +1244,19 @@ Void\&.
 
 .PP
 Definition at line 186 of file Camera\&.cpp\&.
+.SS "void Object::texture (const char **filename)\fC [inherited]\fP"
+
+.PP
+FIXME: This is a junk, nonflexible method\&. It would be better if you didn't think of this as being here\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfilename\fP an array of strings to load textures from\&. 
+.RE
+.PP
+
+.PP
+Definition at line 277 of file Object\&.cpp\&.
 .SS "void Camera::view (void)"
 
 .PP
@@ -1231,6 +1407,12 @@ Definition at line 342 of file Camera\&.cpp\&.
 Current aspect ratio for certain perspectives\&. 
 .PP
 Definition at line 428 of file Camera\&.hpp\&.
+.SS "std::vector< \fBAngel::vec4\fP > Object::_colors\fC [inherited]\fP"
+
+.PP
+Colors buffer\&. 
+.PP
+Definition at line 246 of file Object\&.hpp\&.
 .SS "\fBTransCache\fP Camera::_ctm\fC [private]\fP"
 
 .PP
@@ -1243,6 +1425,12 @@ Definition at line 404 of file Camera\&.hpp\&.
 The current viewing mode type\&. 
 .PP
 Definition at line 407 of file Camera\&.hpp\&.
+.SS "GLenum Object::_drawMode\fC [protected]\fP, \fC [inherited]\fP"
+
+.PP
+Drawing mode for this object\&. GL_TRIANGLES, GL_LINE_LOOP, etc\&. 
+.PP
+Definition at line 268 of file Object\&.hpp\&.
 .SS "GLfloat Camera::_fovy\fC [private]\fP"
 
 .PP
@@ -1255,54 +1443,84 @@ Definition at line 431 of file Camera\&.hpp\&.
 Friction\&. Should be less than MaxAccel\&. 
 .PP
 Definition at line 425 of file Camera\&.hpp\&.
+.SS "std::vector< GLint > Object::_handles\fC [protected]\fP, \fC [inherited]\fP"
+
+.PP
+Handles to Uniforms on the shader\&. Protected to allow derived classes to extend it as needed\&. 
+.PP
+Definition at line 297 of file Object\&.hpp\&.
+.SS "std::vector< unsigned int > Object::_indices\fC [inherited]\fP"
+
+.PP
+Draw Order Index buffer\&. If not used, engine assumes GL_DRAW_ARRAYS\&. 
+.PP
+Definition at line 244 of file Object\&.hpp\&.
+.SS "float Object::_morphPercentage\fC [protected]\fP, \fC [inherited]\fP"
+
+.PP
+The percentage of the morph\&. 0\&.0 means 100% the original, current object\&. 100\&.0 means 100% the new, targeted object\&. 
+.PP
+Definition at line 279 of file Object\&.hpp\&.
 .SS "bool Camera::_motion[Camera::DIR_END]\fC [private]\fP"
 
 .PP
 Booleans correlating to the different motion directions\&. 
 .PP
 Definition at line 440 of file Camera\&.hpp\&.
+.SS "std::string Object::_name\fC [protected]\fP, \fC [inherited]\fP"
+
+.PP
+_name is used as an identifying handle for the object\&. 
+.PP
+Definition at line 259 of file Object\&.hpp\&.
+.SS "std::vector< \fBAngel::vec3\fP > Object::_normals\fC [inherited]\fP"
+
+.PP
+Normals buffer\&. 
+.PP
+Definition at line 242 of file Object\&.hpp\&.
 .SS "GLfloat Camera::_speed\fC [private]\fP"
 
 .PP
 Current Speed of camera motion\&. 
 .PP
 Definition at line 410 of file Camera\&.hpp\&.
+.SS "std::vector< \fBAngel::vec2\fP > Object::_texUVs\fC [inherited]\fP"
+
+.PP
+Texture Coordinates buffer\&. 
+.PP
+Definition at line 248 of file Object\&.hpp\&.
+.SS "std::map< \fBObject::UniformEnum\fP, std::string > Object::_uniformMap\fC [protected]\fP, \fC [inherited]\fP"
+
+.PP
+A map between Uniform variable functions and the actual uniform variable names\&. Used when linking against a shader\&. 
+.PP
+Definition at line 290 of file Object\&.hpp\&.
+.SS "GLuint Object::_vao\fC [protected]\fP, \fC [inherited]\fP"
+
+.PP
+Vertex Array \fBObject\fP handle identifying our buffers/object\&. 
+.PP
+Definition at line 262 of file Object\&.hpp\&.
 .SS "\fBvec3\fP Camera::_velocity\fC [private]\fP"
 
 .PP
 Current Velocity of camera motion\&. 
 .PP
 Definition at line 413 of file Camera\&.hpp\&.
+.SS "std::vector< \fBAngel::vec4\fP > Object::_vertices\fC [inherited]\fP"
+
+.PP
+vertex buffer\&. 
+.PP
+Definition at line 240 of file Object\&.hpp\&.
 .SS "\fBmat4\fP Camera::_view\fC [private]\fP"
 
 .PP
 The current view matrix (defaultly perspective) for this camera\&. 
 .PP
 Definition at line 401 of file Camera\&.hpp\&.
-.SS "GLenum Object::draw_mode\fC [protected]\fP, \fC [inherited]\fP"
-
-.PP
-Drawing mode for this object\&. GL_TRIANGLES, GL_LINE_LOOP, etc\&. 
-.PP
-Definition at line 95 of file Object\&.hpp\&.
-.SS "std::vector< GLint > Object::handles\fC [protected]\fP, \fC [inherited]\fP"
-
-.PP
-Handles to Uniforms on the shader\&. Private to allow derived classes to extend it as needed\&. 
-.PP
-Definition at line 114 of file Object\&.hpp\&.
-.SS "std::string Object::name\fC [protected]\fP, \fC [inherited]\fP"
-
-.PP
-name is used as an identifying handle for the object\&. 
-.PP
-Definition at line 86 of file Object\&.hpp\&.
-.SS "GLuint Object::vao\fC [protected]\fP, \fC [inherited]\fP"
-
-.PP
-Vertex Array \fBObject\fP handle identifying our buffers/object\&. 
-.PP
-Definition at line 89 of file Object\&.hpp\&.
 
 .SH "Author"
 .PP 

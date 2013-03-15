@@ -69,31 +69,31 @@ Inherits \fBScene\fP\&.
 .br
 .RI "\fIobj2Cam is a gross hack; the function is used as a utility to convert \fBObject\fP pointers to \fBCamera\fP pointers safely\&. \fP"
 .ti -1c
-.RI "virtual void \fBShader\fP (GLuint gShader)"
+.RI "virtual void \fBshader\fP (GLuint gShader)"
 .br
 .RI "\fISets the Default shader for the scene\&. \fP"
 .ti -1c
-.RI "GLuint \fBShader\fP (void)"
+.RI "GLuint \fBshader\fP (void)"
 .br
 .RI "\fIRetrieves the handle for the default shader for the scene\&. \fP"
 .ti -1c
-.RI "\fBObject\fP * \fBAddObject\fP (const std::string &objName, GLuint Object_Shader=0)"
+.RI "\fBObject\fP * \fBaddObject\fP (const std::string &objName, GLuint Object_Shader=0)"
 .br
 .ti -1c
-.RI "void \fBDelObject\fP (const std::string &objName)"
+.RI "void \fBdelObject\fP (const std::string &objName)"
 .br
 .ti -1c
-.RI "void \fBDelObject\fP (void)"
+.RI "void \fBdelObject\fP (void)"
 .br
 .ti -1c
-.RI "void \fBPopObject\fP (void)"
+.RI "void \fBpopObject\fP (void)"
 .br
 .ti -1c
-.RI "void \fBDestroyObject\fP (void)"
+.RI "void \fBdestroyObject\fP (void)"
 .br
 .RI "\fICompletely remove this object and all his children\&. \fP"
 .ti -1c
-.RI "void \fBDraw\fP (void)"
+.RI "void \fBdraw\fP (void)"
 .br
 .ti -1c
 .RI "\fBObject\fP * \fBoperator[]\fP (const std::string &objname)"
@@ -103,11 +103,11 @@ Inherits \fBScene\fP\&.
 
 .in +1c
 .ti -1c
-.RI "void \fBDeleteObject\fP (\fBObject\fP *obj)"
+.RI "void \fBdeleteObject\fP (\fBObject\fP *obj)"
 .br
-.RI "\fIDeleteObject is the actual implementation function that will remove an \fBObject\fP from the \fBScene\fP list and \fBScene\fP map, then free the object\&. \fP"
+.RI "\fIdeleteObject is the actual implementation function that will remove an \fBObject\fP from the \fBScene\fP list and \fBScene\fP map, then free the object\&. \fP"
 .ti -1c
-.RI "void \fBInsertObject\fP (const std::string name, \fBObject\fP *obj)"
+.RI "void \fBinsertObject\fP (const std::string name, \fBObject\fP *obj)"
 .br
 .in -1c
 .SS "Protected Attributes"
@@ -209,10 +209,10 @@ void\&.
 
 .PP
 Definition at line 141 of file Cameras\&.cpp\&.
-.SS "void Scene::DeleteObject (\fBObject\fP *obj)\fC [protected]\fP, \fC [inherited]\fP"
+.SS "void Scene::deleteObject (\fBObject\fP *obj)\fC [protected]\fP, \fC [inherited]\fP"
 
 .PP
-DeleteObject is the actual implementation function that will remove an \fBObject\fP from the \fBScene\fP list and \fBScene\fP map, then free the object\&. \fBParameters:\fP
+deleteObject is the actual implementation function that will remove an \fBObject\fP from the \fBScene\fP list and \fBScene\fP map, then free the object\&. \fBParameters:\fP
 .RS 4
 \fIobj\fP The pointer to the object to free\&. 
 .RE
@@ -317,7 +317,7 @@ void\&.
 
 .PP
 Definition at line 128 of file Cameras\&.cpp\&.
-.SS "void Scene::Shader (GLuintgShader)\fC [virtual]\fP, \fC [inherited]\fP"
+.SS "void Scene::shader (GLuintgShader)\fC [virtual]\fP, \fC [inherited]\fP"
 
 .PP
 Sets the Default shader for the scene\&. In the context of inheritance by objects, This sets the shader to use to render the physical object\&.
@@ -337,7 +337,7 @@ void\&.
 Reimplemented in \fBObject\fP\&.
 .PP
 Definition at line 54 of file Scene\&.cpp\&.
-.SS "GLuint Scene::Shader (void)\fC [inherited]\fP"
+.SS "GLuint Scene::shader (void)\fC [inherited]\fP"
 
 .PP
 Retrieves the handle for the default shader for the scene\&. In the context of inheritance by objects, This retrieves the shader handle to use to draw the object\&.

@@ -1,0 +1,294 @@
+\hypertarget{raytrace1_8cpp}{\section{raytrace1.\-cpp File Reference}
+\label{raytrace1_8cpp}\index{raytrace1.\-cpp@{raytrace1.\-cpp}}
+}
+
+
+Geometric Raytracing Demo.  
+
+
+{\ttfamily \#include $<$cmath$>$}\\*
+{\ttfamily \#include $<$iostream$>$}\\*
+{\ttfamily \#include $<$cstdio$>$}\\*
+{\ttfamily \#include $<$S\-O\-I\-L/\-S\-O\-I\-L.\-h$>$}\\*
+{\ttfamily \#include $<$cstring$>$}\\*
+{\ttfamily \#include \char`\"{}Spelchk\-Camera.\-hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Init\-Shader.\-hpp\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{raytrace1_8cpp_a01131b63acf241e9db91704d89ce15d2}{void \hyperlink{raytrace1_8cpp_a01131b63acf241e9db91704d89ce15d2}{idle} (void)}\label{raytrace1_8cpp_a01131b63acf241e9db91704d89ce15d2}
+
+\begin{DoxyCompactList}\small\item\em Redraw the scene. \end{DoxyCompactList}\item 
+void \hyperlink{raytrace1_8cpp_a6819355374dd277347abd7c4235f0cd7}{reshape} (int width, int height)
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_screen}{Screen} resize handler. \end{DoxyCompactList}\item 
+void \hyperlink{raytrace1_8cpp_a7aca3c77669b8c403f580a99c6485016}{customkeyboard} (unsigned char key, int x, int y)
+\begin{DoxyCompactList}\small\item\em Keyboard Conrol Handler. \end{DoxyCompactList}\item 
+void \hyperlink{raytrace1_8cpp_a3942aa773dadccfa1bc0cc8ce3d3db1e}{custommouse} (int button, int state, int x, int y)
+\begin{DoxyCompactList}\small\item\em Mouse click handler. \end{DoxyCompactList}\item 
+void \hyperlink{raytrace1_8cpp_a45a7d7c86c97ca6a2d4d32ce2d263f67}{motion} (int x, int y)
+\begin{DoxyCompactList}\small\item\em Handle mouse and camera movement. \end{DoxyCompactList}\item 
+\hypertarget{raytrace1_8cpp_a4ea013001a5fb47853d0fab8f8de35cd}{void \hyperlink{raytrace1_8cpp_a4ea013001a5fb47853d0fab8f8de35cd}{display} (void)}\label{raytrace1_8cpp_a4ea013001a5fb47853d0fab8f8de35cd}
+
+\begin{DoxyCompactList}\small\item\em Handle the re-\/display of the scene. \end{DoxyCompactList}\item 
+\hypertarget{raytrace1_8cpp_a2858154e2009b0e6e616f313177762bc}{void \hyperlink{raytrace1_8cpp_a2858154e2009b0e6e616f313177762bc}{init} (void)}\label{raytrace1_8cpp_a2858154e2009b0e6e616f313177762bc}
+
+\begin{DoxyCompactList}\small\item\em Initialization of objects and Open\-G\-L state. \end{DoxyCompactList}\item 
+int \hyperlink{raytrace1_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)
+\begin{DoxyCompactList}\small\item\em Simple raytracer demo by Hoanh Nguyen. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{raytrace1_8cpp_a27d8510c93324412d38a888eddee2852}{G\-Luint \hyperlink{raytrace1_8cpp_a27d8510c93324412d38a888eddee2852}{program}}\label{raytrace1_8cpp_a27d8510c93324412d38a888eddee2852}
+
+\begin{DoxyCompactList}\small\item\em Global shader object. \end{DoxyCompactList}\item 
+\hypertarget{raytrace1_8cpp_aa82a2e50ca7f0a7c6c79922cf7ac675d}{G\-Luint \hyperlink{raytrace1_8cpp_aa82a2e50ca7f0a7c6c79922cf7ac675d}{model\-View} = -\/1}\label{raytrace1_8cpp_aa82a2e50ca7f0a7c6c79922cf7ac675d}
+
+\begin{DoxyCompactList}\small\item\em model-\/view matrix uniform shader variable location \end{DoxyCompactList}\item 
+\hypertarget{raytrace1_8cpp_a216a38dca36816a9d3b9ab11920f5898}{G\-Lint {\bfseries v\-Ray\-Position} = -\/1}\label{raytrace1_8cpp_a216a38dca36816a9d3b9ab11920f5898}
+
+\item 
+G\-Lint \hyperlink{raytrace1_8cpp_a16874d01f7ca34ada7dddea3042f067f}{u\-Camera\-Position} = -\/1
+\begin{DoxyCompactList}\small\item\em Handle to uniform that will contain the position of the \hyperlink{class_camera}{Camera}. \end{DoxyCompactList}\item 
+\hyperlink{class_spelchk_camera}{Spelchk\-Camera} \hyperlink{raytrace1_8cpp_a0e46f444cf201063a14a00d1236f0629}{camera} (\hyperlink{struct_angel_1_1vec4}{vec4}(0.\-0, 0.\-0, 0.\-0, 0.\-0))
+\begin{DoxyCompactList}\small\item\em Logical camera object. \end{DoxyCompactList}\item 
+\hyperlink{struct_angel_1_1vec3}{vec3} \hyperlink{raytrace1_8cpp_af1b4855c16b32d349fa8b056c24c7259}{camera\-Position\-Vec} = \hyperlink{struct_angel_1_1vec3}{vec3}( 0.\-0, 0.\-0, 0.\-0 )
+\begin{DoxyCompactList}\small\item\em Spatial coordinate of camera. \end{DoxyCompactList}\item 
+int \hyperlink{raytrace1_8cpp_a9ebc1dbd77788c4bfa27758a6725413f}{screen\-Height}
+\begin{DoxyCompactList}\small\item\em current Height of the screen. \end{DoxyCompactList}\item 
+int \hyperlink{raytrace1_8cpp_ae50cb92a78d9e0a4f4bd718fc02bd294}{screen\-Width}
+\begin{DoxyCompactList}\small\item\em current Width of the screen. \end{DoxyCompactList}\item 
+\hypertarget{raytrace1_8cpp_ab2138cc58a32399a5f3979e283f210a1}{bool \hyperlink{raytrace1_8cpp_ab2138cc58a32399a5f3979e283f210a1}{left\-Down} = false}\label{raytrace1_8cpp_ab2138cc58a32399a5f3979e283f210a1}
+
+\begin{DoxyCompactList}\small\item\em Is the left mouse button being pressed? \end{DoxyCompactList}\item 
+\hypertarget{raytrace1_8cpp_ad63f40b37d892985bb56ae99f16145c5}{bool \hyperlink{raytrace1_8cpp_ad63f40b37d892985bb56ae99f16145c5}{right\-Down} = false}\label{raytrace1_8cpp_ad63f40b37d892985bb56ae99f16145c5}
+
+\begin{DoxyCompactList}\small\item\em Is the right mouse button being pressed? \end{DoxyCompactList}\item 
+\hypertarget{raytrace1_8cpp_a1e74073d42607e52372bf0707ed490f9}{int \hyperlink{raytrace1_8cpp_a1e74073d42607e52372bf0707ed490f9}{mouse\-Down\-X}}\label{raytrace1_8cpp_a1e74073d42607e52372bf0707ed490f9}
+
+\begin{DoxyCompactList}\small\item\em Last known x coordinate of the mouse pointer. \end{DoxyCompactList}\item 
+\hypertarget{raytrace1_8cpp_a86c4394f5079d572ea974f506b282a2d}{int \hyperlink{raytrace1_8cpp_a86c4394f5079d572ea974f506b282a2d}{mouse\-Down\-Y}}\label{raytrace1_8cpp_a86c4394f5079d572ea974f506b282a2d}
+
+\begin{DoxyCompactList}\small\item\em Last known y coordinate of the mouse pointer. \end{DoxyCompactList}\item 
+float \hyperlink{raytrace1_8cpp_a450a5ce9d8d2b3bcb3a31d9a87f91a7f}{rotation\-Factor} = 45.\-0
+\begin{DoxyCompactList}\small\item\em Magic constant to adjust the rate of rotation when re-\/orienting the camera. \end{DoxyCompactList}\item 
+float \hyperlink{raytrace1_8cpp_a4ebc11e7a5ba3738d580c7e764782aff}{translation\-Factor} = 5.\-0
+\begin{DoxyCompactList}\small\item\em Magic constant to adjust the rate of translation when re-\/orienting the camera. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Geometric Raytracing Demo. \begin{DoxyAuthor}{Author}
+Hoanh Nguyen 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2013-\/03-\/15 
+\end{DoxyDate}
+
+
+Definition in file \hyperlink{raytrace1_8cpp_source}{raytrace1.\-cpp}.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{raytrace1_8cpp_a7aca3c77669b8c403f580a99c6485016}{\index{raytrace1.\-cpp@{raytrace1.\-cpp}!customkeyboard@{customkeyboard}}
+\index{customkeyboard@{customkeyboard}!raytrace1.cpp@{raytrace1.\-cpp}}
+\subsubsection[{customkeyboard}]{\setlength{\rightskip}{0pt plus 5cm}void customkeyboard (
+\begin{DoxyParamCaption}
+\item[{unsigned char}]{key, }
+\item[{int}]{x, }
+\item[{int}]{y}
+\end{DoxyParamCaption}
+)}}\label{raytrace1_8cpp_a7aca3c77669b8c403f580a99c6485016}
+
+
+Keyboard Conrol Handler. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & The key that was pressed. \\
+\hline
+{\em x} & X coordinate of the mouse when a key was pressed. \\
+\hline
+{\em y} & Y coordinate of the mouse when a key was pressed. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 62 of file raytrace1.\-cpp.
+
+\hypertarget{raytrace1_8cpp_a3942aa773dadccfa1bc0cc8ce3d3db1e}{\index{raytrace1.\-cpp@{raytrace1.\-cpp}!custommouse@{custommouse}}
+\index{custommouse@{custommouse}!raytrace1.cpp@{raytrace1.\-cpp}}
+\subsubsection[{custommouse}]{\setlength{\rightskip}{0pt plus 5cm}void custommouse (
+\begin{DoxyParamCaption}
+\item[{int}]{button, }
+\item[{int}]{state, }
+\item[{int}]{x, }
+\item[{int}]{y}
+\end{DoxyParamCaption}
+)}}\label{raytrace1_8cpp_a3942aa773dadccfa1bc0cc8ce3d3db1e}
+
+
+Mouse click handler. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em button} & The mouse button that was pressed. \\
+\hline
+{\em state} & The current state of that button. \\
+\hline
+{\em x} & X coordinate of the mouse. \\
+\hline
+{\em y} & Y coordinate of the mouse. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 119 of file raytrace1.\-cpp.
+
+\hypertarget{raytrace1_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{\index{raytrace1.\-cpp@{raytrace1.\-cpp}!main@{main}}
+\index{main@{main}!raytrace1.cpp@{raytrace1.\-cpp}}
+\subsubsection[{main}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$$\ast$}]{argv}
+\end{DoxyParamCaption}
+)}}\label{raytrace1_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}
+
+
+Simple raytracer demo by Hoanh Nguyen. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em argc} & Not used. \\
+\hline
+{\em argv} & Not used. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0. 
+\end{DoxyReturn}
+
+
+Definition at line 254 of file raytrace1.\-cpp.
+
+\hypertarget{raytrace1_8cpp_a45a7d7c86c97ca6a2d4d32ce2d263f67}{\index{raytrace1.\-cpp@{raytrace1.\-cpp}!motion@{motion}}
+\index{motion@{motion}!raytrace1.cpp@{raytrace1.\-cpp}}
+\subsubsection[{motion}]{\setlength{\rightskip}{0pt plus 5cm}void motion (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y}
+\end{DoxyParamCaption}
+)}}\label{raytrace1_8cpp_a45a7d7c86c97ca6a2d4d32ce2d263f67}
+
+
+Handle mouse and camera movement. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & X coordinate of the mouse. \\
+\hline
+{\em y} & Y coordinate of the mouse. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 159 of file raytrace1.\-cpp.
+
+\hypertarget{raytrace1_8cpp_a6819355374dd277347abd7c4235f0cd7}{\index{raytrace1.\-cpp@{raytrace1.\-cpp}!reshape@{reshape}}
+\index{reshape@{reshape}!raytrace1.cpp@{raytrace1.\-cpp}}
+\subsubsection[{reshape}]{\setlength{\rightskip}{0pt plus 5cm}void reshape (
+\begin{DoxyParamCaption}
+\item[{int}]{width, }
+\item[{int}]{height}
+\end{DoxyParamCaption}
+)}}\label{raytrace1_8cpp_a6819355374dd277347abd7c4235f0cd7}
+
+
+\hyperlink{class_screen}{Screen} resize handler. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em width} & New screen width. \\
+\hline
+{\em height} & New screen height. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 51 of file raytrace1.\-cpp.
+
+
+
+\subsection{Variable Documentation}
+\hypertarget{raytrace1_8cpp_a0e46f444cf201063a14a00d1236f0629}{\index{raytrace1.\-cpp@{raytrace1.\-cpp}!camera@{camera}}
+\index{camera@{camera}!raytrace1.cpp@{raytrace1.\-cpp}}
+\subsubsection[{camera}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Spelchk\-Camera} camera({\bf vec4}(0.\-0, 0.\-0, 0.\-0, 0.\-0))}}\label{raytrace1_8cpp_a0e46f444cf201063a14a00d1236f0629}
+
+
+Logical camera object. 
+
+\hypertarget{raytrace1_8cpp_af1b4855c16b32d349fa8b056c24c7259}{\index{raytrace1.\-cpp@{raytrace1.\-cpp}!camera\-Position\-Vec@{camera\-Position\-Vec}}
+\index{camera\-Position\-Vec@{camera\-Position\-Vec}!raytrace1.cpp@{raytrace1.\-cpp}}
+\subsubsection[{camera\-Position\-Vec}]{\setlength{\rightskip}{0pt plus 5cm}{\bf vec3} camera\-Position\-Vec = {\bf vec3}( 0.\-0, 0.\-0, 0.\-0 )}}\label{raytrace1_8cpp_af1b4855c16b32d349fa8b056c24c7259}
+
+
+Spatial coordinate of camera. 
+
+
+
+Definition at line 30 of file raytrace1.\-cpp.
+
+\hypertarget{raytrace1_8cpp_a450a5ce9d8d2b3bcb3a31d9a87f91a7f}{\index{raytrace1.\-cpp@{raytrace1.\-cpp}!rotation\-Factor@{rotation\-Factor}}
+\index{rotation\-Factor@{rotation\-Factor}!raytrace1.cpp@{raytrace1.\-cpp}}
+\subsubsection[{rotation\-Factor}]{\setlength{\rightskip}{0pt plus 5cm}float rotation\-Factor = 45.\-0}}\label{raytrace1_8cpp_a450a5ce9d8d2b3bcb3a31d9a87f91a7f}
+
+
+Magic constant to adjust the rate of rotation when re-\/orienting the camera. 
+
+
+
+Definition at line 150 of file raytrace1.\-cpp.
+
+\hypertarget{raytrace1_8cpp_a9ebc1dbd77788c4bfa27758a6725413f}{\index{raytrace1.\-cpp@{raytrace1.\-cpp}!screen\-Height@{screen\-Height}}
+\index{screen\-Height@{screen\-Height}!raytrace1.cpp@{raytrace1.\-cpp}}
+\subsubsection[{screen\-Height}]{\setlength{\rightskip}{0pt plus 5cm}int screen\-Height}}\label{raytrace1_8cpp_a9ebc1dbd77788c4bfa27758a6725413f}
+
+
+current Height of the screen. 
+
+
+
+Definition at line 42 of file raytrace1.\-cpp.
+
+\hypertarget{raytrace1_8cpp_ae50cb92a78d9e0a4f4bd718fc02bd294}{\index{raytrace1.\-cpp@{raytrace1.\-cpp}!screen\-Width@{screen\-Width}}
+\index{screen\-Width@{screen\-Width}!raytrace1.cpp@{raytrace1.\-cpp}}
+\subsubsection[{screen\-Width}]{\setlength{\rightskip}{0pt plus 5cm}int screen\-Width}}\label{raytrace1_8cpp_ae50cb92a78d9e0a4f4bd718fc02bd294}
+
+
+current Width of the screen. 
+
+
+
+Definition at line 44 of file raytrace1.\-cpp.
+
+\hypertarget{raytrace1_8cpp_a4ebc11e7a5ba3738d580c7e764782aff}{\index{raytrace1.\-cpp@{raytrace1.\-cpp}!translation\-Factor@{translation\-Factor}}
+\index{translation\-Factor@{translation\-Factor}!raytrace1.cpp@{raytrace1.\-cpp}}
+\subsubsection[{translation\-Factor}]{\setlength{\rightskip}{0pt plus 5cm}float translation\-Factor = 5.\-0}}\label{raytrace1_8cpp_a4ebc11e7a5ba3738d580c7e764782aff}
+
+
+Magic constant to adjust the rate of translation when re-\/orienting the camera. 
+
+
+
+Definition at line 152 of file raytrace1.\-cpp.
+
+\hypertarget{raytrace1_8cpp_a16874d01f7ca34ada7dddea3042f067f}{\index{raytrace1.\-cpp@{raytrace1.\-cpp}!u\-Camera\-Position@{u\-Camera\-Position}}
+\index{u\-Camera\-Position@{u\-Camera\-Position}!raytrace1.cpp@{raytrace1.\-cpp}}
+\subsubsection[{u\-Camera\-Position}]{\setlength{\rightskip}{0pt plus 5cm}G\-Lint u\-Camera\-Position = -\/1}}\label{raytrace1_8cpp_a16874d01f7ca34ada7dddea3042f067f}
+
+
+Handle to uniform that will contain the position of the \hyperlink{class_camera}{Camera}. 
+
+
+
+Definition at line 25 of file raytrace1.\-cpp.
+
