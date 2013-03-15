@@ -4,14 +4,16 @@
 // Author: Chris Compton, christopher_compton@student.uml.edu
 // Source: http://ogldev.atspace.co.uk/www/tutorial27/tutorial27.html
 
-layout (points) in;
-layout (triangle_strip) out;
-layout (max_vertices) = 4 out;
+// layout (points) in;
+// layout (triangle_strip) out;
+// layout (max_vertices) = 4 out;
+
+varying vec3 gl_Position[gl_VerticesIn];
 
 uniform mat4 gVP;    // Veiw/Projection matrix
 utifrom vec3 gCamPos // Camera Position
 
-out vec2 TexCoord;   // Texture coordinates
+vec2 TexCoord;       // Texture coordinates
 
 void main () 
 {
