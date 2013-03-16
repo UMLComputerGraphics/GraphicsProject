@@ -7,7 +7,7 @@
 
 //#define EDBG
 
-#include "KinectInator.h"
+#include "KinectInator.hpp"
 
 //---------------------------------------------------------------------------
 // Code

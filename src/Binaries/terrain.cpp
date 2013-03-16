@@ -71,7 +71,7 @@ void randomize_terrain() {
   
   srand(time(NULL));
 
-  Object *Terrain = (*Engine::Instance()->RootScene())["terrain"];
+  Object *Terrain = (*Engine::instance()->rootScene())["terrain"];
   double magnitude = landGen( Terrain, terrain_size, H );
   Terrain->Buffer();
   GLint handle = glGetUniformLocation( Terrain->Shader(), "terrainMag" );
@@ -89,21 +89,21 @@ void randomize_terrain() {
 **/
 void init() {
 
-  Scene *theScene = Engine::Instance()->RootScene();
-  Screen *myScreen = Engine::Instance()->MainScreen();
+  Scene *theScene = Engine::instance()->rootScene();
+  Screen *myScreen = Engine::instance()->mainScreen();
 
   // Load the shaders.
   GLuint gShader = Angel::InitShader( "shaders/vterrain.glsl", "shaders/fterrain.glsl" );
   // Initialize engine setting: Enable "fixed yaw"... disable free-Y rotation.
-  Engine::Instance()->Opt( "fixed_yaw", true );
+  Engine::instance()->opt( "fixed_yaw", true );
 
   // Give the Shader handle to the Scene Graph and the Camera List.
   theScene->Shader( gShader );
-  myScreen->camList.Shader( gShader );
+  myScreen->_camList.Shader( gShader );
 
   // Cameras must be added after setting a shader.
-  myScreen->camList.AddCamera( "Camera1" );
-  myScreen->camList.Next();
+  myScreen->_camList.addCamera( "Camera1" );
+  myScreen->_camList.next();
 
   /*
     NOTE:
@@ -202,7 +202,7 @@ void init() {
   glClearColor( 0.3, 0.5, 0.9, 1.0 );
 
   //Attach a model to the Camera.
-  Object *cam = myScreen->camList.Active();
+  Object *cam = myScreen->_camList.active();
   loadModelFromFile( cam, "../models/rainbow_dashT.obj" );
   // http://kp-shadowsquirrel.deviantart.com/		
   //   art/Pony-Model-Download-Center-215266264
@@ -229,7 +229,7 @@ void init() {
 **/
 void cleanup( void ) {
 
-  Engine::Instance()->RootScene()->DestroyObject();
+  Engine::instance()->rootScene()->DestroyObject();
 
 }
 
@@ -241,9 +241,9 @@ void cleanup( void ) {
 void displayViewport( void ) {  
 
   // Draw free-floating objects
-  Engine::Instance()->RootScene()->Draw();
+  Engine::instance()->rootScene()->Draw();
   // Draw camera-attached objects
-  Engine::Instance()->Cams()->Draw();
+  Engine::instance()->cams()->Draw();
 
 }
 
@@ -257,7 +257,7 @@ void display( void ) {
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
   // Tell camList to draw using our displayViewport rendering function.
-  Engine::Instance()->Cams()->View( displayViewport );
+  Engine::instance()->cams()->view( displayViewport );
 
   // Utilize multi-buffering.
   glutSwapBuffers();
@@ -298,7 +298,7 @@ void TerrainGenerationAnimation( TransCache &obj ) {
 
   case SHRINKING:
     obj.scale.Set(1.0,
-		  ((1.0+cos(CurrentScale*DegreesToRadians))/2.0),
+		  ((1.0+cos(CurrentScale*DEGREES_TO_RADIANS))/2.0),
 		  1.0);
     
     CurrentScale += 1.0 * Tick.Scale() ;
@@ -316,7 +316,7 @@ void TerrainGenerationAnimation( TransCache &obj ) {
 
   case GROWING:
     obj.scale.Set(1.0,
-		  ((1.0+cos(CurrentScale*DegreesToRadians))/2.0),
+		  ((1.0+cos(CurrentScale*DEGREES_TO_RADIANS))/2.0),
 		  1.0);
 
     CurrentScale += 1.0 * Tick.Scale() ;
@@ -358,7 +358,7 @@ void wiilook( Camera &WiiCamera, const Angel::vec3 &NewTheta,
 
   if (abs(yaw) >= 0.1)
     WiiCamera.yaw( -MovementRates.y / 20, 
-		   Engine::Instance()->Opt( "fixed_yaw" ) );
+		   Engine::instance()->opt( "fixed_yaw" ) );
   if (abs(pitch) >= 0.1)
     WiiCamera.pitch( -MovementRates.x / 20 );
   if (abs(roll) >= 0.1)
@@ -415,7 +415,7 @@ float ticker = 0.0;
 
 void idle( void ) {
 
-  Scene &theScene = (*Engine::Instance()->RootScene());
+  Scene &theScene = (*Engine::instance()->rootScene());
 
   Tick.Tock();
 
@@ -440,7 +440,7 @@ void idle( void ) {
 #ifdef WII
   if (usingWii) {
     static const unsigned NumPolls = 20;
-    Camera *camptr = dynamic_cast< Camera* >( myScreen.camList["AutoCamera2"] );
+    Camera *camptr = dynamic_cast< Camera* >( myScreen._camList["AutoCamera2"] );
     Angel::vec3 theta_diff;
     Angel::vec3 accel_mag;
 
@@ -463,7 +463,7 @@ void idle( void ) {
 #endif
   
   // Move all camera(s).
-  Engine::Instance()->Cams()->IdleMotion();
+  Engine::instance()->cams()->idleMotion();
   glutPostRedisplay();
 
 }
@@ -473,8 +473,8 @@ void idle( void ) {
 
 void menufunc( int value ) {
 
-  Engine *EN = Engine::Instance();
-  Scene *theScene = EN->RootScene();
+  Engine *EN = Engine::instance();
+  Scene *theScene = EN->rootScene();
 
   switch (value) {
   case 0:
@@ -482,7 +482,7 @@ void menufunc( int value ) {
     (*theScene)["terrain"]->Buffer();
     break;
   case 1:
-    EN->Flip( "fixed_yaw" );
+    EN->flip( "fixed_yaw" );
     break;
   }
 

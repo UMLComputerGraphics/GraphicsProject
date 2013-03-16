@@ -77,7 +77,7 @@ namespace Angel {
 
 #ifdef DEBUG
     {
-      if ( std::fabs(s) < DivideByZeroTolerance ) {
+      if ( std::fabs(s) < DIVIDE_BY_ZERO_TOLERANCE ) {
 	std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] "
 		  << "Division by zero" << std::endl;
 	return mat2();
@@ -138,7 +138,7 @@ namespace Angel {
   mat2 &mat2::operator/=( const GLfloat s ) {
 #ifdef DEBUG
     {
-      if ( std::fabs(s) < DivideByZeroTolerance ) {
+      if ( std::fabs(s) < DIVIDE_BY_ZERO_TOLERANCE ) {
 	std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] "
 		  << "Division by zero" << std::endl;
 	return (*this = mat2());
@@ -255,7 +255,7 @@ namespace Angel {
   mat3 mat3::operator/( const GLfloat s ) const {
 #ifdef DEBUG
     {
-      if ( std::fabs(s) < DivideByZeroTolerance ) {
+      if ( std::fabs(s) < DIVIDE_BY_ZERO_TOLERANCE ) {
 	std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] "
 		  << "Division by zero" << std::endl;
 	return mat3();
@@ -314,7 +314,7 @@ namespace Angel {
 
   mat3 &mat3::operator/=( const GLfloat s ) {
 #ifdef DEBUG
-    if ( std::fabs(s) < DivideByZeroTolerance ) {
+    if ( std::fabs(s) < DIVIDE_BY_ZERO_TOLERANCE ) {
       std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] "
 		<< "Division by zero" << std::endl;
       return (*this = mat3());
@@ -432,7 +432,7 @@ namespace Angel {
 
   mat4 mat4::operator/( const GLfloat s ) const {
 #ifdef DEBUG
-    if ( std::fabs(s) < DivideByZeroTolerance ) {
+    if ( std::fabs(s) < DIVIDE_BY_ZERO_TOLERANCE ) {
       std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] "
 		<< "Division by zero" << std::endl;
       return mat4();
@@ -497,7 +497,7 @@ namespace Angel {
   
   mat4 &mat4::operator/=( const GLfloat s ) {
 #ifdef DEBUG
-    if ( std::fabs(s) < DivideByZeroTolerance ) {
+    if ( std::fabs(s) < DIVIDE_BY_ZERO_TOLERANCE ) {
       std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] "
 		<< "Division by zero" << std::endl;
       return (*this = mat4());
@@ -569,7 +569,7 @@ namespace Angel {
   }
   
   mat4 RotateX( const GLfloat theta ) {
-    GLfloat angle = DegreesToRadians * theta;
+    GLfloat angle = DEGREES_TO_RADIANS * theta;
     
     mat4 c;
     c[2][2] = c[1][1] = cos(angle);
@@ -579,7 +579,7 @@ namespace Angel {
   }
 
   mat4 RotateY( const GLfloat theta ) {
-    GLfloat angle = DegreesToRadians * theta;
+    GLfloat angle = DEGREES_TO_RADIANS * theta;
     
     mat4 c;
     c[2][2] = c[0][0] = cos(angle);
@@ -589,7 +589,7 @@ namespace Angel {
   }
 
   mat4 RotateZ( const GLfloat theta ) {
-    GLfloat angle = DegreesToRadians * theta;
+    GLfloat angle = DEGREES_TO_RADIANS * theta;
     
     mat4 c;
     c[0][0] = c[1][1] = cos(angle);
@@ -670,7 +670,7 @@ namespace Angel {
   
   mat4 Perspective( const GLfloat fovy, const GLfloat aspect,
 			   const GLfloat zNear, const GLfloat zFar) {
-    GLfloat top = tan(fovy*DegreesToRadians/2) * zNear;
+    GLfloat top = tan(fovy*DEGREES_TO_RADIANS/2) * zNear;
     GLfloat right = top * aspect;
     
     mat4 c;

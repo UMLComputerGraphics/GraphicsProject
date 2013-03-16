@@ -28,19 +28,19 @@
 void init() {
   
   // Get handles to the Scene and the Screen.
-  Scene *rootScene = Engine::Instance()->RootScene();
-  Screen *primScreen = Engine::Instance()->MainScreen();
+  Scene *rootScene = Engine::instance()->rootScene();
+  Screen *primScreen = Engine::instance()->mainScreen();
 
   // Load shaders and use the resulting shader program. 
   GLuint gShader = Angel::InitShader( "shaders/vmorph.glsl", "shaders/fmorph.glsl" );
 
   // Let the other objects know which shader to use by default.
   rootScene->Shader( gShader );
-  primScreen->camList.Shader( gShader );
+  primScreen->_camList.Shader( gShader );
 
-  // We start with no cameras, by default. Add one and set it "active" by using Next().
-  primScreen->camList.AddCamera( "Camera1" );
-  primScreen->camList.Next();
+  // We start with no cameras, by default. Add one and set it "active" by using next().
+  primScreen->_camList.addCamera( "Camera1" );
+  primScreen->_camList.next();
 
   // Create an object and add it to the scene with the name "bottle".
   Object *bottle = rootScene->AddObject( "bottle" );
@@ -80,15 +80,15 @@ void init() {
 }
 
 void cleanup( void ) {
-  Engine::Instance()->RootScene()->DestroyObject();
+  Engine::instance()->rootScene()->DestroyObject();
 }
 
 //--------------------------------------------------------------------
 
 // Implementation of drawing the display with regards to a single viewport.
 void draw( void ) {
-  static Scene *theScene = Engine::Instance()->RootScene();
-  static Cameras *camList = Engine::Instance()->Cams();
+  static Scene *theScene = Engine::instance()->rootScene();
+  static Cameras *camList = Engine::instance()->cams();
 
   theScene->Draw();
   camList->Draw();
@@ -96,13 +96,13 @@ void draw( void ) {
 
 // GLUT display callback. Effectively calls displayViewport per-each Camera.
 void display( void ) {
-  static Cameras *camList = Engine::Instance()->Cams();
+  static Cameras *camList = Engine::instance()->cams();
 
   // Clear the buffer.
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
   // Tell camList to draw using our 'draw' rendering function.
-  camList->View( draw );
+  camList->view( draw );
 
   // Swap to the next buffer.
   glutSwapBuffers();
@@ -111,8 +111,8 @@ void display( void ) {
 
 void idle( void ) {
 
-  static Cameras *camList = Engine::Instance()->Cams();
-  static Scene *rootScene = Engine::Instance()->RootScene();
+  static Cameras *camList = Engine::instance()->cams();
+  static Scene *rootScene = Engine::instance()->rootScene();
 
   // Compute the time since last idle().
   // This is a global, stateful operation.
@@ -131,7 +131,7 @@ void idle( void ) {
 
   // Move all cameras: Apply velocity and acceleration adjustments.
   // If no cameras are currently moving, this will do nothing ;)
-  camList->IdleMotion();
+  camList->idleMotion();
 
   // Inform GLUT we'd like to render a new frame.
   glutPostRedisplay();

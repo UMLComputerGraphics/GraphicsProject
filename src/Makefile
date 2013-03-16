@@ -1,5 +1,5 @@
 #BUILD EVERYTHING FROM A FOLDER OTHER THAN COMMON OR CLASSES AS AN EXECUTABLE!
-SOURCESRAW=$(filter-out SpelchkCommon/%.cpp Common/%.cpp Classes/%.cpp,$(wildcard */*.cpp))
+SOURCESRAW=$(filter-out Incomplete/%.cpp Common/%.cpp Classes/%.cpp,$(wildcard */*.cpp))
 SPELLCHKCOMMONRAW=$(wildcard SpelchkCommon/*.cpp)
 COMMONRAW=$(wildcard Common/*.cpp)
 CLASSESRAW=$(wildcard Classes/*.cpp)
@@ -9,7 +9,7 @@ CLASSESRAW=$(wildcard Classes/*.cpp)
 DIAF=Common/LoadTexture.cpp \
      Classes/Particle.cpp \
      Binaries/raytracer1.cpp \
-     SpelchkCommon/KinectInator.cpp
+     Classes/KinectInator.cpp
 
 
 ifndef WII
@@ -82,6 +82,11 @@ $(TARGETS): $(OBJS)
 	$(CXX) -E $(CXXFLAGS) $< | uniq > $@
 
 #-----------------------------------------------------------------------------
+
+#-----------------------------------------------------------------------------
+.PHONY: docs
+docs:
+	pushd ../Doxygen && doxygen 2>warnings.log && popd;
 
 _clean:	
 	@$(RM) $(DIRT)
