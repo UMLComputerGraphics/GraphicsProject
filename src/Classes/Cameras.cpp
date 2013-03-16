@@ -35,7 +35,7 @@ Cameras::~Cameras( void ) {
 Camera *Cameras::addCamera( const std::string &name ) {
   
   Camera *cam = new Camera( name, _gShader );
-  Scene::InsertObject( name, cam );
+  Scene::insertObject( name, cam );
   calculateViewports();
   return cam;
   //Set active Camera?
@@ -48,7 +48,7 @@ Camera *Cameras::addCamera( const std::string &name ) {
  * @return void.
  */
 void Cameras::popCamera( void ) {
-  Scene::PopObject();
+  Scene::popObject();
   calculateViewports();
 }
 

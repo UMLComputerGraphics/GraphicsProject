@@ -447,7 +447,7 @@ void Object::send( Object::UniformEnum which ) {
  **/
 GLuint Object::shader( void ) {
   
-  return Scene::Shader();
+  return Scene::shader();
   
 }
 

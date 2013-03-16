@@ -49,7 +49,7 @@ void init() {
   primScreen->_camList.next();
   
   // Create an object and add it to the scene with the name "bottle".
-  Object *bottle = rootScene->AddObject( "bottle" );
+  Object *bottle = rootScene->addObject( "bottle" );
   
   // Use the object loader to actually fill out the vertices and-so-on of the bottle.
   ObjLoader::loadModelFromFile( bottle, "../models/bottle-a.obj" );
@@ -89,7 +89,7 @@ void init() {
  * Cleans up our scene graph.
  */
 void cleanup( void ) {
-  Engine::instance()->rootScene()->DestroyObject();
+  //Engine::instance()->rootScene()->DestroyObject();
 }
 
 /**
