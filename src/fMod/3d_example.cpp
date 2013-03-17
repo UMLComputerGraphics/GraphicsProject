@@ -99,21 +99,21 @@ int main(int argc, char *argv[])
     /*
         Load some sounds
     */
-    result = system->createSound("../sounds/drumloop.wav", FMOD_3D, 0, &sound1);
+    result = system->createSound("../sounds/ding1.wav", FMOD_3D, 0, &sound1);
     ERRCHECK(result);
     result = sound1->set3DMinMaxDistance(0.5f * DISTANCEFACTOR, 5000.0f * DISTANCEFACTOR);
     ERRCHECK(result);
     result = sound1->setMode(FMOD_LOOP_NORMAL);
     ERRCHECK(result);
 
-    result = system->createSound("../sounds/jaguar.wav", FMOD_3D, 0, &sound2);
+    result = system->createSound("../sounds/ding2.wav", FMOD_3D, 0, &sound2);
     ERRCHECK(result);
     result = sound2->set3DMinMaxDistance(0.5f * DISTANCEFACTOR, 5000.0f * DISTANCEFACTOR);
     ERRCHECK(result);
     result = sound2->setMode(FMOD_LOOP_NORMAL);
     ERRCHECK(result);
 
-    result = system->createSound("../sounds/swish.wav", FMOD_SOFTWARE | FMOD_2D, 0, &sound3);
+    result = system->createSound("../sounds/heavy_yell9.wav", FMOD_SOFTWARE | FMOD_2D, 0, &sound3);
     ERRCHECK(result);
 
     /*

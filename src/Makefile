@@ -4,7 +4,6 @@ SPELLCHKCOMMONRAW=$(wildcard SpelchkCommon/*.cpp)
 COMMONRAW=$(wildcard Common/*.cpp)
 CLASSESRAW=$(wildcard Classes/*.cpp)
 
-
 #things not needed or that break build
 DIAF=Common/LoadTexture.cpp \
      Classes/Particle.cpp \
@@ -16,6 +15,7 @@ ifndef WII
 DIAF += \
 	Common/WiiUtil.cpp
 endif
+
 SOURCES=$(filter-out $(DIAF),$(SOURCESRAW))
 COMMON=$(filter-out $(DIAF),$(COMMONRAW))
 CLASSES=$(filter-out $(DIAF),$(CLASSESRAW))
@@ -44,17 +44,31 @@ ifdef WII
     LDLIBS += -lwiic -lwiicpp
 endif
 
+#If this is WAY out of place, I apologize, but this is a hairy situation.
+#FMOD stuff:
+FMODLIBDIR = fMod/lib
+
 # Platform-dependent configuration.
 UNAME := $(shell uname)
 ifeq ($(UNAME), Linux)
     CXXINCS += -I/usr/include/SOIL
     CXXDEFS += -DFREEGLUT_STATIC -DGLEW_STATIC
     LDLIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm
+    FMODNAME = libfmodex.so
+    FMODLIB = $(FMODLIBDIR)/$(FMODLIBNAME)
+   # If linux, we don't need any extra build steps
+    FMODLINK = true
 endif
 
 ifeq ($(UNAME), Darwin)
     LDLIBS += -framework Carbon -framework OpenGL -framework GLUT
+    FMODLIBNAME = libfmodex.dylib
+   # If apple, we do need a funky post-compile build step
+    FMODLIB = $(FMODLIBDIR)/$(FMODLIBNAME)
+    FMODLINK = install_name_tool -change ./$(FMODLIBNAME) ../$(FMODLIB)
+
 endif
+
 
 ifdef DEBUG
 	CXXOPTS += -DDEBUG -O0 -g
@@ -65,6 +79,16 @@ endif
 CXXFLAGS = $(CXXOPTS) $(CXXDEFS) $(CXXINCS)
 LDFLAGS = $(LDOPTS) $(LDDIRS) $(LDLIBS)
 
+#Here is a mechanism for disabling fMod entirely
+USE_FMOD = 1
+ifdef USE_FMOD
+# Please help me - I don't know what to do and I smell like an ugly hacker
+    LDFLAGS += $(FMODLIB)
+else
+#in this context, true means "do nothing successfully"
+    FMODLINK = true
+endif
+
 #-----------------------------------------------------------------------------
 
 .PHONY: Makefile
@@ -74,8 +98,9 @@ default all: $(TARGETS)
 $(TARGETS): $(OBJS)
 
 %: %.cpp
-	$(CXX) $(CXXFLAGS) $^ $(LDFLAGS) -o $@
 
+	$(CXX) $(CXXFLAGS) $^ $(LDFLAGS) -o $@
+	$(FMODLINK) $@
 #-----------------------------------------------------------------------------
 
 %.i: %.cpp

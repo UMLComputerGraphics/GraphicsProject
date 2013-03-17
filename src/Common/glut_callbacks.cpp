@@ -87,13 +87,12 @@ void keyboard( unsigned char key, int x, int y ) {
     break;
 
   case ';': // Print Info
-<<<<<<< HEAD
 
     // Active() will throw if there is no active object, or if the requested object doesn't exist
     try 
     {
       fprintf( stderr, "Active Object: %s\n",
-	       theScene->Active()->Name().c_str() );
+	       theScene->active()->Name().c_str() );
     }
 
     catch( std::logic_error& e ) 
@@ -196,7 +195,7 @@ void keyboard_ctrl( int key, int x, int y ) {
   case GLUT_KEY_F1:
     try
     {
-	 theScene->Active()->Mode( GL_POINTS );
+	 theScene->active()->Mode( GL_POINTS );
     }
     catch( std::logic_error& e ) 
      {
@@ -206,7 +205,7 @@ void keyboard_ctrl( int key, int x, int y ) {
   case GLUT_KEY_F2:
     try
     {
-	 theScene->Active()->Mode( GL_LINE_STRIP );
+	 theScene->active()->Mode( GL_LINE_STRIP );
     }
     catch( std::logic_error& e ) 
      {
@@ -216,7 +215,7 @@ void keyboard_ctrl( int key, int x, int y ) {
   case GLUT_KEY_F3:
     try
     {
-	 theScene->Active()->Mode( GL_TRIANGLE_STRIP );
+	 theScene->active()->Mode( GL_TRIANGLE_STRIP );
     }
     catch( std::logic_error& e ) 
      {
@@ -226,7 +225,7 @@ void keyboard_ctrl( int key, int x, int y ) {
   case GLUT_KEY_F4:
     try
     {
-	 theScene->Active()->Mode( GL_TRIANGLES );
+	 theScene->active()->Mode( GL_TRIANGLES );
     }
     catch( std::logic_error& e ) 
      {
