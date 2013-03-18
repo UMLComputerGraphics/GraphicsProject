@@ -15,19 +15,22 @@
 #include "vec.hpp"
 
 
-using Angel::vec4;
-using Angel::mat4;
+using namespace Angel;
 
 // Constructor(s)
 ParticleSystem::ParticleSystem( int particleAmt, const std::string &name, GLuint shader)
-  : Object( name, shader ), numParticles(particleAmt)
+  : Object( name, shader ), numParticles(particleAmt), minLife(0.1), maxLife(1)
 {
   
 }
 
 ParticleSystem::~ParticleSystem( void )
 {
-
+	for(int i=0;i<particles.size();i++)
+	{
+		free(particles[i]);
+	}
+    particles.clear();
 }
 
 void
@@ -39,7 +42,10 @@ ParticleSystem::addParticle( void )
 
   if ( numToAdd > 0 )
     for ( int i = 0 ; i < numToAdd ; i++ )
-      particles.push_back( Particle::Particle( vec4(0,0,0,1), 1, rangeRandom(minLife, maxLife) ));
+    {
+      Particle *p = new Particle(vec4(0,0,0,1), 1, rangeRandom(minLife, maxLife));
+      particles.push_back(p);
+    }
 }
 
 // Getters and Setters

@@ -44,18 +44,18 @@ void init()
 {
 
   GLuint shader;
-  Cameras *camList = Engine::Instance()->Cams();
-  Scene *rootScene = Engine::Instance()->RootScene();
+  Cameras *camList = Engine::instance()->cams();
+  Scene *rootScene = Engine::instance()->rootScene();
   
   // Load shaders and use the resulting shader program. 
   shader = Angel::InitShader( "shaders/vParticle.glsl", 
 			      "shaders/gParticle.glsl",
 			      "shaders/fParticle.glsl");
 
-  camList->SetShader( shader );
-  camList->AddCamera( "Camera1" );
-  camList->Next();
-  camList->Active()->changePerspective( Camera::IDENTITY );
+  camList->Shader( shader );
+  camList->addCamera( "Camera1" );
+  camList->next();
+  camList->active()->changePerspective( Camera::IDENTITY );
 
   Object *particleSystem = new ParticleSystem( 5, "ParticleSystem", shader );
   rootScene->InsertObject( particleSystem );
@@ -68,15 +68,15 @@ void init()
 
 void cleanup( void ) 
 {
-  Engine::Instance()->RootScene()->DestroyObject();
+  Engine::instance()->rootScene()->DestroyObject();
 }
 
 //--------------------------------------------------------------------
 
 void draw( void )
 {
-  static Scene *theScene  = Engine::Instance()->RootScene();
-  static Cameras *camList = Engine::Instance()->Cams();
+  static Scene *theScene  = Engine::instance()->rootScene();
+  static Cameras *camList = Engine::instance()->cams();
 
   theScene->Draw();
   camList->Draw();
@@ -85,13 +85,13 @@ void draw( void )
 // GLUT display callback. Effectively calls displayViewport per-each Camera.
 void display( void ) 
 {
-  static Cameras *camList = Engine::Instance()->Cams();
+  static Cameras *camList = Engine::instance()->cams();
   
   // Clear the buffer.
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
   // Tell camList to draw using our 'draw' rendering function.
-  camList->View( draw );
+  camList->view( draw );
 
   // Swap to the next buffer.
   glutSwapBuffers();
@@ -100,13 +100,13 @@ void display( void )
 
 void idle( void ) 
 {
-  static Cameras *camList = Engine::Instance()->Cams();
+  static Cameras *camList = Engine::instance()->cams();
 
   // Compute the time since last idle().
   Tick.Tock();
 
   // Move all camera(s).
-  camList->IdleMotion();
+  camList->idleMotion();
   glutPostRedisplay();
 }
 
