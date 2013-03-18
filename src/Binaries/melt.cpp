@@ -1,4 +1,24 @@
-#include "Angel.h"
+#include "globals.h"
+#include "platform.h"
+/* Engine Classes */
+#include "Camera.hpp"
+#include "Cameras.hpp"
+#include "Engine.hpp"
+#include "Object.hpp"
+#include "ParticleSystem.hpp"
+#include "Scene.hpp"
+#include "Screen.hpp"
+#include "Timer.hpp"
+/* Utilities and Common */
+#include "glut_callbacks.h"
+#include "InitShader.hpp"
+#include "model.hpp"
+/* System Headers */
+#include <cmath>
+#include <cstdio>
+#include <sstream>
+#include <cstdlib>
+#include <time.h>
 
 float xpos = 0, ypos = 0, zpos = 0;
 float xrot = 0, yrot = 0, angle = 0.0;
@@ -12,7 +32,7 @@ float crater = candleheight;
 float radius = 10;
 int i, j;
 float grow = 0;
-bool melt = FALSE;
+bool melt = false;
 
 void draw (void)
 {
@@ -161,7 +181,7 @@ void reshape (int w, int h)
     glMatrixMode (GL_MODELVIEW); //set the matrix back to model
 }
 
-void keyboard (unsigned char key, int x, int y)
+void _keyboard (unsigned char key, int x, int y)
 {
 	float xrotrad, yrotrad;
 
@@ -286,7 +306,7 @@ int main (int argc, char **argv)
     glutIdleFunc (display); 
     glutReshapeFunc (reshape);
     glutPassiveMotionFunc(mouseMovement); //check for mouse movement
-    glutKeyboardFunc (keyboard);
+    glutKeyboardFunc (_keyboard);
 
     glutMainLoop (); 
     return 0;
