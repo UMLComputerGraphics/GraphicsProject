@@ -344,7 +344,7 @@ float Camera::z( void ) const {
 }
 
 vec4 Camera::pos( void ) const {
-  return vec4( x(), y(), z(), 1.0 );
+  return -1.0*vec4( x(), y(), z(), 1.0 );
 }
 
 float Camera::fieldOfView( void ) const {
