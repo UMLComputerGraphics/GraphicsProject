@@ -11,7 +11,7 @@
 varying vec3 gl_Position[gl_VerticesIn];
 
 uniform mat4 gVP;    // Veiw/Projection matrix
-utifrom vec3 gCamPos // Camera Position
+uniform vec3 gCamPos; // Camera Position
 
 vec2 TexCoord;       // Texture coordinates
 
