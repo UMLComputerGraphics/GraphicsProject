@@ -8,16 +8,17 @@
 // layout (triangle_strip) out;
 // layout (max_vertices) = 4 out;
 
-varying vec3 gl_Position[gl_VerticesIn];
+// varying vec4 gl_Position; 
 
-uniform mat4 gVP;    // Veiw/Projection matrix
+uniform mat4 gVP;     // Veiw/Projection matrix
 uniform vec3 gCamPos; // Camera Position
 
-vec2 TexCoord;       // Texture coordinates
+vec2 TexCoord;        // Texture coordinates
 
 void main () 
 {
-	vec3 Pos = gl_in[0].gl_Position.xyz;
+	// vec3 Pos = gl_in[0].gl_Position.xyz;
+	vec3 Pos = gl_Position.xyz;
 
 	vec3 toCamera = normalize( gCamPos - Pos );
 	vec3 up = vec3( 0.0, 1.0, 0.0 );

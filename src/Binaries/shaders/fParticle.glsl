@@ -4,7 +4,7 @@
 
 uniform sampler2D gColorMap;
 
-varying vec2 TexCoord; 
+vec2 TexCoord; 
 vec4 FragColor;
 
 void main()
