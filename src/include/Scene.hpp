@@ -21,7 +21,7 @@ public:
   GLuint Shader( void );
 
   Object *AddObject( const std::string &objName, GLuint Object_Shader = 0, ObjectType oType = OBJECT );
-  void InsertObject( Object *obj );
+  void InsertObject( const std::string, Object *obj );
   void DelObject( const std::string &objName );
   void DelObject( void );
   void PopObject( void );

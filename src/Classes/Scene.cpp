@@ -23,9 +23,9 @@ Scene::~Scene() {
 
 }
 
-void Scene::InsertObject( Object *obj ) {
+void Scene::InsertObject(const std::string name, Object *obj ) {
   _list.push_back( obj );
-  _map.insert( mapping( obj->Name(), obj ) );
+  _map.insert( mapping( name, obj ));
 }
 
 Object *Scene::AddObject( const std::string &objName,
@@ -43,7 +43,7 @@ Object *Scene::AddObject( const std::string &objName,
   } else {
     obj = new ParticleSystem( 1, objName, ((shader) ? shader : _gShader) );
   }
-  InsertObject( obj );
+  InsertObject( objName, obj );
   return obj;
 }
 
