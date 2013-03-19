@@ -22,6 +22,8 @@ using std::vector;
 
 **/
 
+typedef Particle* ParticleP;
+
 class ParticleSystem : public Object
 {
 
@@ -54,7 +56,7 @@ private:
 
   float rangeRandom( float min, float max );
 
-  vector<Particle> particles;  
+  vector<ParticleP> particles;
   int    numParticles;   // Number of particles that each instance of ParticleSystem will manage
   float  maxLife;
   float  minLife;
