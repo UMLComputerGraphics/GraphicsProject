@@ -21,6 +21,8 @@ using namespace Angel;
 ParticleSystem::ParticleSystem( int particleAmt, const std::string &name, GLuint shader)
   : Object( name, shader ), numParticles(particleAmt), minLife(0.1), maxLife(1)
 {
+  positions = new vec4[numParticles];
+
   addParticles();
 }
 
@@ -45,6 +47,8 @@ ParticleSystem::addParticles( void )
     {
       Particle *p = new Particle(vec4(0,0,0,1), 1, rangeRandom(minLife, maxLife));
       particles.push_back(p);
+
+	 positions[i] = p->getPosition();
     }
 }
 
@@ -90,6 +94,18 @@ void
 ParticleSystem::setNumParticles( int newNumParticles )
 {
   numParticles = newNumParticles;
+}
+
+void
+ParticleSystem::Buffer()
+{
+  glBindVertexArray(vao);
+
+  glBindBuffer(GL_ARRAY_BUFFER, buffer[VERTICES]);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(Angel::vec4) * numParticles,
+  			positions, GL_STATIC_DRAW);
+
+  glBindVertexArray(0);
 }
 
 

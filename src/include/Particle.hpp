@@ -40,6 +40,8 @@ public:
   void setVel( vec3 newVel );
   void setTexFile( string newFilename );
 
+  vec4 getPosition( void );
+
  private:
   vec4 mPos;
   vec3 mScale;

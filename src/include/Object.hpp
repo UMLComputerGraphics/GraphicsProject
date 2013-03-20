@@ -15,6 +15,8 @@ typedef Angel::vec4 point4;
 
 class Object : public Scene {
 
+protected:
+
   // These describe the types of buffers we want on the GPU per-object.
   enum bufferType { 
     VERTICES,
@@ -43,7 +45,7 @@ public:
   Object( const std::string &name, GLuint gShader );
   virtual ~Object( void );
   void Draw( void );
-  void Buffer( void );
+  virtual void Buffer( void );
   void BufferMorphOnly( void ) ;
   void Mode( GLenum new_node );
   void Texture( const char** filename );

@@ -83,3 +83,9 @@ Particle::setTexFile( string newFilename )
 {
   texFilename = newFilename;
 }
+
+vec4
+Particle::getPosition( void )
+{
+  return mPos;
+}
