@@ -59,6 +59,7 @@ void init()
 
   Object *particleSystem = new ParticleSystem( 5, "ParticleSystem", shader );
   rootScene->InsertObject( "ParticleSystem", particleSystem );
+  particleSystem->Buffer();
 
   // Generic OpenGL setup: Enable the depth buffer and set a nice background color.
   glEnable( GL_DEPTH_TEST );

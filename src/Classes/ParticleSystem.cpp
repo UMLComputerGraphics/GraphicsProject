@@ -21,7 +21,7 @@ using namespace Angel;
 ParticleSystem::ParticleSystem( int particleAmt, const std::string &name, GLuint shader)
   : Object( name, shader ), numParticles(particleAmt), minLife(0.1), maxLife(1)
 {
-  
+  addParticles();
 }
 
 ParticleSystem::~ParticleSystem( void )
@@ -34,7 +34,7 @@ ParticleSystem::~ParticleSystem( void )
 }
 
 void
-ParticleSystem::addParticle( void )
+ParticleSystem::addParticles( void )
 {
   
   int numParticles = getNumParticles();
@@ -96,7 +96,11 @@ ParticleSystem::setNumParticles( int newNumParticles )
 // Other functions
 
 void
-ParticleSystem::update(){}
+ParticleSystem::update(){
+
+  
+
+}
 
 // Private Functions
 

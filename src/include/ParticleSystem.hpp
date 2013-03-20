@@ -32,7 +32,7 @@ public:
   ParticleSystem( int particleAmt, const std::string &name, GLuint shader);
   ~ParticleSystem( void ) ;
 
-  void  addParticle( void );
+  void  addParticles( void );
   
   // Getters and Setters
   vec4  getColor( void );
