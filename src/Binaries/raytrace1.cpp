@@ -13,6 +13,7 @@ typedef Angel::vec4 color4;
 typedef Angel::vec4 point4;
 
 GLuint modelView = -1;  // model-view matrix uniform shader variable location
+GLuint dethklok;
 
 GLint vRayPosition = -1;
 GLint uCameraPosition = -1;
@@ -157,6 +158,8 @@ void motion(int x, int y) {
 void display(void) {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+  glUniform1f(dethklok, glutGet(GLUT_ELAPSED_TIME));
+
   mat4 mv = camera.getModelViewMatrix();
   glUniformMatrix4fv(modelView, 1, GL_TRUE, mv);
 
@@ -219,6 +222,8 @@ void init(void) {
   uSphereCenterPoints = glGetUniformLocation(program, "uSphereCenterPoints");
   uSphereRadius = glGetUniformLocation(program, "uSphereRadius");
   uSphereColors = glGetUniformLocation(program, "uSphereColors");
+
+  dethklok = glGetUniformLocation(program, "ftime");
 
   glShadeModel(GL_FLAT);
   glEnable(GL_DEPTH_TEST);

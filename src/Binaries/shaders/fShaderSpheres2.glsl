@@ -4,11 +4,18 @@ const int raytraceDepth = 8;
 
 uniform mat4 ModelView;
 
+const int numberOfLights = 5;
+uniform vec4 LightAmbient, LightPosition[numberOfLights], LightDiffuse[numberOfLights], LightSpecular[numberOfLights];
+
 const int maxNumSphere = 5;
 uniform int uNumOfSpheres;
 uniform vec3 uSphereCenterPoints[maxNumSphere];
 uniform float uSphereRadius[maxNumSphere];
 uniform vec3 uSphereColors[maxNumSphere];
+uniform float ftime;
+
+const float dlight      = 0.05;
+float lightness = 0.5;
 
 in vec3 org,dir;
 
@@ -258,6 +265,10 @@ void test_main()
 	gl_FragColor = color;
 }
 
+float rand(vec2 co){
+    return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+}
+
 void main()
 {
 	sphere[0] = buildSphere(vec3(-1, -1, -2), .5, vec3(1,0.3,0.3));
@@ -293,7 +304,12 @@ void main()
 	i.n = i.p = i.color = vec3(0, 0, 0);
 	
 	float eps  = 0.0001;
-	vec3 bcolor = vec3(1,1,1);
+	float R = rand(vec2(0,ftime));
+	float d = floor(R) == round(R) ? dlight : -dlight;
+	lightness += d;
+	if (lightness < 0) lightness = 0;
+	if (lightness > 1.0) lightness = 1.0;
+	vec3 bcolor = lightness * vec3(1,1,1);
 	for (int j = 0; j < raytraceDepth; j++)
 	{
 		Intersection i;
