@@ -44,14 +44,14 @@ void init() {
   camList->active()->changePerspective( Camera::IDENTITY );
   
   // Adding objects without a default shader:
-  Object *A = rootScene->AddObject( "Object A (RED)", shader[0] );
+  Object *A = rootScene->addObject( "Object A (RED)", shader[0] );
   
   // Setting a default and adding objects without:
   rootScene->shader( shader[1] );
-  Object *B = rootScene->AddObject( "Object B (BLU)" );
+  Object *B = rootScene->addObject( "Object B (BLU)" );
   
   // Third Object, over-ride default shader.
-  Object *C = rootScene->AddObject( "Object C (TEX)", shader[1] );
+  Object *C = rootScene->addObject( "Object C (TEX)", shader[1] );
   
   // Draw two squares:
   triangle( A, vec4( -1, 0, 0, 1 ), vec4( 0, 0, 0, 1 ), vec4( -1, 1, 0, 1 ),
@@ -81,7 +81,7 @@ void init() {
  * Cleans up our scene graph.
  */
 void cleanup( void ) {
-  Engine::instance()->rootScene()->DestroyObject();
+  //Engine::instance()->rootScene()->DestroyObject();
 }
 
 //--------------------------------------------------------------------

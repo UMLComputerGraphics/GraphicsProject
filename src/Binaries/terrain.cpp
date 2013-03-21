@@ -115,16 +115,16 @@ void init() {
   */
 
   // Let's create some objects.
-  Object *terrain = theScene->AddObject( "terrain" );
+  Object *terrain = theScene->addObject( "terrain" );
   glUseProgram( gShader ); // Temporary hack until I refine the texturing management subsystem.
   terrain->texture( terrainTex );
   terrain->drawMode( GL_TRIANGLE_STRIP );
   randomize_terrain(); // This call depends upon "terrain" existing within theScene.
   
-  Object *pyramid = theScene->AddObject( "pyramid" );
+  Object *pyramid = theScene->addObject( "pyramid" );
 
 /*
-  Object *box   = theScene.AddObject( "box" ) ;
+  Object *box   = theScene.addObject( "box" ) ;
   loadModelFromFile( box, "../models/box-a.obj");
   box->_trans.offset.SetY(100.0);
   box->_trans.offset.SetX(100.0);
@@ -139,42 +139,42 @@ void init() {
 		      4 );
   pyramid->buffer();
 
-  Object *cube_base = theScene->AddObject( "basecube" );
+  Object *cube_base = theScene->addObject( "basecube" );
   colorCube( cube_base, 1.0 );
   cube_base->buffer();
   
-  Object *moon_cube = pyramid->AddObject( "moon" );
+  Object *moon_cube = pyramid->addObject( "moon" );
   colorCube( moon_cube, 0.5 );
   moon_cube->buffer();
 
   // These models came from VALVE,
   // From their game "Team Fortress 2."
   // The model processing was done in Blender.
-  Object *heavy = theScene->AddObject( "heavy" );
+  Object *heavy = theScene->addObject( "heavy" );
   ObjLoader::loadModelFromFile( heavy, "../models/heavyT.obj" );
   heavy->buffer();
   heavy->_trans.scale.Set( 0.10 );
   heavy->_trans.offset.Set( 0, 2, 0 );
 
   // Valve's TF2 Medic
-  Object *medic = heavy->AddObject( "medic" );
+  Object *medic = heavy->addObject( "medic" );
   ObjLoader::loadModelFromFile( medic, "../models/medicT.obj" );
   medic->_trans.offset.Set( 0, 20, 0 );
   medic->buffer();
 
   // Valve's TF2 Spy
-  Object *spy = medic->AddObject( "spy" );
+  Object *spy = medic->addObject( "spy" );
   ObjLoader::loadModelFromFile( spy, "../models/spyT.obj" );
   spy->_trans.offset.Set( 0, 20, 0 );
   spy->buffer();
 
-  Object *ball = theScene->AddObject( "ball" );
+  Object *ball = theScene->addObject( "ball" );
   sphere( ball );
   ball->_trans.scale.Set( 1000 );
   ball->buffer();
   
   /*
-  Object *sun = theScene.AddObject ("sun");
+  Object *sun = theScene.addObject ("sun");
   //loadModelFromFile( sun, "../models/heavyT.obj" );
   sphere(sun);
   sun->_trans.offset.SetX(500.0);
@@ -183,7 +183,7 @@ void init() {
   */
 
   /*
-  Object *actualMoon = theScene.AddObject ("actualMoon");
+  Object *actualMoon = theScene.addObject ("actualMoon");
   //loadModelFromFile( actualMoon, "../models/spyT.obj" );
   sphere(actualMoon);
   actualMoon->_trans.offset.SetX(-500.0);
@@ -192,7 +192,7 @@ void init() {
   */
 
   // The water gets generated last -- In order for our fake transparency to work.
-  Object *agua = theScene->AddObject( "agua" );
+  Object *agua = theScene->addObject( "agua" );
   makeAgua( terrain, agua );
   agua->buffer();
   agua->drawMode( GL_TRIANGLES );
@@ -227,7 +227,7 @@ void init() {
 **/
 void cleanup( void ) {
 
-  Engine::instance()->rootScene()->DestroyObject();
+  //Engine::instance()->rootScene()->DestroyObject();
 
 }
 

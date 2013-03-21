@@ -222,7 +222,7 @@ namespace ObjLoader {
         
         // Add this object up-in-here.
         fprintf( stderr, "CREATING OBJECT1: %s\n", objName.c_str() );
-        Object *thisObj = scene.AddObject( objName );
+        Object *thisObj = scene.addObject( objName );
         thisObj->_vertices = vertices;
         thisObj->_texUVs = textureUVs;
         thisObj->_normals = normals;
@@ -274,7 +274,7 @@ namespace ObjLoader {
     // Add this object up-in-here.
     fprintf( stderr, "CREATING OBJECT: %s\n", objName.c_str() );
     if ( objName.length() == 0 ) objName = defaultObjName;
-    Object *thisObj = scene.AddObject( objName );
+    Object *thisObj = scene.addObject( objName );
     thisObj->_vertices = vertices;
     thisObj->_texUVs = textureUVs;
     thisObj->_normals = normals;
