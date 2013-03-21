@@ -5,15 +5,24 @@
 
 #include "Scene.hpp"
 #include "Object.hpp"
-#include "ParticleSystem.hpp"
 
 typedef std::pair<std::string, Object *> mapping ;
 
+/**
+ * Nullary constructor.
+ */
 Scene::Scene() {
   _currentObj = _list.end() ;
   _gShader = 0 ;
 }
 
+/**
+ * Destructor! Will traverse its list and delete all objects!
+ * !! CAUTION !! If you have registered your own Objects manually,
+ * note that the scene will delete them for you!
+ *
+ * You should, of course, never register objects from the stack.
+ */
 Scene::~Scene() {
 
   /* Traverse the list and free all Objects. */
@@ -21,30 +30,6 @@ Scene::~Scene() {
   for (it = _list.rbegin() ; it != _list.rend(); ++it)
     delete *it ;
 
-}
-
-void Scene::InsertObject( Object *obj ) {
-  _list.push_back( obj );
-  _map.insert( mapping( obj->Name(), obj ) );
-}
-
-Object *Scene::AddObject( const std::string &objName,
-			  GLuint shader, ObjectType oType ) {
-
-  Object* obj;
-
-  // Note that 'shader' defaults to 0.
-  if ((!shader) && (!_gShader))
-    throw std::invalid_argument( "A call to AddObject() was made without "
-				 "specifying either the object-specific shader,\n"
-				 "\tor informing the parent Scene of a default shader to use." );
-  if( oType == OBJECT ) {
-    obj = new Object( objName, ((shader) ? shader : _gShader) );
-  } else {
-    obj = new ParticleSystem( 1, objName, ((shader) ? shader : _gShader) );
-  }
-  InsertObject( obj );
-  return obj;
 }
 
 /**
@@ -56,8 +41,7 @@ Object *Scene::AddObject( const std::string &objName,
 
  @return void.
  **/
-
-void Scene::Shader(GLuint gShader) {
+void Scene::shader(GLuint gShader) {
   this->_gShader = gShader ;
 }
 
@@ -68,50 +52,77 @@ void Scene::Shader(GLuint gShader) {
 
  @return A GLuint handle to the shader program.
  **/
-
-GLuint Scene::Shader(void) {
+GLuint Scene::shader(void) {
   return _gShader ;
 }
 
 /**
- DeleteObject is the actual implementation function that will
+ * addObject creates a new Object with the given name and, optionally,
+ * a specified shader and adds it to the Scene graph.
+ * If no shader is given, a default shader MUST have been specified
+ * for the Scene prior to the call.
+ *
+ * @param objName The name of the new Object to add.
+ * @param Object_Shader The shader that should be used to render this object.
+ * @return A pointer to the new Object.
+ */
+Object *Scene::addObject(const std::string &objName, GLuint shader) {
+
+  // Note that 'shader' defaults to 0.
+  if ((!shader) && (!_gShader))
+    throw std::invalid_argument("A call to AddObject() was made without "
+        "specifying either the object-specific shader,\n"
+        "\tor informing the parent Scene of a default shader to use.") ;
+
+  Object *obj = new Object(objName, ((shader) ? shader : _gShader)) ;
+  insertObject(obj) ;
+  return obj ;
+
+}
+
+/**
+ * delObject will remove from the Scene graph the object with the given name.
+ *
+ * @param objName Name of the Object to delete.
+ */
+void Scene::delObject(const std::string &objName) {
+  Object *obj = _map[objName] ;
+  deleteObject(obj) ;
+}
+
+/**
+ * delObject with no parameters will delete the first Object in the Scene.
+ */
+void Scene::delObject(void) {
+  deleteObject(*(_list.begin())) ;
+}
+
+/**
+ * popObject deletes the last Object in the Scene.
+ */
+void Scene::popObject(void) {
+  deleteObject(*(--_list.end())) ;
+}
+
+void Scene::insertObject( Object *obj ) {
+  _list.push_back( obj );
+  _map.insert( mapping( obj->name(), obj ) );
+}
+
+/**
+ deleteObject is the actual implementation function that will
  remove an Object from the Scene list and Scene map,
  then free the object.
  @param obj The pointer to the object to free.
  **/
-void Scene::DeleteObject(Object *obj) {
+void Scene::deleteObject(Object *obj) {
 
   if (obj == active()) prev() ;
 
   _list.remove(obj) ;
-  _map.erase(obj->Name()) ;
+  _map.erase(obj->name()) ;
   delete obj ;
 
-}
-
-void Scene::DelObject(const std::string &objName) {
-  Object *obj = _map[objName] ;
-  DeleteObject(obj) ;
-}
-
-void Scene::DelObject(void) {
-  DeleteObject(*(_list.begin())) ;
-}
-
-/**
- Completely remove this object and all his children.
- **/
-void Scene::DestroyObject(void) {
-  /*  std::list< Object* >::iterator it;
-   for (it = list.begin(); it != list.end(); ++it) {
-   (*it)->DestroyObject();
-   DeleteObject( *it );
-   }
-   */
-}
-
-void Scene::PopObject(void) {
-  DeleteObject(*(--_list.end())) ;
 }
 
 Object *Scene::next(void) {
@@ -156,7 +167,7 @@ Object *Scene::active(void) const {
 void Scene::Draw(void) {
   std::list<Object*>::iterator it ;
   for (it = _list.begin() ; it != _list.end(); ++it) {
-    (*it)->Draw() ;
+    (*it)->draw() ;
   }
 }
 

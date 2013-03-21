@@ -31,12 +31,11 @@
 #include "model.hpp"
 #include "InitShader.hpp"
 #include "glut_callbacks.h"
+#include "ObjLoader.hpp"
 
 // Type Aliases
 using Angel::vec3;
 using Angel::vec4;
-typedef Angel::vec4 color4;
-typedef Angel::vec4 point4;
 
 // Wii Connectivity 
 #ifdef WII
@@ -73,8 +72,8 @@ void randomize_terrain() {
 
   Object *Terrain = (*Engine::instance()->rootScene())["terrain"];
   double magnitude = landGen( Terrain, terrain_size, H );
-  Terrain->Buffer();
-  GLint handle = glGetUniformLocation( Terrain->Shader(), "terrainMag" );
+  Terrain->buffer();
+  GLint handle = glGetUniformLocation( Terrain->shader(), "terrainMag" );
   if (handle != -1) glUniform1f( handle, magnitude );
 
 }
@@ -97,9 +96,9 @@ void init() {
   // Initialize engine setting: Enable "fixed yaw"... disable free-Y rotation.
   Engine::instance()->opt( "fixed_yaw", true );
 
-  // Give the Shader handle to the Scene Graph and the Camera List.
-  theScene->Shader( gShader );
-  myScreen->_camList.Shader( gShader );
+  // Give the shader handle to the Scene Graph and the Camera List.
+  theScene->shader( gShader );
+  myScreen->_camList.shader( gShader );
 
   // Cameras must be added after setting a shader.
   myScreen->_camList.addCamera( "Camera1" );
@@ -116,106 +115,105 @@ void init() {
   */
 
   // Let's create some objects.
-  Object *terrain = theScene->AddObject( "terrain" );
+  Object *terrain = theScene->addObject( "terrain" );
   glUseProgram( gShader ); // Temporary hack until I refine the texturing management subsystem.
-  terrain->Texture( terrainTex );
-  terrain->Mode( GL_TRIANGLE_STRIP );
+  terrain->texture( terrainTex );
+  terrain->drawMode( GL_TRIANGLE_STRIP );
   randomize_terrain(); // This call depends upon "terrain" existing within theScene.
   
-  Object *pyramid = theScene->AddObject( "pyramid" );
+  Object *pyramid = theScene->addObject( "pyramid" );
 
 /*
-  Object *box   = theScene.AddObject( "box" ) ;
+  Object *box   = theScene.addObject( "box" ) ;
   loadModelFromFile( box, "../models/box-a.obj");
-  box->trans.offset.SetY(100.0);
-  box->trans.offset.SetX(100.0);
-  box->Buffer();
+  box->_trans.offset.SetY(100.0);
+  box->_trans.offset.SetX(100.0);
+  box->_buffer();
 */
 
-  Sierpinski_Pyramid( pyramid,
+  sierpinskiPyramid( pyramid,
 		      vec4(  0,      1,  0, 1 ),
 		      vec4( -1, -0.999,  1, 1 ),
 		      vec4(  1, -0.999,  1, 1 ),
 		      vec4(  0, -0.999, -1, 1 ),
 		      4 );
-  pyramid->Buffer();
+  pyramid->buffer();
 
-  Object *cube_base = theScene->AddObject( "basecube" );
-  colorcube( cube_base, 1.0 );
-  cube_base->Buffer();
+  Object *cube_base = theScene->addObject( "basecube" );
+  colorCube( cube_base, 1.0 );
+  cube_base->buffer();
   
-  Object *moon_cube = pyramid->AddObject( "moon" );
-  colorcube( moon_cube, 0.5 );
-  moon_cube->Buffer();
+  Object *moon_cube = pyramid->addObject( "moon" );
+  colorCube( moon_cube, 0.5 );
+  moon_cube->buffer();
 
   // These models came from VALVE,
   // From their game "Team Fortress 2."
   // The model processing was done in Blender.
-  Object *heavy = theScene->AddObject( "heavy" );
-  loadModelFromFile( heavy, "../models/heavyT.obj" );
-  heavy->Buffer();
-  heavy->trans.scale.Set( 0.10 );
-  heavy->trans.offset.Set( 0, 2, 0 );
+  Object *heavy = theScene->addObject( "heavy" );
+  ObjLoader::loadModelFromFile( heavy, "../models/heavyT.obj" );
+  heavy->buffer();
+  heavy->_trans.scale.Set( 0.10 );
+  heavy->_trans.offset.Set( 0, 2, 0 );
 
   // Valve's TF2 Medic
-  Object *medic = heavy->AddObject( "medic" );
-  loadModelFromFile( medic, "../models/medicT.obj" );
-  medic->trans.offset.Set( 0, 20, 0 );
-  medic->Buffer();
+  Object *medic = heavy->addObject( "medic" );
+  ObjLoader::loadModelFromFile( medic, "../models/medicT.obj" );
+  medic->_trans.offset.Set( 0, 20, 0 );
+  medic->buffer();
 
   // Valve's TF2 Spy
-  Object *spy = medic->AddObject( "spy" );
-  loadModelFromFile( spy, "../models/spyT.obj" );
-  spy->trans.offset.Set( 0, 20, 0 );
-  spy->Buffer();
+  Object *spy = medic->addObject( "spy" );
+  ObjLoader::loadModelFromFile( spy, "../models/spyT.obj" );
+  spy->_trans.offset.Set( 0, 20, 0 );
+  spy->buffer();
 
-  Object *ball = theScene->AddObject( "ball" );
+  Object *ball = theScene->addObject( "ball" );
   sphere( ball );
-  ball->trans.scale.Set( 1000 );
-  ball->Buffer();
+  ball->_trans.scale.Set( 1000 );
+  ball->buffer();
   
   /*
-  Object *sun = theScene.AddObject ("sun");
+  Object *sun = theScene.addObject ("sun");
   //loadModelFromFile( sun, "../models/heavyT.obj" );
   sphere(sun);
-  sun->trans.offset.SetX(500.0);
-  sun->trans.scale.Set(16.0) ;
-  sun->Buffer();
+  sun->_trans.offset.SetX(500.0);
+  sun->_trans.scale.Set(16.0) ;
+  sun->_buffer();
   */
 
   /*
-  Object *actualMoon = theScene.AddObject ("actualMoon");
+  Object *actualMoon = theScene.addObject ("actualMoon");
   //loadModelFromFile( actualMoon, "../models/spyT.obj" );
   sphere(actualMoon);
-  actualMoon->trans.offset.SetX(-500.0);
-  actualMoon->trans.scale.Set(12.0);
-  actualMoon->Buffer();
+  actualMoon->_trans.offset.SetX(-500.0);
+  actualMoon->_trans.scale.Set(12.0);
+  actualMoon->_buffer();
   */
 
   // The water gets generated last -- In order for our fake transparency to work.
-  Object *agua = theScene->AddObject( "agua" );
+  Object *agua = theScene->addObject( "agua" );
   makeAgua( terrain, agua );
-  agua->Buffer();
-  agua->Mode( GL_TRIANGLES );
+  agua->buffer();
+  agua->drawMode( GL_TRIANGLES );
 
   glEnable( GL_DEPTH_TEST );
   glClearColor( 0.3, 0.5, 0.9, 1.0 );
 
   //Attach a model to the Camera.
   Object *cam = myScreen->_camList.active();
-  loadModelFromFile( cam, "../models/rainbow_dashT.obj" );
+  ObjLoader::loadModelFromFile( cam, "../models/rainbow_dashT.obj" );
   // http://kp-shadowsquirrel.deviantart.com/		
   //   art/Pony-Model-Download-Center-215266264
-  cam->Buffer();
-  cam->Mode( GL_TRIANGLES );
-  cam->trans.scale.Set( 0.05 );
-  cam->trans.PreRotation.RotateY( 180 );
-  cam->Propagate(); 
+  cam->buffer();
+  cam->drawMode( GL_TRIANGLES );
+  cam->_trans.scale.Set( 0.05 );
+  cam->_trans.PreRotation.RotateY( 180 );
+  cam->propegate();
 
-  // Add the Propagate method to the Scene Graph directly, instead of this:
+  // Add the propegate method to the Scene Graph directly, instead of this:
   // Note: Terrain doesn't/shouldn't have children ...
-  terrain->Propagate();
-
+  terrain->propegate();
 
 }
 
@@ -229,7 +227,7 @@ void init() {
 **/
 void cleanup( void ) {
 
-  Engine::instance()->rootScene()->DestroyObject();
+  //Engine::instance()->rootScene()->DestroyObject();
 
 }
 
@@ -425,17 +423,17 @@ void idle( void ) {
 
   Object &Terrain = *(theScene["terrain"]);
   Object &Pyramid = *(theScene["pyramid"]);
-  Pyramid.Animation( animationTest );
-  Pyramid["moon"]->Animation( simpleRotateAnim );
+  Pyramid.animation( animationTest );
+  Pyramid["moon"]->animation( simpleRotateAnim );
 
   Object &Heavy = *(theScene["heavy"]);
   Object &Medic = *(Heavy["medic"]);
   Object &Spy   = *(Medic["spy"]);
-  Heavy.Animation( simpleRotateAnim );
-  Medic.Animation( simpleRotateY );
-  Spy.Animation( simpleRotateY );
+  Heavy.animation( simpleRotateAnim );
+  Medic.animation( simpleRotateY );
+  Spy.animation( simpleRotateY );
 
-  Terrain.Animation( TerrainGenerationAnimation );
+  Terrain.animation( TerrainGenerationAnimation );
 
 #ifdef WII
   if (usingWii) {
@@ -479,7 +477,7 @@ void menufunc( int value ) {
   switch (value) {
   case 0:
     landGen( (*theScene)["terrain"], 12, 40.0 );
-    (*theScene)["terrain"]->Buffer();
+    (*theScene)["terrain"]->buffer();
     break;
   case 1:
     EN->flip( "fixed_yaw" );

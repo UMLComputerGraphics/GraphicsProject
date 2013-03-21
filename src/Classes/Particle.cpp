@@ -1,3 +1,10 @@
+/**
+ * @file Particle.cpp
+ * @author FIXME
+ * @authors FIXME
+ * @date 2013-03-15
+ * @brief FIXME: Needs documentation from NVV/CC.
+ */
 #include <string>
 #include <SOIL.h>
 #include <stdexcept>
@@ -11,7 +18,6 @@
 #include "Timer.hpp"
 #include "vec.hpp"
 
-
 using Angel::vec4;
 using Angel::mat4;
 
@@ -23,9 +29,8 @@ Particle::Particle( vec4 position, float scale, float lifeSpan )
 }
 
 // Destructor(s)
-Particle::~Particle()
-{
-
+Particle::~Particle() {
+  
 }
 
 // Setters (Will we need getters? Probably not)
@@ -54,27 +59,19 @@ Particle::setColor( vec4 newColor )
   color = newColor;
 }
 
-void 
-Particle::setLifespan( float newLifespan )
-{
+void Particle::setLifespan( float newLifespan ) {
   lifespan = newLifespan;
 }
 
-void
-Particle::setPos( vec4 newPos )
-{
+void Particle::setPos( vec4 newPos ) {
   mPos = newPos;
 }
 
-void
-Particle::setScale( vec3 newScale )
-{
+void Particle::setScale( vec3 newScale ) {
   mScale = newScale;
 }
 
-void
-Particle::setVel( vec3 newVel )
-{
+void Particle::setVel( vec3 newVel ) {
   mVel = newVel;
 }
 

@@ -161,4 +161,9 @@ namespace Angel {
 
 }  // namespace Angel
 
+/** Simple alias of Angel::vec4 to emphasize semantic meaning. */
+typedef Angel::vec4 color4;
+/** Simple alias of Angel::vec4 to emphasize semantic meaning. */
+typedef Angel::vec4 point4;
+
 #endif // __ANGEL_VEC_H__

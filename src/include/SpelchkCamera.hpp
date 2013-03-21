@@ -13,7 +13,7 @@
 #include "vec.hpp"
 using namespace Angel;
 
-class Camera2 {
+class SpelchkCamera {
   private:
     int projectionType;
 
@@ -47,8 +47,8 @@ class Camera2 {
     void calculateTranslationVector();
 
   public:
-    Camera2(vec4 initialTranslationVector);
-    virtual ~Camera2();
+    SpelchkCamera(vec4 initialTranslationVector);
+    virtual ~SpelchkCamera();
 
     mat4 getProjectionMatrix();
     mat4 getModelViewMatrix();

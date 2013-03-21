@@ -52,13 +52,13 @@ void init()
 			      "shaders/gParticle.glsl",
 			      "shaders/fParticle.glsl");
 
-  camList->Shader( shader );
+  camList->shader( shader );
   camList->addCamera( "Camera1" );
   camList->next();
   camList->active()->changePerspective( Camera::IDENTITY );
 
   Object *particleSystem = new ParticleSystem( 5, "ParticleSystem", shader );
-  rootScene->InsertObject( particleSystem );
+  rootScene->insertObject( particleSystem );
 
   // Generic OpenGL setup: Enable the depth buffer and set a nice background color.
   glEnable( GL_DEPTH_TEST );
@@ -68,7 +68,7 @@ void init()
 
 void cleanup( void ) 
 {
-  Engine::instance()->rootScene()->DestroyObject();
+  //Engine::instance()->rootScene()->DestroyObject();
 }
 
 //--------------------------------------------------------------------

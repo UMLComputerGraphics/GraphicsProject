@@ -28,6 +28,7 @@
 #include "model.hpp"
 #include "InitShader.hpp"
 #include "glut_callbacks.h"
+#include "ObjLoader.hpp"
 
 // Initialization: load and compile shaders, initialize camera(s), load models.
 void init() {
@@ -40,51 +41,51 @@ void init() {
   GLuint gShader = Angel::InitShader( "shaders/vmorph.glsl", "shaders/fmorph.glsl" );
 
   // Let the other objects know which shader to use by default.
-  rootScene->Shader( gShader );
-  primScreen->_camList.Shader( gShader );
+  rootScene->shader( gShader );
+  primScreen->_camList.shader( gShader );
 
   // We start with no cameras, by default. Add one and set it "active" by using next().
   primScreen->_camList.addCamera( "Camera1" );
   primScreen->_camList.next();
 
   // Create an object and add it to the scene with the name "bottle".
-  Object *bottle = rootScene->AddObject( "bottle" );
+  Object *bottle = rootScene->addObject( "bottle" );
 
   // Use the object loader to actually fill out the vertices and-so-on of the bottle.
-  loadModelFromFile( bottle, "../models/bottle-b.obj" );
+  ObjLoader::loadModelFromFile( bottle, "../models/bottle-b.obj" );
 
   // Objects has-a pointer to an object which is their "morph target."
   // they are created and buffered as follows:
 
   bottle->genMorphTarget( gShader ) ; // this makes a new object and links it to the source object. it returns the addr of the new obj..
-  Object *bottleMorphTarget = bottle->getMorphTargetPtr() ; // we can get the addr of the morph object like this, also.
-  loadModelFromFile( bottleMorphTarget, "../models/bottle-a.obj" ); // with this model, we can use all the preexisting Object class functionality
+  Object *bottleMorphTarget = bottle->morphTarget() ; // we can get the addr of the morph object like this, also.
+  ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle-a.obj" ); // with this model, we can use all the preexisting Object class functionality
   //loadModelFromFile( bottle->getMorphTargetPtr(), "../models/bottle-b.obj" ); // with this model, we can use all the preexisting Object class functionality
 
-  printf("Number Vertices: %d\n",bottle->getNumberPoints());
-  printf("Number Vertices: %d\n",bottleMorphTarget->getNumberPoints());
-  printf("Colors: %lu\n",bottle->colors.size());
-  printf("Normals: %lu\n",bottle->normals.size());
-  printf("Indices: %lu\n",bottle->indices.size());
+  printf("Number Vertices: %d\n",bottle->numberOfPoints());
+  printf("Number Vertices: %d\n",bottleMorphTarget->numberOfPoints());
+  printf("Colors: %lu\n",bottle->_colors.size());
+  printf("Normals: %lu\n",bottle->_normals.size());
+  printf("Indices: %lu\n",bottle->_indices.size());
   //makeModelsSameSize(bottle, bottleMorphTarget);
 
-  printf("Number Vertices: %d\n",bottle->getNumberPoints());
-  printf("Number Vertices: %d\n",bottleMorphTarget->getNumberPoints());
+  printf("Number Vertices: %d\n",bottle->numberOfPoints());
+  printf("Number Vertices: %d\n",bottleMorphTarget->numberOfPoints());
 
-  bottle->trans.scale.Set( 0.01 );
-  bottleMorphTarget->trans.scale.Set( 0.01 );
-  bottle->Buffer();
-  bottle->BufferMorphOnly(); // YES THIS IS THE REAL OBJECT, NOT THE TARGET. IT SENDS THE MORPH VERTICES TO THE SHADER, NOT TO THE DRAW LIST TO BE DRAWN!
+  bottle->_trans.scale.Set( 0.01 );
+  bottleMorphTarget->_trans.scale.Set( 0.01 );
+  bottle->buffer();
+  bottle->bufferMorphOnly(); // YES THIS IS THE REAL OBJECT, NOT THE TARGET. IT SENDS THE MORPH VERTICES TO THE SHADER, NOT TO THE DRAW LIST TO BE DRAWN!
 
 
-  // Generic OpenGL setup: Enable the depth buffer and set a nice background color.
+  // Generic OpenGL setup: Enable the depth _buffer and set a nice background color.
   glEnable( GL_DEPTH_TEST );
   glClearColor( 0.3, 0.5, 0.9, 1.0 );
 
 }
 
 void cleanup( void ) {
-  Engine::instance()->rootScene()->DestroyObject();
+  //Engine::instance()->rootScene()->DestroyObject();
 }
 
 //--------------------------------------------------------------------
@@ -102,13 +103,13 @@ void draw( void ) {
 void display( void ) {
   static Cameras *camList = Engine::instance()->cams();
 
-  // Clear the buffer.
+  // Clear the _buffer.
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
   // Tell camList to draw using our 'draw' rendering function.
   camList->view( draw );
 
-  // Swap to the next buffer.
+  // Swap to the next _buffer.
   glutSwapBuffers();
 
 }
@@ -154,7 +155,7 @@ void idle( void ) {
 
   //if ( (timer += 0.05 ) > 360.0 ) timer = 0.0 ;
   //float percent = ( sin(timer) + 1 ) / 2 ;
-  (*rootScene)["bottle"]->setMorphPercentage(percent);
+  (*rootScene)["bottle"]->morphPercentage(percent);
 
   if (DEBUG_MOTION) 
     fprintf( stderr, "Time since last idle: %lu\n", Tick.Delta() );

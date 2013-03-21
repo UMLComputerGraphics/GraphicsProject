@@ -7,16 +7,16 @@
 
 #include "SpelchkCamera.hpp"
 
-Camera2::Camera2(vec4 _initialTranslationVector) {
+SpelchkCamera::SpelchkCamera(vec4 _initialTranslationVector) {
   timeRef = 0;
   initialTranslationVector = _initialTranslationVector;
   reset();
 }
 
-Camera2::~Camera2() {
+SpelchkCamera::~SpelchkCamera() {
 }
 
-void Camera2::reset() {
+void SpelchkCamera::reset() {
   projectionType = 0;
   fovy = 45;
 
@@ -48,7 +48,7 @@ void Camera2::reset() {
   calculateTranslationVector();
 }
 
-mat4 Camera2::getProjectionMatrix() {
+mat4 SpelchkCamera::getProjectionMatrix() {
   switch (projectionType) {
     case 1:
       return Ortho(left, right, bottom, top, zNear, zFar);
@@ -59,23 +59,23 @@ mat4 Camera2::getProjectionMatrix() {
   }
 }
 
-mat4 Camera2::getModelViewMatrix() {
+mat4 SpelchkCamera::getModelViewMatrix() {
   modelViewMatrix = RotateX(xAngle) * RotateY(yAngle) * RotateZ(zAngle) * RotateX(xHeadAngle) * RotateY(yHeadAngle) * Translate(translationVector) * RotateX(-xHeadAngle) * RotateY(-yHeadAngle);
   return modelViewMatrix;
 }
 
-vec4 Camera2::getTranslationVector() {
+vec4 SpelchkCamera::getTranslationVector() {
   return translationVector;
 }
 
-void Camera2::calculateTranslationVector() {
+void SpelchkCamera::calculateTranslationVector() {
   // calculate displacement based on current angles (note rotations done in reverse order and negative to move model in opposite direction)
 
   vec4 calculateDisplacement =  RotateZ(-zAngle) * RotateY(-yAngle) * RotateX(-xAngle) * vec4(xDepth, yDepth, -zDepth, 0.0);
   translationVector = (oldTranslationVector + calculateDisplacement);
 }
 
-void Camera2::moveCamera(float _xDepth, float _yDepth, float _zDepth) {
+void SpelchkCamera::moveCamera(float _xDepth, float _yDepth, float _zDepth) {
   oldTranslationVector = translationVector;
 
   xDepth = _xDepth;
@@ -85,7 +85,7 @@ void Camera2::moveCamera(float _xDepth, float _yDepth, float _zDepth) {
   calculateTranslationVector();
 }
 
-void Camera2::rotateCamera(float _xAngle, float _yAngle, float _zAngle) {
+void SpelchkCamera::rotateCamera(float _xAngle, float _yAngle, float _zAngle) {
   xAngle += _xAngle;
   yAngle += _yAngle;
   zAngle += _zAngle;
@@ -100,29 +100,29 @@ void Camera2::rotateCamera(float _xAngle, float _yAngle, float _zAngle) {
   calculateTranslationVector();
 }
 
-void Camera2::setScreenSize(int width, int height) {
+void SpelchkCamera::setScreenSize(int width, int height) {
   glViewport(0, 0, width, height);
   screenWidth = width;
   screenHeight = height;
   aspect = GLfloat(width) / height;
 }
 
-void Camera2::setProjection(int _projectionType) {
+void SpelchkCamera::setProjection(int _projectionType) {
   projectionType = _projectionType;
 }
 
-void Camera2::setLightMovementRef(GLuint ref)
+void SpelchkCamera::setLightMovementRef(GLuint ref)
 {
 	timeRef = ref;
 
 }
 
-void Camera2::setLightMovementTime(float elapsed)
+void SpelchkCamera::setLightMovementTime(float elapsed)
 {
 	if (timeRef != 0)
 	  glUniform1f(timeRef, elapsed);
 }
-void Camera2::headMovement(int usernum, double x, double y, double z)
+void SpelchkCamera::headMovement(int usernum, double x, double y, double z)
 {
 	//mm to meters and cast to float
 
