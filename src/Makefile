@@ -1,3 +1,5 @@
+SHELL = /usr/bin/env bash
+
 #BUILD EVERYTHING FROM A FOLDER OTHER THAN COMMON OR CLASSES AS AN EXECUTABLE!
 SOURCESRAW=$(filter-out Incomplete/%.cpp Common/%.cpp Classes/%.cpp,$(wildcard */*.cpp))
 SPELLCHKCOMMONRAW=$(wildcard SpelchkCommon/*.cpp)

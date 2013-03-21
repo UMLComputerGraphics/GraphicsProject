@@ -402,8 +402,9 @@ void Object::link( UniformEnum which, const std::string &name ) {
   // Save the link between the Uniform and the Variable _name.
   _uniformMap[which] = name;
   
-  fprintf( stderr, "Linking enum[%u] with %s for object %s\n", which,
-           name.c_str(), this->_name.c_str() );
+  if (DEBUG)
+    fprintf( stderr, "Linking enum[%u] with %s for object %s\n", which,
+	     name.c_str(), this->_name.c_str() );
   
   _handles[which] = glGetUniformLocation( shader(), name.c_str() );
   if ( DEBUG )

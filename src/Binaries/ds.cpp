@@ -75,6 +75,12 @@ void init() {
   
   glEnable( GL_DEPTH_TEST );
   glClearColor( 0, 0, 0, 1.0 );
+
+  int numTextures;
+  glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &numTextures);
+  
+  fprintf( stderr, "Capacity: [%d] global textures.\n", numTextures );
+
 }
 
 /**
