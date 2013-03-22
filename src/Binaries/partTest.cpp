@@ -44,7 +44,8 @@ void init()
 {
 
   GLuint shader;
-  Cameras *camList = Engine::instance()->cams();
+  GLuint testShader;
+  Screen *primScreen = Engine::instance()->mainScreen();
   Scene *rootScene = Engine::instance()->rootScene();
   
   // Load shaders and use the resulting shader program. 
@@ -52,10 +53,21 @@ void init()
 			      "shaders/gParticle.glsl",
 			      "shaders/fParticle.glsl");
 
-  camList->Shader( shader );
-  camList->addCamera( "Camera1" );
-  camList->next();
-  camList->active()->changePerspective( Camera::IDENTITY );
+  testShader = Angel::InitShader("shaders/vterrain.glsl", "shaders/fterrain.glsl");
+
+  rootScene->Shader(testShader);
+  primScreen->_camList.Shader(testShader);
+
+  primScreen->_camList.addCamera( "Camera1" );
+  primScreen->_camList.next();
+  //camList->active()->changePerspective( Camera::IDENTITY );
+
+  Object *testObj = rootScene->AddObject("testObj");
+  loadModelFromFile(testObj, "../models/bottle-a.obj");
+
+  testObj->Buffer();
+  testObj->trans.scale.Set(1);
+  testObj->trans.offset.SetY(5);
 
   Object *particleSystem = new ParticleSystem( 5, "ParticleSystem", shader );
   rootScene->InsertObject( "ParticleSystem", particleSystem );

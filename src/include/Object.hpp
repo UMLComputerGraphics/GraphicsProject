@@ -44,7 +44,7 @@ public:
 
   Object( const std::string &name, GLuint gShader );
   virtual ~Object( void );
-  void Draw( void );
+  virtual void Draw( void );
   virtual void Buffer( void );
   void BufferMorphOnly( void ) ;
   void Mode( GLenum new_node );

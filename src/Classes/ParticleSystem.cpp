@@ -108,6 +108,17 @@ ParticleSystem::Buffer()
   glBindVertexArray(0);
 }
 
+void
+ParticleSystem::Draw()
+{
+  glBindVertexArray(vao);
+
+  glUseProgram(Shader());
+
+  glDrawArrays(draw_mode, 0, numParticles);
+
+  glBindVertexArray(0);
+}
 
 // Other functions
 
@@ -126,4 +137,5 @@ ParticleSystem::rangeRandom( float min, float max )
   float diff = max - min;
   
   return  fmod( (float)random(), diff) + min; 
+
 }

@@ -1,3 +1,5 @@
+#version 120
+
 // attributes
 attribute vec4 vPosition;
 attribute vec4 vColor;
@@ -48,8 +50,6 @@ void main() {
   position.w   =  1.0 ;
 
   gl_Position = P * CTM * OTM * position;
-
-
 
   color.x = vColor.x*(1.0-morphPercentage) + vColorMorph.x*morphPercentage ;
   color.y = vColor.y*(1.0-morphPercentage) + vColorMorph.y*morphPercentage ;

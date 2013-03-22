@@ -51,6 +51,7 @@ public:
   void update();
 
   virtual void Buffer();
+  virtual void Draw();
 
 protected:
 

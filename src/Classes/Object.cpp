@@ -390,6 +390,7 @@ void Object::send( Object::UniformEnum which ) {
     break;
     
   case Object::ObjectCTM:
+    fprintf(stderr, "I am sending a ctm\n");
     glUniformMatrix4fv( handles[Object::ObjectCTM], 1, GL_TRUE,
 			this->trans.OTM() );
     break;
@@ -430,9 +431,15 @@ void Object::Draw( void ) {
     activeCamera->view();
   }  
 
+  // calculating the ctm in case it was change
+  // SHOULD be done only when transformation actually occurs
+  trans.CalcCTM();
+
   send( Object::IsTextured ) ;
   send( Object::ObjectCTM  ) ;
   send( Object::MorphPercentage );
+
+  fprintf(stderr, "drawing: %s\n", name.c_str());
 
   //  this->getMorphPercentage() == -1.0 ? ; : send( Object::MorphPercentage );
 
