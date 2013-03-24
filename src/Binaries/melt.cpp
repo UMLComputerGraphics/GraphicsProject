@@ -286,6 +286,7 @@ void mouseMovement(int x, int y)
 
 int main (int argc, char **argv)
 {
+	Angel::InitInitShader(argv[0]);
     glutInit (&argc, argv);
 	
     glutInitDisplayMode (GLUT_DOUBLE | GLUT_DEPTH); 
