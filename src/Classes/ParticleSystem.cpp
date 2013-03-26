@@ -108,6 +108,26 @@ ParticleSystem::Buffer()
   glBindVertexArray(0);
 }
 
+void
+ParticleSystem::Draw()
+{
+  glBindVertexArray(vao);
+
+  GLint currShader;
+  glGetIntegerv(GL_CURRENT_PROGRAM, &currShader);
+  if( (GLuint)currShader != Shader()) {
+    Camera *activeCamera = Engine::instance()->cams()->active();
+    glUseProgram( Shader() );
+    activeCamera->Shader( Shader() );
+    activeCamera->view();
+  }
+
+  send( Object::CamPos );
+  glDrawArrays( GL_TRIANGLE_STRIP, 0, numParticles );
+
+  glBindVertexArray(0);
+  Scene::Draw();
+}
 
 // Other functions
 

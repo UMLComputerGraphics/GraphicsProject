@@ -45,6 +45,7 @@ Object::Object( const std::string &name, GLuint gShader )
   Link( Object::IsTextured, "fIsTextured" );
   Link( Object::ObjectCTM, "OTM" );
   Link( Object::MorphPercentage, "morphPercentage" );
+  Link( Object::CamPos, "cameraPos" );
 
   //Default to "Not Textured"
   this->isTextured = false;
@@ -382,29 +383,32 @@ void Object::Texture( const char** filename ) {
 
 
 void Object::send( Object::UniformEnum which ) {
-  switch (which) {
+   Camera *cam = Engine::instance()->cams()->active();  
+
+   switch (which) {
     
-  case Object::IsTextured:
-    glUniform1i( handles[Object::IsTextured],
-		 (isTextured) ? 1 : 0 );
-    break;
-    
-  case Object::ObjectCTM:
-    glUniformMatrix4fv( handles[Object::ObjectCTM], 1, GL_TRUE,
-			this->trans.OTM() );
-    break;
-    
-
-  case Object::MorphPercentage:
-    glUniform1f( handles[Object::MorphPercentage],
-		 this->getMorphPercentage() );
-
-    break;
-
-
-  default:
-    throw std::invalid_argument( "Unknown Uniform Handle Enumeration." );
-  }
+   case Object::IsTextured:
+     glUniform1i( handles[Object::IsTextured],
+		  (isTextured) ? 1 : 0 );
+     break;
+     
+   case Object::ObjectCTM:
+     glUniformMatrix4fv( handles[Object::ObjectCTM], 1, GL_TRUE,
+			 this->trans.OTM() );
+     break;
+     
+   case Object::MorphPercentage:
+     glUniform1f( handles[Object::MorphPercentage],
+		  this->getMorphPercentage() );
+     break;
+     
+   case Object::CamPos:
+     glUniform3f( handles[Object::CamPos], cam->x(), cam->y(), cam->z() );
+     break;
+     
+   default:
+     throw std::invalid_argument( "Unknown Uniform Handle Enumeration." );
+   }
 }
 
 void Object::Draw( void ) {

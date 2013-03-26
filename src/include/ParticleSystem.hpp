@@ -6,6 +6,8 @@
 #include "mat.hpp"
 #include "Object.hpp"
 #include "Particle.hpp"
+#include "Camera.hpp"
+#include "Engine.hpp"
 #include "vec.hpp"
 
 using Angel::vec2;
@@ -51,6 +53,7 @@ public:
   void update();
 
   virtual void Buffer();
+  virtual void Draw();
 
 protected:
 
