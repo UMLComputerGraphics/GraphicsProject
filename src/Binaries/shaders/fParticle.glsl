@@ -5,14 +5,9 @@
 uniform sampler2D gColorMap;
 
 vec2 TexCoord; 
-vec4 FragColor;
+varying vec4 fColor;
 
 void main()
 {
-	FragColor = texture2D( gColorMap, TexCoord );
-
-	if (FragColor.r == 0.0 && FragColor.g == 0.0 && FragColor.b == 0.0)
-	{
-	discard;
-	}
+	gl_FragColor = fColor;
 }

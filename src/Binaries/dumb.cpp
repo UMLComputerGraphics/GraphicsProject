@@ -49,30 +49,43 @@ void init()
   Scene *rootScene = Engine::instance()->rootScene();
   
   // Load shaders and use the resulting shader program. 
+  /*shader = Angel::InitShader( "shaders/vterrain.glsl", 
+			      "shaders/gPassThru.glsl",
+			      "shaders/fParticle.glsl");*/
+
+  /*
   shader = Angel::InitShader( "shaders/vParticle.glsl", 
-			      "shaders/gParticle.glsl",
+			      "shaders/gPassThru.glsl",
 			      "shaders/fParticle.glsl");
+  */
 
-  //  testShader = Angel::InitShader("shaders/vterrain.glsl", "shaders/fterrain.glsl");
 
-  rootScene->Shader(shader);
-  primScreen->_camList.Shader(shader);
+
+
+  //testShader = Angel::InitShader("shaders/vterrain.glsl", "shaders/fterrain.glsl");
+
+  testShader = Angel::InitShader("shaders/vParticle.glsl", 
+				 "shaders/gDouble.glsl",
+				 "shaders/fParticle.glsl");
+
+  rootScene->Shader(testShader);
+  primScreen->_camList.Shader(testShader);
 
   primScreen->_camList.addCamera( "Camera1" );
   primScreen->_camList.next();
-  //camList->active()->changePerspective( Camera::IDENTITY );
+  //  primScreen->_camList->active()->changePerspective( Camera::IDENTITY );
 
-  //  Object *testObj = rootScene->AddObject("testObj");
-  //  loadModelFromFile(testObj, "../models/bottle-a.obj");
+  Object *testObj = rootScene->AddObject("testObj");
+  loadModelFromFile(testObj, "../models/bottle-a.obj");
 
-  //  testObj->Buffer();
-  //  testObj->trans.scale.Set(1);
-  //  testObj->trans.offset.SetY(5);
-
+  testObj->Buffer();
+  testObj->trans.scale.Set(1);
+  testObj->trans.offset.SetY(5);
+  /*
   Object *particleSystem = new ParticleSystem( 5, "ParticleSystem", shader );
   rootScene->InsertObject( "ParticleSystem", particleSystem );
   particleSystem->Buffer();
-
+  */
   // Generic OpenGL setup: Enable the depth buffer and set a nice background color.
   glEnable( GL_DEPTH_TEST );
   glClearColor( 0.3, 0.5, 0.9, 1.0 );

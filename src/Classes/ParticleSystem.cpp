@@ -45,7 +45,7 @@ ParticleSystem::addParticles( void )
   if ( numToAdd > 0 )
     for ( int i = 0 ; i < numToAdd ; i++ )
     {
-      Particle *p = new Particle(vec4(0,0,0,1), 1, rangeRandom(minLife, maxLife));
+      Particle *p = new Particle(vec4(0.0, 0.0, 0.0, 1.0), 1, rangeRandom(minLife, maxLife));
       particles.push_back(p);
 
 	 positions[i] = p->getPosition();
@@ -123,7 +123,8 @@ ParticleSystem::Draw()
   }
 
   send( Object::CamPos );
-  glDrawArrays( GL_TRIANGLE_STRIP, 0, numParticles );
+  send( Object::ObjectCTM  ) ;
+  glDrawArrays( GL_POINTS, 0, numParticles );
 
   glBindVertexArray(0);
   Scene::Draw();

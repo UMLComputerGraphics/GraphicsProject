@@ -29,6 +29,7 @@
  * It is normally provided by OpenGL directly.
  * FIXME: This seems hacky!
  */
+
 #ifndef GL_GEOMETRY_SHADER
 #define GL_GEOMETRY_SHADER 0x8DD9
 #endif
@@ -149,8 +150,8 @@ namespace Angel {
       const char* filename;
       GLenum type;
       GLchar* source;
-    } shaders[3] = { { vShaderFile, GL_VERTEX_SHADER, NULL }, {
-        gShaderFile, GL_GEOMETRY_SHADER, NULL },
+    } shaders[3] = { { vShaderFile, GL_VERTEX_SHADER,   NULL }, 
+		     { gShaderFile, GL_GEOMETRY_SHADER, NULL },
                      { fShaderFile, GL_FRAGMENT_SHADER, NULL } };
 
     GLuint program = glCreateProgram();
@@ -190,7 +191,7 @@ namespace Angel {
         //glGetIntegerv( GL_MAX_GEOMETRY_OUTPUT_COMPONENTS, &n );
 
         glProgramParameteriEXT( shader, GL_GEOMETRY_INPUT_TYPE_EXT,
-                                GL_TRIANGLES );
+                                GL_POINTS );
 
         glProgramParameteriEXT( shader, GL_GEOMETRY_OUTPUT_TYPE_EXT,
                                 GL_TRIANGLE_STRIP );
