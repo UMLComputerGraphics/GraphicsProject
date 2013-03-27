@@ -10,3 +10,5 @@ morphlite.o
 morph.o
 terrain.o
 morphlite
+partTest
+melt

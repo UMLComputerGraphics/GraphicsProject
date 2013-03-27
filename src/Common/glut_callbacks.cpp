@@ -152,6 +152,11 @@ void keyboard( unsigned char key, int x, int y ) {
   case 'b':
     cam.changePerspective( Camera::IDENTITY );
     break;
+
+  case 't':
+    fprintf( stderr, "turning on terrain_regen\n" );
+    Engine::instance()->opt( "terrain_regen", true );
+    break;
     
   }
 }

@@ -106,6 +106,13 @@ public:
   Scene( const Scene &copy );
   Scene &operator=( const Scene &copy );
 
+  /**
+   * Register a created object with the scene graph.
+   * @param name The name of the object (For the associative map),
+   * @param obj The Object pointer to add to the scene.
+   */
+  void insertObject( Object *obj );
+
 protected:
   /**
    * For the purposes of rapid propagation of scene-graph changes,
@@ -138,13 +145,6 @@ protected:
    * @param obj The object to delete.
    */
   void deleteObject( Object *obj );
-
-  /**
-   * Register a created object with the scene graph.
-   * @param name The name of the object (For the associative map),
-   * @param obj The Object pointer to add to the scene.
-   */
-  void insertObject( const std::string name, Object *obj );
 
 };
 

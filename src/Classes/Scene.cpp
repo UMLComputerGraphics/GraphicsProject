@@ -75,7 +75,9 @@ Object *Scene::addObject(const std::string &objName, GLuint shader) {
         "\tor informing the parent Scene of a default shader to use.") ;
 
   Object *obj = new Object(objName, ((shader) ? shader : _gShader)) ;
-  insertObject(objName, obj) ;
+
+  insertObject(obj) ;
+
   return obj ;
 
 }
@@ -104,15 +106,10 @@ void Scene::popObject(void) {
   deleteObject(*(--_list.end())) ;
 }
 
-
-
-
-void Scene::insertObject(const std::string name, Object *obj) {
-  _list.push_back(obj) ;
-  _map.insert(mapping(name, obj)) ;
+void Scene::insertObject( Object *obj ) {
+  _list.push_back( obj );
+  _map.insert( mapping( obj->name(), obj ) );
 }
-
-
 
 
 /**

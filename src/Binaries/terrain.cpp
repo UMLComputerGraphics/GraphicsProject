@@ -433,6 +433,12 @@ void idle( void ) {
   Medic.animation( simpleRotateY );
   Spy.animation( simpleRotateY );
 
+  if (Engine::instance()->opt( "terrain_regen" )) {
+    fprintf( stderr, "terrain_regen on, turning on switchingTerrain bool\n" );
+    switchingTerrain = true;
+    Engine::instance()->opt( "terrain_regen", false );
+  }
+
   Terrain.animation( TerrainGenerationAnimation );
 
 #ifdef WII

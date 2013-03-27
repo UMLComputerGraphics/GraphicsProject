@@ -23,42 +23,38 @@ using std::string;
 /**
  @author Nick Ver Voort, nicholas_vervoort@student.uml.edu
  @since 23 Feb 2013
-
+ @authors Nick Ver Voort, Chris Compton
+          nicholas_vervoort@student.uml.edu, christopher_compton@student.uml.edu
  @brief TODO: You know you've been bad.
-
  **/
-class Particle : public Object {
-  
+
+class Particle {
+
 public:
-  
-  Particle( vec4 initPos, vec3 initScale, vec3 initVel, float initAlpha,
-            vec4 initColor, float initLifespan, float initSpin,
-            string initTex );
-  virtual ~Particle( void );
 
-  /* Apply all changes to object's transformation */
-  void update();
+  Particle( vec4 position, float scale, float lifeSpan );
+  ~Particle( void ) ;
 
-  void setPos( vec4 newPos );
-  void setScale( vec3 newScale );
-  void setVel( vec3 newVel );
+  void changeVel( vec3 newVel );
 
-  void setAlpha( float newAlpha );
+  float getLifespan( void );
+
+  void setAlpha( float newAlpha );  // changes the alpha level of color
   void setColor( vec4 newColor );
   void setLifespan( float newLifespan );
+  void setPos( vec4 newPos );
+  void setScale( vec3 newScale );
   void setSpin( float newSpin );
-
+  void setVel( vec3 newVel );
   void setTexFile( string newFilename );
 
 private:
   vec4 mPos;
   vec3 mScale;
   vec3 mVel;
-
-  float alpha;
-  vec4 blendColor;
+  vec4  color;
   float lifespan;
-  float spin;
+  //  float spin;
 
   string texFilename;
   

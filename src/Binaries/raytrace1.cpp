@@ -19,6 +19,7 @@ GLuint program;
 
 /** model-view matrix uniform shader variable location **/
 GLuint modelView = -1;
+GLuint dethklok;
 
 GLint vRayPosition = -1;
 /** Handle to uniform that will contain the position of the Camera. **/
@@ -26,10 +27,31 @@ GLint uCameraPosition = -1;
 
 /** Logical camera object. **/
 SpelchkCamera camera( vec4( 0.0, 0.0, 0.0, 0.0 ) );
-/** Spatial coordinate of camera. **/
-vec3 cameraPositionVec = vec3( 0.0, 0.0, 0.0 );
+
+GLint uSphereCenterPoints = -1;
+GLint uSphereRadius = -1;
+GLint uSphereColors = -1;
+GLint uNumOfSpheres = -1;
 
 //----------------------------------------------------------------------------
+
+GLfloat sphereCenterPoints[] = {
+  -1.0, -1.0, -2.0,
+  1.0, -1.0, -2.0,
+  -1.0, 1.0, -2.0,
+  1.0, 1.0, -2.0
+};
+
+GLfloat sphereRadius[] = {
+  0.5, 0.6, 0.7, 0.8
+};
+
+GLfloat sphereColors[] = {
+  1.0, 0.3, 0.3,
+  0.3, 1.0, 0.3,
+  0.3, 0.3, 1.0,
+  1.0, 0.3, 0.3
+};
 
 /**
  * Redraw the scene.
@@ -66,33 +88,32 @@ void customkeyboard( unsigned char key, int x, int y ) {
   case 'Q':
     exit( EXIT_SUCCESS );
     break;
-  case 'w': // move up
-    camera.moveCamera( 0.0, -0.2, 0.0 );
-    cameraPositionVec.y += 0.1;
-    break;
-  case 's': // move down
-    camera.moveCamera( 0.0, 0.2, 0.0 );
-    cameraPositionVec.y -= 0.1;
-    break;
-  case 'a': // move left
-    camera.moveCamera( 0.2, 0.0, 0.0 );
-    cameraPositionVec.x -= 0.1;
-    break;
-  case 'd': // move right
-    camera.moveCamera( -0.2, 0.0, 0.0 );
-    cameraPositionVec.x += 0.1;
-    break;
-  case 'z': //move back
-    camera.moveCamera( 0.0, 0.0, -0.2 );
-    cameraPositionVec.z += 0.1;
-    break;
-  case 'x': //move forward
-    camera.moveCamera( 0.0, 0.0, 0.2 );
-    cameraPositionVec.z -= 0.1;
-    break;
-  case ' ': // reset values to their defaults
-    camera.reset();
-    break;
+    case 'w': // move up
+      camera.moveCamera(0.0, -0.2, 0.0);
+      break;
+    case 's': // move down
+      camera.moveCamera(0.0, 0.2, 0.0);
+      break;
+    case 'a': // move left
+      camera.moveCamera(0.2, 0.0, 0.0);
+      break;
+    case 'd': // move right
+      camera.moveCamera(-0.2, 0.0, 0.0);
+      break;
+    case 'z': //move back
+      camera.moveCamera(0.0,0.0,0.2);
+      break;
+    case 'x': //move forward
+      camera.moveCamera(0.0,0.0,-0.2);
+      break;
+    case '1': //move somewhere
+      camera.reset();
+      camera.moveCamera(0.0, 0.0, -4.0);
+      //camera.rotateCamera(0.0, 90.0, 0.0);
+      break;
+    case ' ': // reset values to their defaults
+      camera.reset();
+      break;
   }
 }
 
@@ -188,15 +209,27 @@ void motion( int x, int y ) {
 void display( void ) {
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
+  glUniform1f(dethklok, glutGet(GLUT_ELAPSED_TIME));
+
   mat4 mv = camera.getModelViewMatrix();
   glUniformMatrix4fv( modelView, 1, GL_TRUE, mv );
+
+  int numSpheres = 4;
+  glUniform1i(uNumOfSpheres, numSpheres);
+  glUniform3fv(uSphereCenterPoints, numSpheres, sphereCenterPoints);
+  glUniform1fv(uSphereRadius, numSpheres, sphereRadius);
+  glUniform3fv(uSphereColors, numSpheres, sphereColors);
 
   float elapsedTime = glutGet( GLUT_ELAPSED_TIME );
   //printf("%f\n", elapsedTime);
 
-  glUniform3fv( uCameraPosition, 1, cameraPositionVec );
+  GLfloat vertices[] = {
+      1.0,  1.0,
+     -1.0,  1.0,
+      1.0, -1.0,
+     -1.0, -1.0,
+  };
 
-  GLfloat vertices[] = { 1.0, 1.0, -1.0, 1.0, 1.0, -1.0, -1.0, -1.0, };
   GLuint vbo_vertices;
   glGenBuffers( 1, &vbo_vertices );
   glBindBuffer( GL_ARRAY_BUFFER, vbo_vertices );
@@ -240,6 +273,13 @@ void init( void ) {
   vRayPosition = glGetAttribLocation( program, "vRayPosition" );
   uCameraPosition = glGetUniformLocation( program, "uCameraPosition" );
 
+  uNumOfSpheres = glGetUniformLocation(program, "uNumOfSpheres");
+  uSphereCenterPoints = glGetUniformLocation(program, "uSphereCenterPoints");
+  uSphereRadius = glGetUniformLocation(program, "uSphereRadius");
+  uSphereColors = glGetUniformLocation(program, "uSphereColors");
+
+  dethklok = glGetUniformLocation(program, "ftime");
+
   glShadeModel( GL_FLAT );
   glEnable( GL_DEPTH_TEST );
   glClearColor( 0.1, 0.1, 0.1, 1.0 );
@@ -255,7 +295,7 @@ int main( int argc, char **argv ) {
   glutInit( &argc, argv );
 
   glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE ); // set rendering context
-  glutInitWindowSize( 768, 768 );
+  glutInitWindowSize( 512, 512 );
   glutCreateWindow( "Project" ); // title
 
   glewInit(); // set OpenGL state and initialize shaders
