@@ -292,6 +292,7 @@ void init( void ) {
  * @return 0.
  */
 int main( int argc, char **argv ) {
+  Angel::InitInitShader(argv[0]);
   glutInit( &argc, argv );
 
   glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE ); // set rendering context

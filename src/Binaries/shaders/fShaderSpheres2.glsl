@@ -14,7 +14,7 @@ uniform float uSphereRadius[maxNumSphere];
 uniform vec3 uSphereColors[maxNumSphere];
 uniform float ftime;
 
-const float dlight      = 0.05;
+const float dlight      = 0.025;
 float lightness = 0.5;
 
 in vec3 org,dir;
@@ -304,7 +304,7 @@ void main()
 	i.n = i.p = i.color = vec3(0, 0, 0);
 	
 	float eps  = 0.0001;
-	float R = rand(vec2(0,ftime));
+	float R = rand(vec2(-ftime,ftime));
 	float d = floor(R) == round(R) ? dlight : -dlight;
 	lightness += d;
 	if (lightness < 0) lightness = 0;
