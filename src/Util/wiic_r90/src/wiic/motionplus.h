@@ -41,18 +41,19 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-int motion_plus_handshake(struct wiimote_t* wm, byte* data, unsigned short len);
-
-void motion_plus_disconnected(struct motion_plus_t* mp);
-
-void motion_plus_event(struct motion_plus_t* mp, byte* msg);
-
-void wiic_set_mp_threshold(struct wiimote_t* wm, int threshold);
-
-void wiic_set_mp_smooth(struct wiimote_t* wm, int status, float alpha);
-
-void motion_plus_apply_smoothing(struct motion_plus_t* mp);
+  
+  int motion_plus_handshake( struct wiimote_t* wm, byte* data,
+                             unsigned short len );
+  
+  void motion_plus_disconnected( struct motion_plus_t* mp );
+  
+  void motion_plus_event( struct motion_plus_t* mp, byte* msg );
+  
+  void wiic_set_mp_threshold( struct wiimote_t* wm, int threshold );
+  
+  void wiic_set_mp_smooth( struct wiimote_t* wm, int status, float alpha );
+  
+  void motion_plus_apply_smoothing( struct motion_plus_t* mp );
 
 #ifdef __cplusplus
 }

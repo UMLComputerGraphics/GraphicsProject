@@ -1,7 +1,6 @@
 #include "mat.hpp"
 #include "Transformation.hpp"
 #include "platform.h" //OpenGL types.
-
 Transformation::~Transformation( void ) {
   // Nihil. Provided for inheritance only.
 }
@@ -44,7 +43,7 @@ const RotMat &RotMat::RotateZ( GLfloat theta, bool postmult ) {
 const RotMat &RotMat::Adjust( const Angel::mat4 &adjustment, bool postmult ) {
   // If we are post-multiplying, The default,
   // Adjustments, which come "last", must appear first.
-  if (postmult) mat = adjustment * mat;
+  if ( postmult ) mat = adjustment * mat;
   // Otherwise, we are pre-multiplying, and later adjustments
   // really do come last.
   else mat = mat * adjustment;
@@ -88,7 +87,7 @@ const TransMat &TransMat::Delta( const float x, const float y, const float z ) {
   mat[2][3] += z;
   return (*this);
 }
-  
+
 const TransMat &TransMat::Delta( const Angel::vec3 &arg ) {
   return Delta( arg.x, arg.y, arg.z );
 }
@@ -96,19 +95,20 @@ const TransMat &TransMat::Delta( const Angel::vec3 &arg ) {
 /* SCALE */
 
 const ScaleMat &ScaleMat::Set( const float x, const float y, const float z ) {
-
+  
   mat[0][0] = x;
   mat[1][1] = y;
   mat[2][2] = z;
   return (*this);
-
+  
 }
 
 const ScaleMat &ScaleMat::Set( const float pct ) {
   return Set( pct, pct, pct );
 }
 
-const ScaleMat &ScaleMat::Adjust( const float x, const float y, const float z ) {
+const ScaleMat &ScaleMat::Adjust( const float x, const float y,
+                                  const float z ) {
   mat[0][0] *= x;
   mat[1][1] *= y;
   mat[2][2] *= z;

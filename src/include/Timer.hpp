@@ -3,10 +3,10 @@
 
 #include <time.h>
 
-class Timer { 
-
+class Timer {
+  
 public:
-  Timer();  
+  Timer();
   unsigned long Tick();
   unsigned long Tock();
   unsigned long Delta() const;
@@ -20,8 +20,8 @@ private:
   struct timeval _T1;
   struct timeval _T2;
 #endif
-  unsigned long delta;
-  double scale;
+  unsigned long _delta;
+  double _scale;
 };
 
 extern Timer Tick;

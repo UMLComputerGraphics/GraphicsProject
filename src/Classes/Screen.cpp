@@ -4,43 +4,43 @@
 using Angel::vec2;
 
 Screen::Screen( int x, int y ) {
-  this->Size( x, y );
+  this->size( x, y );
 }
 
 Screen::Screen( const vec2 &startSize ) {
-  this->Size( startSize );
+  this->size( startSize );
 }
- 
-void Screen::Size( int x, int y ) {
-  Size(vec2( x, y ));
+
+void Screen::size( int x, int y ) {
+  size( vec2( x, y ) );
 }
-		
-void Screen::Size( const vec2 &newSize ) {
-  size = newSize;
-  center = newSize / 2;
-  camList.Resize( size.x, size.y );
+
+void Screen::size( const vec2 &newSize ) {
+  _size = newSize;
+  _center = newSize / 2;
+  _camList.resize( _size.x, _size.y );
 }
-		
-const vec2 &Screen::Size( void ) {
-  return size;
+
+const vec2 &Screen::size( void ) {
+  return _size;
 }
-		
-int Screen::Width( void ) {
-  return size.x;
+
+int Screen::width( void ) {
+  return _size.x;
 }
-		
-int Screen::Height( void ) {
-  return size.y;
+
+int Screen::height( void ) {
+  return _size.y;
 }
-		
-const vec2 &Screen::Center( void ) {
-  return center;
+
+const vec2 &Screen::center( void ) {
+  return _center;
 }
-			
-int Screen::MidpointX( void ) {
-  return center.x;
+
+int Screen::midpointX( void ) {
+  return _center.x;
 }
-		
-int Screen::MidpointY( void ) {
-  return center.y;
+
+int Screen::midpointY( void ) {
+  return _center.y;
 }

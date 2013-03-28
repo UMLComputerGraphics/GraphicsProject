@@ -139,7 +139,6 @@
 #define GUITAR_HERO_3_BUTTON_STRUM_DOWN	0x4000
 #define GUITAR_HERO_3_BUTTON_ALL		0xFEFF
 
-
 /* wiimote option flags */
 #define WIIC_SMOOTHING				0x01
 #define WIIC_CONTINUOUS				0x04 
@@ -231,13 +230,13 @@ typedef char sbyte;
  *      call to wiiuse_read_data().
  */
 struct wiimote_t;
-typedef void (*wiic_read_cb)(struct wiimote_t* wm, byte* data, unsigned short len);
+typedef void (*wiic_read_cb)( struct wiimote_t* wm, byte* data,
+                              unsigned short len );
 
 /**
  *	@enum aspect_t
  *	@brief Screen aspect ratio.
  */
 typedef enum aspect_t {
-	WIIC_ASPECT_4_3,
-	WIIC_ASPECT_16_9
+  WIIC_ASPECT_4_3, WIIC_ASPECT_16_9
 } aspect_t;

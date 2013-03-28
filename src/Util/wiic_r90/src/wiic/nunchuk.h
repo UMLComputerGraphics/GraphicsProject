@@ -42,12 +42,13 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-int nunchuk_handshake(struct wiimote_t* wm, struct nunchuk_t* nc, byte* data, unsigned short len);
-
-void nunchuk_disconnected(struct nunchuk_t* nc);
-
-void nunchuk_event(struct nunchuk_t* nc, byte* msg);
+  
+  int nunchuk_handshake( struct wiimote_t* wm, struct nunchuk_t* nc, byte* data,
+                         unsigned short len );
+  
+  void nunchuk_disconnected( struct nunchuk_t* nc );
+  
+  void nunchuk_event( struct nunchuk_t* nc, byte* msg );
 
 #ifdef __cplusplus
 }
