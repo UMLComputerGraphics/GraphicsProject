@@ -42,18 +42,18 @@
 #define WIIC_H_INCLUDED
 
 #ifdef __APPLE__
-	/* mac */
-	#include <CoreFoundation/CoreFoundation.h>
-	#include <IOBluetooth/IOBluetoothUserLib.h>
+/* mac */
+#include <CoreFoundation/CoreFoundation.h>
+#include <IOBluetooth/IOBluetoothUserLib.h>
 #else
-	/* nix */
-	#include <bluetooth/bluetooth.h>
+/* nix */
+#include <bluetooth/bluetooth.h>
 #endif
 
 #ifdef WIIC_INTERNAL_H_INCLUDED
-	#define WCONST
+#define WCONST
 #else
-	#define WCONST		const
+#define WCONST		const
 #endif
 
 /*
@@ -72,15 +72,14 @@
 #define WIIC_IMPORT_DECL
 
 #ifdef WIIC_COMPILE_LIB
-	#define WIIC_EXPORT WIIC_EXPORT_DECL
+#define WIIC_EXPORT WIIC_EXPORT_DECL
 #else
-	#define WIIC_EXPORT WIIC_IMPORT_DECL
+#define WIIC_EXPORT WIIC_IMPORT_DECL
 #endif
 
 #include "wiic_macros.h"
 #include "wiic_structs.h"
 #include "wiic_functions.h"
-
 
 #endif /* WIIC_H_INCLUDED */
 

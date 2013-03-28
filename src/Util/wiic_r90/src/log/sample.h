@@ -12,22 +12,32 @@
 
 using namespace std;
 
-class Sample
-{
+class Sample {
 public:
-	Sample() : relTimestamp(0) { }
-	~Sample() {}
-	virtual void save(ofstream& out) =0;
-	
-	inline void setLogType(int l) { logType = l; }
-	inline int getLogType() const { return logType; }
-	inline void setTimestampFromGestureStart(unsigned long t) { relTimestamp = t; }
-	inline unsigned long getTimestampFromGestureStart() const { return relTimestamp; }
-	
-protected:	
+  Sample() :
+      relTimestamp( 0 ) {
+  }
+  ~Sample() {
+  }
+  virtual void save( ofstream& out ) =0;
 
-	unsigned long relTimestamp; // msec (from the beginning of the gesture)
-	int logType;
+  inline void setLogType( int l ) {
+    logType = l;
+  }
+  inline int getLogType() const {
+    return logType;
+  }
+  inline void setTimestampFromGestureStart( unsigned long t ) {
+    relTimestamp = t;
+  }
+  inline unsigned long getTimestampFromGestureStart() const {
+    return relTimestamp;
+  }
+  
+protected:
+  
+  unsigned long relTimestamp; // msec (from the beginning of the gesture)
+  int logType;
 };
 
 #endif

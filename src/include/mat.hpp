@@ -203,7 +203,7 @@ namespace Angel {
   //  Helpful Matrix Methods
   /************************************************************************/
 
-#define Error( str ) do {				\
+#define ERROR( str ) do {				\
     std::cerr << "[" __FILE__ ":" << __LINE__ << "] "	\
 	      << str << std::endl; } while(0)
   

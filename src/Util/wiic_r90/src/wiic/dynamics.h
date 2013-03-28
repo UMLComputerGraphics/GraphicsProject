@@ -46,11 +46,12 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-void calculate_orientation(struct vec3f_t* in, struct ang3f_t* out);
-void calculate_gforce(struct accel_t* ac, struct vec3b_t* accel, struct gforce_t* gforce, int smooth);
-void calc_joystick_state(struct joystick_t* js, float x, float y);
-void apply_smoothing(struct gforce_t* gforce, float alpha);
+  
+  void calculate_orientation( struct vec3f_t* in, struct ang3f_t* out );
+  void calculate_gforce( struct accel_t* ac, struct vec3b_t* accel,
+                         struct gforce_t* gforce, int smooth );
+  void calc_joystick_state( struct joystick_t* js, float x, float y );
+  void apply_smoothing( struct gforce_t* gforce, float alpha );
 
 #ifdef __cplusplus
 }

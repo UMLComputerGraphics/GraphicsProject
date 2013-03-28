@@ -51,9 +51,9 @@
 #define WIIC_INFO(fmt, ...)		fprintf(stderr, "[INFO] " fmt "\n", ##__VA_ARGS__)
 
 #ifdef WITH_WIIC_DEBUG
-	#define WIIC_DEBUG(fmt, ...)	fprintf(stderr, "[DEBUG] " __FILE__ ":%i: " fmt "\n", __LINE__, ##__VA_ARGS__)
+#define WIIC_DEBUG(fmt, ...)	fprintf(stderr, "[DEBUG] " __FILE__ ":%i: " fmt "\n", __LINE__, ##__VA_ARGS__)
 #else
-	#define WIIC_DEBUG(fmt, ...)
+#define WIIC_DEBUG(fmt, ...)
 #endif
 
 /* Convert between radians and degrees */

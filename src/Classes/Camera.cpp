@@ -184,15 +184,15 @@ void Camera::adjustRotation( const mat4 &adjustment, const bool &fixed ) {
 #define ROTATE_OFFSET(V) (V * _ctm.orbit.Matrix())
 
 void Camera::sway( const float &by ) {
-  dPos( ROTATE_OFFSET(vec4(by,0,0,0)));
+  dPos( ROTATE_OFFSET(vec4(by,0,0,0)) );
 }
 
 void Camera::surge( const float &by ) {
-  dPos( ROTATE_OFFSET(vec4(0,0,-by,0)));
+  dPos( ROTATE_OFFSET(vec4(0,0,-by,0)) );
 }
 
 void Camera::heave( const float &by ) {
-  dPos( ROTATE_OFFSET(vec4(0,by,0,0)));
+  dPos( ROTATE_OFFSET(vec4(0,by,0,0)) );
 }
 
 void Camera::pitch( const float &by, const bool &fixed ) {
@@ -245,7 +245,7 @@ void Camera::accel( const vec3 &raw_accel ) {
   float Scale = (_maxAccel / SQRT3) * (1 - POW5(_speed_cap)) * (Tick.Scale());
   vec3 accel = raw_accel * Scale;
   
-  if ( DEBUG_MOTION) {
+  if ( DEBUG_MOTION ) {
     fprintf( stderr, "Accel(); raw_accel = (%f,%f,%f)\n", raw_accel.x,
              raw_accel.y, raw_accel.z );
     fprintf(
@@ -264,7 +264,7 @@ void Camera::accel( const vec3 &raw_accel ) {
   //speed and speed_cap must now be recalculated.
   _speed_cap = (_speed = length( _velocity )) / _maxSpeed;
   
-  if ( DEBUG_MOTION)
+  if ( DEBUG_MOTION )
     fprintf( stderr, "Applied Acceleration to Velocity, Is now: (%f,%f,%f)\n",
              _velocity.x, _velocity.y, _velocity.z );
 }
@@ -298,7 +298,7 @@ void Camera::idle( void ) {
     float UnitScale = (1.0 / 20000.0);
     float Scale = Tick.Scale() * UnitScale;
     
-    if ( DEBUG_MOTION)
+    if ( DEBUG_MOTION )
       fprintf( stderr, "Applying Translation: + (%f,%f,%f)\n",
                _velocity.x * Scale, _velocity.y * Scale, _velocity.z * Scale );
     
@@ -308,7 +308,7 @@ void Camera::idle( void ) {
     
     // Friction Calculations
     if ( _speed < (_frictionMagnitude * Tick.Scale()) ) {
-      if ( DEBUG_MOTION)
+      if ( DEBUG_MOTION )
         fprintf( stderr, "Friction has stopped all movement.\n" );
       _velocity = vec3( 0, 0, 0 );
       _speed = 0;
@@ -321,7 +321,7 @@ void Camera::idle( void ) {
       frictionVec = frictionVec / (_speed / _frictionMagnitude);
       frictionVec *= Tick.Scale();
       
-      if ( DEBUG_MOTION)
+      if ( DEBUG_MOTION )
         fprintf( stderr, "Applying friction to Velocity: + (%f,%f,%f)\n",
                  frictionVec.x, frictionVec.y, frictionVec.z );
       _velocity += frictionVec;

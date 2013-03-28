@@ -35,23 +35,13 @@ GLint uNumOfSpheres = -1;
 
 //----------------------------------------------------------------------------
 
-GLfloat sphereCenterPoints[] = {
-  -1.0, -1.0, -2.0,
-  1.0, -1.0, -2.0,
-  -1.0, 1.0, -2.0,
-  1.0, 1.0, -2.0
-};
+GLfloat sphereCenterPoints[] = { -1.0, -1.0, -2.0, 1.0, -1.0, -2.0, -1.0, 1.0,
+                                 -2.0, 1.0, 1.0, -2.0 };
 
-GLfloat sphereRadius[] = {
-  0.5, 0.6, 0.7, 0.8
-};
+GLfloat sphereRadius[] = { 0.5, 0.6, 0.7, 0.8 };
 
-GLfloat sphereColors[] = {
-  1.0, 0.3, 0.3,
-  0.3, 1.0, 0.3,
-  0.3, 0.3, 1.0,
-  1.0, 0.3, 0.3
-};
+GLfloat sphereColors[] = { 1.0, 0.3, 0.3, 0.3, 1.0, 0.3, 0.3, 0.3, 1.0, 1.0,
+                           0.3, 0.3 };
 
 /**
  * Redraw the scene.
@@ -88,32 +78,32 @@ void customkeyboard( unsigned char key, int x, int y ) {
   case 'Q':
     exit( EXIT_SUCCESS );
     break;
-    case 'w': // move up
-      camera.moveCamera(0.0, -0.2, 0.0);
-      break;
-    case 's': // move down
-      camera.moveCamera(0.0, 0.2, 0.0);
-      break;
-    case 'a': // move left
-      camera.moveCamera(0.2, 0.0, 0.0);
-      break;
-    case 'd': // move right
-      camera.moveCamera(-0.2, 0.0, 0.0);
-      break;
-    case 'z': //move back
-      camera.moveCamera(0.0,0.0,0.2);
-      break;
-    case 'x': //move forward
-      camera.moveCamera(0.0,0.0,-0.2);
-      break;
-    case '1': //move somewhere
-      camera.reset();
-      camera.moveCamera(0.0, 0.0, -4.0);
-      //camera.rotateCamera(0.0, 90.0, 0.0);
-      break;
-    case ' ': // reset values to their defaults
-      camera.reset();
-      break;
+  case 'w': // move up
+    camera.moveCamera( 0.0, -0.2, 0.0 );
+    break;
+  case 's': // move down
+    camera.moveCamera( 0.0, 0.2, 0.0 );
+    break;
+  case 'a': // move left
+    camera.moveCamera( 0.2, 0.0, 0.0 );
+    break;
+  case 'd': // move right
+    camera.moveCamera( -0.2, 0.0, 0.0 );
+    break;
+  case 'z': //move back
+    camera.moveCamera( 0.0, 0.0, 0.2 );
+    break;
+  case 'x': //move forward
+    camera.moveCamera( 0.0, 0.0, -0.2 );
+    break;
+  case '1': //move somewhere
+    camera.reset();
+    camera.moveCamera( 0.0, 0.0, -4.0 );
+    //camera.rotateCamera(0.0, 90.0, 0.0);
+    break;
+  case ' ': // reset values to their defaults
+    camera.reset();
+    break;
   }
 }
 
@@ -178,27 +168,27 @@ float translationFactor = 5.0;
  * @param y Y coordinate of the mouse.
  */
 void motion( int x, int y ) {
-
+  
   float xAngle = 0, yAngle = 0;
   float temp;
   float depth;
-
+  
   if ( leftDown ) {
     temp = (x - mouseDownX);
     mouseDownX = x;
     yAngle = (temp * rotationFactor / screenWidth);
-
+    
     temp = (y - mouseDownY);
     mouseDownY = y;
     xAngle = (temp * rotationFactor / screenHeight);
-
+    
     camera.rotateCamera( xAngle, yAngle, 0.0 );
-
+    
   } else if ( rightDown ) {
     temp = (y - mouseDownY);
     mouseDownY = y;
     depth = (temp * translationFactor / screenHeight);
-
+    
     camera.moveCamera( 0.0, 0.0, depth );
   }
 }
@@ -208,34 +198,29 @@ void motion( int x, int y ) {
  */
 void display( void ) {
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-
-  glUniform1f(dethklok, glutGet(GLUT_ELAPSED_TIME));
-
+  
+  glUniform1f( dethklok, glutGet( GLUT_ELAPSED_TIME ) );
+  
   mat4 mv = camera.getModelViewMatrix();
   glUniformMatrix4fv( modelView, 1, GL_TRUE, mv );
-
+  
   int numSpheres = 4;
-  glUniform1i(uNumOfSpheres, numSpheres);
-  glUniform3fv(uSphereCenterPoints, numSpheres, sphereCenterPoints);
-  glUniform1fv(uSphereRadius, numSpheres, sphereRadius);
-  glUniform3fv(uSphereColors, numSpheres, sphereColors);
-
+  glUniform1i( uNumOfSpheres, numSpheres );
+  glUniform3fv( uSphereCenterPoints, numSpheres, sphereCenterPoints );
+  glUniform1fv( uSphereRadius, numSpheres, sphereRadius );
+  glUniform3fv( uSphereColors, numSpheres, sphereColors );
+  
   float elapsedTime = glutGet( GLUT_ELAPSED_TIME );
   //printf("%f\n", elapsedTime);
-
-  GLfloat vertices[] = {
-      1.0,  1.0,
-     -1.0,  1.0,
-      1.0, -1.0,
-     -1.0, -1.0,
-  };
-
+  
+  GLfloat vertices[] = { 1.0, 1.0, -1.0, 1.0, 1.0, -1.0, -1.0, -1.0, };
+  
   GLuint vbo_vertices;
   glGenBuffers( 1, &vbo_vertices );
   glBindBuffer( GL_ARRAY_BUFFER, vbo_vertices );
   glBufferData( GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW );
   glBindBuffer( GL_ARRAY_BUFFER, 0 );
-
+  
   glBindBuffer( GL_ARRAY_BUFFER, vbo_vertices );
   glEnableVertexAttribArray( vRayPosition );
   glVertexAttribPointer( vRayPosition,  // attribute
@@ -245,11 +230,11 @@ void display( void ) {
       0,                  // no extra data between each position
       0                   // offset of first element
       );
-
+  
   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
+  
   glutSwapBuffers();
-
+  
   glDisableVertexAttribArray( vRayPosition );
 }
 
@@ -257,29 +242,29 @@ void display( void ) {
  * Initialization of objects and OpenGL state.
  */
 void init( void ) {
-
+  
   // Create a vertex array object
   GLuint vao;
   glGenVertexArrays( 1, &vao );
   glBindVertexArray( vao );
-
+  
   // Load shaders and use the resulting shader program
   GLuint program = Angel::InitShader( "shaders/vShaderOrgAndDir.glsl",
                                       "shaders/fShaderSpheres2.glsl" );
   glUseProgram( program );
-
+  
   modelView = glGetUniformLocation( program, "ModelView" );
-
+  
   vRayPosition = glGetAttribLocation( program, "vRayPosition" );
   uCameraPosition = glGetUniformLocation( program, "uCameraPosition" );
-
-  uNumOfSpheres = glGetUniformLocation(program, "uNumOfSpheres");
-  uSphereCenterPoints = glGetUniformLocation(program, "uSphereCenterPoints");
-  uSphereRadius = glGetUniformLocation(program, "uSphereRadius");
-  uSphereColors = glGetUniformLocation(program, "uSphereColors");
-
-  dethklok = glGetUniformLocation(program, "ftime");
-
+  
+  uNumOfSpheres = glGetUniformLocation( program, "uNumOfSpheres" );
+  uSphereCenterPoints = glGetUniformLocation( program, "uSphereCenterPoints" );
+  uSphereRadius = glGetUniformLocation( program, "uSphereRadius" );
+  uSphereColors = glGetUniformLocation( program, "uSphereColors" );
+  
+  dethklok = glGetUniformLocation( program, "ftime" );
+  
   glShadeModel( GL_FLAT );
   glEnable( GL_DEPTH_TEST );
   glClearColor( 0.1, 0.1, 0.1, 1.0 );
@@ -292,23 +277,23 @@ void init( void ) {
  * @return 0.
  */
 int main( int argc, char **argv ) {
-  Angel::InitInitShader(argv[0]);
+  Angel::InitInitShader( argv[0] );
   glutInit( &argc, argv );
-
+  
   glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE ); // set rendering context
   glutInitWindowSize( 512, 512 );
   glutCreateWindow( "Project" ); // title
-
+      
   glewInit(); // set OpenGL state and initialize shaders
   init();
-
+  
   glutDisplayFunc( display ); // register callback w/Window System
   glutKeyboardFunc( customkeyboard );
   glutMouseFunc( custommouse );
   glutMotionFunc( motion );
   glutIdleFunc( idle );
   glutReshapeFunc( reshape );
-
+  
   glutMainLoop();
   return 0;
 }

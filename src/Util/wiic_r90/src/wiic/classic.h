@@ -42,12 +42,13 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-int classic_ctrl_handshake(struct wiimote_t* wm, struct classic_ctrl_t* cc, byte* data, unsigned short len);
-
-void classic_ctrl_disconnected(struct classic_ctrl_t* cc);
-
-void classic_ctrl_event(struct classic_ctrl_t* cc, byte* msg);
+  
+  int classic_ctrl_handshake( struct wiimote_t* wm, struct classic_ctrl_t* cc,
+                              byte* data, unsigned short len );
+  
+  void classic_ctrl_disconnected( struct classic_ctrl_t* cc );
+  
+  void classic_ctrl_event( struct classic_ctrl_t* cc, byte* msg );
 
 #ifdef __cplusplus
 }

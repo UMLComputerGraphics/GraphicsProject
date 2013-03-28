@@ -14,62 +14,62 @@
 using namespace Angel;
 
 class SpelchkCamera {
-  private:
-    int projectionType;
+private:
+  int projectionType;
 
-    // Projection transformation parameters
-    GLfloat fovy;  // Field-of-view in Y direction angle (in degrees)
-    GLfloat aspect;       // Viewport aspect ratio
+  // Projection transformation parameters
+  GLfloat fovy;  // Field-of-view in Y direction angle (in degrees)
+  GLfloat aspect;       // Viewport aspect ratio
+  
+  GLfloat left, right;
+  GLfloat bottom, top;
+  GLfloat zNear, zFar;
 
-    GLfloat left, right;
-    GLfloat bottom, top;
-    GLfloat zNear, zFar;
+  GLuint timeRef;
 
-    GLuint timeRef;
+  int screenWidth, screenHeight;
 
-    int screenWidth, screenHeight;
+  GLfloat xDepth, yDepth, zDepth;
+  GLfloat xAngle, yAngle, zAngle;
+  GLfloat xHead, yHead, zHead;
+  float xHeadStart, yHeadStart, zHeadStart;
+  GLfloat xHeadAngle, yHeadAngle, zHeadAngle;
 
-    GLfloat xDepth, yDepth, zDepth;
-    GLfloat xAngle, yAngle, zAngle;
-    GLfloat xHead, yHead, zHead;
-    float xHeadStart, yHeadStart, zHeadStart;
-	GLfloat xHeadAngle, yHeadAngle, zHeadAngle;
+  vec4 initialTranslationVector;
+  vec4 translationVector;
+  vec4 oldTranslationVector;
 
-    vec4 initialTranslationVector;
-    vec4 translationVector;
-    vec4 oldTranslationVector;
+  mat4 modelViewMatrix;
 
-    mat4 modelViewMatrix;
+  int inboundHeadData;
+  vec4 initialHeadPosition;
 
-    int inboundHeadData;
-    vec4 initialHeadPosition;
+  void calculateTranslationVector();
 
-    void calculateTranslationVector();
+public:
+  SpelchkCamera( vec4 initialTranslationVector );
+  virtual ~SpelchkCamera();
 
-  public:
-    SpelchkCamera(vec4 initialTranslationVector);
-    virtual ~SpelchkCamera();
+  mat4 getProjectionMatrix();
+  mat4 getModelViewMatrix();
+  vec4 getTranslationVector();
 
-    mat4 getProjectionMatrix();
-    mat4 getModelViewMatrix();
-    vec4 getTranslationVector();
+  // Displaces camera from its current location
+  void moveCamera( float xDepth, float yDepth, float zDepth );
 
-    // Displaces camera from its current location
-    void moveCamera(float xDepth, float yDepth, float zDepth);
+  // Rotate camera from its current orientation
+  void rotateCamera( float xAngle, float yAngle, float zAngle );
 
-    // Rotate camera from its current orientation
-    void rotateCamera(float xAngle, float yAngle, float zAngle);
+  void setScreenSize( int width, int height );
+  void setProjection( int projectionType );
 
-    void setScreenSize(int width, int height);
-    void setProjection(int projectionType);
+  void reset();
 
-    void reset();
+  void setLightMovementRef( GLuint ref );
+  void setLightMovementTime( float elapsed );
 
-    void setLightMovementRef(GLuint ref);
-    void setLightMovementTime(float elapsed);
-
-    void getReadyForZero(int usernum);
-    void headMovement(int usernum, double x, double y, double z);
+  void getReadyForZero( int usernum );
+  void headMovement( int usernum, double x, double y, double z );
 };
 
 #endif /* CAMERA_H_ */

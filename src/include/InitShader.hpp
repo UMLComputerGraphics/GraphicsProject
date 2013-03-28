@@ -18,8 +18,8 @@ namespace Angel {
    *
    * @return The relative path from the working directory to the directory containing shaders folder
    */
-  const char* InitInitShader(const char* binloc);
-
+  const char* InitInitShader( const char* binloc );
+  
   /**
    * InitShader takes two shader sourcefiles and compiles them into a
    * shader program.

@@ -152,7 +152,7 @@ void keyboard( unsigned char key, int x, int y ) {
   case 'b':
     cam.changePerspective( Camera::IDENTITY );
     break;
-
+    
   case 't':
     fprintf( stderr, "turning on terrain_regen\n" );
     Engine::instance()->opt( "terrain_regen", true );
@@ -251,10 +251,10 @@ void mouseroll( int x, int y ) {
   
   static Screen *myScreen = Engine::instance()->mainScreen();
   
-  if ( (x != myScreen->MidpointX()) || (y != myScreen->MidpointY()) ) {
+  if ( (x != myScreen->midpointX()) || (y != myScreen->midpointY()) ) {
     if ( myScreen->_camList.numCameras() > 0 )
-      myScreen->_camList.active()->roll( x - myScreen->MidpointX() );
-    glutWarpPointer( myScreen->MidpointX(), myScreen->MidpointY() );
+      myScreen->_camList.active()->roll( x - myScreen->midpointX() );
+    glutWarpPointer( myScreen->midpointX(), myScreen->midpointY() );
   }
   
 }
@@ -270,9 +270,9 @@ void mouseroll( int x, int y ) {
 void mouselook( int x, int y ) {
   
   static Screen *myScreen = Engine::instance()->mainScreen();
-  if ( (x != myScreen->MidpointX()) || (y != myScreen->MidpointY()) ) {
-    const double dx = ((double) x - myScreen->MidpointX());
-    const double dy = ((double) y - myScreen->MidpointY());
+  if ( (x != myScreen->midpointX()) || (y != myScreen->midpointY()) ) {
+    const double dx = ((double) x - myScreen->midpointX());
+    const double dy = ((double) y - myScreen->midpointY());
     
     if ( (abs( dx ) > 100) || (abs( dy ) > 100) ) return;
     
@@ -282,7 +282,7 @@ void mouselook( int x, int y ) {
           dx, Engine::instance()->opt( "fixed_yaw" ) );
     }
     
-    glutWarpPointer( myScreen->MidpointX(), myScreen->MidpointY() );
+    glutWarpPointer( myScreen->midpointX(), myScreen->midpointY() );
   }
   
 }
@@ -307,9 +307,9 @@ void resizeEvent( int width, int height ) {
   Screen *scr = Engine::instance()->mainScreen();
   
   // Update the size, which propagates changes to cameras and viewports.
-  scr->Size( width, height );
+  scr->size( width, height );
   
   // move the pointer so that there isn't a big jump next time we move it.
-  glutWarpPointer( scr->MidpointX(), scr->MidpointY() );
+  glutWarpPointer( scr->midpointX(), scr->midpointY() );
   
 }

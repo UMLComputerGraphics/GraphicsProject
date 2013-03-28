@@ -12,7 +12,6 @@
 #include <map>
 #include <list>
 #include "platform.h" // for GLuint
-
 /**
  * Forward reference so we can return pointers to Objects,
  * Instead of pointers to scenes.
@@ -29,7 +28,7 @@ class Object;
  * @author John Huston
  */
 class Scene {
-
+  
 public:
   /**
    * Nullary constructor.
@@ -98,7 +97,7 @@ public:
   Object *prev( void );
   Object *active( void ) const;
 
-  void Draw( void );
+  void draw( void );
 
   Object *operator[]( const std::string &objname );
 
@@ -145,7 +144,7 @@ protected:
    * @param obj The object to delete.
    */
   void deleteObject( Object *obj );
-
+  
 };
 
 #endif

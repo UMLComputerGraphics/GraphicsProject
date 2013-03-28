@@ -35,9 +35,9 @@ Cameras::~Cameras( void ) {
 Camera *Cameras::addCamera( const std::string &name ) {
   
   Camera *cam = new Camera( name, _gShader );
-
+  
   Scene::insertObject( cam );
-
+  
   calculateViewports();
   return cam;
   //Set active Camera?
@@ -179,8 +179,8 @@ void Cameras::calculateViewports( void ) {
   // (By extension: drawMaxRows = (numRows-drawMinRows))
   size_t drawMinRows =
       (numCameras % numRows) ?
-          ((int) (numCameras - (numRows * numMaxCols)) / (int) (numMinCols
-              - numMaxCols)) :
+          ((int) (numCameras - (numRows * numMaxCols))
+           / (int) (numMinCols - numMaxCols)) :
           0;
   
   std::list< Object * >::iterator it = _list.begin();

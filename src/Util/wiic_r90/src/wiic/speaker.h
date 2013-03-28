@@ -38,14 +38,13 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-void wiic_set_speaker(struct wiimote_t* wm, int status);
-void wiic_mute_speaker(struct wiimote_t* wm, int status);
-void wiic_sound(struct wiimote_t* wm);
+  
+  void wiic_set_speaker( struct wiimote_t* wm, int status );
+  void wiic_mute_speaker( struct wiimote_t* wm, int status );
+  void wiic_sound( struct wiimote_t* wm );
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif // SPEAKER_H_INCLUDED
-

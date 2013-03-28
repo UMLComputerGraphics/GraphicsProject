@@ -99,8 +99,8 @@ void draw( void ) {
   static Scene *theScene = Engine::instance()->rootScene();
   static Cameras *camList = Engine::instance()->cams();
   
-  theScene->Draw();
-  camList->Draw();
+  theScene->draw();
+  camList->draw();
 }
 
 /**
@@ -141,7 +141,7 @@ void idle( void ) {
   // Update the morph percentage.
   (*rootScene)["bottle"]->morphPercentage( percent );
   
-  if ( DEBUG_MOTION)
+  if ( DEBUG_MOTION )
     fprintf( stderr, "Time since last idle: %lu\n", Tick.Delta() );
   
   // Move all cameras: Apply velocity and acceleration adjustments.
@@ -171,7 +171,7 @@ int main( int argc, char **argv ) {
 #ifdef __APPLE__
   CGSetLocalEventsSuppressionInterval( 0.0 );
 #endif
-  Angel::InitInitShader(argv[0]);
+  Angel::InitInitShader( argv[0] );
   
   glutInit( &argc, argv );
   glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH );
@@ -180,8 +180,7 @@ int main( int argc, char **argv ) {
   glutFullScreen();
   glutSetCursor( GLUT_CURSOR_NONE );
   
-  GLEW_INIT()
-  ;
+  GLEW_INIT();
   init();
   
   /* Register our Callbacks */

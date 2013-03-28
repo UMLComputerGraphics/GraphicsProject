@@ -51,12 +51,14 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-int guitar_hero_3_handshake(struct wiimote_t* wm, struct guitar_hero_3_t* gh3, byte* data, unsigned short len);
-
-void guitar_hero_3_disconnected(struct guitar_hero_3_t* gh3);
-
-void guitar_hero_3_event(struct guitar_hero_3_t* gh3, byte* msg);
+  
+  int guitar_hero_3_handshake( struct wiimote_t* wm,
+                               struct guitar_hero_3_t* gh3, byte* data,
+                               unsigned short len );
+  
+  void guitar_hero_3_disconnected( struct guitar_hero_3_t* gh3 );
+  
+  void guitar_hero_3_event( struct guitar_hero_3_t* gh3, byte* msg );
 
 #ifdef __cplusplus
 }

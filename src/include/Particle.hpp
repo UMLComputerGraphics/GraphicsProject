@@ -24,16 +24,16 @@ using std::string;
  @author Nick Ver Voort, nicholas_vervoort@student.uml.edu
  @since 23 Feb 2013
  @authors Nick Ver Voort, Chris Compton
-          nicholas_vervoort@student.uml.edu, christopher_compton@student.uml.edu
+ nicholas_vervoort@student.uml.edu, christopher_compton@student.uml.edu
  @brief TODO: You know you've been bad.
  **/
 
 class Particle {
-
+  
 public:
-
+  
   Particle( vec4 position, float scale, float lifeSpan );
-  ~Particle( void ) ;
+  ~Particle( void );
 
   void changeVel( vec3 newVel );
 
@@ -52,10 +52,10 @@ private:
   vec4 mPos;
   vec3 mScale;
   vec3 mVel;
-  vec4  color;
+  vec4 color;
   float lifespan;
   //  float spin;
-
+  
   string texFilename;
   
 };

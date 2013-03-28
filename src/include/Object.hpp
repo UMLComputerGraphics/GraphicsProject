@@ -41,16 +41,16 @@ class Object : public Scene {
    *
    * NUM_BUFFERS is a special sentinel enumeration that must always be last.
    */
-  enum bufferType {
-    VERTICES,      //!< VERTICES
-    NORMALS,       //!< NORMALS
-    INDICES,       //!< INDICES
-    COLORS,        //!< COLORS
-    TEXCOORDS,     //!< TEXCOORDS
-    VERTICES_MORPH,     //!< VERTICES_MORPH
+  enum BufferType {
+    VERTICES, //!< VERTICES
+    NORMALS, //!< NORMALS
+    INDICES, //!< INDICES
+    COLORS, //!< COLORS
+    TEXCOORDS, //!< TEXCOORDS
+    VERTICES_MORPH, //!< VERTICES_MORPH
     NORMALS_MORPH, //!< NORMALS_MORPH
-    COLORS_MORPH,  //!< COLORS_MORPH
-    NUM_BUFFERS    //!< NUM_BUFFERS This is a sentinel enumeration.
+    COLORS_MORPH, //!< COLORS_MORPH
+    NUM_BUFFERS //!< NUM_BUFFERS This is a sentinel enumeration.
   };
 
 public:
@@ -77,11 +77,12 @@ public:
    * must be first and last, respectively.
    */
   typedef enum Uniforms {
-    BEGIN,               //!< BEGIN
+    BEGIN, //!< BEGIN
     IS_TEXTURED = BEGIN, //!< IS_TEXTURED
-    OBJECT_CTM,          //!< OBJECT_CTM
-    MORPH_PCT,           //!< MORPH_PCT
-    END                  //!< END
+    OBJECT_CTM, //!< OBJECT_CTM
+    MORPH_PCT, //!< MORPH_PCT
+    TEX_SAMPLER, //!< TEX_SAMPLER
+    END //!< END
   } Uniform;
 
   /**
@@ -182,9 +183,9 @@ public:
 
   /**
    * Scene-graph changes are not automatically applied to children.
-   * For efficiency reasons, you need to call propegate() manually.
+   * For efficiency reasons, you need to call propagate() manually.
    */
-  void propegate( void );
+  void propagate( void );
 
   // Getters ==================================================================
   
@@ -235,6 +236,14 @@ public:
    */
   int numberOfPoints();
 
+  /**
+   * Set the Texture ID / Texture Unit for this Object.
+   * @return None.
+   */
+  void textureID( GLint newTextureID ) {
+    _textureID = newTextureID;
+  }
+  
   // FIXME: Should these members be protected?
   /** vertex buffer. **/
   std::vector< Angel::vec4 > _vertices;
@@ -295,6 +304,11 @@ protected:
    to extend it as needed.
    **/
   std::vector< GLint > _handles;
+
+  /**
+   * The texture unit index this Object uses.
+   */
+  GLint _textureID;
   
 };
 

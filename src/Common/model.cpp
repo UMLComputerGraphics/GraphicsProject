@@ -483,14 +483,15 @@ double landGen( Object *obj, int N, float H ) {
         // so that we can wrap around the array to find the corners
         
         double avg = (HEIGHT_AT( (x-halfSide + S) % S, z )
-            + HEIGHT_AT( x + halfSide % S, z )
-            + HEIGHT_AT( x, z + halfSide % S )
-            + HEIGHT_AT( x, (z - halfSide + S) % S ))
+                      + HEIGHT_AT( x + halfSide % S, z )
+                      + HEIGHT_AT( x, z + halfSide % S )
+                      + HEIGHT_AT( x, (z - halfSide + S) % S ))
                      / 4.0;
         
         vec4 color_avg = (COLOR_AT( (x-halfSide + S) % S, z )
-            + COLOR_AT( x + halfSide % S, z ) + COLOR_AT( x, z + halfSide % S )
-            + COLOR_AT( x, (z - halfSide + S) % S ))
+                          + COLOR_AT( x + halfSide % S, z )
+                          + COLOR_AT( x, z + halfSide % S )
+                          + COLOR_AT( x, (z - halfSide + S) % S ))
                          / 4.0;
         vec4 color_jitter = vec4( jitter( CH ), jitter( CH ), jitter( CH ), 0 );
         
@@ -518,16 +519,16 @@ double landGen( Object *obj, int N, float H ) {
   drawIndex.reserve( 2 * S * S - 2 * S );
   for ( int i = 0, j = 0; i + 1 < S; i++ ) {
     for ( j = 0; j < S; j++ ) {
-      drawIndex.push_back( OFFSET_AT(i,j));
-      drawIndex.push_back( OFFSET_AT(i+1,j));
+      drawIndex.push_back( OFFSET_AT(i,j) );
+      drawIndex.push_back( OFFSET_AT(i+1,j) );
     }
     
     /* If we're out of rows to serialize, give up. */
     if ( ++i == S ) break;
     
     for ( ; j > 0; j-- ) {
-      drawIndex.push_back( OFFSET_AT(i,j-1));
-      drawIndex.push_back( OFFSET_AT(i+1,j-1));
+      drawIndex.push_back( OFFSET_AT(i,j-1) );
+      drawIndex.push_back( OFFSET_AT(i+1,j-1) );
     }
   }
   

@@ -7,7 +7,7 @@
  */
 #include <string>
 #include <vector>
-#include <SOIL.h>
+#include "Texture.hpp"
 #include <stdexcept>
 
 #include "platform.h"
@@ -52,6 +52,7 @@ Object::Object( const std::string &name, GLuint gShader ) {
   link( Object::IS_TEXTURED, "fIsTextured" );
   link( Object::OBJECT_CTM, "OTM" );
   link( Object::MORPH_PCT, "morphPercentage" );
+  link( Object::TEX_SAMPLER, "sampler" );
   
   //Default to "Not Textured"
   this->_isTextured = false;
@@ -169,6 +170,7 @@ void Object::draw( void ) {
   send( Object::IS_TEXTURED );
   send( Object::OBJECT_CTM );
   send( Object::MORPH_PCT );
+  send( Object::TEX_SAMPLER );
   
   //  this->morphPercentage() == -1.0 ? ; : send( Object::MORPH_PCT );
   
@@ -181,7 +183,7 @@ void Object::draw( void ) {
   
   // draw all of our Children.
   // (With clothes on, pervert.)
-  Scene::Draw();
+  Scene::draw();
   
 }
 
@@ -279,42 +281,30 @@ void Object::texture( const char** filename ) {
   Tick.Tock();
   glBindVertexArray( _vao );
   
-  GLuint tex2ddirt = SOIL_load_OGL_texture(
-      filename[0],
-      SOIL_LOAD_AUTO,
-      SOIL_CREATE_NEW_ID,
-      SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB
-      | SOIL_FLAG_COMPRESS_TO_DXT );
+  Texture **textures = (Texture **) malloc( sizeof(Texture*) * 5 );
+  textures[0] = new Texture( GL_TEXTURE_2D );
+  textures[1] = new Texture( GL_TEXTURE_2D );
+  textures[2] = new Texture( GL_TEXTURE_2D );
+  textures[3] = new Texture( GL_TEXTURE_2D );
+  textures[4] = new Texture( GL_TEXTURE_2D );
   
-  GLuint tex2dsand = SOIL_load_OGL_texture(
-      filename[1],
-      SOIL_LOAD_AUTO,
-      SOIL_CREATE_NEW_ID,
-      SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB
-      | SOIL_FLAG_COMPRESS_TO_DXT );
+  textures[0]->load( filename[0] );
+  textures[1]->load( filename[1] );
+  textures[2]->load( filename[2] );
+  textures[3]->load( filename[3] );
+  textures[4]->load( filename[4] );
   
-  GLuint tex2dgrass = SOIL_load_OGL_texture(
-      filename[2],
-      SOIL_LOAD_AUTO,
-      SOIL_CREATE_NEW_ID,
-      SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB
-      | SOIL_FLAG_COMPRESS_TO_DXT );
+  textures[0]->buffer();
+  textures[1]->buffer();
+  textures[2]->buffer();
+  textures[3]->buffer();
+  textures[4]->buffer();
   
-  GLuint tex2drock = SOIL_load_OGL_texture(
-      filename[3],
-      SOIL_LOAD_AUTO,
-      SOIL_CREATE_NEW_ID,
-      SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB
-      | SOIL_FLAG_COMPRESS_TO_DXT );
-  
-  GLuint tex2dsnow = SOIL_load_OGL_texture(
-      filename[4],
-      SOIL_LOAD_AUTO,
-      SOIL_CREATE_NEW_ID,
-      SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB
-      | SOIL_FLAG_COMPRESS_TO_DXT );
-  Tick.Tock();
-  fprintf( stderr, "took %lu usec to load textures.\n", Tick.Delta() );
+  textures[0]->bind( GL_TEXTURE0 );
+  textures[1]->bind( GL_TEXTURE1 );
+  textures[2]->bind( GL_TEXTURE2 );
+  textures[3]->bind( GL_TEXTURE3 );
+  textures[4]->bind( GL_TEXTURE4 );
   
   GLuint gSampler0 = glGetUniformLocation( shader(), "gSampler0" );
   glUniform1i( gSampler0, 0 );
@@ -326,46 +316,6 @@ void Object::texture( const char** filename ) {
   glUniform1i( gSampler3, 3 );
   GLuint gSampler4 = glGetUniformLocation( shader(), "gSampler4" );
   glUniform1i( gSampler4, 4 );
-  
-  glActiveTexture( GL_TEXTURE0 );
-  glBindTexture( GL_TEXTURE_2D, tex2ddirt );
-  glEnable( GL_TEXTURE_2D );
-  glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-  glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-  glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
-  glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
-  
-  glActiveTexture( GL_TEXTURE1 );
-  glBindTexture( GL_TEXTURE_2D, tex2dsand );
-  glEnable( GL_TEXTURE_2D );
-  glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-  glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-  glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
-  glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
-  
-  glActiveTexture( GL_TEXTURE2 );
-  glBindTexture( GL_TEXTURE_2D, tex2dgrass );
-  glEnable( GL_TEXTURE_2D );
-  glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-  glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-  glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
-  glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
-  
-  glActiveTexture( GL_TEXTURE3 );
-  glBindTexture( GL_TEXTURE_2D, tex2drock );
-  glEnable( GL_TEXTURE_2D );
-  glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-  glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-  glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
-  glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
-  
-  glActiveTexture( GL_TEXTURE4 );
-  glBindTexture( GL_TEXTURE_2D, tex2dsnow );
-  glEnable( GL_TEXTURE_2D );
-  glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-  glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-  glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
-  glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
   
   glBindVertexArray( 0 );
   
@@ -402,9 +352,9 @@ void Object::link( UniformEnum which, const std::string &name ) {
   // Save the link between the Uniform and the Variable _name.
   _uniformMap[which] = name;
   
-  if (DEBUG)
+  if ( DEBUG )
     fprintf( stderr, "Linking enum[%u] with %s for object %s\n", which,
-	     name.c_str(), this->_name.c_str() );
+             name.c_str(), this->_name.c_str() );
   
   _handles[which] = glGetUniformLocation( shader(), name.c_str() );
   if ( DEBUG )
@@ -432,6 +382,10 @@ void Object::send( Object::UniformEnum which ) {
   case Object::MORPH_PCT:
     glUniform1f( _handles[Object::MORPH_PCT], this->morphPercentage() );
     
+    break;
+    
+  case Object::TEX_SAMPLER:
+    glUniform1i( _handles[Object::TEX_SAMPLER], _textureID );
     break;
     
   default:
@@ -485,17 +439,17 @@ void Object::shader( GLuint newShader ) {
  */
 void Object::animation( void (*anim_func)( TransCache &arg ) ) {
   anim_func( this->_trans );
-  Object::propegate();
+  Object::propagate();
 }
 
 /**
  * Scene-graph changes are not automatically applied to children.
- * For efficiency reasons, you need to call propegate() manually.
+ * For efficiency reasons, you need to call propagate() manually.
  */
-void Object::propegate( void ) {
+void Object::propagate( void ) {
   
   //fprintf( stderr, "\n" );
-  //fprintf( stderr, "propegate called on %s\n", _name.c_str() );
+  //fprintf( stderr, "propagate called on %s\n", _name.c_str() );
   
   std::list< Object* >::iterator it;
   
@@ -506,8 +460,8 @@ void Object::propegate( void ) {
   //send my OTM as the PTM to all of my children.
   for ( it = _list.begin(); it != _list.end(); ++it ) {
     (*it)->_trans.PTM( this->_trans.OTM() );
-    //Tell that child to update his CTM and propegate.
-    (*it)->propegate();
+    //Tell that child to update his CTM and propagate.
+    (*it)->propagate();
   }
   
   //std::cerr << "{" << _name << "::OTM:" << this->_trans.OTM() << "}\n";
