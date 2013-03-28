@@ -42,11 +42,11 @@
 
 using std::cerr;
 using Angel::vec3;
-vec3 bb_magnitudes;
-wiiPollData PollResults;
+vec3 bbMagnitudes;
+WiiPollData pollResults;
 
-int LED_MAP[4] = { CWiimote::LED_1, CWiimote::LED_2, CWiimote::LED_3,
-                   CWiimote::LED_4 };
+int ::ledMap[4] = { CWiimote::LED_1, CWiimote::LED_2, CWiimote::LED_3,
+                    CWiimote::LED_4 };
 
 bool initWii( CWii &wii ) {
   
@@ -77,7 +77,7 @@ bool initWii( CWii &wii ) {
         ++it, ++index ) {
       CWiimote &wm = *it;
       /*CExpansionDevice &CED = wm.ExpansionDevice;*/
-      wm.SetLEDs( LED_MAP[index] );
+      wm.SetLEDs( ::ledMap[index] );
       ;
     }
     return true; /* We're all good! */
@@ -98,16 +98,16 @@ void HandleEvent( CWiimote &wm ) {
     wm.SetMotionSensingMode( CWiimote::ON );
     wm.IR.SetMode( CIR::ON );
     wm.EnableMotionPlus( CWiimote::ON );
-    PollResults.Reset_Camera = true;
+    pollResults.resetCamera = true;
   }
   
   // if the accelerometer is turned on then print angles
   if ( wm.isUsingACC() ) {
     float pitch, roll, yaw;
     wm.Accelerometer.GetOrientation( pitch, roll, yaw );
-    PollResults.wr_thetas.x = pitch;
-    PollResults.wr_thetas.y = yaw;
-    PollResults.wr_thetas.z = roll;
+    pollResults.wrThetas.x = pitch;
+    pollResults.wrThetas.y = yaw;
+    pollResults.wrThetas.z = roll;
     printf( "%s wiimote roll = %f\n", prefixString, roll );
     printf( "%s wiimote pitch = %f\n", prefixString, pitch );
     printf( "%s wiimote yaw = %f\n", prefixString, yaw );
@@ -118,9 +118,9 @@ void HandleEvent( CWiimote &wm ) {
     float roll_rate, pitch_rate, yaw_rate;
     wm.ExpansionDevice.MotionPlus.Gyroscope.GetRates( roll_rate, pitch_rate,
                                                       yaw_rate );
-    PollResults.wr_rates.x = pitch_rate;
-    PollResults.wr_rates.y = yaw_rate;
-    PollResults.wr_rates.z = roll_rate;
+    pollResults.wrRates.x = pitch_rate;
+    pollResults.wrRates.y = yaw_rate;
+    pollResults.wrRates.z = roll_rate;
     printf( "%s motion plus roll rate = %f\n", prefixString, roll_rate );
     printf( "%s motion plus pitch rate = %f\n", prefixString, pitch_rate );
     printf( "%s motion plus yaw rate = %f\n", prefixString, yaw_rate );
@@ -171,10 +171,10 @@ void HandleEvent( CWiimote &wm ) {
     printf( "%s joystick angle = %f\n", prefixString, angle );
     printf( "%s joystick magnitude = %f\n", prefixString, magnitude );
   }
-  if ( exType == wm.ExpansionDevice.TYPE_BALANCE_BOARD ) WiiHandleBB( wm );
+  if ( exType == wm.ExpansionDevice.TYPE_BALANCE_BOARD ) wiiHandleBB( wm );
 }
 
-void WiiHandleBB( CWiimote &wm ) {
+void wiiHandleBB( CWiimote &wm ) {
   enum bb_sensor {
     TOP_LEFT, TOP_RIGHT, BOT_LEFT, BOT_RIGHT, TOT_WEIGHT
   };
@@ -191,7 +191,7 @@ void WiiHandleBB( CWiimote &wm ) {
     tare_polls = 0;
     for ( size_t i = 0; i < 5; ++i )
       tare_val[i] = 0;
-    PollResults.bb_magnitudes = vec3( 0, 0, 0 );
+    pollResults.bbMagnitudes = vec3( 0, 0, 0 );
   }
   CBalanceBoard &bb = wm.ExpansionDevice.BalanceBoard;
   bb.WeightSensor.GetWeight( raw_val[TOT_WEIGHT], raw_val[TOP_LEFT],
@@ -223,7 +223,7 @@ void WiiHandleBB( CWiimote &wm ) {
     }
     return; /* Return early: do not compute anything with weird half-tared values. */
   } else if ( adj_val[TOT_WEIGHT] < 10 ) {
-    PollResults.bb_magnitudes = vec3( 0, 0, 0 );
+    pollResults.bbMagnitudes = vec3( 0, 0, 0 );
     return;
   }
   
@@ -243,8 +243,8 @@ void WiiHandleBB( CWiimote &wm ) {
   if ( sway_pct < -1 ) sway_pct = -1;
   else if ( sway_pct > 1 ) sway_pct = 1;
   
-  PollResults.bb_magnitudes.y = sway_pct;
-  PollResults.bb_magnitudes.z = surge_pct;
+  pollResults.bbMagnitudes.y = sway_pct;
+  pollResults.bbMagnitudes.z = surge_pct;
   
   if ( 0 ) {
     printf( "Balance Board Raw Weights: {" );
@@ -268,7 +268,7 @@ void enableRemote( CWiimote &wm ) {
   
 }
 
-void CalibrateGyro( CWii &wii ) {
+void calibrateGyro( CWii &wii ) {
   
   std::vector< CWiimote >& wiimotes = wii.GetWiimotes();
   std::vector< CWiimote >::iterator it;
@@ -285,7 +285,7 @@ void CalibrateGyro( CWii &wii ) {
 void pollWii( CWii &wii, bool CalibrateGyro ) {
   
   struct timeval start, end;
-  PollResults.Reset_Camera = false;
+  pollResults.resetCamera = false;
   
   //Poll the wiimotes to get the status like pitch or roll
   if ( 0 ) gettimeofday( &start, NULL );
@@ -304,7 +304,7 @@ void pollWii( CWii &wii, bool CalibrateGyro ) {
       case CWiimote::EVENT_EVENT:
         if ( wiimote.ExpansionDevice.GetType()
              == wiimote.ExpansionDevice.TYPE_BALANCE_BOARD )
-          WiiHandleBB( wiimote );
+          wiiHandleBB( wiimote );
         HandleEvent( wiimote );
         break;
         
@@ -323,9 +323,9 @@ void pollWii( CWii &wii, bool CalibrateGyro ) {
         break;
       case CWiimote::EVENT_BALANCE_BOARD_INSERTED:
         std::cerr << "A balance board has become available.\n";
-        wiimote.SetLEDs( LED_MAP[3] );
+        wiimote.SetLEDs( ::ledMap[3] );
         ;
-        wiimote.SetLEDs( LED_MAP[3] );
+        wiimote.SetLEDs( ::ledMap[3] );
         ;
         break;
       case CWiimote::EVENT_BALANCE_BOARD_REMOVED:

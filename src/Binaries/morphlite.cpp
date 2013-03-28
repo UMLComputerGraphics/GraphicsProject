@@ -55,7 +55,7 @@ void init() {
   ObjLoader::loadModelFromFile( bottle, "../models/bottle-a.obj" );
   
   // Scale the bottle down!
-  bottle->_trans.scale.Set( 0.01 );
+  bottle->_trans._scale.set( 0.01 );
   
   // _buffer the object onto the GPU. This does not happen by default,
   // To allow you to make many changes and _buffer only once,
@@ -73,7 +73,7 @@ void init() {
   
   // with this model, we can use all the preexisting Object class functionality
   ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle-b.obj" );
-  bottleMorphTarget->_trans.scale.Set( 0.01 );
+  bottleMorphTarget->_trans._scale.set( 0.01 );
   
   // YES THIS IS THE REAL OBJECT, NOT THE TARGET. 
   // IT SENDS THE MORPH VERTICES TO THE SHADER, NOT TO THE DRAW LIST TO BE DRAWN!
@@ -131,7 +131,7 @@ void idle( void ) {
   
   // Compute the time since last idle().
   // This is a global, stateful operation.
-  Tick.Tock();
+  tick.tock();
   
   // Animation variables.
   static double timer = 0.0;
@@ -142,7 +142,7 @@ void idle( void ) {
   (*rootScene)["bottle"]->morphPercentage( percent );
   
   if ( DEBUG_MOTION )
-    fprintf( stderr, "Time since last idle: %lu\n", Tick.Delta() );
+    fprintf( stderr, "Time since last idle: %lu\n", tick.delta() );
   
   // Move all cameras: Apply velocity and acceleration adjustments.
   // If no cameras are currently moving, this will do nothing ;)

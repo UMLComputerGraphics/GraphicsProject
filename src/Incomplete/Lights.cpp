@@ -234,7 +234,7 @@ void Lights::sendAll() {
   
 }
 
-void Lights::moveLight( unsigned int u, point4 p ) {
+void Lights::moveLight( unsigned int u, Point4 p ) {
   
   if ( u < theLights.size() ) theLights[u].SetPosition( p );
   

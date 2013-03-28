@@ -44,7 +44,7 @@ void makeModelsSameSize( Object* model1, Object* model2 ) {
       for ( int i = 0; i < 3; i++ ) {
         model2->_vertices.push_back( vec4( model2->_vertices[index + i] ) );
         model2->_normals.push_back( vec3( model2->_normals[index + i] ) );
-        model2->_colors.push_back( color4( model2->_colors[index + i] ) );
+        model2->_colors.push_back( Color4( model2->_colors[index + i] ) );
       }
     }
   } else if ( model1->numberOfPoints() < model2->numberOfPoints() ) {
@@ -54,7 +54,7 @@ void makeModelsSameSize( Object* model1, Object* model2 ) {
       for ( int i = 0; i < 3; i++ ) {
         model1->_vertices.push_back( vec4( model1->_vertices[index + i] ) );
         model1->_normals.push_back( vec3( model1->_normals[index + i] ) );
-        model1->_colors.push_back( color4( model1->_colors[index + i] ) );
+        model1->_colors.push_back( Color4( model1->_colors[index + i] ) );
       }
     }
   } else {

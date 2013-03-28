@@ -32,8 +32,8 @@
 // Type Aliases
 using Angel::vec3;
 using Angel::vec4;
-typedef Angel::vec4 color4;
-typedef Angel::vec4 point4;
+typedef Angel::vec4 Color4;
+typedef Angel::vec4 Point4;
 
 // Global objects for magical camera success
 Screen myScreen( 800, 600 );
@@ -98,7 +98,7 @@ void idle( void ) {
   static Cameras *camList = Engine::instance()->cams();
   
   // Compute the time since last idle().
-  Tick.Tock();
+  tick.tock();
   
   // Move all camera(s).
   camList->idleMotion();

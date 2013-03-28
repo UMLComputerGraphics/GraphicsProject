@@ -15,7 +15,7 @@ public:
    */
   virtual ~Transformation( void );
 
-  const Angel::mat4 &Matrix( void ) const;
+  const Angel::mat4 &matrix( void ) const;
   Angel::mat4 operator*( const Angel::mat4 &rhs ) const;
   Angel::mat4 operator*( const Transformation &rhs ) const;
 
@@ -32,11 +32,11 @@ class RotMat : public Transformation {
   
 public:
   
-  const RotMat &Reset( const Angel::mat4 &NewState );
-  const RotMat &RotateX( const GLfloat theta, bool postmult = true );
-  const RotMat &RotateY( const GLfloat theta, bool postmult = true );
-  const RotMat &RotateZ( const GLfloat theta, bool postmult = true );
-  const RotMat &Adjust( const Angel::mat4 &Adjustment, bool postmult = true );
+  const RotMat &reset( const Angel::mat4 &NewState );
+  const RotMat &rotateX( const GLfloat theta, bool postmult = true );
+  const RotMat &rotateY( const GLfloat theta, bool postmult = true );
+  const RotMat &rotateZ( const GLfloat theta, bool postmult = true );
+  const RotMat &adjust( const Angel::mat4 &Adjustment, bool postmult = true );
   
 };
 
@@ -46,15 +46,15 @@ class TransMat : public Transformation {
   
 public:
   
-  const TransMat &SetX( const float x );
-  const TransMat &SetY( const float y );
-  const TransMat &SetZ( const float z );
+  const TransMat &setX( const float x );
+  const TransMat &setY( const float y );
+  const TransMat &setZ( const float z );
 
-  const TransMat &Set( const float x, const float y, const float z );
-  const TransMat &Set( const Angel::vec3 &arg );
+  const TransMat &set( const float x, const float y, const float z );
+  const TransMat &set( const Angel::vec3 &arg );
 
-  const TransMat &Delta( const float x, const float y, const float z );
-  const TransMat &Delta( const Angel::vec3 &arg );
+  const TransMat &delta( const float x, const float y, const float z );
+  const TransMat &delta( const Angel::vec3 &arg );
   
 };
 
@@ -62,11 +62,11 @@ class ScaleMat : public Transformation {
   
 public:
   
-  const ScaleMat &Set( const float x, const float y, const float z );
-  const ScaleMat &Set( const float pct );
+  const ScaleMat &set( const float x, const float y, const float z );
+  const ScaleMat &set( const float pct );
 
-  const ScaleMat &Adjust( const float x, const float y, const float z );
-  const ScaleMat &Adjust( const float pct );
+  const ScaleMat &adjust( const float x, const float y, const float z );
+  const ScaleMat &adjust( const float pct );
   
 };
 

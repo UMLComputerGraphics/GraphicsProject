@@ -22,7 +22,7 @@ using Angel::mat4;
 using std::vector;
 
 /*
- point4   position( 0.0, 0.0, 0.0, 0.0 ) ;
+ Point4   position( 0.0, 0.0, 0.0, 0.0 ) ;
  vec3    direction( 0.0, 0.0, 0.0 ) ;
  color4 light_ambient(  0.0, 0.0, 0.0, 1.0 );
  color4 light_diffuse(  0.0, 0.0, 0.0, 1.0 );
@@ -84,7 +84,7 @@ public:
   void init_lights( /*const*/GLuint & );   // init the vertex shading variables.
   unsigned int getNumLights() const;// get the number of lights in the container.
   
-  void moveLight( unsigned int u, point4 p );
+  void moveLight( unsigned int u, Point4 p );
 
   bool getComplex() const;
 
@@ -109,7 +109,7 @@ public:
  vec3 LightSource::GetDirection() const {
  return direction ;
  }
- point4 LightSource::GetPoint() const {
+ Point4 LightSource::GetPoint() const {
  return position ;
  }
  */

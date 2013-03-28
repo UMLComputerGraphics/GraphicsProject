@@ -18,7 +18,7 @@ using Angel::vec4;
 using Angel::mat4;
 using std::vector;
 
-typedef vec4 point4, color4;
+typedef vec4 Point4, Color4;
 
 class LightSource {
   
@@ -28,14 +28,14 @@ class LightSource {
 
 private:
   
-  point4 position; //( 0.0, 0.0, 0.0, 0.0 ) ;
+  Point4 position; //( 0.0, 0.0, 0.0, 0.0 ) ;
   vec4 direction; //( 0.0, 0.0, 0.0 ) ;
   
-  color4 light_ambient; //(  0.0, 0.0, 0.0, 1.0 );
-  color4 light_diffuse; //(  0.0, 0.0, 0.0, 1.0 );
-  color4 light_specular; //( 0.0, 0.0, 0.0, 1.0 );
+  Color4 light_ambient; //(  0.0, 0.0, 0.0, 1.0 );
+  Color4 light_diffuse; //(  0.0, 0.0, 0.0, 1.0 );
+  Color4 light_specular; //( 0.0, 0.0, 0.0, 1.0 );
   
-  color4 light_color; //( 0.0, 0.0, 0.0, 1.0 );
+  Color4 light_color; //( 0.0, 0.0, 0.0, 1.0 );
   
   bool complexSwitch;
 
@@ -49,12 +49,12 @@ private:
 public:
   
   LightSource();
-  LightSource( const point4& );
-  LightSource( const point4&, const color4& );
-  LightSource( const point4&, const color4&, const color4&, const color4& );
-  LightSource( const point4&, const vec4&, const color4&, const color4&,
-               const color4& );
-  //LightSource(point4, vec4, color4, color4, color4, unsigned int);
+  LightSource( const Point4& );
+  LightSource( const Point4&, const Color4& );
+  LightSource( const Point4&, const Color4&, const Color4&, const Color4& );
+  LightSource( const Point4&, const vec4&, const Color4&, const Color4&,
+               const Color4& );
+  //LightSource(Point4, vec4, Color4, Color4, Color4, unsigned int);
   
   LightSource( const LightSource& orig );
 
@@ -62,23 +62,23 @@ public:
   ~LightSource();
 
   // Set/Get Member pairs
-  void SetLight_specular( color4 &light_specular );
-  color4 GetLight_specular() const;
+  void SetLight_specular( Color4 &light_specular );
+  Color4 GetLight_specular() const;
 
-  void SetLight_diffuse( color4 &light_diffuse );
-  color4 GetLight_diffuse() const;
+  void SetLight_diffuse( Color4 &light_diffuse );
+  Color4 GetLight_diffuse() const;
 
-  void SetLight_ambient( color4 &light_ambient );
-  color4 GetLight_ambient() const;
+  void SetLight_ambient( Color4 &light_ambient );
+  Color4 GetLight_ambient() const;
 
-  void SetLight_color( color4 &light_color );
-  color4 GetLight_color() const;
+  void SetLight_color( Color4 &light_color );
+  Color4 GetLight_color() const;
 
   void SetDirection( vec4 &direction );
   vec4 GetDirection() const;
 
-  void SetPosition( point4 &z );
-  point4 GetPosition() const;
+  void SetPosition( Point4 &z );
+  Point4 GetPosition() const;
 
   bool GetComplexSwitch() const;
 

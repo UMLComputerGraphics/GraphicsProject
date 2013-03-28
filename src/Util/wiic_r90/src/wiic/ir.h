@@ -55,4 +55,3 @@ extern "C" {
 #endif
 
 #endif // IR_H_INCLUDED
-

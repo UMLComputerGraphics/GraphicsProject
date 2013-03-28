@@ -67,31 +67,31 @@ Camera::~Camera( void ) {
 
 void Camera::x( const float &in, const bool &update ) {
   
-  _ctm.offset.SetX( -in );
-  _trans.offset.SetX( in );
+  _ctm._offset.setX( -in );
+  _trans._offset.setX( in );
   if ( update ) {
-    _ctm.CalcCTM();
-    _trans.CalcCTM();
+    _ctm.calcCTM();
+    _trans.calcCTM();
     send( TRANSLATION );
   }
 }
 
 void Camera::y( const float &in, const bool &update ) {
-  _ctm.offset.SetY( -in );
-  _trans.offset.SetY( in );
+  _ctm._offset.setY( -in );
+  _trans._offset.setY( in );
   if ( update ) {
-    _ctm.CalcCTM();
-    _trans.CalcCTM();
+    _ctm.calcCTM();
+    _trans.calcCTM();
     send( TRANSLATION );
   }
 }
 
 void Camera::z( const float &in, const bool &update ) {
-  _ctm.offset.SetZ( -in );
-  _trans.offset.SetZ( in );
+  _ctm._offset.setZ( -in );
+  _trans._offset.setZ( in );
   if ( update ) {
-    _trans.CalcCTM();
-    _ctm.CalcCTM();
+    _trans.calcCTM();
+    _ctm.calcCTM();
     send( TRANSLATION );
   }
 }
@@ -102,8 +102,8 @@ void Camera::pos( const float &newX, const float &newY, const float &newZ,
   y( newY, false );
   z( newZ, false );
   if ( update ) {
-    _trans.CalcCTM();
-    _ctm.CalcCTM();
+    _trans.calcCTM();
+    _ctm.calcCTM();
     send( TRANSLATION );
   }
 }
@@ -132,8 +132,8 @@ void Camera::dPos( const float &x, const float &y, const float &z ) {
   dX( x, false );
   dY( y, false );
   dZ( z, false );
-  _trans.CalcCTM();
-  _ctm.CalcCTM();
+  _trans.calcCTM();
+  _ctm.calcCTM();
   send( TRANSLATION );
 }
 
@@ -150,7 +150,7 @@ void Camera::adjustRotation( const mat4 &adjustment, const bool &fixed ) {
   /*
    By default, the 'order' bool represents the PREMULT behavior.
    However, if the fixed bool is present, toggle the order bool.
-   This stealthily inserts this rotation "first",
+   This stealthily inserts this _rotation "first",
    So that it is applied before any other rotations.
    */
   bool order = POSTMULT;
@@ -158,7 +158,7 @@ void Camera::adjustRotation( const mat4 &adjustment, const bool &fixed ) {
   
   // Apply our rotational adjustment to the camera.
   // Unintuitively, we need to adjust the Orbit.
-  _ctm.orbit.Adjust( adjustment, order );
+  _ctm._orbit.adjust( adjustment, order );
   
   /*
    Next, our Camera may have a physical object whose
@@ -166,22 +166,22 @@ void Camera::adjustRotation( const mat4 &adjustment, const bool &fixed ) {
    We need to apply the OPPOSITE rotations,
    So Transpose the Adjustment to obtain that.
    */
-  _trans.rotation.Adjust( transpose( adjustment ), !order );
+  _trans._rotation.adjust( transpose( adjustment ), !order );
   
   // Update our state.
-  _trans.CalcCTM();
-  _ctm.CalcCTM();
+  _trans.calcCTM();
+  _ctm.calcCTM();
   send( ROTATION );
 }
 
 /** 
  ROTATE_OFFSET is a macro which is used to normalize
  the six camera motion directions with respect to the
- current camera rotation. It is used in heave(), sway() and surge().
- @param V a vec4 representing the movement offset vector.
+ current camera _rotation. It is used in heave(), sway() and surge().
+ @param V a vec4 representing the movement _offset vector.
  @return A rotated vec4.
  **/
-#define ROTATE_OFFSET(V) (V * _ctm.orbit.Matrix())
+#define ROTATE_OFFSET(V) (V * _ctm._orbit.matrix())
 
 void Camera::sway( const float &by ) {
   dPos( ROTATE_OFFSET(vec4(by,0,0,0)) );
@@ -198,7 +198,7 @@ void Camera::heave( const float &by ) {
 void Camera::pitch( const float &by, const bool &fixed ) {
   /*
    Since negative values are interpreted as pitching down,
-   We leave the input uninverted, because a negative rotation
+   We leave the input uninverted, because a negative _rotation
    about the x axis rotates counter-clockwise (looking right),
    and clockwise (looking left), which achieves the effect of
    looking 'down'.
@@ -209,7 +209,7 @@ void Camera::pitch( const float &by, const bool &fixed ) {
 void Camera::yaw( const float &by, const bool &fixed ) {
   /*
    Since a positive 'by' should represent looking right,
-   we invert the rotation because rotating by a positive value
+   we invert the _rotation because rotating by a positive value
    will rotate right, which simulates looking left.
    Therefore, invert.
    */
@@ -235,14 +235,14 @@ void Camera::accel( const vec3 &raw_accel ) {
    Will approach 0, so that if we are at MAX SPEED,
    our acceleration will be scaled to (nearly) zero.
 
-   (C) (Tick.Scale())
+   (C) (tick.scale())
    This scales the amount of acceleration by an amount [0,1]
    so that if we are drawing many frames, we'll apply less acceleration.
    If we are drawing not so many, we'll apply more.
    This should keep the animation relatively consistent across platforms.
    */
 
-  float Scale = (_maxAccel / SQRT3) * (1 - POW5(_speed_cap)) * (Tick.Scale());
+  float Scale = (_maxAccel / SQRT3) * (1 - POW5(_speed_cap)) * (tick.scale());
   vec3 accel = raw_accel * Scale;
   
   if ( DEBUG_MOTION ) {
@@ -252,7 +252,7 @@ void Camera::accel( const vec3 &raw_accel ) {
         stderr,
         "Accel(); Scale = (MaxAccel/SQRT3) * (1-POW5(speed_cap)) * Tick.Scale()\n" );
     fprintf( stderr, "Accel(); Scale = (%f/%f) * (%f) * (%f)\n", _maxAccel,
-             SQRT3, (1 - POW5(_speed_cap)), Tick.Scale() );
+             SQRT3, (1 - POW5(_speed_cap)), tick.scale() );
     fprintf( stderr, "Accel(); Scale = %f\n", Scale );
     fprintf( stderr, "Accle(); accel = raw_accel * Scale = (%f,%f,%f)\n",
              accel.x, accel.y, accel.z );
@@ -293,10 +293,10 @@ void Camera::idle( void ) {
      which includes instructions from keyboard and the Balance Board. */
     /* 1/20000 is a magic constant which converts our velocity units
      into model units. */
-    /* Tick.Scale() helps keep animation speed consistent
+    /* tick.scale() helps keep animation speed consistent
      between different hardware. */
     float UnitScale = (1.0 / 20000.0);
-    float Scale = Tick.Scale() * UnitScale;
+    float Scale = tick.scale() * UnitScale;
     
     if ( DEBUG_MOTION )
       fprintf( stderr, "Applying Translation: + (%f,%f,%f)\n",
@@ -307,7 +307,7 @@ void Camera::idle( void ) {
     surge( _velocity.z * Scale );
     
     // Friction Calculations
-    if ( _speed < (_frictionMagnitude * Tick.Scale()) ) {
+    if ( _speed < (_frictionMagnitude * tick.scale()) ) {
       if ( DEBUG_MOTION )
         fprintf( stderr, "Friction has stopped all movement.\n" );
       _velocity = vec3( 0, 0, 0 );
@@ -319,7 +319,7 @@ void Camera::idle( void ) {
       /* By dividing friction by (speed/FrictionMagnitude), 
        we guarantee that the magnitude is FrictionMagnitude. */
       frictionVec = frictionVec / (_speed / _frictionMagnitude);
-      frictionVec *= Tick.Scale();
+      frictionVec *= tick.scale();
       
       if ( DEBUG_MOTION )
         fprintf( stderr, "Applying friction to Velocity: + (%f,%f,%f)\n",
@@ -332,15 +332,15 @@ void Camera::idle( void ) {
 }
 
 float Camera::x( void ) const {
-  return -_ctm.offset.Matrix()[0][3];
+  return -_ctm._offset.matrix()[0][3];
 }
 
 float Camera::y( void ) const {
-  return -_ctm.offset.Matrix()[1][3];
+  return -_ctm._offset.matrix()[1][3];
 }
 
 float Camera::z( void ) const {
-  return -_ctm.offset.Matrix()[2][3];
+  return -_ctm._offset.matrix()[2][3];
 }
 
 vec4 Camera::pos( void ) const {
@@ -405,12 +405,12 @@ void Camera::send( Object::UniformEnum which ) {
   switch ( which ) {
   case TRANSLATION:
     if ( _handles[which] != -1 )
-    glUniformMatrix4fv( _handles[which], 1, GL_TRUE, _ctm.offset.Matrix() );
+    glUniformMatrix4fv( _handles[which], 1, GL_TRUE, _ctm._offset.matrix() );
     send( CTM );
     break;
   case ROTATION:
     if ( _handles[which] != -1 )
-    glUniformMatrix4fv( _handles[which], 1, GL_TRUE, _ctm.orbit.Matrix() );
+    glUniformMatrix4fv( _handles[which], 1, GL_TRUE, _ctm._orbit.matrix() );
     send( CTM );
     break;
   case VIEW:
@@ -419,9 +419,9 @@ void Camera::send( Object::UniformEnum which ) {
     send( CTM );
     break;
   case CTM:
-    _ctm.CalcCTM( POSTMULT );
+    _ctm.calcCTM( POSTMULT );
     if ( _handles[which] != -1 )
-    glUniformMatrix4fv( _handles[which], 1, GL_TRUE, _ctm.OTM() );
+    glUniformMatrix4fv( _handles[which], 1, GL_TRUE, _ctm.otm() );
     break;
   default:
     // If we don't know which variable this is,
@@ -445,8 +445,8 @@ void Camera::view( void ) {
 
 void Camera::resetRotation( void ) {
   
-  // The transpose of any rotation is its inverse.
+  // The transpose of any _rotation is its inverse.
   // Thus, this resets the rotational matrix.
-  this->_ctm.orbit.Adjust( transpose( this->_ctm.rotation.Matrix() ) );
+  this->_ctm._orbit.adjust( transpose( this->_ctm._rotation.matrix() ) );
   
 }

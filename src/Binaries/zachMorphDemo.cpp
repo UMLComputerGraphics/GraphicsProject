@@ -73,8 +73,8 @@ void init() {
   printf( "Number Vertices: %d\n", bottle->numberOfPoints() );
   printf( "Number Vertices: %d\n", bottleMorphTarget->numberOfPoints() );
   
-  bottle->_trans.scale.Set( 0.01 );
-  bottleMorphTarget->_trans.scale.Set( 0.01 );
+  bottle->_trans._scale.set( 0.01 );
+  bottleMorphTarget->_trans._scale.set( 0.01 );
   bottle->buffer();
   bottle->bufferMorphOnly();// YES THIS IS THE REAL OBJECT, NOT THE TARGET. IT SENDS THE MORPH VERTICES TO THE SHADER, NOT TO THE DRAW LIST TO BE DRAWN!
   
@@ -116,9 +116,9 @@ void display( void ) {
 
 void simpleRotateAnim( TransCache &obj ) {
   
-  obj.rotation.RotateY( Tick.Scale() * 1.5 );
-  obj.offset.Set( 1.5, 0, 0 );
-  obj.orbit.RotateY( Tick.Scale() * -1.0 );
+  obj._rotation.rotateY( tick.scale() * 1.5 );
+  obj._offset.set( 1.5, 0, 0 );
+  obj._orbit.rotateY( tick.scale() * -1.0 );
   
 }
 
@@ -126,7 +126,7 @@ void idle( void ) {
   
   static Cameras *camList = Engine::instance()->cams();
   static Scene *rootScene = Engine::instance()->rootScene();
-  Tick.Tock();
+  tick.tock();
   
   //zach m  - in order to eventually allow for user specified equations,
   //          we need to think of equations between 0 and 1.
@@ -155,7 +155,7 @@ void idle( void ) {
   (*rootScene)["bottle"]->morphPercentage( percent );
   
   if ( DEBUG_MOTION )
-    fprintf( stderr, "Time since last idle: %lu\n", Tick.Delta() );
+    fprintf( stderr, "Time since last idle: %lu\n", tick.delta() );
   
   // Move all cameras: Apply velocity and acceleration adjustments.
   // If no cameras are currently moving, this will do nothing ;)

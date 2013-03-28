@@ -77,31 +77,31 @@ void init() {
   C->_texUVs.push_back( vec2( 1, 1 ) );
   C->_texUVs.push_back( vec2( 0, 1 ) );
   C->buffer();
-
+  
   const char *filename = "../Textures/GrassGreenTexture0002.jpg";
-
+  
   /*******************************/
-  Tick.Tock();
+  tick.tock();
   Texture *grassTex = new Texture( GL_TEXTURE_2D );
   grassTex->load( filename );
-  Tick.Tock();
-  fprintf( stderr, "Load: %lu usec\n", Tick.Delta() );
+  tick.tock();
+  fprintf( stderr, "Load: %lu usec\n", tick.delta() );
   grassTex->buffer();
-  Tick.Tock();
-  fprintf( stderr, "Buffer: %lu usec\n", Tick.Delta() );
+  tick.tock();
+  fprintf( stderr, "Buffer: %lu usec\n", tick.delta() );
   grassTex->bind( GL_TEXTURE0 );
-  Tick.Tock();
-  fprintf( stderr, "Bind: %lu usec\n", Tick.Delta() );
+  tick.tock();
+  fprintf( stderr, "Bind: %lu usec\n", tick.delta() );
   /******************************/
 
   glEnable( GL_DEPTH_TEST );
   glClearColor( 0, 0, 0, 1.0 );
-
+  
   int numTextures;
   glGetIntegerv( GL_MAX_TEXTURE_IMAGE_UNITS, &numTextures );
   
   fprintf( stderr, "Capacity: [%d] global textures.\n", numTextures );
-
+  
 }
 
 /**
@@ -146,7 +146,7 @@ void idle( void ) {
   static Cameras *camList = Engine::instance()->cams();
   
   // Compute the time since last idle().
-  Tick.Tock();
+  tick.tock();
   
   // Move all camera(s).
   camList->idleMotion();

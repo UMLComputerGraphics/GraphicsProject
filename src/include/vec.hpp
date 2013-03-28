@@ -156,13 +156,13 @@ namespace Angel {
   GLfloat length( const vec4& v );
   vec4 normalize( const vec4& v );
   vec3 cross( const vec4& a, const vec4& b );
-  vec3 XYZ( const vec4& a );
+  vec3 xyz( const vec4& a );
 
 }  // namespace Angel
 
 /** Simple alias of Angel::vec4 to emphasize semantic meaning. */
-typedef Angel::vec4 color4;
+typedef Angel::vec4 Color4;
 /** Simple alias of Angel::vec4 to emphasize semantic meaning. */
-typedef Angel::vec4 point4;
+typedef Angel::vec4 Point4;
 
 #endif // __ANGEL_VEC_H__
