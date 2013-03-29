@@ -9,30 +9,30 @@
 #ifndef __INIT_SHADER_H
 #define __INIT_SHADER_H
 
+#define GL_INVALID_SHADER -1
+
 namespace Angel {
   /**
-   * InitShader takes two shader sourcefiles and compiles them into a
-   * shader program.
+   * InitInitShader is a preparation step allowing executables to be invoked from
+   * working directories OTHER than the one containing the shaders directory
    *
-   * @param vShaderFile the vertex shader source file
-   * @param fShaderFile the fragment shader source file
+   * @param binloc argv[0] from main
    *
-   * @return A handle to the compiled glsl program.
+   * @return The relative path from the working directory to the directory containing shaders folder
    */
-  GLuint InitShader( const char* vShaderFile, const char* fShaderFile );
-
+  const char* InitInitShader( const char* binloc );
+  
   /**
-   * InitShader takes three shader sourcefiles and compiles them into a
+   * InitShader takes two or three shader sourcefiles and compiles them into a
    * shader program.
    *
    * @param vShaderFile the vertex shader source file
-   * @param gShaderFile the geometry shader source file
    * @param fShaderFile the fragment shader source file
+   * @param gShaderFile the geometry shader source file (omit if not applicable)
    *
    * @return A handle to the compiled glsl program.
    */
-  GLuint InitShader( const char* vShaderFile, const char* gShaderFile,
-                     const char* fShaderFile );
+  GLuint InitShader( const char* vShaderFile, const char* fShaderFile, const char* gShaderFile = NULL );
 }
 
 #endif

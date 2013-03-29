@@ -1,3 +1,11 @@
+/**
+ * @file ParticleSystem.hpp
+ * @author Chris Compton <christopher_compton@student.uml.edu>
+ * @date 2013-02-24
+ * @brief TODO: Documentation from CC/NVV
+ * @details TODO: Documentation from CC/NVV
+ */
+
 #ifndef __PARTICLESYSTEM_H
 #define __PARTICLESYSTEM_H
 
@@ -17,47 +25,40 @@ using Angel::mat4;
 using std::string;
 using std::vector;
 
-/**
-   @author Chris Compton, christopher_compton@student.uml.edu
-   @since 24 Feb 2013
-   @brief todo
-
-**/
-
 typedef Particle* ParticleP;
 
-class ParticleSystem : public Object
-{
-
+class ParticleSystem : public Object {
+  
 public:
   
-  ParticleSystem( int particleAmt, const std::string &name, GLuint shader);
-  ~ParticleSystem( void ) ;
+  ParticleSystem( int particleAmt, const std::string &name, GLuint shader );
+  ~ParticleSystem( void );
 
-  void  addParticles( void );
-  
+  void addParticles( void );
+
   // Getters and Setters
-  vec4  getColor( void );
+  vec4 getColor( void );
   float getLifespan( void );
   float getMaxLife( void );
   float getMinLife( void );
-  int   getNumParticles( void );
+  int getNumParticles( void );
 
-  void  setColor( vec4 newColor );
-  void  setLifespan( float minLifespan, float maxLifespan );
-  void  setNumParticles( int newNumParticles );
+  void setColor( vec4 newColor );
+  void setLifespan( float minLifespan, float maxLifespan );
+  void setNumParticles( int newNumParticles );
 
   /* The Do-All function.  Will do everything needed in order
-     to have the particles behave according to our specification
-     on each call to Draw(). That's the idea, anyway. */
+   to have the particles behave according to our specification
+   on each call to Draw(). That's the idea, anyway. */
   void update();
 
   virtual void Buffer();
   virtual void Draw();
 
 protected:
-
+  
 private:
+  
 
   float rangeRandom( float min, float max );
 
@@ -69,8 +70,7 @@ private:
   vec4* positions;
   
   // Pass-through variable... maybe not be needed and function can pass through
-  vec4   color;          
-
+  vec4   color;
 };
 
 #endif

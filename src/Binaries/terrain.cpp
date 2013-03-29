@@ -1,11 +1,11 @@
 /**
-   @file terrain.cpp
-   @authors John Huston, Nicholas StPierre, Chris Compton
-   @date 2013-02-23
-   @brief This is a trimmed version of our Fall 2012 project.
-   @details This is a tech demo for terrain generation using an udpated
-   engine derived from Ed Angel's code from his book.
-**/
+ @file terrain.cpp
+ @authors John Huston, Nicholas StPierre, Chris Compton
+ @date 2013-02-23
+ @brief This is a trimmed version of our Fall 2012 project.
+ @details This is a tech demo for terrain generation using an udpated
+ engine derived from Ed Angel's code from his book.
+ **/
 
 // System Headers
 #include <cmath>
@@ -31,12 +31,12 @@
 #include "model.hpp"
 #include "InitShader.hpp"
 #include "glut_callbacks.h"
+#include "ObjLoader.hpp"
+#include "eric_rules.hpp"
 
 // Type Aliases
 using Angel::vec3;
 using Angel::vec4;
-typedef Angel::vec4 color4;
-typedef Angel::vec4 point4;
 
 // Wii Connectivity 
 #ifdef WII
@@ -48,365 +48,352 @@ bool usingWii = false;
 
 // Textures
 // Obtained from www.goodtextures.com
-const char* terrainTex[] = {
-  "../Textures/GoodTextures_0013423.jpg",  // Dirt/Mud
-  "../Textures/GoodTextures_0013779.jpg",  // Sand
-  "../Textures/GrassGreenTexture0002.jpg", // Grass (who'da thunk?)
-  "../Textures/GoodTextures_0013418.jpg",  // Rock
-  "../Textures/GoodTextures_0013291.jpg"   // Snow
-};
+const char* terrainTex[] = { "../Textures/GoodTextures_0013423.jpg", // Dirt/Mud
+    "../Textures/GoodTextures_0013779.jpg",  // Sand
+    "../Textures/GrassGreenTexture0002.jpg", // Grass (who'da thunk?)
+    "../Textures/GoodTextures_0013418.jpg",  // Rock
+    "../Textures/GoodTextures_0013291.jpg"   // Snow
+    };
 
 /**
-   randomize_terrain is called to regenerate the terrain in this application.
-   It assumes the terrain is named "terrain" and is located as a direct
-   child of the main scene graph.
+ randomize_terrain is called to regenerate the terrain in this application.
+ It assumes the terrain is named "terrain" and is located as a direct
+ child of the main scene graph.
 
-   @return void.
-**/
+ @return void.
+ **/
 void randomize_terrain() {
-
+  
   // Final project demo used the equivalent of terrain_size = 10.
   const size_t terrain_size = 8;
-  float H = fmod((float)random(), 20 * terrain_size) + 5 * terrain_size;
+  float H = fmod( (float) random(), 20 * terrain_size ) + 5 * terrain_size;
   
-  srand(time(NULL));
-
+  srand( time( NULL ) );
+  
   Object *Terrain = (*Engine::instance()->rootScene())["terrain"];
   double magnitude = landGen( Terrain, terrain_size, H );
-  Terrain->Buffer();
-  GLint handle = glGetUniformLocation( Terrain->Shader(), "terrainMag" );
-  if (handle != -1) glUniform1f( handle, magnitude );
-
+  Terrain->buffer();
+  GLint handle = glGetUniformLocation( Terrain->shader(), "terrainMag" );
+  if ( handle != -1 ) glUniform1f( handle, magnitude );
+  
 }
 
-
 /**
-   init will initialize this particular flythrough,
-   by creating and instantiating a shader, a camera,
-   and a number of initial objects.
+ init will initialize this particular flythrough,
+ by creating and instantiating a shader, a camera,
+ and a number of initial objects.
 
-   @return void.
-**/
+ @return void.
+ **/
 void init() {
-
+  
   Scene *theScene = Engine::instance()->rootScene();
   Screen *myScreen = Engine::instance()->mainScreen();
-
+  
   // Load the shaders.
-  GLuint gShader = Angel::InitShader( "shaders/vterrain.glsl", "shaders/fterrain.glsl" );
-  // Initialize engine setting: Enable "fixed yaw"... disable free-Y rotation.
+  GLuint gShader = Angel::InitShader( "shaders/vterrain.glsl",
+                                      "shaders/fterrain.glsl" );
+  // Initialize engine setting: Enable "fixed yaw"... disable free-Y _rotation.
   Engine::instance()->opt( "fixed_yaw", true );
-
-  // Give the Shader handle to the Scene Graph and the Camera List.
-  theScene->Shader( gShader );
-  myScreen->_camList.Shader( gShader );
-
+  
+  // Give the shader handle to the Scene Graph and the Camera List.
+  theScene->shader( gShader );
+  myScreen->_camList.shader( gShader );
+  
   // Cameras must be added after setting a shader.
   myScreen->_camList.addCamera( "Camera1" );
   myScreen->_camList.next();
-
+  
   /*
-    NOTE:
-    ==========================
-    Please do not give the Terrain children.
-    The terrain generation animation applies directly to the terrain,
-    which of course propegates the animation to all child objects.
+   NOTE:
+   ==========================
+   Please do not give the Terrain children.
+   The terrain generation animation applies directly to the terrain,
+   which of course propegates the animation to all child objects.
 
-    You'll pancake any child objects.
-  */
+   You'll pancake any child objects.
+   */
 
   // Let's create some objects.
-  Object *terrain = theScene->AddObject( "terrain" );
-  glUseProgram( gShader ); // Temporary hack until I refine the texturing management subsystem.
-  terrain->Texture( terrainTex );
-  terrain->Mode( GL_TRIANGLE_STRIP );
-  randomize_terrain(); // This call depends upon "terrain" existing within theScene.
+  Object *terrain = theScene->addObject( "terrain" );
+  glUseProgram( gShader );// Temporary hack until I refine the texturing management subsystem.
+  terrain->texture( terrainTex );
+  terrain->drawMode( GL_TRIANGLE_STRIP );
+  randomize_terrain();// This call depends upon "terrain" existing within theScene.
   
-  Object *pyramid = theScene->AddObject( "pyramid" );
-
-/*
-  Object *box   = theScene.AddObject( "box" ) ;
-  loadModelFromFile( box, "../models/box-a.obj");
-  box->trans.offset.SetY(100.0);
-  box->trans.offset.SetX(100.0);
-  box->Buffer();
-*/
-
-  Sierpinski_Pyramid( pyramid,
-		      vec4(  0,      1,  0, 1 ),
-		      vec4( -1, -0.999,  1, 1 ),
-		      vec4(  1, -0.999,  1, 1 ),
-		      vec4(  0, -0.999, -1, 1 ),
-		      4 );
-  pyramid->Buffer();
-
-  Object *cube_base = theScene->AddObject( "basecube" );
-  colorcube( cube_base, 1.0 );
-  cube_base->Buffer();
+  Object *pyramid = theScene->addObject( "pyramid" );
   
-  Object *moon_cube = pyramid->AddObject( "moon" );
-  colorcube( moon_cube, 0.5 );
-  moon_cube->Buffer();
+  /*
+   Object *box   = theScene.addObject( "box" ) ;
+   loadModelFromFile( box, "../models/box-a.obj");
+   box->_trans._offset.SetY(100.0);
+   box->_trans._offset.SetX(100.0);
+   box->_buffer();
+   */
 
+  sierpinskiPyramid( pyramid, vec4( 0, 1, 0, 1 ), vec4( -1, -0.999, 1, 1 ),
+                     vec4( 1, -0.999, 1, 1 ), vec4( 0, -0.999, -1, 1 ), 4 );
+  pyramid->buffer();
+  
+  Object *cube_base = theScene->addObject( "basecube" );
+  colorCube( cube_base, 1.0 );
+  cube_base->buffer();
+  
+  Object *moon_cube = pyramid->addObject( "moon" );
+  colorCube( moon_cube, 0.5 );
+  moon_cube->buffer();
+  
   // These models came from VALVE,
   // From their game "Team Fortress 2."
   // The model processing was done in Blender.
-  Object *heavy = theScene->AddObject( "heavy" );
-  loadModelFromFile( heavy, "../models/heavyT.obj" );
-  heavy->Buffer();
-  heavy->trans.scale.Set( 0.10 );
-  heavy->trans.offset.Set( 0, 2, 0 );
-
+  Object *heavy = theScene->addObject( "heavy" );
+  ObjLoader::loadModelFromFile( heavy, "../models/heavyT.obj" );
+  heavy->buffer();
+  heavy->_trans._scale.set( 0.10 );
+  heavy->_trans._offset.set( 0, 2, 0 );
+  
   // Valve's TF2 Medic
-  Object *medic = heavy->AddObject( "medic" );
-  loadModelFromFile( medic, "../models/medicT.obj" );
-  medic->trans.offset.Set( 0, 20, 0 );
-  medic->Buffer();
-
+  Object *medic = heavy->addObject( "medic" );
+  ObjLoader::loadModelFromFile( medic, "../models/medicT.obj" );
+  medic->_trans._offset.set( 0, 20, 0 );
+  medic->buffer();
+  
   // Valve's TF2 Spy
-  Object *spy = medic->AddObject( "spy" );
-  loadModelFromFile( spy, "../models/spyT.obj" );
-  spy->trans.offset.Set( 0, 20, 0 );
-  spy->Buffer();
-
-  Object *ball = theScene->AddObject( "ball" );
+  Object *spy = medic->addObject( "spy" );
+  ObjLoader::loadModelFromFile( spy, "../models/spyT.obj" );
+  spy->_trans._offset.set( 0, 20, 0 );
+  spy->buffer();
+  
+  Object *ball = theScene->addObject( "ball" );
   sphere( ball );
-  ball->trans.scale.Set( 1000 );
-  ball->Buffer();
+  ball->_trans._scale.set( 1000 );
+  ball->buffer();
   
   /*
-  Object *sun = theScene.AddObject ("sun");
-  //loadModelFromFile( sun, "../models/heavyT.obj" );
-  sphere(sun);
-  sun->trans.offset.SetX(500.0);
-  sun->trans.scale.Set(16.0) ;
-  sun->Buffer();
-  */
+   Object *sun = theScene.addObject ("sun");
+   //loadModelFromFile( sun, "../models/heavyT.obj" );
+   sphere(sun);
+   sun->_trans._offset.SetX(500.0);
+   sun->_trans._scale.set(16.0) ;
+   sun->_buffer();
+   */
 
   /*
-  Object *actualMoon = theScene.AddObject ("actualMoon");
-  //loadModelFromFile( actualMoon, "../models/spyT.obj" );
-  sphere(actualMoon);
-  actualMoon->trans.offset.SetX(-500.0);
-  actualMoon->trans.scale.Set(12.0);
-  actualMoon->Buffer();
-  */
+   Object *actualMoon = theScene.addObject ("actualMoon");
+   //loadModelFromFile( actualMoon, "../models/spyT.obj" );
+   sphere(actualMoon);
+   actualMoon->_trans._offset.SetX(-500.0);
+   actualMoon->_trans._scale.set(12.0);
+   actualMoon->_buffer();
+   */
 
   // The water gets generated last -- In order for our fake transparency to work.
-  Object *agua = theScene->AddObject( "agua" );
+  Object *agua = theScene->addObject( "agua" );
   makeAgua( terrain, agua );
-  agua->Buffer();
-  agua->Mode( GL_TRIANGLES );
-
+  agua->buffer();
+  agua->drawMode( GL_TRIANGLES );
+  
   glEnable( GL_DEPTH_TEST );
   glClearColor( 0.3, 0.5, 0.9, 1.0 );
-
+  
   //Attach a model to the Camera.
   Object *cam = myScreen->_camList.active();
-  loadModelFromFile( cam, "../models/rainbow_dashT.obj" );
+  ObjLoader::loadModelFromFile( cam, "../models/rainbow_dashT.obj" );
   // http://kp-shadowsquirrel.deviantart.com/		
   //   art/Pony-Model-Download-Center-215266264
-  cam->Buffer();
-  cam->Mode( GL_TRIANGLES );
-  cam->trans.scale.Set( 0.05 );
-  cam->trans.PreRotation.RotateY( 180 );
-  cam->Propagate(); 
-
-  // Add the Propagate method to the Scene Graph directly, instead of this:
+  cam->buffer();
+  cam->drawMode( GL_TRIANGLES );
+  cam->_trans._scale.set( 0.05 );
+  cam->_trans._preRotation.rotateY( 180 );
+  cam->propagate();
+  
+  // Add the propagate method to the Scene Graph directly, instead of this:
   // Note: Terrain doesn't/shouldn't have children ...
-  terrain->Propagate();
-
-
+  terrain->propagate();
+  
 }
 
 /**
-   cleanup is a routine to call at exit time that will free up the
-   resources the application is using.
-   While not critical, it does aid in using debuggers to not have
-   any memory leaks at exit time.
-   
-   @return void.
-**/
+ cleanup is a routine to call at exit time that will free up the
+ resources the application is using.
+ While not critical, it does aid in using debuggers to not have
+ any memory leaks at exit time.
+ 
+ @return void.
+ **/
 void cleanup( void ) {
-
-  Engine::instance()->rootScene()->DestroyObject();
-
+  
+  //Engine::instance()->rootScene()->DestroyObject();
+  
 }
 
 /** 
-    displayViewport is responsible for drawing a single viewport.
+ displayViewport is responsible for drawing a single viewport.
 
-    @return void.
-**/
-void displayViewport( void ) {  
-
-  // Draw free-floating objects
-  Engine::instance()->rootScene()->Draw();
-  // Draw camera-attached objects
-  Engine::instance()->cams()->Draw();
-
+ @return void.
+ **/
+void displayViewport( void ) {
+  
+  // draw free-floating objects
+  Engine::instance()->rootScene()->draw();
+  // draw camera-attached objects
+  Engine::instance()->cams()->draw();
+  
 }
 
 /**
-   display is responsible for drawing an entire screen.
+ display is responsible for drawing an entire screen.
 
-   @return void.
-**/
+ @return void.
+ **/
 void display( void ) {
   // Clear the screen and begin rendering.
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-
+  
   // Tell camList to draw using our displayViewport rendering function.
   Engine::instance()->cams()->view( displayViewport );
-
+  
   // Utilize multi-buffering.
   glutSwapBuffers();
 }
 
 // This global switch controls if we generate terrain or not.
-bool switchingTerrain = false ;
+bool switchingTerrain = false;
 
 /**
-   TerrainGenerationAnimation is an animation callback that will:
-   (A) If triggered, begin to shrink the object into a flat plane,
-   (B) Order a re-generation of the terrain data
-   (C) will grow the object back into its new, final shape.
+ TerrainGenerationAnimation is an animation callback that will:
+ (A) If triggered, begin to shrink the object into a flat plane,
+ (B) Order a re-generation of the terrain data
+ (C) will grow the object back into its new, final shape.
 
-   @param obj A reference to an object's transformation state.
+ @param obj A reference to an object's transformation state.
 
-   @return void.
-**/
+ @return void.
+ **/
 void TerrainGenerationAnimation( TransCache &obj ) {
-
+  
   typedef enum {
-    SHRINKING,
-    TRANSITIONING,
-    GROWING,
-    DONE
+    SHRINKING, TRANSITIONING, GROWING, DONE
   } AnimationState;
   static AnimationState terrainState = DONE;
   static float CurrentScale = 0.0;
-
-
-  if (switchingTerrain) {
+  
+  if ( switchingTerrain ) {
     terrainState = SHRINKING;
     switchingTerrain = false;
     CurrentScale = 0.0;
   }
-
+  
   switch ( terrainState ) {
-
+  
   case SHRINKING:
-    obj.scale.Set(1.0,
-		  ((1.0+cos(CurrentScale*DEGREES_TO_RADIANS))/2.0),
-		  1.0);
+    obj._scale.set( 1.0,
+                    ((1.0 + cos( CurrentScale * DEGREES_TO_RADIANS )) / 2.0),
+                    1.0 );
     
-    CurrentScale += 1.0 * Tick.Scale() ;
-
+    CurrentScale += 1.0 * tick.scale();
+    
     if ( CurrentScale >= 180.0 ) {
-      terrainState = TRANSITIONING ;
+      terrainState = TRANSITIONING;
     }
     break;
-
+    
   case TRANSITIONING:
     // Multithread this for graphics 2 project
     randomize_terrain();
     terrainState = GROWING;
     break;
-
+    
   case GROWING:
-    obj.scale.Set(1.0,
-		  ((1.0+cos(CurrentScale*DEGREES_TO_RADIANS))/2.0),
-		  1.0);
-
-    CurrentScale += 1.0 * Tick.Scale() ;
-
-    if ( CurrentScale >= 360.0 ) terrainState = DONE ;
+    obj._scale.set( 1.0,
+                    ((1.0 + cos( CurrentScale * DEGREES_TO_RADIANS )) / 2.0),
+                    1.0 );
+    
+    CurrentScale += 1.0 * tick.scale();
+    
+    if ( CurrentScale >= 360.0 ) terrainState = DONE;
     break;
-
+    
   case DONE:
     return;
-
-  default: 
+    
+  default:
     return;
   }
 }
 
 /**
-   wiilook is an analog of mouselook, for wii remote controls.
-   It takes a reference to a Camera, and two vec3s,
-   and uses the information to adjust the Camera's rotation.
+ wiilook is an analog of mouselook, for wii remote controls.
+ It takes a reference to a Camera, and two vec3s,
+ and uses the information to adjust the Camera's _rotation.
 
-   @param WiiCamera The camera to adjust the rotation of.
-   @param NewTheta  The X,Y,Z angles of the Wii Remote.
-   @param MovementRates The X, Y, Z angular velocities of the Wii Remote.
+ @param WiiCamera The camera to adjust the _rotation of.
+ @param NewTheta  The X,Y,Z angles of the Wii Remote.
+ @param MovementRates The X, Y, Z angular velocities of the Wii Remote.
 
-   @return Void.
-**/
+ @return Void.
+ **/
 void wiilook( Camera &WiiCamera, const Angel::vec3 &NewTheta,
-	      const Angel::vec3 &MovementRates ) {
-
-  static Angel::vec3 OldTheta; /* Defaults to 0,0,0 */  
+              const Angel::vec3 &MovementRates ) {
+  
+  static Angel::vec3 OldTheta; /* Defaults to 0,0,0 */
   // Rotation Order: Y-X-Z looks the best, I think.
   //WiiCamera.yaw( NewTheta.y - OldTheta.y );
   //WiiCamera.pitch( OldTheta.x - NewTheta.x );
   //WiiCamera.roll( NewTheta.z - OldTheta.z );
-
+  
   float yaw = -MovementRates.y / 20;
   float pitch = -MovementRates.x / 20;
   float roll = MovementRates.z / 20;
-
-  if (abs(yaw) >= 0.1)
-    WiiCamera.yaw( -MovementRates.y / 20, 
-		   Engine::instance()->opt( "fixed_yaw" ) );
-  if (abs(pitch) >= 0.1)
-    WiiCamera.pitch( -MovementRates.x / 20 );
-  if (abs(roll) >= 0.1)
-    WiiCamera.roll( MovementRates.z / 20 );
-
+  
+  if ( abs( yaw ) >= 0.1 )
+    WiiCamera.yaw( -MovementRates.y / 20,
+                   Engine::instance()->opt( "fixed_yaw" ) );
+  if ( abs( pitch ) >= 0.1 ) WiiCamera.pitch( -MovementRates.x / 20 );
+  if ( abs( roll ) >= 0.1 ) WiiCamera.roll( MovementRates.z / 20 );
+  
   OldTheta = NewTheta;
-
+  
 }
 
 void simpleRotateY( TransCache &obj ) {
-  obj.rotation.RotateY( Tick.Scale() * 1.5 ); 
+  obj._rotation.rotateY( tick.scale() * 1.5 );
 }
 void simpleRotateAnim( TransCache &obj ) {
-  obj.rotation.RotateY( Tick.Scale() * 1.5 );
-  obj.offset.Set( 1.5, 0, 0 );
-  obj.orbit.RotateY( Tick.Scale() * -1.0 );
+  obj._rotation.rotateY( tick.scale() * 1.5 );
+  obj._offset.set( 1.5, 0, 0 );
+  obj._orbit.rotateY( tick.scale() * -1.0 );
 }
 
 void animationTest( TransCache &obj ) {
-  double timeScale = Tick.Scale();
+  double timeScale = tick.scale();
   double theta = timeScale * 0.1;
-  if (0) fprintf( stderr, "Timescale: %f\n", timeScale );
-
+  if ( 0 ) fprintf( stderr, "Timescale: %f\n", timeScale );
+  
   //Object increasingly grows. 
   /* Note that, Scaling Adjustment, unlike Rotation and Translation,
-     is a multiplicative adjustment, which means that
-     we can't just multiply by our time scaling factor,
-     we have to take pow( scaleFactor, timeScale ) instead.
-     This is, of course, incredibly inefficient. */
-  // obj.scale.Adjust( pow( 1.001, timeScale ) );
-
+   is a multiplicative adjustment, which means that
+   we can't just multiply by our time scaling factor,
+   we have to take pow( scaleFactor, timeScale ) instead.
+   This is, of course, incredibly inefficient. */
+  // obj._scale.Adjust( pow( 1.001, timeScale ) );
   //Object rotates in-place.
-  obj.rotation.RotateX( theta );
-  obj.rotation.RotateY( theta );
-  obj.rotation.RotateZ( theta );
-
-  obj.offset.Set( 5, 0, 0 );
-
+  obj._rotation.rotateX( theta );
+  obj._rotation.rotateY( theta );
+  obj._rotation.rotateZ( theta );
+  
+  obj._offset.set( 5, 0, 0 );
+  
   //Object increasingly moves away from origin, x += 0.01
-  //obj.offset.Delta( timeScale * 0.01, 0, 0 );
-
+  //obj._offset.delta( timeScale * 0.01, 0, 0 );
+  
   //Object orbits about the origin
-  obj.orbit.RotateX( timeScale * 0.2 );
-  obj.orbit.RotateY( timeScale * 0.2 );
-  obj.orbit.RotateZ( timeScale * 0.2 );
-
-  // Object moves its focal orbit-point, x = 5.
-  //obj.displacement.Set( 5, 0, 0 ); 
+  obj._orbit.rotateX( timeScale * 0.2 );
+  obj._orbit.rotateY( timeScale * 0.2 );
+  obj._orbit.rotateZ( timeScale * 0.2 );
+  
+  // Object moves its focal _orbit-point, x = 5.
+  //obj.displacement.set( 5, 0, 0 ); 
 }
 
 /// hackity hack hack hackey doo!
@@ -414,29 +401,34 @@ float heightScale = 0.0;
 float ticker = 0.0;
 
 void idle( void ) {
-
+  
   Scene &theScene = (*Engine::instance()->rootScene());
-
-  Tick.Tock();
-
-  if (DEBUG_MOTION) 
-    fprintf( stderr, "Time since last idle: %lu\n", Tick.Delta() );
-
-
+  
+  tick.tock();
+  
+  if ( DEBUG_MOTION )
+    fprintf( stderr, "Time since last idle: %lu\n", tick.delta() );
+  
   Object &Terrain = *(theScene["terrain"]);
   Object &Pyramid = *(theScene["pyramid"]);
-  Pyramid.Animation( animationTest );
-  Pyramid["moon"]->Animation( simpleRotateAnim );
-
+  Pyramid.animation( animationTest );
+  Pyramid["moon"]->animation( simpleRotateAnim );
+  
   Object &Heavy = *(theScene["heavy"]);
   Object &Medic = *(Heavy["medic"]);
-  Object &Spy   = *(Medic["spy"]);
-  Heavy.Animation( simpleRotateAnim );
-  Medic.Animation( simpleRotateY );
-  Spy.Animation( simpleRotateY );
-
-  Terrain.Animation( TerrainGenerationAnimation );
-
+  Object &Spy = *(Medic["spy"]);
+  Heavy.animation( simpleRotateAnim );
+  Medic.animation( simpleRotateY );
+  Spy.animation( simpleRotateY );
+  
+  if ( Engine::instance()->opt( "terrain_regen" ) ) {
+    fprintf( stderr, "terrain_regen on, turning on switchingTerrain bool\n" );
+    switchingTerrain = true;
+    Engine::instance()->opt( "terrain_regen", false );
+  }
+  
+  Terrain.animation( TerrainGenerationAnimation );
+  
 #ifdef WII
   if (usingWii) {
     static const unsigned NumPolls = 20;
@@ -465,37 +457,36 @@ void idle( void ) {
   // Move all camera(s).
   Engine::instance()->cams()->idleMotion();
   glutPostRedisplay();
-
+  
 }
-
 
 //--------------------------------------------------------------------
 
 void menufunc( int value ) {
-
+  
   Engine *EN = Engine::instance();
   Scene *theScene = EN->rootScene();
-
-  switch (value) {
+  
+  switch ( value ) {
   case 0:
     landGen( (*theScene)["terrain"], 12, 40.0 );
-    (*theScene)["terrain"]->Buffer();
+    (*theScene)["terrain"]->buffer();
     break;
   case 1:
     EN->flip( "fixed_yaw" );
     break;
   }
-
+  
 }
 
 int main( int argc, char **argv ) {
- 
+  
 #ifdef WII
   if (!(usingWii = initWii( Wii ))) {
     std::cerr << "Not using Wii controls for this runthrough.\n";
   }
 #endif
-
+  
   // OS X suppresses events after mouse warp.  This resets the suppression 
   // interval to 0 so that events will not be suppressed. This also found
   // at http://stackoverflow.com/questions/728049/
@@ -503,17 +494,18 @@ int main( int argc, char **argv ) {
 #ifdef __APPLE__
   CGSetLocalEventsSuppressionInterval( 0.0 );
 #endif
-
+  VooDoo::InitRelativePaths(argc, argv);
+  
   glutInit( &argc, argv );
   glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH );
   //glutInitWindowSize( 0, 0 );
   glutCreateWindow( "Terrain" );
   glutFullScreen();
   glutSetCursor( GLUT_CURSOR_NONE );
-
+  
   GLEW_INIT();
   init();
-
+  
   /* Register our Callbacks */
   glutDisplayFunc( display );
   glutKeyboardFunc( keyboard );
@@ -524,25 +516,24 @@ int main( int argc, char **argv ) {
   glutPassiveMotionFunc( mouselook );
   glutIdleFunc( idle );
   glutReshapeFunc( resizeEvent );
-
-  if (DEBUG) {
-    fprintf( stderr, "GL_VENDOR: %s\n", glGetString( GL_VENDOR ));
-    fprintf( stderr, "GL_RENDERER: %s\n", glGetString( GL_RENDERER ));
-    fprintf( stderr, "GL_VERSION: %s\n", glGetString( GL_VERSION ));
-    fprintf( stderr, "GL_SHADING_LANGUAGE_VERSION: %s\n", 
-	     glGetString( GL_SHADING_LANGUAGE_VERSION ));
-    fprintf( stderr, "GL_EXTENSIONS: %s\n",
-	     glGetString( GL_EXTENSIONS ) );
+  
+  if ( DEBUG ) {
+    fprintf( stderr, "GL_VENDOR: %s\n", glGetString( GL_VENDOR ) );
+    fprintf( stderr, "GL_RENDERER: %s\n", glGetString( GL_RENDERER ) );
+    fprintf( stderr, "GL_VERSION: %s\n", glGetString( GL_VERSION ) );
+    fprintf( stderr, "GL_SHADING_LANGUAGE_VERSION: %s\n",
+             glGetString( GL_SHADING_LANGUAGE_VERSION ) );
+    fprintf( stderr, "GL_EXTENSIONS: %s\n", glGetString( GL_EXTENSIONS ) );
   }
-
+  
   int menu = glutCreateMenu( menufunc );
   glutSetMenu( menu );
   glutAddMenuEntry( "Randomize Terrain", 0 );
   glutAddMenuEntry( "Toggle Free Rotation", 1 );
   glutAttachMenu( GLUT_RIGHT_BUTTON );
-
+  
   /* PULL THE TRIGGER */
   glutMainLoop();
   return EXIT_SUCCESS;
-
+  
 }

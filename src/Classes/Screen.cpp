@@ -1,46 +1,55 @@
+/**
+ * @file Screen.cpp
+ * @author John Huston
+ * @date 2013-03-29
+ * @brief Screen class implementation
+ * @details Screen contains size and positioning
+ * information for a logical window.
+ */
+
 #include "Screen.hpp"
 #include "Cameras.hpp"
 #include "vec.hpp"
-using Angel::vec2 ;
+using Angel::vec2;
 
-Screen::Screen(int x, int y) {
-  this->Size(x, y) ;
+Screen::Screen( int x, int y ) {
+  this->size( x, y );
 }
 
-Screen::Screen(const vec2 &startSize) {
-  this->Size(startSize) ;
+Screen::Screen( const vec2 &startSize ) {
+  this->size( startSize );
 }
 
-void Screen::Size(int x, int y) {
-  Size(vec2(x, y)) ;
+void Screen::size( int x, int y ) {
+  size( vec2( x, y ) );
 }
 
-void Screen::Size(const vec2 &newSize) {
-  _size = newSize ;
-  _center = newSize / 2 ;
-  _camList.resize(_size.x, _size.y) ;
+void Screen::size( const vec2 &newSize ) {
+  _size = newSize;
+  _center = newSize / 2;
+  _camList.resize( _size.x, _size.y );
 }
 
-const vec2 &Screen::Size(void) {
-  return _size ;
+const vec2 &Screen::size( void ) {
+  return _size;
 }
 
-int Screen::Width(void) {
-  return _size.x ;
+int Screen::width( void ) {
+  return _size.x;
 }
 
-int Screen::Height(void) {
-  return _size.y ;
+int Screen::height( void ) {
+  return _size.y;
 }
 
-const vec2 &Screen::Center(void) {
-  return _center ;
+const vec2 &Screen::center( void ) {
+  return _center;
 }
 
-int Screen::MidpointX(void) {
-  return _center.x ;
+int Screen::midpointX( void ) {
+  return _center.x;
 }
 
-int Screen::MidpointY(void) {
-  return _center.y ;
+int Screen::midpointY( void ) {
+  return _center.y;
 }

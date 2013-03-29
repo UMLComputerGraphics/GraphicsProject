@@ -1,3 +1,5 @@
+SHELL = /usr/bin/env bash
+
 #BUILD EVERYTHING FROM A FOLDER OTHER THAN COMMON OR CLASSES AS AN EXECUTABLE!
 SOURCESRAW=$(filter-out Incomplete/%.cpp Common/%.cpp Classes/%.cpp,$(wildcard */*.cpp))
 SPELLCHKCOMMONRAW=$(wildcard SpelchkCommon/*.cpp)
@@ -35,7 +37,7 @@ CXXINCS = "-I$(CURDIR)/include"
 
 DIRT = $(wildcard */*.o */*.so */*.d *.i *~ */*~ *.log)
 
-LDLIBS = -lSOIL
+LDLIBS =
 
 # Configuration Options
 ifdef POSTMULT
@@ -50,9 +52,9 @@ endif
 # Platform-dependent configuration.
 UNAME := $(shell uname)
 ifeq ($(UNAME), Linux)
-    CXXINCS += -I/usr/include/SOIL
+    CXXINCS += -I/usr/include/ImageMagick
     CXXDEFS += -DFREEGLUT_STATIC -DGLEW_STATIC
-    LDLIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm
+    LDLIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm -lMagick++
 endif
 
 ifeq ($(UNAME), Darwin)

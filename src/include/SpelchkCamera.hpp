@@ -1,8 +1,9 @@
-/*
- * Camera.h
- *
- *  Created on: Dec 1, 2012
- *      Author: Hoanh Nguyen
+/**
+ * @file SpelchkCamera.hpp
+ * @author Hoanh Nguyen
+ * @date 2012-12-01
+ * @brief Team Spelchk Camera Header.
+ * @details @see SpelchkCamera
  */
 
 #ifndef CAMERA_H_
@@ -13,63 +14,63 @@
 #include "vec.hpp"
 using namespace Angel;
 
-class Camera2 {
-  private:
-    int projectionType;
+class SpelchkCamera {
+private:
+  int _projectionType;
 
-    // Projection transformation parameters
-    GLfloat fovy;  // Field-of-view in Y direction angle (in degrees)
-    GLfloat aspect;       // Viewport aspect ratio
+  // Projection transformation parameters
+  GLfloat _fovy;  // Field-of-view in Y direction angle (in degrees)
+  GLfloat _aspect;       // Viewport aspect ratio
+  
+  GLfloat _left, _right;
+  GLfloat _bottom, _top;
+  GLfloat _zNear, _zFar;
 
-    GLfloat left, right;
-    GLfloat bottom, top;
-    GLfloat zNear, zFar;
+  GLuint _timeRef;
 
-    GLuint timeRef;
+  int _screenWidth, _screenHeight;
 
-    int screenWidth, screenHeight;
+  GLfloat _xDepth, _yDepth, _zDepth;
+  GLfloat _xAngle, _yAngle, _zAngle;
+  GLfloat _xHead, _yHead, _zHead;
+  float _xHeadStart, _yHeadStart, _zHeadStart;
+  GLfloat _xHeadAngle, _yHeadAngle, _zHeadAngle;
 
-    GLfloat xDepth, yDepth, zDepth;
-    GLfloat xAngle, yAngle, zAngle;
-    GLfloat xHead, yHead, zHead;
-    float xHeadStart, yHeadStart, zHeadStart;
-	GLfloat xHeadAngle, yHeadAngle, zHeadAngle;
+  vec4 _initialTranslationVector;
+  vec4 _translationVector;
+  vec4 _oldTranslationVector;
 
-    vec4 initialTranslationVector;
-    vec4 translationVector;
-    vec4 oldTranslationVector;
+  mat4 _modelViewMatrix;
 
-    mat4 modelViewMatrix;
+  int _inboundHeadData;
+  vec4 _initialHeadPosition;
 
-    int inboundHeadData;
-    vec4 initialHeadPosition;
+  void calculateTranslationVector();
 
-    void calculateTranslationVector();
+public:
+  SpelchkCamera( vec4 initialTranslationVector );
+  virtual ~SpelchkCamera();
 
-  public:
-    Camera2(vec4 initialTranslationVector);
-    virtual ~Camera2();
+  mat4 getProjectionMatrix();
+  mat4 getModelViewMatrix();
+  vec4 getTranslationVector();
 
-    mat4 getProjectionMatrix();
-    mat4 getModelViewMatrix();
-    vec4 getTranslationVector();
+  // Displaces camera from its current location
+  void moveCamera( float xDepth, float yDepth, float zDepth );
 
-    // Displaces camera from its current location
-    void moveCamera(float xDepth, float yDepth, float zDepth);
+  // Rotate camera from its current orientation
+  void rotateCamera( float xAngle, float yAngle, float zAngle );
 
-    // Rotate camera from its current orientation
-    void rotateCamera(float xAngle, float yAngle, float zAngle);
+  void setScreenSize( int width, int height );
+  void setProjection( int projectionType );
 
-    void setScreenSize(int width, int height);
-    void setProjection(int projectionType);
+  void reset();
 
-    void reset();
+  void setLightMovementRef( GLuint ref );
+  void setLightMovementTime( float elapsed );
 
-    void setLightMovementRef(GLuint ref);
-    void setLightMovementTime(float elapsed);
-
-    void getReadyForZero(int usernum);
-    void headMovement(int usernum, double x, double y, double z);
+  void getReadyForZero( int usernum );
+  void headMovement( int usernum, double x, double y, double z );
 };
 
 #endif /* CAMERA_H_ */

@@ -50,15 +50,15 @@
 #import "io.h"
 
 @interface WiiSearch : NSObject
-{
-	IOBluetoothDeviceInquiry* inquiry;
-	BOOL isDiscovering;
-	// Number of found wiimotes
-	int foundWiimotes;
-	// Maximum number of wiimotes to be searched
-	int maxWiimotes;
-	// The Wiimotes structure
-	wiimote** wiimotes;
+{ 
+  IOBluetoothDeviceInquiry* inquiry;
+  BOOL isDiscovering;
+  // Number of found wiimotes
+  int foundWiimotes;
+  // Maximum number of wiimotes to be searched
+  int maxWiimotes;
+  // The Wiimotes structure
+  wiimote** wiimotes;
 }
 
 - (BOOL) isDiscovering;
@@ -76,16 +76,16 @@
 @end
 
 @interface WiiConnect : NSObject
-{
-	// Buffer to store incoming data from the Wiimote
-	NSData* receivedMsg;
-	unsigned int msgLength;
-	
-	// Reference to the relative wiimote struct (used only to complete handshaking)
-	wiimote* _wm;
-	BOOL isReading;
-	BOOL timeout;
-	BOOL disconnecting;
+{ 
+  // Buffer to store incoming data from the Wiimote
+  NSData* receivedMsg;
+  unsigned int msgLength;
+
+  // Reference to the relative wiimote struct (used only to complete handshaking)
+  wiimote* _wm;
+  BOOL isReading;
+  BOOL timeout;
+  BOOL disconnecting;
 }
 
 - (IOBluetoothL2CAPChannel *) openL2CAPChannelWithPSM:(BluetoothL2CAPPSM) psm device:(IOBluetoothDevice*) device delegate:(id) delegate;

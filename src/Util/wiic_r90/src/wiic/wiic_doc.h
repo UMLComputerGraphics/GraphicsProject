@@ -23,7 +23,7 @@
  *	  $Header$
  */
 
- /*! \mainpage WiiC
+/*! \mainpage WiiC
  *
  * \section intro_sec Introduction
  *

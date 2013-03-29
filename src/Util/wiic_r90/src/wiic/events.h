@@ -43,15 +43,15 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-void wiic_pressed_buttons(struct wiimote_t* wm, byte* msg);
-
-void handshake_expansion(struct wiimote_t* wm, byte* data, unsigned short len);
-void disable_expansion(struct wiimote_t* wm);
+  
+  void wiic_pressed_buttons( struct wiimote_t* wm, byte* msg );
+  
+  void handshake_expansion( struct wiimote_t* wm, byte* data,
+                            unsigned short len );
+  void disable_expansion( struct wiimote_t* wm );
 
 #ifdef __cplusplus
 }
 #endif
-
 
 #endif // EVENTS_H_INCLUDED

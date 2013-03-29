@@ -11,3 +11,5 @@ morph.o
 terrain.o
 morphlite
 partTest
+melt
+MONOLITH

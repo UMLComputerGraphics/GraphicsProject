@@ -48,8 +48,8 @@
 #define WIIC_INTERNAL_H_INCLUDED
 
 #ifndef __APPLE__
-	#include <arpa/inet.h>				/* htons() */
-	#include <bluetooth/bluetooth.h>
+#include <arpa/inet.h>				/* htons() */
+#include <bluetooth/bluetooth.h>
 #endif
 
 #include "definitions.h"
@@ -118,13 +118,13 @@
  * 00000000 00100101 00000100 
  */
 #ifdef __APPLE__
-	#define WM_DEV_MINOR_CLASS				0x01
-	#define WM_DEV_MAJOR_CLASS				0x05
-	#define WM_DEV_MAJOR_SERVICE			0x01
+#define WM_DEV_MINOR_CLASS				0x01
+#define WM_DEV_MAJOR_CLASS				0x05
+#define WM_DEV_MAJOR_SERVICE			0x01
 #else
-	#define WM_DEV_CLASS_0				0x04
-	#define WM_DEV_CLASS_1				0x25
-	#define WM_DEV_CLASS_2				0x00
+#define WM_DEV_CLASS_0				0x04
+#define WM_DEV_CLASS_1				0x25
+#define WM_DEV_CLASS_2				0x00
 #endif
 #define WM_VENDOR_ID				0x057E
 #define WM_PRODUCT_ID				0x0306
@@ -186,7 +186,6 @@
 #define WM_ASPECT_4_3_X		560
 #define WM_ASPECT_4_3_Y		420
 
-
 /**
  *	Expansion stuff
  */
@@ -218,12 +217,14 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-/* not part of the api */
-int wiic_set_report_type(struct wiimote_t* wm);
-void wiic_send_next_pending_read_request(struct wiimote_t* wm);
-int wiic_send(struct wiimote_t* wm, byte report_type, byte* msg, int len);
-int wiic_read_data_cb(struct wiimote_t* wm, wiic_read_cb read_cb, byte* buffer, unsigned int offset, unsigned short len);
+  
+  /* not part of the api */
+  int wiic_set_report_type( struct wiimote_t* wm );
+  void wiic_send_next_pending_read_request( struct wiimote_t* wm );
+  int wiic_send( struct wiimote_t* wm, byte report_type, byte* msg, int len );
+  int wiic_read_data_cb( struct wiimote_t* wm, wiic_read_cb read_cb,
+                         byte* buffer, unsigned int offset,
+                         unsigned short len );
 
 #ifdef __cplusplus
 }

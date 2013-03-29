@@ -1,6 +1,13 @@
+/**
+ * @file ParticleSystem.cpp
+ * @date 2013-03-29
+ * @authors Nick VerVoort, Chris Compton
+ * @brief ParticleSystem implementation.
+ * @details FIXME: Needs documentation from CC/NVV
+ */
+
 #include <cmath>
 #include <string>
-#include <SOIL.h>
 #include <cstdlib>
 #include <stdexcept>
 #include <vector>
@@ -14,34 +21,30 @@
 #include "Timer.hpp"
 #include "vec.hpp"
 
-
 using namespace Angel;
 
 // Constructor(s)
-ParticleSystem::ParticleSystem( int particleAmt, const std::string &name, GLuint shader)
-  : Object( name, shader ), numParticles(particleAmt), minLife(0.1), maxLife(1)
-{
+ParticleSystem::ParticleSystem( int particleAmt, const std::string &name,
+                                GLuint shader ) :
+    Object( name, shader ), numParticles( particleAmt ), minLife( 0.1 ),
+    maxLife( 1 ) {
   positions = new vec4[numParticles];
 
   addParticles();
 }
 
-ParticleSystem::~ParticleSystem( void )
-{
-	for(int i=0;i<particles.size();i++)
-	{
-		free(particles[i]);
-	}
-    particles.clear();
+ParticleSystem::~ParticleSystem( void ) {
+  for ( int i = 0; i < particles.size(); i++ ) {
+    free( particles[i] );
+  }
+  particles.clear();
 }
 
-void
-ParticleSystem::addParticles( void )
-{
+void ParticleSystem::addParticles( void ) {
   
   int numParticles = getNumParticles();
   int numToAdd = numParticles - particles.size();
-
+  
   if ( numToAdd > 0 )
     for ( int i = 0 ; i < numToAdd ; i++ )
     {
@@ -53,55 +56,41 @@ ParticleSystem::addParticles( void )
 }
 
 // Getters and Setters
-vec4
-ParticleSystem::getColor( void )
-{
+vec4 ParticleSystem::getColor( void ) {
   return color;
 }
 
-float
-ParticleSystem::getMaxLife( void )
-{
+float ParticleSystem::getMaxLife( void ) {
   return maxLife;
 }
 
-float
-ParticleSystem::getMinLife( void )
-{
+float ParticleSystem::getMinLife( void ) {
   return minLife;
 }
 
-int
-ParticleSystem::getNumParticles( void )
-{
+int ParticleSystem::getNumParticles( void ) {
   return numParticles;
 }
 
-void
-ParticleSystem::setColor( vec4 newColor )
-{
+void ParticleSystem::setColor( vec4 newColor ) {
   color = newColor;
 }
 
-void 
-ParticleSystem::setLifespan( float minLifespan, float maxLifespan )
-{
-  minLife = minLifespan ;
-  maxLife = maxLifespan ;
+void ParticleSystem::setLifespan( float minLifespan, float maxLifespan ) {
+  minLife = minLifespan;
+  maxLife = maxLifespan;
 }
 
-void
-ParticleSystem::setNumParticles( int newNumParticles )
-{
+void ParticleSystem::setNumParticles( int newNumParticles ) {
   numParticles = newNumParticles;
 }
 
 void
 ParticleSystem::Buffer()
 {
-  glBindVertexArray(vao);
+  glBindVertexArray(_vao);
 
-  glBindBuffer(GL_ARRAY_BUFFER, buffer[VERTICES]);
+  glBindBuffer(GL_ARRAY_BUFFER, _buffer[VERTICES]);
   glBufferData(GL_ARRAY_BUFFER, sizeof(Angel::vec4) * numParticles,
   			positions, GL_STATIC_DRAW);
 
@@ -111,40 +100,35 @@ ParticleSystem::Buffer()
 void
 ParticleSystem::Draw()
 {
-  glBindVertexArray(vao);
+  glBindVertexArray(_vao);
 
   GLint currShader;
   glGetIntegerv(GL_CURRENT_PROGRAM, &currShader);
-  if( (GLuint)currShader != Shader()) {
+  if( (GLuint)currShader != shader()) {
     Camera *activeCamera = Engine::instance()->cams()->active();
-    glUseProgram( Shader() );
-    activeCamera->Shader( Shader() );
+    glUseProgram( shader() );
+    activeCamera->shader( shader() );
     activeCamera->view();
   }
 
-  send( Object::CamPos );
-  send( Object::ObjectCTM  ) ;
+  // XXX THIS DISAPPEARED -- FIX IT?
+  //send( Object::camPos ); 
+  send( Object::OBJECT_CTM  ) ;
   glDrawArrays( GL_POINTS, 0, numParticles );
 
   glBindVertexArray(0);
-  Scene::Draw();
+  Scene::draw();
 }
 
 // Other functions
 
-void
-ParticleSystem::update(){
-
-  
-
+void ParticleSystem::update() {
 }
 
 // Private Functions
 
-float
-ParticleSystem::rangeRandom( float min, float max )
-{
+float ParticleSystem::rangeRandom( float min, float max ) {
   float diff = max - min;
   
-  return  fmod( (float)random(), diff) + min; 
+  return fmod( (float) random(), diff ) + min;
 }

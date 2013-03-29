@@ -8,7 +8,6 @@
  * Based loosely on Ed Angel's tutorials.
  **/
 
-#include <SOIL.h>
 /* Multi-platform support and OpenGL headers. */
 #include "globals.h"
 #include "platform.h"
@@ -20,68 +19,97 @@
 #include "Timer.hpp"
 #include "Scene.hpp"
 #include "Engine.hpp"
+#include "Texture.hpp"
 /* Utilities and Common */
 #include "model.hpp"
 #include "InitShader.hpp"
 #include "glut_callbacks.h"
+#include "eric_rules.hpp"
+
+/* Texture Shens */
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <cstdio>
 
 /**
  * Initialization: load and compile shaders, initialize camera(s), load models.
  */
 void init() {
-
+  
   GLuint shader[3];
   Cameras *camList = Engine::instance()->cams();
   Scene *rootScene = Engine::instance()->rootScene();
-
+  
   shader[0] = Angel::InitShader( "shaders/vred.glsl", "shaders/fragment.glsl" );
   shader[1] = Angel::InitShader( "shaders/vblu.glsl", "shaders/fragment.glsl" );
   shader[2] = Angel::InitShader( "shaders/vtex.glsl", "shaders/ftex.glsl" );
-
-  //camList->Shader( shader[0] );
+  
   camList->addCamera( "Camera1" );
   camList->next();
   camList->active()->changePerspective( Camera::IDENTITY );
-
+  
   // Adding objects without a default shader:
-  Object *A = rootScene->AddObject( "Object A (RED)", shader[0] );
-
+  Object *A = rootScene->addObject( "Object A (RED)", shader[0] );
+  
   // Setting a default and adding objects without:
-  rootScene->Shader( shader[1] );
-  Object *B = rootScene->AddObject( "Object B (BLU)" );
-
+  rootScene->shader( shader[1] );
+  Object *B = rootScene->addObject( "Object B (BLU)" );
+  
   // Third Object, over-ride default shader.
-  Object *C = rootScene->AddObject( "Object C (TEX)", shader[1] );
-
-  // Draw two squares:
+  Object *C = rootScene->addObject( "Object C (TEX)", shader[2] );
+  
+  // draw a square in the upper left
   triangle( A, vec4( -1, 0, 0, 1 ), vec4( 0, 0, 0, 1 ), vec4( -1, 1, 0, 1 ),
             0 );
   triangle( A, vec4( 0, 0, 0, 1 ), vec4( -1, 1, 0, 1 ), vec4( 0, 1, 0, 1 ), 0 );
-  A->Buffer();
-
+  A->buffer();
+  
+  // draw a square in the lower right
   triangle( B, vec4( 0, -1, 0, 1 ), vec4( 1, -1, 0, 1 ), vec4( 0, 0, 0, 1 ),
             0 );
   triangle( B, vec4( 1, -1, 0, 1 ), vec4( 0, 0, 0, 1 ), vec4( 1, 0, 0, 1 ), 0 );
-  B->Buffer();
-
+  B->buffer();
+  
+  // draw a triangle in the lower left, and texture it.
   triangle( C, vec4( -1, -1, 0, 1 ), vec4( 0, -1, 0, 1 ), vec4( -1, 0, 0, 1 ),
             0 );
-  C->texcoords.push_back( vec2( 0, 0 ) );
-  C->texcoords.push_back( vec2( 1, 1 ) );
-  C->texcoords.push_back( vec2( 0, 1 ) );
-  C->Buffer();
-
-  //GLint tex2ddirt = txload_w( "../Textures/GrassGreenTexture0002.jpg" );
+  C->_texUVs.push_back( vec2( 0, 0 ) );
+  C->_texUVs.push_back( vec2( 1, 1 ) );
+  C->_texUVs.push_back( vec2( 0, 1 ) );
+  C->buffer();
+  
+  const char *filename = "../Textures/GrassGreenTexture0002.jpg";
+  
+  /*******************************/
+  tick.tock();
+  Texture *grassTex = new Texture( GL_TEXTURE_2D );
+  grassTex->load( filename );
+  tick.tock();
+  fprintf( stderr, "Load: %lu usec\n", tick.delta() );
+  grassTex->buffer();
+  tick.tock();
+  fprintf( stderr, "Buffer: %lu usec\n", tick.delta() );
+  grassTex->bind( GL_TEXTURE0 );
+  tick.tock();
+  fprintf( stderr, "Bind: %lu usec\n", tick.delta() );
+  /******************************/
 
   glEnable( GL_DEPTH_TEST );
   glClearColor( 0, 0, 0, 1.0 );
+  
+  int numTextures;
+  glGetIntegerv( GL_MAX_TEXTURE_IMAGE_UNITS, &numTextures );
+  
+  fprintf( stderr, "Capacity: [%d] global textures.\n", numTextures );
+  
 }
 
 /**
  * Cleans up our scene graph.
  */
 void cleanup( void ) {
-  Engine::instance()->rootScene()->DestroyObject();
+  //Engine::instance()->rootScene()->DestroyObject();
 }
 
 //--------------------------------------------------------------------
@@ -92,9 +120,9 @@ void cleanup( void ) {
 void draw( void ) {
   static Scene *theScene = Engine::instance()->rootScene();
   static Cameras *camList = Engine::instance()->cams();
-
-  theScene->Draw();
-  camList->Draw();
+  
+  theScene->draw();
+  camList->draw();
 }
 
 /**
@@ -102,12 +130,12 @@ void draw( void ) {
  */
 void display( void ) {
   static Cameras *camList = Engine::instance()->cams();
-
+  
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-
+  
   // Tell camList to draw using our 'draw' rendering function.
   camList->view( draw );
-
+  
   glutSwapBuffers();
 }
 
@@ -115,12 +143,12 @@ void display( void ) {
  * Compute time since last idle, update camera positions, redisplay.
  */
 void idle( void ) {
-
+  
   static Cameras *camList = Engine::instance()->cams();
-
+  
   // Compute the time since last idle().
-  Tick.Tock();
-
+  tick.tock();
+  
   // Move all camera(s).
   camList->idleMotion();
   glutPostRedisplay();
@@ -137,7 +165,7 @@ void idle( void ) {
  *
  */
 int main( int argc, char **argv ) {
-
+  
   // OS X suppresses events after mouse warp.  This resets the suppression 
   // interval to 0 so that events will not be suppressed. This also found
   // at http://stackoverflow.com/questions/728049/
@@ -145,31 +173,30 @@ int main( int argc, char **argv ) {
 #ifdef __APPLE__
   CGSetLocalEventsSuppressionInterval( 0.0 );
 #endif
-
+  VooDoo::InitRelativePaths(argc, argv);
   glutInit( &argc, argv );
   glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH );
   glutInitWindowSize( 0, 0 );
   glutCreateWindow( "Linear Interpolation Morphing Demo" );
   glutFullScreen();
   glutSetCursor( GLUT_CURSOR_NONE );
-
-  GLEW_INIT()
-  ;
+  
+  GLEW_INIT();
   init();
-
+  
   /* Register our Callbacks */
   glutDisplayFunc( display );
   glutKeyboardFunc( keyboard );
   glutKeyboardUpFunc( keylift );
   glutSpecialFunc( keyboard_ctrl );
-  //glutMouseFunc( mouse );
-  //glutMotionFunc( mouseroll );
-  //glutPassiveMotionFunc( mouselook );
+  glutMouseFunc( mouse );
+  glutMotionFunc( mouseroll );
+  glutPassiveMotionFunc( mouselook );
   glutIdleFunc( idle );
   glutReshapeFunc( resizeEvent );
-
+  
   /* PULL THE TRIGGER */
   glutMainLoop();
   return EXIT_SUCCESS;
-
+  
 }

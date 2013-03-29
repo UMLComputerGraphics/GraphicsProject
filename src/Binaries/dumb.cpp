@@ -28,6 +28,8 @@
 #include <sstream>
 #include <cstdlib>
 #include <time.h>
+#include "ObjLoader.hpp"
+#include "eric_rules.hpp"
 
 // Type Aliases
 using Angel::vec3;
@@ -49,14 +51,14 @@ void init()
   Scene *rootScene = Engine::instance()->rootScene();
   
   // Load shaders and use the resulting shader program. 
-  /*shader = Angel::InitShader( "shaders/vterrain.glsl", 
-			      "shaders/gPassThru.glsl",
-			      "shaders/fParticle.glsl");*/
+  /*shader = Angel::InitShader( "shaders/vterrain.glsl",
+			      "shaders/fParticle.glsl", 
+			      "shaders/gPassThru.glsl");*/
 
   /*
-  shader = Angel::InitShader( "shaders/vParticle.glsl", 
-			      "shaders/gPassThru.glsl",
-			      "shaders/fParticle.glsl");
+  shader = Angel::InitShader( "shaders/vParticle.glsl",
+			      "shaders/fParticle.glsl", 
+			      "shaders/gPassThru.glsl");
   */
 
 
@@ -64,23 +66,23 @@ void init()
 
   //testShader = Angel::InitShader("shaders/vterrain.glsl", "shaders/fterrain.glsl");
 
-  testShader = Angel::InitShader("shaders/vParticle.glsl", 
-				 "shaders/gDouble.glsl",
-				 "shaders/fParticle.glsl");
+  testShader = Angel::InitShader("shaders/vParticle.glsl",
+				 "shaders/fParticle.glsl", 
+				 "shaders/gDouble.glsl");
 
-  rootScene->Shader(testShader);
-  primScreen->_camList.Shader(testShader);
+  rootScene->shader(testShader);
+  primScreen->_camList.shader(testShader);
 
   primScreen->_camList.addCamera( "Camera1" );
   primScreen->_camList.next();
   //  primScreen->_camList->active()->changePerspective( Camera::IDENTITY );
 
-  Object *testObj = rootScene->AddObject("testObj");
-  loadModelFromFile(testObj, "../models/bottle-a.obj");
+  Object *testObj = rootScene->addObject("testObj");
+  ObjLoader::loadModelFromFile(testObj, "../models/bottle-a.obj");
 
-  testObj->Buffer();
-  testObj->trans.scale.Set(1);
-  testObj->trans.offset.SetY(5);
+  testObj->buffer();
+  testObj->_trans._scale.set(1);
+  testObj->_trans._offset.setY(5);
   /*
   Object *particleSystem = new ParticleSystem( 5, "ParticleSystem", shader );
   rootScene->InsertObject( "ParticleSystem", particleSystem );
@@ -94,7 +96,7 @@ void init()
 
 void cleanup( void ) 
 {
-  Engine::instance()->rootScene()->DestroyObject();
+  Engine::instance()->rootScene()->delObject();
 }
 
 //--------------------------------------------------------------------
@@ -104,8 +106,8 @@ void draw( void )
   static Scene *theScene  = Engine::instance()->rootScene();
   static Cameras *camList = Engine::instance()->cams();
 
-  theScene->Draw();
-  camList->Draw();
+  theScene->draw();
+  camList->draw();
 }
 
 // GLUT display callback. Effectively calls displayViewport per-each Camera.
@@ -129,7 +131,7 @@ void idle( void )
   static Cameras *camList = Engine::instance()->cams();
 
   // Compute the time since last idle().
-  Tick.Tock();
+  tick.tock();
 
   // Move all camera(s).
   camList->idleMotion();
@@ -145,10 +147,11 @@ int main( int argc, char **argv ) {
 #ifdef __APPLE__
   CGSetLocalEventsSuppressionInterval( 0.0 );
 #endif
+  VooDoo::InitRelativePaths(argc, argv);
 
   glutInit( &argc, argv );
   glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH );
-  glutInitWindowSize( myScreen.Width(), myScreen.Height() );
+  glutInitWindowSize( myScreen.width(), myScreen.height() );
   glutCreateWindow( "Particle Test" );
   //  glutFullScreen();
   glutSetCursor( GLUT_CURSOR_NONE );

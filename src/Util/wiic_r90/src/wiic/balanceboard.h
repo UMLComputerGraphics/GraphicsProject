@@ -38,12 +38,13 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-int balance_board_handshake(struct wiimote_t* wm, struct balance_board_t* bb, byte* data, unsigned short len);
-
-void balance_board_disconnected(struct balance_board_t* bb);
-
-void balance_board_event(struct balance_board_t* bb, byte* msg);
+  
+  int balance_board_handshake( struct wiimote_t* wm, struct balance_board_t* bb,
+                               byte* data, unsigned short len );
+  
+  void balance_board_disconnected( struct balance_board_t* bb );
+  
+  void balance_board_event( struct balance_board_t* bb, byte* msg );
 
 #ifdef __cplusplus
 }
