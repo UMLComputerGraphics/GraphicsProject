@@ -28,7 +28,9 @@ ParticleSystem::ParticleSystem( int particleAmt, const std::string &name,
                                 GLuint shader ) :
     Object( name, shader ), numParticles( particleAmt ), minLife( 0.1 ),
     maxLife( 1 ) {
-  
+  positions = new vec4[numParticles];
+
+  addParticles();
 }
 
 ParticleSystem::~ParticleSystem( void ) {
@@ -38,16 +40,18 @@ ParticleSystem::~ParticleSystem( void ) {
   particles.clear();
 }
 
-void ParticleSystem::addParticle( void ) {
+void ParticleSystem::addParticles( void ) {
   
   int numParticles = getNumParticles();
   int numToAdd = numParticles - particles.size();
   
   if ( numToAdd > 0 )
-    for ( int i = 0; i < numToAdd; i++ ) {
-      Particle *p = new Particle( vec4( 0, 0, 0, 1 ), 1,
-                                  rangeRandom( minLife, maxLife ) );
-      particles.push_back( p );
+    for ( int i = 0 ; i < numToAdd ; i++ )
+    {
+      Particle *p = new Particle(vec4(0.0, 0.0, 0.0, 1.0), 1, rangeRandom(minLife, maxLife));
+      particles.push_back(p);
+
+	 positions[i] = p->getPosition();
     }
 }
 
@@ -79,6 +83,41 @@ void ParticleSystem::setLifespan( float minLifespan, float maxLifespan ) {
 
 void ParticleSystem::setNumParticles( int newNumParticles ) {
   numParticles = newNumParticles;
+}
+
+void
+ParticleSystem::Buffer()
+{
+  glBindVertexArray(_vao);
+
+  glBindBuffer(GL_ARRAY_BUFFER, _buffer[VERTICES]);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(Angel::vec4) * numParticles,
+  			positions, GL_STATIC_DRAW);
+
+  glBindVertexArray(0);
+}
+
+void
+ParticleSystem::Draw()
+{
+  glBindVertexArray(_vao);
+
+  GLint currShader;
+  glGetIntegerv(GL_CURRENT_PROGRAM, &currShader);
+  if( (GLuint)currShader != shader()) {
+    Camera *activeCamera = Engine::instance()->cams()->active();
+    glUseProgram( shader() );
+    activeCamera->shader( shader() );
+    activeCamera->view();
+  }
+
+  // XXX THIS DISAPPEARED -- FIX IT?
+  //send( Object::camPos ); 
+  send( Object::OBJECT_CTM  ) ;
+  glDrawArrays( GL_POINTS, 0, numParticles );
+
+  glBindVertexArray(0);
+  Scene::draw();
 }
 
 // Other functions

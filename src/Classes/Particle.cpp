@@ -68,3 +68,9 @@ void Particle::setVel( vec3 newVel ) {
 void Particle::setTexFile( string newFilename ) {
   texFilename = newFilename;
 }
+
+vec4
+Particle::getPosition( void )
+{
+  return mPos;
+}

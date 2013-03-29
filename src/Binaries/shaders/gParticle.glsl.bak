@@ -1,4 +1,3 @@
-#version 120
 #extension GL_EXT_gpu_shader4: enable
 #extension GL_EXT_geometry_shader4: enable
 // Particle System Geometry Shader
@@ -18,28 +17,37 @@ vec2 TexCoord;        // Texture coordinates
 
 void main () 
 {
+	// vec3 Pos = gl_in[0].gl_Position.xyz;
+	int i;
+	for (i = 0; i < gl_VerticesIn; i++) { 
+		vec3 Pos = gl_PositionIn[i].xyz;
 
-		vec4 Pos = gl_PositionIn[0];
+		vec3 toCamera = normalize( gCamPos - Pos );
+		vec3 up = vec3( 0.0, 1.0, 0.0 );
+		vec3 right = cross( toCamera, up );
 
 		// 'Grow' quad around a point
-		gl_Position = Pos ;
+		Pos -= ( right * 0.5 );
+		gl_Position = gVP * vec4( Pos, 1.0 );
+		TexCoord = vec2( 0.0, 0.0);
 		EmitVertex();
 
-		Pos.z += 10.0 ;
-		Pos.x += 10.0 ;
-		gl_Position = Pos ;
+		Pos.y += 1.0;
+		gl_Position = gVP * vec4( Pos, 1.0 );
+		TexCoord = vec2( 0.0, 1.0 );
 		EmitVertex();
 
-		Pos.z += 10.0 ;
-		Pos.z += 10.0 ;
-		Pos.y += 10.0;
-		gl_Position = Pos ;
+		Pos.y -= 1.0;
+		Pos += right;
+		gl_Position = gVP * vec4( Pos, 1.0 );
+		TexCoord = vec2( 1.0, 0.0 );
 		EmitVertex();
 
-		Pos.z += 10.0 ;
-		Pos.x -= 10.0;
-		gl_Position = Pos ;
+		Pos.y += 1.0;
+		gl_Position = gVP * vec4( Pos, 1.0 );
+		TexCoord = vec2( 1.0, 1.0 );
 		EmitVertex();
-			
+		
 		EndPrimitive();
+	}
 }
