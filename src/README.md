@@ -5,7 +5,7 @@ Laziness
   Chris Compton's Graphics I project for Fall 2012. It needs to
   be updated for Spring 2013!
 
-- Requires libsoil for textures, and libwiicpp for Wii interactivity,
+- Requires libmagick++-dev for textures, and libwiicpp for Wii interactivity,
   if you choose to build it.
 
 HSC
