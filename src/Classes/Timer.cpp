@@ -88,10 +88,10 @@ double Timer::scale( void ) const {
   return _scale;
 }
 
-unsigned long Timer::keyFrameRate() const {
+float Timer::keyFrameRate() const {
   return _keyFrameRate;
 }
 
-unsigned long Timer::keyFrameRate( unsigned long newFrameRate ) {
+float Timer::keyFrameRate( float newFrameRate ) {
   _keyFrameRate = newFrameRate;
 }
