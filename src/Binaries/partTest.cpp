@@ -48,8 +48,8 @@ void init() {
   
   // Load shaders and use the resulting shader program. 
   shader = Angel::InitShader( "shaders/vParticle.glsl",
-                              "shaders/gParticle.glsl",
-                              "shaders/fParticle.glsl" );
+                              "shaders/fParticle.glsl",
+                              "shaders/gParticle.glsl" );
   
   camList->shader( shader );
   camList->addCamera( "Camera1" );
