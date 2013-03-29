@@ -1,8 +1,10 @@
-////////////////////////////////////////////////////////////////////////////
-//
-//  --- vec.h ---
-//
-////////////////////////////////////////////////////////////////////////////
+/**
+ * @file vec.hpp
+ * @date 2013-03-29
+ * @author Ed Angel
+ * @brief Headers for vec2, vec3, and vec4.
+ * @details Headers for 2D, 3D and 4D vectors, as well as supporting utility functions.
+ */
 
 #ifndef __ANGEL_VEC_H__
 #define __ANGEL_VEC_H__

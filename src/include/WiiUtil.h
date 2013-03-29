@@ -1,3 +1,11 @@
+/**
+ * @file WiiUtil.h
+ * @author John Huston
+ * @date 2013-03-29
+ * @brief Wii Support Utility Header
+ * @details Functions and global declarations for Wii Remote Support.
+ */
+
 #ifndef __WII_H
 #define __WII_H
 

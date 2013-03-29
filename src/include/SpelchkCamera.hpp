@@ -1,8 +1,9 @@
-/*
- * Camera.h
- *
- *  Created on: Dec 1, 2012
- *      Author: Hoanh Nguyen
+/**
+ * @file SpelchkCamera.hpp
+ * @author Hoanh Nguyen
+ * @date 2012-12-01
+ * @brief Team Spelchk Camera Header.
+ * @details @see SpelchkCamera
  */
 
 #ifndef CAMERA_H_

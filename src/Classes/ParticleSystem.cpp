@@ -1,3 +1,11 @@
+/**
+ * @file ParticleSystem.cpp
+ * @date 2013-03-29
+ * @authors Nick VerVoort, Chris Compton
+ * @brief ParticleSystem implementation.
+ * @details FIXME: Needs documentation from CC/NVV
+ */
+
 #include <cmath>
 #include <string>
 #include <cstdlib>

@@ -1,3 +1,11 @@
+/**
+ * @file Timer.hpp
+ * @author John Huston
+ * @date 2013-03-29
+ * @brief Timer class header.
+ * @details Header for the Timer class, which provides a global timer object.
+ */
+
 #ifndef __TIMER_HPP
 #define __TIMER_HPP
 
@@ -27,8 +35,19 @@ private:
   unsigned long _keyFrameRate;
 };
 
+/**
+ * tick is a globally provided timer object,
+ * named cutely so we can call tick.tock() and feel clever.
+ */
 extern Timer tick;
+
+/**
+ * DEFAULT_KEYFRAME_RATE is defined to be
+ * 1/60th of a second, or 60FPS.
+ * This is only the default, and can be changed at runtime.
+ * The value is in terms of microseconds:
+ * 16667 usec = 16.667 msec = 0.016667 sec
+ */
 #define DEFAULT_KEYFRAME_RATE (16667.0)
-// Key Frame is every 1/60th sec, 16.67 ms or 16667 usec
 
 #endif

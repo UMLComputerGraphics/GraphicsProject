@@ -1,3 +1,11 @@
+/**
+ * @file ParticleSystem.hpp
+ * @author Chris Compton <christopher_compton@student.uml.edu>
+ * @date 2013-02-24
+ * @brief TODO: Documentation from CC/NVV
+ * @details TODO: Documentation from CC/NVV
+ */
+
 #ifndef __PARTICLESYSTEM_H
 #define __PARTICLESYSTEM_H
 
@@ -14,13 +22,6 @@ using Angel::vec4;
 using Angel::mat4;
 using std::string;
 using std::vector;
-
-/**
- @author Chris Compton, christopher_compton@student.uml.edu
- @since 24 Feb 2013
- @brief todo
-
- **/
 
 typedef Particle* ParticleP;
 

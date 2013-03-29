@@ -1,3 +1,11 @@
+/**
+ * @file melt.cpp
+ * @author Alex Chea
+ * @date 2013-03-29
+ * @brief Melting Candle Demo
+ * @details FIXME: Documentation from Alex Chea.
+ */
+
 #include "globals.h"
 #include "platform.h"
 /* Engine Classes */

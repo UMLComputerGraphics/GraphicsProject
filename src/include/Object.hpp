@@ -238,6 +238,7 @@ public:
 
   /**
    * Set the Texture ID / Texture Unit for this Object.
+   * @param newTextureID The new Texture Unit ID/Index for this Object.
    * @return None.
    */
   void textureID( GLint newTextureID ) {

@@ -1,3 +1,13 @@
+/**
+ * @file TransCache.hpp
+ * @date 2013-03-29
+ * @author John Huston
+ * @brief Header for the "Transformation Cache" class.
+ * @details Encompasses all of the necessary details
+ * to apply a variety of common transformations to a single object
+ * in a scene graph.
+ */
+
 #include "mat.hpp"
 #include "Transformation.hpp"
 

@@ -1,11 +1,11 @@
 /**
- @file morph.cpp
- @author Nicholas St.Pierre
- @authors John Huston, Nicholas VerVoort, Chris Compton
- @date 2012-12-06
- @brief This is a derivative of our main project file, fly.cpp.
+ @file zachMorphDemo.cpp
+ @author Zach Maybury
+ @authors Nicholas St.Pierre, John Huston, Nicholas VerVoort, Chris Compton
+ @date 2013-03-28
+ @brief Zach's Bottle Morphing Demo.
  @details This is a tech demo for morphing two objects back and forth.
- This is mostly based on ed angel's code from his book.
+ The main driver code is based on Ed Angel's code from his book.
  **/
 
 #include "globals.h"

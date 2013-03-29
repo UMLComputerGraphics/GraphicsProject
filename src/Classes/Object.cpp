@@ -293,12 +293,16 @@ void Object::texture( const char** filename ) {
   textures[2]->load( filename[2] );
   textures[3]->load( filename[3] );
   textures[4]->load( filename[4] );
+  tick.tock();
+  fprintf( stderr, "Texture loads: %lu\n", tick.delta() );
   
   textures[0]->buffer();
   textures[1]->buffer();
   textures[2]->buffer();
   textures[3]->buffer();
   textures[4]->buffer();
+  tick.tock();
+  fprintf( stderr, "Texture buffering: %lu\n", tick.delta() );
   
   textures[0]->bind( GL_TEXTURE0 );
   textures[1]->bind( GL_TEXTURE1 );
@@ -316,11 +320,10 @@ void Object::texture( const char** filename ) {
   glUniform1i( gSampler3, 3 );
   GLuint gSampler4 = glGetUniformLocation( shader(), "gSampler4" );
   glUniform1i( gSampler4, 4 );
+  tick.tock();
+  fprintf( stderr, "Texture binding and sending sampler uniforms: %lu\n", tick.delta() );
   
   glBindVertexArray( 0 );
-  
-  tick.tock();
-  fprintf( stderr, "took %lu usec to finalize textures.\n", tick.delta() );
 }
 
 /**

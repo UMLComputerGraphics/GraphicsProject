@@ -1,3 +1,12 @@
+/**
+ * @file Transformation.hpp
+ * @author John Huston
+ * @date 2013-03-29
+ * @brief Headers for Transformation, RotMat, TransMat and ScaleMat.
+ * @details Headers for the Transformation superclass, and Rotation,
+ * Translation, and Scale specialization classes.
+ */
+
 #ifndef __TRANSMAT_HPP
 #define __TRANSMAT_HPP
 

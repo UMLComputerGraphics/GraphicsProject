@@ -1,8 +1,9 @@
-/*
- * Camera.cpp
- *
- *  Created on: Dec 1, 2012
- *      Author: Hoanh Nguyen
+/**
+ * @file SpelchkCamera.cpp
+ * @author Hoanh Nguyen
+ * @date 2012-12-01
+ * @brief Tiem Spelchk Camera Implementation
+ * @details FIXME
  */
 
 #include "SpelchkCamera.hpp"

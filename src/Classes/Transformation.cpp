@@ -1,3 +1,12 @@
+/**
+ * @file Transformation.cpp
+ * @author John Huston
+ * @date 2013-03-28
+ * @brief Transformation Superclass Implementation
+ * @details Implementation for a generic "Transformation"
+ * specialized 4x4 matrix (mat4).
+ */
+
 #include "mat.hpp"
 #include "Transformation.hpp"
 #include "platform.h" //OpenGL types.

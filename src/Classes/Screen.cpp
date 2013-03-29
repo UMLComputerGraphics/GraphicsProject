@@ -1,3 +1,12 @@
+/**
+ * @file Screen.cpp
+ * @author John Huston
+ * @date 2013-03-29
+ * @brief Screen class implementation
+ * @details Screen contains size and positioning
+ * information for a logical window.
+ */
+
 #include "Screen.hpp"
 #include "Cameras.hpp"
 #include "vec.hpp"

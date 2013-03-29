@@ -1,3 +1,11 @@
+/**
+ * @file Scene.cpp
+ * @date 2013-03-29
+ * @author John Huston
+ * @brief Scene graph implementation.
+ * @details Scene graph implementation.
+ */
+
 #include <string>
 #include <map>
 #include <list>

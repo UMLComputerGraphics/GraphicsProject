@@ -1,3 +1,15 @@
+/**
+ * @file Timer.cpp
+ * @author John Huston
+ * @date 2013-03-28
+ * @brief Implementation for global Timer object.
+ * @details Timer provides a class for measuring the time
+ * delta between frame renders, and provides fractional
+ * scalar values for use with animation speeds to
+ * accelerate or slow animations in accordance with
+ * the key frame rate.
+ */
+
 #include <time.h>
 #include <sys/time.h>
 #include "Timer.hpp"

@@ -1,3 +1,13 @@
+/**
+ * @file TransCache.cpp
+ * @author John Huston
+ * @date 2013-03-28
+ * @brief TransCache Implementation
+ * @details Transformation Cache implementation; This class
+ * serves as a wrapper for containing all the necessary
+ * transformations for the Scene graph.
+ */
+
 #include "TransCache.hpp"
 #include "Transformation.hpp"
 #include "mat.hpp"

@@ -1,3 +1,10 @@
+/**
+ * @file Screen.hpp
+ * @author John Huston
+ * @date 2013-03-29
+ * @brief Screen class header file.
+ * @details @see Screen.
+ */
 #ifndef __SCREEN_HPP
 #define __SCREEN_HPP
 
