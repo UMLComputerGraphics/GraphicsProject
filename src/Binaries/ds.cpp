@@ -24,6 +24,7 @@
 #include "model.hpp"
 #include "InitShader.hpp"
 #include "glut_callbacks.h"
+#include "eric_rules.hpp"
 
 /* Texture Shens */
 #include <sys/types.h>
@@ -172,7 +173,7 @@ int main( int argc, char **argv ) {
 #ifdef __APPLE__
   CGSetLocalEventsSuppressionInterval( 0.0 );
 #endif
-  Angel::InitInitShader( argv[0] );
+  VooDoo::InitRelativePaths(argc, argv);
   glutInit( &argc, argv );
   glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH );
   glutInitWindowSize( 0, 0 );

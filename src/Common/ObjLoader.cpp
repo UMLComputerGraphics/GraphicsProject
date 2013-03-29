@@ -13,6 +13,7 @@
 #include <cstdio>
 #include "vec.hpp"
 #include "ObjLoader.hpp"
+#include "eric_rules.hpp"
 
 using std::vector;
 using std::string;
@@ -298,7 +299,7 @@ namespace ObjLoader {
   void loadModelFromFile( Object *object, const char *filename ) {
     
     // file input stream
-    std::ifstream in( filename, std::ios::in );
+    std::ifstream in( VooDoo::getRelativePath(filename), std::ios::in );
     
     if ( !in ) {
       throw std::runtime_error( "Could not open file." );

@@ -14,6 +14,7 @@
 #include <vector>
 #include "platform.h"
 #include "InitShader.hpp"
+#include "eric_rules.hpp"
 
 /**
  * @def GEOMETRY_VERTICES_OUT_EXT
@@ -37,47 +38,7 @@
 #define GL_GEOMETRY_SHADER 0x8DD9
 #endif
 
-// http://stackoverflow.com/questions/236129/splitting-a-string-in-c
-std::vector< std::string > &split( const std::string &s, char delim,
-                                   std::vector< std::string > &elems ) {
-  std::stringstream ss( s );
-  std::string item;
-  while ( std::getline( ss, item, delim ) ) {
-    elems.push_back( item );
-  }
-  return elems;
-}
-std::vector< std::string > split( const std::string &s, char delim ) {
-  std::vector< std::string > elems;
-  return split( s, delim, elems );
-}
-
 namespace Angel {
-  
-  /**
-   * InitInitShader is a preparation step allowing executables to be invoked from
-   * working directories OTHER than the one containing the shaders directory
-   *
-   * @param binloc argv[0] from main
-   *
-   * @return The relative path from the working directory to the directory containing shaders folder
-   */
-  const char* InitInitShader( const char* binloc = "" ) {
-    static std::string dondeestalosshaders;
-    if ( binloc == NULL || strlen( binloc ) <= 0 ) {
-      return dondeestalosshaders.c_str();
-    }
-    std::vector< std::string > slapchop = split( std::string( binloc ), '/' );
-    
-    //slapchop[0..length-2] == path without executable name
-    if ( slapchop.size() > 1 ) {
-      std::stringstream cat;
-      for ( int i = 0; i < slapchop.size() - 1; i++ )
-        cat << slapchop[i] << "/";
-      dondeestalosshaders = cat.str();
-    }
-    return dondeestalosshaders.c_str();
-  }
   
   /**
    * Read in a shader file into a NULL-terminated string.
@@ -87,10 +48,9 @@ namespace Angel {
    * @return A pointer to the NULL terminated string.
    */
   static char *readShaderSource( const char* shaderFile ) {
-    std::stringstream wholepath;
-    wholepath << InitInitShader() << shaderFile;
-    FILE* fp = fopen( wholepath.str().c_str(), "r" );
     
+    FILE* fp = fopen( VooDoo::getRelativePath(shaderFile), "r" );
+
     if ( fp == NULL ) {
       return NULL;
     }

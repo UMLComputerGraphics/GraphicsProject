@@ -28,6 +28,7 @@
 #include <sstream>
 #include <cstdlib>
 #include <time.h>
+#include "eric_rules.hpp"
 
 // Type Aliases
 using Angel::vec3;
@@ -114,8 +115,8 @@ int main( int argc, char **argv ) {
 #ifdef __APPLE__
   CGSetLocalEventsSuppressionInterval( 0.0 );
 #endif
-  Angel::InitInitShader( argv[0] );
   
+
   glutInit( &argc, argv );
   glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH );
   glutInitWindowSize( myScreen.width(), myScreen.height() );

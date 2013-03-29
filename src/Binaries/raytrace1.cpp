@@ -13,6 +13,7 @@
 
 #include "SpelchkCamera.hpp"
 #include "InitShader.hpp"
+#include "eric_rules.hpp"
 
 /** Global shader object **/
 GLuint program;
@@ -277,7 +278,7 @@ void init( void ) {
  * @return 0.
  */
 int main( int argc, char **argv ) {
-  Angel::InitInitShader( argv[0] );
+  VooDoo::InitRelativePaths(argc, argv);
   glutInit( &argc, argv );
   
   glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE ); // set rendering context
