@@ -126,8 +126,7 @@ namespace Angel {
       GLchar* source;
     } shaders[3] = { { vShaderFile, GL_VERTEX_SHADER, NULL },
                      { fShaderFile, GL_FRAGMENT_SHADER, NULL },
-                     { gShaderFile, GL_INVALID_SHADER, NULL } };
-    if (nShaders == 3) shaders[2].type = GL_GEOMETRY_SHADER;
+                     { gShaderFile, GL_GEOMETRY_SHADER, NULL } };
     
     GLuint program = glCreateProgram();
     
@@ -176,7 +175,8 @@ namespace Angel {
     }
     
     // Gshader gak
-    glProgramParameteriEXT( program, GEOMETRY_VERTICES_OUT_EXT, 4 );
+    if (nShaders == 3)
+      glProgramParameteriEXT( program, GEOMETRY_VERTICES_OUT_EXT, 4 );
     
     /* link  and error check */glLinkProgram( program );
     
@@ -195,7 +195,7 @@ namespace Angel {
     }
     
     /* use program object */
-    //glUseProgram(program);
+    glUseProgram(program);
     return program;
   }
 }  // Close namespace Angel block
