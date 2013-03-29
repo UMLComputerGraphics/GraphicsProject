@@ -36,7 +36,7 @@ int slices = 100;
 int i, j;
 bool melt = false;
 
-void draw (void)
+void melt_draw (void)
 {
 	// the flame
 	glPushMatrix();
@@ -116,11 +116,11 @@ void draw (void)
 	glPopMatrix();
 }
 
-void init(void)
+void melt_init(void)
 {
 }
 
-void enable (void)
+void melt_enable (void)
 {
 	glClearColor (0.0, 0.0, 0.0, 0.0);
 
@@ -137,18 +137,18 @@ void enable (void)
     glShadeModel (GL_SMOOTH); //set the shader to smooth shader
 }
 
-void camera (void)
+void melt_camera (void)
 {
 	gluLookAt(-25, 50, -75, 0, 25, 0, -25, 26, -75);
 }
 
-void display (void)
+void melt_display (void)
 {
 	glClearColor (0.0,0.0,0.0,1.0); //clear the screen to black
     glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //clear the color buffer and the depth buffer
     glLoadIdentity();  
-    camera();
-    enable();
+    melt_camera();
+    melt_enable();
 	
 	// the update loop
 	for (i = 0; i <= slices ; ++i)
@@ -159,7 +159,7 @@ void display (void)
 		positionz[i] = sin(angle);
 	}
 
-    draw();
+    melt_draw();
 
     glutSwapBuffers(); //swap the buffers
     angle++; //increase the angle
@@ -183,7 +183,7 @@ void display (void)
 	
 }
 
-void reshape (int w, int h)
+void melt_reshape (int w, int h)
 {
     glViewport (0, 0, (GLsizei)w, (GLsizei)h); //set the viewport to the current window specifications
     glMatrixMode (GL_PROJECTION); //set the matrix to projection
@@ -236,10 +236,10 @@ int main (int argc, char **argv)
 	glutFullScreen();
 	glutSetCursor(GLUT_CURSOR_NONE);
 
-	init();
-    glutDisplayFunc (display); 
-    glutIdleFunc (display); 
-    glutReshapeFunc (reshape);
+	melt_init();
+    glutDisplayFunc (melt_display);
+    glutIdleFunc (melt_display);
+    glutReshapeFunc (melt_reshape);
     glutKeyboardFunc (melt_keyboard);
 
     glutMainLoop (); 
