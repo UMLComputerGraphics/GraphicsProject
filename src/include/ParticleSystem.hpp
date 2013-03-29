@@ -14,6 +14,8 @@
 #include "mat.hpp"
 #include "Object.hpp"
 #include "Particle.hpp"
+#include "Camera.hpp"
+#include "Engine.hpp"
 #include "vec.hpp"
 
 using Angel::vec2;
@@ -32,7 +34,7 @@ public:
   ParticleSystem( int particleAmt, const std::string &name, GLuint shader );
   ~ParticleSystem( void );
 
-  void addParticle( void );
+  void addParticles( void );
 
   // Getters and Setters
   vec4 getColor( void );
@@ -50,20 +52,25 @@ public:
    on each call to Draw(). That's the idea, anyway. */
   void update();
 
+  virtual void Buffer();
+  virtual void Draw();
+
 protected:
   
 private:
   
+
   float rangeRandom( float min, float max );
 
-  vector< ParticleP > particles;
-  int numParticles;// Number of particles that each instance of ParticleSystem will manage
-  float maxLife;
-  float minLife;
+  vector<ParticleP> particles;
+  int    numParticles;   // Number of particles that each instance of ParticleSystem will manage
+  float  maxLife;
+  float  minLife;
 
-  // Pass-through variable... maybe not be needed and function can pass through
-  vec4 color;
+  vec4* positions;
   
+  // Pass-through variable... maybe not be needed and function can pass through
+  vec4   color;
 };
 
 #endif

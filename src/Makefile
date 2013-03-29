@@ -9,8 +9,12 @@ CLASSESRAW=$(wildcard Classes/*.cpp)
 
 #things not needed or that break build
 DIAF=Common/LoadTexture.cpp \
-     Binaries/raytracer1.cpp \
+     Binaries/raytrace1.cpp \
      Classes/KinectInator.cpp
+#DIAF=Common/LoadTexture.cpp \
+#     Classes/Particle.cpp \
+#     Binaries/raytracer1.cpp \
+#     Classes/KinectInator.cpp
 
 
 ifndef WII
