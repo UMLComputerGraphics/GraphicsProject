@@ -30,11 +30,11 @@
 
 float positionx[1000], positiony[1000], positionz[1000];
 float orb = 0, candleheight = 50, radius = 10, grow = 0;
-float angle, random;
+float angle, randomN;
 float crater = candleheight;
 int slices = 100;
 int i, j;
-bool melt = FALSE;
+bool melt = false;
 
 void draw (void)
 {
@@ -168,16 +168,16 @@ void display (void)
     if ( orb > 360.0 )
 		orb = 0;
 	
-	if (melt == TRUE)
+	if (melt == true)
 	{
-		random = rand() % 10;
-		grow += random / 1000;
+		randomN = rand() % 10;
+		grow += randomN / 1000;
 
 		if (grow >= 0.5)
 		{
 			grow = 0.5;
 			if ( candleheight >= 5)
-				candleheight -= random / 100;
+				candleheight -= randomN / 100;
 		}
 	}
 	
@@ -192,7 +192,7 @@ void reshape (int w, int h)
     glMatrixMode (GL_MODELVIEW); //set the matrix back to model
 }
 
-void keyboard (unsigned char key, int x, int y)
+void melt_keyboard (unsigned char key, int x, int y)
 {
 	// Esc key; quit
     if (key == 27)
@@ -217,10 +217,10 @@ void keyboard (unsigned char key, int x, int y)
 	// play/pause melt
 	if (key == ' ')
 	{
-		if (melt == FALSE)
-			melt = TRUE;
+		if (melt == false)
+			melt = true;
 		else
-			melt = FALSE;
+			melt = false;
 	}
 }
 
@@ -240,7 +240,7 @@ int main (int argc, char **argv)
     glutDisplayFunc (display); 
     glutIdleFunc (display); 
     glutReshapeFunc (reshape);
-    glutKeyboardFunc (keyboard);
+    glutKeyboardFunc (melt_keyboard);
 
     glutMainLoop (); 
     return 0;
