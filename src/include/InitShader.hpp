@@ -9,6 +9,8 @@
 #ifndef __INIT_SHADER_H
 #define __INIT_SHADER_H
 
+#define GL_INVALID_SHADER -1
+
 namespace Angel {
   /**
    * InitInitShader is a preparation step allowing executables to be invoked from

@@ -120,17 +120,14 @@ namespace Angel {
   GLuint InitShader( const char* vShaderFile, const char* fShaderFile, const char* gShaderFile ) {
     const int nShaders = (gShaderFile == NULL ? 2 : 3);
 
-    typedef struct {
+    struct Shader {
       const char* filename;
       GLenum type;
       GLchar* source;
-    } Shader;
-    
-    Shader *shaders = (Shader*)malloc(nShaders * sizeof(Shader));
-
-    shaders[0] = { vShaderFile, GL_VERTEX_SHADER, NULL };
-    shaders[1] = { fShaderFile, GL_FRAGMENT_SHADER, NULL };
-    if (nShaders == 3) shaders[2] = { gShaderFile, GL_GEOMETRY_SHADER, NULL };
+    } shaders[3] = { { vShaderFile, GL_VERTEX_SHADER, NULL },
+                     { fShaderFile, GL_FRAGMENT_SHADER, NULL },
+                     { gShaderFile, GL_INVALID_SHADER, NULL } };
+    if (nShaders == 3) shaders[2].type = GL_GEOMETRY_SHADER;
     
     GLuint program = glCreateProgram();
     
