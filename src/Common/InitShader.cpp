@@ -76,6 +76,7 @@ namespace Angel {
         cat << slapchop[i] << "/";
       dondeestalosshaders = cat.str();
     }
+    return dondeestalosshaders.c_str();
   }
   
   /**
