@@ -455,7 +455,7 @@ static void event_data_read( struct wiimote_t* wm, byte* msg ) {
   /* this should never happen */
   req->wait = 0;
   
-  WIIC_DEBUG("Received read packet:"); WIIC_DEBUG("    Packet read offset:   %i bytes", offset); WIIC_DEBUG("    Request read offset:  %i bytes", req->addr); WIIC_DEBUG("    Read offset into buf: %i bytes", offset - req->addr); WIIC_DEBUG("    Read data size:       %i bytes", len); WIIC_DEBUG("    Still need:           %i bytes", req->wait);
+  WIIC_DEBUG("Received read packet:");WIIC_DEBUG("    Packet read offset:   %i bytes", offset);WIIC_DEBUG("    Request read offset:  %i bytes", req->addr);WIIC_DEBUG("    Read offset into buf: %i bytes", offset - req->addr);WIIC_DEBUG("    Read data size:       %i bytes", len);WIIC_DEBUG("    Still need:           %i bytes", req->wait);
   
   /* reconstruct this part of the data */
   memcpy( (req->buf + offset - req->addr), (msg + 5), len );

@@ -22,7 +22,7 @@ using Angel::vec3;
  * @param the_color The vec4 specifying the RGBA color value of the vertex.
  * @param the_normal The vec3 that specifies the normal for this vertex.
  */
-void createPoint( Object *obj, point4 const &the_point, color4 const &the_color,
+void createPoint( Object *obj, Point4 const &the_point, Color4 const &the_color,
                   vec3 const &the_normal );
 
 /**
@@ -35,7 +35,7 @@ void createPoint( Object *obj, point4 const &the_point, color4 const &the_color,
  * @param color An index for the color to use for the triangle:
  * { Red, Green, Blue, Yellow, Pink, White }
  */
-void triangle( Object *obj, const point4& a, const point4& b, const point4& c,
+void triangle( Object *obj, const Point4& a, const Point4& b, const Point4& c,
                const int color );
 
 /**
@@ -50,8 +50,8 @@ void triangle( Object *obj, const point4& a, const point4& b, const point4& c,
  * @param color An index for the color to use for the triangle:
  * { Red, Green, Blue, Yellow, Pink, White }
  */
-void divideTriangle( Object *obj, const point4& a, const point4& b,
-                     const point4& c, int timesToRecurse, int color );
+void divideTriangle( Object *obj, const Point4& a, const Point4& b,
+                     const Point4& c, int timesToRecurse, int color );
 
 /**
  * Creates a tetrahedron using four triangles. (12 vertices.)
@@ -62,8 +62,8 @@ void divideTriangle( Object *obj, const point4& a, const point4& b,
  * @param c The third spatial coordinate for the tetrahedron.
  * @param d The fourth spatial coordinate for the tetrahedron.
  */
-void tetra( Object *obj, const point4& a, const point4& b, const point4& c,
-            const point4& d );
+void tetra( Object *obj, const Point4& a, const Point4& b, const Point4& c,
+            const Point4& d );
 
 /**
  * Forms a Sierpinski Pyramid object given four 4D points in space.
@@ -74,8 +74,8 @@ void tetra( Object *obj, const point4& a, const point4& b, const point4& c,
  * @param d The fourth coordinate.
  * @param count The number of recursions to perform to construct the gasket.
  */
-void sierpinskiPyramid( Object *obj, const point4& a, const point4& b,
-                        const point4& c, const point4& d, int count );
+void sierpinskiPyramid( Object *obj, const Point4& a, const Point4& b,
+                        const Point4& c, const Point4& d, int count );
 
 /**
  * Given a quadrilateral, splits it up into smaller quadrilaterals.
@@ -91,8 +91,8 @@ void sierpinskiPyramid( Object *obj, const point4& a, const point4& b,
  * @param color An index for the color to use for the triangle:
  * { Red, Green, Blue, Yellow, Pink, White }
  */
-void recursiveModelGen( Object *obj, const point4& a, const point4& b,
-                        const point4& c, const point4& d, int timesToRecurse,
+void recursiveModelGen( Object *obj, const Point4& a, const Point4& b,
+                        const Point4& c, const Point4& d, int timesToRecurse,
                         int color );
 
 /**
@@ -114,9 +114,9 @@ void sphere( Object *obj );
  * @param C The color of the third point.
  * @param D The color of the fourth point.
  */
-void quad( Object *obj, const point4 &a, const point4 &b, const point4 &c,
-           const point4 &d, const color4 &A, const color4 &B, const color4 &C,
-           const color4 &D );
+void quad( Object *obj, const Point4 &a, const Point4 &b, const Point4 &c,
+           const Point4 &d, const Color4 &A, const Color4 &B, const Color4 &C,
+           const Color4 &D );
 
 /**
  * Create a cube of a given size fixed at the origin, using the
@@ -126,7 +126,7 @@ void quad( Object *obj, const point4 &a, const point4 &b, const point4 &c,
  * @param size The size of the cube to create.
  * @param colors An array of eight colors for the vertices.
  */
-void cube( Object *obj, const GLfloat &size, const color4 colors[8] );
+void cube( Object *obj, const GLfloat &size, const Color4 colors[8] );
 
 /**
  * Creates a cube of a given size fixed at the origin,

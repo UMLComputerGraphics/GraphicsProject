@@ -28,19 +28,19 @@ LightSource::LightSource( const LightSource& orig ) {
   
 }
 
-LightSource::LightSource( const point4& pos ) :
+LightSource::LightSource( const Point4& pos ) :
     position( pos ) //, id(nextId) 
 {
   //nextId++;
 }
 
-LightSource::LightSource( const point4& pos, const color4& color ) :
+LightSource::LightSource( const Point4& pos, const Color4& color ) :
     position( pos ), light_color( color ), complexSwitch( false ) {
   
 }
 
-LightSource::LightSource( const point4& pos, const color4& ambient,
-                          const color4& diffuse, const color4& specular ) :
+LightSource::LightSource( const Point4& pos, const Color4& ambient,
+                          const Color4& diffuse, const Color4& specular ) :
     position( pos ), light_ambient( ambient ), light_diffuse( diffuse ),
     light_specular( specular ), complexSwitch( true )
 //, id(nextId)
@@ -51,9 +51,9 @@ LightSource::LightSource( const point4& pos, const color4& ambient,
   
 }
 
-LightSource::LightSource( const point4& pos, const vec4& dir,
-                          const color4& ambient, const color4& diffuse,
-                          const color4& specular ) :
+LightSource::LightSource( const Point4& pos, const vec4& dir,
+                          const Color4& ambient, const Color4& diffuse,
+                          const Color4& specular ) :
     position( pos ), direction( dir ), light_ambient( ambient ),
     light_diffuse( diffuse ), light_specular( specular ), complexSwitch( true )//id(nextId)
 {
@@ -70,35 +70,35 @@ bool LightSource::GetComplexSwitch() const {
   return complexSwitch;
 }
 
-void LightSource::SetLight_specular( color4 &light_specular ) {
+void LightSource::SetLight_specular( Color4 &light_specular ) {
   this->light_specular = light_specular;
 }
 
-color4 LightSource::GetLight_specular() const {
+Color4 LightSource::GetLight_specular() const {
   return light_specular;
 }
 
-void LightSource::SetLight_diffuse( color4 &light_diffuse ) {
+void LightSource::SetLight_diffuse( Color4 &light_diffuse ) {
   this->light_diffuse = light_diffuse;
 }
 
-color4 LightSource::GetLight_diffuse() const {
+Color4 LightSource::GetLight_diffuse() const {
   return light_diffuse;
 }
 
-void LightSource::SetLight_ambient( color4 &light_ambient ) {
+void LightSource::SetLight_ambient( Color4 &light_ambient ) {
   this->light_ambient = light_ambient;
 }
 
-color4 LightSource::GetLight_ambient() const {
+Color4 LightSource::GetLight_ambient() const {
   return light_ambient;
 }
 
-void LightSource::SetLight_color( color4 &c ) {
+void LightSource::SetLight_color( Color4 &c ) {
   this->light_color = c;
 }
 
-color4 LightSource::GetLight_color() const {
+Color4 LightSource::GetLight_color() const {
   return light_color;
 }
 
@@ -110,11 +110,11 @@ vec4 LightSource::GetDirection() const {
   return direction;
 }
 
-void LightSource::SetPosition( point4 &position ) {
+void LightSource::SetPosition( Point4 &position ) {
   this->position = position;
 }
 
-point4 LightSource::GetPosition() const {
+Point4 LightSource::GetPosition() const {
   return position;
 }
 

@@ -34,7 +34,7 @@ using std::endl;
  * @param the_color The vec4 specifying the RGBA color value of the vertex.
  * @param the_normal The vec3 that specifies the normal for this vertex.
  */
-void createPoint( Object *obj, point4 const &the_point, color4 const &the_color,
+void createPoint( Object *obj, Point4 const &the_point, Color4 const &the_color,
                   vec3 const &the_normal ) {
   
   obj->_vertices.push_back( the_point );
@@ -53,7 +53,7 @@ void createPoint( Object *obj, point4 const &the_point, color4 const &the_color,
  * @param color An index for the color to use for the triangle:
  * { Red, Green, Blue, Yellow, Pink, White }
  */
-void triangle( Object *obj, const point4& a, const point4& b, const point4& c,
+void triangle( Object *obj, const Point4& a, const Point4& b, const Point4& c,
                const int color ) {
   
   static vec4 base_colors[] = { vec4( 1.0, 0.0, 0.0, 1.0 ), /* R */
@@ -85,8 +85,8 @@ void triangle( Object *obj, const point4& a, const point4& b, const point4& c,
  * @param p
  * @return
  */
-point4 unit( const point4 &p ) {
-  point4 c;
+Point4 unit( const Point4 &p ) {
+  Point4 c;
   double d = 0.0;
   
   for ( int i = 0; i < 3; i++ )
@@ -115,10 +115,10 @@ point4 unit( const point4 &p ) {
  * @param color An index for the color to use for the triangle:
  * { Red, Green, Blue, Yellow, Pink, White }
  */
-void divideTriangle( Object *obj, const point4& a, const point4& b,
-                     const point4& c, int timesToRecurse, int color ) {
+void divideTriangle( Object *obj, const Point4& a, const Point4& b,
+                     const Point4& c, int timesToRecurse, int color ) {
   
-  point4 v1, v2, v3;
+  Point4 v1, v2, v3;
   
   if ( timesToRecurse > 0 ) {
     v1 = unit( a + b );
@@ -141,8 +141,8 @@ void divideTriangle( Object *obj, const point4& a, const point4& b,
  * @param c The third spatial coordinate for the tetrahedron.
  * @param d The fourth spatial coordinate for the tetrahedron.
  */
-void tetra( Object *obj, const point4& a, const point4& b, const point4& c,
-            const point4& d ) {
+void tetra( Object *obj, const Point4& a, const Point4& b, const Point4& c,
+            const Point4& d ) {
   
   triangle( obj, a, b, c, 0 );
   triangle( obj, a, c, d, 1 );
@@ -160,15 +160,15 @@ void tetra( Object *obj, const point4& a, const point4& b, const point4& c,
  * @param d The fourth coordinate.
  * @param count The number of recursions to perform to construct the gasket.
  */
-void sierpinskiPyramid( Object *obj, const point4& a, const point4& b,
-                        const point4& c, const point4& d, int count ) {
+void sierpinskiPyramid( Object *obj, const Point4& a, const Point4& b,
+                        const Point4& c, const Point4& d, int count ) {
   if ( count > 0 ) {
-    point4 v0 = (a + b) / 2.0;
-    point4 v1 = (a + c) / 2.0;
-    point4 v2 = (a + d) / 2.0;
-    point4 v3 = (b + c) / 2.0;
-    point4 v4 = (c + d) / 2.0;
-    point4 v5 = (b + d) / 2.0;
+    Point4 v0 = (a + b) / 2.0;
+    Point4 v1 = (a + c) / 2.0;
+    Point4 v2 = (a + d) / 2.0;
+    Point4 v3 = (b + c) / 2.0;
+    Point4 v4 = (c + d) / 2.0;
+    Point4 v5 = (b + d) / 2.0;
     sierpinskiPyramid( obj, a, v0, v1, v2, count - 1 );
     sierpinskiPyramid( obj, v0, b, v3, v5, count - 1 );
     sierpinskiPyramid( obj, v1, v3, c, v4, count - 1 );
@@ -192,8 +192,8 @@ void sierpinskiPyramid( Object *obj, const point4& a, const point4& b,
  * @param color An index for the color to use for the triangle:
  * { Red, Green, Blue, Yellow, Pink, White }
  */
-void recursiveModelGen( Object *obj, const point4& a, const point4& b,
-                        const point4& c, const point4& d, int timesToRecurse,
+void recursiveModelGen( Object *obj, const Point4& a, const Point4& b,
+                        const Point4& c, const Point4& d, int timesToRecurse,
                         int color ) {
   
   divideTriangle( obj, a, b, c, timesToRecurse, color );
@@ -209,12 +209,12 @@ void recursiveModelGen( Object *obj, const point4& a, const point4& b,
  */
 void sphere( Object *obj ) {
   
-  static const point4 initialSpherePoints[4] = { point4( 0.0, 0.0, 1.0, 1.0 ),
-                                                 point4( 0.0, 0.942809,
+  static const Point4 initialSpherePoints[4] = { Point4( 0.0, 0.0, 1.0, 1.0 ),
+                                                 Point4( 0.0, 0.942809,
                                                          -0.333333, 1.0 ),
-                                                 point4( -0.816497, -0.471405,
+                                                 Point4( -0.816497, -0.471405,
                                                          -0.333333, 1.0 ),
-                                                 point4( 0.816497, -0.471405,
+                                                 Point4( 0.816497, -0.471405,
                                                          -0.333333, 1.0 ) };
   
   recursiveModelGen( obj, initialSpherePoints[0], initialSpherePoints[1],
@@ -234,9 +234,9 @@ void sphere( Object *obj ) {
  * @param C The color of the third point.
  * @param D The color of the fourth point.
  */
-void quad( Object *obj, const point4 &a, const point4 &b, const point4 &c,
-           const point4 &d, const color4 &A, const color4 &B, const color4 &C,
-           const color4 &D ) {
+void quad( Object *obj, const Point4 &a, const Point4 &b, const Point4 &c,
+           const Point4 &d, const Color4 &A, const Color4 &B, const Color4 &C,
+           const Color4 &D ) {
   
   // Initialize temporary vectors along the quad's edge to                                                                                 
   //   compute its face normal                                                                                                             
@@ -272,18 +272,18 @@ void quad( Object *obj, const point4 &a, const point4 &b, const point4 &c,
  * @param size The size of the cube to create.
  * @param colors An array of eight _colors for the vertices.
  */
-void cube( Object *obj, const GLfloat &size, const color4 colors[8] ) {
+void cube( Object *obj, const GLfloat &size, const Color4 colors[8] ) {
   
   const GLfloat lower = -(size / 2);
   const GLfloat upper = (size / 2);
   
-  const point4 vertices[8] = { point4( lower, lower, upper, 1.0 ), point4(
+  const Point4 vertices[8] = { Point4( lower, lower, upper, 1.0 ), Point4(
       lower, upper, upper, 1.0 ),
-                               point4( upper, upper, upper, 1.0 ), point4(
+                               Point4( upper, upper, upper, 1.0 ), Point4(
                                    upper, lower, upper, 1.0 ),
-                               point4( lower, lower, lower, 1.0 ), point4(
+                               Point4( lower, lower, lower, 1.0 ), Point4(
                                    lower, upper, lower, 1.0 ),
-                               point4( upper, upper, lower, 1.0 ), point4(
+                               Point4( upper, upper, lower, 1.0 ), Point4(
                                    upper, lower, lower, 1.0 ) };
   
   QUAD( 1, 0, 3, 2 );
@@ -304,14 +304,14 @@ void cube( Object *obj, const GLfloat &size, const color4 colors[8] ) {
  */
 void colorCube( Object *obj, GLfloat size ) {
   
-  static const color4 vertex_colors[8] = { color4( 0.0, 0.0, 0.0, 1.0 ),// black
-                                           color4( 1.0, 0.0, 0.0, 1.0 ),  // red
-                                           color4( 1.0, 1.0, 0.0, 1.0 ),// yellow
-                                           color4( 0.0, 1.0, 0.0, 1.0 ),// green
-                                           color4( 0.0, 0.0, 1.0, 1.0 ), // blue
-                                           color4( 1.0, 0.0, 1.0, 1.0 ),// magenta
-                                           color4( 1.0, 1.0, 1.0, 1.0 ),// white
-                                           color4( 0.0, 1.0, 1.0, 1.0 ) // cyan
+  static const Color4 vertex_colors[8] = { Color4( 0.0, 0.0, 0.0, 1.0 ),// black
+                                           Color4( 1.0, 0.0, 0.0, 1.0 ),  // red
+                                           Color4( 1.0, 1.0, 0.0, 1.0 ),// yellow
+                                           Color4( 0.0, 1.0, 0.0, 1.0 ),// green
+                                           Color4( 0.0, 0.0, 1.0, 1.0 ), // blue
+                                           Color4( 1.0, 0.0, 1.0, 1.0 ),// magenta
+                                           Color4( 1.0, 1.0, 1.0, 1.0 ),// white
+                                           Color4( 0.0, 1.0, 1.0, 1.0 ) // cyan
       };
   
   cube( obj, size, vertex_colors );
@@ -344,12 +344,12 @@ double jitter( double H ) {
  *
  * @return The vector normal to the plane formed by the triangle a,b,c.
  */
-vec3 calcNormal( point4 &a, point4 &b, point4 &c ) {
+vec3 calcNormal( Point4 &a, Point4 &b, Point4 &c ) {
   return cross( c - b, b - a );
 }
 
 /*
- * vec3 calcNormal( point4 &a, point4 &b, point4 &c, point4 &d ) {
+ * vec3 calcNormal( Point4 &a, Point4 &b, Point4 &c, Point4 &d ) {
  return cross( c - b, b - a );
  }
  */
@@ -398,8 +398,8 @@ double landGen( Object *obj, int N, float H ) {
   
   Timer Tick;
   const int S = pow( 2, N ) + 1;
-  std::vector< point4 > &vec = obj->_vertices;
-  std::vector< point4 > &col = obj->_colors;
+  std::vector< Point4 > &vec = obj->_vertices;
+  std::vector< Point4 > &col = obj->_colors;
   //std::vector< vec3 > &nor = obj->_normals;
   std::vector< unsigned int > &drawIndex = obj->_indices;
   std::vector< Angel::vec2 > &txy = obj->_texUVs;
@@ -538,12 +538,12 @@ double landGen( Object *obj, int N, float H ) {
    }
    */
 
-  Tick.Tock();
+  Tick.tock();
   if ( DEBUG )
     fprintf(
         stderr,
         "Landgen took %lu usec, %f msec, %f sec to generate %d vertices.\n",
-        Tick.Delta(), Tick.Delta() / 1000.0, Tick.Delta() / 1000000.0, S * S );
+        Tick.delta(), Tick.delta() / 1000.0, Tick.delta() / 1000000.0, S * S );
   
   return magnitude;
 }

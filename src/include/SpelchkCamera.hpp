@@ -15,34 +15,34 @@ using namespace Angel;
 
 class SpelchkCamera {
 private:
-  int projectionType;
+  int _projectionType;
 
   // Projection transformation parameters
-  GLfloat fovy;  // Field-of-view in Y direction angle (in degrees)
-  GLfloat aspect;       // Viewport aspect ratio
+  GLfloat _fovy;  // Field-of-view in Y direction angle (in degrees)
+  GLfloat _aspect;       // Viewport aspect ratio
   
-  GLfloat left, right;
-  GLfloat bottom, top;
-  GLfloat zNear, zFar;
+  GLfloat _left, _right;
+  GLfloat _bottom, _top;
+  GLfloat _zNear, _zFar;
 
-  GLuint timeRef;
+  GLuint _timeRef;
 
-  int screenWidth, screenHeight;
+  int _screenWidth, _screenHeight;
 
-  GLfloat xDepth, yDepth, zDepth;
-  GLfloat xAngle, yAngle, zAngle;
-  GLfloat xHead, yHead, zHead;
-  float xHeadStart, yHeadStart, zHeadStart;
-  GLfloat xHeadAngle, yHeadAngle, zHeadAngle;
+  GLfloat _xDepth, _yDepth, _zDepth;
+  GLfloat _xAngle, _yAngle, _zAngle;
+  GLfloat _xHead, _yHead, _zHead;
+  float _xHeadStart, _yHeadStart, _zHeadStart;
+  GLfloat _xHeadAngle, _yHeadAngle, _zHeadAngle;
 
-  vec4 initialTranslationVector;
-  vec4 translationVector;
-  vec4 oldTranslationVector;
+  vec4 _initialTranslationVector;
+  vec4 _translationVector;
+  vec4 _oldTranslationVector;
 
-  mat4 modelViewMatrix;
+  mat4 _modelViewMatrix;
 
-  int inboundHeadData;
-  vec4 initialHeadPosition;
+  int _inboundHeadData;
+  vec4 _initialHeadPosition;
 
   void calculateTranslationVector();
 

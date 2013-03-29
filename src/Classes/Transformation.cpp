@@ -5,7 +5,7 @@ Transformation::~Transformation( void ) {
   // Nihil. Provided for inheritance only.
 }
 
-const Angel::mat4 &Transformation::Matrix( void ) const {
+const Angel::mat4 &Transformation::matrix( void ) const {
   return mat;
 }
 
@@ -14,33 +14,33 @@ Angel::mat4 Transformation::operator*( const Angel::mat4 &rhs ) const {
 }
 
 Angel::mat4 Transformation::operator*( const Transformation &rhs ) const {
-  return mat * rhs.Matrix();
+  return mat * rhs.matrix();
 }
 
 Angel::mat4 operator*( const Angel::mat4 &lhs, const Transformation &rhs ) {
-  return lhs * rhs.Matrix();
+  return lhs * rhs.matrix();
 }
 
 /* ROTATION */
 
-const RotMat &RotMat::Reset( const Angel::mat4 &NewState ) {
+const RotMat &RotMat::reset( const Angel::mat4 &NewState ) {
   mat = NewState;
   return (*this);
 }
 
-const RotMat &RotMat::RotateX( GLfloat theta, bool postmult ) {
-  return Adjust( Angel::RotateX( theta ), postmult );
+const RotMat &RotMat::rotateX( GLfloat theta, bool postmult ) {
+  return adjust( Angel::RotateX( theta ), postmult );
 }
 
-const RotMat &RotMat::RotateY( GLfloat theta, bool postmult ) {
-  return Adjust( Angel::RotateY( theta ), postmult );
+const RotMat &RotMat::rotateY( GLfloat theta, bool postmult ) {
+  return adjust( Angel::RotateY( theta ), postmult );
 }
 
-const RotMat &RotMat::RotateZ( GLfloat theta, bool postmult ) {
-  return Adjust( Angel::RotateZ( theta ), postmult );
+const RotMat &RotMat::rotateZ( GLfloat theta, bool postmult ) {
+  return adjust( Angel::RotateZ( theta ), postmult );
 }
 
-const RotMat &RotMat::Adjust( const Angel::mat4 &adjustment, bool postmult ) {
+const RotMat &RotMat::adjust( const Angel::mat4 &adjustment, bool postmult ) {
   // If we are post-multiplying, The default,
   // Adjustments, which come "last", must appear first.
   if ( postmult ) mat = adjustment * mat;
@@ -52,49 +52,49 @@ const RotMat &RotMat::Adjust( const Angel::mat4 &adjustment, bool postmult ) {
 
 /* TRANSLATION */
 
-const TransMat &TransMat::SetX( const float x ) {
-  //fprintf( stderr, "SetX( %f )\n", x );
+const TransMat &TransMat::setX( const float x ) {
+  //fprintf( stderr, "setX( %f )\n", x );
   mat[0][3] = x;
   return (*this);
 }
 
-const TransMat &TransMat::SetY( const float y ) {
-  //fprintf( stderr, "SetY( %f )\n", y );
+const TransMat &TransMat::setY( const float y ) {
+  //fprintf( stderr, "setY( %f )\n", y );
   mat[1][3] = y;
   return (*this);
 }
 
-const TransMat &TransMat::SetZ( const float z ) {
-  //fprintf( stderr, "SetZ( %f )\n", z );
+const TransMat &TransMat::setZ( const float z ) {
+  //fprintf( stderr, "setZ( %f )\n", z );
   mat[2][3] = z;
   return (*this);
 }
 
-const TransMat &TransMat::Set( const float x, const float y, const float z ) {
+const TransMat &TransMat::set( const float x, const float y, const float z ) {
   mat[0][3] = x;
   mat[1][3] = y;
   mat[2][3] = z;
   return (*this);
 }
 
-const TransMat &TransMat::Set( const Angel::vec3 &arg ) {
-  return Set( arg.x, arg.y, arg.z );
+const TransMat &TransMat::set( const Angel::vec3 &arg ) {
+  return set( arg.x, arg.y, arg.z );
 }
 
-const TransMat &TransMat::Delta( const float x, const float y, const float z ) {
+const TransMat &TransMat::delta( const float x, const float y, const float z ) {
   mat[0][3] += x;
   mat[1][3] += y;
   mat[2][3] += z;
   return (*this);
 }
 
-const TransMat &TransMat::Delta( const Angel::vec3 &arg ) {
-  return Delta( arg.x, arg.y, arg.z );
+const TransMat &TransMat::delta( const Angel::vec3 &arg ) {
+  return delta( arg.x, arg.y, arg.z );
 }
 
 /* SCALE */
 
-const ScaleMat &ScaleMat::Set( const float x, const float y, const float z ) {
+const ScaleMat &ScaleMat::set( const float x, const float y, const float z ) {
   
   mat[0][0] = x;
   mat[1][1] = y;
@@ -103,11 +103,11 @@ const ScaleMat &ScaleMat::Set( const float x, const float y, const float z ) {
   
 }
 
-const ScaleMat &ScaleMat::Set( const float pct ) {
-  return Set( pct, pct, pct );
+const ScaleMat &ScaleMat::set( const float pct ) {
+  return set( pct, pct, pct );
 }
 
-const ScaleMat &ScaleMat::Adjust( const float x, const float y,
+const ScaleMat &ScaleMat::adjust( const float x, const float y,
                                   const float z ) {
   mat[0][0] *= x;
   mat[1][1] *= y;
@@ -115,6 +115,6 @@ const ScaleMat &ScaleMat::Adjust( const float x, const float y,
   return (*this);
 }
 
-const ScaleMat &ScaleMat::Adjust( const float pct ) {
-  return Adjust( pct, pct, pct );
+const ScaleMat &ScaleMat::adjust( const float pct ) {
+  return adjust( pct, pct, pct );
 }

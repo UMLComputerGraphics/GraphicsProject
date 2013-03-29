@@ -92,7 +92,7 @@ void init() {
   // Load the shaders.
   GLuint gShader = Angel::InitShader( "shaders/vterrain.glsl",
                                       "shaders/fterrain.glsl" );
-  // Initialize engine setting: Enable "fixed yaw"... disable free-Y rotation.
+  // Initialize engine setting: Enable "fixed yaw"... disable free-Y _rotation.
   Engine::instance()->opt( "fixed_yaw", true );
   
   // Give the shader handle to the Scene Graph and the Camera List.
@@ -125,8 +125,8 @@ void init() {
   /*
    Object *box   = theScene.addObject( "box" ) ;
    loadModelFromFile( box, "../models/box-a.obj");
-   box->_trans.offset.SetY(100.0);
-   box->_trans.offset.SetX(100.0);
+   box->_trans._offset.SetY(100.0);
+   box->_trans._offset.SetX(100.0);
    box->_buffer();
    */
 
@@ -148,32 +148,32 @@ void init() {
   Object *heavy = theScene->addObject( "heavy" );
   ObjLoader::loadModelFromFile( heavy, "../models/heavyT.obj" );
   heavy->buffer();
-  heavy->_trans.scale.Set( 0.10 );
-  heavy->_trans.offset.Set( 0, 2, 0 );
+  heavy->_trans._scale.set( 0.10 );
+  heavy->_trans._offset.set( 0, 2, 0 );
   
   // Valve's TF2 Medic
   Object *medic = heavy->addObject( "medic" );
   ObjLoader::loadModelFromFile( medic, "../models/medicT.obj" );
-  medic->_trans.offset.Set( 0, 20, 0 );
+  medic->_trans._offset.set( 0, 20, 0 );
   medic->buffer();
   
   // Valve's TF2 Spy
   Object *spy = medic->addObject( "spy" );
   ObjLoader::loadModelFromFile( spy, "../models/spyT.obj" );
-  spy->_trans.offset.Set( 0, 20, 0 );
+  spy->_trans._offset.set( 0, 20, 0 );
   spy->buffer();
   
   Object *ball = theScene->addObject( "ball" );
   sphere( ball );
-  ball->_trans.scale.Set( 1000 );
+  ball->_trans._scale.set( 1000 );
   ball->buffer();
   
   /*
    Object *sun = theScene.addObject ("sun");
    //loadModelFromFile( sun, "../models/heavyT.obj" );
    sphere(sun);
-   sun->_trans.offset.SetX(500.0);
-   sun->_trans.scale.Set(16.0) ;
+   sun->_trans._offset.SetX(500.0);
+   sun->_trans._scale.set(16.0) ;
    sun->_buffer();
    */
 
@@ -181,8 +181,8 @@ void init() {
    Object *actualMoon = theScene.addObject ("actualMoon");
    //loadModelFromFile( actualMoon, "../models/spyT.obj" );
    sphere(actualMoon);
-   actualMoon->_trans.offset.SetX(-500.0);
-   actualMoon->_trans.scale.Set(12.0);
+   actualMoon->_trans._offset.SetX(-500.0);
+   actualMoon->_trans._scale.set(12.0);
    actualMoon->_buffer();
    */
 
@@ -202,8 +202,8 @@ void init() {
   //   art/Pony-Model-Download-Center-215266264
   cam->buffer();
   cam->drawMode( GL_TRIANGLES );
-  cam->_trans.scale.Set( 0.05 );
-  cam->_trans.PreRotation.RotateY( 180 );
+  cam->_trans._scale.set( 0.05 );
+  cam->_trans._preRotation.rotateY( 180 );
   cam->propagate();
   
   // Add the propagate method to the Scene Graph directly, instead of this:
@@ -286,11 +286,11 @@ void TerrainGenerationAnimation( TransCache &obj ) {
   switch ( terrainState ) {
   
   case SHRINKING:
-    obj.scale.Set( 1.0,
-                   ((1.0 + cos( CurrentScale * DEGREES_TO_RADIANS )) / 2.0),
-                   1.0 );
+    obj._scale.set( 1.0,
+                    ((1.0 + cos( CurrentScale * DEGREES_TO_RADIANS )) / 2.0),
+                    1.0 );
     
-    CurrentScale += 1.0 * Tick.Scale();
+    CurrentScale += 1.0 * tick.scale();
     
     if ( CurrentScale >= 180.0 ) {
       terrainState = TRANSITIONING;
@@ -304,11 +304,11 @@ void TerrainGenerationAnimation( TransCache &obj ) {
     break;
     
   case GROWING:
-    obj.scale.Set( 1.0,
-                   ((1.0 + cos( CurrentScale * DEGREES_TO_RADIANS )) / 2.0),
-                   1.0 );
+    obj._scale.set( 1.0,
+                    ((1.0 + cos( CurrentScale * DEGREES_TO_RADIANS )) / 2.0),
+                    1.0 );
     
-    CurrentScale += 1.0 * Tick.Scale();
+    CurrentScale += 1.0 * tick.scale();
     
     if ( CurrentScale >= 360.0 ) terrainState = DONE;
     break;
@@ -324,9 +324,9 @@ void TerrainGenerationAnimation( TransCache &obj ) {
 /**
  wiilook is an analog of mouselook, for wii remote controls.
  It takes a reference to a Camera, and two vec3s,
- and uses the information to adjust the Camera's rotation.
+ and uses the information to adjust the Camera's _rotation.
 
- @param WiiCamera The camera to adjust the rotation of.
+ @param WiiCamera The camera to adjust the _rotation of.
  @param NewTheta  The X,Y,Z angles of the Wii Remote.
  @param MovementRates The X, Y, Z angular velocities of the Wii Remote.
 
@@ -356,16 +356,16 @@ void wiilook( Camera &WiiCamera, const Angel::vec3 &NewTheta,
 }
 
 void simpleRotateY( TransCache &obj ) {
-  obj.rotation.RotateY( Tick.Scale() * 1.5 );
+  obj._rotation.rotateY( tick.scale() * 1.5 );
 }
 void simpleRotateAnim( TransCache &obj ) {
-  obj.rotation.RotateY( Tick.Scale() * 1.5 );
-  obj.offset.Set( 1.5, 0, 0 );
-  obj.orbit.RotateY( Tick.Scale() * -1.0 );
+  obj._rotation.rotateY( tick.scale() * 1.5 );
+  obj._offset.set( 1.5, 0, 0 );
+  obj._orbit.rotateY( tick.scale() * -1.0 );
 }
 
 void animationTest( TransCache &obj ) {
-  double timeScale = Tick.Scale();
+  double timeScale = tick.scale();
   double theta = timeScale * 0.1;
   if ( 0 ) fprintf( stderr, "Timescale: %f\n", timeScale );
   
@@ -375,24 +375,24 @@ void animationTest( TransCache &obj ) {
    we can't just multiply by our time scaling factor,
    we have to take pow( scaleFactor, timeScale ) instead.
    This is, of course, incredibly inefficient. */
-  // obj.scale.Adjust( pow( 1.001, timeScale ) );
+  // obj._scale.Adjust( pow( 1.001, timeScale ) );
   //Object rotates in-place.
-  obj.rotation.RotateX( theta );
-  obj.rotation.RotateY( theta );
-  obj.rotation.RotateZ( theta );
+  obj._rotation.rotateX( theta );
+  obj._rotation.rotateY( theta );
+  obj._rotation.rotateZ( theta );
   
-  obj.offset.Set( 5, 0, 0 );
+  obj._offset.set( 5, 0, 0 );
   
   //Object increasingly moves away from origin, x += 0.01
-  //obj.offset.Delta( timeScale * 0.01, 0, 0 );
+  //obj._offset.delta( timeScale * 0.01, 0, 0 );
   
   //Object orbits about the origin
-  obj.orbit.RotateX( timeScale * 0.2 );
-  obj.orbit.RotateY( timeScale * 0.2 );
-  obj.orbit.RotateZ( timeScale * 0.2 );
+  obj._orbit.rotateX( timeScale * 0.2 );
+  obj._orbit.rotateY( timeScale * 0.2 );
+  obj._orbit.rotateZ( timeScale * 0.2 );
   
-  // Object moves its focal orbit-point, x = 5.
-  //obj.displacement.Set( 5, 0, 0 ); 
+  // Object moves its focal _orbit-point, x = 5.
+  //obj.displacement.set( 5, 0, 0 ); 
 }
 
 /// hackity hack hack hackey doo!
@@ -403,10 +403,10 @@ void idle( void ) {
   
   Scene &theScene = (*Engine::instance()->rootScene());
   
-  Tick.Tock();
+  tick.tock();
   
   if ( DEBUG_MOTION )
-    fprintf( stderr, "Time since last idle: %lu\n", Tick.Delta() );
+    fprintf( stderr, "Time since last idle: %lu\n", tick.delta() );
   
   Object &Terrain = *(theScene["terrain"]);
   Object &Pyramid = *(theScene["pyramid"]);

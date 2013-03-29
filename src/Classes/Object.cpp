@@ -278,7 +278,7 @@ void Object::drawMode( GLenum new_mode ) {
  */
 void Object::texture( const char** filename ) {
   
-  Tick.Tock();
+  tick.tock();
   glBindVertexArray( _vao );
   
   Texture **textures = (Texture **) malloc( sizeof(Texture*) * 5 );
@@ -319,8 +319,8 @@ void Object::texture( const char** filename ) {
   
   glBindVertexArray( 0 );
   
-  Tick.Tock();
-  fprintf( stderr, "took %lu usec to finalize textures.\n", Tick.Delta() );
+  tick.tock();
+  fprintf( stderr, "took %lu usec to finalize textures.\n", tick.delta() );
 }
 
 /**
@@ -376,7 +376,7 @@ void Object::send( Object::UniformEnum which ) {
     
   case Object::OBJECT_CTM:
     glUniformMatrix4fv( _handles[Object::OBJECT_CTM], 1, GL_TRUE,
-                        this->_trans.OTM() );
+                        this->_trans.otm() );
     break;
     
   case Object::MORPH_PCT:
@@ -455,16 +455,16 @@ void Object::propagate( void ) {
   
   //std::cerr << "Calling CALCCTM:\n";
   //Update my Object's CTM...
-  this->_trans.CalcCTM();
+  this->_trans.calcCTM();
   
-  //send my OTM as the PTM to all of my children.
+  //send my otm as the ptm to all of my children.
   for ( it = _list.begin(); it != _list.end(); ++it ) {
-    (*it)->_trans.PTM( this->_trans.OTM() );
+    (*it)->_trans.ptm( this->_trans.otm() );
     //Tell that child to update his CTM and propagate.
     (*it)->propagate();
   }
   
-  //std::cerr << "{" << _name << "::OTM:" << this->_trans.OTM() << "}\n";
+  //std::cerr << "{" << _name << "::otm:" << this->_trans.otm() << "}\n";
   
 }
 
@@ -474,7 +474,7 @@ void Object::propagate( void ) {
  */
 vec4 Object::position( void ) const {
   
-  mat4 theOTM = this->_trans.OTM();
+  mat4 theOTM = this->_trans.otm();
   
   return vec4( theOTM[0][3], theOTM[1][3], theOTM[2][3], 1.0 );
 }

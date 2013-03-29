@@ -5,31 +5,31 @@ class TransCache {
   
 public:
   
-  void PTM( const Angel::mat4 &ptm_in, bool postmult = true );
+  void ptm( const Angel::mat4 &ptm_in, bool postmult = true );
 
-  const Angel::mat4 &PTM( void ) const;
-  const Angel::mat4 &CTM( void ) const;
-  const Angel::mat4 &OTM( void ) const;
+  const Angel::mat4 &ptm( void ) const;
+  const Angel::mat4 &ctm( void ) const;
+  const Angel::mat4 &otm( void ) const;
 
   // Hacky: For Camera.
-  TransMat PreOffset;
-  RotMat PreRotation;
+  TransMat _preOffset;
+  RotMat _preRotation;
 
   // Component Transformations //
-  ScaleMat scale; /* Scale Matrix */
-  RotMat rotation; /* Rotation-in-place Matrix */
-  TransMat offset; /* Radius, or offset from origin. */
-  RotMat orbit; /* Rotation about the origin */
-  TransMat displacement; /* Offset of entire animation from origin. */
+  ScaleMat _scale; /* Scale Matrix */
+  RotMat _rotation; /* Rotation-in-place Matrix */
+  TransMat _offset; /* Radius, or _offset from origin. */
+  RotMat _orbit; /* Rotation about the origin */
+  TransMat _displacement; /* Offset of entire animation from origin. */
   
-  /* Updates our CTM. Private Use. */
-  void CalcCTM( bool postmult = true );
+  /* Updates our ctm. Private Use. */
+  void calcCTM( bool postmult = true );
 
 private:
   
   // Cached Result Matrices
-  Angel::mat4 ptm; /* Parent's Cumulative Transformation Matrix */
-  Angel::mat4 ctm; /* Current Transformation Matrix */
-  Angel::mat4 otm; /* Cached Result Transformation Matrix: e.g; CTM * PTM */
+  Angel::mat4 _ptm; /* Parent's Cumulative Transformation Matrix */
+  Angel::mat4 _ctm; /* Current Transformation Matrix */
+  Angel::mat4 _otm; /* Cached Result Transformation Matrix: e.g; ctm * ptm */
   
 };
