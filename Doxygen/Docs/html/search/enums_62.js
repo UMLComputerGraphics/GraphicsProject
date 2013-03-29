@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['buffertype',['bufferType',['../class_object.html#a74a39247838865244defd0ae9712df9b',1,'Object']]]
+  ['buffertype',['BufferType',['../class_object.html#a51d08da3bd559d08734197006bc29a79',1,'Object']]]
 ];

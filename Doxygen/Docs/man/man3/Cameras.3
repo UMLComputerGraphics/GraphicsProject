@@ -1,4 +1,4 @@
-.TH "Cameras" 3 "Fri Mar 15 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
+.TH "Cameras" 3 "Fri Mar 29 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -79,25 +79,29 @@ Inherits \fBScene\fP\&.
 .ti -1c
 .RI "\fBObject\fP * \fBaddObject\fP (const std::string &objName, GLuint Object_Shader=0)"
 .br
+.RI "\fIaddObject creates a new \fBObject\fP with the given name and, optionally, a specified shader and adds it to the \fBScene\fP graph\&. \fP"
 .ti -1c
 .RI "void \fBdelObject\fP (const std::string &objName)"
 .br
+.RI "\fIdelObject will remove from the \fBScene\fP graph the object with the given name\&. \fP"
 .ti -1c
 .RI "void \fBdelObject\fP (void)"
 .br
+.RI "\fIdelObject with no parameters will delete the first \fBObject\fP in the \fBScene\fP\&. \fP"
 .ti -1c
 .RI "void \fBpopObject\fP (void)"
 .br
-.ti -1c
-.RI "void \fBdestroyObject\fP (void)"
-.br
-.RI "\fICompletely remove this object and all his children\&. \fP"
+.RI "\fIpopObject deletes the last \fBObject\fP in the \fBScene\fP\&. \fP"
 .ti -1c
 .RI "void \fBdraw\fP (void)"
 .br
 .ti -1c
 .RI "\fBObject\fP * \fBoperator[]\fP (const std::string &objname)"
 .br
+.ti -1c
+.RI "void \fBinsertObject\fP (\fBObject\fP *obj)"
+.br
+.RI "\fIRegister a created object with the scene graph\&. \fP"
 .in -1c
 .SS "Protected Member Functions"
 
@@ -105,10 +109,7 @@ Inherits \fBScene\fP\&.
 .ti -1c
 .RI "void \fBdeleteObject\fP (\fBObject\fP *obj)"
 .br
-.RI "\fIdeleteObject is the actual implementation function that will remove an \fBObject\fP from the \fBScene\fP list and \fBScene\fP map, then free the object\&. \fP"
-.ti -1c
-.RI "void \fBinsertObject\fP (const std::string name, \fBObject\fP *obj)"
-.br
+.RI "\fIVery seriously delete a child object and free his memory\&. \fP"
 .in -1c
 .SS "Protected Attributes"
 
@@ -116,15 +117,19 @@ Inherits \fBScene\fP\&.
 .ti -1c
 .RI "std::list< \fBObject\fP * > \fB_list\fP"
 .br
+.RI "\fIFor the purposes of rapid propagation of scene-graph changes, \fBObject\fP pointers are stored in a regular flat list\&. \fP"
 .ti -1c
 .RI "std::map< std::string, \fBObject\fP * > \fB_map\fP"
 .br
+.RI "\fIFor the purposes of accessing named objects quickly, though, objects are also re-stored in an associative map\&. \fP"
 .ti -1c
 .RI "std::list< \fBObject\fP * >::iterator \fB_currentObj\fP"
 .br
+.RI "\fIWe keep an iterator on-hand that references what the scene considers to be it's active, current object\&. \fP"
 .ti -1c
 .RI "GLuint \fB_gShader\fP"
 .br
+.RI "\fIA handle to a shader program to be used as the default shader for new children objects added to the scene\&. \fP"
 .in -1c
 .SS "Private Attributes"
 
@@ -177,7 +182,9 @@ A pointer to the currently selected, active \fBCamera\fP\&.
 .PP
 
 .PP
-Definition at line 86 of file Cameras\&.cpp\&.
+Reimplemented from \fBScene\fP\&.
+.PP
+Definition at line 88 of file Cameras\&.cpp\&.
 .SS "\fBCamera\fP * Cameras::addCamera (const std::string &name)"
 
 .PP
@@ -194,6 +201,26 @@ A Pointer to a newly created \fBCamera\fP object\&.
 
 .PP
 Definition at line 35 of file Cameras\&.cpp\&.
+.SS "\fBObject\fP * Scene::addObject (const std::string &objName, GLuintshader = \fC0\fP)\fC [inherited]\fP"
+
+.PP
+addObject creates a new \fBObject\fP with the given name and, optionally, a specified shader and adds it to the \fBScene\fP graph\&. If no shader is given, a default shader MUST have been specified for the \fBScene\fP prior to the call\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIobjName\fP The name of the new \fBObject\fP to add\&. 
+.br
+\fIObject_Shader\fP The shader that should be used to render this object\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A pointer to the new \fBObject\fP\&. 
+.RE
+.PP
+
+.PP
+Definition at line 77 of file Scene\&.cpp\&.
 .SS "void Cameras::calculateViewports (void)"
 
 .PP
@@ -208,18 +235,33 @@ void\&.
 .PP
 
 .PP
-Definition at line 141 of file Cameras\&.cpp\&.
+Definition at line 143 of file Cameras\&.cpp\&.
 .SS "void Scene::deleteObject (\fBObject\fP *obj)\fC [protected]\fP, \fC [inherited]\fP"
 
 .PP
-deleteObject is the actual implementation function that will remove an \fBObject\fP from the \fBScene\fP list and \fBScene\fP map, then free the object\&. \fBParameters:\fP
+Very seriously delete a child object and free his memory\&. deleteObject is the actual implementation function that will remove an \fBObject\fP from the \fBScene\fP list and \fBScene\fP map, then free the object\&.
+.PP
+\fBParameters:\fP
 .RS 4
+\fIobj\fP The object to delete\&.
+.br
 \fIobj\fP The pointer to the object to free\&. 
 .RE
 .PP
 
 .PP
-Definition at line 76 of file Scene\&.cpp\&.
+Definition at line 129 of file Scene\&.cpp\&.
+.SS "void Scene::delObject (const std::string &objName)\fC [inherited]\fP"
+
+.PP
+delObject will remove from the \fBScene\fP graph the object with the given name\&. \fBParameters:\fP
+.RS 4
+\fIobjName\fP Name of the \fBObject\fP to delete\&. 
+.RE
+.PP
+
+.PP
+Definition at line 99 of file Scene\&.cpp\&.
 .SS "void Cameras::idleMotion (void)"
 
 .PP
@@ -232,7 +274,20 @@ void\&.
 .PP
 
 .PP
-Definition at line 111 of file Cameras\&.cpp\&.
+Definition at line 113 of file Cameras\&.cpp\&.
+.SS "void Scene::insertObject (\fBObject\fP *obj)\fC [inherited]\fP"
+
+.PP
+Register a created object with the scene graph\&. \fBParameters:\fP
+.RS 4
+\fIname\fP The name of the object (For the associative map), 
+.br
+\fIobj\fP The \fBObject\fP pointer to add to the scene\&. 
+.RE
+.PP
+
+.PP
+Definition at line 118 of file Scene\&.cpp\&.
 .SS "\fBCamera\fP * Cameras::next (void)"
 
 .PP
@@ -245,7 +300,9 @@ A pointer to the newly active \fBCamera\fP\&.
 .PP
 
 .PP
-Definition at line 64 of file Cameras\&.cpp\&.
+Reimplemented from \fBScene\fP\&.
+.PP
+Definition at line 66 of file Cameras\&.cpp\&.
 .SS "size_t Cameras::numCameras (void) const"
 
 .PP
@@ -256,7 +313,7 @@ an unsigned integer, the number of \fBCameras\fP in the collection\&.
 .PP
 
 .PP
-Definition at line 101 of file Cameras\&.cpp\&.
+Definition at line 103 of file Cameras\&.cpp\&.
 .SS "\fBCamera\fP * Cameras::obj2Cam (std::list< \fBObject\fP * >::iterator &it)"
 
 .PP
@@ -274,7 +331,7 @@ A pointer to a \fBCamera\fP object\&.
 .PP
 
 .PP
-Definition at line 249 of file Cameras\&.cpp\&.
+Definition at line 251 of file Cameras\&.cpp\&.
 .SS "void Cameras::popCamera (void)"
 
 .PP
@@ -285,7 +342,7 @@ void\&.
 .PP
 
 .PP
-Definition at line 50 of file Cameras\&.cpp\&.
+Definition at line 52 of file Cameras\&.cpp\&.
 .SS "\fBCamera\fP * Cameras::prev (void)"
 
 .PP
@@ -296,7 +353,9 @@ A pointer to the newly active \fBCamera\fP\&.
 .PP
 
 .PP
-Definition at line 75 of file Cameras\&.cpp\&.
+Reimplemented from \fBScene\fP\&.
+.PP
+Definition at line 77 of file Cameras\&.cpp\&.
 .SS "void Cameras::resize (intwidth, intheight)"
 
 .PP
@@ -316,7 +375,7 @@ void\&.
 .PP
 
 .PP
-Definition at line 128 of file Cameras\&.cpp\&.
+Definition at line 130 of file Cameras\&.cpp\&.
 .SS "void Scene::shader (GLuintgShader)\fC [virtual]\fP, \fC [inherited]\fP"
 
 .PP
@@ -336,7 +395,7 @@ void\&.
 .PP
 Reimplemented in \fBObject\fP\&.
 .PP
-Definition at line 54 of file Scene\&.cpp\&.
+Definition at line 52 of file Scene\&.cpp\&.
 .SS "GLuint Scene::shader (void)\fC [inherited]\fP"
 
 .PP
@@ -349,7 +408,9 @@ A GLuint handle to the shader program\&.
 .PP
 
 .PP
-Definition at line 66 of file Scene\&.cpp\&.
+Reimplemented in \fBObject\fP\&.
+.PP
+Definition at line 63 of file Scene\&.cpp\&.
 .SS "void Cameras::view (void(*)(void)draw_func)"
 
 .PP
@@ -364,7 +425,15 @@ view calls the view method on all child cameras, followed by the provided draw f
 .PP
 
 .PP
-Definition at line 232 of file Cameras\&.cpp\&.
+Definition at line 234 of file Cameras\&.cpp\&.
+.SH "Member Data Documentation"
+.PP 
+.SS "std::map< std::string, \fBObject\fP* > Scene::_map\fC [protected]\fP, \fC [inherited]\fP"
+
+.PP
+For the purposes of accessing named objects quickly, though, objects are also re-stored in an associative map\&. It's a little superfluous, but here it is! 
+.PP
+Definition at line 127 of file Scene\&.hpp\&.
 
 .SH "Author"
 .PP 

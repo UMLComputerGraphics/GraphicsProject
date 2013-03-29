@@ -1,4 +1,4 @@
-.TH "raytrace1.cpp" 3 "Fri Mar 15 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
+.TH "raytrace1.cpp" 3 "Fri Mar 29 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -22,6 +22,8 @@ Geometric Raytracing Demo\&.
 \fC#include 'SpelchkCamera\&.hpp'\fP
 .br
 \fC#include 'InitShader\&.hpp'\fP
+.br
+\fC#include 'eric_rules\&.hpp'\fP
 .br
 
 .SS "Functions"
@@ -72,6 +74,9 @@ Geometric Raytracing Demo\&.
 .br
 .RI "\fImodel-view matrix uniform shader variable location \fP"
 .ti -1c
+.RI "GLuint \fBdethklok\fP"
+.br
+.ti -1c
 .RI "GLint \fBvRayPosition\fP = -1"
 .br
 .ti -1c
@@ -83,9 +88,26 @@ Geometric Raytracing Demo\&.
 .br
 .RI "\fILogical camera object\&. \fP"
 .ti -1c
-.RI "\fBvec3\fP \fBcameraPositionVec\fP = \fBvec3\fP( 0\&.0, 0\&.0, 0\&.0 )"
+.RI "GLint \fBuSphereCenterPoints\fP = -1"
 .br
-.RI "\fISpatial coordinate of camera\&. \fP"
+.ti -1c
+.RI "GLint \fBuSphereRadius\fP = -1"
+.br
+.ti -1c
+.RI "GLint \fBuSphereColors\fP = -1"
+.br
+.ti -1c
+.RI "GLint \fBuNumOfSpheres\fP = -1"
+.br
+.ti -1c
+.RI "GLfloat \fBsphereCenterPoints\fP []"
+.br
+.ti -1c
+.RI "GLfloat \fBsphereRadius\fP [] = { 0\&.5, 0\&.6, 0\&.7, 0\&.8 }"
+.br
+.ti -1c
+.RI "GLfloat \fBsphereColors\fP []"
+.br
 .ti -1c
 .RI "int \fBscreenHeight\fP"
 .br
@@ -152,7 +174,7 @@ Keyboard Conrol Handler\&. \fBParameters:\fP
 .PP
 
 .PP
-Definition at line 62 of file raytrace1\&.cpp\&.
+Definition at line 75 of file raytrace1\&.cpp\&.
 .SS "void custommouse (intbutton, intstate, intx, inty)"
 
 .PP
@@ -169,7 +191,7 @@ Mouse click handler\&. \fBParameters:\fP
 .PP
 
 .PP
-Definition at line 119 of file raytrace1\&.cpp\&.
+Definition at line 131 of file raytrace1\&.cpp\&.
 .SS "int main (intargc, char **argv)"
 
 .PP
@@ -187,7 +209,7 @@ Simple raytracer demo by Hoanh Nguyen\&. \fBParameters:\fP
 .PP
 
 .PP
-Definition at line 254 of file raytrace1\&.cpp\&.
+Definition at line 280 of file raytrace1\&.cpp\&.
 .SS "void motion (intx, inty)"
 
 .PP
@@ -200,7 +222,7 @@ Handle mouse and camera movement\&. \fBParameters:\fP
 .PP
 
 .PP
-Definition at line 159 of file raytrace1\&.cpp\&.
+Definition at line 171 of file raytrace1\&.cpp\&.
 .SS "void reshape (intwidth, intheight)"
 
 .PP
@@ -213,35 +235,47 @@ Definition at line 159 of file raytrace1\&.cpp\&.
 .PP
 
 .PP
-Definition at line 51 of file raytrace1\&.cpp\&.
+Definition at line 64 of file raytrace1\&.cpp\&.
 .SH "Variable Documentation"
 .PP 
 .SS "\fBSpelchkCamera\fP camera(\fBvec4\fP(0\&.0, 0\&.0, 0\&.0, 0\&.0))"
 
 .PP
 Logical camera object\&. 
-.SS "\fBvec3\fP cameraPositionVec = \fBvec3\fP( 0\&.0, 0\&.0, 0\&.0 )"
-
-.PP
-Spatial coordinate of camera\&. 
-.PP
-Definition at line 30 of file raytrace1\&.cpp\&.
 .SS "float rotationFactor = 45\&.0"
 
 .PP
 Magic constant to adjust the rate of rotation when re-orienting the camera\&. 
 .PP
-Definition at line 150 of file raytrace1\&.cpp\&.
+Definition at line 162 of file raytrace1\&.cpp\&.
 .SS "int screenHeight"
 
 .PP
 current Height of the screen\&. 
 .PP
-Definition at line 42 of file raytrace1\&.cpp\&.
+Definition at line 55 of file raytrace1\&.cpp\&.
 .SS "int screenWidth"
 
 .PP
 current Width of the screen\&. 
+.PP
+Definition at line 57 of file raytrace1\&.cpp\&.
+.SS "GLfloat sphereCenterPoints[]"
+\fBInitial value:\fP
+.PP
+.nf
+ { -1\&.0, -1\&.0, -2\&.0, 1\&.0, -1\&.0, -2\&.0, -1\&.0, 1\&.0,
+                                 -2\&.0, 1\&.0, 1\&.0, -2\&.0 }
+.fi
+.PP
+Definition at line 39 of file raytrace1\&.cpp\&.
+.SS "GLfloat sphereColors[]"
+\fBInitial value:\fP
+.PP
+.nf
+ { 1\&.0, 0\&.3, 0\&.3, 0\&.3, 1\&.0, 0\&.3, 0\&.3, 0\&.3, 1\&.0, 1\&.0,
+                           0\&.3, 0\&.3 }
+.fi
 .PP
 Definition at line 44 of file raytrace1\&.cpp\&.
 .SS "float translationFactor = 5\&.0"
@@ -249,13 +283,13 @@ Definition at line 44 of file raytrace1\&.cpp\&.
 .PP
 Magic constant to adjust the rate of translation when re-orienting the camera\&. 
 .PP
-Definition at line 152 of file raytrace1\&.cpp\&.
+Definition at line 164 of file raytrace1\&.cpp\&.
 .SS "GLint uCameraPosition = -1"
 
 .PP
 Handle to uniform that will contain the position of the \fBCamera\fP\&. 
 .PP
-Definition at line 25 of file raytrace1\&.cpp\&.
+Definition at line 27 of file raytrace1\&.cpp\&.
 .SH "Author"
 .PP 
 Generated automatically by Doxygen for HyperGrafx from the source code\&.

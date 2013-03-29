@@ -16,14 +16,16 @@ var annotated =
     [ "Engine", "class_engine.html", "class_engine" ],
     [ "Object", "class_object.html", "class_object" ],
     [ "Particle", "class_particle.html", "class_particle" ],
+    [ "ParticleSystem", "class_particle_system.html", "class_particle_system" ],
     [ "RotMat", "class_rot_mat.html", "class_rot_mat" ],
     [ "ScaleMat", "class_scale_mat.html", "class_scale_mat" ],
     [ "Scene", "class_scene.html", "class_scene" ],
     [ "Screen", "class_screen.html", "class_screen" ],
     [ "SpelchkCamera", "class_spelchk_camera.html", "class_spelchk_camera" ],
+    [ "Texture", "class_texture.html", "class_texture" ],
     [ "Timer", "class_timer.html", "class_timer" ],
     [ "TransCache", "class_trans_cache.html", "class_trans_cache" ],
     [ "Transformation", "class_transformation.html", "class_transformation" ],
     [ "TransMat", "class_trans_mat.html", "class_trans_mat" ],
-    [ "wiiPollData", "structwii_poll_data.html", "structwii_poll_data" ]
+    [ "WiiPollData", "struct_wii_poll_data.html", "struct_wii_poll_data" ]
 ];

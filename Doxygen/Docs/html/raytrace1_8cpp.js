@@ -9,7 +9,7 @@ var raytrace1_8cpp =
     [ "motion", "raytrace1_8cpp.html#a45a7d7c86c97ca6a2d4d32ce2d263f67", null ],
     [ "reshape", "raytrace1_8cpp.html#a6819355374dd277347abd7c4235f0cd7", null ],
     [ "camera", "raytrace1_8cpp.html#a0e46f444cf201063a14a00d1236f0629", null ],
-    [ "cameraPositionVec", "raytrace1_8cpp.html#af1b4855c16b32d349fa8b056c24c7259", null ],
+    [ "dethklok", "raytrace1_8cpp.html#ac669817a94c510db37084c9dd9dcfb55", null ],
     [ "leftDown", "raytrace1_8cpp.html#ab2138cc58a32399a5f3979e283f210a1", null ],
     [ "modelView", "raytrace1_8cpp.html#aa82a2e50ca7f0a7c6c79922cf7ac675d", null ],
     [ "mouseDownX", "raytrace1_8cpp.html#a1e74073d42607e52372bf0707ed490f9", null ],
@@ -19,7 +19,14 @@ var raytrace1_8cpp =
     [ "rotationFactor", "raytrace1_8cpp.html#a450a5ce9d8d2b3bcb3a31d9a87f91a7f", null ],
     [ "screenHeight", "raytrace1_8cpp.html#a9ebc1dbd77788c4bfa27758a6725413f", null ],
     [ "screenWidth", "raytrace1_8cpp.html#ae50cb92a78d9e0a4f4bd718fc02bd294", null ],
+    [ "sphereCenterPoints", "raytrace1_8cpp.html#a1b43fb6e961f9006cdde22ffeb51573e", null ],
+    [ "sphereColors", "raytrace1_8cpp.html#a0049a4399f161944c46d12e156b1e2c0", null ],
+    [ "sphereRadius", "raytrace1_8cpp.html#aacb8095464f12290818f45bf69b180ed", null ],
     [ "translationFactor", "raytrace1_8cpp.html#a4ebc11e7a5ba3738d580c7e764782aff", null ],
     [ "uCameraPosition", "raytrace1_8cpp.html#a16874d01f7ca34ada7dddea3042f067f", null ],
+    [ "uNumOfSpheres", "raytrace1_8cpp.html#a34acd21874fb66785b6d2a8681e6ab94", null ],
+    [ "uSphereCenterPoints", "raytrace1_8cpp.html#ac19fb5c188fc806f2dd15bfd6837e06f", null ],
+    [ "uSphereColors", "raytrace1_8cpp.html#ac9ad675235d6dc86104ef8ba4b56ddba", null ],
+    [ "uSphereRadius", "raytrace1_8cpp.html#ac922fb8458c34a5ba06bf7504e9f12f4", null ],
     [ "vRayPosition", "raytrace1_8cpp.html#a216a38dca36816a9d3b9ab11920f5898", null ]
 ];

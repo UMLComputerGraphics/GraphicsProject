@@ -1,4 +1,4 @@
-.TH "Timer" 3 "Fri Mar 15 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
+.TH "Timer" 3 "Fri Mar 29 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -10,30 +10,36 @@ Timer \-
 
 .in +1c
 .ti -1c
-.RI "unsigned long \fBTick\fP ()"
+.RI "unsigned long \fBtick\fP ()"
 .br
-.RI "\fITick is an alias for Tock\&. \fP"
+.RI "\fItick is an alias for tock\&. \fP"
 .ti -1c
-.RI "unsigned long \fBTock\fP ()"
+.RI "unsigned long \fBtock\fP ()"
 .br
-.RI "\fITock returns the time elapsed since the last Tock\&. \fP"
+.RI "\fItock returns the time elapsed since the last tock\&. \fP"
 .ti -1c
-.RI "unsigned long \fBDelta\fP () const "
+.RI "unsigned long \fBdelta\fP () const "
 .br
-.RI "\fIDelta returns the time elapsed between the last Tick and the last Tock\&. \fP"
+.RI "\fIdelta returns the time elapsed between the last tick and the last tock\&. \fP"
 .ti -1c
-.RI "double \fBScale\fP () const "
+.RI "float \fBkeyFrameRate\fP () const "
 .br
-.RI "\fIScale returns the relative lateness or eagerness of the \fBTimer\fP, Relative to a benchmark or Key Frame Rate (The default is 60FPS, or 16667 msec\&.) \fP"
+.ti -1c
+.RI "float \fBkeyFrameRate\fP (float newFrameRate)"
+.br
+.ti -1c
+.RI "double \fBscale\fP () const "
+.br
+.RI "\fIscale returns the relative lateness or eagerness of the \fBTimer\fP, Relative to a benchmark or Key Frame Rate (The default is 60FPS, or 16667 msec\&.) \fP"
 .in -1c
 .SS "Private Attributes"
 
 .in +1c
 .ti -1c
-.RI "struct timeval \fB_T1\fP"
+.RI "struct timeval \fB_t1\fP"
 .br
 .ti -1c
-.RI "struct timeval \fB_T2\fP"
+.RI "struct timeval \fB_t2\fP"
 .br
 .ti -1c
 .RI "unsigned long \fB_delta\fP"
@@ -41,16 +47,19 @@ Timer \-
 .ti -1c
 .RI "double \fB_scale\fP"
 .br
+.ti -1c
+.RI "float \fB_keyFrameRate\fP"
+.br
 .in -1c
 .SH "Detailed Description"
 .PP 
-Definition at line 6 of file Timer\&.hpp\&.
+Definition at line 14 of file Timer\&.hpp\&.
 .SH "Member Function Documentation"
 .PP 
-.SS "unsigned long Timer::Delta (void) const"
+.SS "unsigned long Timer::delta (void) const"
 
 .PP
-Delta returns the time elapsed between the last Tick and the last Tock\&. Does not start a new timer\&. 
+delta returns the time elapsed between the last tick and the last tock\&. Does not start a new timer\&. 
 .PP
 \fBReturns:\fP
 .RS 4
@@ -59,42 +68,42 @@ Time elapsed in Microseconds, or Nanoseconds if _RT was enabled\&.
 .PP
 
 .PP
-Definition at line 59 of file Timer\&.cpp\&.
-.SS "double Timer::Scale (void) const"
+Definition at line 74 of file Timer\&.cpp\&.
+.SS "double Timer::scale (void) const"
 
 .PP
-Scale returns the relative lateness or eagerness of the \fBTimer\fP, Relative to a benchmark or Key Frame Rate (The default is 60FPS, or 16667 msec\&.) \fBReturns:\fP
+scale returns the relative lateness or eagerness of the \fBTimer\fP, Relative to a benchmark or Key Frame Rate (The default is 60FPS, or 16667 msec\&.) \fBReturns:\fP
 .RS 4
 A non-zero float that ranges from (0,1) indicating that the program is rendering faster than 60FPS, or from the range [1,+inf) indicating that the program is rendering slower than 60FPS\&. 
 .RE
 .PP
 
 .PP
-Definition at line 72 of file Timer\&.cpp\&.
-.SS "unsigned long Timer::Tick (void)"
+Definition at line 87 of file Timer\&.cpp\&.
+.SS "unsigned long Timer::tick (void)"
 
 .PP
-Tick is an alias for Tock\&. Ha, Ha, Ha\&. 
+tick is an alias for tock\&. Ha, Ha, Ha\&. 
 .PP
 \fBReturns:\fP
 .RS 4
-An unsigned long corresponding to how much time has passed since the last Tick\&. Microseconds normally, Nanoseconds if _RT was enabled\&. 
+An unsigned long corresponding to how much time has passed since the last tick\&. Microseconds normally, Nanoseconds if _RT was enabled\&. 
 .RE
 .PP
 
 .PP
-Definition at line 29 of file Timer\&.cpp\&.
-.SS "unsigned long Timer::Tock (void)"
+Definition at line 44 of file Timer\&.cpp\&.
+.SS "unsigned long Timer::tock (void)"
 
 .PP
-Tock returns the time elapsed since the last Tock\&. \fBReturns:\fP
+tock returns the time elapsed since the last tock\&. \fBReturns:\fP
 .RS 4
-An unsigned long corresponding to how much time has passed since the last Tock\&. Microseconds normally, Nanoseconds if _RT was enabled\&. 
+An unsigned long corresponding to how much time has passed since the last tock\&. Microseconds normally, Nanoseconds if _RT was enabled\&. 
 .RE
 .PP
 
 .PP
-Definition at line 39 of file Timer\&.cpp\&.
+Definition at line 54 of file Timer\&.cpp\&.
 
 .SH "Author"
 .PP 

@@ -1,4 +1,4 @@
-.TH "model.cpp" 3 "Fri Mar 15 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
+.TH "model.cpp" 3 "Fri Mar 29 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -54,7 +54,7 @@ Functions related to constructing simple geometry\&.
 .ti -1c
 .RI "#define \fBTEX_UV_AT\fP(X, Z)   (txy\&.at(\fBOFFSET_AT\fP(X,Z)))"
 .br
-.RI "\fIReturns the Texture UV (vec2) for the terrain at (X,Z)\&. \fP"
+.RI "\fIReturns the \fBTexture\fP UV (vec2) for the terrain at (X,Z)\&. \fP"
 .ti -1c
 .RI "#define \fBNORMAL_AT\fP(X, Z)   (nor\&.at(\fBOFFSET_AT\fP(X,Z)))"
 .br
@@ -64,31 +64,31 @@ Functions related to constructing simple geometry\&.
 
 .in +1c
 .ti -1c
-.RI "void \fBcreatePoint\fP (\fBObject\fP *obj, \fBpoint4\fP const &the_point, \fBcolor4\fP const &the_color, \fBvec3\fP const &the_normal)"
+.RI "void \fBcreatePoint\fP (\fBObject\fP *obj, \fBPoint4\fP const &the_point, \fBColor4\fP const &the_color, \fBvec3\fP const &the_normal)"
 .br
 .RI "\fIAdds another vertex to the specified object\&. \fP"
 .ti -1c
-.RI "void \fBtriangle\fP (\fBObject\fP *obj, const \fBpoint4\fP &a, const \fBpoint4\fP &b, const \fBpoint4\fP &c, const int color)"
+.RI "void \fBtriangle\fP (\fBObject\fP *obj, const \fBPoint4\fP &a, const \fBPoint4\fP &b, const \fBPoint4\fP &c, const int color)"
 .br
 .RI "\fICreates a triangle primitive from three spatial coordinates\&. \fP"
 .ti -1c
-.RI "\fBpoint4\fP \fBunit\fP (const \fBpoint4\fP &p)"
+.RI "\fBPoint4\fP \fBunit\fP (const \fBPoint4\fP &p)"
 .br
 .RI "\fIEd Angel utility function: Used to normalize a vector\&. \fP"
 .ti -1c
-.RI "void \fBdivideTriangle\fP (\fBObject\fP *obj, const \fBpoint4\fP &a, const \fBpoint4\fP &b, const \fBpoint4\fP &c, int timesToRecurse, int color)"
+.RI "void \fBdivideTriangle\fP (\fBObject\fP *obj, const \fBPoint4\fP &a, const \fBPoint4\fP &b, const \fBPoint4\fP &c, int timesToRecurse, int color)"
 .br
 .RI "\fIUsed in building the Sierpinski gasket: Takes the coordinate for a triangle and splits it into several smaller triangles\&. \fP"
 .ti -1c
-.RI "void \fBtetra\fP (\fBObject\fP *obj, const \fBpoint4\fP &a, const \fBpoint4\fP &b, const \fBpoint4\fP &c, const \fBpoint4\fP &d)"
+.RI "void \fBtetra\fP (\fBObject\fP *obj, const \fBPoint4\fP &a, const \fBPoint4\fP &b, const \fBPoint4\fP &c, const \fBPoint4\fP &d)"
 .br
 .RI "\fICreates a tetrahedron using four triangles\&. \fP"
 .ti -1c
-.RI "void \fBsierpinskiPyramid\fP (\fBObject\fP *obj, const \fBpoint4\fP &a, const \fBpoint4\fP &b, const \fBpoint4\fP &c, const \fBpoint4\fP &d, int count)"
+.RI "void \fBsierpinskiPyramid\fP (\fBObject\fP *obj, const \fBPoint4\fP &a, const \fBPoint4\fP &b, const \fBPoint4\fP &c, const \fBPoint4\fP &d, int count)"
 .br
 .RI "\fIForms a Sierpinski Pyramid object given four 4D _vertices in space\&. \fP"
 .ti -1c
-.RI "void \fBrecursiveModelGen\fP (\fBObject\fP *obj, const \fBpoint4\fP &a, const \fBpoint4\fP &b, const \fBpoint4\fP &c, const \fBpoint4\fP &d, int timesToRecurse, int color)"
+.RI "void \fBrecursiveModelGen\fP (\fBObject\fP *obj, const \fBPoint4\fP &a, const \fBPoint4\fP &b, const \fBPoint4\fP &c, const \fBPoint4\fP &d, int timesToRecurse, int color)"
 .br
 .RI "\fIGiven a quadrilateral, splits it up into smaller quadrilaterals\&. \fP"
 .ti -1c
@@ -96,11 +96,11 @@ Functions related to constructing simple geometry\&.
 .br
 .RI "\fICreates a white sphere\&. \fP"
 .ti -1c
-.RI "void \fBquad\fP (\fBObject\fP *obj, const \fBpoint4\fP &a, const \fBpoint4\fP &b, const \fBpoint4\fP &c, const \fBpoint4\fP &d, const \fBcolor4\fP &A, const \fBcolor4\fP &B, const \fBcolor4\fP &C, const \fBcolor4\fP &D)"
+.RI "void \fBquad\fP (\fBObject\fP *obj, const \fBPoint4\fP &a, const \fBPoint4\fP &b, const \fBPoint4\fP &c, const \fBPoint4\fP &d, const \fBColor4\fP &A, const \fBColor4\fP &B, const \fBColor4\fP &C, const \fBColor4\fP &D)"
 .br
 .RI "\fICreate a quadrilateral from four _vertices and four _colors\&. \fP"
 .ti -1c
-.RI "void \fBcube\fP (\fBObject\fP *obj, const GLfloat &size, const \fBcolor4\fP colors[8])"
+.RI "void \fBcube\fP (\fBObject\fP *obj, const GLfloat &size, const \fBColor4\fP colors[8])"
 .br
 .RI "\fICreate a cube of a given size fixed at the origin, using the eight _colors specified\&. \fP"
 .ti -1c
@@ -116,7 +116,7 @@ Functions related to constructing simple geometry\&.
 .br
 .RI "\fIReturns a random float between [-H,H]\&. \fP"
 .ti -1c
-.RI "\fBvec3\fP \fBcalcNormal\fP (\fBpoint4\fP &a, \fBpoint4\fP &b, \fBpoint4\fP &c)"
+.RI "\fBvec3\fP \fBcalcNormal\fP (\fBPoint4\fP &a, \fBPoint4\fP &b, \fBPoint4\fP &c)"
 .br
 .RI "\fICalculate the vector normal to the triangle formed by three _vertices\&. \fP"
 .ti -1c
@@ -165,7 +165,7 @@ A macro to help quickly call \fBquad()\fP with correct parameters\&. \fBSee Also
 Definition at line 263 of file model\&.cpp\&.
 .SH "Function Documentation"
 .PP 
-.SS "\fBvec3\fP calcNormal (\fBpoint4\fP &a, \fBpoint4\fP &b, \fBpoint4\fP &c)"
+.SS "\fBvec3\fP calcNormal (\fBPoint4\fP &a, \fBPoint4\fP &b, \fBPoint4\fP &c)"
 
 .PP
 Calculate the vector normal to the triangle formed by three _vertices\&. \fBParameters:\fP
@@ -200,7 +200,7 @@ Creates a cube of a given size fixed at the origin, using all eight primary _col
 
 .PP
 Definition at line 305 of file model\&.cpp\&.
-.SS "void createPoint (\fBObject\fP *obj, \fBpoint4\fP const &the_point, \fBcolor4\fP const &the_color, \fBvec3\fP const &the_normal)"
+.SS "void createPoint (\fBObject\fP *obj, \fBPoint4\fP const &the_point, \fBColor4\fP const &the_color, \fBvec3\fP const &the_normal)"
 
 .PP
 Adds another vertex to the specified object\&. \fBParameters:\fP
@@ -217,7 +217,7 @@ Adds another vertex to the specified object\&. \fBParameters:\fP
 
 .PP
 Definition at line 37 of file model\&.cpp\&.
-.SS "void cube (\fBObject\fP *obj, const GLfloat &size, const \fBcolor4\fPcolors[8])"
+.SS "void cube (\fBObject\fP *obj, const GLfloat &size, const \fBColor4\fPcolors[8])"
 
 .PP
 Create a cube of a given size fixed at the origin, using the eight _colors specified\&. Create a cube of a given size fixed at the origin, using the eight colors specified\&.
@@ -234,7 +234,7 @@ Create a cube of a given size fixed at the origin, using the eight _colors speci
 
 .PP
 Definition at line 275 of file model\&.cpp\&.
-.SS "void divideTriangle (\fBObject\fP *obj, const \fBpoint4\fP &a, const \fBpoint4\fP &b, const \fBpoint4\fP &c, inttimesToRecurse, intcolor)"
+.SS "void divideTriangle (\fBObject\fP *obj, const \fBPoint4\fP &a, const \fBPoint4\fP &b, const \fBPoint4\fP &c, inttimesToRecurse, intcolor)"
 
 .PP
 Used in building the Sierpinski gasket: Takes the coordinate for a triangle and splits it into several smaller triangles\&. \fBParameters:\fP
@@ -303,8 +303,8 @@ Adds a blue quadrilateral to an already-generated terrain object to create the a
 .PP
 What should the water's height be? 
 .PP
-Definition at line 557 of file model\&.cpp\&.
-.SS "void quad (\fBObject\fP *obj, const \fBpoint4\fP &a, const \fBpoint4\fP &b, const \fBpoint4\fP &c, const \fBpoint4\fP &d, const \fBcolor4\fP &A, const \fBcolor4\fP &B, const \fBcolor4\fP &C, const \fBcolor4\fP &D)"
+Definition at line 558 of file model\&.cpp\&.
+.SS "void quad (\fBObject\fP *obj, const \fBPoint4\fP &a, const \fBPoint4\fP &b, const \fBPoint4\fP &c, const \fBPoint4\fP &d, const \fBColor4\fP &A, const \fBColor4\fP &B, const \fBColor4\fP &C, const \fBColor4\fP &D)"
 
 .PP
 Create a quadrilateral from four _vertices and four _colors\&. Create a quadrilateral from four points and four colors\&.
@@ -344,7 +344,7 @@ A random float, just for you!
 
 .PP
 Definition at line 326 of file model\&.cpp\&.
-.SS "void recursiveModelGen (\fBObject\fP *obj, const \fBpoint4\fP &a, const \fBpoint4\fP &b, const \fBpoint4\fP &c, const \fBpoint4\fP &d, inttimesToRecurse, intcolor)"
+.SS "void recursiveModelGen (\fBObject\fP *obj, const \fBPoint4\fP &a, const \fBPoint4\fP &b, const \fBPoint4\fP &c, const \fBPoint4\fP &d, inttimesToRecurse, intcolor)"
 
 .PP
 Given a quadrilateral, splits it up into smaller quadrilaterals\&. Used in the generation of spheres! FIXME: Nick St\&.Pierre (Documentation!)
@@ -369,7 +369,7 @@ Given a quadrilateral, splits it up into smaller quadrilaterals\&. Used in the g
 
 .PP
 Definition at line 195 of file model\&.cpp\&.
-.SS "void sierpinskiPyramid (\fBObject\fP *obj, const \fBpoint4\fP &a, const \fBpoint4\fP &b, const \fBpoint4\fP &c, const \fBpoint4\fP &d, intcount)"
+.SS "void sierpinskiPyramid (\fBObject\fP *obj, const \fBPoint4\fP &a, const \fBPoint4\fP &b, const \fBPoint4\fP &c, const \fBPoint4\fP &d, intcount)"
 
 .PP
 Forms a Sierpinski Pyramid object given four 4D _vertices in space\&. Forms a Sierpinski Pyramid object given four 4D points in space\&.
@@ -403,7 +403,7 @@ Creates a white sphere\&. \fBParameters:\fP
 
 .PP
 Definition at line 210 of file model\&.cpp\&.
-.SS "void tetra (\fBObject\fP *obj, const \fBpoint4\fP &a, const \fBpoint4\fP &b, const \fBpoint4\fP &c, const \fBpoint4\fP &d)"
+.SS "void tetra (\fBObject\fP *obj, const \fBPoint4\fP &a, const \fBPoint4\fP &b, const \fBPoint4\fP &c, const \fBPoint4\fP &d)"
 
 .PP
 Creates a tetrahedron using four triangles\&. (12 vertices\&.)
@@ -424,7 +424,7 @@ Creates a tetrahedron using four triangles\&. (12 vertices\&.)
 
 .PP
 Definition at line 144 of file model\&.cpp\&.
-.SS "void triangle (\fBObject\fP *obj, const \fBpoint4\fP &a, const \fBpoint4\fP &b, const \fBpoint4\fP &c, const intcolor)"
+.SS "void triangle (\fBObject\fP *obj, const \fBPoint4\fP &a, const \fBPoint4\fP &b, const \fBPoint4\fP &c, const intcolor)"
 
 .PP
 Creates a triangle primitive from three spatial coordinates\&. \fBParameters:\fP
@@ -443,7 +443,7 @@ Creates a triangle primitive from three spatial coordinates\&. \fBParameters:\fP
 
 .PP
 Definition at line 56 of file model\&.cpp\&.
-.SS "\fBpoint4\fP unit (const \fBpoint4\fP &p)"
+.SS "\fBPoint4\fP unit (const \fBPoint4\fP &p)"
 
 .PP
 Ed Angel utility function: Used to normalize a vector\&. TODO: Is this a redundant version of Angel::normalize?

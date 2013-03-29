@@ -1,4 +1,4 @@
-.TH "RotMat" 3 "Fri Mar 15 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
+.TH "RotMat" 3 "Fri Mar 29 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -17,22 +17,22 @@ Inherits \fBTransformation\fP\&.
 
 .in +1c
 .ti -1c
-.RI "const \fBRotMat\fP & \fBReset\fP (const \fBAngel::mat4\fP &NewState)"
+.RI "const \fBRotMat\fP & \fBreset\fP (const \fBAngel::mat4\fP &NewState)"
 .br
 .ti -1c
-.RI "const \fBRotMat\fP & \fBRotateX\fP (const GLfloat theta, bool postmult=true)"
+.RI "const \fBRotMat\fP & \fBrotateX\fP (const GLfloat theta, bool postmult=true)"
 .br
 .ti -1c
-.RI "const \fBRotMat\fP & \fBRotateY\fP (const GLfloat theta, bool postmult=true)"
+.RI "const \fBRotMat\fP & \fBrotateY\fP (const GLfloat theta, bool postmult=true)"
 .br
 .ti -1c
-.RI "const \fBRotMat\fP & \fBRotateZ\fP (const GLfloat theta, bool postmult=true)"
+.RI "const \fBRotMat\fP & \fBrotateZ\fP (const GLfloat theta, bool postmult=true)"
 .br
 .ti -1c
-.RI "const \fBRotMat\fP & \fBAdjust\fP (const \fBAngel::mat4\fP &Adjustment, bool postmult=true)"
+.RI "const \fBRotMat\fP & \fBadjust\fP (const \fBAngel::mat4\fP &Adjustment, bool postmult=true)"
 .br
 .ti -1c
-.RI "const \fBAngel::mat4\fP & \fBMatrix\fP (void) const "
+.RI "const \fBAngel::mat4\fP & \fBmatrix\fP (void) const "
 .br
 .ti -1c
 .RI "\fBAngel::mat4\fP \fBoperator*\fP (const \fBAngel::mat4\fP &rhs) const "
@@ -52,7 +52,7 @@ Inherits \fBTransformation\fP\&.
 .PP 
 Rotations\&. 
 .PP
-Definition at line 33 of file Transformation\&.hpp\&.
+Definition at line 40 of file Transformation\&.hpp\&.
 
 .SH "Author"
 .PP 

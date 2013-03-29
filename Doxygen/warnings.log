@@ -1,20 +1,30 @@
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/zachMorphDemo.cpp:2: warning: the name `morph.cpp' supplied as the second argument in the \file statement is not an input file
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/WiiUtil.h:7: warning: Compound wiiPollData is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:8: warning: Compound Transformation is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:12: warning: Compound Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:16: warning: Compound Angel::vec2 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:61: warning: Compound Angel::vec3 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:111: warning: Compound Angel::vec4 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Timer.hpp:6: warning: Compound Timer is not documented.
+warning: ignoring unsupported tag `AUTOLINK_SUPPORT       =' at line 270, file Doxyfile
+warning: ignoring unsupported tag `USE_MDFILE_AS_MAINPAGE =' at line 836, file Doxyfile
+warning: ignoring unsupported tag `HTML_EXTRA_STYLESHEET  =' at line 974, file Doxyfile
+warning: ignoring unsupported tag `MATHJAX_FORMAT         =' at line 1252, file Doxyfile
+warning: ignoring unsupported tag `EXTERNAL_SEARCH        =' at line 1299, file Doxyfile
+warning: ignoring unsupported tag `SEARCHENGINE_URL       =' at line 1307, file Doxyfile
+warning: ignoring unsupported tag `SEARCHDATA_FILE        =' at line 1313, file Doxyfile
+warning: ignoring unsupported tag `EXTERNAL_SEARCH_ID     =' at line 1320, file Doxyfile
+warning: ignoring unsupported tag `EXTRA_SEARCH_MAPPINGS  =' at line 1329, file Doxyfile
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:16: warning: Compound Transformation is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:18: warning: Compound Angel::vec2 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:63: warning: Compound Angel::vec3 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:112: warning: Compound Angel::vec4 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Timer.hpp:14: warning: Compound Timer is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Texture.hpp:16: warning: Compound Texture is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/WiiUtil.h:15: warning: Compound WiiPollData is not documented.
 /home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/KinectInator.hpp:56: warning: Compound TiemSpelchk::Lurn2SpielNub is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Screen.hpp:8: warning: Compound Screen is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/TransCache.hpp:4: warning: Compound TransCache is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:63: warning: Compound ScaleMat is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:16: warning: Compound SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Screen.hpp:15: warning: Compound Screen is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/ParticleSystem.hpp:28: warning: Compound ParticleSystem is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/TransCache.hpp:14: warning: Compound TransCache is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:70: warning: Compound ScaleMat is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:17: warning: Compound SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/InitShader.hpp:12: warning: Member GL_INVALID_SHADER (macro definition) of file InitShader.hpp is not documented.
 /home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/KinectInator.cpp:104: warning: Member CHECK_RC(nRetVal, what) (macro definition) of file KinectInator.cpp is not documented.
 /home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/KinectInator.cpp:22: warning: Member fileExists(const char *fn) (function) of file KinectInator.cpp is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/KinectInator.cpp:294: warning: Member printhead(int user, double x, double y, double z) (function) of file KinectInator.cpp is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/KinectInator.cpp:297: warning: Member noop(int user, double x, double y, double z) (function) of file KinectInator.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/KinectInator.cpp:293: warning: Member printhead(int user, double x, double y, double z) (function) of file KinectInator.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/KinectInator.cpp:296: warning: Member noop(int user, double x, double y, double z) (function) of file KinectInator.cpp is not documented.
 /home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/KinectInator.cpp:169: warning: Member _new_user (variable) of namespace TiemSpelchk is not documented.
 /home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/KinectInator.cpp:170: warning: Member _lost_user (variable) of namespace TiemSpelchk is not documented.
 /home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/KinectInator.cpp:171: warning: Member _pose (variable) of namespace TiemSpelchk is not documented.
@@ -57,7 +67,7 @@
 /home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/mat.cpp:643: warning: Member Frustum(const GLfloat left, const GLfloat right, const GLfloat bottom, const GLfloat top, const GLfloat zNear, const GLfloat zFar) (function) of namespace Angel is not documented.
 /home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/mat.cpp:656: warning: Member Perspective(const GLfloat fovy, const GLfloat aspect, const GLfloat zNear, const GLfloat zFar) (function) of namespace Angel is not documented.
 /home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/mat.cpp:669: warning: Member LookAt(const vec4 &eye, const vec4 &at, const vec4 &up) (function) of namespace Angel is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/mat.hpp:208: warning: Member Error(str) (macro definition) of file mat.hpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/mat.hpp:208: warning: Member ERROR(str) (macro definition) of file mat.hpp is not documented.
 /home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/mat.cpp:183: warning: Member matrixCompMult(const mat2 &A, const mat2 &B) (function) of namespace Angel is not documented.
 /home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/mat.cpp:188: warning: Member transpose(const mat2 &A) (function) of namespace Angel is not documented.
 /home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/mat.cpp:354: warning: Member matrixCompMult(const mat3 &A, const mat3 &B) (function) of namespace Angel is not documented.
@@ -77,244 +87,328 @@
 /home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/mat.cpp:643: warning: Member Frustum(const GLfloat left, const GLfloat right, const GLfloat bottom, const GLfloat top, const GLfloat zNear, const GLfloat zFar) (function) of namespace Angel is not documented.
 /home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/mat.cpp:656: warning: Member Perspective(const GLfloat fovy, const GLfloat aspect, const GLfloat zNear, const GLfloat zFar) (function) of namespace Angel is not documented.
 /home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/mat.cpp:669: warning: Member LookAt(const vec4 &eye, const vec4 &at, const vec4 &up) (function) of namespace Angel is not documented.
-<Error>:1: warning: parameters of member Error are not (all) documented
+<ERROR>:1: warning: parameters of member ERROR are not (all) documented
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/melt.cpp:40: warning: Member melt_draw(void) (function) of file melt.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/melt.cpp:120: warning: Member melt_init(void) (function) of file melt.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/melt.cpp:124: warning: Member melt_enable(void) (function) of file melt.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/melt.cpp:141: warning: Member melt_camera(void) (function) of file melt.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/melt.cpp:146: warning: Member melt_display(void) (function) of file melt.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/melt.cpp:187: warning: Member melt_reshape(int w, int h) (function) of file melt.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/melt.cpp:196: warning: Member melt_keyboard(unsigned char key, int x, int y) (function) of file melt.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/melt.cpp:228: warning: Member main(int argc, char **argv) (function) of file melt.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/melt.cpp:31: warning: Member positionx[1000] (variable) of file melt.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/melt.cpp:31: warning: Member positiony[1000] (variable) of file melt.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/melt.cpp:31: warning: Member positionz[1000] (variable) of file melt.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/melt.cpp:32: warning: Member orb (variable) of file melt.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/melt.cpp:32: warning: Member candleheight (variable) of file melt.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/melt.cpp:32: warning: Member radius (variable) of file melt.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/melt.cpp:32: warning: Member grow (variable) of file melt.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/melt.cpp:33: warning: Member angle (variable) of file melt.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/melt.cpp:33: warning: Member randomN (variable) of file melt.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/melt.cpp:34: warning: Member crater (variable) of file melt.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/melt.cpp:35: warning: Member slices (variable) of file melt.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/melt.cpp:36: warning: Member i (variable) of file melt.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/melt.cpp:36: warning: Member j (variable) of file melt.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/melt.cpp:37: warning: Member melt (variable) of file melt.cpp is not documented.
 /home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Common/modelFunctions.cpp:13: warning: Member threeDimensionalDistance(vec4 points1, vec4 points2) (function) of file modelFunctions.cpp is not documented.
 /home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Common/modelFunctions.cpp:20: warning: Member findTriangleWithMinimumDistance(Object *largerModel, Object *smallerModel, int index) (function) of file modelFunctions.cpp is not documented.
 /home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Common/modelFunctions.cpp:39: warning: Member makeModelsSameSize(Object *model1, Object *model2) (function) of file modelFunctions.cpp is not documented.
 /home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/modelFunctions.hpp:23: warning: Member makeModelsSameSize(Object *model1, Object *model2) (function) of file modelFunctions.hpp is not documented.
 /home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/modelFunctions.hpp:25: warning: Member findTriangleWithMinimumDistance(Object *largerModel, Object *smallerModel, int index) (function) of file modelFunctions.hpp is not documented.
 /home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/modelFunctions.hpp:26: warning: Member threeDimensionalDistance(vec4 points1, vec4 points2) (function) of file modelFunctions.hpp is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/raytrace1.cpp:23: warning: Member vRayPosition (variable) of file raytrace1.cpp is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/terrain.cpp:369: warning: Member simpleRotateY(TransCache &obj) (function) of file terrain.cpp is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/terrain.cpp:372: warning: Member simpleRotateAnim(TransCache &obj) (function) of file terrain.cpp is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/terrain.cpp:378: warning: Member animationTest(TransCache &obj) (function) of file terrain.cpp is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/terrain.cpp:414: warning: Member idle(void) (function) of file terrain.cpp is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/terrain.cpp:472: warning: Member menufunc(int value) (function) of file terrain.cpp is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/terrain.cpp:489: warning: Member main(int argc, char **argv) (function) of file terrain.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/ParticleSystem.hpp:26: warning: Member ParticleP (typedef) of file ParticleSystem.hpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/partTest.cpp:36: warning: Member Color4 (typedef) of file partTest.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/partTest.cpp:37: warning: Member Point4 (typedef) of file partTest.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/partTest.cpp:44: warning: Member init() (function) of file partTest.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/partTest.cpp:69: warning: Member cleanup(void) (function) of file partTest.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/partTest.cpp:75: warning: Member draw(void) (function) of file partTest.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/partTest.cpp:84: warning: Member display(void) (function) of file partTest.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/partTest.cpp:98: warning: Member idle(void) (function) of file partTest.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/partTest.cpp:109: warning: Member main(int argc, char **argv) (function) of file partTest.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/partTest.cpp:40: warning: Member myScreen(800, 600) (variable) of file partTest.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/partTest.cpp:41: warning: Member fixed_yaw (variable) of file partTest.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/raytrace1.cpp:23: warning: Member dethklok (variable) of file raytrace1.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/raytrace1.cpp:25: warning: Member vRayPosition (variable) of file raytrace1.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/raytrace1.cpp:32: warning: Member uSphereCenterPoints (variable) of file raytrace1.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/raytrace1.cpp:33: warning: Member uSphereRadius (variable) of file raytrace1.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/raytrace1.cpp:34: warning: Member uSphereColors (variable) of file raytrace1.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/raytrace1.cpp:35: warning: Member uNumOfSpheres (variable) of file raytrace1.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/raytrace1.cpp:40: warning: Member sphereCenterPoints[] (variable) of file raytrace1.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/raytrace1.cpp:42: warning: Member sphereRadius[] (variable) of file raytrace1.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/raytrace1.cpp:45: warning: Member sphereColors[] (variable) of file raytrace1.cpp is not documented.
+<sphereCenterPoints>:1: warning: parameters of member sphereCenterPoints are not (all) documented
+<sphereColors>:1: warning: parameters of member sphereColors are not (all) documented
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/Scene.cpp:17: warning: Member mapping (typedef) of file Scene.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/terrain.cpp:359: warning: Member simpleRotateY(TransCache &obj) (function) of file terrain.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/terrain.cpp:362: warning: Member simpleRotateAnim(TransCache &obj) (function) of file terrain.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/terrain.cpp:368: warning: Member animationTest(TransCache &obj) (function) of file terrain.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/terrain.cpp:403: warning: Member idle(void) (function) of file terrain.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/terrain.cpp:465: warning: Member menufunc(int value) (function) of file terrain.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/terrain.cpp:482: warning: Member main(int argc, char **argv) (function) of file terrain.cpp is not documented.
 /home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/terrain.cpp:56: warning: Member terrainTex[] (variable) of file terrain.cpp is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/terrain.cpp:265: warning: Member switchingTerrain (variable) of file terrain.cpp is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/terrain.cpp:412: warning: Member ticker (variable) of file terrain.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/terrain.cpp:261: warning: Member switchingTerrain (variable) of file terrain.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/terrain.cpp:401: warning: Member ticker (variable) of file terrain.cpp is not documented.
 <terrainTex>:1: warning: parameters of member terrainTex are not (all) documented
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:126: warning: Member operator*(const GLfloat s, const vec2 &v) (function) of namespace Angel is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:128: warning: Member operator<<(std::ostream &os, const vec2 &v) (function) of namespace Angel is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:133: warning: Member operator>>(std::istream &is, vec2 &v) (function) of namespace Angel is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:135: warning: Member dot(const vec2 &u, const vec2 &v) (function) of namespace Angel is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:140: warning: Member length(const vec2 &v) (function) of namespace Angel is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:145: warning: Member normalize(const vec2 &v) (function) of namespace Angel is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:258: warning: Member operator*(const GLfloat s, const vec3 &v) (function) of namespace Angel is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:260: warning: Member operator<<(std::ostream &os, const vec3 &v) (function) of namespace Angel is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:265: warning: Member operator>>(std::istream &is, vec3 &v) (function) of namespace Angel is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:267: warning: Member dot(const vec3 &u, const vec3 &v) (function) of namespace Angel is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:272: warning: Member length(const vec3 &v) (function) of namespace Angel is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:277: warning: Member normalize(const vec3 &v) (function) of namespace Angel is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:283: warning: Member cross(const vec3 &a, const vec3 &b) (function) of namespace Angel is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:403: warning: Member operator*(const GLfloat s, const vec4 &v) (function) of namespace Angel is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:405: warning: Member operator<<(std::ostream &os, const vec4 &v) (function) of namespace Angel is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:411: warning: Member operator>>(std::istream &is, vec4 &v) (function) of namespace Angel is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:414: warning: Member dot(const vec4 &u, const vec4 &v) (function) of namespace Angel is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:419: warning: Member length(const vec4 &v) (function) of namespace Angel is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:424: warning: Member normalize(const vec4 &v) (function) of namespace Angel is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:430: warning: Member cross(const vec4 &a, const vec4 &b) (function) of namespace Angel is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:436: warning: Member XYZ(const vec4 &a) (function) of namespace Angel is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:21: warning: Member addObject(const std::string &objName, GLuint Object_Shader=0) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:22: warning: Member delObject(const std::string &objName) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:23: warning: Member delObject(void) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:24: warning: Member popObject(void) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:27: warning: Member next(void) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:28: warning: Member prev(void) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:29: warning: Member active(void) const  (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:33: warning: Member operator[](const std::string &objname) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:49: warning: Member insertObject(const std::string name, Object *obj) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:40: warning: Member _list (variable) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:41: warning: Member _map (variable) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:42: warning: Member _currentObj (variable) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:45: warning: Member _gShader (variable) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:21: warning: Member addObject(const std::string &objName, GLuint Object_Shader=0) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:22: warning: Member delObject(const std::string &objName) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:23: warning: Member delObject(void) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:24: warning: Member popObject(void) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:31: warning: Member draw(void) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:33: warning: Member operator[](const std::string &objname) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:49: warning: Member insertObject(const std::string name, Object *obj) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:40: warning: Member _list (variable) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:41: warning: Member _map (variable) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:42: warning: Member _currentObj (variable) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:45: warning: Member _gShader (variable) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:21: warning: Member addObject(const std::string &objName, GLuint Object_Shader=0) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:22: warning: Member delObject(const std::string &objName) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:23: warning: Member delObject(void) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:24: warning: Member popObject(void) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:27: warning: Member next(void) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:28: warning: Member prev(void) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:29: warning: Member active(void) const  (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:33: warning: Member operator[](const std::string &objname) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:49: warning: Member insertObject(const std::string name, Object *obj) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:40: warning: Member _list (variable) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:41: warning: Member _map (variable) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:42: warning: Member _currentObj (variable) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:45: warning: Member _gShader (variable) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Particle.hpp:36: warning: Member Particle(vec4 initPos, vec3 initScale, vec3 initVel, float initAlpha, vec4 initColor, float initLifespan, float initSpin, string initTex) (function) of class Particle is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Particle.hpp:40: warning: Member update() (function) of class Particle is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Particle.hpp:42: warning: Member setPos(vec4 newPos) (function) of class Particle is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Particle.hpp:43: warning: Member setScale(vec3 newScale) (function) of class Particle is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Particle.hpp:44: warning: Member setVel(vec3 newVel) (function) of class Particle is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Particle.hpp:46: warning: Member setAlpha(float newAlpha) (function) of class Particle is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Particle.hpp:47: warning: Member setColor(vec4 newColor) (function) of class Particle is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Particle.hpp:48: warning: Member setLifespan(float newLifespan) (function) of class Particle is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Particle.hpp:49: warning: Member setSpin(float newSpin) (function) of class Particle is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Particle.hpp:51: warning: Member setTexFile(string newFilename) (function) of class Particle is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:21: warning: Member addObject(const std::string &objName, GLuint Object_Shader=0) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:22: warning: Member delObject(const std::string &objName) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:23: warning: Member delObject(void) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:24: warning: Member popObject(void) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:27: warning: Member next(void) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:28: warning: Member prev(void) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:29: warning: Member active(void) const  (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:33: warning: Member operator[](const std::string &objname) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:49: warning: Member insertObject(const std::string name, Object *obj) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:40: warning: Member _list (variable) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:41: warning: Member _map (variable) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:42: warning: Member _currentObj (variable) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:45: warning: Member _gShader (variable) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Particle.hpp:54: warning: Member mPos (variable) of class Particle is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Particle.hpp:55: warning: Member mScale (variable) of class Particle is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Particle.hpp:56: warning: Member mVel (variable) of class Particle is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Particle.hpp:58: warning: Member alpha (variable) of class Particle is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Particle.hpp:59: warning: Member blendColor (variable) of class Particle is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Particle.hpp:60: warning: Member lifespan (variable) of class Particle is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Particle.hpp:61: warning: Member spin (variable) of class Particle is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Particle.hpp:63: warning: Member texFilename (variable) of class Particle is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:37: warning: Member Reset(const Angel::mat4 &NewState) (function) of class RotMat is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:38: warning: Member RotateX(const GLfloat theta, bool postmult=true) (function) of class RotMat is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:39: warning: Member RotateY(const GLfloat theta, bool postmult=true) (function) of class RotMat is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:40: warning: Member RotateZ(const GLfloat theta, bool postmult=true) (function) of class RotMat is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:41: warning: Member Adjust(const Angel::mat4 &Adjustment, bool postmult=true) (function) of class RotMat is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:19: warning: Member Matrix(void) const  (function) of class Transformation is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:20: warning: Member operator*(const Angel::mat4 &rhs) const  (function) of class Transformation is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:21: warning: Member operator*(const Transformation &rhs) const  (function) of class Transformation is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:24: warning: Member mat (variable) of class Transformation is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:67: warning: Member Set(const float x, const float y, const float z) (function) of class ScaleMat is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:68: warning: Member Set(const float pct) (function) of class ScaleMat is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:70: warning: Member Adjust(const float x, const float y, const float z) (function) of class ScaleMat is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:71: warning: Member Adjust(const float pct) (function) of class ScaleMat is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:19: warning: Member Matrix(void) const  (function) of class Transformation is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:20: warning: Member operator*(const Angel::mat4 &rhs) const  (function) of class Transformation is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:21: warning: Member operator*(const Transformation &rhs) const  (function) of class Transformation is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:24: warning: Member mat (variable) of class Transformation is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:21: warning: Member addObject(const std::string &objName, GLuint Object_Shader=0) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:22: warning: Member delObject(const std::string &objName) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:23: warning: Member delObject(void) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:24: warning: Member popObject(void) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:27: warning: Member next(void) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:28: warning: Member prev(void) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:29: warning: Member active(void) const  (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:31: warning: Member draw(void) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:33: warning: Member operator[](const std::string &objname) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:36: warning: Member Scene(const Scene &copy) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:37: warning: Member operator=(const Scene &copy) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:49: warning: Member insertObject(const std::string name, Object *obj) (function) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:40: warning: Member _list (variable) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:41: warning: Member _map (variable) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:42: warning: Member _currentObj (variable) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:45: warning: Member _gShader (variable) of class Scene is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Screen.hpp:12: warning: Member Screen(int x=0, int y=0) (function) of class Screen is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Screen.hpp:13: warning: Member Screen(const vec2 &newSize) (function) of class Screen is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Screen.hpp:16: warning: Member Size(int x, int y) (function) of class Screen is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Screen.hpp:17: warning: Member Size(const vec2 &newSize) (function) of class Screen is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Screen.hpp:19: warning: Member Size(void) (function) of class Screen is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Screen.hpp:20: warning: Member Width(void) (function) of class Screen is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Screen.hpp:21: warning: Member Height(void) (function) of class Screen is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Screen.hpp:23: warning: Member Center(void) (function) of class Screen is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Screen.hpp:24: warning: Member MidpointX(void) (function) of class Screen is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Screen.hpp:25: warning: Member MidpointY(void) (function) of class Screen is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Screen.hpp:28: warning: Member _camList (variable) of class Screen is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Screen.hpp:32: warning: Member _size (variable) of class Screen is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Screen.hpp:33: warning: Member _center (variable) of class Screen is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:50: warning: Member SpelchkCamera(vec4 initialTranslationVector) (function) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:53: warning: Member getProjectionMatrix() (function) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:54: warning: Member getModelViewMatrix() (function) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:55: warning: Member getTranslationVector() (function) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:58: warning: Member moveCamera(float xDepth, float yDepth, float zDepth) (function) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:61: warning: Member rotateCamera(float xAngle, float yAngle, float zAngle) (function) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:63: warning: Member setScreenSize(int width, int height) (function) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:64: warning: Member setProjection(int projectionType) (function) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:66: warning: Member reset() (function) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:68: warning: Member setLightMovementRef(GLuint ref) (function) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:69: warning: Member setLightMovementTime(float elapsed) (function) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:71: warning: Member getReadyForZero(int usernum) (function) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:72: warning: Member headMovement(int usernum, double x, double y, double z) (function) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:47: warning: Member calculateTranslationVector() (function) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:18: warning: Member projectionType (variable) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:21: warning: Member fovy (variable) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:22: warning: Member aspect (variable) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:24: warning: Member left (variable) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:24: warning: Member right (variable) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:25: warning: Member bottom (variable) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:25: warning: Member top (variable) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:26: warning: Member zNear (variable) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:26: warning: Member zFar (variable) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:28: warning: Member timeRef (variable) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:30: warning: Member screenWidth (variable) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:30: warning: Member screenHeight (variable) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:32: warning: Member xDepth (variable) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:32: warning: Member yDepth (variable) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:32: warning: Member zDepth (variable) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:33: warning: Member xAngle (variable) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:33: warning: Member yAngle (variable) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:33: warning: Member zAngle (variable) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:34: warning: Member xHead (variable) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:34: warning: Member yHead (variable) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:34: warning: Member zHead (variable) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:35: warning: Member xHeadStart (variable) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:35: warning: Member yHeadStart (variable) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:35: warning: Member zHeadStart (variable) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:36: warning: Member xHeadAngle (variable) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:36: warning: Member yHeadAngle (variable) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:36: warning: Member zHeadAngle (variable) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:38: warning: Member initialTranslationVector (variable) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:39: warning: Member translationVector (variable) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:40: warning: Member oldTranslationVector (variable) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:42: warning: Member modelViewMatrix (variable) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:44: warning: Member inboundHeadData (variable) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:45: warning: Member initialHeadPosition (variable) of class SpelchkCamera is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Timer.hpp:20: warning: Member _T1 (variable) of class Timer is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Timer.hpp:21: warning: Member _T2 (variable) of class Timer is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Timer.hpp:23: warning: Member _delta (variable) of class Timer is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Timer.hpp:24: warning: Member _scale (variable) of class Timer is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/TransCache.hpp:8: warning: Member PTM(const Angel::mat4 &ptm_in, bool postmult=true) (function) of class TransCache is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/TransCache.hpp:10: warning: Member PTM(void) const  (function) of class TransCache is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/TransCache.hpp:11: warning: Member CTM(void) const  (function) of class TransCache is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/TransCache.hpp:12: warning: Member OTM(void) const  (function) of class TransCache is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/TransCache.hpp:26: warning: Member CalcCTM(bool postmult=true) (function) of class TransCache is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/TransCache.hpp:15: warning: Member PreOffset (variable) of class TransCache is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/TransCache.hpp:16: warning: Member PreRotation (variable) of class TransCache is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/TransCache.hpp:19: warning: Member scale (variable) of class TransCache is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/TransCache.hpp:20: warning: Member rotation (variable) of class TransCache is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/TransCache.hpp:21: warning: Member offset (variable) of class TransCache is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/TransCache.hpp:22: warning: Member orbit (variable) of class TransCache is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/TransCache.hpp:23: warning: Member displacement (variable) of class TransCache is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/TransCache.hpp:31: warning: Member ptm (variable) of class TransCache is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/TransCache.hpp:32: warning: Member ctm (variable) of class TransCache is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/TransCache.hpp:33: warning: Member otm (variable) of class TransCache is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:19: warning: Member Matrix(void) const  (function) of class Transformation is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:20: warning: Member operator*(const Angel::mat4 &rhs) const  (function) of class Transformation is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:21: warning: Member operator*(const Transformation &rhs) const  (function) of class Transformation is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:24: warning: Member mat (variable) of class Transformation is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:51: warning: Member SetX(const float x) (function) of class TransMat is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:52: warning: Member SetY(const float y) (function) of class TransMat is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:53: warning: Member SetZ(const float z) (function) of class TransMat is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:55: warning: Member Set(const float x, const float y, const float z) (function) of class TransMat is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:56: warning: Member Set(const Angel::vec3 &arg) (function) of class TransMat is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:58: warning: Member Delta(const float x, const float y, const float z) (function) of class TransMat is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:59: warning: Member Delta(const Angel::vec3 &arg) (function) of class TransMat is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:19: warning: Member Matrix(void) const  (function) of class Transformation is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:20: warning: Member operator*(const Angel::mat4 &rhs) const  (function) of class Transformation is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:21: warning: Member operator*(const Transformation &rhs) const  (function) of class Transformation is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:24: warning: Member mat (variable) of class Transformation is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/WiiUtil.h:8: warning: Member bb_magnitudes (variable) of class wiiPollData is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/WiiUtil.h:9: warning: Member wr_thetas (variable) of class wiiPollData is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/WiiUtil.h:10: warning: Member wr_rates (variable) of class wiiPollData is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/WiiUtil.h:11: warning: Member Reset_Camera (variable) of class wiiPollData is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/Timer.cpp:20: warning: Member SecToNSec (macro definition) of file Timer.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/Timer.cpp:21: warning: Member SecTouSec (macro definition) of file Timer.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/Timer.cpp:22: warning: Member SecToMSec (macro definition) of file Timer.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/Transformation.cpp:29: warning: Member operator*(const Angel::mat4 &lhs, const Transformation &rhs) (function) of file Transformation.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:36: warning: Member operator*(const Angel::mat4 &lhs, const Transformation &rhs) (function) of file Transformation.hpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:149: warning: Member operator*(const GLfloat s, const vec2 &v) (function) of namespace Angel is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:153: warning: Member operator<<(std::ostream &os, const vec2 &v) (function) of namespace Angel is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:157: warning: Member operator>>(std::istream &is, vec2 &v) (function) of namespace Angel is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:161: warning: Member dot(const vec2 &u, const vec2 &v) (function) of namespace Angel is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:165: warning: Member length(const vec2 &v) (function) of namespace Angel is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:169: warning: Member normalize(const vec2 &v) (function) of namespace Angel is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:317: warning: Member operator*(const GLfloat s, const vec3 &v) (function) of namespace Angel is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:321: warning: Member operator<<(std::ostream &os, const vec3 &v) (function) of namespace Angel is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:325: warning: Member operator>>(std::istream &is, vec3 &v) (function) of namespace Angel is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:329: warning: Member dot(const vec3 &u, const vec3 &v) (function) of namespace Angel is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:333: warning: Member length(const vec3 &v) (function) of namespace Angel is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:337: warning: Member normalize(const vec3 &v) (function) of namespace Angel is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:341: warning: Member cross(const vec3 &a, const vec3 &b) (function) of namespace Angel is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:499: warning: Member operator*(const GLfloat s, const vec4 &v) (function) of namespace Angel is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:503: warning: Member operator<<(std::ostream &os, const vec4 &v) (function) of namespace Angel is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:508: warning: Member operator>>(std::istream &is, vec4 &v) (function) of namespace Angel is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:512: warning: Member dot(const vec4 &u, const vec4 &v) (function) of namespace Angel is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:516: warning: Member length(const vec4 &v) (function) of namespace Angel is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:520: warning: Member normalize(const vec4 &v) (function) of namespace Angel is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:524: warning: Member cross(const vec4 &a, const vec4 &b) (function) of namespace Angel is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:529: warning: Member xyz(const vec4 &a) (function) of namespace Angel is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:161: warning: Member dot(const vec2 &u, const vec2 &v) (function) of namespace Angel is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:165: warning: Member length(const vec2 &v) (function) of namespace Angel is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:169: warning: Member normalize(const vec2 &v) (function) of namespace Angel is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:329: warning: Member dot(const vec3 &u, const vec3 &v) (function) of namespace Angel is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:333: warning: Member length(const vec3 &v) (function) of namespace Angel is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:337: warning: Member normalize(const vec3 &v) (function) of namespace Angel is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:341: warning: Member cross(const vec3 &a, const vec3 &b) (function) of namespace Angel is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:512: warning: Member dot(const vec4 &u, const vec4 &v) (function) of namespace Angel is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:516: warning: Member length(const vec4 &v) (function) of namespace Angel is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:520: warning: Member normalize(const vec4 &v) (function) of namespace Angel is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:524: warning: Member cross(const vec4 &a, const vec4 &b) (function) of namespace Angel is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Classes/vec.cpp:529: warning: Member xyz(const vec4 &a) (function) of namespace Angel is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Common/WiiUtil.cpp:55: warning: Member initWii(CWii &wii) (function) of file WiiUtil.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Common/WiiUtil.cpp:181: warning: Member wiiHandleBB(CWiimote &wm) (function) of file WiiUtil.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Common/WiiUtil.cpp:267: warning: Member enableRemote(CWiimote &wm) (function) of file WiiUtil.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Common/WiiUtil.cpp:275: warning: Member calibrateGyro(CWii &wii) (function) of file WiiUtil.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Common/WiiUtil.cpp:49: warning: Member bbMagnitudes (variable) of file WiiUtil.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Common/WiiUtil.cpp:50: warning: Member pollResults (variable) of file WiiUtil.cpp is not documented.
+<pollWii>:1: warning: parameters of member pollWii are not (all) documented
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/WiiUtil.h:26: warning: Member initWii(CWii &wii) (function) of file WiiUtil.h is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/WiiUtil.h:28: warning: Member wiiHandleBB(CWiimote &wm) (function) of file WiiUtil.h is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/WiiUtil.h:29: warning: Member calibrateGyro(CWii &wii) (function) of file WiiUtil.h is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/WiiUtil.h:22: warning: Member ledMap[4] (variable) of file WiiUtil.h is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/WiiUtil.h:23: warning: Member bbMagnitudes (variable) of file WiiUtil.h is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/WiiUtil.h:24: warning: Member pollResults (variable) of file WiiUtil.h is not documented.
+<pollWii>:1: warning: parameters of member pollWii are not (all) documented
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/zachMorphDemo.cpp:35: warning: Member init() (function) of file zachMorphDemo.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/zachMorphDemo.cpp:88: warning: Member cleanup(void) (function) of file zachMorphDemo.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/zachMorphDemo.cpp:95: warning: Member draw(void) (function) of file zachMorphDemo.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/zachMorphDemo.cpp:104: warning: Member display(void) (function) of file zachMorphDemo.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/zachMorphDemo.cpp:118: warning: Member simpleRotateAnim(TransCache &obj) (function) of file zachMorphDemo.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/zachMorphDemo.cpp:126: warning: Member idle(void) (function) of file zachMorphDemo.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/Binaries/zachMorphDemo.cpp:170: warning: Member main(int argc, char **argv) (function) of file zachMorphDemo.cpp is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:96: warning: Member next(void) (function) of class Scene is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:97: warning: Member prev(void) (function) of class Scene is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:98: warning: Member active(void) const  (function) of class Scene is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:102: warning: Member operator[](const std::string &objname) (function) of class Scene is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:68: warning: argument 'Object_Shader' of command @param is not found in the argument list of Scene::addObject(const std::string &objName, GLuint shader=0)
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:68: warning: The following parameters of Scene::addObject(const std::string &objName, GLuint shader=0) are not documented:
+  parameter 'shader'
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:109: warning: argument 'name' of command @param is not found in the argument list of Scene::insertObject(Object *obj)
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:100: warning: Member draw(void) (function) of class Scene is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:102: warning: Member operator[](const std::string &objname) (function) of class Scene is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:68: warning: argument 'Object_Shader' of command @param is not found in the argument list of Scene::addObject(const std::string &objName, GLuint shader=0)
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:68: warning: The following parameters of Scene::addObject(const std::string &objName, GLuint shader=0) are not documented:
+  parameter 'shader'
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:109: warning: argument 'name' of command @param is not found in the argument list of Scene::insertObject(Object *obj)
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:96: warning: Member next(void) (function) of class Scene is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:97: warning: Member prev(void) (function) of class Scene is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:98: warning: Member active(void) const  (function) of class Scene is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:102: warning: Member operator[](const std::string &objname) (function) of class Scene is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:68: warning: argument 'Object_Shader' of command @param is not found in the argument list of Scene::addObject(const std::string &objName, GLuint shader=0)
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:68: warning: The following parameters of Scene::addObject(const std::string &objName, GLuint shader=0) are not documented:
+  parameter 'shader'
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:109: warning: argument 'name' of command @param is not found in the argument list of Scene::insertObject(Object *obj)
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Particle.hpp:35: warning: Member Particle(vec4 position, float scale, float lifeSpan) (function) of class Particle is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Particle.hpp:38: warning: Member changeVel(vec3 newVel) (function) of class Particle is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Particle.hpp:40: warning: Member getLifespan(void) (function) of class Particle is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Particle.hpp:42: warning: Member setAlpha(float newAlpha) (function) of class Particle is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Particle.hpp:43: warning: Member setColor(vec4 newColor) (function) of class Particle is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Particle.hpp:44: warning: Member setLifespan(float newLifespan) (function) of class Particle is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Particle.hpp:45: warning: Member setPos(vec4 newPos) (function) of class Particle is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Particle.hpp:46: warning: Member setScale(vec3 newScale) (function) of class Particle is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Particle.hpp:47: warning: Member setSpin(float newSpin) (function) of class Particle is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Particle.hpp:48: warning: Member setVel(vec3 newVel) (function) of class Particle is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Particle.hpp:49: warning: Member setTexFile(string newFilename) (function) of class Particle is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Particle.hpp:52: warning: Member mPos (variable) of class Particle is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Particle.hpp:53: warning: Member mScale (variable) of class Particle is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Particle.hpp:54: warning: Member mVel (variable) of class Particle is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Particle.hpp:55: warning: Member color (variable) of class Particle is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Particle.hpp:56: warning: Member lifespan (variable) of class Particle is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Particle.hpp:59: warning: Member texFilename (variable) of class Particle is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/ParticleSystem.hpp:32: warning: Member ParticleSystem(int particleAmt, const std::string &name, GLuint shader) (function) of class ParticleSystem is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/ParticleSystem.hpp:35: warning: Member addParticle(void) (function) of class ParticleSystem is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/ParticleSystem.hpp:38: warning: Member getColor(void) (function) of class ParticleSystem is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/ParticleSystem.hpp:39: warning: Member getLifespan(void) (function) of class ParticleSystem is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/ParticleSystem.hpp:40: warning: Member getMaxLife(void) (function) of class ParticleSystem is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/ParticleSystem.hpp:41: warning: Member getMinLife(void) (function) of class ParticleSystem is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/ParticleSystem.hpp:42: warning: Member getNumParticles(void) (function) of class ParticleSystem is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/ParticleSystem.hpp:44: warning: Member setColor(vec4 newColor) (function) of class ParticleSystem is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/ParticleSystem.hpp:45: warning: Member setLifespan(float minLifespan, float maxLifespan) (function) of class ParticleSystem is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/ParticleSystem.hpp:46: warning: Member setNumParticles(int newNumParticles) (function) of class ParticleSystem is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/ParticleSystem.hpp:51: warning: Member update() (function) of class ParticleSystem is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:96: warning: Member next(void) (function) of class Scene is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:97: warning: Member prev(void) (function) of class Scene is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:98: warning: Member active(void) const  (function) of class Scene is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:102: warning: Member operator[](const std::string &objname) (function) of class Scene is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/ParticleSystem.hpp:57: warning: Member rangeRandom(float min, float max) (function) of class ParticleSystem is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/ParticleSystem.hpp:59: warning: Member particles (variable) of class ParticleSystem is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/ParticleSystem.hpp:60: warning: Member numParticles (variable) of class ParticleSystem is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/ParticleSystem.hpp:61: warning: Member maxLife (variable) of class ParticleSystem is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/ParticleSystem.hpp:62: warning: Member minLife (variable) of class ParticleSystem is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/ParticleSystem.hpp:65: warning: Member color (variable) of class ParticleSystem is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:68: warning: argument 'Object_Shader' of command @param is not found in the argument list of Scene::addObject(const std::string &objName, GLuint shader=0)
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:68: warning: The following parameters of Scene::addObject(const std::string &objName, GLuint shader=0) are not documented:
+  parameter 'shader'
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:109: warning: argument 'name' of command @param is not found in the argument list of Scene::insertObject(Object *obj)
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:44: warning: Member reset(const Angel::mat4 &NewState) (function) of class RotMat is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:45: warning: Member rotateX(const GLfloat theta, bool postmult=true) (function) of class RotMat is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:46: warning: Member rotateY(const GLfloat theta, bool postmult=true) (function) of class RotMat is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:47: warning: Member rotateZ(const GLfloat theta, bool postmult=true) (function) of class RotMat is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:48: warning: Member adjust(const Angel::mat4 &Adjustment, bool postmult=true) (function) of class RotMat is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:27: warning: Member matrix(void) const  (function) of class Transformation is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:28: warning: Member operator*(const Angel::mat4 &rhs) const  (function) of class Transformation is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:29: warning: Member operator*(const Transformation &rhs) const  (function) of class Transformation is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:32: warning: Member mat (variable) of class Transformation is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:74: warning: Member set(const float x, const float y, const float z) (function) of class ScaleMat is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:75: warning: Member set(const float pct) (function) of class ScaleMat is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:77: warning: Member adjust(const float x, const float y, const float z) (function) of class ScaleMat is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:78: warning: Member adjust(const float pct) (function) of class ScaleMat is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:27: warning: Member matrix(void) const  (function) of class Transformation is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:28: warning: Member operator*(const Angel::mat4 &rhs) const  (function) of class Transformation is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:29: warning: Member operator*(const Transformation &rhs) const  (function) of class Transformation is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:32: warning: Member mat (variable) of class Transformation is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:96: warning: Member next(void) (function) of class Scene is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:97: warning: Member prev(void) (function) of class Scene is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:98: warning: Member active(void) const  (function) of class Scene is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:100: warning: Member draw(void) (function) of class Scene is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:102: warning: Member operator[](const std::string &objname) (function) of class Scene is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:105: warning: Member Scene(const Scene &copy) (function) of class Scene is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:106: warning: Member operator=(const Scene &copy) (function) of class Scene is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:68: warning: argument 'Object_Shader' of command @param is not found in the argument list of Scene::addObject(const std::string &objName, GLuint shader=0)
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:68: warning: The following parameters of Scene::addObject(const std::string &objName, GLuint shader=0) are not documented:
+  parameter 'shader'
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Scene.hpp:109: warning: argument 'name' of command @param is not found in the argument list of Scene::insertObject(Object *obj)
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Screen.hpp:19: warning: Member Screen(int x=0, int y=0) (function) of class Screen is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Screen.hpp:20: warning: Member Screen(const vec2 &newSize) (function) of class Screen is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Screen.hpp:23: warning: Member size(int x, int y) (function) of class Screen is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Screen.hpp:24: warning: Member size(const vec2 &newSize) (function) of class Screen is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Screen.hpp:26: warning: Member size(void) (function) of class Screen is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Screen.hpp:27: warning: Member width(void) (function) of class Screen is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Screen.hpp:28: warning: Member height(void) (function) of class Screen is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Screen.hpp:30: warning: Member center(void) (function) of class Screen is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Screen.hpp:31: warning: Member midpointX(void) (function) of class Screen is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Screen.hpp:32: warning: Member midpointY(void) (function) of class Screen is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Screen.hpp:35: warning: Member _camList (variable) of class Screen is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Screen.hpp:39: warning: Member _size (variable) of class Screen is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Screen.hpp:40: warning: Member _center (variable) of class Screen is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:51: warning: Member SpelchkCamera(vec4 initialTranslationVector) (function) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:54: warning: Member getProjectionMatrix() (function) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:55: warning: Member getModelViewMatrix() (function) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:56: warning: Member getTranslationVector() (function) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:59: warning: Member moveCamera(float xDepth, float yDepth, float zDepth) (function) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:62: warning: Member rotateCamera(float xAngle, float yAngle, float zAngle) (function) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:64: warning: Member setScreenSize(int width, int height) (function) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:65: warning: Member setProjection(int projectionType) (function) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:67: warning: Member reset() (function) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:69: warning: Member setLightMovementRef(GLuint ref) (function) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:70: warning: Member setLightMovementTime(float elapsed) (function) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:72: warning: Member getReadyForZero(int usernum) (function) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:73: warning: Member headMovement(int usernum, double x, double y, double z) (function) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:48: warning: Member calculateTranslationVector() (function) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:19: warning: Member _projectionType (variable) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:22: warning: Member _fovy (variable) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:23: warning: Member _aspect (variable) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:25: warning: Member _left (variable) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:25: warning: Member _right (variable) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:26: warning: Member _bottom (variable) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:26: warning: Member _top (variable) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:27: warning: Member _zNear (variable) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:27: warning: Member _zFar (variable) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:29: warning: Member _timeRef (variable) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:31: warning: Member _screenWidth (variable) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:31: warning: Member _screenHeight (variable) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:33: warning: Member _xDepth (variable) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:33: warning: Member _yDepth (variable) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:33: warning: Member _zDepth (variable) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:34: warning: Member _xAngle (variable) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:34: warning: Member _yAngle (variable) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:34: warning: Member _zAngle (variable) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:35: warning: Member _xHead (variable) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:35: warning: Member _yHead (variable) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:35: warning: Member _zHead (variable) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:36: warning: Member _xHeadStart (variable) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:36: warning: Member _yHeadStart (variable) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:36: warning: Member _zHeadStart (variable) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:37: warning: Member _xHeadAngle (variable) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:37: warning: Member _yHeadAngle (variable) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:37: warning: Member _zHeadAngle (variable) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:39: warning: Member _initialTranslationVector (variable) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:40: warning: Member _translationVector (variable) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:41: warning: Member _oldTranslationVector (variable) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:43: warning: Member _modelViewMatrix (variable) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:45: warning: Member _inboundHeadData (variable) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/SpelchkCamera.hpp:46: warning: Member _initialHeadPosition (variable) of class SpelchkCamera is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Texture.hpp:18: warning: Member Texture(GLenum _textureTarget) (function) of class Texture is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Texture.hpp:21: warning: Member load(const std::string &filename) (function) of class Texture is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Texture.hpp:22: warning: Member bind(GLenum textureUnit) (function) of class Texture is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Texture.hpp:23: warning: Member buffer(void) (function) of class Texture is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Texture.hpp:26: warning: Member _textureTarget (variable) of class Texture is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Texture.hpp:27: warning: Member _textureObj (variable) of class Texture is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Texture.hpp:28: warning: Member _image (variable) of class Texture is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Texture.hpp:29: warning: Member _blob (variable) of class Texture is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Timer.hpp:21: warning: Member keyFrameRate() const  (function) of class Timer is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Timer.hpp:22: warning: Member keyFrameRate(float newFrameRate) (function) of class Timer is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Timer.hpp:30: warning: Member _t1 (variable) of class Timer is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Timer.hpp:31: warning: Member _t2 (variable) of class Timer is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Timer.hpp:33: warning: Member _delta (variable) of class Timer is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Timer.hpp:34: warning: Member _scale (variable) of class Timer is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Timer.hpp:35: warning: Member _keyFrameRate (variable) of class Timer is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/TransCache.hpp:18: warning: Member ptm(const Angel::mat4 &ptm_in, bool postmult=true) (function) of class TransCache is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/TransCache.hpp:20: warning: Member ptm(void) const  (function) of class TransCache is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/TransCache.hpp:21: warning: Member ctm(void) const  (function) of class TransCache is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/TransCache.hpp:22: warning: Member otm(void) const  (function) of class TransCache is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/TransCache.hpp:36: warning: Member calcCTM(bool postmult=true) (function) of class TransCache is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/TransCache.hpp:25: warning: Member _preOffset (variable) of class TransCache is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/TransCache.hpp:26: warning: Member _preRotation (variable) of class TransCache is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/TransCache.hpp:29: warning: Member _scale (variable) of class TransCache is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/TransCache.hpp:30: warning: Member _rotation (variable) of class TransCache is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/TransCache.hpp:31: warning: Member _offset (variable) of class TransCache is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/TransCache.hpp:32: warning: Member _orbit (variable) of class TransCache is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/TransCache.hpp:33: warning: Member _displacement (variable) of class TransCache is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/TransCache.hpp:41: warning: Member _ptm (variable) of class TransCache is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/TransCache.hpp:42: warning: Member _ctm (variable) of class TransCache is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/TransCache.hpp:43: warning: Member _otm (variable) of class TransCache is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:27: warning: Member matrix(void) const  (function) of class Transformation is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:28: warning: Member operator*(const Angel::mat4 &rhs) const  (function) of class Transformation is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:29: warning: Member operator*(const Transformation &rhs) const  (function) of class Transformation is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:32: warning: Member mat (variable) of class Transformation is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:58: warning: Member setX(const float x) (function) of class TransMat is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:59: warning: Member setY(const float y) (function) of class TransMat is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:60: warning: Member setZ(const float z) (function) of class TransMat is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:62: warning: Member set(const float x, const float y, const float z) (function) of class TransMat is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:63: warning: Member set(const Angel::vec3 &arg) (function) of class TransMat is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:65: warning: Member delta(const float x, const float y, const float z) (function) of class TransMat is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:66: warning: Member delta(const Angel::vec3 &arg) (function) of class TransMat is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:27: warning: Member matrix(void) const  (function) of class Transformation is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:28: warning: Member operator*(const Angel::mat4 &rhs) const  (function) of class Transformation is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:29: warning: Member operator*(const Transformation &rhs) const  (function) of class Transformation is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/Transformation.hpp:32: warning: Member mat (variable) of class Transformation is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/WiiUtil.h:16: warning: Member bbMagnitudes (variable) of class WiiPollData is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/WiiUtil.h:17: warning: Member wrThetas (variable) of class WiiPollData is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/WiiUtil.h:18: warning: Member wrRates (variable) of class WiiPollData is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/WiiUtil.h:19: warning: Member resetCamera (variable) of class WiiPollData is not documented.
 /home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/mat.hpp:43: warning: Member mat2(const GLfloat d=GLfloat(1.0)) (function) of class Angel::mat2 is not documented.
 /home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/mat.hpp:44: warning: Member mat2(const vec2 &a, const vec2 &b) (function) of class Angel::mat2 is not documented.
 /home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/mat.hpp:45: warning: Member mat2(GLfloat m00, GLfloat m10, GLfloat m01, GLfloat m11) (function) of class Angel::mat2 is not documented.
@@ -385,81 +479,81 @@
 /home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/mat.hpp:175: warning: Member operator*(const vec4 &v, const mat4 &_m) (friend) of class Angel::mat4 is not documented.
 /home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/mat.hpp:189: warning: Member operator<<(std::ostream &os, const mat4 &m) (friend) of class Angel::mat4 is not documented.
 /home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/mat.hpp:190: warning: Member operator>>(std::istream &is, mat4 &m) (friend) of class Angel::mat4 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:22: warning: Member vec2(GLfloat s=GLfloat(0.0)) (function) of class Angel::vec2 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:23: warning: Member vec2(GLfloat x, GLfloat y) (function) of class Angel::vec2 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:24: warning: Member vec2(const vec2 &v) (function) of class Angel::vec2 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:27: warning: Member operator[](int i) (function) of class Angel::vec2 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:28: warning: Member operator[](int i) const  (function) of class Angel::vec2 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:31: warning: Member operator-() const  (function) of class Angel::vec2 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:32: warning: Member operator+(const vec2 &v) const  (function) of class Angel::vec2 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:33: warning: Member operator-(const vec2 &v) const  (function) of class Angel::vec2 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:34: warning: Member operator*(const GLfloat s) const  (function) of class Angel::vec2 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:35: warning: Member operator*(const vec2 &v) const  (function) of class Angel::vec2 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:37: warning: Member operator/(const GLfloat s) const  (function) of class Angel::vec2 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:40: warning: Member operator+=(const vec2 &v) (function) of class Angel::vec2 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:41: warning: Member operator-=(const vec2 &v) (function) of class Angel::vec2 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:42: warning: Member operator*=(const GLfloat s) (function) of class Angel::vec2 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:43: warning: Member operator*=(const vec2 &v) (function) of class Angel::vec2 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:44: warning: Member operator/=(const GLfloat s) (function) of class Angel::vec2 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:51: warning: Member operator const GLfloat *() const  (function) of class Angel::vec2 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:52: warning: Member operator GLfloat *() (function) of class Angel::vec2 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:18: warning: Member x (variable) of class Angel::vec2 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:19: warning: Member y (variable) of class Angel::vec2 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:36: warning: Member operator*(const GLfloat s, const vec2 &v) (friend) of class Angel::vec2 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:47: warning: Member operator<<(std::ostream &os, const vec2 &v) (friend) of class Angel::vec2 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:48: warning: Member operator>>(std::istream &is, vec2 &v) (friend) of class Angel::vec2 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:68: warning: Member vec3(GLfloat s=GLfloat(0.0)) (function) of class Angel::vec3 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:69: warning: Member vec3(GLfloat x, GLfloat y, GLfloat z) (function) of class Angel::vec3 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:70: warning: Member vec3(const vec3 &v) (function) of class Angel::vec3 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:71: warning: Member vec3(const vec2 &v, const float f) (function) of class Angel::vec3 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:74: warning: Member operator[](int i) (function) of class Angel::vec3 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:75: warning: Member operator[](int i) const  (function) of class Angel::vec3 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:78: warning: Member operator-() const  (function) of class Angel::vec3 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:79: warning: Member operator+(const vec3 &v) const  (function) of class Angel::vec3 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:80: warning: Member operator-(const vec3 &v) const  (function) of class Angel::vec3 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:81: warning: Member operator*(const GLfloat s) const  (function) of class Angel::vec3 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:82: warning: Member operator*(const vec3 &v) const  (function) of class Angel::vec3 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:84: warning: Member operator/(const GLfloat s) const  (function) of class Angel::vec3 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:87: warning: Member operator+=(const vec3 &v) (function) of class Angel::vec3 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:88: warning: Member operator-=(const vec3 &v) (function) of class Angel::vec3 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:89: warning: Member operator*=(const GLfloat s) (function) of class Angel::vec3 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:90: warning: Member operator*=(const vec3 &v) (function) of class Angel::vec3 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:91: warning: Member operator/=(const GLfloat s) (function) of class Angel::vec3 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:98: warning: Member operator const GLfloat *() const  (function) of class Angel::vec3 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:99: warning: Member operator GLfloat *() (function) of class Angel::vec3 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:63: warning: Member x (variable) of class Angel::vec3 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:64: warning: Member y (variable) of class Angel::vec3 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:65: warning: Member z (variable) of class Angel::vec3 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:83: warning: Member operator*(const GLfloat s, const vec3 &v) (friend) of class Angel::vec3 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:94: warning: Member operator<<(std::ostream &os, const vec3 &v) (friend) of class Angel::vec3 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:95: warning: Member operator>>(std::istream &is, vec3 &v) (friend) of class Angel::vec3 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:119: warning: Member vec4(GLfloat s=GLfloat(0.0)) (function) of class Angel::vec4 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:120: warning: Member vec4(GLfloat x, GLfloat y, GLfloat z, GLfloat w) (function) of class Angel::vec4 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:121: warning: Member vec4(const vec4 &v) (function) of class Angel::vec4 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:122: warning: Member vec4(const vec3 &v, const float w=1.0) (function) of class Angel::vec4 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:123: warning: Member vec4(const vec2 &v, const float z, const float w) (function) of class Angel::vec4 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:126: warning: Member operator[](int i) (function) of class Angel::vec4 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:127: warning: Member operator[](int i) const  (function) of class Angel::vec4 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:130: warning: Member operator-() const  (function) of class Angel::vec4 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:131: warning: Member operator+(const vec4 &v) const  (function) of class Angel::vec4 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:132: warning: Member operator-(const vec4 &v) const  (function) of class Angel::vec4 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:133: warning: Member operator*(const GLfloat s) const  (function) of class Angel::vec4 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:134: warning: Member operator*(const vec4 &v) const  (function) of class Angel::vec4 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:136: warning: Member operator/(const GLfloat s) const  (function) of class Angel::vec4 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:139: warning: Member operator+=(const vec4 &v) (function) of class Angel::vec4 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:140: warning: Member operator-=(const vec4 &v) (function) of class Angel::vec4 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:141: warning: Member operator*=(const GLfloat s) (function) of class Angel::vec4 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:142: warning: Member operator*=(const vec4 &v) (function) of class Angel::vec4 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:143: warning: Member operator/=(const GLfloat s) (function) of class Angel::vec4 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:150: warning: Member operator const GLfloat *() const  (function) of class Angel::vec4 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:151: warning: Member operator GLfloat *() (function) of class Angel::vec4 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:113: warning: Member x (variable) of class Angel::vec4 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:114: warning: Member y (variable) of class Angel::vec4 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:115: warning: Member z (variable) of class Angel::vec4 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:116: warning: Member w (variable) of class Angel::vec4 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:135: warning: Member operator*(const GLfloat s, const vec4 &v) (friend) of class Angel::vec4 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:146: warning: Member operator<<(std::ostream &os, const vec4 &v) (friend) of class Angel::vec4 is not documented.
-/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:147: warning: Member operator>>(std::istream &is, vec4 &v) (friend) of class Angel::vec4 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:24: warning: Member vec2(GLfloat s=GLfloat(0.0)) (function) of class Angel::vec2 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:25: warning: Member vec2(GLfloat x, GLfloat y) (function) of class Angel::vec2 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:26: warning: Member vec2(const vec2 &v) (function) of class Angel::vec2 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:29: warning: Member operator[](int i) (function) of class Angel::vec2 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:30: warning: Member operator[](int i) const  (function) of class Angel::vec2 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:33: warning: Member operator-() const  (function) of class Angel::vec2 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:34: warning: Member operator+(const vec2 &v) const  (function) of class Angel::vec2 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:35: warning: Member operator-(const vec2 &v) const  (function) of class Angel::vec2 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:36: warning: Member operator*(const GLfloat s) const  (function) of class Angel::vec2 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:37: warning: Member operator*(const vec2 &v) const  (function) of class Angel::vec2 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:39: warning: Member operator/(const GLfloat s) const  (function) of class Angel::vec2 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:42: warning: Member operator+=(const vec2 &v) (function) of class Angel::vec2 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:43: warning: Member operator-=(const vec2 &v) (function) of class Angel::vec2 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:44: warning: Member operator*=(const GLfloat s) (function) of class Angel::vec2 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:45: warning: Member operator*=(const vec2 &v) (function) of class Angel::vec2 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:46: warning: Member operator/=(const GLfloat s) (function) of class Angel::vec2 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:53: warning: Member operator const GLfloat *() const  (function) of class Angel::vec2 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:54: warning: Member operator GLfloat *() (function) of class Angel::vec2 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:20: warning: Member x (variable) of class Angel::vec2 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:21: warning: Member y (variable) of class Angel::vec2 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:38: warning: Member operator*(const GLfloat s, const vec2 &v) (friend) of class Angel::vec2 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:49: warning: Member operator<<(std::ostream &os, const vec2 &v) (friend) of class Angel::vec2 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:50: warning: Member operator>>(std::istream &is, vec2 &v) (friend) of class Angel::vec2 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:70: warning: Member vec3(GLfloat s=GLfloat(0.0)) (function) of class Angel::vec3 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:71: warning: Member vec3(GLfloat x, GLfloat y, GLfloat z) (function) of class Angel::vec3 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:72: warning: Member vec3(const vec3 &v) (function) of class Angel::vec3 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:73: warning: Member vec3(const vec2 &v, const float f) (function) of class Angel::vec3 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:76: warning: Member operator[](int i) (function) of class Angel::vec3 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:77: warning: Member operator[](int i) const  (function) of class Angel::vec3 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:80: warning: Member operator-() const  (function) of class Angel::vec3 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:81: warning: Member operator+(const vec3 &v) const  (function) of class Angel::vec3 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:82: warning: Member operator-(const vec3 &v) const  (function) of class Angel::vec3 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:83: warning: Member operator*(const GLfloat s) const  (function) of class Angel::vec3 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:84: warning: Member operator*(const vec3 &v) const  (function) of class Angel::vec3 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:86: warning: Member operator/(const GLfloat s) const  (function) of class Angel::vec3 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:89: warning: Member operator+=(const vec3 &v) (function) of class Angel::vec3 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:90: warning: Member operator-=(const vec3 &v) (function) of class Angel::vec3 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:91: warning: Member operator*=(const GLfloat s) (function) of class Angel::vec3 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:92: warning: Member operator*=(const vec3 &v) (function) of class Angel::vec3 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:93: warning: Member operator/=(const GLfloat s) (function) of class Angel::vec3 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:100: warning: Member operator const GLfloat *() const  (function) of class Angel::vec3 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:101: warning: Member operator GLfloat *() (function) of class Angel::vec3 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:65: warning: Member x (variable) of class Angel::vec3 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:66: warning: Member y (variable) of class Angel::vec3 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:67: warning: Member z (variable) of class Angel::vec3 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:85: warning: Member operator*(const GLfloat s, const vec3 &v) (friend) of class Angel::vec3 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:96: warning: Member operator<<(std::ostream &os, const vec3 &v) (friend) of class Angel::vec3 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:97: warning: Member operator>>(std::istream &is, vec3 &v) (friend) of class Angel::vec3 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:120: warning: Member vec4(GLfloat s=GLfloat(0.0)) (function) of class Angel::vec4 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:121: warning: Member vec4(GLfloat x, GLfloat y, GLfloat z, GLfloat w) (function) of class Angel::vec4 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:122: warning: Member vec4(const vec4 &v) (function) of class Angel::vec4 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:123: warning: Member vec4(const vec3 &v, const float w=1.0) (function) of class Angel::vec4 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:124: warning: Member vec4(const vec2 &v, const float z, const float w) (function) of class Angel::vec4 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:127: warning: Member operator[](int i) (function) of class Angel::vec4 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:128: warning: Member operator[](int i) const  (function) of class Angel::vec4 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:131: warning: Member operator-() const  (function) of class Angel::vec4 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:132: warning: Member operator+(const vec4 &v) const  (function) of class Angel::vec4 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:133: warning: Member operator-(const vec4 &v) const  (function) of class Angel::vec4 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:134: warning: Member operator*(const GLfloat s) const  (function) of class Angel::vec4 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:135: warning: Member operator*(const vec4 &v) const  (function) of class Angel::vec4 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:137: warning: Member operator/(const GLfloat s) const  (function) of class Angel::vec4 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:140: warning: Member operator+=(const vec4 &v) (function) of class Angel::vec4 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:141: warning: Member operator-=(const vec4 &v) (function) of class Angel::vec4 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:142: warning: Member operator*=(const GLfloat s) (function) of class Angel::vec4 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:143: warning: Member operator*=(const vec4 &v) (function) of class Angel::vec4 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:144: warning: Member operator/=(const GLfloat s) (function) of class Angel::vec4 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:151: warning: Member operator const GLfloat *() const  (function) of class Angel::vec4 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:152: warning: Member operator GLfloat *() (function) of class Angel::vec4 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:114: warning: Member x (variable) of class Angel::vec4 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:115: warning: Member y (variable) of class Angel::vec4 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:116: warning: Member z (variable) of class Angel::vec4 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:117: warning: Member w (variable) of class Angel::vec4 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:136: warning: Member operator*(const GLfloat s, const vec4 &v) (friend) of class Angel::vec4 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:147: warning: Member operator<<(std::ostream &os, const vec4 &v) (friend) of class Angel::vec4 is not documented.
+/home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/vec.hpp:148: warning: Member operator>>(std::istream &is, vec4 &v) (friend) of class Angel::vec4 is not documented.
 /home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/KinectInator.hpp:74: warning: Member setCallback(boost::function< void(int, double, double, double) > headCB) (function) of class TiemSpelchk::Lurn2SpielNub is not documented.
 /home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/KinectInator.hpp:75: warning: Member Start() (function) of class TiemSpelchk::Lurn2SpielNub is not documented.
 /home/nago/Dropbox/Spring 2013/Graphics II/S2/src/include/KinectInator.hpp:76: warning: Member Shutdown() (function) of class TiemSpelchk::Lurn2SpielNub is not documented.

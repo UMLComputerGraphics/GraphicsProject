@@ -1,16 +1,29 @@
-.TH "Scene" 3 "Fri Mar 15 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
+.TH "Scene" 3 "Fri Mar 29 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
 Scene \- 
+.PP
+The \fBScene\fP object keeps track of a list of objects considered to be 'children' of the \fBScene\fP\&.  
+
 .SH SYNOPSIS
 .br
 .PP
+.PP
+\fC#include <Scene\&.hpp>\fP
 .PP
 Inherited by \fBCameras\fP, and \fBObject\fP\&.
 .SS "Public Member Functions"
 
 .in +1c
+.ti -1c
+.RI "\fBScene\fP ()"
+.br
+.RI "\fINullary constructor\&. \fP"
+.ti -1c
+.RI "virtual \fB~Scene\fP ()"
+.br
+.RI "\fIDestructor! Will traverse its list and delete all objects! !! CAUTION !! If you have registered your own Objects manually, note that the scene will delete them for you! \fP"
 .ti -1c
 .RI "virtual void \fBshader\fP (GLuint gShader)"
 .br
@@ -22,19 +35,19 @@ Inherited by \fBCameras\fP, and \fBObject\fP\&.
 .ti -1c
 .RI "\fBObject\fP * \fBaddObject\fP (const std::string &objName, GLuint Object_Shader=0)"
 .br
+.RI "\fIaddObject creates a new \fBObject\fP with the given name and, optionally, a specified shader and adds it to the \fBScene\fP graph\&. \fP"
 .ti -1c
 .RI "void \fBdelObject\fP (const std::string &objName)"
 .br
+.RI "\fIdelObject will remove from the \fBScene\fP graph the object with the given name\&. \fP"
 .ti -1c
 .RI "void \fBdelObject\fP (void)"
 .br
+.RI "\fIdelObject with no parameters will delete the first \fBObject\fP in the \fBScene\fP\&. \fP"
 .ti -1c
 .RI "void \fBpopObject\fP (void)"
 .br
-.ti -1c
-.RI "void \fBdestroyObject\fP (void)"
-.br
-.RI "\fICompletely remove this object and all his children\&. \fP"
+.RI "\fIpopObject deletes the last \fBObject\fP in the \fBScene\fP\&. \fP"
 .ti -1c
 .RI "\fBObject\fP * \fBnext\fP (void)"
 .br
@@ -56,6 +69,10 @@ Inherited by \fBCameras\fP, and \fBObject\fP\&.
 .ti -1c
 .RI "\fBScene\fP & \fBoperator=\fP (const \fBScene\fP &copy)"
 .br
+.ti -1c
+.RI "void \fBinsertObject\fP (\fBObject\fP *obj)"
+.br
+.RI "\fIRegister a created object with the scene graph\&. \fP"
 .in -1c
 .SS "Protected Member Functions"
 
@@ -63,10 +80,7 @@ Inherited by \fBCameras\fP, and \fBObject\fP\&.
 .ti -1c
 .RI "void \fBdeleteObject\fP (\fBObject\fP *obj)"
 .br
-.RI "\fIdeleteObject is the actual implementation function that will remove an \fBObject\fP from the \fBScene\fP list and \fBScene\fP map, then free the object\&. \fP"
-.ti -1c
-.RI "void \fBinsertObject\fP (const std::string name, \fBObject\fP *obj)"
-.br
+.RI "\fIVery seriously delete a child object and free his memory\&. \fP"
 .in -1c
 .SS "Protected Attributes"
 
@@ -74,32 +88,108 @@ Inherited by \fBCameras\fP, and \fBObject\fP\&.
 .ti -1c
 .RI "std::list< \fBObject\fP * > \fB_list\fP"
 .br
+.RI "\fIFor the purposes of rapid propagation of scene-graph changes, \fBObject\fP pointers are stored in a regular flat list\&. \fP"
 .ti -1c
 .RI "std::map< std::string, \fBObject\fP * > \fB_map\fP"
 .br
+.RI "\fIFor the purposes of accessing named objects quickly, though, objects are also re-stored in an associative map\&. \fP"
 .ti -1c
 .RI "std::list< \fBObject\fP * >::iterator \fB_currentObj\fP"
 .br
+.RI "\fIWe keep an iterator on-hand that references what the scene considers to be it's active, current object\&. \fP"
 .ti -1c
 .RI "GLuint \fB_gShader\fP"
 .br
+.RI "\fIA handle to a shader program to be used as the default shader for new children objects added to the scene\&. \fP"
 .in -1c
 .SH "Detailed Description"
 .PP 
-Definition at line 12 of file Scene\&.hpp\&.
+The \fBScene\fP object keeps track of a list of objects considered to be 'children' of the \fBScene\fP\&. 
+
+The \fBScene\fP itself has no physical representation or presence otherwise on the GPU, it is purely a logical CPU entity\&.
+.PP
+\fBDate:\fP
+.RS 4
+2013-03-16 
+.RE
+.PP
+\fBAuthor:\fP
+.RS 4
+John Huston 
+.RE
+.PP
+
+.PP
+Definition at line 30 of file Scene\&.hpp\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Scene::~Scene ()\fC [virtual]\fP"
+
+.PP
+Destructor! Will traverse its list and delete all objects! !! CAUTION !! If you have registered your own Objects manually, note that the scene will delete them for you! You should, of course, never register objects from the stack\&. 
+.PP
+Definition at line 34 of file Scene\&.cpp\&.
 .SH "Member Function Documentation"
 .PP 
+.SS "\fBObject\fP * Scene::addObject (const std::string &objName, GLuintshader = \fC0\fP)"
+
+.PP
+addObject creates a new \fBObject\fP with the given name and, optionally, a specified shader and adds it to the \fBScene\fP graph\&. If no shader is given, a default shader MUST have been specified for the \fBScene\fP prior to the call\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIobjName\fP The name of the new \fBObject\fP to add\&. 
+.br
+\fIObject_Shader\fP The shader that should be used to render this object\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A pointer to the new \fBObject\fP\&. 
+.RE
+.PP
+
+.PP
+Definition at line 77 of file Scene\&.cpp\&.
 .SS "void Scene::deleteObject (\fBObject\fP *obj)\fC [protected]\fP"
 
 .PP
-deleteObject is the actual implementation function that will remove an \fBObject\fP from the \fBScene\fP list and \fBScene\fP map, then free the object\&. \fBParameters:\fP
+Very seriously delete a child object and free his memory\&. deleteObject is the actual implementation function that will remove an \fBObject\fP from the \fBScene\fP list and \fBScene\fP map, then free the object\&.
+.PP
+\fBParameters:\fP
 .RS 4
+\fIobj\fP The object to delete\&.
+.br
 \fIobj\fP The pointer to the object to free\&. 
 .RE
 .PP
 
 .PP
-Definition at line 76 of file Scene\&.cpp\&.
+Definition at line 129 of file Scene\&.cpp\&.
+.SS "void Scene::delObject (const std::string &objName)"
+
+.PP
+delObject will remove from the \fBScene\fP graph the object with the given name\&. \fBParameters:\fP
+.RS 4
+\fIobjName\fP Name of the \fBObject\fP to delete\&. 
+.RE
+.PP
+
+.PP
+Definition at line 99 of file Scene\&.cpp\&.
+.SS "void Scene::insertObject (\fBObject\fP *obj)"
+
+.PP
+Register a created object with the scene graph\&. \fBParameters:\fP
+.RS 4
+\fIname\fP The name of the object (For the associative map), 
+.br
+\fIobj\fP The \fBObject\fP pointer to add to the scene\&. 
+.RE
+.PP
+
+.PP
+Definition at line 118 of file Scene\&.cpp\&.
 .SS "void Scene::shader (GLuintgShader)\fC [virtual]\fP"
 
 .PP
@@ -119,7 +209,7 @@ void\&.
 .PP
 Reimplemented in \fBObject\fP\&.
 .PP
-Definition at line 54 of file Scene\&.cpp\&.
+Definition at line 52 of file Scene\&.cpp\&.
 .SS "GLuint Scene::shader (void)"
 
 .PP
@@ -132,7 +222,17 @@ A GLuint handle to the shader program\&.
 .PP
 
 .PP
-Definition at line 66 of file Scene\&.cpp\&.
+Reimplemented in \fBObject\fP\&.
+.PP
+Definition at line 63 of file Scene\&.cpp\&.
+.SH "Member Data Documentation"
+.PP 
+.SS "std::map< std::string, \fBObject\fP* > Scene::_map\fC [protected]\fP"
+
+.PP
+For the purposes of accessing named objects quickly, though, objects are also re-stored in an associative map\&. It's a little superfluous, but here it is! 
+.PP
+Definition at line 127 of file Scene\&.hpp\&.
 
 .SH "Author"
 .PP 

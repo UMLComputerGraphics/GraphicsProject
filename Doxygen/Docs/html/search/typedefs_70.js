@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['point4',['point4',['../model_8cpp.html#acd96474ea1ee15dc164c05371abfd25b',1,'point4():&#160;model.cpp'],['../model_8hpp.html#acd96474ea1ee15dc164c05371abfd25b',1,'point4():&#160;model.hpp']]]
+  ['point4',['Point4',['../vec_8hpp.html#a2deb4dc6a4048e0d7bfd890c8052d21e',1,'vec.hpp']]]
 ];

@@ -3,7 +3,7 @@ var mat_8hpp =
     [ "mat2", "class_angel_1_1mat2.html", "class_angel_1_1mat2" ],
     [ "mat3", "class_angel_1_1mat3.html", "class_angel_1_1mat3" ],
     [ "mat4", "class_angel_1_1mat4.html", "class_angel_1_1mat4" ],
-    [ "Error", "mat_8hpp.html#a3d2a1a300dfa6254ba95a4abfa0e7575", null ],
+    [ "ERROR", "mat_8hpp.html#a39b3cc118c8339855e5578335a0b2417", null ],
     [ "Frustum", "mat_8hpp.html#a5775b27ec156cd2166a59bf038dc8efc", null ],
     [ "LookAt", "mat_8hpp.html#aee52b8fa583cbbe460e2e80c05b59f8b", null ],
     [ "matrixCompMult", "mat_8hpp.html#a14b1d7bed352f45380d7fc26e2553627", null ],

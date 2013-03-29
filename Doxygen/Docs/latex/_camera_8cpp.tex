@@ -16,8 +16,8 @@ Implementation for the \hyperlink{class_camera}{Camera} class.
 \subsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
-\#define \hyperlink{_camera_8cpp_a00e96bcc90e768c724477dbd2a3d9291}{R\-O\-T\-A\-T\-E\-\_\-\-O\-F\-F\-S\-E\-T}(V)~(V $\ast$ \-\_\-ctm.\-orbit.\-Matrix())
-\begin{DoxyCompactList}\small\item\em R\-O\-T\-A\-T\-E\-\_\-\-O\-F\-F\-S\-E\-T is a macro which is used to normalize the six camera motion directions with respect to the current camera rotation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\#define \hyperlink{_camera_8cpp_a00e96bcc90e768c724477dbd2a3d9291}{R\-O\-T\-A\-T\-E\-\_\-\-O\-F\-F\-S\-E\-T}(V)~(V $\ast$ \-\_\-ctm.\-\_\-orbit.\-matrix())
+\begin{DoxyCompactList}\small\item\em R\-O\-T\-A\-T\-E\-\_\-\-O\-F\-F\-S\-E\-T is a macro which is used to normalize the six camera motion directions with respect to the current camera \-\_\-rotation. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -43,14 +43,14 @@ Definition in file \hyperlink{_camera_8cpp_source}{Camera.\-cpp}.
 \begin{DoxyParamCaption}
 \item[{}]{V}
 \end{DoxyParamCaption}
-)~(V $\ast$ \-\_\-ctm.\-orbit.\-Matrix())}}\label{_camera_8cpp_a00e96bcc90e768c724477dbd2a3d9291}
+)~(V $\ast$ \-\_\-ctm.\-\_\-orbit.\-matrix())}}\label{_camera_8cpp_a00e96bcc90e768c724477dbd2a3d9291}
 
 
-R\-O\-T\-A\-T\-E\-\_\-\-O\-F\-F\-S\-E\-T is a macro which is used to normalize the six camera motion directions with respect to the current camera rotation. 
+R\-O\-T\-A\-T\-E\-\_\-\-O\-F\-F\-S\-E\-T is a macro which is used to normalize the six camera motion directions with respect to the current camera \-\_\-rotation. 
 
 It is used in heave(), sway() and surge(). 
 \begin{DoxyParams}{Parameters}
-{\em V} & a vec4 representing the movement offset vector. \\
+{\em V} & a vec4 representing the movement \-\_\-offset vector. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}

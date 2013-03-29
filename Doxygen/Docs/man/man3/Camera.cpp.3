@@ -1,4 +1,4 @@
-.TH "Camera.cpp" 3 "Fri Mar 15 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
+.TH "Camera.cpp" 3 "Fri Mar 29 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -28,9 +28,9 @@ Implementation for the \fBCamera\fP class\&.
 
 .in +1c
 .ti -1c
-.RI "#define \fBROTATE_OFFSET\fP(V)   (V * _ctm\&.orbit\&.Matrix())"
+.RI "#define \fBROTATE_OFFSET\fP(V)   (V * _ctm\&._orbit\&.matrix())"
 .br
-.RI "\fIROTATE_OFFSET is a macro which is used to normalize the six camera motion directions with respect to the current camera rotation\&. \fP"
+.RI "\fIROTATE_OFFSET is a macro which is used to normalize the six camera motion directions with respect to the current camera _rotation\&. \fP"
 .in -1c
 .SH "Detailed Description"
 .PP 
@@ -56,14 +56,14 @@ John Huston, Nicholas StPierre, Chris Compton
 Definition in file \fBCamera\&.cpp\fP\&.
 .SH "Macro Definition Documentation"
 .PP 
-.SS "#define ROTATE_OFFSET(V)   (V * _ctm\&.orbit\&.Matrix())"
+.SS "#define ROTATE_OFFSET(V)   (V * _ctm\&._orbit\&.matrix())"
 
 .PP
-ROTATE_OFFSET is a macro which is used to normalize the six camera motion directions with respect to the current camera rotation\&. It is used in heave(), sway() and surge()\&. 
+ROTATE_OFFSET is a macro which is used to normalize the six camera motion directions with respect to the current camera _rotation\&. It is used in heave(), sway() and surge()\&. 
 .PP
 \fBParameters:\fP
 .RS 4
-\fIV\fP a vec4 representing the movement offset vector\&. 
+\fIV\fP a vec4 representing the movement _offset vector\&. 
 .RE
 .PP
 \fBReturns:\fP

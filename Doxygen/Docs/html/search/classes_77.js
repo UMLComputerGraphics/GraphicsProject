@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['wiipolldata',['wiiPollData',['../structwii_poll_data.html',1,'']]]
+  ['wiipolldata',['WiiPollData',['../struct_wii_poll_data.html',1,'']]]
 ];

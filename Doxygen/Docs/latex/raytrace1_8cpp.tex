@@ -13,6 +13,7 @@ Geometric Raytracing Demo.
 {\ttfamily \#include $<$cstring$>$}\\*
 {\ttfamily \#include \char`\"{}Spelchk\-Camera.\-hpp\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}Init\-Shader.\-hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}eric\-\_\-rules.\-hpp\char`\"{}}\\*
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -44,6 +45,9 @@ int \hyperlink{raytrace1_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc
 \hypertarget{raytrace1_8cpp_aa82a2e50ca7f0a7c6c79922cf7ac675d}{G\-Luint \hyperlink{raytrace1_8cpp_aa82a2e50ca7f0a7c6c79922cf7ac675d}{model\-View} = -\/1}\label{raytrace1_8cpp_aa82a2e50ca7f0a7c6c79922cf7ac675d}
 
 \begin{DoxyCompactList}\small\item\em model-\/view matrix uniform shader variable location \end{DoxyCompactList}\item 
+\hypertarget{raytrace1_8cpp_ac669817a94c510db37084c9dd9dcfb55}{G\-Luint {\bfseries dethklok}}\label{raytrace1_8cpp_ac669817a94c510db37084c9dd9dcfb55}
+
+\item 
 \hypertarget{raytrace1_8cpp_a216a38dca36816a9d3b9ab11920f5898}{G\-Lint {\bfseries v\-Ray\-Position} = -\/1}\label{raytrace1_8cpp_a216a38dca36816a9d3b9ab11920f5898}
 
 \item 
@@ -51,8 +55,25 @@ G\-Lint \hyperlink{raytrace1_8cpp_a16874d01f7ca34ada7dddea3042f067f}{u\-Camera\-
 \begin{DoxyCompactList}\small\item\em Handle to uniform that will contain the position of the \hyperlink{class_camera}{Camera}. \end{DoxyCompactList}\item 
 \hyperlink{class_spelchk_camera}{Spelchk\-Camera} \hyperlink{raytrace1_8cpp_a0e46f444cf201063a14a00d1236f0629}{camera} (\hyperlink{struct_angel_1_1vec4}{vec4}(0.\-0, 0.\-0, 0.\-0, 0.\-0))
 \begin{DoxyCompactList}\small\item\em Logical camera object. \end{DoxyCompactList}\item 
-\hyperlink{struct_angel_1_1vec3}{vec3} \hyperlink{raytrace1_8cpp_af1b4855c16b32d349fa8b056c24c7259}{camera\-Position\-Vec} = \hyperlink{struct_angel_1_1vec3}{vec3}( 0.\-0, 0.\-0, 0.\-0 )
-\begin{DoxyCompactList}\small\item\em Spatial coordinate of camera. \end{DoxyCompactList}\item 
+\hypertarget{raytrace1_8cpp_ac19fb5c188fc806f2dd15bfd6837e06f}{G\-Lint {\bfseries u\-Sphere\-Center\-Points} = -\/1}\label{raytrace1_8cpp_ac19fb5c188fc806f2dd15bfd6837e06f}
+
+\item 
+\hypertarget{raytrace1_8cpp_ac922fb8458c34a5ba06bf7504e9f12f4}{G\-Lint {\bfseries u\-Sphere\-Radius} = -\/1}\label{raytrace1_8cpp_ac922fb8458c34a5ba06bf7504e9f12f4}
+
+\item 
+\hypertarget{raytrace1_8cpp_ac9ad675235d6dc86104ef8ba4b56ddba}{G\-Lint {\bfseries u\-Sphere\-Colors} = -\/1}\label{raytrace1_8cpp_ac9ad675235d6dc86104ef8ba4b56ddba}
+
+\item 
+\hypertarget{raytrace1_8cpp_a34acd21874fb66785b6d2a8681e6ab94}{G\-Lint {\bfseries u\-Num\-Of\-Spheres} = -\/1}\label{raytrace1_8cpp_a34acd21874fb66785b6d2a8681e6ab94}
+
+\item 
+G\-Lfloat {\bfseries sphere\-Center\-Points} \mbox{[}$\,$\mbox{]}
+\item 
+\hypertarget{raytrace1_8cpp_aacb8095464f12290818f45bf69b180ed}{G\-Lfloat {\bfseries sphere\-Radius} \mbox{[}$\,$\mbox{]} = \{ 0.\-5, 0.\-6, 0.\-7, 0.\-8 \}}\label{raytrace1_8cpp_aacb8095464f12290818f45bf69b180ed}
+
+\item 
+G\-Lfloat {\bfseries sphere\-Colors} \mbox{[}$\,$\mbox{]}
+\item 
 int \hyperlink{raytrace1_8cpp_a9ebc1dbd77788c4bfa27758a6725413f}{screen\-Height}
 \begin{DoxyCompactList}\small\item\em current Height of the screen. \end{DoxyCompactList}\item 
 int \hyperlink{raytrace1_8cpp_ae50cb92a78d9e0a4f4bd718fc02bd294}{screen\-Width}
@@ -113,7 +134,7 @@ Keyboard Conrol Handler.
 \end{DoxyParams}
 
 
-Definition at line 62 of file raytrace1.\-cpp.
+Definition at line 75 of file raytrace1.\-cpp.
 
 \hypertarget{raytrace1_8cpp_a3942aa773dadccfa1bc0cc8ce3d3db1e}{\index{raytrace1.\-cpp@{raytrace1.\-cpp}!custommouse@{custommouse}}
 \index{custommouse@{custommouse}!raytrace1.cpp@{raytrace1.\-cpp}}
@@ -142,7 +163,7 @@ Mouse click handler.
 \end{DoxyParams}
 
 
-Definition at line 119 of file raytrace1.\-cpp.
+Definition at line 131 of file raytrace1.\-cpp.
 
 \hypertarget{raytrace1_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{\index{raytrace1.\-cpp@{raytrace1.\-cpp}!main@{main}}
 \index{main@{main}!raytrace1.cpp@{raytrace1.\-cpp}}
@@ -168,7 +189,7 @@ Simple raytracer demo by Hoanh Nguyen.
 \end{DoxyReturn}
 
 
-Definition at line 254 of file raytrace1.\-cpp.
+Definition at line 280 of file raytrace1.\-cpp.
 
 \hypertarget{raytrace1_8cpp_a45a7d7c86c97ca6a2d4d32ce2d263f67}{\index{raytrace1.\-cpp@{raytrace1.\-cpp}!motion@{motion}}
 \index{motion@{motion}!raytrace1.cpp@{raytrace1.\-cpp}}
@@ -191,7 +212,7 @@ Handle mouse and camera movement.
 \end{DoxyParams}
 
 
-Definition at line 159 of file raytrace1.\-cpp.
+Definition at line 171 of file raytrace1.\-cpp.
 
 \hypertarget{raytrace1_8cpp_a6819355374dd277347abd7c4235f0cd7}{\index{raytrace1.\-cpp@{raytrace1.\-cpp}!reshape@{reshape}}
 \index{reshape@{reshape}!raytrace1.cpp@{raytrace1.\-cpp}}
@@ -214,7 +235,7 @@ Definition at line 159 of file raytrace1.\-cpp.
 \end{DoxyParams}
 
 
-Definition at line 51 of file raytrace1.\-cpp.
+Definition at line 64 of file raytrace1.\-cpp.
 
 
 
@@ -226,17 +247,6 @@ Definition at line 51 of file raytrace1.\-cpp.
 
 Logical camera object. 
 
-\hypertarget{raytrace1_8cpp_af1b4855c16b32d349fa8b056c24c7259}{\index{raytrace1.\-cpp@{raytrace1.\-cpp}!camera\-Position\-Vec@{camera\-Position\-Vec}}
-\index{camera\-Position\-Vec@{camera\-Position\-Vec}!raytrace1.cpp@{raytrace1.\-cpp}}
-\subsubsection[{camera\-Position\-Vec}]{\setlength{\rightskip}{0pt plus 5cm}{\bf vec3} camera\-Position\-Vec = {\bf vec3}( 0.\-0, 0.\-0, 0.\-0 )}}\label{raytrace1_8cpp_af1b4855c16b32d349fa8b056c24c7259}
-
-
-Spatial coordinate of camera. 
-
-
-
-Definition at line 30 of file raytrace1.\-cpp.
-
 \hypertarget{raytrace1_8cpp_a450a5ce9d8d2b3bcb3a31d9a87f91a7f}{\index{raytrace1.\-cpp@{raytrace1.\-cpp}!rotation\-Factor@{rotation\-Factor}}
 \index{rotation\-Factor@{rotation\-Factor}!raytrace1.cpp@{raytrace1.\-cpp}}
 \subsubsection[{rotation\-Factor}]{\setlength{\rightskip}{0pt plus 5cm}float rotation\-Factor = 45.\-0}}\label{raytrace1_8cpp_a450a5ce9d8d2b3bcb3a31d9a87f91a7f}
@@ -246,7 +256,7 @@ Magic constant to adjust the rate of rotation when re-\/orienting the camera.
 
 
 
-Definition at line 150 of file raytrace1.\-cpp.
+Definition at line 162 of file raytrace1.\-cpp.
 
 \hypertarget{raytrace1_8cpp_a9ebc1dbd77788c4bfa27758a6725413f}{\index{raytrace1.\-cpp@{raytrace1.\-cpp}!screen\-Height@{screen\-Height}}
 \index{screen\-Height@{screen\-Height}!raytrace1.cpp@{raytrace1.\-cpp}}
@@ -257,7 +267,7 @@ current Height of the screen.
 
 
 
-Definition at line 42 of file raytrace1.\-cpp.
+Definition at line 55 of file raytrace1.\-cpp.
 
 \hypertarget{raytrace1_8cpp_ae50cb92a78d9e0a4f4bd718fc02bd294}{\index{raytrace1.\-cpp@{raytrace1.\-cpp}!screen\-Width@{screen\-Width}}
 \index{screen\-Width@{screen\-Width}!raytrace1.cpp@{raytrace1.\-cpp}}
@@ -266,6 +276,30 @@ Definition at line 42 of file raytrace1.\-cpp.
 
 current Width of the screen. 
 
+
+
+Definition at line 57 of file raytrace1.\-cpp.
+
+\hypertarget{raytrace1_8cpp_a1b43fb6e961f9006cdde22ffeb51573e}{\index{raytrace1.\-cpp@{raytrace1.\-cpp}!sphere\-Center\-Points@{sphere\-Center\-Points}}
+\index{sphere\-Center\-Points@{sphere\-Center\-Points}!raytrace1.cpp@{raytrace1.\-cpp}}
+\subsubsection[{sphere\-Center\-Points}]{\setlength{\rightskip}{0pt plus 5cm}G\-Lfloat sphere\-Center\-Points\mbox{[}$\,$\mbox{]}}}\label{raytrace1_8cpp_a1b43fb6e961f9006cdde22ffeb51573e}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+ \{ -1.0, -1.0, -2.0, 1.0, -1.0, -2.0, -1.0, 1.0,
+                                 -2.0, 1.0, 1.0, -2.0 \}
+\end{DoxyCode}
+
+
+Definition at line 39 of file raytrace1.\-cpp.
+
+\hypertarget{raytrace1_8cpp_a0049a4399f161944c46d12e156b1e2c0}{\index{raytrace1.\-cpp@{raytrace1.\-cpp}!sphere\-Colors@{sphere\-Colors}}
+\index{sphere\-Colors@{sphere\-Colors}!raytrace1.cpp@{raytrace1.\-cpp}}
+\subsubsection[{sphere\-Colors}]{\setlength{\rightskip}{0pt plus 5cm}G\-Lfloat sphere\-Colors\mbox{[}$\,$\mbox{]}}}\label{raytrace1_8cpp_a0049a4399f161944c46d12e156b1e2c0}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+ \{ 1.0, 0.3, 0.3, 0.3, 1.0, 0.3, 0.3, 0.3, 1.0, 1.0,
+                           0.3, 0.3 \}
+\end{DoxyCode}
 
 
 Definition at line 44 of file raytrace1.\-cpp.
@@ -279,7 +313,7 @@ Magic constant to adjust the rate of translation when re-\/orienting the camera.
 
 
 
-Definition at line 152 of file raytrace1.\-cpp.
+Definition at line 164 of file raytrace1.\-cpp.
 
 \hypertarget{raytrace1_8cpp_a16874d01f7ca34ada7dddea3042f067f}{\index{raytrace1.\-cpp@{raytrace1.\-cpp}!u\-Camera\-Position@{u\-Camera\-Position}}
 \index{u\-Camera\-Position@{u\-Camera\-Position}!raytrace1.cpp@{raytrace1.\-cpp}}
@@ -290,5 +324,5 @@ Handle to uniform that will contain the position of the \hyperlink{class_camera}
 
 
 
-Definition at line 25 of file raytrace1.\-cpp.
+Definition at line 27 of file raytrace1.\-cpp.
 

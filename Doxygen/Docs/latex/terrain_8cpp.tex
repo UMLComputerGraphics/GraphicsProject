@@ -26,6 +26,7 @@ This is a trimmed version of our Fall 2012 project.
 {\ttfamily \#include \char`\"{}Init\-Shader.\-hpp\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}glut\-\_\-callbacks.\-h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}Obj\-Loader.\-hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}eric\-\_\-rules.\-hpp\char`\"{}}\\*
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -109,7 +110,7 @@ void.
 \end{DoxyReturn}
 
 
-Definition at line 228 of file terrain.\-cpp.
+Definition at line 224 of file terrain.\-cpp.
 
 \hypertarget{terrain_8cpp_a4ea013001a5fb47853d0fab8f8de35cd}{\index{terrain.\-cpp@{terrain.\-cpp}!display@{display}}
 \index{display@{display}!terrain.cpp@{terrain.\-cpp}}
@@ -127,7 +128,7 @@ void.
 \end{DoxyReturn}
 
 
-Definition at line 253 of file terrain.\-cpp.
+Definition at line 249 of file terrain.\-cpp.
 
 \hypertarget{terrain_8cpp_af3c12d5391e754508338373c5071b2ed}{\index{terrain.\-cpp@{terrain.\-cpp}!display\-Viewport@{display\-Viewport}}
 \index{display\-Viewport@{display\-Viewport}!terrain.cpp@{terrain.\-cpp}}
@@ -145,7 +146,7 @@ void.
 \end{DoxyReturn}
 
 
-Definition at line 239 of file terrain.\-cpp.
+Definition at line 235 of file terrain.\-cpp.
 
 \hypertarget{terrain_8cpp_a02fd73d861ef2e4aabb38c0c9ff82947}{\index{terrain.\-cpp@{terrain.\-cpp}!init@{init}}
 \index{init@{init}!terrain.cpp@{terrain.\-cpp}}
@@ -163,7 +164,7 @@ void.
 \end{DoxyReturn}
 
 
-Definition at line 89 of file terrain.\-cpp.
+Definition at line 88 of file terrain.\-cpp.
 
 \hypertarget{terrain_8cpp_a43d76d6460eea14cbfac57f649c4ccc9}{\index{terrain.\-cpp@{terrain.\-cpp}!randomize\-\_\-terrain@{randomize\-\_\-terrain}}
 \index{randomize\-\_\-terrain@{randomize\-\_\-terrain}!terrain.cpp@{terrain.\-cpp}}
@@ -206,7 +207,7 @@ void.
 \end{DoxyReturn}
 
 
-Definition at line 277 of file terrain.\-cpp.
+Definition at line 273 of file terrain.\-cpp.
 
 \hypertarget{terrain_8cpp_a3db6770b4d2fa9a7566e01c68880d49c}{\index{terrain.\-cpp@{terrain.\-cpp}!wiilook@{wiilook}}
 \index{wiilook@{wiilook}!terrain.cpp@{terrain.\-cpp}}
@@ -221,11 +222,11 @@ Definition at line 277 of file terrain.\-cpp.
 
 wiilook is an analog of mouselook, for wii remote controls. 
 
-It takes a reference to a \hyperlink{class_camera}{Camera}, and two vec3s, and uses the information to adjust the \hyperlink{class_camera}{Camera}'s rotation.
+It takes a reference to a \hyperlink{class_camera}{Camera}, and two vec3s, and uses the information to adjust the \hyperlink{class_camera}{Camera}'s \-\_\-rotation.
 
 
 \begin{DoxyParams}{Parameters}
-{\em Wii\-Camera} & The camera to adjust the rotation of. \\
+{\em Wii\-Camera} & The camera to adjust the \-\_\-rotation of. \\
 \hline
 {\em New\-Theta} & The X,Y,Z angles of the Wii Remote. \\
 \hline
@@ -237,7 +238,7 @@ Void.
 \end{DoxyReturn}
 
 
-Definition at line 344 of file terrain.\-cpp.
+Definition at line 336 of file terrain.\-cpp.
 
 
 
@@ -247,15 +248,14 @@ Definition at line 344 of file terrain.\-cpp.
 \subsubsection[{terrain\-Tex}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ terrain\-Tex\mbox{[}$\,$\mbox{]}}}\label{terrain_8cpp_abc581addfa7e463bdc14d275fe30f412}
 {\bfseries Initial value\-:}
 \begin{DoxyCode}
-= \{
-  \textcolor{stringliteral}{"../Textures/GoodTextures\_0013423.jpg"},  
-  \textcolor{stringliteral}{"../Textures/GoodTextures\_0013779.jpg"},  
-  \textcolor{stringliteral}{"../Textures/GrassGreenTexture0002.jpg"}, 
-  \textcolor{stringliteral}{"../Textures/GoodTextures\_0013418.jpg"},  
-  \textcolor{stringliteral}{"../Textures/GoodTextures\_0013291.jpg"}   
-\}
+ \{ \textcolor{stringliteral}{"../Textures/GoodTextures\_0013423.jpg"}, 
+    \textcolor{stringliteral}{"../Textures/GoodTextures\_0013779.jpg"},  
+    \textcolor{stringliteral}{"../Textures/GrassGreenTexture0002.jpg"}, 
+    \textcolor{stringliteral}{"../Textures/GoodTextures\_0013418.jpg"},  
+    \textcolor{stringliteral}{"../Textures/GoodTextures\_0013291.jpg"}   
+    \}
 \end{DoxyCode}
 
 
-Definition at line 50 of file terrain.\-cpp.
+Definition at line 51 of file terrain.\-cpp.
 

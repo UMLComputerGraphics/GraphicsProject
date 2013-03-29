@@ -6,13 +6,19 @@
 Provides a wrapper utility for quickly linking against glsl programs.  
 
 
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{_init_shader_8hpp_abb13017b9a808564eee922ad64d2fb64}{\#define {\bfseries G\-L\-\_\-\-I\-N\-V\-A\-L\-I\-D\-\_\-\-S\-H\-A\-D\-E\-R}~-\/1}\label{_init_shader_8hpp_abb13017b9a808564eee922ad64d2fb64}
+
+\end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-G\-Luint {\bfseries Angel\-::\-Init\-Shader} (const char $\ast$v\-Shader\-File, const char $\ast$f\-Shader\-File)
-\begin{DoxyCompactList}\small\item\em Init\-Shader takes two shader sourcefiles and compiles them into a shader program. \end{DoxyCompactList}\item 
-G\-Luint {\bfseries Angel\-::\-Init\-Shader} (const char $\ast$v\-Shader\-File, const char $\ast$g\-Shader\-File, const char $\ast$f\-Shader\-File)
-\begin{DoxyCompactList}\small\item\em Init\-Shader takes three shader sourcefiles and compiles them into a shader program. \end{DoxyCompactList}\end{DoxyCompactItemize}
+const char $\ast$ {\bfseries Angel\-::\-Init\-Init\-Shader} (const char $\ast$binloc)
+\begin{DoxyCompactList}\small\item\em Init\-Init\-Shader is a preparation step allowing executables to be invoked from working directories O\-T\-H\-E\-R than the one containing the shaders directory. \end{DoxyCompactList}\item 
+G\-Luint {\bfseries Angel\-::\-Init\-Shader} (const char $\ast$v\-Shader\-File, const char $\ast$f\-Shader\-File, const char $\ast$g\-Shader\-File)
+\begin{DoxyCompactList}\small\item\em Init\-Shader takes two shader sourcefiles and compiles them into a shader program. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}

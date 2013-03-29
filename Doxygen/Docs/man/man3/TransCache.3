@@ -1,4 +1,4 @@
-.TH "TransCache" 3 "Fri Mar 15 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
+.TH "TransCache" 3 "Fri Mar 29 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -10,62 +10,62 @@ TransCache \-
 
 .in +1c
 .ti -1c
-.RI "void \fBPTM\fP (const \fBAngel::mat4\fP &ptm_in, bool postmult=true)"
+.RI "void \fBptm\fP (const \fBAngel::mat4\fP &ptm_in, bool postmult=true)"
 .br
 .ti -1c
-.RI "const \fBAngel::mat4\fP & \fBPTM\fP (void) const "
+.RI "const \fBAngel::mat4\fP & \fBptm\fP (void) const "
 .br
 .ti -1c
-.RI "const \fBAngel::mat4\fP & \fBCTM\fP (void) const "
+.RI "const \fBAngel::mat4\fP & \fBctm\fP (void) const "
 .br
 .ti -1c
-.RI "const \fBAngel::mat4\fP & \fBOTM\fP (void) const "
+.RI "const \fBAngel::mat4\fP & \fBotm\fP (void) const "
 .br
 .ti -1c
-.RI "void \fBCalcCTM\fP (bool postmult=true)"
+.RI "void \fBcalcCTM\fP (bool postmult=true)"
 .br
 .in -1c
 .SS "Public Attributes"
 
 .in +1c
 .ti -1c
-.RI "\fBTransMat\fP \fBPreOffset\fP"
+.RI "\fBTransMat\fP \fB_preOffset\fP"
 .br
 .ti -1c
-.RI "\fBRotMat\fP \fBPreRotation\fP"
+.RI "\fBRotMat\fP \fB_preRotation\fP"
 .br
 .ti -1c
-.RI "\fBScaleMat\fP \fBscale\fP"
+.RI "\fBScaleMat\fP \fB_scale\fP"
 .br
 .ti -1c
-.RI "\fBRotMat\fP \fBrotation\fP"
+.RI "\fBRotMat\fP \fB_rotation\fP"
 .br
 .ti -1c
-.RI "\fBTransMat\fP \fBoffset\fP"
+.RI "\fBTransMat\fP \fB_offset\fP"
 .br
 .ti -1c
-.RI "\fBRotMat\fP \fBorbit\fP"
+.RI "\fBRotMat\fP \fB_orbit\fP"
 .br
 .ti -1c
-.RI "\fBTransMat\fP \fBdisplacement\fP"
+.RI "\fBTransMat\fP \fB_displacement\fP"
 .br
 .in -1c
 .SS "Private Attributes"
 
 .in +1c
 .ti -1c
-.RI "\fBAngel::mat4\fP \fBptm\fP"
+.RI "\fBAngel::mat4\fP \fB_ptm\fP"
 .br
 .ti -1c
-.RI "\fBAngel::mat4\fP \fBctm\fP"
+.RI "\fBAngel::mat4\fP \fB_ctm\fP"
 .br
 .ti -1c
-.RI "\fBAngel::mat4\fP \fBotm\fP"
+.RI "\fBAngel::mat4\fP \fB_otm\fP"
 .br
 .in -1c
 .SH "Detailed Description"
 .PP 
-Definition at line 4 of file TransCache\&.hpp\&.
+Definition at line 14 of file TransCache\&.hpp\&.
 
 .SH "Author"
 .PP 

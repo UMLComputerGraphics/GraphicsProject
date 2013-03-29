@@ -28,7 +28,7 @@ enum \hyperlink{class_camera_a80cb65605322d27ad3b6d973484509ec}{Direction} \{ \\
 {\bfseries D\-I\-R\-\_\-\-U\-P}, 
 {\bfseries D\-I\-R\-\_\-\-D\-O\-W\-N}, 
 {\bfseries D\-I\-R\-\_\-\-E\-N\-D}, 
-{\bfseries D\-I\-R\-\_\-\-B\-E\-G\-I\-N} = D\-I\-R\-\_\-\-F\-O\-R\-W\-A\-R\-D
+{\bfseries D\-I\-R\-\_\-\-B\-E\-G\-I\-N} =  D\-I\-R\-\_\-\-F\-O\-R\-W\-A\-R\-D
  \}
 \begin{DoxyCompactList}\small\item\em The Direction enumeration lists all of the possible directions the camera may travel in. \end{DoxyCompactList}\item 
 enum \hyperlink{class_camera_aaa256acd50a2fa143d9f8d9456e2802f}{View\-Type} \{ \\*
@@ -41,8 +41,8 @@ enum \hyperlink{class_camera_aaa256acd50a2fa143d9f8d9456e2802f}{View\-Type} \{ \
  \}
 \begin{DoxyCompactList}\small\item\em The View\-Type enumeration lists the various possibilities for the current viewing mode that can be switched between. \end{DoxyCompactList}\item 
 enum \hyperlink{class_camera_a630738fd23098d44c0d15ee28d5649dd}{Uniforms} \{ \\*
-{\bfseries B\-E\-G\-I\-N} = Object\-:\-:E\-N\-D, 
-{\bfseries T\-R\-A\-N\-S\-L\-A\-T\-I\-O\-N} = B\-E\-G\-I\-N, 
+{\bfseries B\-E\-G\-I\-N} =  Object\-:\-:E\-N\-D, 
+{\bfseries T\-R\-A\-N\-S\-L\-A\-T\-I\-O\-N} =  B\-E\-G\-I\-N, 
 {\bfseries R\-O\-T\-A\-T\-I\-O\-N}, 
 {\bfseries V\-I\-E\-W}, 
 \\*
@@ -166,7 +166,7 @@ virtual void \hyperlink{class_object_aeaf11bb87bd59381c9e066f0b4f40d8e}{shader} 
 \begin{DoxyCompactList}\small\item\em Sets the shader to be used by this object. \end{DoxyCompactList}\item 
 void \hyperlink{class_object_a0d604a816115c474b9593aeaebda9f8b}{animation} (void($\ast$anim\-\_\-func)(\hyperlink{class_trans_cache}{Trans\-Cache} \&arg))
 \begin{DoxyCompactList}\small\item\em Apply an animation callback function to this \hyperlink{class_object}{Object}. \end{DoxyCompactList}\item 
-void \hyperlink{class_object_a70a0f93ad9805057c5cc39853ce049c7}{propegate} (void)
+void \hyperlink{class_object_a2fdd201413e0408f5a2508874acd2ef5}{propagate} (void)
 \begin{DoxyCompactList}\small\item\em Scene-\/graph changes are not automatically applied to children. \end{DoxyCompactList}\item 
 \hyperlink{struct_angel_1_1vec4}{vec4} \hyperlink{class_object_ac64609eb614aa5974b74000cec6fc95c}{position} () const 
 \begin{DoxyCompactList}\small\item\em Obtain the vec4 representative of the \hyperlink{class_object}{Object}'s current position in space. \end{DoxyCompactList}\item 
@@ -183,21 +183,18 @@ void \hyperlink{class_object_a543d2329b25df9fb0a782f09d03e5cb1}{morph\-Percentag
 \begin{DoxyCompactList}\small\item\em Obliterate the morph target for this object. \end{DoxyCompactList}\item 
 int \hyperlink{class_object_a73f1a6210bacf504de9a808009479b81}{number\-Of\-Points} ()
 \begin{DoxyCompactList}\small\item\em Retrieve the number of \-\_\-vertices this object has. \end{DoxyCompactList}\item 
-\hypertarget{class_scene_aa5a48614e959c38c35d824fa9d6a4b8b}{\hyperlink{class_object}{Object} $\ast$ {\bfseries add\-Object} (const std\-::string \&obj\-Name, G\-Luint Object\-\_\-\-Shader=0)}\label{class_scene_aa5a48614e959c38c35d824fa9d6a4b8b}
+void \hyperlink{class_object_a74300b3fa318786e21b65183461c5e25}{texture\-I\-D} (G\-Lint new\-Texture\-I\-D)
+\begin{DoxyCompactList}\small\item\em Set the \hyperlink{class_texture}{Texture} I\-D / \hyperlink{class_texture}{Texture} Unit for this \hyperlink{class_object}{Object}. \end{DoxyCompactList}\item 
+\hyperlink{class_object}{Object} $\ast$ \hyperlink{class_scene_aa5a48614e959c38c35d824fa9d6a4b8b}{add\-Object} (const std\-::string \&obj\-Name, G\-Luint Object\-\_\-\-Shader=0)
+\begin{DoxyCompactList}\small\item\em add\-Object creates a new \hyperlink{class_object}{Object} with the given name and, optionally, a specified shader and adds it to the \hyperlink{class_scene}{Scene} graph. \end{DoxyCompactList}\item 
+void \hyperlink{class_scene_a2a6845dacbb468c5c097c7a6ab5a0fe0}{del\-Object} (const std\-::string \&obj\-Name)
+\begin{DoxyCompactList}\small\item\em del\-Object will remove from the \hyperlink{class_scene}{Scene} graph the object with the given name. \end{DoxyCompactList}\item 
+\hypertarget{class_scene_a2e6b319b60e27e66ad43bb942a6c4424}{void \hyperlink{class_scene_a2e6b319b60e27e66ad43bb942a6c4424}{del\-Object} (void)}\label{class_scene_a2e6b319b60e27e66ad43bb942a6c4424}
 
-\item 
-\hypertarget{class_scene_a2a6845dacbb468c5c097c7a6ab5a0fe0}{void {\bfseries del\-Object} (const std\-::string \&obj\-Name)}\label{class_scene_a2a6845dacbb468c5c097c7a6ab5a0fe0}
+\begin{DoxyCompactList}\small\item\em del\-Object with no parameters will delete the first \hyperlink{class_object}{Object} in the \hyperlink{class_scene}{Scene}. \end{DoxyCompactList}\item 
+\hypertarget{class_scene_ad6c9d1d1d0c786d39bf97dc60410e28b}{void \hyperlink{class_scene_ad6c9d1d1d0c786d39bf97dc60410e28b}{pop\-Object} (void)}\label{class_scene_ad6c9d1d1d0c786d39bf97dc60410e28b}
 
-\item 
-\hypertarget{class_scene_a2e6b319b60e27e66ad43bb942a6c4424}{void {\bfseries del\-Object} (void)}\label{class_scene_a2e6b319b60e27e66ad43bb942a6c4424}
-
-\item 
-\hypertarget{class_scene_ad6c9d1d1d0c786d39bf97dc60410e28b}{void {\bfseries pop\-Object} (void)}\label{class_scene_ad6c9d1d1d0c786d39bf97dc60410e28b}
-
-\item 
-\hypertarget{class_scene_a8c57e1cebc39586c7928225d1e25de39}{void \hyperlink{class_scene_a8c57e1cebc39586c7928225d1e25de39}{destroy\-Object} (void)}\label{class_scene_a8c57e1cebc39586c7928225d1e25de39}
-
-\begin{DoxyCompactList}\small\item\em Completely remove this object and all his children. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em pop\-Object deletes the last \hyperlink{class_object}{Object} in the \hyperlink{class_scene}{Scene}. \end{DoxyCompactList}\item 
 \hypertarget{class_scene_a70fcdad192a4c6ff508125de8af6cf4d}{\hyperlink{class_object}{Object} $\ast$ {\bfseries next} (void)}\label{class_scene_a70fcdad192a4c6ff508125de8af6cf4d}
 
 \item 
@@ -209,7 +206,9 @@ int \hyperlink{class_object_a73f1a6210bacf504de9a808009479b81}{number\-Of\-Point
 \item 
 \hypertarget{class_scene_ae9b69d8db8a46991017635f22e45baad}{\hyperlink{class_object}{Object} $\ast$ {\bfseries operator\mbox{[}$\,$\mbox{]}} (const std\-::string \&objname)}\label{class_scene_ae9b69d8db8a46991017635f22e45baad}
 
-\end{DoxyCompactItemize}
+\item 
+void \hyperlink{class_scene_a8893899f0088a72642ae32a656252e7f}{insert\-Object} (\hyperlink{class_object}{Object} $\ast$obj)
+\begin{DoxyCompactList}\small\item\em Register a created object with the scene graph. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -222,7 +221,7 @@ std\-::vector$<$ unsigned int $>$ \hyperlink{class_object_ab85adc7a2d3b891051c09
 std\-::vector$<$ \hyperlink{struct_angel_1_1vec4}{Angel\-::vec4} $>$ \hyperlink{class_object_a29a0e9959c490067db69378bf57a17ba}{\-\_\-colors}
 \begin{DoxyCompactList}\small\item\em Colors buffer. \end{DoxyCompactList}\item 
 std\-::vector$<$ \hyperlink{struct_angel_1_1vec2}{Angel\-::vec2} $>$ \hyperlink{class_object_aa9ddc3b95d74b76ab8a251fb376dfafb}{\-\_\-tex\-U\-Vs}
-\begin{DoxyCompactList}\small\item\em Texture Coordinates buffer. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_texture}{Texture} Coordinates buffer. \end{DoxyCompactList}\item 
 \hypertarget{class_object_af17d57ea2dab64e21112e8949d50d85f}{\hyperlink{class_trans_cache}{Trans\-Cache} \hyperlink{class_object_af17d57ea2dab64e21112e8949d50d85f}{\-\_\-trans}}\label{class_object_af17d57ea2dab64e21112e8949d50d85f}
 
 \begin{DoxyCompactList}\small\item\em The \-\_\-trans cache encompasses the current transformational state of this object. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -230,10 +229,7 @@ std\-::vector$<$ \hyperlink{struct_angel_1_1vec2}{Angel\-::vec2} $>$ \hyperlink{
 \begin{DoxyCompactItemize}
 \item 
 void \hyperlink{class_scene_ad3897f8ac658af62c133783b2c4eaee4}{delete\-Object} (\hyperlink{class_object}{Object} $\ast$obj)
-\begin{DoxyCompactList}\small\item\em delete\-Object is the actual implementation function that will remove an \hyperlink{class_object}{Object} from the \hyperlink{class_scene}{Scene} list and \hyperlink{class_scene}{Scene} map, then free the object. \end{DoxyCompactList}\item 
-\hypertarget{class_scene_ab64354bd8059bab589ca2dbf9de9e66c}{void {\bfseries insert\-Object} (const std\-::string \hyperlink{class_object_aafd766fce2598f718cac97a3ac731706}{name}, \hyperlink{class_object}{Object} $\ast$obj)}\label{class_scene_ab64354bd8059bab589ca2dbf9de9e66c}
-
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Very seriously delete a child object and free his memory. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -241,7 +237,7 @@ std\-::string \hyperlink{class_object_a3f617214b260ebbe394e7c7b08ab5e43}{\-\_\-n
 \begin{DoxyCompactList}\small\item\em \-\_\-name is used as an identifying handle for the object. \end{DoxyCompactList}\item 
 G\-Luint \hyperlink{class_object_a564aa6b1df66a05ab6b6c2f071851c4e}{\-\_\-vao}
 \begin{DoxyCompactList}\small\item\em Vertex Array \hyperlink{class_object}{Object} handle identifying our buffers/object. \end{DoxyCompactList}\item 
-\hypertarget{class_object_adf8365e2c661ab4014c3dbf60e48572b}{G\-Luint \hyperlink{class_object_adf8365e2c661ab4014c3dbf60e48572b}{\-\_\-buffer} \mbox{[}\hyperlink{class_object_a74a39247838865244defd0ae9712df9ba1999a38dc687c7ae05c884078de39b51}{N\-U\-M\-\_\-\-B\-U\-F\-F\-E\-R\-S}\mbox{]}}\label{class_object_adf8365e2c661ab4014c3dbf60e48572b}
+\hypertarget{class_object_adf8365e2c661ab4014c3dbf60e48572b}{G\-Luint \hyperlink{class_object_adf8365e2c661ab4014c3dbf60e48572b}{\-\_\-buffer} \mbox{[}\hyperlink{class_object_a51d08da3bd559d08734197006bc29a79a1999a38dc687c7ae05c884078de39b51}{N\-U\-M\-\_\-\-B\-U\-F\-F\-E\-R\-S}\mbox{]}}\label{class_object_adf8365e2c661ab4014c3dbf60e48572b}
 
 \begin{DoxyCompactList}\small\item\em Handles to our buffers (Vertices, Tex\-U\-Vs, etc.) \end{DoxyCompactList}\item 
 G\-Lenum \hyperlink{class_object_ae8457eabfb89d55826142508013b56c0}{\-\_\-draw\-Mode}
@@ -259,18 +255,20 @@ std\-::string $>$ \hyperlink{class_object_a6378d0b0eeec23045ae2a5245e42bf13}{\-\
 \begin{DoxyCompactList}\small\item\em A map between Uniform variable functions and the actual uniform variable names. \end{DoxyCompactList}\item 
 std\-::vector$<$ G\-Lint $>$ \hyperlink{class_object_a983963f564898beca4bda99676245663}{\-\_\-handles}
 \begin{DoxyCompactList}\small\item\em Handles to Uniforms on the shader. \end{DoxyCompactList}\item 
-\hypertarget{class_scene_acdd0123ca6b2d64d8d447bb485b235fc}{std\-::list$<$ \hyperlink{class_object}{Object} $\ast$ $>$ {\bfseries \-\_\-list}}\label{class_scene_acdd0123ca6b2d64d8d447bb485b235fc}
+\hypertarget{class_object_aefef7502dd10fb3c1c266cf688c432de}{G\-Lint \hyperlink{class_object_aefef7502dd10fb3c1c266cf688c432de}{\-\_\-texture\-I\-D}}\label{class_object_aefef7502dd10fb3c1c266cf688c432de}
 
-\item 
-\hypertarget{class_scene_a8bd5d86484a12255b26b92b6cbf8d29a}{std\-::map$<$ std\-::string, \hyperlink{class_object}{Object} $\ast$ $>$ {\bfseries \-\_\-map}}\label{class_scene_a8bd5d86484a12255b26b92b6cbf8d29a}
+\begin{DoxyCompactList}\small\item\em The texture unit index this \hyperlink{class_object}{Object} uses. \end{DoxyCompactList}\item 
+\hypertarget{class_scene_acdd0123ca6b2d64d8d447bb485b235fc}{std\-::list$<$ \hyperlink{class_object}{Object} $\ast$ $>$ \hyperlink{class_scene_acdd0123ca6b2d64d8d447bb485b235fc}{\-\_\-list}}\label{class_scene_acdd0123ca6b2d64d8d447bb485b235fc}
 
-\item 
-\hypertarget{class_scene_ae87ca5350fcc595f3f15a4fd3c39f3d9}{std\-::list$<$ \hyperlink{class_object}{Object} $\ast$ $>$\-::iterator {\bfseries \-\_\-current\-Obj}}\label{class_scene_ae87ca5350fcc595f3f15a4fd3c39f3d9}
+\begin{DoxyCompactList}\small\item\em For the purposes of rapid propagation of scene-\/graph changes, \hyperlink{class_object}{Object} pointers are stored in a regular flat list. \end{DoxyCompactList}\item 
+std\-::map$<$ std\-::string, \hyperlink{class_object}{Object} $\ast$ $>$ \hyperlink{class_scene_a8bd5d86484a12255b26b92b6cbf8d29a}{\-\_\-map}
+\begin{DoxyCompactList}\small\item\em For the purposes of accessing named objects quickly, though, objects are also re-\/stored in an associative map. \end{DoxyCompactList}\item 
+\hypertarget{class_scene_ae87ca5350fcc595f3f15a4fd3c39f3d9}{std\-::list$<$ \hyperlink{class_object}{Object} $\ast$ $>$\-::iterator \hyperlink{class_scene_ae87ca5350fcc595f3f15a4fd3c39f3d9}{\-\_\-current\-Obj}}\label{class_scene_ae87ca5350fcc595f3f15a4fd3c39f3d9}
 
-\item 
-\hypertarget{class_scene_a8f9bdd8ec5edb1f414fbd314a36e2724}{G\-Luint {\bfseries \-\_\-g\-Shader}}\label{class_scene_a8f9bdd8ec5edb1f414fbd314a36e2724}
+\begin{DoxyCompactList}\small\item\em We keep an iterator on-\/hand that references what the scene considers to be it's active, current object. \end{DoxyCompactList}\item 
+\hypertarget{class_scene_a8f9bdd8ec5edb1f414fbd314a36e2724}{G\-Luint \hyperlink{class_scene_a8f9bdd8ec5edb1f414fbd314a36e2724}{\-\_\-g\-Shader}}\label{class_scene_a8f9bdd8ec5edb1f414fbd314a36e2724}
 
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em A handle to a shader program to be used as the default shader for new children objects added to the scene. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -541,6 +539,34 @@ Void.
 
 Definition at line 223 of file Camera.\-cpp.
 
+\hypertarget{class_scene_aa5a48614e959c38c35d824fa9d6a4b8b}{\index{Camera@{Camera}!add\-Object@{add\-Object}}
+\index{add\-Object@{add\-Object}!Camera@{Camera}}
+\subsubsection[{add\-Object}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Object} $\ast$ Scene\-::add\-Object (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{obj\-Name, }
+\item[{G\-Luint}]{shader = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inherited]}}}\label{class_scene_aa5a48614e959c38c35d824fa9d6a4b8b}
+
+
+add\-Object creates a new \hyperlink{class_object}{Object} with the given name and, optionally, a specified shader and adds it to the \hyperlink{class_scene}{Scene} graph. 
+
+If no shader is given, a default shader M\-U\-S\-T have been specified for the \hyperlink{class_scene}{Scene} prior to the call.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj\-Name} & The name of the new \hyperlink{class_object}{Object} to add. \\
+\hline
+{\em Object\-\_\-\-Shader} & The shader that should be used to render this object. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A pointer to the new \hyperlink{class_object}{Object}. 
+\end{DoxyReturn}
+
+
+Definition at line 77 of file Scene.\-cpp.
+
 \hypertarget{class_camera_a717f5d58bb0a73f8c5513a3520d98203}{\index{Camera@{Camera}!adjust\-Field\-Of\-View@{adjust\-Field\-Of\-View}}
 \index{adjust\-Field\-Of\-View@{adjust\-Field\-Of\-View}!Camera@{Camera}}
 \subsubsection[{adjust\-Field\-Of\-View}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::adjust\-Field\-Of\-View (
@@ -608,7 +634,7 @@ Works once only\-: Does not save the function or automatically run on idle.
 \end{DoxyParams}
 
 
-Definition at line 485 of file Object.\-cpp.
+Definition at line 443 of file Object.\-cpp.
 
 \hypertarget{class_camera_a8463a19c9e1e7a1c51cd97051e937230}{\index{Camera@{Camera}!change\-Perspective@{change\-Perspective}}
 \index{change\-Perspective@{change\-Perspective}!Camera@{Camera}}
@@ -660,16 +686,40 @@ Definition at line 19 of file Camera.\-cpp.
 )\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}}\label{class_scene_ad3897f8ac658af62c133783b2c4eaee4}
 
 
-delete\-Object is the actual implementation function that will remove an \hyperlink{class_object}{Object} from the \hyperlink{class_scene}{Scene} list and \hyperlink{class_scene}{Scene} map, then free the object. 
+Very seriously delete a child object and free his memory. 
+
+delete\-Object is the actual implementation function that will remove an \hyperlink{class_object}{Object} from the \hyperlink{class_scene}{Scene} list and \hyperlink{class_scene}{Scene} map, then free the object.
 
 
 \begin{DoxyParams}{Parameters}
+{\em obj} & The object to delete.\\
+\hline
 {\em obj} & The pointer to the object to free. \\
 \hline
 \end{DoxyParams}
 
 
-Definition at line 76 of file Scene.\-cpp.
+Definition at line 129 of file Scene.\-cpp.
+
+\hypertarget{class_scene_a2a6845dacbb468c5c097c7a6ab5a0fe0}{\index{Camera@{Camera}!del\-Object@{del\-Object}}
+\index{del\-Object@{del\-Object}!Camera@{Camera}}
+\subsubsection[{del\-Object}]{\setlength{\rightskip}{0pt plus 5cm}void Scene\-::del\-Object (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{obj\-Name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inherited]}}}\label{class_scene_a2a6845dacbb468c5c097c7a6ab5a0fe0}
+
+
+del\-Object will remove from the \hyperlink{class_scene}{Scene} graph the object with the given name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj\-Name} & Name of the \hyperlink{class_object}{Object} to delete. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 99 of file Scene.\-cpp.
 
 \hypertarget{class_camera_a2ac5f89b4f9f012dead66980925143c0}{\index{Camera@{Camera}!d\-Pos@{d\-Pos}}
 \index{d\-Pos@{d\-Pos}!Camera@{Camera}}
@@ -767,7 +817,7 @@ Can be G\-L\-\_\-\-L\-I\-N\-E\-S, G\-L\-\_\-\-L\-I\-N\-E\-\_\-\-L\-O\-O\-P, G\-L
 \end{DoxyParams}
 
 
-Definition at line 267 of file Object.\-cpp.
+Definition at line 269 of file Object.\-cpp.
 
 \hypertarget{class_camera_ac7985a6cb48f4e1e74fda17e5213dd74}{\index{Camera@{Camera}!d\-X@{d\-X}}
 \index{d\-X@{d\-X}!Camera@{Camera}}
@@ -909,7 +959,7 @@ A pointer to the newly created target.
 \end{DoxyReturn}
 
 
-Definition at line 545 of file Object.\-cpp.
+Definition at line 503 of file Object.\-cpp.
 
 \hypertarget{class_camera_a2148d751f104d8e39c9832e2372df2d9}{\index{Camera@{Camera}!heave@{heave}}
 \index{heave@{heave}!Camera@{Camera}}
@@ -952,6 +1002,28 @@ Void.
 
 Definition at line 280 of file Camera.\-cpp.
 
+\hypertarget{class_scene_a8893899f0088a72642ae32a656252e7f}{\index{Camera@{Camera}!insert\-Object@{insert\-Object}}
+\index{insert\-Object@{insert\-Object}!Camera@{Camera}}
+\subsubsection[{insert\-Object}]{\setlength{\rightskip}{0pt plus 5cm}void Scene\-::insert\-Object (
+\begin{DoxyParamCaption}
+\item[{{\bf Object} $\ast$}]{obj}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inherited]}}}\label{class_scene_a8893899f0088a72642ae32a656252e7f}
+
+
+Register a created object with the scene graph. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the object (For the associative map), \\
+\hline
+{\em obj} & The \hyperlink{class_object}{Object} pointer to add to the scene. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 118 of file Scene.\-cpp.
+
 \hypertarget{class_object_a11d6063c580331d6af59c8d71b7f3e9f}{\index{Camera@{Camera}!link@{link}}
 \index{link@{link}!Camera@{Camera}}
 \subsubsection[{link}]{\setlength{\rightskip}{0pt plus 5cm}void Object\-::link (
@@ -973,7 +1045,7 @@ link a specified Uniform against the shader's variable \-\_\-name.
 \end{DoxyParams}
 
 
-Definition at line 392 of file Object.\-cpp.
+Definition at line 345 of file Object.\-cpp.
 
 \hypertarget{class_object_accb051cdc79bc93e8c9c0edb79dd6b30}{\index{Camera@{Camera}!morph\-Percentage@{morph\-Percentage}}
 \index{morph\-Percentage@{morph\-Percentage}!Camera@{Camera}}
@@ -991,7 +1063,7 @@ The morph percentage, as a float.
 \end{DoxyReturn}
 
 
-Definition at line 557 of file Object.\-cpp.
+Definition at line 515 of file Object.\-cpp.
 
 \hypertarget{class_object_a543d2329b25df9fb0a782f09d03e5cb1}{\index{Camera@{Camera}!morph\-Percentage@{morph\-Percentage}}
 \index{morph\-Percentage@{morph\-Percentage}!Camera@{Camera}}
@@ -1011,7 +1083,7 @@ Set the morph percentage of this \hyperlink{class_object}{Object}.
 \end{DoxyParams}
 
 
-Definition at line 566 of file Object.\-cpp.
+Definition at line 524 of file Object.\-cpp.
 
 \hypertarget{class_object_a7694c9cfe445c3d5b993a38e3f8badd9}{\index{Camera@{Camera}!morph\-Target@{morph\-Target}}
 \index{morph\-Target@{morph\-Target}!Camera@{Camera}}
@@ -1029,7 +1101,7 @@ An \hyperlink{class_object}{Object} pointer to the morph target.
 \end{DoxyReturn}
 
 
-Definition at line 531 of file Object.\-cpp.
+Definition at line 489 of file Object.\-cpp.
 
 \hypertarget{class_camera_aaa9706527438bd5bd323dd018bb34fcf}{\index{Camera@{Camera}!move@{move}}
 \index{move@{move}!Camera@{Camera}}
@@ -1070,7 +1142,7 @@ The \-\_\-name of this \hyperlink{class_object}{Object}.
 \end{DoxyReturn}
 
 
-Definition at line 380 of file Object.\-cpp.
+Definition at line 333 of file Object.\-cpp.
 
 \hypertarget{class_object_a73f1a6210bacf504de9a808009479b81}{\index{Camera@{Camera}!number\-Of\-Points@{number\-Of\-Points}}
 \index{number\-Of\-Points@{number\-Of\-Points}!Camera@{Camera}}
@@ -1088,7 +1160,7 @@ An integer representing the number of vertices the object has.
 \end{DoxyReturn}
 
 
-Definition at line 586 of file Object.\-cpp.
+Definition at line 544 of file Object.\-cpp.
 
 \hypertarget{class_camera_aac7dbb6201be7f17e014fc6fdf915560}{\index{Camera@{Camera}!pitch@{pitch}}
 \index{pitch@{pitch}!Camera@{Camera}}
@@ -1234,22 +1306,22 @@ vec4 representing the \hyperlink{class_object}{Object}'s position in space.
 \end{DoxyReturn}
 
 
-Definition at line 520 of file Object.\-cpp.
+Definition at line 478 of file Object.\-cpp.
 
-\hypertarget{class_object_a70a0f93ad9805057c5cc39853ce049c7}{\index{Camera@{Camera}!propegate@{propegate}}
-\index{propegate@{propegate}!Camera@{Camera}}
-\subsubsection[{propegate}]{\setlength{\rightskip}{0pt plus 5cm}void Object\-::propegate (
+\hypertarget{class_object_a2fdd201413e0408f5a2508874acd2ef5}{\index{Camera@{Camera}!propagate@{propagate}}
+\index{propagate@{propagate}!Camera@{Camera}}
+\subsubsection[{propagate}]{\setlength{\rightskip}{0pt plus 5cm}void Object\-::propagate (
 \begin{DoxyParamCaption}
 \item[{void}]{}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inherited]}}}\label{class_object_a70a0f93ad9805057c5cc39853ce049c7}
+)\hspace{0.3cm}{\ttfamily [inherited]}}}\label{class_object_a2fdd201413e0408f5a2508874acd2ef5}
 
 
 Scene-\/graph changes are not automatically applied to children. 
 
-For efficiency reasons, you need to call \hyperlink{class_object_a70a0f93ad9805057c5cc39853ce049c7}{propegate()} manually. 
+For efficiency reasons, you need to call \hyperlink{class_object_a2fdd201413e0408f5a2508874acd2ef5}{propagate()} manually. 
 
-Definition at line 494 of file Object.\-cpp.
+Definition at line 452 of file Object.\-cpp.
 
 \hypertarget{class_camera_a24c5346fc0dfaa93257b6716fe0f2421}{\index{Camera@{Camera}!refresh\-Perspective@{refresh\-Perspective}}
 \index{refresh\-Perspective@{refresh\-Perspective}!Camera@{Camera}}
@@ -1358,7 +1430,11 @@ a G\-Luint handle to the shader program used by this \hyperlink{class_object}{Ob
 \end{DoxyReturn}
 
 
-Definition at line 448 of file Object.\-cpp.
+Reimplemented from \hyperlink{class_scene_a9d8a33f0f0a296aba0fb6717ab85cb18}{Scene}.
+
+
+
+Definition at line 406 of file Object.\-cpp.
 
 \hypertarget{class_object_aeaf11bb87bd59381c9e066f0b4f40d8e}{\index{Camera@{Camera}!shader@{shader}}
 \index{shader@{shader}!Camera@{Camera}}
@@ -1387,7 +1463,7 @@ Reimplemented from \hyperlink{class_scene_a3ea7e92935755c776c235a9872f53394}{Sce
 
 
 
-Definition at line 464 of file Object.\-cpp.
+Definition at line 422 of file Object.\-cpp.
 
 \hypertarget{class_camera_ae7414c6ae83c3c9392ab90e957daf2b9}{\index{Camera@{Camera}!stop@{stop}}
 \index{stop@{stop}!Camera@{Camera}}
@@ -1478,7 +1554,30 @@ It would be better if you didn't think of this as being here.
 \end{DoxyParams}
 
 
-Definition at line 277 of file Object.\-cpp.
+Definition at line 279 of file Object.\-cpp.
+
+\hypertarget{class_object_a74300b3fa318786e21b65183461c5e25}{\index{Camera@{Camera}!texture\-I\-D@{texture\-I\-D}}
+\index{texture\-I\-D@{texture\-I\-D}!Camera@{Camera}}
+\subsubsection[{texture\-I\-D}]{\setlength{\rightskip}{0pt plus 5cm}void Object\-::texture\-I\-D (
+\begin{DoxyParamCaption}
+\item[{G\-Lint}]{new\-Texture\-I\-D}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}}\label{class_object_a74300b3fa318786e21b65183461c5e25}
+
+
+Set the \hyperlink{class_texture}{Texture} I\-D / \hyperlink{class_texture}{Texture} Unit for this \hyperlink{class_object}{Object}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\-Texture\-I\-D} & The new \hyperlink{class_texture}{Texture} Unit I\-D/\-Index for this \hyperlink{class_object}{Object}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None. 
+\end{DoxyReturn}
+
+
+Definition at line 244 of file Object.\-hpp.
 
 \hypertarget{class_camera_ae845a36306bba6b6e359cbdddce65f7f}{\index{Camera@{Camera}!view@{view}}
 \index{view@{view}!Camera@{Camera}}
@@ -1711,7 +1810,7 @@ Colors buffer.
 
 
 
-Definition at line 246 of file Object.\-hpp.
+Definition at line 256 of file Object.\-hpp.
 
 \hypertarget{class_camera_a6c1e31c8470b923f9f872f73597cb95b}{\index{Camera@{Camera}!\-\_\-ctm@{\-\_\-ctm}}
 \index{\-\_\-ctm@{\-\_\-ctm}!Camera@{Camera}}
@@ -1744,7 +1843,7 @@ Drawing mode for this object.
 
 G\-L\-\_\-\-T\-R\-I\-A\-N\-G\-L\-E\-S, G\-L\-\_\-\-L\-I\-N\-E\-\_\-\-L\-O\-O\-P, etc. 
 
-Definition at line 268 of file Object.\-hpp.
+Definition at line 278 of file Object.\-hpp.
 
 \hypertarget{class_camera_a82542bb76347e2a2bb66b3bb7842945b}{\index{Camera@{Camera}!\-\_\-fovy@{\-\_\-fovy}}
 \index{\-\_\-fovy@{\-\_\-fovy}!Camera@{Camera}}
@@ -1777,7 +1876,7 @@ Handles to Uniforms on the shader.
 
 Protected to allow derived classes to extend it as needed. 
 
-Definition at line 297 of file Object.\-hpp.
+Definition at line 307 of file Object.\-hpp.
 
 \hypertarget{class_object_ab85adc7a2d3b891051c096593982653d}{\index{Camera@{Camera}!\-\_\-indices@{\-\_\-indices}}
 \index{\-\_\-indices@{\-\_\-indices}!Camera@{Camera}}
@@ -1788,7 +1887,18 @@ Draw Order Index buffer.
 
 If not used, engine assumes G\-L\-\_\-\-D\-R\-A\-W\-\_\-\-A\-R\-R\-A\-Y\-S. 
 
-Definition at line 244 of file Object.\-hpp.
+Definition at line 254 of file Object.\-hpp.
+
+\hypertarget{class_scene_a8bd5d86484a12255b26b92b6cbf8d29a}{\index{Camera@{Camera}!\-\_\-map@{\-\_\-map}}
+\index{\-\_\-map@{\-\_\-map}!Camera@{Camera}}
+\subsubsection[{\-\_\-map}]{\setlength{\rightskip}{0pt plus 5cm}std\-::map$<$ std\-::string, {\bf Object}$\ast$ $>$ Scene\-::\-\_\-map\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}}\label{class_scene_a8bd5d86484a12255b26b92b6cbf8d29a}
+
+
+For the purposes of accessing named objects quickly, though, objects are also re-\/stored in an associative map. 
+
+It's a little superfluous, but here it is! 
+
+Definition at line 127 of file Scene.\-hpp.
 
 \hypertarget{class_object_a7fbbac9027e1a8266342bd5ce064120d}{\index{Camera@{Camera}!\-\_\-morph\-Percentage@{\-\_\-morph\-Percentage}}
 \index{\-\_\-morph\-Percentage@{\-\_\-morph\-Percentage}!Camera@{Camera}}
@@ -1799,7 +1909,7 @@ The percentage of the morph.
 
 0.\-0 means 100\% the original, current object. 100.\-0 means 100\% the new, targeted object. 
 
-Definition at line 279 of file Object.\-hpp.
+Definition at line 289 of file Object.\-hpp.
 
 \hypertarget{class_camera_abec7e2becbad5a692a54a69b6a5f6d75}{\index{Camera@{Camera}!\-\_\-motion@{\-\_\-motion}}
 \index{\-\_\-motion@{\-\_\-motion}!Camera@{Camera}}
@@ -1821,7 +1931,7 @@ Definition at line 440 of file Camera.\-hpp.
 
 
 
-Definition at line 259 of file Object.\-hpp.
+Definition at line 269 of file Object.\-hpp.
 
 \hypertarget{class_object_a20bb786cb5915934853855aab9d1a1b3}{\index{Camera@{Camera}!\-\_\-normals@{\-\_\-normals}}
 \index{\-\_\-normals@{\-\_\-normals}!Camera@{Camera}}
@@ -1832,7 +1942,7 @@ Normals buffer.
 
 
 
-Definition at line 242 of file Object.\-hpp.
+Definition at line 252 of file Object.\-hpp.
 
 \hypertarget{class_camera_a21f8eb53e5369018e39add0453ae626d}{\index{Camera@{Camera}!\-\_\-speed@{\-\_\-speed}}
 \index{\-\_\-speed@{\-\_\-speed}!Camera@{Camera}}
@@ -1850,11 +1960,11 @@ Definition at line 410 of file Camera.\-hpp.
 \subsubsection[{\-\_\-tex\-U\-Vs}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ {\bf Angel\-::vec2} $>$ Object\-::\-\_\-tex\-U\-Vs\hspace{0.3cm}{\ttfamily [inherited]}}}\label{class_object_aa9ddc3b95d74b76ab8a251fb376dfafb}
 
 
-Texture Coordinates buffer. 
+\hyperlink{class_texture}{Texture} Coordinates buffer. 
 
 
 
-Definition at line 248 of file Object.\-hpp.
+Definition at line 258 of file Object.\-hpp.
 
 \hypertarget{class_object_a6378d0b0eeec23045ae2a5245e42bf13}{\index{Camera@{Camera}!\-\_\-uniform\-Map@{\-\_\-uniform\-Map}}
 \index{\-\_\-uniform\-Map@{\-\_\-uniform\-Map}!Camera@{Camera}}
@@ -1865,7 +1975,7 @@ A map between Uniform variable functions and the actual uniform variable names.
 
 Used when linking against a shader. 
 
-Definition at line 290 of file Object.\-hpp.
+Definition at line 300 of file Object.\-hpp.
 
 \hypertarget{class_object_a564aa6b1df66a05ab6b6c2f071851c4e}{\index{Camera@{Camera}!\-\_\-vao@{\-\_\-vao}}
 \index{\-\_\-vao@{\-\_\-vao}!Camera@{Camera}}
@@ -1876,7 +1986,7 @@ Vertex Array \hyperlink{class_object}{Object} handle identifying our buffers/obj
 
 
 
-Definition at line 262 of file Object.\-hpp.
+Definition at line 272 of file Object.\-hpp.
 
 \hypertarget{class_camera_aa15577ff9e67c81699ee86d4d20a7ee7}{\index{Camera@{Camera}!\-\_\-velocity@{\-\_\-velocity}}
 \index{\-\_\-velocity@{\-\_\-velocity}!Camera@{Camera}}
@@ -1898,7 +2008,7 @@ vertex buffer.
 
 
 
-Definition at line 240 of file Object.\-hpp.
+Definition at line 250 of file Object.\-hpp.
 
 \hypertarget{class_camera_a28f6e710df6db726568cd0f2bbd3643a}{\index{Camera@{Camera}!\-\_\-view@{\-\_\-view}}
 \index{\-\_\-view@{\-\_\-view}!Camera@{Camera}}

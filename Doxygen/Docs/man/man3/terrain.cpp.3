@@ -1,4 +1,4 @@
-.TH "terrain.cpp" 3 "Fri Mar 15 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
+.TH "terrain.cpp" 3 "Fri Mar 29 2013" "Version 31337" "HyperGrafx" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -48,6 +48,8 @@ This is a trimmed version of our Fall 2012 project\&.
 \fC#include 'glut_callbacks\&.h'\fP
 .br
 \fC#include 'ObjLoader\&.hpp'\fP
+.br
+\fC#include 'eric_rules\&.hpp'\fP
 .br
 
 .SS "Functions"
@@ -148,7 +150,7 @@ void\&.
 .PP
 
 .PP
-Definition at line 228 of file terrain\&.cpp\&.
+Definition at line 224 of file terrain\&.cpp\&.
 .SS "void display (void)"
 
 .PP
@@ -159,7 +161,7 @@ void\&.
 .PP
 
 .PP
-Definition at line 253 of file terrain\&.cpp\&.
+Definition at line 249 of file terrain\&.cpp\&.
 .SS "void displayViewport (void)"
 
 .PP
@@ -170,7 +172,7 @@ void\&.
 .PP
 
 .PP
-Definition at line 239 of file terrain\&.cpp\&.
+Definition at line 235 of file terrain\&.cpp\&.
 .SS "void init (void)"
 
 .PP
@@ -181,7 +183,7 @@ void\&.
 .PP
 
 .PP
-Definition at line 89 of file terrain\&.cpp\&.
+Definition at line 88 of file terrain\&.cpp\&.
 .SS "void randomize_terrain ()"
 
 .PP
@@ -210,15 +212,15 @@ void\&.
 .PP
 
 .PP
-Definition at line 277 of file terrain\&.cpp\&.
+Definition at line 273 of file terrain\&.cpp\&.
 .SS "void wiilook (\fBCamera\fP &WiiCamera, const \fBAngel::vec3\fP &NewTheta, const \fBAngel::vec3\fP &MovementRates)"
 
 .PP
-wiilook is an analog of mouselook, for wii remote controls\&. It takes a reference to a \fBCamera\fP, and two vec3s, and uses the information to adjust the \fBCamera\fP's rotation\&.
+wiilook is an analog of mouselook, for wii remote controls\&. It takes a reference to a \fBCamera\fP, and two vec3s, and uses the information to adjust the \fBCamera\fP's _rotation\&.
 .PP
 \fBParameters:\fP
 .RS 4
-\fIWiiCamera\fP The camera to adjust the rotation of\&. 
+\fIWiiCamera\fP The camera to adjust the _rotation of\&. 
 .br
 \fINewTheta\fP The X,Y,Z angles of the Wii Remote\&. 
 .br
@@ -232,23 +234,22 @@ Void\&.
 .PP
 
 .PP
-Definition at line 344 of file terrain\&.cpp\&.
+Definition at line 336 of file terrain\&.cpp\&.
 .SH "Variable Documentation"
 .PP 
 .SS "const char* terrainTex[]"
 \fBInitial value:\fP
 .PP
 .nf
-= {
-  '\&.\&./Textures/GoodTextures_0013423\&.jpg',  
-  '\&.\&./Textures/GoodTextures_0013779\&.jpg',  
-  '\&.\&./Textures/GrassGreenTexture0002\&.jpg', 
-  '\&.\&./Textures/GoodTextures_0013418\&.jpg',  
-  '\&.\&./Textures/GoodTextures_0013291\&.jpg'   
-}
+ { '\&.\&./Textures/GoodTextures_0013423\&.jpg', 
+    '\&.\&./Textures/GoodTextures_0013779\&.jpg',  
+    '\&.\&./Textures/GrassGreenTexture0002\&.jpg', 
+    '\&.\&./Textures/GoodTextures_0013418\&.jpg',  
+    '\&.\&./Textures/GoodTextures_0013291\&.jpg'   
+    }
 .fi
 .PP
-Definition at line 50 of file terrain\&.cpp\&.
+Definition at line 51 of file terrain\&.cpp\&.
 .SH "Author"
 .PP 
 Generated automatically by Doxygen for HyperGrafx from the source code\&.

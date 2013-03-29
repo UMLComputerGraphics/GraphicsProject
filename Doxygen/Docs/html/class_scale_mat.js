@@ -1,11 +1,11 @@
 var class_scale_mat =
 [
-    [ "Adjust", "class_scale_mat.html#ad259370ba433114d9cdbd9d817552905", null ],
-    [ "Adjust", "class_scale_mat.html#af915563091d994e41c309a2bcd31615e", null ],
-    [ "Matrix", "class_scale_mat.html#ae6a57a1ee74ca1da1b8aef3d328a8772", null ],
+    [ "adjust", "class_scale_mat.html#a6d6d05f3af9012223bb0b61530f18688", null ],
+    [ "adjust", "class_scale_mat.html#a5cb132a1dec58200eceaa33c4c619580", null ],
+    [ "matrix", "class_scale_mat.html#afcec300424207fc1d20864b73136937e", null ],
     [ "operator*", "class_scale_mat.html#afdfbf48815a5b0d885f3b93f04cd2c66", null ],
     [ "operator*", "class_scale_mat.html#a85b923e0066365ef2e4aec3671396410", null ],
-    [ "Set", "class_scale_mat.html#aa72e3e61eddd0e88092e6cc76cc78972", null ],
-    [ "Set", "class_scale_mat.html#aea523b732204366c105809fc447ff07e", null ],
+    [ "set", "class_scale_mat.html#ae8b855d2dc58511ab404d5c275936e7d", null ],
+    [ "set", "class_scale_mat.html#a2c543c3aa6c795de16fba8cb40434a4f", null ],
     [ "mat", "class_scale_mat.html#a5f39fb578a1cdf78ca85efbd932d3834", null ]
 ];

@@ -7,9 +7,14 @@ Provides a wrapper utility for quickly linking against glsl programs.
 
 
 {\ttfamily \#include $<$cstdio$>$}\\*
+{\ttfamily \#include $<$string.\-h$>$}\\*
+{\ttfamily \#include $<$string$>$}\\*
+{\ttfamily \#include $<$sstream$>$}\\*
 {\ttfamily \#include $<$iostream$>$}\\*
+{\ttfamily \#include $<$vector$>$}\\*
 {\ttfamily \#include \char`\"{}platform.\-h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}Init\-Shader.\-hpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}eric\-\_\-rules.\-hpp\char`\"{}}\\*
 \subsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
@@ -22,10 +27,8 @@ Provides a wrapper utility for quickly linking against glsl programs.
 \item 
 static char $\ast$ {\bfseries Angel\-::read\-Shader\-Source} (const char $\ast$shader\-File)
 \begin{DoxyCompactList}\small\item\em Read in a shader file into a N\-U\-L\-L-\/terminated string. \end{DoxyCompactList}\item 
-G\-Luint {\bfseries Angel\-::\-Init\-Shader} (const char $\ast$v\-Shader\-File, const char $\ast$f\-Shader\-File)
-\begin{DoxyCompactList}\small\item\em Init\-Shader takes two shader sourcefiles and compiles them into a shader program. \end{DoxyCompactList}\item 
-G\-Luint {\bfseries Angel\-::\-Init\-Shader} (const char $\ast$v\-Shader\-File, const char $\ast$g\-Shader\-File, const char $\ast$f\-Shader\-File)
-\begin{DoxyCompactList}\small\item\em Init\-Shader takes three shader sourcefiles and compiles them into a shader program. \end{DoxyCompactList}\end{DoxyCompactItemize}
+G\-Luint {\bfseries Angel\-::\-Init\-Shader} (const char $\ast$v\-Shader\-File, const char $\ast$f\-Shader\-File, const char $\ast$g\-Shader\-File)
+\begin{DoxyCompactList}\small\item\em Init\-Shader takes two shader sourcefiles and compiles them into a shader program. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -51,7 +54,7 @@ G\-E\-O\-M\-E\-T\-R\-Y\-\_\-\-V\-E\-R\-T\-I\-C\-E\-S\-\_\-\-O\-U\-T\-\_\-\-E\-X\
 
 On some systems, we might need to define this manually. It is normally provided by Open\-G\-L directly. F\-I\-X\-M\-E\-: This seems hacky! 
 
-Definition at line 22 of file Init\-Shader.\-cpp.
+Definition at line 27 of file Init\-Shader.\-cpp.
 
 \hypertarget{_init_shader_8cpp_a1e0c2d7120ea4f2e30000d134a9dc335}{\index{Init\-Shader.\-cpp@{Init\-Shader.\-cpp}!G\-L\-\_\-\-G\-E\-O\-M\-E\-T\-R\-Y\-\_\-\-S\-H\-A\-D\-E\-R@{G\-L\-\_\-\-G\-E\-O\-M\-E\-T\-R\-Y\-\_\-\-S\-H\-A\-D\-E\-R}}
 \index{G\-L\-\_\-\-G\-E\-O\-M\-E\-T\-R\-Y\-\_\-\-S\-H\-A\-D\-E\-R@{G\-L\-\_\-\-G\-E\-O\-M\-E\-T\-R\-Y\-\_\-\-S\-H\-A\-D\-E\-R}!InitShader.cpp@{Init\-Shader.\-cpp}}
@@ -62,5 +65,5 @@ G\-E\-O\-M\-E\-T\-R\-Y\-\_\-\-V\-E\-R\-T\-I\-C\-E\-S\-\_\-\-O\-U\-T\-\_\-\-E\-X\
 
 On some systems, we might need to define this manually. It is normally provided by Open\-G\-L directly. F\-I\-X\-M\-E\-: This seems hacky! 
 
-Definition at line 33 of file Init\-Shader.\-cpp.
+Definition at line 38 of file Init\-Shader.\-cpp.
 

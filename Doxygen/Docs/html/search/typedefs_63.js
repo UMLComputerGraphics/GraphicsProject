@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['color4',['color4',['../model_8cpp.html#a5c48af6a06eb70709fe4ce950c3015e3',1,'color4():&#160;model.cpp'],['../model_8hpp.html#a5c48af6a06eb70709fe4ce950c3015e3',1,'color4():&#160;model.hpp']]]
+  ['color4',['Color4',['../vec_8hpp.html#a8bedcae0602a1167f1d39683f4dc83a6',1,'vec.hpp']]]
 ];
