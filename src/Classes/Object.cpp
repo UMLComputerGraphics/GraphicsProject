@@ -545,9 +545,36 @@ int Object::numberOfPoints( void ) {
   return _vertices.size();
 }
 
+Angel::vec3 Object::getMax( void ) {
+  
+  Angel::vec3 max = Angel::vec3( -INFINITY, -INFINITY, -INFINITY );
+  for (size_t i = 0; i < _vertices.size(); ++i ) {
+    if ( _vertices[i].x > max.x ) max.x = _vertices[i].x;
+    if ( _vertices[i].y > max.y ) max.y = _vertices[i].y;
+    if ( _vertices[i].z > max.z ) max.z = _vertices[i].z;
+  }
+
+  return max;
+
+}
+
+Angel::vec3 Object::getMin( void ) {
+  
+  Angel::vec3 min = Angel::vec3( INFINITY, INFINITY, INFINITY );
+  for (size_t i = 0; i < _vertices.size(); ++i ) {
+    if ( _vertices[i].x < min.x ) min.x = _vertices[i].x;
+    if ( _vertices[i].y < min.y ) min.y = _vertices[i].y;
+    if ( _vertices[i].z < min.z ) min.z = _vertices[i].z;
+  }
+
+  return min;
+
+}
+
+/*
 GLfloat Object::getMaxX(){
 	GLfloat max = _vertices[0].x;
-	for(int i=1; i<_vertices.size(); i++){
+	for(size_t i=1; i<_vertices.size(); i++){
 		if(_vertices[i].x > max){
 			max = _vertices[i].x;
 		}
@@ -604,3 +631,4 @@ GLfloat Object::getMinZ(){
 	}
 	return min;
 }
+*/

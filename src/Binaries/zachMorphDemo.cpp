@@ -58,7 +58,20 @@ void init() {
   printf("Number Vertices Model1: %d\n",bottle->numberOfPoints());
   printf("Number Vertices Model2: %d\n",bottleMorphTarget->numberOfPoints());
 
-  SquareMap* squareMap = createSquareMap(fminf(float(bottle->getMinX()),float(bottleMorphTarget->getMinX())),fmaxf(float(bottle->getMaxX()),float(bottleMorphTarget->getMaxX())),fminf(float(bottle->getMinY()),float(bottleMorphTarget->getMinY())),fmaxf(float(bottle->getMaxY()),float(bottleMorphTarget->getMaxY())));
+  Angel::vec3 lowBoundSrc = bottle->getMin();
+  Angel::vec3 maxBoundSrc = bottle->getMax();
+  Angel::vec3 lowBoundDst = bottleMorphTarget->getMin();
+  Angel::vec3 maxBoundDst = bottleMorphTarget->getMax();
+
+  SquareMap* squareMap = createSquareMap(fminf(float(lowBoundSrc.x),
+					       float(lowBoundDst.x)),
+					 fmaxf(float(maxBoundSrc.x),
+					       float(maxBoundDst.x)),
+					 fminf(float(lowBoundSrc.y),
+					       float(lowBoundDst.y)),
+					 fmaxf(float(maxBoundSrc.y),
+					       float(maxBoundDst.y)));
+
   printf("\nBottom Left Square X Start: %f\n",squareMap->bottomLeft->xStart);
   printf("Bottom RIght Square Y Start: %f\n",squareMap->bottomLeft->yStart);
   printf("Top Right Square X End: %f\n",squareMap->topRight->xEnd);

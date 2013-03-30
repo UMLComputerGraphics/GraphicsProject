@@ -264,12 +264,16 @@ public:
    */
   TransCache _trans;
 
+  Angel::vec3 getMax( void );
+  Angel::vec3 getMin( void );
+  /*
   GLfloat getMaxX();
   GLfloat getMinX();
   GLfloat getMaxY();
   GLfloat getMinY();
   GLfloat getMaxZ();
   GLfloat getMinZ();
+  */
 
 protected:
   /** _name is used as an identifying handle for the object. **/

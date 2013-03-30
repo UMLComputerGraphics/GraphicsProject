@@ -1,14 +1,13 @@
 /**
  @file MONOLITH.cpp
- @author EVERYBODI
- @date yesterday
+ @author UMLComputerGraphics <https://github.com/UMLComputerGraphics>
+ @date 2013-03-29
  @brief This is a monolith of every component.
- @details ROUND ONE... FIGHT
+ @details Final project rough draft.
  Original engine based on Ed Angel's book code.
- This file features a severely reduced linecount for demo purposes.
- @see THE FUTURE for a fully-featured example.
  **/
 
+/* OpenGL and "The Engine" */
 #include "Engine.hpp"
 /* Utilities and Common */
 #include "model.hpp"

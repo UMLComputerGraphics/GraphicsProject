@@ -52,8 +52,8 @@ vec4 findCenter(vec4 point1, vec4 point2, vec4 point3){
 }
 
 int findTriangleWithMinimumDistanceFromCenter(Object* largerModel, Object* smallerModel, int index){
-	int minIndex;
-		float minDistance = 9999999.0;
+  int minIndex = -1;
+  float minDistance = INFINITY;
 
 		for(int i=0; i<smallerModel->numberOfPoints();i+= 3){
 			float distance = threeDimensionalDistanceFromCenter(findCenter(smallerModel->_vertices[i],smallerModel->_vertices[i+1],smallerModel->_vertices[i+2]),findCenter(largerModel->_vertices[index],largerModel->_vertices[index+1],largerModel->_vertices[index+2]));
