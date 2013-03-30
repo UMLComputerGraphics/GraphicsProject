@@ -37,7 +37,7 @@ namespace ObjLoader {
    * @param defaultObjName The name to use for any objects that are found.
    * @return A pointer to the most recently created object.
    */
-  Object *loadObj( Scene &scene, const char* filename, const char *objName =
+  Object *loadObj( const Scene &scene, const char* filename, const char *objName =
                        NULL );
   
   /**
@@ -46,7 +46,7 @@ namespace ObjLoader {
    * @param delim The delimeter.
    * @return A std::vector<std::string> of all the tokens.
    */
-  Angel::vec4 parseVertex( string line );
+  Angel::vec4 parseVertex( const string &line );
   
   /**
    * Obtain a 2D TexUV coordinate from a std::string line.
@@ -54,7 +54,7 @@ namespace ObjLoader {
    * @param line The line to parse.
    * @return a vec2 containing the parsed texUV.
    */
-  Angel::vec2 parseTextureUV( string line );
+  Angel::vec2 parseTextureUV( const string &line );
   
   /**
    * Obtain a 3D normal vector from a std::string line.
@@ -62,7 +62,7 @@ namespace ObjLoader {
    * @param line the line to parse.
    * @return a vec3 containing the parsed normal.
    */
-  Angel::vec3 parseNormal( string line );
+  Angel::vec3 parseNormal( const string &line );
   
   /**
    * parses face elements into a vector of 3 vectors of 3 ints
@@ -70,7 +70,7 @@ namespace ObjLoader {
    * @param line The line to parse.
    * @return vector containing 3 vectors of 3 ints each.
    */
-  vector< vector< int > > parseFaceElements( string line );
+  vector< vector< int > > parseFaceElements( const string &line );
   
   /**
    * Helper function that splits an obj element listing
@@ -81,7 +81,7 @@ namespace ObjLoader {
    * @param uv_elements Where to store UVs found.
    * @param n_elements Where to store normals found.
    */
-  void parseElementTriple( string triple, vector< int > &v_elements,
+  void parseElementTriple( const string &triple, vector< int > &v_elements,
                            vector< int > &uv_elements,
                            vector< int > &n_elements );
   

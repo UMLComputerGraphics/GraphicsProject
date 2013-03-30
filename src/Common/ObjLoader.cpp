@@ -52,7 +52,7 @@ namespace ObjLoader {
    * @param line The line to parse.
    * @return a vec4 containing the parsed vertex.
    */
-  vec4 parseVertex( string line ) {
+  vec4 parseVertex( const string& line ) {
     
     vec4 v;
     
@@ -72,7 +72,7 @@ namespace ObjLoader {
    * @param line The line to parse.
    * @return a vec2 containing the parsed texUV.
    */
-  vec2 parseTextureUV( string line ) {
+  vec2 parseTextureUV( const string &line ) {
     vec2 uv;
     
     // read in uv coords
@@ -89,7 +89,7 @@ namespace ObjLoader {
    * @param line the line to parse.
    * @return a vec3 containing the parsed normal.
    */
-  vec3 parseNormal( string line ) {
+  vec3 parseNormal( const string& line ) {
     vec3 vn;
     
     istringstream s( line.substr( 3 ) );
@@ -106,7 +106,7 @@ namespace ObjLoader {
    * @param line The line to parse.
    * @return vector containing 3 vectors of 3 ints each.
    */
-  vector< vector< int > > parseFaceElements( string line ) {
+  vector< vector< int > > parseFaceElements( const string& line ) {
     vector< vector< int > > elements;
     
     // vectors for vertex, texture, and normal elements
@@ -149,24 +149,15 @@ namespace ObjLoader {
 // parses a line of elements and adds the elements to the vectors passed in
 // if a line has less than 3 kinds of elements, the vectors of the types
 // of elements that are not included in the file will not be updated
-  void parseElementTriple( string triple, vector< int > &v_elements,
-                           vector< int > &uv_elements,
-                           vector< int > &n_elements ) {
+  void parseElementTriple( const string &triple, vector< int > &v_elements,
+      vector< int > &uv_elements,
+      vector< int > &n_elements ) {
     vector< string > raw_elements = split( triple, '/' );
-    
-    switch ( raw_elements.size() ) {
-    // if we have at least 3 types, add in _normals
-    case 3:
-      n_elements.push_back( atoi( raw_elements[2].c_str() ) );
-      // if we have at least 2, add in uv elements if they exist
-    case 2:
-      if ( raw_elements[1].compare( "" ) != 0 ) {
-        uv_elements.push_back( atoi( raw_elements[1].c_str() ) );
-      }
-      // add in vertex elements
-    case 1:
-      v_elements.push_back( atoi( raw_elements[0].c_str() ) );
-    }
+
+    for(int i=raw_elements.size()-1;i>=0;i--)
+      if (i!=1 || raw_elements[i].compare( "" ) != 0)
+        (i>=2?n_elements:(i==1?uv_elements:v_elements))
+          .push_back(atoi(raw_elements[i].c_str()));
   }
   
   /**
@@ -177,7 +168,7 @@ namespace ObjLoader {
    * @param defaultObjName The name to use for any objects that are found.
    * @return A pointer to the most recently created object.
    */
-  Object *loadObj( Scene &scene, const char* filename,
+  Object *loadObj(Scene scene, const char* filename,
                    const char *defaultObjName ) {
     // file input stream
     std::ifstream in( filename, std::ios::in );

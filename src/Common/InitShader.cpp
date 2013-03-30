@@ -34,6 +34,7 @@
  * It is normally provided by OpenGL directly.
  * FIXME: This seems hacky!
  */
+
 #ifndef GL_GEOMETRY_SHADER
 #define GL_GEOMETRY_SHADER 0x8DD9
 #endif
@@ -124,7 +125,7 @@ namespace Angel {
         //glGetIntegerv( GL_MAX_GEOMETRY_OUTPUT_COMPONENTS, &n );
         
         glProgramParameteriEXT( shader, GL_GEOMETRY_INPUT_TYPE_EXT,
-                                GL_TRIANGLES );
+                                GL_POINTS );
         
         glProgramParameteriEXT( shader, GL_GEOMETRY_OUTPUT_TYPE_EXT,
                                 GL_TRIANGLE_STRIP );

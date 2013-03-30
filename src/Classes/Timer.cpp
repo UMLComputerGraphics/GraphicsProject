@@ -21,7 +21,8 @@ Timer tick;
 #define SecTouSec (1000000)
 #define SecToMSec (1000)
 
-Timer::Timer( void ) {
+Timer::Timer( void ) :
+  _scale(0.0), _uniform(0), _delta(0) {
 #ifdef _RT
   clock_gettime( CLOCK_REALTIME, &_t1 );
   clock_gettime( CLOCK_REALTIME, &_t2 );
@@ -31,7 +32,11 @@ Timer::Timer( void ) {
 #endif
   
   _keyFrameRate = (DEFAULT_KEYFRAME_RATE);
-  
+}
+
+void Timer::setTimeUniform(GLuint uniform)
+{
+  _uniform = uniform;
 }
 
 /**
@@ -66,6 +71,12 @@ unsigned long Timer::tock( void ) {
   return _delta;
 }
 
+// TELL THAT THAR SHADER WHAT TIME IT IS
+void Timer::foxtrotUniformCharlieKilo( void ) {
+  if (_uniform > 0)
+    glUniform1f( _uniform, glutGet( GLUT_ELAPSED_TIME ) );
+}
+
 /**
  delta returns the time elapsed between the last tick and the last tock.
  Does not start a new timer.
@@ -88,10 +99,10 @@ double Timer::scale( void ) const {
   return _scale;
 }
 
-unsigned long Timer::keyFrameRate() const {
+float Timer::keyFrameRate() const {
   return _keyFrameRate;
 }
 
-unsigned long Timer::keyFrameRate( unsigned long newFrameRate ) {
-  _keyFrameRate = newFrameRate;
+float Timer::keyFrameRate( float newFrameRate ) {
+  return _keyFrameRate = newFrameRate;
 }

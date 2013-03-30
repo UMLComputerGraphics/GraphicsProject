@@ -34,6 +34,8 @@ using Angel::vec4;
  * such that children objects can be attached.
  */
 class Object : public Scene {
+
+public:
   
   /**
    * These enumerations describe the types of buffers
@@ -53,8 +55,6 @@ class Object : public Scene {
     NUM_BUFFERS //!< NUM_BUFFERS This is a sentinel enumeration.
   };
 
-public:
-  
   /**
    * The Object class takes advantage of child-extendible enumerations.
    * We create an alias here for sake of ease.

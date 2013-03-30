@@ -7,11 +7,12 @@ attribute vec4 vPositionMorph;
 attribute vec4 vColorMorph;
 attribute vec3 vNormalMorph;
 
+uniform bool isMorphing;
 
 // sent to the fshader
-varying vec4 color;
 varying vec4 fPosition;
-
+varying vec3 fNormal;
+varying vec4 color;
 
 // position/movement
 uniform mat4 P;
@@ -38,23 +39,27 @@ uniform float morphPercentage;
 
 void main() {
 
-  vec4 position = vec4(0.0,0.0,0.0,1.0) ;
+  vec4 position = vec4(vPosition.x, vPosition.y, vPosition.z,1.0) ;
 
-//  position   = (vec4(vPosition.xyz*(1.0-morphPercentage), 1.0) + (vec4(vPositionMorph.xyz*(morphPercentage), 1.0))) ;
+  if (isMorphing)
+  {
+    position.x   =  vPosition.x*(1.0-morphPercentage) + vPositionMorph.x*morphPercentage ;
+    position.y   =  vPosition.y*(1.0-morphPercentage) + vPositionMorph.y*morphPercentage ;
+    position.z   =  vPosition.z*(1.0-morphPercentage) + vPositionMorph.z*morphPercentage ;
+    position.w   =  1.0 ;
+  }
 
-  position.x   =  vPosition.x*(1.0-morphPercentage) + vPositionMorph.x*morphPercentage ;
-  position.y   =  vPosition.y*(1.0-morphPercentage) + vPositionMorph.y*morphPercentage ;
-  position.z   =  vPosition.z*(1.0-morphPercentage) + vPositionMorph.z*morphPercentage ;
-  position.w   =  1.0 ;
-
+  fPosition = CTM * OTM * position;
+  fNormal = normalize(CTM * OTM * vec4(vNormal, 0.0)).xyz;
+    
   gl_Position = P * CTM * OTM * position;
 
-
-
-  color.x = vColor.x*(1.0-morphPercentage) + vColorMorph.x*morphPercentage ;
-  color.y = vColor.y*(1.0-morphPercentage) + vColorMorph.y*morphPercentage ;
-  color.z = vColor.z*(1.0-morphPercentage) + vColorMorph.z*morphPercentage ;
-  color.w = 1.0 ;
-
-
+  color = vec4(vColor.x, vColor.y, vColor.z, 1.0);
+  if (isMorphing)
+  {
+    color.x = vColor.x*(1.0-morphPercentage) + vColorMorph.x*morphPercentage ;
+    color.y = vColor.y*(1.0-morphPercentage) + vColorMorph.y*morphPercentage ;
+    color.z = vColor.z*(1.0-morphPercentage) + vColorMorph.z*morphPercentage ;
+    color.w = 1.0 ;
+  }
 }

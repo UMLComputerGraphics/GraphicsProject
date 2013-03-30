@@ -9,8 +9,12 @@ CLASSESRAW=$(wildcard Classes/*.cpp)
 
 #things not needed or that break build
 DIAF=Common/LoadTexture.cpp \
-     Binaries/raytracer1.cpp \
+     Binaries/raytrace1.cpp \
      Classes/KinectInator.cpp
+#DIAF=Common/LoadTexture.cpp \
+#     Classes/Particle.cpp \
+#     Binaries/raytracer1.cpp \
+#     Classes/KinectInator.cpp
 
 
 ifndef WII
@@ -54,7 +58,8 @@ ifeq ($(UNAME), Linux)
 endif
 
 ifeq ($(UNAME), Darwin)
-    LDLIBS += -framework Carbon -framework OpenGL -framework GLUT
+    CXXINCS += -I/opt/local/include/ImageMagick
+    LDLIBS += -framework Carbon -framework OpenGL -framework GLUT -L/opt/local/lib -lMagick++
 endif
 
 ifdef DEBUG

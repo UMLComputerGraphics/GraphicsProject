@@ -10,17 +10,21 @@
 #define __TIMER_HPP
 
 #include <time.h>
+#include "mat.hpp"
+#include "vec.hpp"
 
 class Timer {
-  
+
 public:
   Timer();
   unsigned long tick();
   unsigned long tock();
   unsigned long delta() const;
-  unsigned long keyFrameRate() const;
-  unsigned long keyFrameRate( unsigned long newFrameRate );
+  float keyFrameRate() const;
+  float keyFrameRate( float newFrameRate );
+  void setTimeUniform(GLuint uniform);
   double scale() const;
+  void foxtrotUniformCharlieKilo();
 
 private:
 #ifdef _RT
@@ -32,7 +36,8 @@ private:
 #endif
   unsigned long _delta;
   double _scale;
-  unsigned long _keyFrameRate;
+  float _keyFrameRate;
+  GLuint _uniform;
 };
 
 /**
