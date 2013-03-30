@@ -91,11 +91,11 @@ void SpelchkCamera::moveCamera( float xDepth, float yDepth, float zDepth ) {
   calculateTranslationVector();
 }
 
-void SpelchkCamera::rotateCamera( float _xAngle, float _yAngle,
-                                  float _zAngle ) {
-  _xAngle += _xAngle;
-  _yAngle += _yAngle;
-  _zAngle += _zAngle;
+void SpelchkCamera::rotateCamera( float xAngle, float yAngle,
+                                  float zAngle ) {
+  _xAngle += xAngle;
+  _yAngle += yAngle;
+  _zAngle += zAngle;
   
   // Keep camera from flipping over
   if ( _xAngle > 90.0 ) {
