@@ -21,7 +21,8 @@ Timer tick;
 #define SecTouSec (1000000)
 #define SecToMSec (1000)
 
-Timer::Timer( void ) {
+Timer::Timer( void ) :
+  _scale(0.0), _uniform(0), _delta(0) {
 #ifdef _RT
   clock_gettime( CLOCK_REALTIME, &_t1 );
   clock_gettime( CLOCK_REALTIME, &_t2 );
@@ -103,5 +104,5 @@ float Timer::keyFrameRate() const {
 }
 
 float Timer::keyFrameRate( float newFrameRate ) {
-  _keyFrameRate = newFrameRate;
+  return _keyFrameRate = newFrameRate;
 }
