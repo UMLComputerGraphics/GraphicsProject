@@ -545,3 +545,62 @@ int Object::numberOfPoints( void ) {
   return _vertices.size();
 }
 
+GLfloat Object::getMaxX(){
+	GLfloat max = _vertices[0].x;
+	for(int i=1; i<_vertices.size(); i++){
+		if(_vertices[i].x > max){
+			max = _vertices[i].x;
+		}
+	}
+	return max;
+}
+
+GLfloat Object::getMaxY(){
+	GLfloat max = _vertices[0].y;
+	for(int i=1; i<_vertices.size(); i++){
+		if(_vertices[i].y > max){
+			max = _vertices[i].y;
+		}
+	}
+	return max;
+}
+
+GLfloat Object::getMaxZ(){
+	GLfloat max = _vertices[0].z;
+	for(int i=1; i<_vertices.size(); i++){
+		if(_vertices[i].z > max){
+			max = _vertices[i].z;
+		}
+	}
+	return max;
+}
+
+GLfloat Object::getMinX(){
+	GLfloat min = _vertices[0].x;
+	for(int i=1; i<_vertices.size(); i++){
+		if(_vertices[i].x < min){
+			min = _vertices[i].x;
+		}
+	}
+	return min;
+}
+
+GLfloat Object::getMinY(){
+	GLfloat min = _vertices[0].y;
+	for(int i=1; i<_vertices.size(); i++){
+		if(_vertices[i].y < min){
+			min = _vertices[i].y;
+		}
+	}
+	return min;
+}
+
+GLfloat Object::getMinZ(){
+	GLfloat min = _vertices[0].z;
+	for(int i=1; i<_vertices.size(); i++){
+		if(_vertices[i].z < min){
+			min = _vertices[i].z;
+		}
+	}
+	return min;
+}

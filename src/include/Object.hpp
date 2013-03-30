@@ -264,6 +264,13 @@ public:
    */
   TransCache _trans;
 
+  GLfloat getMaxX();
+  GLfloat getMinX();
+  GLfloat getMaxY();
+  GLfloat getMinY();
+  GLfloat getMaxZ();
+  GLfloat getMinZ();
+
 protected:
   /** _name is used as an identifying handle for the object. **/
   std::string _name;

@@ -28,36 +28,35 @@
 void init() {
   
   // Get handles to the Scene and the Screen.
-  Scene *rootScene = Engine::Instance()->RootScene();
-  Screen *primScreen = Engine::Instance()->MainScreen();
+  Scene *rootScene = Engine::instance()->rootScene();
+  Screen *primScreen = Engine::instance()->mainScreen();
 
   // Load shaders and use the resulting shader program. 
   GLuint gShader = Angel::InitShader("shaders/vmorph.glsl","shaders/fmorph.glsl");
 
   // Let the other objects know which shader to use by default.
-  rootScene->Shader( gShader );
-  primScreen->camList.Shader( gShader );
+  rootScene->shader( gShader );
+  primScreen->_camList.shader( gShader );
 
   // We start with no cameras, by default. Add one and set it "active" by using Next().
-  primScreen->camList.AddCamera( "Camera1" );
-  primScreen->camList.Next();
+  primScreen->_camList.addCamera( "Camera1" );
+  primScreen->_camList.next();
 
   // Create an object and add it to the scene with the name "bottle".
-  Object *bottle = rootScene->AddObject( "bottle" );
+  Object *bottle = rootScene->addObject( "bottle" );
 
   // Use the object loader to actually fill out the vertices and-so-on of the bottle.
-  loadModelFromFile( bottle, "../models/bottle-b.obj" );
+  ObjLoader::loadModelFromFile( bottle, "../models/bottle-b.obj" );
 
   // Objects has-a pointer to an object which is their "morph target."
   // they are created and buffered as follows:
 
   bottle->genMorphTarget( gShader ) ; // this makes a new object and links it to the source object. it returns the addr of the new obj..
-  Object *bottleMorphTarget = bottle->getMorphTargetPtr() ; // we can get the addr of the morph object like this, also.
-  loadModelFromFile( bottleMorphTarget, "../models/bottle-a.obj" ); // with this model, we can use all the preexisting Object class functionality
-  //loadModelFromFile( bottle->getMorphTargetPtr(), "../models/bottle-b.obj" ); // with this model, we can use all the preexisting Object class functionality
+  Object *bottleMorphTarget = bottle->morphTarget() ; // we can get the addr of the morph object like this, also.
+  ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle-a.obj" ); // with this model, we can use all the preexisting Object class functionality
 
-  printf("Number Vertices Model1: %d\n",bottle->getNumberPoints());
-  printf("Number Vertices Model2: %d\n",bottleMorphTarget->getNumberPoints());
+  printf("Number Vertices Model1: %d\n",bottle->numberOfPoints());
+  printf("Number Vertices Model2: %d\n",bottleMorphTarget->numberOfPoints());
 
   SquareMap* squareMap = createSquareMap(fminf(float(bottle->getMinX()),float(bottleMorphTarget->getMinX())),fmaxf(float(bottle->getMaxX()),float(bottleMorphTarget->getMaxX())),fminf(float(bottle->getMinY()),float(bottleMorphTarget->getMinY())),fmaxf(float(bottle->getMaxY()),float(bottleMorphTarget->getMaxY())));
   printf("\nBottom Left Square X Start: %f\n",squareMap->bottomLeft->xStart);
@@ -69,13 +68,13 @@ void init() {
   matchInitialPoints(bottle, bottleMorphTarget);
   makeModelsSameSize(bottle, bottleMorphTarget);
 
-  printf("Number Vertices Model1: %d\n",bottle->getNumberPoints());
-  printf("Number Vertices Model2: %d\n",bottleMorphTarget->getNumberPoints());
+  printf("Number Vertices Model1: %d\n",bottle->numberOfPoints());
+  printf("Number Vertices Model2: %d\n",bottleMorphTarget->numberOfPoints());
 
-  bottle->trans.scale.Set( 0.01 );
-  bottleMorphTarget->trans.scale.Set( 0.01 );
-  bottle->Buffer();
-  bottle->BufferMorphOnly(); // YES THIS IS THE REAL OBJECT, NOT THE TARGET. IT SENDS THE MORPH VERTICES TO THE SHADER, NOT TO THE DRAW LIST TO BE DRAWN!
+  bottle->_trans._scale.set( 0.01 );
+  bottleMorphTarget->_trans._scale.set( 0.01 );
+  bottle->buffer();
+  bottle->bufferMorphOnly(); // YES THIS IS THE REAL OBJECT, NOT THE TARGET. IT SENDS THE MORPH VERTICES TO THE SHADER, NOT TO THE DRAW LIST TO BE DRAWN!
 
 
   // Generic OpenGL setup: Enable the depth buffer and set a nice background color.
@@ -85,29 +84,29 @@ void init() {
 }
 
 void cleanup( void ) {
-  Engine::Instance()->RootScene()->DestroyObject();
+  //Engine::instance()->rootScene()->DestroyObject();
 }
 
 //--------------------------------------------------------------------
 
 // Implementation of drawing the display with regards to a single viewport.
 void draw( void ) {
-  static Scene *theScene = Engine::Instance()->RootScene();
-  static Cameras *camList = Engine::Instance()->Cams();
+  static Scene *theScene = Engine::instance()->rootScene();
+  static Cameras *camList = Engine::instance()->cams();
 
-  theScene->Draw();
-  camList->Draw();
+  theScene->draw();
+  camList->draw();
 }
 
 // GLUT display callback. Effectively calls displayViewport per-each Camera.
 void display( void ) {
-  static Cameras *camList = Engine::Instance()->Cams();
+  static Cameras *camList = Engine::instance()->cams();
 
   // Clear the buffer.
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
   // Tell camList to draw using our 'draw' rendering function.
-  camList->View( draw );
+  camList->view( draw );
 
   // Swap to the next buffer.
   glutSwapBuffers();
@@ -117,9 +116,9 @@ void display( void ) {
 
 void simpleRotateAnim( TransCache &obj ) {
 
-  obj.rotation.RotateY( Tick.Scale() * 1.5 );
-  obj.offset.Set( 1.5, 0, 0 );
-  obj.orbit.RotateY( Tick.Scale() * -1.0 );
+  obj._rotation.rotateY( tick.scale() * 1.5 );
+  obj._offset.set( 1.5, 0, 0 );
+  obj._orbit.rotateY( tick.scale() * -1.0 );
 
 }
 
@@ -127,9 +126,9 @@ void simpleRotateAnim( TransCache &obj ) {
 
 void idle( void ) {
 
-  static Cameras *camList = Engine::Instance()->Cams();
-  static Scene *rootScene = Engine::Instance()->RootScene();
-  Tick.Tock();
+  static Cameras *camList = Engine::instance()->cams();
+  static Scene *rootScene = Engine::instance()->rootScene();
+  tick.tock();
 
   //zach m  - in order to eventually allow for user specified equations,
   //          we need to think of equations between 0 and 1.
@@ -155,14 +154,14 @@ void idle( void ) {
 
   //if ( (timer += 0.05 ) > 360.0 ) timer = 0.0 ;
   //float percent = ( sin(timer) + 1 ) / 2 ;
-  (*rootScene)["bottle"]->setMorphPercentage(percent);
+  (*rootScene)["bottle"]->morphPercentage(percent);
 
   if (DEBUG_MOTION) 
-    fprintf( stderr, "Time since last idle: %lu\n", Tick.Delta() );
+    fprintf( stderr, "Time since last idle: %lu\n", tick.delta() );
 
   // Move all cameras: Apply velocity and acceleration adjustments.
   // If no cameras are currently moving, this will do nothing ;)
-  camList->IdleMotion();
+  camList->idleMotion();
 
   // Inform GLUT we'd like to render a new frame.
   glutPostRedisplay();
@@ -178,7 +177,7 @@ int main( int argc, char **argv ) {
 #ifdef __APPLE__
   CGSetLocalEventsSuppressionInterval( 0.0 );
 #endif
-  Angel::InitInitShader( argv[0] );
+  VooDoo::InitRelativePaths(argc, argv);
   
   glutInit( &argc, argv );
   glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH );
@@ -186,12 +185,7 @@ int main( int argc, char **argv ) {
   glutCreateWindow( "Zach's Morphing Demo" );
   glutFullScreen();
   glutSetCursor( GLUT_CURSOR_NONE );
-<<<<<<< Updated upstream
-  
-=======
 
-  glewExperimental = GL_TRUE;
->>>>>>> Stashed changes
   GLEW_INIT();
   init();
 
