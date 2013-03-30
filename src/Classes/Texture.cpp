@@ -13,21 +13,32 @@
 #else // non-Mac OS X operating systems
 #include <ImageMagick/Magick++.h>
 #endif // __APPLE__
-
 #include <iostream>
 #include <cstdlib>
 #include "Texture.hpp"
 #include "platform.h"
 
+/**
+ * Initialize a new texture of a given type.
+ * @param textureTarget The type of texture to initialize, e.g, TEXTURE_2D.
+ */
 Texture::Texture( GLenum textureTarget ) {
   _textureTarget = textureTarget;
   _image = NULL;
 }
 
+/**
+ * Default destructor.
+ */
 Texture::~Texture( void ) {
   
 }
 
+/**
+ * Perform the actual loading and conversion of the data.
+ * @param filename The filename to load as a texture.
+ * @return bool: true if we succeed, false otherwise.
+ */
 bool Texture::load( const std::string &filename ) {
   
   try {
@@ -42,6 +53,9 @@ bool Texture::load( const std::string &filename ) {
   
 }
 
+/**
+ * Registers the texture with OpenGL.
+ */
 void Texture::buffer( void ) {
   
   glGenTextures( 1, &_textureObj );
@@ -53,14 +67,11 @@ void Texture::buffer( void ) {
   
 }
 
+/**
+ * Binds this texture to a specific Texture Unit.
+ * @param textureUnit The Texture Unit to bind to.
+ */
 void Texture::bind( GLenum textureUnit ) {
   glActiveTexture( textureUnit );
   glBindTexture( _textureTarget, _textureObj );
 }
-
-/*
- GLenum _textureTarget;
- GLuint _textureObj;
- Magick::Image *_image;
- Magick::Blob _blob;
- */
