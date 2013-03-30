@@ -1,9 +1,9 @@
 /**
-   @file partTest.cpp
+   @file dumb.cpp
    @author Nicholas St.Pierre
    @authors John Huston, Nicholas VerVoort, Chris Compton
    @date 2013-02-23
-   @brief This is a derivative of our main project file, fly.cpp.
+   @brief FIXME: This is very stupid.
    @details This is a tech demo for a particle system
 */
 

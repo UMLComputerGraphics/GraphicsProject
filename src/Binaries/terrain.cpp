@@ -33,8 +33,9 @@ CWii Wii;
 bool usingWii = false;
 #endif
 
-// Textures
-// Obtained from www.goodtextures.com
+/**
+ * Here's a gross blob of texture constants used for terrain generation!
+ */
 const char* terrainTex[] = { "../Textures/GoodTextures_0013423.jpg", // Dirt/Mud
     "../Textures/GoodTextures_0013779.jpg",  // Sand
     "../Textures/GrassGreenTexture0002.jpg", // Grass (who'da thunk?)
@@ -244,7 +245,9 @@ void display( void ) {
   glutSwapBuffers();
 }
 
-// This global switch controls if we generate terrain or not.
+/**
+ * This global switch controls our terrain generation.
+ */
 bool switchingTerrain = false;
 
 /**
@@ -343,15 +346,32 @@ void wiilook( Camera &WiiCamera, const Angel::vec3 &NewTheta,
   
 }
 
+/**
+ * A simple animation callback.
+ * Rotates the object about its Y axis.
+ * @param obj The object to rotate.
+ */
 void simpleRotateY( TransCache &obj ) {
   obj._rotation.rotateY( tick.scale() * 1.5 );
 }
+
+/**
+ * A simple animation callback.
+ * Rotates the object about its Y axis,
+ * as it orbits the object around a point about the Y axis.
+ * @param obj The object to animate.
+ */
 void simpleRotateAnim( TransCache &obj ) {
   obj._rotation.rotateY( tick.scale() * 1.5 );
   obj._offset.set( 1.5, 0, 0 );
   obj._orbit.rotateY( tick.scale() * -1.0 );
 }
 
+/**
+ * An animation callback that tests a variety of transformations
+ * in the scene graph.
+ * @param obj The object to animate.
+ */
 void animationTest( TransCache &obj ) {
   double timeScale = tick.scale();
   double theta = timeScale * 0.1;
@@ -383,10 +403,15 @@ void animationTest( TransCache &obj ) {
   //obj.displacement.set( 5, 0, 0 ); 
 }
 
-/// hackity hack hack hackey doo!
+/** Scale used for terrain generation animation. **/
 float heightScale = 0.0;
+/** Timer used for terrain generation animation. **/
 float ticker = 0.0;
 
+/**
+ * Idle function that is called from the GLUT mainloop.
+ * Applies animations, camera motion, and Wii input.
+ */
 void idle( void ) {
   
   Scene &theScene = (*Engine::instance()->rootScene());
@@ -449,23 +474,34 @@ void idle( void ) {
 
 //--------------------------------------------------------------------
 
+/**
+ * menufunc is registered with GLUT to handle callbacks from
+ * the simple menu that it generates.
+ * @param value Integer representing the option the user chose from the menu.
+ */
 void menufunc( int value ) {
   
   Engine *EN = Engine::instance();
   Scene *theScene = EN->rootScene();
   
   switch ( value ) {
-  case 0:
+  case 0: // Generate Terrain
     landGen( (*theScene)["terrain"], 12, 40.0 );
     (*theScene)["terrain"]->buffer();
     break;
-  case 1:
+  case 1: // Toggle fixed-yaw.
     EN->flip( "fixed_yaw" );
     break;
   }
   
 }
 
+/**
+ * Terrain generation demonstration!
+ * @param argc Ignored.
+ * @param argv Ignored.
+ * @return EXIT_SUCCESS.
+ */
 int main( int argc, char **argv ) {
   
 #ifdef WII
