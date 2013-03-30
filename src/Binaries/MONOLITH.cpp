@@ -38,9 +38,11 @@ void init() {
   
   // Load shaders and use the resulting shader program. 
   GLuint gShader = Angel::InitShader( "shaders/vMONOLITH.glsl",
-                                      "shaders/fMONOLITH.glsl",
-                                      "shaders/gMONOLITH.glsl" );
+                                      "shaders/fMONOLITH.glsl" /*,    HAD TO REMOVE THE GEOMETRY SHADER BECAUSE IT'S SEVERELY BROKEN!!!!!
+                                      "shaders/gMONOLITH.glsl"*/ );
   
+  tick.setTimeUniform(glGetUniformLocation( gShader, "ftime" ));
+
   // Let the other objects know which shader to use by default.
   rootScene->shader( gShader );
   primScreen->_camList.shader( gShader );
@@ -68,7 +70,15 @@ void init() {
   
   // this makes a new object and links it to the source object. it returns the addr of the new obj..
   bottle->genMorphTarget( gShader );
+
+  // tell the shaders to handle the bottle differently than a candle or something.
+  GLuint morphing =  glGetUniformLocation(bottle->shader(), "isMorphing");
+  glUniform1f(morphing, true);
   
+  // this obscure allusion to "the thong song" brought to you by Eric McCann
+  GLuint sisqo =  glGetUniformLocation(bottle->shader(), "letMeSeeThatPhong");
+  glUniform1f(sisqo, true);
+
   // we can get the addr of the morph object like this, also.
   Object *bottleMorphTarget = bottle->morphTarget();
   
@@ -113,6 +123,9 @@ void display( void ) {
   // Clear the _buffer.
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
   
+  //tell the shader WHAT TIME IT IS
+  tick.foxtrotUniformCharlieKilo();
+
   // Tell camList to draw using our 'draw' rendering function.
   camList->view( draw );
   
@@ -165,7 +178,6 @@ void idle( void ) {
  */
 int main( int argc, char **argv ) {
   printf("PUT THINGS IN THIS.\n");
-  return 1;
   
   // OS X suppresses events after mouse warp.  This resets the suppression 
   // interval to 0 so that events will not be suppressed. This also found
@@ -179,7 +191,7 @@ int main( int argc, char **argv ) {
   glutInit( &argc, argv );
   glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH );
   glutInitWindowSize( 0, 0 );
-  glutCreateWindow( "Linear Interpolation Morphing Demo" );
+  glutCreateWindow( "WE ARE THE BORG. RESISTANCE IS FUTILE!" );
   glutFullScreen();
   glutSetCursor( GLUT_CURSOR_NONE );
   

@@ -1,49 +1,45 @@
-#extension GL_EXT_gpu_shader4: enable
-#extension GL_EXT_geometry_shader4: enable
-// Particle System Geometry Shader
-// Author: Chris Compton, christopher_compton@student.uml.edu
-// Source: http://ogldev.atspace.co.uk/www/tutorial27/tutorial27.html
+///////////////////////////////////////////////////////////////////////////////
+// Geometry shader
+//
+//
+#version 120
+#extension GL_EXT_geometry_shader4 : enable
 
-// layout (points) in;
-// layout (triangle_strip) out;
-// layout (max_vertices) = 4 out;
+// ∆t
 
-varying vec3 gl_Position[gl_VerticesIn];
 
-uniform mat4 gVP;    // Veiw/Projection matrix
-uniform vec3 gCamPos; // Camera Position
+/*
+void doPassThrough() {
 
-vec2 TexCoord;       // Texture coordinates
+     Fun fact: GLSL is incredibly thick. So thick, in fact, that we need this 
+     mind-numbing function.
 
-void main () 
-{
-	vec3 Pos = gl_in[0].gl_Position.xyz;
+     
 
-	vec3 toCamera = normalize( gCamPos - Pos );
-	vec3 up = vec3( 0.0, 1.0, 0.0 );
-	vec3 right = cross( toCamera, up );
+     color = color ;
+     fPosition = fPosition ;
+     outtexture = outtexture;
+     cameraVector = cameraVector;
+     fragmentNormal = fragmentNormal;
 
-	// 'Grow' quad around a point
-	Pos -= ( right * 0.5 );
-	gl_Position = gVP * vec4( Pos, 1.0 );
-	TexCoord = vec2( 0.0, 0.0);
-	EmitVertex();
+     for ( int i = 0 ; i < 8 ; ++i ) { lightVector[i] = lightVector[i] ; }
 
-	Pos.y += 1.0;
-	gl_Position = gVP * vec4( Pos, 1.0 );
-	TexCoord = vec2( 0.0, 1.0 );
-	EmitVertex();
+}
+*/
 
-	Pos.y -= 1.0;
-	Pos += right;
-	gl_Position = gVP * vec4( Pos, 1.0 );
-	TexCoord = vec2( 1.0, 0.0 );
-	EmitVertex();
 
-	Pos.y += 1.0;
-	gl_Position = gVP * vec4( Pos, 1.0 );
-	TexCoord = vec2( 1.0, 1.0 );
-	EmitVertex();
+void main() {
 
-	EndPrimitive();
+//  doPassThrough();
+
+  for( int i = 0; i < gl_VerticesIn; ++i) {
+
+    gl_FrontColor = gl_FrontColorIn[i];
+
+    gl_Position = gl_PositionIn[i];
+
+    EmitVertex();
+
+  }
+
 }
