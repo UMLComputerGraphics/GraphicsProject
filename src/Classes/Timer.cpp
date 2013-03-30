@@ -21,7 +21,8 @@ Timer tick;
 #define SecTouSec (1000000)
 #define SecToMSec (1000)
 
-Timer::Timer( void ) {
+Timer::Timer( void ) :
+  _delta(0), _scale(0.0), _uniform(0) {
 #ifdef _RT
   clock_gettime( CLOCK_REALTIME, &_t1 );
   clock_gettime( CLOCK_REALTIME, &_t2 );
