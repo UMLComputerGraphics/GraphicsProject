@@ -112,7 +112,7 @@ void display( void ) {
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
   
   //tell the shader WHAT TIME IT IS
-  tick.foxtrotUniformCharlieKilo();
+  tick.sendTime();
 
   // Tell camList to draw using our 'draw' rendering function.
   camList->view( draw );
