@@ -8,10 +8,20 @@
 #ifndef __ENGINE_HPP
 #define __ENGINE_HPP
 
+/* OpenGL and Globals */
+#include "platform.h"
+#include "globals.h"
+#include "Util.hpp"
+/* Engine Classes */
+#include "Camera.hpp"
 #include "Cameras.hpp"
-#include "Scene.hpp"
 #include "Screen.hpp"
+#include "Object.hpp"
+#include "Timer.hpp"
+#include "Scene.hpp"
+#include "Texture.hpp"
 
+/* System */
 #include <string>
 #include <map>
 

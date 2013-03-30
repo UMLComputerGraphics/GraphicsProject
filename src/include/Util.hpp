@@ -1,8 +1,9 @@
-/*
- * eric_rules.hpp
- *
- *  Created on: Mar 29, 2013
- *      Author: eric
+/**
+ * @file Util.hpp
+ * @author Eric McCann
+ * @date 2013-03-29
+ * @brief String utilities.
+ * @details String and path loading helper functions.
  */
 
 #ifndef ERIC_RULES_HPP_

@@ -9,6 +9,7 @@
 #include <vector>
 #include "modelFunctions.hpp"
 #include "Object.hpp"
+#include <stdexcept>
 
 float threeDimensionalDistance( vec4 points1, vec4 points2 ) {
   return sqrt(
@@ -18,11 +19,11 @@ float threeDimensionalDistance( vec4 points1, vec4 points2 ) {
 
 int findTriangleWithMinimumDistance( Object* largerModel, Object* smallerModel,
                                      int index ) {
-  int minIndex;
-  float minDistance = 99999.0;
+  int minIndex = -1;
+  float minDistance = INFINITY;
   
   for ( int i = 0; i < smallerModel->numberOfPoints(); i += 3 ) {
-    float distance;
+    float distance = 0.0;
     for ( int j = 0; j < 3; j++ ) {
       distance += threeDimensionalDistance( smallerModel->_vertices[i + j],
                                             largerModel->_vertices[index + j] );
@@ -33,7 +34,8 @@ int findTriangleWithMinimumDistance( Object* largerModel, Object* smallerModel,
     }
   }
   
-  return minIndex;
+  if (minIndex >= 0) return minIndex;
+  else throw std::logic_error( "Unable to identify the minimum index." );
 }
 
 void makeModelsSameSize( Object* model1, Object* model2 ) {

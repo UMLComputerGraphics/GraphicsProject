@@ -1,19 +1,19 @@
-/*
- * eric_rules.cpp
- *
- *  Created on: Mar 29, 2013
- *      Author: Eric McCann
+/**
+ * @file Util.cpp
+ * @author Eric McCann
+ * @date 2013-03-29
+ * @brief String utilities.
+ * @details Formerly named "eric_rules.cpp", but he had to know that wouldn't last too long.
  */
 
 #include <cstdio>
-#include <string.h>
+#include <cstring>
+#include <cstdlib>
 #include <string>
 #include <sstream>
 #include <iostream>
 #include <vector>
-#include "platform.h"
-#include "InitShader.hpp"
-#include "eric_rules.hpp"
+#include "Util.hpp"
 
 
 // http://stackoverflow.com/questions/236129/splitting-a-string-in-c
@@ -49,7 +49,7 @@ namespace VooDoo
     //slapchop[0..length-2] == path without executable name
     if ( slapchop.size() > 1 ) {
       std::stringstream cat;
-      for ( int i = 0; i < slapchop.size() - 1; i++ )
+      for ( size_t i = 0; i < slapchop.size() - 1; i++ )
         cat << slapchop[i] << "/";
       getRelativePath(cat.str().c_str());
     }

@@ -8,7 +8,7 @@
  The main driver code is based on Ed Angel's code from his book.
  **/
 
-#include "globals.h"
+#include "Engine.hpp"
 /* System Headers */
 #include <cmath>
 #include <cstdio>
@@ -16,14 +16,6 @@
 #include <cstdlib>
 #include <time.h>
 /* Multi-platform support and OpenGL headers. */
-#include "platform.h"
-#include "Camera.hpp"
-#include "Cameras.hpp"
-#include "Screen.hpp"
-#include "Object.hpp"
-#include "Timer.hpp"
-#include "Scene.hpp"
-#include "Engine.hpp"
 /* Utilities and Common */
 #include "model.hpp"
 #include "modelFunctions.hpp"

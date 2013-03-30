@@ -7,14 +7,14 @@
  **/
 
 #include <cstdio>
-#include <string.h>
+#include <cstring>
 #include <string>
 #include <sstream>
 #include <iostream>
 #include <vector>
 #include "platform.h"
 #include "InitShader.hpp"
-#include "eric_rules.hpp"
+#include "Util.hpp"
 
 /**
  * @def GEOMETRY_VERTICES_OUT_EXT

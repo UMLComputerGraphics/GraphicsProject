@@ -2,42 +2,33 @@ SHELL = /usr/bin/env bash
 
 #BUILD EVERYTHING FROM A FOLDER OTHER THAN COMMON OR CLASSES AS AN EXECUTABLE!
 SOURCESRAW=$(filter-out Incomplete/%.cpp Common/%.cpp Classes/%.cpp,$(wildcard */*.cpp))
-SPELLCHKCOMMONRAW=$(wildcard SpelchkCommon/*.cpp)
 COMMONRAW=$(wildcard Common/*.cpp)
 CLASSESRAW=$(wildcard Classes/*.cpp)
 
 
 #things not needed or that break build
-DIAF=Common/LoadTexture.cpp \
-     Binaries/raytrace1.cpp \
-     Classes/KinectInator.cpp
-#DIAF=Common/LoadTexture.cpp \
-#     Classes/Particle.cpp \
-#     Binaries/raytracer1.cpp \
-#     Classes/KinectInator.cpp
-
+DIAF=Classes/KinectInator.cpp
 
 ifndef WII
 DIAF += \
 	Common/WiiUtil.cpp
 endif
+
 SOURCES=$(filter-out $(DIAF),$(SOURCESRAW))
 COMMON=$(filter-out $(DIAF),$(COMMONRAW))
 CLASSES=$(filter-out $(DIAF),$(CLASSESRAW))
-SPELLCHKCOMMON=$(filter-out $(DIAF),$(SPELLCHKCOMMONRAW))
 
 TARGETS = $(basename $(strip $(SOURCES)))
 
 OBJS = $(subst .cpp,.o,$(COMMON)) \
        $(subst .cpp,.o,$(CLASSES)) \
-       $(subst .cpp,.o,$(SPELLCHKCOMMON))
 
-CXXOPTS = -fmessage-length=0 -pedantic 
+CXXOPTS = -fmessage-length=0 -ansi -Wall -pedantic 
 CXXINCS = "-I$(CURDIR)/include"
 
 DIRT = $(wildcard */*.o */*.so */*.d *.i *~ */*~ *.log)
 
-LDLIBS =
+LDLIBS = -lMagick++
 
 # Configuration Options
 ifdef POSTMULT
@@ -52,14 +43,14 @@ endif
 # Platform-dependent configuration.
 UNAME := $(shell uname)
 ifeq ($(UNAME), Linux)
-    CXXINCS += -I/usr/include/ImageMagick
+    CXXINCS += -I/usr/include/ImageMagick/
     CXXDEFS += -DFREEGLUT_STATIC -DGLEW_STATIC
-    LDLIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm -lMagick++
+    LDLIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm 
 endif
 
 ifeq ($(UNAME), Darwin)
     CXXINCS += -I/opt/local/include/ImageMagick
-    LDLIBS += -framework Carbon -framework OpenGL -framework GLUT -L/opt/local/lib -lMagick++
+    LDLIBS += -framework Carbon -framework OpenGL -framework GLUT -L/opt/local/lib
 endif
 
 ifdef DEBUG
@@ -101,10 +92,10 @@ _rmtargets:
 	@$(RM) $(TARGETS)
 
 clean: _clean
-	@echo "Removed everything BUT compiled executables"
+	@echo "Removed everything except compiled executables."
 
 rmtargets: _rmtargets
-	@echo "Removed executables"
+	@echo "Removed executables."
 
 clobber: _clean _rmtargets
-	@echo "Cleaned EVERYTHING MUAHAHAHA"
+	@echo "Removed objects and executables."
