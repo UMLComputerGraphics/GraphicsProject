@@ -7,17 +7,8 @@
  @details This is a tech demo for a particle system
  */
 
-#include "globals.h"
-#include "platform.h"
-/* Engine Classes */
-#include "Camera.hpp"
-#include "Cameras.hpp"
 #include "Engine.hpp"
-#include "Object.hpp"
 #include "ParticleSystem.hpp"
-#include "Scene.hpp"
-#include "Screen.hpp"
-#include "Timer.hpp"
 /* Utilities and Common */
 #include "glut_callbacks.h"
 #include "InitShader.hpp"
@@ -28,7 +19,6 @@
 #include <sstream>
 #include <cstdlib>
 #include <time.h>
-#include "eric_rules.hpp"
 
 // Type Aliases
 using Angel::vec3;
@@ -44,7 +34,7 @@ bool fixed_yaw = true;
 void init() {
   
   GLuint shader;
-  GLuint testShader;
+  //GLuint testShader;
   Screen *primScreen = Engine::instance()->mainScreen();
   Scene *rootScene = Engine::instance()->rootScene();
   

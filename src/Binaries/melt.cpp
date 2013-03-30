@@ -6,17 +6,8 @@
  * @details FIXME: Documentation from Alex Chea.
  */
 
-#include "globals.h"
-#include "platform.h"
-/* Engine Classes */
-#include "Camera.hpp"
-#include "Cameras.hpp"
 #include "Engine.hpp"
-#include "Object.hpp"
 #include "ParticleSystem.hpp"
-#include "Scene.hpp"
-#include "Screen.hpp"
-#include "Timer.hpp"
 /* Utilities and Common */
 #include "glut_callbacks.h"
 #include "InitShader.hpp"

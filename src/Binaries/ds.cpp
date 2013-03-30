@@ -8,29 +8,12 @@
  * Based loosely on Ed Angel's tutorials.
  **/
 
-/* Multi-platform support and OpenGL headers. */
-#include "globals.h"
-#include "platform.h"
 /* Engine Classes */
-#include "Camera.hpp"
-#include "Cameras.hpp"
-#include "Screen.hpp"
-#include "Object.hpp"
-#include "Timer.hpp"
-#include "Scene.hpp"
 #include "Engine.hpp"
-#include "Texture.hpp"
 /* Utilities and Common */
 #include "model.hpp"
 #include "InitShader.hpp"
 #include "glut_callbacks.h"
-#include "eric_rules.hpp"
-
-/* Texture Shens */
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
-#include <cstdio>
 
 /**
  * Initialization: load and compile shaders, initialize camera(s), load models.

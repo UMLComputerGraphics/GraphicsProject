@@ -13,7 +13,7 @@
 #include <cstdio>
 #include "vec.hpp"
 #include "ObjLoader.hpp"
-#include "eric_rules.hpp"
+#include "Util.hpp"
 
 using std::vector;
 using std::string;

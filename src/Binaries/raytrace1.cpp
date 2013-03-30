@@ -14,7 +14,7 @@
 #include "SpelchkCamera.hpp"
 #include "InitShader.hpp"
 #include "Timer.hpp"
-#include "eric_rules.hpp"
+#include "Util.hpp"
 
 /** Global shader object **/
 GLuint program;
@@ -211,7 +211,7 @@ void display( void ) {
   glUniform1fv( uSphereRadius, numSpheres, sphereRadius );
   glUniform3fv( uSphereColors, numSpheres, sphereColors );
   
-  float elapsedTime = glutGet( GLUT_ELAPSED_TIME );
+  //float elapsedTime = glutGet( GLUT_ELAPSED_TIME );
   //printf("%f\n", elapsedTime);
   
   GLfloat vertices[] = { 1.0, 1.0, -1.0, 1.0, 1.0, -1.0, -1.0, -1.0, };

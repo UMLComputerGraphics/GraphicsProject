@@ -8,7 +8,7 @@
  The main driver code is based on Ed Angel's code from his book.
  **/
 
-#include "globals.h"
+#include "Engine.hpp"
 /* System Headers */
 #include <cmath>
 #include <cstdio>
@@ -16,20 +16,11 @@
 #include <cstdlib>
 #include <time.h>
 /* Multi-platform support and OpenGL headers. */
-#include "platform.h"
-#include "Camera.hpp"
-#include "Cameras.hpp"
-#include "Screen.hpp"
-#include "Object.hpp"
-#include "Timer.hpp"
-#include "Scene.hpp"
-#include "Engine.hpp"
 /* Utilities and Common */
 #include "model.hpp"
 #include "InitShader.hpp"
 #include "glut_callbacks.h"
 #include "ObjLoader.hpp"
-#include "eric_rules.hpp"
 
 // Initialization: load and compile shaders, initialize camera(s), load models.
 void init() {

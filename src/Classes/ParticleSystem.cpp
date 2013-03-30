@@ -26,15 +26,15 @@ using namespace Angel;
 // Constructor(s)
 ParticleSystem::ParticleSystem( int particleAmt, const std::string &name,
                                 GLuint shader ) :
-    Object( name, shader ), numParticles( particleAmt ), minLife( 0.1 ),
-    maxLife( 1 ) {
+  Object( name, shader ), numParticles( particleAmt ), maxLife( 1 ), minLife( 0.1 ) {
+
   positions = new vec4[numParticles];
 
   addParticles();
 }
 
 ParticleSystem::~ParticleSystem( void ) {
-  for ( int i = 0; i < particles.size(); i++ ) {
+  for ( size_t i = 0; i < particles.size(); i++ ) {
     free( particles[i] );
   }
   particles.clear();

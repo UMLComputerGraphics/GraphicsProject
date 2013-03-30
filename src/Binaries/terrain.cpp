@@ -14,25 +14,12 @@
 #include <cstdlib>
 #include <time.h>
 // Multi-platform support and OpenGL headers
-#include "platform.h"
-#include "globals.h"
-// Ed Angel's Math Classes
-#include "vec.hpp"
-#include "mat.hpp"
-// Utilities and Classes
 #include "Engine.hpp"
-#include "Camera.hpp"
-#include "Cameras.hpp"
-#include "Screen.hpp"
-#include "Object.hpp"
-#include "Timer.hpp"
-#include "Scene.hpp"
 // Utilities
 #include "model.hpp"
 #include "InitShader.hpp"
 #include "glut_callbacks.h"
 #include "ObjLoader.hpp"
-#include "eric_rules.hpp"
 
 // Type Aliases
 using Angel::vec3;

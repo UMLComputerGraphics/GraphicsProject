@@ -102,6 +102,6 @@ float Timer::keyFrameRate() const {
   return _keyFrameRate;
 }
 
-float Timer::keyFrameRate( float newFrameRate ) {
+void Timer::keyFrameRate( float newFrameRate ) {
   _keyFrameRate = newFrameRate;
 }

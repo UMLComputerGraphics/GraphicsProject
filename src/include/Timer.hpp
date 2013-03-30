@@ -21,7 +21,7 @@ public:
   unsigned long tock();
   unsigned long delta() const;
   float keyFrameRate() const;
-  float keyFrameRate( float newFrameRate );
+  void keyFrameRate( float newFrameRate );
   void setTimeUniform(GLuint uniform);
   double scale() const;
   void foxtrotUniformCharlieKilo();
