@@ -81,11 +81,6 @@ void init() {
   glEnable( GL_DEPTH_TEST );
   glClearColor( 0, 0, 0, 1.0 );
   
-  int numTextures;
-  glGetIntegerv( GL_MAX_TEXTURE_IMAGE_UNITS, &numTextures );
-  
-  fprintf( stderr, "Capacity: [%d] global textures.\n", numTextures );
-  
 }
 
 /**
@@ -177,6 +172,16 @@ int main( int argc, char **argv ) {
   glutPassiveMotionFunc( mouselook );
   glutIdleFunc( idle );
   glutReshapeFunc( resizeEvent );
+
+  int numTextures;
+  glGetIntegerv( GL_MAX_TEXTURE_IMAGE_UNITS, &numTextures );
+
+  for ( int i = 0; i < numTextures; ++i ) {
+    ;
+  };
+
+  fprintf( stderr, "GL_TEXTURE0: %x\n", GL_TEXTURE0 );
+  fprintf( stderr, "GL_TEXTURE1: %x\n", GL_TEXTURE1 );
   
   /* PULL THE TRIGGER */
   glutMainLoop();

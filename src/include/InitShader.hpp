@@ -1,6 +1,6 @@
 /**
  * @file InitShader.hpp
- * @authors Ed Angel, Nick St.Pierre
+ * @authors Ed Angel, Eric McCann, Nick St.Pierre
  * @date 2013-03-13
  * @brief Provides a wrapper utility for quickly
  * linking against glsl programs.
@@ -9,7 +9,8 @@
 #ifndef __INIT_SHADER_H
 #define __INIT_SHADER_H
 
-#define GL_INVALID_SHADER -1
+// Fixme: Not Used?
+//#define GL_INVALID_SHADER -1
 
 namespace Angel {
   /**

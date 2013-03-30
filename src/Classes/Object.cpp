@@ -7,16 +7,11 @@
  */
 #include <string>
 #include <vector>
-#include "Texture.hpp"
 #include <stdexcept>
+#include <cstdio>
 
-#include "platform.h"
 #include "Engine.hpp"
-#include "vec.hpp"
-#include "mat.hpp"
 #include "Object.hpp"
-#include "globals.h"
-#include "Timer.hpp"
 
 using Angel::vec4;
 using Angel::mat4;
@@ -545,6 +540,10 @@ int Object::numberOfPoints( void ) {
   return _vertices.size();
 }
 
+/**
+ * Retrieve a vec3 containing the maximum x,y,z values found in this Object.
+ * @return vec3( maxX, maxY, maxZ )
+ */
 Angel::vec3 Object::getMax( void ) {
   
   Angel::vec3 max = Angel::vec3( -INFINITY, -INFINITY, -INFINITY );
@@ -558,6 +557,10 @@ Angel::vec3 Object::getMax( void ) {
 
 }
 
+/**
+ * Retrieve a vec3 containing the minimum x,y,z values found in this Object.
+ * @return vec3( minX, minY, minZ )
+ */
 Angel::vec3 Object::getMin( void ) {
   
   Angel::vec3 min = Angel::vec3( INFINITY, INFINITY, INFINITY );
@@ -570,65 +573,3 @@ Angel::vec3 Object::getMin( void ) {
   return min;
 
 }
-
-/*
-GLfloat Object::getMaxX(){
-	GLfloat max = _vertices[0].x;
-	for(size_t i=1; i<_vertices.size(); i++){
-		if(_vertices[i].x > max){
-			max = _vertices[i].x;
-		}
-	}
-	return max;
-}
-
-GLfloat Object::getMaxY(){
-	GLfloat max = _vertices[0].y;
-	for(int i=1; i<_vertices.size(); i++){
-		if(_vertices[i].y > max){
-			max = _vertices[i].y;
-		}
-	}
-	return max;
-}
-
-GLfloat Object::getMaxZ(){
-	GLfloat max = _vertices[0].z;
-	for(int i=1; i<_vertices.size(); i++){
-		if(_vertices[i].z > max){
-			max = _vertices[i].z;
-		}
-	}
-	return max;
-}
-
-GLfloat Object::getMinX(){
-	GLfloat min = _vertices[0].x;
-	for(int i=1; i<_vertices.size(); i++){
-		if(_vertices[i].x < min){
-			min = _vertices[i].x;
-		}
-	}
-	return min;
-}
-
-GLfloat Object::getMinY(){
-	GLfloat min = _vertices[0].y;
-	for(int i=1; i<_vertices.size(); i++){
-		if(_vertices[i].y < min){
-			min = _vertices[i].y;
-		}
-	}
-	return min;
-}
-
-GLfloat Object::getMinZ(){
-	GLfloat min = _vertices[0].z;
-	for(int i=1; i<_vertices.size(); i++){
-		if(_vertices[i].z < min){
-			min = _vertices[i].z;
-		}
-	}
-	return min;
-}
-*/

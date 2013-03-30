@@ -264,16 +264,17 @@ public:
    */
   TransCache _trans;
 
+  /**
+   * Retrieve a vec3 containing the maximum x,y,z values found in this Object.
+   * @return vec3( maxX, maxY, maxZ )
+   */
   Angel::vec3 getMax( void );
+
+  /**
+   * Retrieve a vec3 containing the minimum x,y,z values found in this Object.
+   * @return vec3( minX, minY, minZ )
+   */
   Angel::vec3 getMin( void );
-  /*
-  GLfloat getMaxX();
-  GLfloat getMinX();
-  GLfloat getMaxY();
-  GLfloat getMinY();
-  GLfloat getMaxZ();
-  GLfloat getMinZ();
-  */
 
 protected:
   /** _name is used as an identifying handle for the object. **/

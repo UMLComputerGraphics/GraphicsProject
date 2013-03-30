@@ -1,3 +1,11 @@
+/**
+ * @file meshMapping.cpp
+ * @date 2013-03-30
+ * @author Zach Maybury
+ * @brief FIXME: Documentation from Zach
+ * @details FIXME: Documentation from Zach
+ */
+
 #include "meshMapping.hpp"
 
 SquareMap* createSquareMap(float xstart, float xend, float ystart, float yend){

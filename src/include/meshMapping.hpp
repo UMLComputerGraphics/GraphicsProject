@@ -1,3 +1,11 @@
+/**
+ * @file meshMapping.hpp
+ * @date 2013-03-30
+ * @author Zach Maybury
+ * @brief FIXME: Documentation from Zach
+ * @details FIXME: Documentation from Zach
+ */
+
 #ifndef __MESHMAPPING_HPP
 #define __MESHMAPPING_HPP
 

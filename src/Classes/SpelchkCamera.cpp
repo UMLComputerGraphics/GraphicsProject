@@ -8,9 +8,9 @@
 
 #include "SpelchkCamera.hpp"
 
-SpelchkCamera::SpelchkCamera( vec4 _initialTranslationVector ) {
+SpelchkCamera::SpelchkCamera( vec4 initialTranslationVector ) {
   _timeRef = 0;
-  _initialTranslationVector = _initialTranslationVector;
+  _initialTranslationVector = initialTranslationVector;
   reset();
 }
 
@@ -81,12 +81,12 @@ void SpelchkCamera::calculateTranslationVector() {
   _translationVector = (_oldTranslationVector + calculateDisplacement);
 }
 
-void SpelchkCamera::moveCamera( float _xDepth, float _yDepth, float _zDepth ) {
+void SpelchkCamera::moveCamera( float xDepth, float yDepth, float zDepth ) {
   _oldTranslationVector = _translationVector;
   
-  _xDepth = _xDepth;
-  _yDepth = _yDepth;
-  _zDepth = _zDepth;
+  _xDepth = xDepth;
+  _yDepth = yDepth;
+  _zDepth = zDepth;
   
   calculateTranslationVector();
 }
@@ -114,8 +114,8 @@ void SpelchkCamera::setScreenSize( int width, int height ) {
   _aspect = GLfloat( width ) / height;
 }
 
-void SpelchkCamera::setProjection( int _projectionType ) {
-  _projectionType = _projectionType;
+void SpelchkCamera::setProjection( int projectionType ) {
+  _projectionType = projectionType;
 }
 
 void SpelchkCamera::setLightMovementRef( GLuint ref ) {
