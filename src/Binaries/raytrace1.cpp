@@ -13,6 +13,7 @@
 
 #include "SpelchkCamera.hpp"
 #include "InitShader.hpp"
+#include "Timer.hpp"
 #include "eric_rules.hpp"
 
 /** Global shader object **/
@@ -20,7 +21,6 @@ GLuint program;
 
 /** model-view matrix uniform shader variable location **/
 GLuint modelView = -1;
-GLuint dethklok;
 
 GLint vRayPosition = -1;
 /** Handle to uniform that will contain the position of the Camera. **/
@@ -199,9 +199,9 @@ void motion( int x, int y ) {
  */
 void display( void ) {
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-  
-  glUniform1f( dethklok, glutGet( GLUT_ELAPSED_TIME ) );
-  
+
+  tick.foxtrotUniformCharlieKilo();
+
   mat4 mv = camera.getModelViewMatrix();
   glUniformMatrix4fv( modelView, 1, GL_TRUE, mv );
   
@@ -264,7 +264,7 @@ void init( void ) {
   uSphereRadius = glGetUniformLocation( program, "uSphereRadius" );
   uSphereColors = glGetUniformLocation( program, "uSphereColors" );
   
-  dethklok = glGetUniformLocation( program, "ftime" );
+  tick.setTimeUniform(glGetUniformLocation( program, "ftime" ));
   
   glShadeModel( GL_FLAT );
   glEnable( GL_DEPTH_TEST );

@@ -31,7 +31,11 @@ Timer::Timer( void ) {
 #endif
   
   _keyFrameRate = (DEFAULT_KEYFRAME_RATE);
-  
+}
+
+void Timer::setTimeUniform(GLuint uniform)
+{
+  _uniform = uniform;
 }
 
 /**
@@ -64,6 +68,12 @@ unsigned long Timer::tock( void ) {
 #endif
   _t1 = _t2;
   return _delta;
+}
+
+// TELL THAT THAR SHADER WHAT TIME IT IS
+void Timer::foxtrotUniformCharlieKilo( void ) {
+  if (_uniform > 0)
+    glUniform1f( _uniform, glutGet( GLUT_ELAPSED_TIME ) );
 }
 
 /**
