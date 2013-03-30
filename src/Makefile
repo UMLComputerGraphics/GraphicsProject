@@ -58,7 +58,8 @@ ifeq ($(UNAME), Linux)
 endif
 
 ifeq ($(UNAME), Darwin)
-    LDLIBS += -framework Carbon -framework OpenGL -framework GLUT
+    CXXINCS += -I/opt/local/include/ImageMagick
+    LDLIBS += -framework Carbon -framework OpenGL -framework GLUT -L/opt/local/lib -lMagick++
 endif
 
 ifdef DEBUG
