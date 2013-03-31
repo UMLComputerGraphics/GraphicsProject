@@ -80,7 +80,7 @@ void init() {
   
   // Generic OpenGL setup: Enable the depth _buffer and set a nice background color.
   glEnable( GL_DEPTH_TEST );
-  glClearColor( 0.3, 0.5, 0.9, 1.0 );
+  glClearColor( 0.0, 0.0, 0.0, 1.0 );
   
 }
 
