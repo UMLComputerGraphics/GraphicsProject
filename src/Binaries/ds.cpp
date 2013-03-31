@@ -63,8 +63,10 @@ void init() {
   C->buffer();
   
   const char *filename = "../Textures/GrassGreenTexture0002.jpg";
+  C->texture( filename );
   
   /*******************************/
+  /*
   tick.tock();
   Texture *grassTex = new Texture( GL_TEXTURE_2D );
   grassTex->load( filename );
@@ -76,6 +78,7 @@ void init() {
   grassTex->bind( GL_TEXTURE0 );
   tick.tock();
   fprintf( stderr, "Bind: %lu usec\n", tick.delta() );
+  */
   /******************************/
 
   glEnable( GL_DEPTH_TEST );

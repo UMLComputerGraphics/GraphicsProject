@@ -271,7 +271,7 @@ void Object::drawMode( GLenum new_mode ) {
  *
  * @param filename an array of strings to load textures from.
  */
-void Object::texture( const char** filename ) {
+void Object::terrainTexture( const char** filename ) {
   
   tick.tock();
   glBindVertexArray( _vao );
@@ -319,6 +319,20 @@ void Object::texture( const char** filename ) {
   fprintf( stderr, "Texture binding and sending sampler uniforms: %lu\n", tick.delta() );
   
   glBindVertexArray( 0 );
+}
+
+/**
+ * Binds a texture to this Object.
+ * @param filename The filename of the texture to load.
+ */
+void Object::texture( const char* filename ) {
+
+  TextureManagement *tx = Engine::instance()->texMan();
+  Texture *newTex = new Texture( GL_TEXTURE_2D );
+  newTex->load( filename );
+  newTex->buffer();
+  tx->assign( newTex );
+
 }
 
 /**

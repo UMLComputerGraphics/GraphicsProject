@@ -127,7 +127,13 @@ public:
    *
    * @param filename an array of strings to load textures from.
    */
-  void texture( const char** filename );
+  void terrainTexture( const char** filename );
+
+  /**
+   * Binds a texture to this Object.
+   * @param filename The filename of the texture to load.
+   */
+  void texture( const char* filename );
 
   /**
    * Retrieve the _name of this Object.

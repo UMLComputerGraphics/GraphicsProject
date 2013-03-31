@@ -105,7 +105,7 @@ void init() {
   // Let's create some objects.
   Object *terrain = theScene->addObject( "terrain" );
   glUseProgram( gShader );// Temporary hack until I refine the texturing management subsystem.
-  terrain->texture( terrainTex );
+  terrain->terrainTexture( terrainTex );
   terrain->drawMode( GL_TRIANGLE_STRIP );
   randomize_terrain();// This call depends upon "terrain" existing within theScene.
   
