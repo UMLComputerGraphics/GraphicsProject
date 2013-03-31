@@ -1,6 +1,6 @@
 #version 150 
 // FragmentProgram
-const int raytraceDepth = 8;
+const int raytraceDepth = 3;
 
 uniform mat4 ModelView;
 
@@ -12,9 +12,18 @@ uniform int uNumOfSpheres;
 uniform vec3 uSphereCenterPoints[maxNumSphere];
 uniform float uSphereRadius[maxNumSphere];
 uniform vec3 uSphereColors[maxNumSphere];
+
+const int numOfTriangleVectors = 5;
+uniform int uNumOfTriangle;
+
+const int numOfBoundingTriangles = 12;
+uniform int uNumOfBoundingSpheres;
+
+uniform samplerBuffer bufferData;
+
 uniform float ftime;
 
-const float dlight      = 0.025;
+const float dlight = 0.025;
 float lightness = 0.5;
 
 in vec3 org,dir;
@@ -159,21 +168,18 @@ Sphere buildSphere(vec3 centerPoint, float radius, vec3 color) {
 	return s;
 }
 
-Triangle buildTriangle(vec3 a, vec3 b, vec3 c, vec3 color) {
+Triangle buildTriangle(vec3 a, vec3 b, vec3 c, vec3 color, vec3 normal) {
 	Triangle t;
 
 	t.a = (ModelView * vec4(a, 1.0)).xyz;
 	t.b = (ModelView * vec4(b, 1.0)).xyz;
 	t.c = (ModelView * vec4(c, 1.0)).xyz;
 	t.color = color;
-	vec3 N = cross((a - b), (a - c)); 
-	t.n = normalize(N);
+	t.n = normal;
 	
 	return t;
 }
 
-Sphere sphere[8];
-Triangle triangle[6];
 Plane plane;
 void Intersect(Ray r, inout Intersection i)
 {
@@ -182,9 +188,44 @@ void Intersect(Ray r, inout Intersection i)
 		sphere_intersect(buildSphere(uSphereCenterPoints[c], uSphereRadius[c], uSphereColors[c]), r, i);
 	}
 	
-	for (int c = 0; c < 2; c++)
+	int pointIndex = 0;
+	for (int c = 0; c < uNumOfTriangle; c++)
 	{
-		triangle_intersect(triangle[c], r, i);
+		Triangle triangle = buildTriangle(texelFetch(bufferData, pointIndex++).xyz, texelFetch(bufferData, pointIndex++).xyz, texelFetch(bufferData, pointIndex++).xyz, 
+											texelFetch(bufferData, pointIndex++).xyz, texelFetch(bufferData, pointIndex++).xyz);
+		triangle_intersect(triangle, r, i);
+	}
+	
+	//plane_intersect(plane, r, i);
+}
+
+void IntersectWithHitSpheres(Ray r, inout Intersection i)
+{
+	for (int c = 0; c < uNumOfSpheres; c++)
+	{
+		sphere_intersect(buildSphere(uSphereCenterPoints[c], uSphereRadius[c], uSphereColors[c]), r, i);
+	}
+	
+	int index = uNumOfTriangle * numOfTriangleVectors;
+	for(int hitIndex = 0 ; hitIndex < uNumOfBoundingSpheres; hitIndex++) {
+		vec3 centerPoint = (ModelView * texelFetch(bufferData, index++)).xyz;
+		float radius = texelFetch(bufferData, index++).x;
+		
+		vec3 rs = r.org - centerPoint;
+		float B = dot(rs, r.dir);
+		float C = dot(rs, rs) - (radius * radius);
+		float D = B * B - C;
+	
+		if (D > 0.0) {
+			int pointIndex = hitIndex * numOfTriangleVectors * numOfBoundingTriangles;
+			
+			for (int c = 0; c < numOfBoundingTriangles && pointIndex < uNumOfTriangle * numOfTriangleVectors; c++)
+			{
+				Triangle triangle = buildTriangle(texelFetch(bufferData, pointIndex++).xyz, texelFetch(bufferData, pointIndex++).xyz, texelFetch(bufferData, pointIndex++).xyz, 
+													texelFetch(bufferData, pointIndex++).xyz, texelFetch(bufferData, pointIndex++).xyz);
+				triangle_intersect(triangle, r, i);
+			}
+		}
 	}
 	
 	//plane_intersect(plane, r, i);
@@ -230,9 +271,6 @@ void test_main()
 	sphere.c   = (ModelView * vec4(0.0, 0.0, -2.0, 1.0)).xyz;
 	sphere.r   = 0.5;
 	
-	triangle[0] = buildTriangle(vec3(-2.0, -2.0, -1), vec3(2.0, -2.0, -1), vec3(2.0, 2.0, -1), vec3(1, 0, 1));
-	triangle[1] = buildTriangle(vec3(-2.0, 2.0, -1), vec3(-2.0, -2.0, -1), vec3(2.0, 2.0, -1), vec3(0, 1, 1));
-	
 	Ray r;
 	r.org = org;
 	r.dir = normalize(dir);
@@ -242,21 +280,6 @@ void test_main()
 	i.hit = 0;
 	i.t = 1.0e+30;
 	i.n = i.p = i.color = vec3(0, 0, 0);
-	
-	
-	triangle_intersect(triangle[0], r, i);
-	if (i.hit != 0)
-		color = vec4(triangle[0].color, 1);
-		
-	i.hit = 0;
-	i.t = 1.0e+30;
-	
-	triangle_intersect(triangle[1], r, i);
-	if (i.hit != 0)
-		color = vec4(triangle[1].color, 1);
-		
-	i.hit = 0;
-	i.t = 1.0e+30;
 		
 	//sphere_intersect(sphere, r, i);
 	if (i.hit != 0)
@@ -270,25 +293,7 @@ float rand(vec2 co){
 }
 
 void main()
-{
-	sphere[0] = buildSphere(vec3(-1, -1, -2), .5, vec3(1,0.3,0.3));
-	sphere[1] = buildSphere(vec3(1, -1, -2), .5, vec3(0.3,1,0.3));
-	
-	sphere[2] = buildSphere(vec3(-1, 1, -2), .5, vec3(0.3,0.3,1));
-	sphere[3] = buildSphere(vec3(1, 1, -2), .5, vec3(1,0.3,0.3));
-	
-	sphere[4] = buildSphere(vec3(-1, -1, -1), .5, vec3(0.3,1,0.3));
-	sphere[5] = buildSphere(vec3(1, -1, -1), .5, vec3(0.3,0.3,1));
-	
-	sphere[6] = buildSphere(vec3(-1, 1, -1), .5, vec3(0.3,1,0.3));
-	sphere[7] = buildSphere(vec3(1, 1, -1), .5, vec3(0.3,0.3,1));
-
-	triangle[0] = buildTriangle(vec3(-2.0, -2.0, -5), vec3(2.0, -2.0, -5), vec3(2.0, 2.0, -5), vec3(1, 0, 1));
-	triangle[1] = buildTriangle(vec3(-2.0, 2.0, -5), vec3(-2.0, -2.0, -5), vec3(2.0, 2.0, -5), vec3(0, 1, 1));
-	
-	triangle[2] = buildTriangle(vec3(0.0, 2.0, -5), vec3(-2.0, 0.0, -5), vec3(0.0, -2.0, -5), vec3(1, 1, 0));
-	triangle[3] = buildTriangle(vec3(0.0, 2.0, -5), vec3(0.0, -2.0, -5), vec3(2.0, 0.0, -5), vec3(1, 1, 1));
-	
+{	
 	plane.p = (ModelView * vec4(0,-0.5, 0, 1.0)).xyz;
 	plane.n = (vec4(0, 1.0, 0, 1.0)).xyz;
 	plane.color = vec3(1,1, 1);
@@ -317,7 +322,7 @@ void main()
 		i.t = 1.0e+30;
 		i.n = i.p = i.color = vec3(0, 0, 0);
 			
-		Intersect(r, i);
+		IntersectWithHitSpheres(r, i);
 		if (i.hit != 0)
 		{
 			color.rgb += bcolor * i.color * computeLightShadow(i);
