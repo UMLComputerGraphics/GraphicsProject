@@ -80,7 +80,7 @@ void init() {
   
   // Generic OpenGL setup: Enable the depth _buffer and set a nice background color.
   glEnable( GL_DEPTH_TEST );
-  glClearColor( 0.3, 0.5, 0.9, 1.0 );
+  glClearColor( 0.0, 0.0, 0.0, 1.0 );
   
 }
 
@@ -112,7 +112,7 @@ void display( void ) {
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
   
   //tell the shader WHAT TIME IT IS
-  tick.foxtrotUniformCharlieKilo();
+  tick.sendTime();
 
   // Tell camList to draw using our 'draw' rendering function.
   camList->view( draw );
@@ -174,7 +174,7 @@ int main( int argc, char **argv ) {
 #ifdef __APPLE__
   CGSetLocalEventsSuppressionInterval( 0.0 );
 #endif
-  VooDoo::InitRelativePaths(argc, argv);
+  Util::InitRelativePaths(argc, argv);
   
   glutInit( &argc, argv );
   glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH );

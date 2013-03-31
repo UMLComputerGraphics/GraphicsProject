@@ -264,6 +264,10 @@ void wiiHandleBB( CWiimote &wm ) {
   
 }
 
+/**
+ * Turn a Wii Remote on!
+ * @param wm The Wii Remote to activate.
+ */
 void enableRemote( CWiimote &wm ) {
   
   wm.SetMotionSensingMode( CWiimote::ON );

@@ -200,7 +200,7 @@ void motion( int x, int y ) {
 void display( void ) {
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-  tick.foxtrotUniformCharlieKilo();
+  tick.sendTime();
 
   mat4 mv = camera.getModelViewMatrix();
   glUniformMatrix4fv( modelView, 1, GL_TRUE, mv );
@@ -278,7 +278,7 @@ void init( void ) {
  * @return 0.
  */
 int main( int argc, char **argv ) {
-  VooDoo::InitRelativePaths(argc, argv);
+  Util::InitRelativePaths(argc, argv);
   glutInit( &argc, argv );
   
   glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE ); // set rendering context

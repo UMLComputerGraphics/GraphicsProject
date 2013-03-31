@@ -1,9 +1,9 @@
 /**
-   @file partTest.cpp
+   @file dumb.cpp
    @author Nicholas St.Pierre
    @authors John Huston, Nicholas VerVoort, Chris Compton
    @date 2013-02-23
-   @brief This is a derivative of our main project file, fly.cpp.
+   @brief FIXME: This is very stupid.
    @details This is a tech demo for a particle system
 */
 
@@ -138,7 +138,7 @@ int main( int argc, char **argv ) {
 #ifdef __APPLE__
   CGSetLocalEventsSuppressionInterval( 0.0 );
 #endif
-  VooDoo::InitRelativePaths(argc, argv);
+  Util::InitRelativePaths(argc, argv);
 
   glutInit( &argc, argv );
   glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH );

@@ -12,6 +12,11 @@
 // Fixme: Not Used?
 //#define GL_INVALID_SHADER -1
 
+/**
+ * Namespace to encompass Ed Angel's functions and classes.
+ * @author Ed Angel
+ * @date 2013-03-30
+ */
 namespace Angel {
   /**
    * InitInitShader is a preparation step allowing executables to be invoked from

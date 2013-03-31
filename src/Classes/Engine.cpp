@@ -100,6 +100,14 @@ Screen *Engine::mainScreen( void ) {
 }
 
 /**
+ * Retrieves a pointer to the Texture Management object.
+ * @return A pointer to the Texture Management object.
+ */
+TextureManagement *Engine::texMan( void ){
+  return &_texMan;
+}
+
+/**
  * opt retrieves the current setting of an option in the Engine.
  * @param Option The name of the option to access.
  * @return A bool: the current value of the setting.

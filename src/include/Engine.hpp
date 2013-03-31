@@ -20,6 +20,7 @@
 #include "Timer.hpp"
 #include "Scene.hpp"
 #include "Texture.hpp"
+#include "TextureMan.hpp"
 
 /* System */
 #include <string>
@@ -70,6 +71,12 @@ public:
    * @return A pointer to the core 'Screen' object.
    */
   Screen *mainScreen( void );
+
+  /**
+   * Retrieves a pointer to the Texture Management object.
+   * @return A pointer to the Texture Management object.
+   */
+  TextureManagement *texMan( void );
 
   // Settings Getters/Setters.
   /**
@@ -132,6 +139,12 @@ private:
    * Engine options.
    */
   SettingsMap _engineSettings;
+
+  /**
+   * _texMan is a TextureManagement object that
+   * helps to manage all of the active Texture objects.
+   */
+  TextureManagement _texMan;
 
   // Singleton Enforcement
   /**

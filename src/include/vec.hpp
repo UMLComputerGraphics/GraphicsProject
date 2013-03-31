@@ -12,9 +12,18 @@
 #include "OpenGL.h"
 #include <iostream>
 
+/**
+ * Namespace to encompass Ed Angel's functions and classes.
+ * @author Ed Angel
+ * @date 2013-03-30
+ */
 namespace Angel {
   
-  //  vec2.h - 2D vector
+/**
+ * vec2: 2D vector.
+ * @author Ed Angel
+ * @date 2013-03-30
+ */
   struct vec2 {
     
     GLfloat x;
@@ -59,7 +68,11 @@ namespace Angel {
   GLfloat length( const vec2& v );
   vec2 normalize( const vec2& v );
   
-  //  vec3.h - 3D vector
+/**
+ * vec3 - 3D vector.
+ * @author Ed Angel
+ * @date 2013-03-30
+ */
   struct vec3 {
     
     GLfloat x;
@@ -108,7 +121,11 @@ namespace Angel {
   vec3 normalize( const vec3& v );
   vec3 cross( const vec3& a, const vec3& b );
   
-  //  vec4 - 4D vector
+/**
+ * vec4 - 4D vector.
+ * @author Ed Angel
+ * @date 2013-03-30
+ */
   struct vec4 {
     
     GLfloat x;
