@@ -62,7 +62,7 @@ public:
    * @param newTexture The texture to bind.
    * @return The GLenum Texture Unit we bound it to.
    */
-  GLenum assign( Texture *newTexture );
+  unsigned assign( Texture *newTexture );
 
 private:
   /**

@@ -45,7 +45,7 @@ unsigned TextureManagement::numUsed( void ) {
   return _texUnits.size();
 }
 
-GLenum TextureManagement::assign( Texture *newTexture ) {
+unsigned TextureManagement::assign( Texture *newTexture ) {
   TexMap::iterator it;
   GLenum assignedTexUnit;
   for ( size_t i = 0; i < maxTextures(); ++i ) {
@@ -54,7 +54,8 @@ GLenum TextureManagement::assign( Texture *newTexture ) {
       // This key not found. That means this slot is open!
       assignedTexUnit = getTexUnit(i);
       newTexture->bind( assignedTexUnit );
-      return assignedTexUnit;
+      // FIXME: Clean this function up in the morning...
+      return i;
     }
   }
 

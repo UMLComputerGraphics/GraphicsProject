@@ -220,7 +220,7 @@ void customkeyboard(unsigned char key, int x, int y)
 
 int main (int argc, char **argv)
 {
-  VooDoo::InitRelativePaths(argc, argv);
+  Util::InitRelativePaths(argc, argv);
   glutInit (&argc, argv);
   
   glutInitDisplayMode (GLUT_DOUBLE | GLUT_DEPTH); 
