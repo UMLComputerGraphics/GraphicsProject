@@ -17,6 +17,7 @@
 #include <cstdlib>
 #include "Texture.hpp"
 #include "platform.h"
+#include "Util.hpp"
 
 /**
  * Initialize a new texture of a given type.
@@ -42,10 +43,10 @@ Texture::~Texture( void ) {
 bool Texture::load( const std::string &filename ) {
   
   try {
-    _image = new Magick::Image( filename );
+    _image = new Magick::Image( Util::getRelativePath(filename.c_str()) );
     _image->write( &_blob, "RGBA" );
   } catch ( Magick::Error& Error ) {
-    std::cerr << "Error loading texture '" << filename << "': " << Error.what()
+    std::cerr << "Error loading texture '" << Util::getRelativePath(filename.c_str()) << "': " << Error.what()
               << std::endl;
     return false;
   }
