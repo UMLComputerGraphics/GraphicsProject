@@ -54,12 +54,12 @@ unsigned long Timer::tick( void ) {
 unsigned long Timer::tock( void ) {
 #ifdef _RT
   clock_gettime( CLOCK_REALTIME, &_t2 );
-  _delta = (_t2.tv_nsec - _t1.tv_nsec) + (SecToNSec * (_t2.tv_sec - _t1.tv_sec));
+  _delta = (_t2.tv_nsec - _t1.tv_nsec) + (SEC_TO_NSEC * (_t2.tv_sec - _t1.tv_sec));
   _scale = (_delta / (keyFrameRate() * 1000))
 #else
   gettimeofday( &_t2, NULL );
   _delta = (_t2.tv_usec - _t1.tv_usec)
-           + (SecTouSec * (_t2.tv_sec - _t1.tv_sec));
+           + (SEC_TO_USEC * (_t2.tv_sec - _t1.tv_sec));
   _scale = (_delta / keyFrameRate());
 #endif
   _t1 = _t2;

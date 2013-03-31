@@ -50,7 +50,7 @@ namespace Angel {
    */
   static char *readShaderSource( const char* shaderFile ) {
     
-    FILE* fp = fopen( VooDoo::getRelativePath(shaderFile), "r" );
+    FILE* fp = fopen( Util::getRelativePath(shaderFile), "r" );
 
     if ( fp == NULL ) {
       return NULL;
