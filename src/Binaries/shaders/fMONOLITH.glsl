@@ -36,7 +36,7 @@ vec4 aRomanticEvening()
     if (lightness < 0.0) lightness = 0.0;
     if (lightness > 1.0) lightness = 1.0;    
   }
-  return lightness * vec4(1.0,1.0,1.0,0.1/lightness);
+  return lightness * vec4(1.0,1.0,1.0,1.0);
 }
 
 void main() 
