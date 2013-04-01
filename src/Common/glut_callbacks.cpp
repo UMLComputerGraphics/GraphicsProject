@@ -18,6 +18,10 @@
 #include "Engine.hpp"
 #include <sstream>
 
+
+//This counteracts mouse rotation slugishness when screen dimensions are considered in calculating movement
+#define MAGIC_MOUSE_SCALAR (45.0)
+
 /**
  * keylift is registered as a GLUT callback for when a user
  * releases a depressed key.
@@ -236,7 +240,7 @@ void mouse( int button, int state, int x, int y ) {
       break;
     }
   }
-  
+
 }
 
 /**
@@ -250,13 +254,11 @@ void mouse( int button, int state, int x, int y ) {
 void mouseroll( int x, int y ) {
   
   static Screen *myScreen = Engine::instance()->mainScreen();
+  const double dx = ((double) x - myScreen->midpointX()) * MAGIC_MOUSE_SCALAR / ((double)myScreen->width());
   
-  if ( (x != myScreen->midpointX()) || (y != myScreen->midpointY()) ) {
-    if ( myScreen->_camList.numCameras() > 0 )
-      myScreen->_camList.active()->roll( x - myScreen->midpointX() );
-    glutWarpPointer( myScreen->midpointX(), myScreen->midpointY() );
-  }
-  
+  if ( myScreen->_camList.numCameras() > 0 )
+    myScreen->_camList.active()->roll( dx );
+  glutWarpPointer( myScreen->midpointX(), myScreen->midpointY() );
 }
 
 /**
@@ -270,21 +272,19 @@ void mouseroll( int x, int y ) {
 void mouselook( int x, int y ) {
   
   static Screen *myScreen = Engine::instance()->mainScreen();
-  if ( (x != myScreen->midpointX()) || (y != myScreen->midpointY()) ) {
-    const double dx = ((double) x - myScreen->midpointX());
-    const double dy = ((double) y - myScreen->midpointY());
-    
-    if ( (abs( dx ) > 100) || (abs( dy ) > 100) ) return;
-    
-    if ( myScreen->_camList.numCameras() > 0 ) {
-      myScreen->_camList.active()->pitch( dy );
-      myScreen->_camList.active()->yaw(
-          dx, Engine::instance()->opt( "fixed_yaw" ) );
-    }
-    
-    glutWarpPointer( myScreen->midpointX(), myScreen->midpointY() );
+
+  const double dx = ((double) x - myScreen->midpointX()) * MAGIC_MOUSE_SCALAR / ((double)myScreen->width());
+  const double dy = ((double) myScreen->midpointY() - y) * MAGIC_MOUSE_SCALAR / ((double)myScreen->height());
+
+  if (dx == 0 || dy == 0) return;
+  if ( myScreen->_camList.numCameras() > 0 ) {
+    myScreen->_camList.active()->pitch( dy );
+    myScreen->_camList.active()->yaw(
+        dx, Engine::instance()->opt( "fixed_yaw" ) );
   }
   
+  glutWarpPointer( myScreen->midpointX(), myScreen->midpointY() );
+
 }
 
 /**
