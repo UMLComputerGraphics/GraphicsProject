@@ -137,8 +137,7 @@ void idle( void ) {
   tick.tock();
   
   // Animation variables.
-  static double timer = 0.0;
-  if ( (timer += 0.005) > 360.0 ) timer = 0.0;
+  double timer = glutGet( GLUT_ELAPSED_TIME ) / 500.0;
   float percent = (sin( timer ) + 1) / 2;
   
   // Update the morph percentage.
