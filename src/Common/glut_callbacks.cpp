@@ -115,7 +115,10 @@ void keyboard( unsigned char key, int x, int y ) {
   
   switch ( key ) {
   case '-':
-    camList->popCamera();
+    if (camList->numCameras() > 1)
+      camList->popCamera();
+    else
+      fprintf(stderr, "You cannot delete the only camera. Deal with it.\n");
     break;
   case ';':
     fprintf( stderr, "Camera Position: (%f,%f,%f)\n", cam.x(), cam.y(),
@@ -179,6 +182,8 @@ void keyboard_ctrl( int key, int x, int y ) {
   Scene *theScene = Engine::instance()->rootScene();
   Cameras *camList = Engine::instance()->cams();
   
+  GLuint mode;
+
   switch ( key ) {
   //Cycle between active Objects ...
   case GLUT_KEY_LEFT:
@@ -190,16 +195,28 @@ void keyboard_ctrl( int key, int x, int y ) {
     
     //Change the Draw drawMode ...
   case GLUT_KEY_F1:
-    theScene->active()->drawMode( GL_POINTS );
-    break;
+    mode = GL_POINTS;
+    /* no break */
   case GLUT_KEY_F2:
-    theScene->active()->drawMode( GL_LINE_STRIP );
-    break;
+     mode = GL_LINE_STRIP;
+     /* no break */
   case GLUT_KEY_F3:
-    theScene->active()->drawMode( GL_TRIANGLE_STRIP );
-    break;
+    mode = GL_TRIANGLE_STRIP;
+    /* no break */
   case GLUT_KEY_F4:
-    theScene->active()->drawMode( GL_TRIANGLES );
+    mode = GL_TRIANGLES;
+    /* no break */
+  default:
+    Object *s;
+    try {
+      s = theScene->active();
+      s->drawMode( mode );
+    }
+    catch(std::exception &ex)
+    {
+      fprintf(stderr, "Active object could be retrieved from scene: %s\n", ex.what());
+      s = NULL;
+    }
     break;
   }
   
