@@ -54,12 +54,12 @@ void main() {
     
   gl_Position = P * CTM * OTM * position;
 
-  color = vec4(vColor.x, vColor.y, vColor.z, 1.0);
+  color = vec4(vColor.x, vColor.y, vColor.z, vColor.w);
   if (isMorphing)
   {
     color.x = vColor.x*(1.0-morphPercentage) + vColorMorph.x*morphPercentage ;
     color.y = vColor.y*(1.0-morphPercentage) + vColorMorph.y*morphPercentage ;
     color.z = vColor.z*(1.0-morphPercentage) + vColorMorph.z*morphPercentage ;
-    color.w = 1.0 ;
+    color.w = vColor.w*(1.0-morphPercentage) + vColorMorph.w*morphPercentage;
   }
 }

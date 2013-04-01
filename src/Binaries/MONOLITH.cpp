@@ -48,6 +48,11 @@ void init() {
   // Scale the bottle down!
   bottle->_trans._scale.set( 0.01 );
   
+  for (uint i=0; i < bottle->_colors.size(); i++)
+  {
+    bottle->_colors[i].w = 0.4;
+  }
+
   // _buffer the object onto the GPU. This does not happen by default,
   // To allow you to make many changes and _buffer only once,
   // or to _buffer changes selectively.
@@ -74,6 +79,11 @@ void init() {
   ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle-b.obj" );
   bottleMorphTarget->_trans._scale.set( 0.01 );
   
+  for (uint i=0; i < bottle->_colors.size(); i++)
+  {
+    bottleMorphTarget->_colors[i].w = 0.4;
+  }
+
   // YES THIS IS THE REAL OBJECT, NOT THE TARGET. 
   // IT SENDS THE MORPH VERTICES TO THE SHADER, NOT TO THE DRAW LIST TO BE DRAWN!
   bottle->bufferMorphOnly();
@@ -88,7 +98,7 @@ void init() {
  * Cleans up our scene graph.
  */
 void cleanup( void ) {
-  //Engine::instance()->rootScene()->DestroyObject();
+  Engine::instance()->rootScene()->delObject();
 }
 
 /**
@@ -119,7 +129,6 @@ void display( void ) {
   
   // Swap to the next _buffer.
   glutSwapBuffers();
-  
 }
 
 /**
@@ -151,7 +160,6 @@ void idle( void ) {
   
   // Inform GLUT we'd like to render a new frame.
   glutPostRedisplay();
-  
 }
 
 /**
