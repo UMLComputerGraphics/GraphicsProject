@@ -72,9 +72,10 @@ public:
    *
    * @param objName The name of the new Object to add.
    * @param shader The shader that should be used to render this object.
+   * @param rayTrace Whether or not the new object should be handled differently for raytracing.
    * @return A pointer to the new Object.
    */
-  Object *addObject( const std::string &objName, GLuint shader = 0 );
+  Object *addObject( const std::string &objName, GLuint shader = 0, bool rayTrace = false );
 
   /**
    * delObject will remove from the Scene graph the object with the given name.

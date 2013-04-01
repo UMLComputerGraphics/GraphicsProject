@@ -26,7 +26,7 @@ using namespace Angel;
 // Constructor(s)
 ParticleSystem::ParticleSystem( int particleAmt, const std::string &name,
                                 GLuint shader ) :
-  Object( name, shader ), numParticles( particleAmt ), maxLife( 1 ), minLife( 0.1 ) {
+  Object( name, shader, false ), numParticles( particleAmt ), maxLife( 1 ), minLife( 0.1 ) {
 
   positions = new vec4[numParticles];
 

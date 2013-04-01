@@ -44,19 +44,19 @@ void Camera::commonInit( void ) {
 
 Camera::Camera( const std::string &name, GLuint gShader, float x, float y,
                 float z ) :
-    Object( name, gShader ) {
+    Object( name, gShader, false ) {
   commonInit();
   this->pos( x, y, z, false );
 }
 
 Camera::Camera( const std::string &name, GLuint gShader, vec3 &in ) :
-    Object( name, gShader ) {
+    Object( name, gShader, false ) {
   commonInit();
   this->pos( in, false );
 }
 
 Camera::Camera( const std::string &name, GLuint gShader, vec4 &in ) :
-    Object( name, gShader ) {
+    Object( name, gShader, false ) {
   commonInit();
   this->pos( in, false );
 }

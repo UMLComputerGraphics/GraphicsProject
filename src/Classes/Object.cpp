@@ -21,7 +21,7 @@ using Angel::mat4;
  * @param name The _name of this object.
  * @param gShader The shader to use to render this object.
  */
-Object::Object( const std::string &name, GLuint gShader ) {
+Object::Object( const std::string &name, GLuint gShader, bool rayTrace ) {
   
   /* The constructor is going to initialize the VAO and a series of VBOs.
    The VAO is our general handle to this collection of VBOs.
@@ -34,6 +34,8 @@ Object::Object( const std::string &name, GLuint gShader ) {
     fprintf( stderr, "\nCreating %d handles for uniforms\n", Object::END );
   _handles.resize( Object::END );
   
+  _rayTrace = rayTrace;
+
   // Associate this Object with the shader.
   shader( gShader );
   
@@ -58,39 +60,45 @@ Object::Object( const std::string &name, GLuint gShader ) {
   this->_morphTarget = NULL;
   
   /* Create our VAO, which is our handle to all 
-   the rest of the following information. */glGenVertexArrays( 1, &_vao );
+   the rest of the following information. */
+  glGenVertexArrays( 1, &_vao );
   glBindVertexArray( _vao );
   GLuint glsl_uniform;
   
   /* Create (Eight) VBOs: One each for Positions, Colors, Normals, 
-   Textures, draw Order; Three for Morphing (Position,Colors,Normals.) */glGenBuffers(
+   Textures, draw Order; Three for Morphing (Position,Colors,Normals.) */
+  glGenBuffers(
       NUM_BUFFERS, _buffer );
   
-  /* Create the Vertex _buffer and link it with the shader. */glBindBuffer(
-      GL_ARRAY_BUFFER, _buffer[VERTICES] );
+  /* Create the Vertex _buffer and link it with the shader. */
+  glBindBuffer(GL_ARRAY_BUFFER, _buffer[VERTICES] );
   glsl_uniform = glGetAttribLocation( gShader, "vPosition" );
   glEnableVertexAttribArray( glsl_uniform );
   glVertexAttribPointer( glsl_uniform, 4, GL_FLOAT, GL_FALSE, 0, 0 );
   
-  /* Create the MORPH Vertex _buffer and link it with the shader. */glBindBuffer(
+  /* Create the MORPH Vertex _buffer and link it with the shader. */
+  glBindBuffer(
       GL_ARRAY_BUFFER, _buffer[VERTICES_MORPH] );
   glsl_uniform = glGetAttribLocation( gShader, "vPositionMorph" );
   glEnableVertexAttribArray( glsl_uniform );
   glVertexAttribPointer( glsl_uniform, 4, GL_FLOAT, GL_FALSE, 0, 0 );
   
-  /* Create the Normal _buffer and link it with the shader. */glBindBuffer(
+  /* Create the Normal _buffer and link it with the shader. */
+  glBindBuffer(
       GL_ARRAY_BUFFER, _buffer[NORMALS] );
   glsl_uniform = glGetAttribLocation( gShader, "vNormal" );
   glEnableVertexAttribArray( glsl_uniform );
   glVertexAttribPointer( glsl_uniform, 3, GL_FLOAT, GL_FALSE, 0, 0 );
   
-  /* Create the Normal MORPH _buffer and link it with the shader. */glBindBuffer(
+  /* Create the Normal MORPH _buffer and link it with the shader. */
+  glBindBuffer(
       GL_ARRAY_BUFFER, _buffer[NORMALS_MORPH] );
   glsl_uniform = glGetAttribLocation( gShader, "vNormalMorph" );
   glEnableVertexAttribArray( glsl_uniform );
   glVertexAttribPointer( glsl_uniform, 3, GL_FLOAT, GL_FALSE, 0, 0 );
   
-  /* Create the Color _buffer and link it with the shader. */glBindBuffer(
+  /* Create the Color _buffer and link it with the shader. */
+  glBindBuffer(
       GL_ARRAY_BUFFER, _buffer[COLORS] );
   glEnable( GL_BLEND );
   glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
@@ -98,14 +106,16 @@ Object::Object( const std::string &name, GLuint gShader ) {
   glEnableVertexAttribArray( glsl_uniform );
   glVertexAttribPointer( glsl_uniform, 4, GL_FLOAT, GL_FALSE, 0, 0 );
   
-  /* Create the Color Morph _buffer and link it with the shader. */glBindBuffer(
+  /* Create the Color Morph _buffer and link it with the shader. */
+  glBindBuffer(
       GL_ARRAY_BUFFER, _buffer[COLORS_MORPH] );
   glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
   glsl_uniform = glGetAttribLocation( gShader, "vColorMorph" );
   glEnableVertexAttribArray( glsl_uniform );
   glVertexAttribPointer( glsl_uniform, 4, GL_FLOAT, GL_FALSE, 0, 0 );
   
-  /* Create the texture Coordinate _buffer and link it with the shader. */glBindBuffer(
+  /* Create the texture Coordinate _buffer and link it with the shader. */
+  glBindBuffer(
       GL_ARRAY_BUFFER, _buffer[TEXCOORDS] );
   glsl_uniform = glGetAttribLocation( gShader, "vTex" );
   glEnableVertexAttribArray( glsl_uniform );
@@ -120,9 +130,15 @@ Object::Object( const std::string &name, GLuint gShader ) {
   /* Create the Drawing Order _buffer, but we don't need to link it 
    with any uniform,
    because we won't be accessing this data directly. (I.e, the numbers here
-   are not important once we are in the Vertex shader. */glBindBuffer(
+   are not important once we are in the Vertex shader. */
+  glBindBuffer(
       GL_ELEMENT_ARRAY_BUFFER, _buffer[INDICES] );
   
+  if (rayTrace)
+  {
+     printf("Preparing %s for RAY TRACING!\n", _name.c_str());
+  }
+
   /* Unset the VAO context. */
   glBindVertexArray( 0 );
 }
@@ -187,21 +203,20 @@ void Object::draw( void ) {
  * Indices, Colors and Morph Buffers.
  */
 void Object::buffer( void ) {
-  
   glBindVertexArray( _vao );
-  
+
   glBindBuffer( GL_ARRAY_BUFFER, _buffer[VERTICES] );
   glBufferData( GL_ARRAY_BUFFER, sizeof(Angel::vec4) * _vertices.size(),
                 &(_vertices[0]), GL_STATIC_DRAW );
-  
+
   glBindBuffer( GL_ARRAY_BUFFER, _buffer[NORMALS] );
   glBufferData( GL_ARRAY_BUFFER, sizeof(Angel::vec3) * _normals.size(),
                 &(_normals[0]), GL_STATIC_DRAW );
-  
+
   glBindBuffer( GL_ARRAY_BUFFER, _buffer[COLORS] );
   glBufferData( GL_ARRAY_BUFFER, sizeof(Angel::vec4) * _colors.size(),
                 &(_colors[0]), GL_STATIC_DRAW );
-  
+
   /* Without the following workaround code,
    Mac OSX will segfault attempting to access
    the texcoordinate buffers on nontextured objects. */
@@ -213,17 +228,78 @@ void Object::buffer( void ) {
      Oops. */
     _isTextured = true;
   }
-  
+
   glBindBuffer( GL_ARRAY_BUFFER, _buffer[TEXCOORDS] );
   glBufferData( GL_ARRAY_BUFFER, sizeof(Angel::vec2) * _texUVs.size(),
                 (_texUVs.size() ? &(_texUVs[0]) : NULL), GL_STATIC_DRAW );
-  
+
   glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, _buffer[INDICES] );
   glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * _indices.size(),
                 &(_indices[0]), GL_STATIC_DRAW );
-  
+
+  if (_rayTrace)
+  {
+    glUniform1i( _uNumOfTriangle, _vertices.size() / 3 );
+    int numOfBoundingSpheres;
+    unsigned int i = 0;
+    int groupSize = 12 * 3;
+    while(i < _vertices.size() / 3) {
+
+      vec4 centerPoint;
+
+      int j;
+      for(j = 0; j < groupSize && i < _vertices.size(); j++) {
+        centerPoint += _vertices.data()[i++];
+      }
+
+      centerPoint.x /= j;
+      centerPoint.y /= j;
+      centerPoint.z /= j;
+
+      _bufferData.push_back(centerPoint.x);
+      _bufferData.push_back(centerPoint.y);
+      _bufferData.push_back(centerPoint.z);
+
+      //printf("%f, %f, %f\n", centerPoint.x, centerPoint.y, centerPoint.z);
+
+      i -= j;
+
+      float distance = 0.0;
+      for(j = 0; j < groupSize && i < _vertices.size(); j++) {
+
+        vec4 point = _vertices.data()[i++];
+        float x = centerPoint.x - point.x;
+        float y = centerPoint.y - point.y;
+        float z = centerPoint.z - point.z;
+
+        float tempDistance = sqrtf((x * x) + (y * y) + (z * z));
+
+        if(tempDistance > distance) distance = tempDistance;
+      }
+      distance += 0.01;
+
+      _bufferData.push_back(distance);
+      _bufferData.push_back(0.0);
+      _bufferData.push_back(0.0);
+
+      //printf("distance %f\n", distance);
+      numOfBoundingSpheres++;
+    }
+    glUniform1i( _uNumOfBoundingSpheres, numOfBoundingSpheres );
+    printf("numTriangles %d\n", (int)_vertices.size());
+    printf("numOfBoundingSpheres %d\n", numOfBoundingSpheres);
+
+    GLuint bufObj;
+    glActiveTexture(GL_TEXTURE0);
+    glGenBuffers(1, &bufObj);
+    glBindBuffer(GL_TEXTURE_BUFFER, bufObj);
+    // Size of float * number of floats in a vector * number of vectors in a triangle (a, b, c, color) * number of triangles
+    GLsizeiptr triangleSize = 3 * 5 * _vertices.size();
+    GLsizeiptr boundingSphereSize = 3 * 2 * numOfBoundingSpheres;
+    glBufferData(GL_TEXTURE_BUFFER, sizeof(GLfloat) * (triangleSize + boundingSphereSize), _bufferData.data(), GL_STATIC_DRAW);
+    glTexBuffer(GL_TEXTURE_BUFFER, GL_RGB32F, bufObj);
+  }
   glBindVertexArray( 0 );
-  
 }
 
 /**
@@ -366,14 +442,15 @@ void Object::link( UniformEnum which, const std::string &name ) {
         which, _handles.size() );
     return;
   }
-  
+
   // Save the link between the Uniform and the Variable _name.
   _uniformMap[which] = name;
   
   if ( DEBUG )
     fprintf( stderr, "Linking enum[%u] with %s for object %s\n", which,
              name.c_str(), this->_name.c_str() );
-  
+
+  printf("SHADER %d\n", shader());
   _handles[which] = glGetUniformLocation( shader(), name.c_str() );
   if ( DEBUG )
     fprintf( stderr, "Linking handles[%d] to %s; got %d.\n", which,

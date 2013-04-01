@@ -10,11 +10,19 @@ uniform mat4 T;
 uniform mat4 CTM; // CTM is either PRT or TRP, depending.
 uniform mat4 OTM;
 
+//<raycasting>
+const int numOfTriangleVectors = 5;
+uniform int uNumOfTriangle;
+const int numOfBoundingTriangles = 12;
+uniform int uNumOfBoundingSpheres;
+uniform samplerBuffer bufferData;
+//</raycasting>
+
 uniform float ftime; //for Eric's 1337 h@x
 
 //general light stuff
 uniform bool letMeSeeThatPhong; //pha phong phong phong
-const vec4 LightAmbient = vec4(0.8, 0.8, 0.8, 1.0);
+const vec4 LightAmbient = vec4(0.5, 0.5, 0.5, 1.0);
 //TODO: MAKE THIS MOVE WITH TOP OF CANDLE
 vec4 LightPosition = vec4(1.0, 1.0, 1.0, 0.0);
 uniform vec4 MaterialAmbient, MaterialDiffuse, MaterialSpecular;

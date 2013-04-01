@@ -75,9 +75,10 @@ GLuint Scene::shader( void ) {
  *
  * @param objName The name of the new Object to add.
  * @param shader The shader that should be used to render this object.
+ * @param rayTrace Whether or not the new object should be handled differently for raytracing.
  * @return A pointer to the new Object.
  */
-Object *Scene::addObject( const std::string &objName, GLuint shader ) {
+Object *Scene::addObject( const std::string &objName, GLuint shader, bool rayTrace ) {
   
   // Note that 'shader' defaults to 0.
   if ( (!shader) && (!_gShader) )
@@ -86,7 +87,7 @@ Object *Scene::addObject( const std::string &objName, GLuint shader ) {
         "specifying either the object-specific shader,\n"
         "\tor informing the parent Scene of a default shader to use." );
   
-  Object *obj = new Object( objName, ((shader) ? shader : _gShader) );
+  Object *obj = new Object( objName, ((shader) ? shader : _gShader), rayTrace );
   
   insertObject( obj );
   

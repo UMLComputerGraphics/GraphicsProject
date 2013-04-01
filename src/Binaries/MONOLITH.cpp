@@ -7,6 +7,8 @@
  Original engine based on Ed Angel's book code.
  **/
 
+//#define PHONG_FALLBACK
+
 /* OpenGL and "The Engine" */
 #include "Engine.hpp"
 /* Utilities and Common */
@@ -40,7 +42,7 @@ void init() {
   primScreen->_camList.next();
   
   // Create an object and add it to the scene with the name "bottle".
-  Object *bottle = rootScene->addObject( "bottle" );
+  Object *bottle = rootScene->addObject( "bottle", 0, false );
   
   // Use the object loader to actually fill out the vertices and-so-on of the bottle.
   ObjLoader::loadModelFromFile( bottle, "../models/bottle-a.obj" );
@@ -119,7 +121,6 @@ void display( void ) {
   
   // Swap to the next _buffer.
   glutSwapBuffers();
-  
 }
 
 /**
@@ -152,7 +153,6 @@ void idle( void ) {
   
   // Inform GLUT we'd like to render a new frame.
   glutPostRedisplay();
-  
 }
 
 /**

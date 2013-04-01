@@ -89,8 +89,9 @@ public:
    * Constructor. Requires at minimum a _name and a shader handle.
    * @param name The _name of this object.
    * @param gShader The shader to use to render this object.
+   * @param rayTrace Whether or not these vertices should be ray traced.
    */
-  Object( const std::string &name, GLuint gShader );
+  Object( const std::string &name, GLuint gShader, bool rayTrace = false );
 
   /**
    * Default destructor.
@@ -263,6 +264,11 @@ public:
   /** Texture Coordinates buffer. **/
   std::vector< Angel::vec2 > _texUVs;
 
+
+  std::vector<GLfloat> _bufferData;
+
+  bool _rayTrace;
+
   // FIXME: Should the transformational state be protected?
   /**
    * The _trans cache encompasses the current transformational
@@ -285,6 +291,10 @@ public:
 protected:
   /** _name is used as an identifying handle for the object. **/
   std::string _name;
+
+  GLint _uNumOfTriangle;
+
+  GLint _uNumOfBoundingSpheres;
 
   /** Vertex Array Object handle identifying our buffers/object. **/
   GLuint _vao;

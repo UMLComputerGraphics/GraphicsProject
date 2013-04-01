@@ -325,6 +325,13 @@ namespace ObjLoader {
         for ( uint i = 0; i < faceElements.at( 0 ).size(); i++ ) {
           object->_vertices.push_back(
               raw_vertices.at( faceElements.at( 0 ).at( i ) - 1 ) );
+          if (object->_rayTrace)
+          {
+            vec4 rawvertex = raw_vertices.at( faceElements.at( 0 ).at( i ) - 1 );
+            object->_bufferData.push_back(rawvertex.x);
+            object->_bufferData.push_back(rawvertex.y);
+            object->_bufferData.push_back(rawvertex.z);
+          }
         }
         
         // do the same for texture elements
