@@ -64,6 +64,8 @@ public:
    */
   unsigned assign( Texture *newTexture );
 
+  void rebind( void );
+
 private:
   /**
    * A mapping of indexed texture units (0-n) and Texture objects.

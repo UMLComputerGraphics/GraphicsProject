@@ -41,6 +41,9 @@ void init() {
   
   // Third Object, over-ride default shader.
   Object *C = rootScene->addObject( "Object C (TEX)", shader[2] );
+
+  // Fourth Object.
+  Object *D = rootScene->addObject( "Object D (TEX2)", shader[2] );
   
   // draw a square in the upper left
   triangle( A, vec4( -1, 0, 0, 1 ), vec4( 0, 0, 0, 1 ), vec4( -1, 1, 0, 1 ),
@@ -61,28 +64,22 @@ void init() {
   C->_texUVs.push_back( vec2( 1, 1 ) );
   C->_texUVs.push_back( vec2( 0, 1 ) );
   C->buffer();
-  
   const char *filename = "../Textures/GrassGreenTexture0002.jpg";
   C->texture( filename );
-  
-  /*******************************/
-  /*
-  tick.tock();
-  Texture *grassTex = new Texture( GL_TEXTURE_2D );
-  grassTex->load( filename );
-  tick.tock();
-  fprintf( stderr, "Load: %lu usec\n", tick.delta() );
-  grassTex->buffer();
-  tick.tock();
-  fprintf( stderr, "Buffer: %lu usec\n", tick.delta() );
-  grassTex->bind( GL_TEXTURE0 );
-  tick.tock();
-  fprintf( stderr, "Bind: %lu usec\n", tick.delta() );
-  */
-  /******************************/
+
+  // draw another triangle in the lower left, texture it differently.
+  triangle( D, vec4( -1, 0, 0, 1), vec4( 0, 0, 0, 1 ), vec4( 0, -1, 0, 1 ), 0 );
+  D->_texUVs.push_back( vec2( 0, 0 ) );
+  D->_texUVs.push_back( vec2( 1, 1 ) );
+  D->_texUVs.push_back( vec2( 0, 1 ) );
+  D->buffer();
+  D->texture( "../Textures/GoodTextures_0013291.jpg" );
 
   glEnable( GL_DEPTH_TEST );
   glClearColor( 0, 0, 0, 1.0 );
+
+
+  Engine::instance()->texMan()->rebind();
   
 }
 
@@ -175,13 +172,6 @@ int main( int argc, char **argv ) {
   glutPassiveMotionFunc( mouselook );
   glutIdleFunc( idle );
   glutReshapeFunc( resizeEvent );
-
-  int numTextures;
-  glGetIntegerv( GL_MAX_TEXTURE_IMAGE_UNITS, &numTextures );
-
-  for ( int i = 0; i < numTextures; ++i ) {
-    ;
-  };
 
   fprintf( stderr, "GL_TEXTURE0: %x\n", GL_TEXTURE0 );
   fprintf( stderr, "GL_TEXTURE1: %x\n", GL_TEXTURE1 );

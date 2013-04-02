@@ -54,10 +54,18 @@ unsigned TextureManagement::assign( Texture *newTexture ) {
       // This key not found. That means this slot is open!
       assignedTexUnit = getTexUnit(i);
       newTexture->bind( assignedTexUnit );
-      // FIXME: Clean this function up in the morning...
+      _texUnits[i] = newTexture;
+      // Return which texture unit we bound this texture to.
       return i;
     }
   }
 
   throw std::out_of_range( "No texture units available, oh no!" );
+}
+
+void TextureManagement::rebind( void ) {
+  TexMap::iterator it;
+  for (it = _texUnits.begin(); it != _texUnits.end(); ++it) {
+    it->second->bind( getTexUnit( it->first ) );
+  }
 }

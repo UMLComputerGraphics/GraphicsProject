@@ -327,16 +327,12 @@ void Object::terrainTexture( const char** filename ) {
  */
 void Object::texture( const char* filename ) {
 
-  unsigned texUnitIndex;
   TextureManagement *tx = Engine::instance()->texMan();
   Texture *newTex = new Texture( GL_TEXTURE_2D );
   newTex->load( filename );
   newTex->buffer();
 
-  // FIXME: Get the TexUnit Index from assign and update the uniform.
-  texUnitIndex = tx->assign( newTex );
-  _textureID = texUnitIndex;
-
+  _textureID = tx->assign( newTex );
   send( Object::TEX_SAMPLER );
 
 }

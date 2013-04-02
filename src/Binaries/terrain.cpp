@@ -194,6 +194,14 @@ void init() {
   cam->_trans._scale.set( 0.05 );
   cam->_trans._preRotation.rotateY( 180 );
   cam->propagate();
+
+  Object *rcam = cam->addObject( "right-cam" );
+  ObjLoader::loadModelFromFile( rcam, "../models/rainbow_dashT.obj" );
+  rcam->buffer();
+  rcam->drawMode( GL_TRIANGLES );
+  rcam->_trans._offset.set( 10, 0, 0 );
+  cam->propagate();
+  rcam->propagate();
   
   // Add the propagate method to the Scene Graph directly, instead of this:
   // Note: Terrain doesn't/shouldn't have children ...
