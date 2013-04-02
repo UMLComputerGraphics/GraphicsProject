@@ -1,15 +1,15 @@
 #version 150 
 // VertexProgram
 
+uniform mat4 uRotationMatrix;
+uniform vec4 uCameraPosition;
+
 in vec2 vRayPosition;
 
 out vec3 org, dir;
 
 void main()
 {
-    
-    org = vec3(0, 0, 0);
-    
     float width = 512;
     float height = 512;
     
@@ -25,6 +25,8 @@ void main()
     float xx = (2 * ((x + 0.5) * invWidth) - 1) * angle * aspectratio;
     float yy = (1 - 2 * ((y + 0.5) * invHeight)) * angle;
     
-    dir = normalize(vec3(xx, yy, -1.0));
+    org = uCameraPosition.xyz;
+    dir = normalize(uRotationMatrix * vec4(xx, yy, -1.0, 0.0)).xyz;
+    
     gl_Position = vec4(xx, yy, -1.0, 1.0);
 }

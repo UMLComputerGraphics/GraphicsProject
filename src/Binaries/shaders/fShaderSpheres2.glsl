@@ -161,7 +161,7 @@ void plane_intersect(Plane pl, Ray ray, inout Intersection isect)
 
 Sphere buildSphere(vec3 centerPoint, float radius, vec3 color) {
 	Sphere s;
-	s.c = (ModelView * vec4(centerPoint, 1)).xyz;
+	s.c = (vec4(centerPoint, 1)).xyz;
 	s.r = radius;
 	s.color = color;
 
@@ -171,9 +171,9 @@ Sphere buildSphere(vec3 centerPoint, float radius, vec3 color) {
 Triangle buildTriangle(vec3 a, vec3 b, vec3 c, vec3 color, vec3 normal) {
 	Triangle t;
 
-	t.a = (ModelView * vec4(a, 1.0)).xyz;
-	t.b = (ModelView * vec4(b, 1.0)).xyz;
-	t.c = (ModelView * vec4(c, 1.0)).xyz;
+	t.a = (vec4(a, 1.0)).xyz;
+	t.b = (vec4(b, 1.0)).xyz;
+	t.c = (vec4(c, 1.0)).xyz;
 	t.color = color;
 	t.n = normal;
 	
@@ -208,7 +208,7 @@ void IntersectWithHitSpheres(Ray r, inout Intersection i)
 	
 	int index = uNumOfTriangle * numOfTriangleVectors;
 	for(int hitIndex = 0 ; hitIndex < uNumOfBoundingSpheres; hitIndex++) {
-		vec3 centerPoint = (ModelView * texelFetch(bufferData, index++)).xyz;
+		vec3 centerPoint = (texelFetch(bufferData, index++)).xyz;
 		float radius = texelFetch(bufferData, index++).x;
 		
 		vec3 rs = r.org - centerPoint;
@@ -243,7 +243,7 @@ vec3 computeLightShadow(in Intersection isect)
 				  isect.p.y + eps * isect.n.y,
 				  isect.p.z + eps * isect.n.z);
 
-	vec3 lightPoint = (ModelView * vec4(0, 0, 5, 1)).xyz;
+	vec3 lightPoint = (vec4(0, 0, 5, 1)).xyz;
 	Ray ray;
 	ray.org = p;
 	ray.dir = normalize(lightPoint - p);
@@ -268,7 +268,7 @@ vec3 computeLightShadow(in Intersection isect)
 void test_main()
 {
 	Sphere sphere;
-	sphere.c   = (ModelView * vec4(0.0, 0.0, -2.0, 1.0)).xyz;
+	sphere.c   = (vec4(0.0, 0.0, -2.0, 1.0)).xyz;
 	sphere.r   = 0.5;
 	
 	Ray r;
@@ -294,7 +294,7 @@ float rand(vec2 co){
 
 void main()
 {	
-	plane.p = (ModelView * vec4(0,-0.5, 0, 1.0)).xyz;
+	plane.p = (vec4(0,-0.5, 0, 1.0)).xyz;
 	plane.n = (vec4(0, 1.0, 0, 1.0)).xyz;
 	plane.color = vec3(1,1, 1);
 	

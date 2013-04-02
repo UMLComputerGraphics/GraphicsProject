@@ -20,10 +20,10 @@
 /** Global shader object **/
 GLuint program;
 
-/** model-view matrix uniform shader variable location **/
-GLuint modelView = -1;
-
 GLint vRayPosition = -1;
+
+/** Rotation matrix uniform shader variable location **/
+GLuint uRotationMatrix = -1;
 /** Handle to uniform that will contain the position of the Camera. **/
 GLint uCameraPosition = -1;
 
@@ -91,16 +91,16 @@ void customkeyboard( unsigned char key, int x, int y ) {
     exit( EXIT_SUCCESS );
     break;
   case 'w': // move up
-    camera.moveCamera( 0.0, -0.2, 0.0 );
-    break;
-  case 's': // move down
     camera.moveCamera( 0.0, 0.2, 0.0 );
     break;
+  case 's': // move down
+    camera.moveCamera( 0.0, -0.2, 0.0 );
+    break;
   case 'a': // move left
-    camera.moveCamera( 0.2, 0.0, 0.0 );
+    camera.moveCamera( -0.2, 0.0, 0.0 );
     break;
   case 'd': // move right
-    camera.moveCamera( -0.2, 0.0, 0.0 );
+    camera.moveCamera( 0.2, 0.0, 0.0 );
     break;
   case 'z': //move back
     camera.moveCamera( 0.0, 0.0, 0.2 );
@@ -216,9 +216,12 @@ void display( void ) {
 
   tick.sendTime();
 
-  mat4 mv = camera.getModelViewMatrix();
-  glUniformMatrix4fv( modelView, 1, GL_TRUE, mv );
+  mat4 mv = camera.getRotationMatrix();
+  glUniformMatrix4fv( uRotationMatrix, 1, GL_TRUE, mv );
   
+  vec4 cameraPosition = camera.getCameraPosition();
+  glUniform4fv( uCameraPosition, 1, cameraPosition );
+
   int numSpheres = 4;
   glUniform1i( uNumOfSpheres, numSpheres );
   glUniform3fv( uSphereCenterPoints, numSpheres, sphereCenterPoints );
@@ -412,9 +415,9 @@ void init( void ) {
                                       "shaders/fShaderSpheres2.glsl" );
   glUseProgram( program );
   
-  modelView = glGetUniformLocation( program, "ModelView" );
-  
   vRayPosition = glGetAttribLocation( program, "vRayPosition" );
+
+  uRotationMatrix = glGetUniformLocation( program, "uRotationMatrix" );
   uCameraPosition = glGetUniformLocation( program, "uCameraPosition" );
   
   uNumOfSpheres = glGetUniformLocation( program, "uNumOfSpheres" );

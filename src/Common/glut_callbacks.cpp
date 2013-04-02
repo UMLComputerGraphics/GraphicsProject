@@ -17,6 +17,11 @@
 #include "Screen.hpp"
 #include "Engine.hpp"
 #include <sstream>
+#include "glut_callbacks.h"
+
+
+//This counteracts mouse rotation slugishness when screen dimensions are considered in calculating movement
+#define MAGIC_MOUSE_SCALAR (45.0)
 
 /**
  * keylift is registered as a GLUT callback for when a user
@@ -110,7 +115,10 @@ void keyboard( unsigned char key, int x, int y ) {
   
   switch ( key ) {
   case '-':
-    camList->popCamera();
+    if (camList->numCameras() > 1)
+      camList->popCamera();
+    else
+      fprintf(stderr, "You cannot delete the only camera. Deal with it.\n");
     break;
   case ';':
     fprintf( stderr, "Camera Position: (%f,%f,%f)\n", cam.x(), cam.y(),
@@ -174,6 +182,8 @@ void keyboard_ctrl( int key, int x, int y ) {
   Scene *theScene = Engine::instance()->rootScene();
   Cameras *camList = Engine::instance()->cams();
   
+  GLuint mode;
+
   switch ( key ) {
   //Cycle between active Objects ...
   case GLUT_KEY_LEFT:
@@ -185,16 +195,28 @@ void keyboard_ctrl( int key, int x, int y ) {
     
     //Change the Draw drawMode ...
   case GLUT_KEY_F1:
-    theScene->active()->drawMode( GL_POINTS );
-    break;
+    mode = GL_POINTS;
+    /* no break */
   case GLUT_KEY_F2:
-    theScene->active()->drawMode( GL_LINE_STRIP );
-    break;
+     mode = GL_LINE_STRIP;
+     /* no break */
   case GLUT_KEY_F3:
-    theScene->active()->drawMode( GL_TRIANGLE_STRIP );
-    break;
+    mode = GL_TRIANGLE_STRIP;
+    /* no break */
   case GLUT_KEY_F4:
-    theScene->active()->drawMode( GL_TRIANGLES );
+    mode = GL_TRIANGLES;
+    /* no break */
+  default:
+    Object *s;
+    try {
+      s = theScene->active();
+      s->drawMode( mode );
+    }
+    catch(std::exception &ex)
+    {
+      fprintf(stderr, "Active object could be retrieved from scene: %s\n", ex.what());
+      s = NULL;
+    }
     break;
   }
   
@@ -212,6 +234,9 @@ void keyboard_ctrl( int key, int x, int y ) {
   }
 }
 
+//these track button states
+bool _leftDown, _rightDown;
+
 /**
  * mouse is registered as a GLUT callback.
  * It handles input from, primarily, the scrollwheel.
@@ -226,17 +251,20 @@ void mouse( int button, int state, int x, int y ) {
   static Cameras *camList = Engine::instance()->cams();
   if ( camList->numCameras() < 1 ) return;
   
-  if ( state == GLUT_DOWN ) {
-    switch ( button ) {
-    case 3:
-      camList->active()->adjustFieldOfView( 1 );
-      break;
-    case 4:
-      camList->active()->adjustFieldOfView( -1 );
-      break;
-    }
+  switch ( button ) {
+  case GLUT_LEFT_BUTTON:
+    _leftDown = state == GLUT_DOWN;
+    break;
+  case GLUT_RIGHT_BUTTON:
+    _rightDown = state == GLUT_DOWN;
+    break;
+  case 3:
+    camList->active()->adjustFieldOfView( 1 );
+    break;
+  case 4:
+    camList->active()->adjustFieldOfView( -1 );
+    break;
   }
-  
 }
 
 /**
@@ -248,15 +276,7 @@ void mouse( int button, int state, int x, int y ) {
  * @param y the y coordinate of the mouse pointer.
  */
 void mouseroll( int x, int y ) {
-  
-  static Screen *myScreen = Engine::instance()->mainScreen();
-  
-  if ( (x != myScreen->midpointX()) || (y != myScreen->midpointY()) ) {
-    if ( myScreen->_camList.numCameras() > 0 )
-      myScreen->_camList.active()->roll( x - myScreen->midpointX() );
-    glutWarpPointer( myScreen->midpointX(), myScreen->midpointY() );
-  }
-  
+  mouselook(x,y);
 }
 
 /**
@@ -270,21 +290,26 @@ void mouseroll( int x, int y ) {
 void mouselook( int x, int y ) {
   
   static Screen *myScreen = Engine::instance()->mainScreen();
-  if ( (x != myScreen->midpointX()) || (y != myScreen->midpointY()) ) {
-    const double dx = ((double) x - myScreen->midpointX());
-    const double dy = ((double) y - myScreen->midpointY());
-    
-    if ( (abs( dx ) > 100) || (abs( dy ) > 100) ) return;
-    
-    if ( myScreen->_camList.numCameras() > 0 ) {
+
+  const double dx = ((double) x - myScreen->midpointX()) * MAGIC_MOUSE_SCALAR / ((double)myScreen->width());
+  const double dy = ((double) myScreen->midpointY() - y) * MAGIC_MOUSE_SCALAR / ((double)myScreen->height());
+
+  if (dx == 0 || dy == 0) return;
+  if ( myScreen->_camList.numCameras() > 0 ) {
+    if (_leftDown || _rightDown)
+    {
+      myScreen->_camList.active()->roll( dx );
+    }
+    else
+    {
       myScreen->_camList.active()->pitch( dy );
       myScreen->_camList.active()->yaw(
           dx, Engine::instance()->opt( "fixed_yaw" ) );
     }
-    
-    glutWarpPointer( myScreen->midpointX(), myScreen->midpointY() );
   }
   
+  glutWarpPointer( myScreen->midpointX(), myScreen->midpointY() );
+
 }
 
 /**

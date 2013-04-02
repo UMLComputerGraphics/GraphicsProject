@@ -14,7 +14,7 @@ uniform float ftime; //for Eric's 1337 h@x
 
 //general light stuff
 uniform bool letMeSeeThatPhong; //pha phong phong phong
-const vec4 LightAmbient = vec4(0.8, 0.8, 0.8, 1.0);
+const vec4 LightAmbient = vec4(0.5, 0.5, 0.5, 1.0);
 //TODO: MAKE THIS MOVE WITH TOP OF CANDLE
 vec4 LightPosition = vec4(1.0, 1.0, 1.0, 0.0);
 uniform vec4 MaterialAmbient, MaterialDiffuse, MaterialSpecular;
@@ -36,7 +36,7 @@ vec4 aRomanticEvening()
     if (lightness < 0.0) lightness = 0.0;
     if (lightness > 1.0) lightness = 1.0;    
   }
-  return lightness * vec4(1.0,1.0,1.0,1.0/lightness);
+  return lightness * vec4(1.0,1.0,1.0,1.0);
 }
 
 void main() 

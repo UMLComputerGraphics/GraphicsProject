@@ -46,7 +46,12 @@ void SpelchkCamera::reset() {
   
   _oldTranslationVector = _initialTranslationVector;
   _translationVector = _oldTranslationVector;
+
+  _oldCameraPosition = _initialTranslationVector;
+  _cameraPosition = _oldCameraPosition;
+
   calculateTranslationVector();
+  calculateCameraPosition();
 }
 
 mat4 SpelchkCamera::getProjectionMatrix() {
@@ -72,23 +77,38 @@ vec4 SpelchkCamera::getTranslationVector() {
   return _translationVector;
 }
 
+mat4 SpelchkCamera::getRotationMatrix() {
+  return RotateZ(-_zAngle) * RotateY(-_yAngle) * RotateX(-_xAngle);
+}
+
+vec4 SpelchkCamera::getCameraPosition() {
+  return _cameraPosition;
+}
+
+void SpelchkCamera::calculateCameraPosition() {
+  vec4 cameraDisplacement = RotateZ(-_zAngle) * RotateY(-_yAngle) * RotateX(-_xAngle) * vec4( _xDepth, _yDepth, _zDepth, 0.0 );
+  _cameraPosition = (_oldCameraPosition + cameraDisplacement);
+}
+
 void SpelchkCamera::calculateTranslationVector() {
   // calculate displacement based on current angles (note rotations done in reverse order and negative to move model in opposite direction)
   
   vec4 calculateDisplacement = RotateZ( -_zAngle ) * RotateY( -_yAngle )
                                * RotateX( -_xAngle )
-                               * vec4( _xDepth, _yDepth, -_zDepth, 0.0 );
+                               * vec4( -_xDepth, -_yDepth, -_zDepth, 0.0 );
   _translationVector = (_oldTranslationVector + calculateDisplacement);
 }
 
 void SpelchkCamera::moveCamera( float xDepth, float yDepth, float zDepth ) {
   _oldTranslationVector = _translationVector;
+  _oldCameraPosition = _cameraPosition;
   
   _xDepth = xDepth;
   _yDepth = yDepth;
   _zDepth = zDepth;
   
   calculateTranslationVector();
+  calculateCameraPosition();
 }
 
 void SpelchkCamera::rotateCamera( float xAngle, float yAngle,
