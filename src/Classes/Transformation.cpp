@@ -10,6 +10,11 @@
 #include "mat.hpp"
 #include "Transformation.hpp"
 #include "platform.h" //OpenGL types.
+
+Transformation::Transformation( void ) {
+  _inheritable = true;
+  _new = false;
+}
 Transformation::~Transformation( void ) {
   // Nihil. Provided for inheritance only.
 }
@@ -28,6 +33,10 @@ Angel::mat4 Transformation::operator*( const Transformation &rhs ) const {
 
 bool Transformation::inheritable( void ) const {
   return _inheritable;
+}
+
+void Transformation::markNew( void ) {
+  _new = true;
 }
 
 Angel::mat4 operator*( const Angel::mat4 &lhs, const Transformation &rhs ) {
@@ -67,6 +76,10 @@ Angel::mat4 RotMat::inverse( void ) const {
 
   return transpose( mat );
 
+}
+
+Transformation::Subtype RotMat::type( void ) const {
+  return Transformation::ROTATION;
 }
 
 /* TRANSLATION */
@@ -120,6 +133,10 @@ Angel::mat4 TransMat::inverse( void ) const {
 
 }
 
+Transformation::Subtype TransMat::type( void ) const {
+  return Transformation::TRANSLATION;
+}
+
 /* SCALE */
 
 const ScaleMat &ScaleMat::set( const float x, const float y, const float z ) {
@@ -154,4 +171,9 @@ Angel::mat4 ScaleMat::inverse( void ) const {
                       0, 0, (1/mat[2][2]), 0,
                       0, 0, 0, 1);
 
+}
+
+
+Transformation::Subtype ScaleMat::type( void ) const {
+  return Transformation::SCALE;
 }
