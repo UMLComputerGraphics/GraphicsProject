@@ -28,8 +28,10 @@ public:
   Angel::mat4 operator*( const Angel::mat4 &rhs ) const;
   Angel::mat4 operator*( const Transformation &rhs ) const;
   virtual Angel::mat4 inverse( void ) const = 0;
+  bool inheritable( void ) const;
 
 protected:
+  bool _inheritable;
   Angel::mat4 mat;
   
 };

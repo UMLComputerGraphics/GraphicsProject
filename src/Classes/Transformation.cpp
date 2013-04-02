@@ -26,6 +26,10 @@ Angel::mat4 Transformation::operator*( const Transformation &rhs ) const {
   return mat * rhs.matrix();
 }
 
+bool Transformation::inheritable( void ) const {
+  return _inheritable;
+}
+
 Angel::mat4 operator*( const Angel::mat4 &lhs, const Transformation &rhs ) {
   return lhs * rhs.matrix();
 }

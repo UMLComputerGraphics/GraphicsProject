@@ -10,6 +10,7 @@
 
 #include "mat.hpp"
 #include "Transformation.hpp"
+#include <deque>
 
 class TransCache {
   
@@ -37,9 +38,13 @@ public:
 
 private:
   
+  void updateCache( void );
+
   // Cached Result Matrices
   Angel::mat4 _ptm; /* Parent's Cumulative Transformation Matrix */
   Angel::mat4 _ctm; /* Current Transformation Matrix */
+  Angel::mat4 _itm; // Inheritable Trans Mat: CTM, minus transformations we don't want our kids to have.
   Angel::mat4 _otm; /* Cached Result Transformation Matrix: e.g; ctm * ptm */
+  std::deque< Transformation > _transformations;
   
 };

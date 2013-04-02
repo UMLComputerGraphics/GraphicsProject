@@ -38,6 +38,23 @@ void TransCache::calcCTM( bool postmult ) {
   }
 }
 
+void TransCache::updateCache( void ) {
+  std::deque<Transformation>::reverse_iterator rit;
+  // Clear out our [I]nheritable [T]ransformation [M]atrix,
+  // And our [C]urrent [T]ransformation [M]atrix.
+  _itm = _ctm = Angel::mat4();
+
+  for (rit = _transformations.rbegin(); rit != _transformations.rend(); ++rit ) {
+    _ctm = (*rit) * _ctm;
+    if (rit->inheritable()) _itm = (*rit) * _itm;
+  }
+
+  // Recompute our [O]bject [T]ransformation [M]atrix,
+  // The result of our parent's and our own transformations combined.
+  _otm = _ctm * _ptm;
+
+}
+
 const Angel::mat4 &TransCache::ptm( void ) const {
   return _ptm;
 }
