@@ -59,6 +59,12 @@ const RotMat &RotMat::adjust( const Angel::mat4 &adjustment, bool postmult ) {
   return (*this);
 }
 
+Angel::mat4 RotMat::inverse( void ) const {
+
+  return transpose( mat );
+
+}
+
 /* TRANSLATION */
 
 const TransMat &TransMat::setX( const float x ) {
@@ -101,6 +107,15 @@ const TransMat &TransMat::delta( const Angel::vec3 &arg ) {
   return delta( arg.x, arg.y, arg.z );
 }
 
+Angel::mat4 TransMat::inverse( void ) const {
+
+  return Angel::mat4( 1, 0, 0, -mat[0][3],
+                      0, 1, 0, -mat[1][3],
+                      0, 0, 1, -mat[2][3],
+                      0, 0, 0, 1);
+
+}
+
 /* SCALE */
 
 const ScaleMat &ScaleMat::set( const float x, const float y, const float z ) {
@@ -126,4 +141,13 @@ const ScaleMat &ScaleMat::adjust( const float x, const float y,
 
 const ScaleMat &ScaleMat::adjust( const float pct ) {
   return adjust( pct, pct, pct );
+}
+
+Angel::mat4 ScaleMat::inverse( void ) const {
+
+  return Angel::mat4( (1/mat[0][0]), 0, 0, 0,
+                      0, (1/mat[1][1]), 0, 0,
+                      0, 0, (1/mat[2][2]), 0,
+                      0, 0, 0, 1);
+
 }

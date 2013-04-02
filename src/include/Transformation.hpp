@@ -27,6 +27,7 @@ public:
   const Angel::mat4 &matrix( void ) const;
   Angel::mat4 operator*( const Angel::mat4 &rhs ) const;
   Angel::mat4 operator*( const Transformation &rhs ) const;
+  virtual Angel::mat4 inverse( void ) const = 0;
 
 protected:
   Angel::mat4 mat;
@@ -46,7 +47,8 @@ public:
   const RotMat &rotateY( const GLfloat theta, bool postmult = true );
   const RotMat &rotateZ( const GLfloat theta, bool postmult = true );
   const RotMat &adjust( const Angel::mat4 &Adjustment, bool postmult = true );
-  
+  virtual Angel::mat4 inverse( void ) const;
+
 };
 
 /** Translations **/
@@ -64,7 +66,8 @@ public:
 
   const TransMat &delta( const float x, const float y, const float z );
   const TransMat &delta( const Angel::vec3 &arg );
-  
+  virtual Angel::mat4 inverse( void ) const;
+
 };
 
 class ScaleMat : public Transformation {
@@ -76,6 +79,7 @@ public:
 
   const ScaleMat &adjust( const float x, const float y, const float z );
   const ScaleMat &adjust( const float pct );
+  virtual Angel::mat4 inverse( void ) const;
   
 };
 
