@@ -168,9 +168,7 @@ Sphere buildSphere(vec3 centerPoint, float radius, vec3 color) {
 	return s;
 }
 
-Triangle buildTriangle(vec3 a, vec3 b, vec3 c, vec3 color, vec3 normal) {
-	Triangle t;
-
+Triangle buildTriangle(inout Triangle t, vec3 a, vec3 b, vec3 c, vec3 color, vec3 normal) {
 	t.a = (vec4(a, 1.0)).xyz;
 	t.b = (vec4(b, 1.0)).xyz;
 	t.c = (vec4(c, 1.0)).xyz;
@@ -188,10 +186,11 @@ void Intersect(Ray r, inout Intersection i)
 		sphere_intersect(buildSphere(uSphereCenterPoints[c], uSphereRadius[c], uSphereColors[c]), r, i);
 	}
 	
+	Triangle triangle;
 	int pointIndex = 0;
 	for (int c = 0; c < uNumOfTriangle; c++)
 	{
-		Triangle triangle = buildTriangle(texelFetch(bufferData, pointIndex++).xyz, texelFetch(bufferData, pointIndex++).xyz, texelFetch(bufferData, pointIndex++).xyz, 
+		buildTriangle(triangle, texelFetch(bufferData, pointIndex++).xyz, texelFetch(bufferData, pointIndex++).xyz, texelFetch(bufferData, pointIndex++).xyz, 
 											texelFetch(bufferData, pointIndex++).xyz, texelFetch(bufferData, pointIndex++).xyz);
 		triangle_intersect(triangle, r, i);
 	}
@@ -206,6 +205,7 @@ void IntersectWithHitSpheres(Ray r, inout Intersection i)
 		sphere_intersect(buildSphere(uSphereCenterPoints[c], uSphereRadius[c], uSphereColors[c]), r, i);
 	}
 	
+	Triangle triangle;
 	int index = uNumOfTriangle * numOfTriangleVectors;
 	for(int hitIndex = 0 ; hitIndex < uNumOfBoundingSpheres; hitIndex++) {
 		vec3 centerPoint = (texelFetch(bufferData, index++)).xyz;
@@ -217,13 +217,21 @@ void IntersectWithHitSpheres(Ray r, inout Intersection i)
 		float D = B * B - C;
 	
 		if (D > 0.0) {
-			int pointIndex = hitIndex * numOfTriangleVectors * numOfBoundingTriangles;
+			float srqtOfD = sqrt(D);
+			float t = -B - srqtOfD;
+			float tPlus = B + srqtOfD;
 			
-			for (int c = 0; c < numOfBoundingTriangles && pointIndex < uNumOfTriangle * numOfTriangleVectors; c++)
+			// Check if the sphere is closer than the current intersection or the ray is inside the sphere
+			if((t > 0.0) && (t < i.t) || (t < 0.0) && (tPlus > 0.0))
 			{
-				Triangle triangle = buildTriangle(texelFetch(bufferData, pointIndex++).xyz, texelFetch(bufferData, pointIndex++).xyz, texelFetch(bufferData, pointIndex++).xyz, 
-													texelFetch(bufferData, pointIndex++).xyz, texelFetch(bufferData, pointIndex++).xyz);
-				triangle_intersect(triangle, r, i);
+				int pointIndex = hitIndex * numOfTriangleVectors * numOfBoundingTriangles;
+				
+				for (int c = 0; c < numOfBoundingTriangles && pointIndex < uNumOfTriangle * numOfTriangleVectors; c++)
+				{
+					buildTriangle(triangle, texelFetch(bufferData, pointIndex++).xyz, texelFetch(bufferData, pointIndex++).xyz, texelFetch(bufferData, pointIndex++).xyz, 
+														texelFetch(bufferData, pointIndex++).xyz, texelFetch(bufferData, pointIndex++).xyz);
+					triangle_intersect(triangle, r, i);
+				}
 			}
 		}
 	}
