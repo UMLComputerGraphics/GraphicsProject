@@ -14,6 +14,7 @@
 #include "model.hpp"
 #include "InitShader.hpp"
 #include "glut_callbacks.h"
+#include "ObjLoader.hpp"
 
 /**
  * Initialization: load and compile shaders, initialize camera(s), load models.
@@ -77,7 +78,6 @@ void init() {
 
   glEnable( GL_DEPTH_TEST );
   glClearColor( 0, 0, 0, 1.0 );
-
 
   Engine::instance()->texMan()->rebind();
   
@@ -164,14 +164,14 @@ int main( int argc, char **argv ) {
   
   /* Register our Callbacks */
   glutDisplayFunc( display );
-  glutKeyboardFunc( keyboard );
-  glutKeyboardUpFunc( keylift );
-  glutSpecialFunc( keyboard_ctrl );
-  glutMouseFunc( mouse );
-  glutMotionFunc( mouseroll );
-  glutPassiveMotionFunc( mouselook );
+  glutKeyboardFunc( engineKeyboard );
+  glutKeyboardUpFunc( engineKeylift );
+  glutSpecialFunc( engineSpecialKeyboard );
+  glutMouseFunc( engineMouse );
+  glutMotionFunc( engineMouseMotion );
+  glutPassiveMotionFunc( EngineMousePassive );
   glutIdleFunc( idle );
-  glutReshapeFunc( resizeEvent );
+  glutReshapeFunc( engineResize );
 
   fprintf( stderr, "GL_TEXTURE0: %x\n", GL_TEXTURE0 );
   fprintf( stderr, "GL_TEXTURE1: %x\n", GL_TEXTURE1 );

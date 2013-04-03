@@ -223,36 +223,6 @@ void cleanup( void ) {
   
 }
 
-/** 
- displayViewport is responsible for drawing a single viewport.
-
- @return void.
- **/
-void displayViewport( void ) {
-  
-  // draw free-floating objects
-  Engine::instance()->rootScene()->draw();
-  // draw camera-attached objects
-  Engine::instance()->cams()->draw();
-  
-}
-
-/**
- display is responsible for drawing an entire screen.
-
- @return void.
- **/
-void display( void ) {
-  // Clear the screen and begin rendering.
-  glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-  
-  // Tell camList to draw using our displayViewport rendering function.
-  Engine::instance()->cams()->view( displayViewport );
-  
-  // Utilize multi-buffering.
-  glutSwapBuffers();
-}
-
 /**
  * This global switch controls our terrain generation.
  */
@@ -420,15 +390,10 @@ float ticker = 0.0;
  * Idle function that is called from the GLUT mainloop.
  * Applies animations, camera motion, and Wii input.
  */
-void idle( void ) {
+void terrain_idle( void ) {
   
   Scene &theScene = (*Engine::instance()->rootScene());
-  
-  tick.tock();
-  
-  if ( DEBUG_MOTION )
-    fprintf( stderr, "Time since last idle: %lu\n", tick.delta() );
-  
+
   Object &Terrain = *(theScene["terrain"]);
   Object &Pyramid = *(theScene["pyramid"]);
   Pyramid.animation( animationTest );
@@ -473,11 +438,7 @@ void idle( void ) {
 
   }
 #endif
-  
-  // Move all camera(s).
-  Engine::instance()->cams()->idleMotion();
-  glutPostRedisplay();
-  
+
 }
 
 //--------------------------------------------------------------------
@@ -518,37 +479,9 @@ int main( int argc, char **argv ) {
   }
 #endif
   
-  // OS X suppresses events after mouse warp.  This resets the suppression 
-  // interval to 0 so that events will not be suppressed. This also found
-  // at http://stackoverflow.com/questions/728049/
-  // glutpassivemotionfunc-and-glutwarpmousepointer
-#ifdef __APPLE__
-  CGSetLocalEventsSuppressionInterval( 0.0 );
-#endif
-  Util::InitRelativePaths(argc, argv);
-  
-  glutInit( &argc, argv );
-  glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH );
-  //glutInitWindowSize( 0, 0 );
-  glutCreateWindow( "Terrain" );
-  glutFullScreen();
-  glutSetCursor( GLUT_CURSOR_NONE );
-  
-  GLEW_INIT();
+  Engine::init( &argc, argv, "Terrain Generation Flythrough" );
   init();
-  
-  /* Register our Callbacks */
-  glutDisplayFunc( display );
-  glutKeyboardFunc( keyboard );
-  glutKeyboardUpFunc( keylift );
-  glutSpecialFunc( keyboard_ctrl );
-  glutMouseFunc( mouse );
-  glutMotionFunc( mouseroll );
-  glutPassiveMotionFunc( mouselook );
-  glutIdleFunc( idle );
-  glutReshapeFunc( resizeEvent );
-  
-  if ( DEBUG ) {
+    if ( DEBUG ) {
     fprintf( stderr, "GL_VENDOR: %s\n", glGetString( GL_VENDOR ) );
     fprintf( stderr, "GL_RENDERER: %s\n", glGetString( GL_RENDERER ) );
     fprintf( stderr, "GL_VERSION: %s\n", glGetString( GL_VERSION ) );
@@ -563,6 +496,8 @@ int main( int argc, char **argv ) {
   glutAddMenuEntry( "Toggle Free Rotation", 1 );
   glutAttachMenu( GLUT_RIGHT_BUTTON );
   
+  Engine::instance()->registerIdle( terrain_idle );
+
   /* PULL THE TRIGGER */
   glutMainLoop();
   return EXIT_SUCCESS;

@@ -2,8 +2,14 @@ varying vec4 color;
 varying vec2 outtexture;
 uniform sampler2D sampler;
 
+uniform bool fIsTextured;
+
 void main() 
 { 
-    gl_FragColor = texture2D( sampler, outtexture );
+if (fIsTextured) {
+  gl_FragColor = texture2D( sampler, outtexture );
+} else {
+  gl_FragColor = color;
+}
 } 
 

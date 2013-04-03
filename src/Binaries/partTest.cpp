@@ -131,14 +131,14 @@ int main( int argc, char **argv ) {
   
   /* Register our Callbacks */
   glutDisplayFunc( display );
-  glutKeyboardFunc( keyboard );
-  glutKeyboardUpFunc( keylift );
-  glutSpecialFunc( keyboard_ctrl );
-  glutMouseFunc( mouse );
-  glutMotionFunc( mouseroll );
-  glutPassiveMotionFunc( mouselook );
+  glutKeyboardFunc( engineKeyboard );
+  glutKeyboardUpFunc( engineKeylift );
+  glutSpecialFunc( engineSpecialKeyboard );
+  glutMouseFunc( engineMouse );
+  glutMotionFunc( engineMouseMotion );
+  glutPassiveMotionFunc( EngineMousePassive );
   glutIdleFunc( idle );
-  glutReshapeFunc( resizeEvent );
+  glutReshapeFunc( engineResize );
   
   /* PULL THE TRIGGER */
   glutMainLoop();

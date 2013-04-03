@@ -110,6 +110,14 @@ public:
   bool flip( const std::string &Option );
 
   /**
+   * Let's get started!
+   */
+  static void init( int *argc, char *argv[], const char *title );
+
+  void registerIdle( void (idleFunc)( void ) );
+  void callIdle( void );
+
+  /**
    * Default, non-virtual destructor.
    */
   ~Engine( void );
@@ -120,6 +128,10 @@ private:
    * static, stateful variable that is our singleton pointer.
    */
   static Engine *_engineSingleton;
+
+  static void idle( void );
+  static void displayScreen( void );
+  static void displayViewport( void );
 
   // Engine's main components
   /**
@@ -145,6 +157,8 @@ private:
    * helps to manage all of the active Texture objects.
    */
   TextureManagement _texMan;
+
+  void ( *_idleFunc )();
 
   // Singleton Enforcement
   /**

@@ -13,6 +13,7 @@
 #include "Cameras.hpp"
 #include "Scene.hpp"
 #include "Screen.hpp"
+#include "glut_callbacks.h"
 
 /**
  * static, stateful variable that is our singleton pointer.
@@ -38,7 +39,7 @@ Engine *Engine::instance( void ) {
  * Default constructor. Cannot be called, this is a singleton class.
  */
 Engine::Engine( void ) {
-  // Nihil. How's the weather?
+  _idleFunc = NULL;
 }
 
 /**
@@ -146,4 +147,103 @@ bool Engine::set( const std::string &Option ) {
  */
 bool Engine::flip( const std::string &Option ) {
   return _engineSettings[Option] = (!_engineSettings[Option]);
+}
+
+/**
+ * Initialize GLEW, GLUT and our Engine.
+ */
+void Engine::init( int *argc, char *argv[], const char *title ) {
+
+  // OS X suppresses events after mouse warp.  This resets the suppression
+  // interval to 0 so that events will not be suppressed. This also found
+  // at http://stackoverflow.com/questions/728049/
+  // glutpassivemotionfunc-and-glutwarpmousepointer
+#ifdef __APPLE__
+  CGSetLocalEventsSuppressionInterval( 0.0 );
+#endif
+  Util::InitRelativePaths(*argc, argv);
+  glutInit( argc, argv );
+  glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH );
+  glutInitWindowSize( 0, 0 );
+  glutCreateWindow( title );
+  glutFullScreen();
+  glutSetCursor( GLUT_CURSOR_NONE );
+
+  GLEW_INIT();
+
+  glutCreateWindow( "Linear Interpolation Morphing Demo" );
+  glutFullScreen();
+  glutSetCursor( GLUT_CURSOR_NONE );
+
+  /* Register our Callbacks */
+  glutDisplayFunc( Engine::displayScreen );
+  glutKeyboardFunc( engineKeyboard );
+  glutKeyboardUpFunc( engineKeylift );
+  glutSpecialFunc( engineSpecialKeyboard );
+  glutMouseFunc( engineMouse );
+  glutMotionFunc( engineMouseMotion );
+  glutPassiveMotionFunc( EngineMousePassive );
+  glutIdleFunc( Engine::idle );
+  glutReshapeFunc( engineResize );
+
+}
+
+
+void Engine::registerIdle( void (idleFunc)( void ) ) {
+  _idleFunc = idleFunc;
+}
+
+
+/**
+ * What should the engine be doing every idle()?
+ */
+void Engine::idle( void ) {
+
+  static Cameras *camList = Engine::instance()->cams();
+
+  // Compute the time since last idle().
+  tick.tock();
+
+  // Move all camera(s).
+  camList->idleMotion();
+
+  Engine::instance()->callIdle();
+
+  glutPostRedisplay();
+
+}
+
+void Engine::callIdle( void ) {
+  if (_idleFunc) (*_idleFunc)();
+}
+
+
+/**
+ * What should we be doing to display()?
+ * Display/render the entire screen.
+ */
+void Engine::displayScreen( void ) {
+
+  static Cameras *camList = Engine::instance()->cams();
+
+  glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+
+  // Tell camList to draw using our 'draw' rendering function.
+  camList->view( Engine::displayViewport );
+
+  glutSwapBuffers();
+
+}
+
+/**
+ * Display/re-render a viewport.
+ */
+void Engine::displayViewport( void ) {
+
+  static Scene *theScene = Engine::instance()->rootScene();
+  static Cameras *camList = Engine::instance()->cams();
+
+  theScene->draw();
+  camList->draw();
+
 }

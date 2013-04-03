@@ -31,7 +31,7 @@
  * @param x The x coordinate of the mouse at the time the key was released.
  * @param y The y coordinate of the mouse at the time the key was released.
  */
-void keylift( unsigned char key, int x, int y ) {
+void engineKeylift( unsigned char key, int x, int y ) {
   
   Cameras *camList = Engine::instance()->cams();
   
@@ -68,7 +68,7 @@ void keylift( unsigned char key, int x, int y ) {
  * @param x The x coordinate of the mouse when the key was pressed.
  * @param y The y coordinate of the mouse when the key was pressed.
  */
-void keyboard( unsigned char key, int x, int y ) {
+void engineKeyboard( unsigned char key, int x, int y ) {
   
   Scene *theScene = Engine::instance()->rootScene();
   Cameras *camList = Engine::instance()->cams();
@@ -177,7 +177,7 @@ void keyboard( unsigned char key, int x, int y ) {
  * @param x The x coordinate of the mouse when the key was pressed.
  * @param y The y coordinate of the mouse when the key was pressed.
  */
-void keyboard_ctrl( int key, int x, int y ) {
+void engineSpecialKeyboard( int key, int x, int y ) {
   
   Scene *theScene = Engine::instance()->rootScene();
   Cameras *camList = Engine::instance()->cams();
@@ -246,7 +246,7 @@ bool _leftDown, _rightDown;
  * @param x the x coordinate of the mouse.
  * @param y the y coordinate of the mouse.
  */
-void mouse( int button, int state, int x, int y ) {
+void engineMouse( int button, int state, int x, int y ) {
   
   static Cameras *camList = Engine::instance()->cams();
   if ( camList->numCameras() < 1 ) return;
@@ -275,8 +275,8 @@ void mouse( int button, int state, int x, int y ) {
  * @param x the x coordinate of the mouse pointer.
  * @param y the y coordinate of the mouse pointer.
  */
-void mouseroll( int x, int y ) {
-  mouselook(x,y);
+void engineMouseMotion( int x, int y ) {
+  EngineMousePassive(x,y);
 }
 
 /**
@@ -287,7 +287,7 @@ void mouseroll( int x, int y ) {
  * @param x the x coordinate of the mouse pointer.
  * @param y the y coordinate of the mouse pointer.
  */
-void mouselook( int x, int y ) {
+void EngineMousePassive( int x, int y ) {
   
   static Screen *myScreen = Engine::instance()->mainScreen();
 
@@ -326,7 +326,7 @@ void mouselook( int x, int y ) {
  *
  * @return void.
  */
-void resizeEvent( int width, int height ) {
+void engineResize( int width, int height ) {
   
   // Get a handle to the screen object
   Screen *scr = Engine::instance()->mainScreen();

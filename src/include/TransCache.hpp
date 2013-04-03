@@ -39,6 +39,8 @@ public:
   void calcCTM( bool postmult = true );
 
   // Scene Graph V2.0 //
+  // Everything below here will eventually replace everything above.
+
   void push( Transformation *newTrans ); // Add New Transformation
   void pop( void );                      // Remove Transformation
   void clear( void );                    // Clear all Transformations

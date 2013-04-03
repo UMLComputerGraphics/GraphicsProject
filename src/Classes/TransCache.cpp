@@ -126,12 +126,11 @@ void TransCache::rebuild( void ) {
   // And our [C]urrent [T]ransformation [M]atrix.
   _itm = _ctm = Angel::mat4();
 
-  if (_premult) {
-    for ( rit = _transformations.rbegin();
-        rit != _transformations.rend();
+  if ( _premult ) {
+    for ( rit = _transformations.rbegin(); rit != _transformations.rend();
         ++rit ) {
       _ctm = _ctm * (**rit);
-      if ((*rit)->inheritable()) _itm = _itm * (**rit);
+      if ( (*rit)->inheritable() ) _itm = _itm * (**rit);
     }
   } else {
     for ( rit = _transformations.rbegin(); rit != _transformations.rend();
@@ -155,20 +154,39 @@ void TransCache::rebuild( void ) {
  */
 void TransCache::clean( void ) {
 
-  // TODO: Stub.
+  if ( _rebuild ) return rebuild();
+
+  if ( _new ) {
+    // TODO: stub ...
+
+    // Get the lower block to compute
+    // our new _otm for us by pretending
+    // that we received a new parent.
+    _parent = true;
+  }
+
+  if ( _parent ) {
+    // If we received a new parent matrix,
+    // Recompute our OTM.
+    if ( _premult ) _otm = _ctm * _ptm;
+    else _otm = _ptm * _ctm;
+    _parent = false;
+  }
   dirty( false );
 
 }
 
 void TransCache::adopt( const Angel::mat4 &ptm_in ) {
 
-  //TODO: Stub.
+  // Update our cache of our Parent's Matrix
   _ptm = ptm_in;
+
+  // Mark that we have a new Parent matrix,
+  // And we need to update our children, too.
   _parent = true;
+  _cascade = true;
 
 }
-
-
 
 /**
  * Do we need to invoke clean()?
@@ -178,7 +196,7 @@ bool TransCache::dirty( void ) {
 }
 
 void TransCache::dirty( bool newState ) {
-  if (newState == false) {
+  if ( newState == false ) {
     _new = _rebuild = _parent = false;
   } else {
     // Using the dirty method is a blunt object.
