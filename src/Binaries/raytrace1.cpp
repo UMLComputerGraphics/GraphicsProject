@@ -8,7 +8,6 @@
 #include <cmath>
 #include <iostream>
 #include <cstdio>
-#include <SOIL/SOIL.h>
 #include <cstring>
 #include <vector>
 
