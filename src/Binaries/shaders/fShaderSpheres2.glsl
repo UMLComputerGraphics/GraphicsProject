@@ -16,8 +16,8 @@ uniform vec3 uSphereColors[maxNumSphere];
 const int numOfTriangleVectors = 5;
 uniform int uNumOfTriangle;
 
-const int numOfBoundingTriangles = 12;
 uniform int uNumOfBoundingSpheres;
+uniform int uNumOfTrianglesBounded;
 
 uniform samplerBuffer bufferData;
 
@@ -177,24 +177,6 @@ void buildTriangle(inout Triangle t, vec3 a, vec3 b, vec3 c, vec3 color, vec3 no
 }
 
 Plane plane;
-void Intersect(in Ray r, inout Intersection i)
-{
-	for (int c = 0; c < uNumOfSpheres; c++)
-	{
-		sphere_intersect(c, r, i);
-	}
-	
-	Triangle triangle;
-	int pointIndex = 0;
-	for (int c = 0; c < uNumOfTriangle; c++)
-	{
-		buildTriangle(triangle, texelFetch(bufferData, pointIndex+1).xyz, texelFetch(bufferData, pointIndex+2).xyz, texelFetch(bufferData, pointIndex+3).xyz, 
-											texelFetch(bufferData, pointIndex+4).xyz, texelFetch(bufferData, pointIndex+5).xyz);
-		triangle_intersect(triangle, r, i);
-	}
-	
-	//plane_intersect(plane, r, i);
-}
 
 void IntersectWithHitSpheres(in Ray r, inout Intersection i)
 {
@@ -224,9 +206,9 @@ void IntersectWithHitSpheres(in Ray r, inout Intersection i)
 			// Check if the sphere is closer than the current intersection or the ray is inside the sphere
 			if((t > 0.0) && (t < i.t) || (t < 0.0) && (tPlus > 0.0))
 			{
-				int pointIndex = hitIndex * numOfTriangleVectors * numOfBoundingTriangles;
+				int pointIndex = hitIndex * numOfTriangleVectors * uNumOfTrianglesBounded;
 				
-				for (int c = 0; c < numOfBoundingTriangles && pointIndex < startingindex; c++)
+				for (int c = 0; c < uNumOfTrianglesBounded && pointIndex < startingindex; c++)
 				{
 					buildTriangle(triangle, texelFetch(bufferData, pointIndex).xyz, texelFetch(bufferData, pointIndex+1).xyz, texelFetch(bufferData, pointIndex+2).xyz, 
 														texelFetch(bufferData, pointIndex+3).xyz, texelFetch(bufferData, pointIndex+4).xyz);
@@ -261,7 +243,7 @@ vec3 computeLightShadow(in Intersection isect)
 	lisect.hit = 0;
 	lisect.t = 1.0e+30;
 	lisect.n = lisect.p = lisect.color = vec3(0, 0, 0);
-	Intersect(ray, lisect);
+	IntersectWithHitSpheres(ray, lisect);
 	if (lisect.hit != 0)
 		return vec3(0.0,0.0,0.0);
 	else
