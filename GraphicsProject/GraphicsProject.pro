@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui opengl
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -27,7 +27,8 @@ SOURCES += main.cpp\
     Transformation.cpp \
     ParticleSystem.cpp \
     Particle.cpp \
-    Texture.cpp
+    Texture.cpp \
+    glwidget.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \
@@ -49,9 +50,21 @@ HEADERS  += mainwindow.h \
     ParticleSystem.hpp \
     Particle.hpp \
     Texture.hpp \
-    Timer.hpp
+    Timer.hpp \
+    glwidget.h
+
+unix:!macx {
+LIBS += -lGL -lGLU -lGLEW -lglu -lm
+
+INCLUDEPATH +=. /usr/include/ImageMagick/
+LIBS += -lMagick++
+}
+
+macx {
+LIBS += -framework OpenGL -framework GLUT
 
 INCLUDEPATH +=. /opt/local/include/ImageMagick/
 LIBS += -L/opt/local/lib -lMagick++
+}
 
 FORMS    += mainwindow.ui
