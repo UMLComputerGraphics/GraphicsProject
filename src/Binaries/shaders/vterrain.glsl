@@ -19,13 +19,13 @@ uniform mat4 OTM;
 uniform bool fIsTextured;
 
 // Lighting, dammit.
-uniform int numLights ;
-uniform vec3 LightPositionArray[5] ;
+//uniform int numLights ;
+//uniform vec3 LightPositionArray[5] ;
 
 // fshader lighting vars
 varying vec3 cameraVector;
 varying vec3 fragmentNormal;
-varying vec3 lightVector[5];
+//varying vec3 lightVector[5];
 
 void main() {
 

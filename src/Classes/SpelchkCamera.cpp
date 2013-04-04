@@ -1,15 +1,16 @@
-/*
- * Camera.cpp
- *
- *  Created on: Dec 1, 2012
- *      Author: Hoanh Nguyen
+/**
+ * @file SpelchkCamera.cpp
+ * @author Hoanh Nguyen
+ * @date 2012-12-01
+ * @brief Tiem Spelchk Camera Implementation
+ * @details FIXME
  */
 
 #include "SpelchkCamera.hpp"
 
-SpelchkCamera::SpelchkCamera( vec4 _initialTranslationVector ) {
+SpelchkCamera::SpelchkCamera( vec4 initialTranslationVector ) {
   _timeRef = 0;
-  _initialTranslationVector = _initialTranslationVector;
+  _initialTranslationVector = initialTranslationVector;
   reset();
 }
 
@@ -45,7 +46,12 @@ void SpelchkCamera::reset() {
   
   _oldTranslationVector = _initialTranslationVector;
   _translationVector = _oldTranslationVector;
+
+  _oldCameraPosition = _initialTranslationVector;
+  _cameraPosition = _oldCameraPosition;
+
   calculateTranslationVector();
+  calculateCameraPosition();
 }
 
 mat4 SpelchkCamera::getProjectionMatrix() {
@@ -71,30 +77,45 @@ vec4 SpelchkCamera::getTranslationVector() {
   return _translationVector;
 }
 
+mat4 SpelchkCamera::getRotationMatrix() {
+  return RotateZ(-_zAngle) * RotateY(-_yAngle) * RotateX(-_xAngle);
+}
+
+vec4 SpelchkCamera::getCameraPosition() {
+  return _cameraPosition;
+}
+
+void SpelchkCamera::calculateCameraPosition() {
+  vec4 cameraDisplacement = RotateZ(-_zAngle) * RotateY(-_yAngle) * RotateX(-_xAngle) * vec4( _xDepth, _yDepth, _zDepth, 0.0 );
+  _cameraPosition = (_oldCameraPosition + cameraDisplacement);
+}
+
 void SpelchkCamera::calculateTranslationVector() {
   // calculate displacement based on current angles (note rotations done in reverse order and negative to move model in opposite direction)
   
   vec4 calculateDisplacement = RotateZ( -_zAngle ) * RotateY( -_yAngle )
                                * RotateX( -_xAngle )
-                               * vec4( _xDepth, _yDepth, -_zDepth, 0.0 );
+                               * vec4( -_xDepth, -_yDepth, -_zDepth, 0.0 );
   _translationVector = (_oldTranslationVector + calculateDisplacement);
 }
 
-void SpelchkCamera::moveCamera( float _xDepth, float _yDepth, float _zDepth ) {
+void SpelchkCamera::moveCamera( float xDepth, float yDepth, float zDepth ) {
   _oldTranslationVector = _translationVector;
+  _oldCameraPosition = _cameraPosition;
   
-  _xDepth = _xDepth;
-  _yDepth = _yDepth;
-  _zDepth = _zDepth;
+  _xDepth = xDepth;
+  _yDepth = yDepth;
+  _zDepth = zDepth;
   
   calculateTranslationVector();
+  calculateCameraPosition();
 }
 
-void SpelchkCamera::rotateCamera( float _xAngle, float _yAngle,
-                                  float _zAngle ) {
-  _xAngle += _xAngle;
-  _yAngle += _yAngle;
-  _zAngle += _zAngle;
+void SpelchkCamera::rotateCamera( float xAngle, float yAngle,
+                                  float zAngle ) {
+  _xAngle += xAngle;
+  _yAngle += yAngle;
+  _zAngle += zAngle;
   
   // Keep camera from flipping over
   if ( _xAngle > 90.0 ) {
@@ -113,8 +134,8 @@ void SpelchkCamera::setScreenSize( int width, int height ) {
   _aspect = GLfloat( width ) / height;
 }
 
-void SpelchkCamera::setProjection( int _projectionType ) {
-  _projectionType = _projectionType;
+void SpelchkCamera::setProjection( int projectionType ) {
+  _projectionType = projectionType;
 }
 
 void SpelchkCamera::setLightMovementRef( GLuint ref ) {

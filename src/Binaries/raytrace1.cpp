@@ -8,30 +8,38 @@
 #include <cmath>
 #include <iostream>
 #include <cstdio>
-#include <SOIL/SOIL.h>
 #include <cstring>
+#include <vector>
 
 #include "SpelchkCamera.hpp"
 #include "InitShader.hpp"
+#include "Timer.hpp"
+#include "Util.hpp"
+
+#include "ObjLoader.hpp"
 
 /** Global shader object **/
 GLuint program;
 
-/** model-view matrix uniform shader variable location **/
-GLuint modelView = -1;
-GLuint dethklok;
-
 GLint vRayPosition = -1;
+
+/** Rotation matrix uniform shader variable location **/
+GLuint uRotationMatrix = -1;
 /** Handle to uniform that will contain the position of the Camera. **/
 GLint uCameraPosition = -1;
 
 /** Logical camera object. **/
-SpelchkCamera camera( vec4( 0.0, 0.0, 0.0, 0.0 ) );
+SpelchkCamera camera( vec4( 0.0, 0.0, 10.0, 0.0 ) );
 
 GLint uSphereCenterPoints = -1;
 GLint uSphereRadius = -1;
 GLint uSphereColors = -1;
 GLint uNumOfSpheres = -1;
+
+GLint uNumOfTriangle = -1;
+
+GLint uNumOfBoundingSpheres = - 1;
+GLint uNumOfTrianglesBounded = -1;
 
 //----------------------------------------------------------------------------
 
@@ -42,6 +50,14 @@ GLfloat sphereRadius[] = { 0.5, 0.6, 0.7, 0.8 };
 
 GLfloat sphereColors[] = { 1.0, 0.3, 0.3, 0.3, 1.0, 0.3, 0.3, 0.3, 1.0, 1.0,
                            0.3, 0.3 };
+
+int numTriangles = 0;
+std::vector<vec3> trianglePoints;
+
+int numOfBoundingSpheres = 0;
+std::vector<GLfloat> bufferData;
+
+int numOfTrianglesBounded = 2;
 
 /**
  * Redraw the scene.
@@ -79,16 +95,16 @@ void customkeyboard( unsigned char key, int x, int y ) {
     exit( EXIT_SUCCESS );
     break;
   case 'w': // move up
-    camera.moveCamera( 0.0, -0.2, 0.0 );
-    break;
-  case 's': // move down
     camera.moveCamera( 0.0, 0.2, 0.0 );
     break;
+  case 's': // move down
+    camera.moveCamera( 0.0, -0.2, 0.0 );
+    break;
   case 'a': // move left
-    camera.moveCamera( 0.2, 0.0, 0.0 );
+    camera.moveCamera( -0.2, 0.0, 0.0 );
     break;
   case 'd': // move right
-    camera.moveCamera( -0.2, 0.0, 0.0 );
+    camera.moveCamera( 0.2, 0.0, 0.0 );
     break;
   case 'z': //move back
     camera.moveCamera( 0.0, 0.0, 0.2 );
@@ -193,26 +209,34 @@ void motion( int x, int y ) {
   }
 }
 
+int frameCount = 0;
+float previousTime = 0.0;
+
 /**
  * Handle the re-display of the scene.
  */
 void display( void ) {
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+
+  tick.sendTime();
+
+  mat4 mv = camera.getRotationMatrix();
+  glUniformMatrix4fv( uRotationMatrix, 1, GL_TRUE, mv );
   
-  glUniform1f( dethklok, glutGet( GLUT_ELAPSED_TIME ) );
-  
-  mat4 mv = camera.getModelViewMatrix();
-  glUniformMatrix4fv( modelView, 1, GL_TRUE, mv );
-  
-  int numSpheres = 4;
+  vec4 cameraPosition = camera.getCameraPosition();
+  glUniform4fv( uCameraPosition, 1, cameraPosition );
+
+  int numSpheres = 0;
   glUniform1i( uNumOfSpheres, numSpheres );
   glUniform3fv( uSphereCenterPoints, numSpheres, sphereCenterPoints );
   glUniform1fv( uSphereRadius, numSpheres, sphereRadius );
   glUniform3fv( uSphereColors, numSpheres, sphereColors );
   
-  float elapsedTime = glutGet( GLUT_ELAPSED_TIME );
-  //printf("%f\n", elapsedTime);
-  
+  glUniform1i( uNumOfTriangle, numTriangles );
+
+  glUniform1i( uNumOfBoundingSpheres, numOfBoundingSpheres );
+  glUniform1i( uNumOfTrianglesBounded, numOfTrianglesBounded );
+
   GLfloat vertices[] = { 1.0, 1.0, -1.0, 1.0, 1.0, -1.0, -1.0, -1.0, };
   
   GLuint vbo_vertices;
@@ -232,10 +256,182 @@ void display( void ) {
       );
   
   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-  
   glutSwapBuffers();
-  
   glDisableVertexAttribArray( vRayPosition );
+
+  frameCount++;
+  if(frameCount == 10) {
+    float elapsedTime = glutGet( GLUT_ELAPSED_TIME );
+    float fps = 10.0 / ((elapsedTime - previousTime) / 1000.0);
+    printf("fps: %f\n", fps);
+    previousTime = elapsedTime;
+    frameCount = 0;
+  }
+}
+
+void addTriangle(const vec3& a, const vec3& b, const vec3& c, const vec3& color) {
+  trianglePoints.push_back(a);
+  trianglePoints.push_back(b);
+  trianglePoints.push_back(c);
+
+  bufferData.push_back(a.x);
+  bufferData.push_back(a.y);
+  bufferData.push_back(a.z);
+
+  bufferData.push_back(b.x);
+  bufferData.push_back(b.y);
+  bufferData.push_back(b.z);
+
+  bufferData.push_back(c.x);
+  bufferData.push_back(c.y);
+  bufferData.push_back(c.z);
+
+  bufferData.push_back(color.x);
+  bufferData.push_back(color.y);
+  bufferData.push_back(color.z);
+
+  vec3 normal = normalize(cross(b - a, c - b));
+  bufferData.push_back(normal.x);
+  bufferData.push_back(normal.y);
+  bufferData.push_back(normal.z);
+
+  numTriangles++;
+}
+
+void addCube(vec3 position, vec3 color) {
+  vec3 vertices[8] = {
+    vec3(-0.5, -0.5,  0.5), // 0 left bottom front
+    vec3(-0.5,  0.5,  0.5), // 1 left top front
+    vec3( 0.5,  0.5,  0.5), // 2 right top front
+    vec3( 0.5, -0.5,  0.5), // 3 right bottom front
+    vec3(-0.5, -0.5, -0.5), // 4 left bottom back
+    vec3(-0.5,  0.5, -0.5), // 5 left top back
+    vec3( 0.5,  0.5, -0.5), // 6 right top back
+    vec3( 0.5, -0.5, -0.5)  // 7 right bottom back
+  };
+
+  //front
+  addTriangle(vertices[1] + position, vertices[0] + position, vertices[3] + position, color);
+  addTriangle(vertices[1] + position, vertices[3] + position, vertices[2] + position, color);
+
+  //back
+  addTriangle(vertices[6] + position, vertices[7] + position, vertices[4] + position, color);
+  addTriangle(vertices[6] + position, vertices[4] + position, vertices[5] + position, color);
+
+  //right
+  addTriangle(vertices[2] + position, vertices[3] + position, vertices[7] + position, color);
+  addTriangle(vertices[2] + position, vertices[7] + position, vertices[6] + position, color);
+
+  //left
+  addTriangle(vertices[5] + position, vertices[4] + position, vertices[0] + position, color);
+  addTriangle(vertices[5] + position, vertices[0] + position, vertices[1] + position, color);
+
+  //top
+  addTriangle(vertices[5] + position, vertices[1] + position, vertices[2] + position, color);
+  addTriangle(vertices[5] + position, vertices[2] + position, vertices[6] + position, color);
+
+  //bottom
+  addTriangle(vertices[0] + position, vertices[4] + position, vertices[7] + position, color);
+  addTriangle(vertices[0] + position, vertices[7] + position, vertices[3] + position, color);
+}
+
+void pushDataToBuffer() {
+  unsigned int i = 0;
+  int groupSize = numOfTrianglesBounded * 3;
+  while(i < trianglePoints.size()) {
+
+    vec3 centerPoint;
+
+    int j;
+    for(j = 0; j < groupSize && i < trianglePoints.size(); j++) {
+      centerPoint += trianglePoints.data()[i++];
+    }
+
+    centerPoint.x /= j;
+    centerPoint.y /= j;
+    centerPoint.z /= j;
+
+    bufferData.push_back(centerPoint.x);
+    bufferData.push_back(centerPoint.y);
+    bufferData.push_back(centerPoint.z);
+
+    //printf("%f, %f, %f\n", centerPoint.x, centerPoint.y, centerPoint.z);
+
+    i -= j;
+
+    float distance = 0.0;
+    for(j = 0; j < groupSize && i < trianglePoints.size(); j++) {
+
+      vec3 point = trianglePoints.data()[i++];
+      float x = centerPoint.x - point.x;
+      float y = centerPoint.y - point.y;
+      float z = centerPoint.z - point.z;
+
+      float tempDistance = sqrtf((x * x) + (y * y) + (z * z));
+
+      if(tempDistance > distance) distance = tempDistance;
+    }
+    distance += 0.0001;
+
+    bufferData.push_back(distance);
+    bufferData.push_back(0.0);
+    bufferData.push_back(0.0);
+
+    //printf("distance %f\n", distance);
+    numOfBoundingSpheres++;
+  }
+
+  printf("numTriangles %d\n", numTriangles);
+  printf("numOfBoundingSpheres %d\n", numOfBoundingSpheres);
+
+  GLuint bufObj;
+  glActiveTexture(GL_TEXTURE0);
+  glGenBuffers(1, &bufObj);
+  glBindBuffer(GL_TEXTURE_BUFFER, bufObj);
+  // Size of float * number of floats in a vector * number of vectors in a triangle (a, b, c, color) * number of triangles
+  GLsizeiptr triangleSize = 3 * 5 * numTriangles;
+  GLsizeiptr boundingSphereSize = 3 * 2 * numOfBoundingSpheres;
+  glBufferData(GL_TEXTURE_BUFFER, sizeof(GLfloat) * (triangleSize + boundingSphereSize), bufferData.data(), GL_STATIC_DRAW);
+  glTexBuffer(GL_TEXTURE_BUFFER, GL_RGB32F, bufObj);
+}
+
+void genereateScene() {
+
+
+  Object *bottle = new Object("", -1);
+  ObjLoader::loadModelFromFile( bottle, "../models/bottle-b.obj" );
+
+  vec4 *vertices = bottle->_vertices.data();
+  vec4 *colors = bottle->_colors.data();
+  unsigned long int count = 0;
+  while(count < bottle->_vertices.size()) {
+    vec4 vertex = vertices[count++];
+    vec3 a = vec3(vertex.x, vertex.y, vertex.z);
+    vertex = vertices[count++];
+    vec3 b = vec3(vertex.x, vertex.y, vertex.z);
+    vertex = vertices[count++];
+    vec3 c = vec3(vertex.x, vertex.y, vertex.z);
+
+    vec4 color = colors[count - 1];
+
+    addTriangle(a, b, c, vec3(color.x, color.y, color.z));
+  }
+
+  addTriangle(vec3(-10.0, -10.0, -6.0), vec3(10.0, -10.0, -6.0), vec3(10.0, 10.0, -6.0), vec3(1.0, 1.0, 1.0));
+  addTriangle(vec3(-10.0, -10.0, -6.0), vec3(10.0, 10.0, -6.0), vec3(-10.0, 10.0, -6.0), vec3(0.0, 1.0, 1.0));
+
+/*
+  float xPos, yPos;
+  for(xPos = -8; xPos <= 8; xPos += 2) {
+    for(yPos = -8; yPos <= 8; yPos += 2) {
+      addCube(vec3(xPos, yPos, -5.0), vec3(1.0, 1.0, 1.0));
+    }
+  }
+
+  addTriangle(vec3(-5.0, -5.0, -6.0), vec3(5.0, -5.0, -6.0), vec3(5.0, 5.0, -6.0), vec3(1.0, 0.0, 0.0));
+  addTriangle(vec3(-5.0, -5.0, -6.0), vec3(5.0, 5.0, -6.0), vec3(-5.0, 5.0, -6.0), vec3(0.0, 1.0, 0.0));
+*/
+  pushDataToBuffer();
 }
 
 /**
@@ -253,9 +449,9 @@ void init( void ) {
                                       "shaders/fShaderSpheres2.glsl" );
   glUseProgram( program );
   
-  modelView = glGetUniformLocation( program, "ModelView" );
-  
   vRayPosition = glGetAttribLocation( program, "vRayPosition" );
+
+  uRotationMatrix = glGetUniformLocation( program, "uRotationMatrix" );
   uCameraPosition = glGetUniformLocation( program, "uCameraPosition" );
   
   uNumOfSpheres = glGetUniformLocation( program, "uNumOfSpheres" );
@@ -263,11 +459,18 @@ void init( void ) {
   uSphereRadius = glGetUniformLocation( program, "uSphereRadius" );
   uSphereColors = glGetUniformLocation( program, "uSphereColors" );
   
-  dethklok = glGetUniformLocation( program, "ftime" );
+  uNumOfTriangle = glGetUniformLocation( program, "uNumOfTriangle" );
+
+  uNumOfBoundingSpheres = glGetUniformLocation( program, "uNumOfBoundingSpheres" );
+  uNumOfTrianglesBounded = glGetUniformLocation( program, "uNumOfTrianglesBounded" );
+
+  tick.setTimeUniform(glGetUniformLocation( program, "ftime" ));
   
   glShadeModel( GL_FLAT );
   glEnable( GL_DEPTH_TEST );
   glClearColor( 0.1, 0.1, 0.1, 1.0 );
+
+  genereateScene();
 }
 
 /**
@@ -277,7 +480,7 @@ void init( void ) {
  * @return 0.
  */
 int main( int argc, char **argv ) {
-  Angel::InitInitShader( argv[0] );
+  Util::InitRelativePaths(argc, argv);
   glutInit( &argc, argv );
   
   glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE ); // set rendering context

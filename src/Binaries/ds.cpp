@@ -8,28 +8,13 @@
  * Based loosely on Ed Angel's tutorials.
  **/
 
-/* Multi-platform support and OpenGL headers. */
-#include "globals.h"
-#include "platform.h"
 /* Engine Classes */
-#include "Camera.hpp"
-#include "Cameras.hpp"
-#include "Screen.hpp"
-#include "Object.hpp"
-#include "Timer.hpp"
-#include "Scene.hpp"
 #include "Engine.hpp"
-#include "Texture.hpp"
 /* Utilities and Common */
 #include "model.hpp"
 #include "InitShader.hpp"
 #include "glut_callbacks.h"
-
-/* Texture Shens */
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
-#include <cstdio>
+#include "ObjLoader.hpp"
 
 /**
  * Initialization: load and compile shaders, initialize camera(s), load models.
@@ -57,6 +42,9 @@ void init() {
   
   // Third Object, over-ride default shader.
   Object *C = rootScene->addObject( "Object C (TEX)", shader[2] );
+
+  // Fourth Object.
+  Object *D = rootScene->addObject( "Object D (TEX2)", shader[2] );
   
   // draw a square in the upper left
   triangle( A, vec4( -1, 0, 0, 1 ), vec4( 0, 0, 0, 1 ), vec4( -1, 1, 0, 1 ),
@@ -77,30 +65,21 @@ void init() {
   C->_texUVs.push_back( vec2( 1, 1 ) );
   C->_texUVs.push_back( vec2( 0, 1 ) );
   C->buffer();
-  
   const char *filename = "../Textures/GrassGreenTexture0002.jpg";
-  
-  /*******************************/
-  tick.tock();
-  Texture *grassTex = new Texture( GL_TEXTURE_2D );
-  grassTex->load( filename );
-  tick.tock();
-  fprintf( stderr, "Load: %lu usec\n", tick.delta() );
-  grassTex->buffer();
-  tick.tock();
-  fprintf( stderr, "Buffer: %lu usec\n", tick.delta() );
-  grassTex->bind( GL_TEXTURE0 );
-  tick.tock();
-  fprintf( stderr, "Bind: %lu usec\n", tick.delta() );
-  /******************************/
+  C->texture( filename );
+
+  // draw another triangle in the lower left, texture it differently.
+  triangle( D, vec4( -1, 0, 0, 1), vec4( 0, 0, 0, 1 ), vec4( 0, -1, 0, 1 ), 0 );
+  D->_texUVs.push_back( vec2( 0, 0 ) );
+  D->_texUVs.push_back( vec2( 1, 1 ) );
+  D->_texUVs.push_back( vec2( 0, 1 ) );
+  D->buffer();
+  D->texture( "../Textures/GoodTextures_0013291.jpg" );
 
   glEnable( GL_DEPTH_TEST );
   glClearColor( 0, 0, 0, 1.0 );
-  
-  int numTextures;
-  glGetIntegerv( GL_MAX_TEXTURE_IMAGE_UNITS, &numTextures );
-  
-  fprintf( stderr, "Capacity: [%d] global textures.\n", numTextures );
+
+  Engine::instance()->texMan()->rebind();
   
 }
 
@@ -172,7 +151,7 @@ int main( int argc, char **argv ) {
 #ifdef __APPLE__
   CGSetLocalEventsSuppressionInterval( 0.0 );
 #endif
-  Angel::InitInitShader( argv[0] );
+  Util::InitRelativePaths(argc, argv);
   glutInit( &argc, argv );
   glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH );
   glutInitWindowSize( 0, 0 );
@@ -185,14 +164,17 @@ int main( int argc, char **argv ) {
   
   /* Register our Callbacks */
   glutDisplayFunc( display );
-  glutKeyboardFunc( keyboard );
-  glutKeyboardUpFunc( keylift );
-  glutSpecialFunc( keyboard_ctrl );
-  glutMouseFunc( mouse );
-  glutMotionFunc( mouseroll );
-  glutPassiveMotionFunc( mouselook );
+  glutKeyboardFunc( engineKeyboard );
+  glutKeyboardUpFunc( engineKeylift );
+  glutSpecialFunc( engineSpecialKeyboard );
+  glutMouseFunc( engineMouse );
+  glutMotionFunc( engineMouseMotion );
+  glutPassiveMotionFunc( EngineMousePassive );
   glutIdleFunc( idle );
-  glutReshapeFunc( resizeEvent );
+  glutReshapeFunc( engineResize );
+
+  fprintf( stderr, "GL_TEXTURE0: %x\n", GL_TEXTURE0 );
+  fprintf( stderr, "GL_TEXTURE1: %x\n", GL_TEXTURE1 );
   
   /* PULL THE TRIGGER */
   glutMainLoop();

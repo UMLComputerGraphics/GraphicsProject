@@ -1,8 +1,12 @@
 /**
- Based heavily on WiiC's usage example, whose header appears below.
- This file was written by John Huston, <jhuston@cs.uml.edu>
- 01 Dec 20122. Only 11 days until the end of the world!
- **/
+ * @file WiiUtil.cpp
+ * @author John Huston
+ * @authors Gabriele Randelli
+ * @date 2013-03-29
+ * @brief Wii Remote Utility Files
+ * @details Based heavily on WiiC's usage example, whose header
+ * appears below. Originally authored by JH on 2013-12-01.
+ */
 
 /*
  *	This file is part of WiiC, written by:
@@ -260,6 +264,10 @@ void wiiHandleBB( CWiimote &wm ) {
   
 }
 
+/**
+ * Turn a Wii Remote on!
+ * @param wm The Wii Remote to activate.
+ */
 void enableRemote( CWiimote &wm ) {
   
   wm.SetMotionSensingMode( CWiimote::ON );

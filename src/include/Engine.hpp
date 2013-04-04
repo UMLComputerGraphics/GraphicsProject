@@ -8,10 +8,21 @@
 #ifndef __ENGINE_HPP
 #define __ENGINE_HPP
 
+/* OpenGL and Globals */
+#include "platform.h"
+#include "globals.h"
+#include "Util.hpp"
+/* Engine Classes */
+#include "Camera.hpp"
 #include "Cameras.hpp"
-#include "Scene.hpp"
 #include "Screen.hpp"
+#include "Object.hpp"
+#include "Timer.hpp"
+#include "Scene.hpp"
+#include "Texture.hpp"
+#include "TextureMan.hpp"
 
+/* System */
 #include <string>
 #include <map>
 
@@ -61,6 +72,12 @@ public:
    */
   Screen *mainScreen( void );
 
+  /**
+   * Retrieves a pointer to the Texture Management object.
+   * @return A pointer to the Texture Management object.
+   */
+  TextureManagement *texMan( void );
+
   // Settings Getters/Setters.
   /**
    * opt retrieves the current setting of an option in the Engine.
@@ -93,6 +110,14 @@ public:
   bool flip( const std::string &Option );
 
   /**
+   * Let's get started!
+   */
+  static void init( int *argc, char *argv[], const char *title );
+
+  void registerIdle( void (idleFunc)( void ) );
+  void callIdle( void );
+
+  /**
    * Default, non-virtual destructor.
    */
   ~Engine( void );
@@ -103,6 +128,10 @@ private:
    * static, stateful variable that is our singleton pointer.
    */
   static Engine *_engineSingleton;
+
+  static void idle( void );
+  static void displayScreen( void );
+  static void displayViewport( void );
 
   // Engine's main components
   /**
@@ -122,6 +151,14 @@ private:
    * Engine options.
    */
   SettingsMap _engineSettings;
+
+  /**
+   * _texMan is a TextureManagement object that
+   * helps to manage all of the active Texture objects.
+   */
+  TextureManagement _texMan;
+
+  void ( *_idleFunc )();
 
   // Singleton Enforcement
   /**

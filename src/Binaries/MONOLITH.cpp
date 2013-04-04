@@ -1,24 +1,13 @@
 /**
  @file MONOLITH.cpp
- @author EVERYBODI
- @date yesterday
+ @author UMLComputerGraphics <https://github.com/UMLComputerGraphics>
+ @date 2013-03-29
  @brief This is a monolith of every component.
- @details ROUND ONE... FIGHT
+ @details Final project rough draft.
  Original engine based on Ed Angel's book code.
- This file features a severely reduced linecount for demo purposes.
- @see THE FUTURE for a fully-featured example.
  **/
 
-/* Multi-platform support and OpenGL headers. */
-#include "globals.h"
-#include "platform.h"
-/* Engine Classes */
-#include "Camera.hpp"
-#include "Cameras.hpp"
-#include "Screen.hpp"
-#include "Object.hpp"
-#include "Timer.hpp"
-#include "Scene.hpp"
+/* OpenGL and "The Engine" */
 #include "Engine.hpp"
 /* Utilities and Common */
 #include "model.hpp"
@@ -37,9 +26,11 @@ void init() {
   
   // Load shaders and use the resulting shader program. 
   GLuint gShader = Angel::InitShader( "shaders/vMONOLITH.glsl",
-                                      "shaders/fMONOLITH.glsl",
-                                      "shaders/gMONOLITH.glsl" );
+                                      "shaders/fMONOLITH.glsl" /*,    HAD TO REMOVE THE GEOMETRY SHADER BECAUSE IT'S SEVERELY BROKEN!!!!!
+                                      "shaders/gMONOLITH.glsl"*/ );
   
+  tick.setTimeUniform(glGetUniformLocation( gShader, "ftime" ));
+
   // Let the other objects know which shader to use by default.
   rootScene->shader( gShader );
   primScreen->_camList.shader( gShader );
@@ -57,6 +48,11 @@ void init() {
   // Scale the bottle down!
   bottle->_trans._scale.set( 0.01 );
   
+  for (uint i=0; i < bottle->_colors.size(); i++)
+  {
+    bottle->_colors[i].w = 0.4;
+  }
+
   // _buffer the object onto the GPU. This does not happen by default,
   // To allow you to make many changes and _buffer only once,
   // or to _buffer changes selectively.
@@ -67,7 +63,15 @@ void init() {
   
   // this makes a new object and links it to the source object. it returns the addr of the new obj..
   bottle->genMorphTarget( gShader );
+
+  // tell the shaders to handle the bottle differently than a candle or something.
+  GLuint morphing =  glGetUniformLocation(bottle->shader(), "isMorphing");
+  glUniform1f(morphing, true);
   
+  // this obscure allusion to "the thong song" brought to you by Eric McCann
+  GLuint sisqo =  glGetUniformLocation(bottle->shader(), "letMeSeeThatPhong");
+  glUniform1f(sisqo, true);
+
   // we can get the addr of the morph object like this, also.
   Object *bottleMorphTarget = bottle->morphTarget();
   
@@ -75,13 +79,18 @@ void init() {
   ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle-b.obj" );
   bottleMorphTarget->_trans._scale.set( 0.01 );
   
+  for (uint i=0; i < bottle->_colors.size(); i++)
+  {
+    bottleMorphTarget->_colors[i].w = 0.4;
+  }
+
   // YES THIS IS THE REAL OBJECT, NOT THE TARGET. 
   // IT SENDS THE MORPH VERTICES TO THE SHADER, NOT TO THE DRAW LIST TO BE DRAWN!
   bottle->bufferMorphOnly();
   
   // Generic OpenGL setup: Enable the depth _buffer and set a nice background color.
   glEnable( GL_DEPTH_TEST );
-  glClearColor( 0.3, 0.5, 0.9, 1.0 );
+  glClearColor( 0.0, 0.0, 0.0, 1.0 );
   
 }
 
@@ -89,7 +98,7 @@ void init() {
  * Cleans up our scene graph.
  */
 void cleanup( void ) {
-  //Engine::instance()->rootScene()->DestroyObject();
+  Engine::instance()->rootScene()->delObject();
 }
 
 /**
@@ -112,12 +121,14 @@ void display( void ) {
   // Clear the _buffer.
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
   
+  //tell the shader WHAT TIME IT IS
+  tick.sendTime();
+
   // Tell camList to draw using our 'draw' rendering function.
   camList->view( draw );
   
   // Swap to the next _buffer.
   glutSwapBuffers();
-  
 }
 
 /**
@@ -134,8 +145,7 @@ void idle( void ) {
   tick.tock();
   
   // Animation variables.
-  static double timer = 0.0;
-  if ( (timer += 0.005) > 360.0 ) timer = 0.0;
+  double timer = glutGet( GLUT_ELAPSED_TIME ) / 500.0;
   float percent = (sin( timer ) + 1) / 2;
   
   // Update the morph percentage.
@@ -150,7 +160,6 @@ void idle( void ) {
   
   // Inform GLUT we'd like to render a new frame.
   glutPostRedisplay();
-  
 }
 
 /**
@@ -164,7 +173,6 @@ void idle( void ) {
  */
 int main( int argc, char **argv ) {
   printf("PUT THINGS IN THIS.\n");
-  return 1;
   
   // OS X suppresses events after mouse warp.  This resets the suppression 
   // interval to 0 so that events will not be suppressed. This also found
@@ -173,12 +181,12 @@ int main( int argc, char **argv ) {
 #ifdef __APPLE__
   CGSetLocalEventsSuppressionInterval( 0.0 );
 #endif
-  Angel::InitInitShader( argv[0] );
+  Util::InitRelativePaths(argc, argv);
   
   glutInit( &argc, argv );
   glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH );
   glutInitWindowSize( 0, 0 );
-  glutCreateWindow( "Linear Interpolation Morphing Demo" );
+  glutCreateWindow( "WE ARE THE BORG. RESISTANCE IS FUTILE!" );
   glutFullScreen();
   glutSetCursor( GLUT_CURSOR_NONE );
   
@@ -187,14 +195,14 @@ int main( int argc, char **argv ) {
   
   /* Register our Callbacks */
   glutDisplayFunc( display );
-  glutKeyboardFunc( keyboard );
-  glutKeyboardUpFunc( keylift );
-  glutSpecialFunc( keyboard_ctrl );
-  glutMouseFunc( mouse );
-  glutMotionFunc( mouseroll );
-  glutPassiveMotionFunc( mouselook );
+  glutKeyboardFunc( engineKeyboard );
+  glutKeyboardUpFunc( engineKeylift );
+  glutSpecialFunc( engineSpecialKeyboard );
+  glutMouseFunc( engineMouse );
+  glutMotionFunc( engineMouseMotion );
+  glutPassiveMotionFunc( EngineMousePassive );
   glutIdleFunc( idle );
-  glutReshapeFunc( resizeEvent );
+  glutReshapeFunc( engineResize );
   
   /* PULL THE TRIGGER */
   glutMainLoop();

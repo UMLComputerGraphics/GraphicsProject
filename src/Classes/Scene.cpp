@@ -1,3 +1,11 @@
+/**
+ * @file Scene.cpp
+ * @date 2013-03-29
+ * @author John Huston
+ * @brief Scene graph implementation.
+ * @details Scene graph implementation.
+ */
+
 #include <string>
 #include <map>
 #include <list>
@@ -6,7 +14,10 @@
 #include "Scene.hpp"
 #include "Object.hpp"
 
-typedef std::pair< std::string, Object * > mapping;
+/**
+ * Shorthand alias for the <string:object> pair used in the Scene graph.
+ */
+typedef std::pair< std::string, Object * > NameObjPair;
 
 /**
  * Nullary constructor.
@@ -63,7 +74,7 @@ GLuint Scene::shader( void ) {
  * for the Scene prior to the call.
  *
  * @param objName The name of the new Object to add.
- * @param Object_Shader The shader that should be used to render this object.
+ * @param shader The shader that should be used to render this object.
  * @return A pointer to the new Object.
  */
 Object *Scene::addObject( const std::string &objName, GLuint shader ) {
@@ -107,27 +118,24 @@ void Scene::popObject( void ) {
   deleteObject( *(--_list.end()) );
 }
 
+/**
+ * insertObject will register a new Object in the scene graph.
+ * WARNING! This Object now "Belongs to" the scene graph and
+ * the scene graph will manage the object for you. Do not free it!
+ *
+ * @param obj The object pointer to register with the Scene graph.
+ */
 void Scene::insertObject( Object *obj ) {
   _list.push_back( obj );
-  _map.insert( mapping( obj->name(), obj ) );
+  _map.insert( NameObjPair( obj->name(), obj ) );
 }
+
 
 /**
- deleteObject is the actual implementation function that will
- remove an Object from the Scene list and Scene map,
- then free the object.
- @param obj The pointer to the object to free.
- **/
-void Scene::deleteObject( Object *obj ) {
-  
-  if ( obj == active() ) prev();
-  
-  _list.remove( obj );
-  _map.erase( obj->name() );
-  delete obj;
-  
-}
-
+ * Select as the "active object" the next object in the list.
+ * If there is no "Next" object, cycle back to the first.
+ * @return A pointer to the Next object in the list.
+ */
 Object *Scene::next( void ) {
   
   // If the list is empty, we can't cycle.
@@ -142,6 +150,11 @@ Object *Scene::next( void ) {
   
 }
 
+/**
+ * Selects as the active object the previous item in the list.
+ * If there is no previous item, cycles back to the last item in the list.
+ * @return A pointer to the Previous object in the list.
+ */
 Object *Scene::prev( void ) {
   
   if ( _list.size() == 0 )
@@ -155,6 +168,10 @@ Object *Scene::prev( void ) {
   
 }
 
+/**
+ * Returns a pointer to the "active" object in the scene graph.
+ * @return An Object pointer to the active object at this level.
+ */
 Object *Scene::active( void ) const {
   
   if ( _list.size() == 0 ) throw std::logic_error(
@@ -165,6 +182,10 @@ Object *Scene::active( void ) const {
   
 }
 
+/**
+ * Calls the draw method on all children.
+ * @return void.
+ */
 void Scene::draw( void ) {
   std::list< Object* >::iterator it;
   for ( it = _list.begin(); it != _list.end(); ++it ) {
@@ -172,17 +193,29 @@ void Scene::draw( void ) {
   }
 }
 
+/**
+ * Fetch an Object pointer from the scene graph with the matching name.
+ * @param objname The name of the object to fetch.
+ * @return The requested Object pointer.
+ */
 Object *Scene::operator[]( std::string const &objname ) {
   
   std::map< std::string, Object* >::iterator ret;
   ret = _map.find( objname );
   
-  if ( ret == _map.end() ) return NULL;
-  //if (ret == map.end()) throw std::out_of_range("Requested scene object \"" + objname + "\" not in scene");
+  //if ( ret == _map.end() ) return NULL;
+  if (ret == _map.end())
+    throw std::out_of_range("Requested scene object \"" + objname + "\" not in scene");
   return ret->second;
   
 }
 
+/**
+ * "Copies" a scene into a new scene: Objects and Active state
+ * are left behind, though, so it's not much of a copy.
+ * @param copy The scene to copy from.
+ * @return A reference to the scene we copied into.
+ */
 Scene &Scene::operator=( const Scene &copy ) {
   
   this->_gShader = copy._gShader;
@@ -193,6 +226,26 @@ Scene &Scene::operator=( const Scene &copy ) {
   
 }
 
+/**
+ * Copy constructor: Uses Scene::operator= to do its dirty work.
+ * @param copy The scene to copy from.
+ */
 Scene::Scene( const Scene &copy ) {
   (*this) = copy;
+}
+
+/**
+ deleteObject is the actual implementation function that will
+ remove an Object from the Scene list and Scene map,
+ then free the object.
+ @param obj The pointer to the object to free.
+ **/
+void Scene::deleteObject( Object *obj ) {
+
+  if ( obj == active() ) prev();
+
+  _list.remove( obj );
+  _map.erase( obj->name() );
+  delete obj;
+
 }
