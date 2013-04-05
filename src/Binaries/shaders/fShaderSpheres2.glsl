@@ -13,8 +13,8 @@ uniform vec3 uSphereCenterPoints[maxNumSphere];
 uniform float uSphereRadius[maxNumSphere];
 uniform vec3 uSphereColors[maxNumSphere];
 
-const int numOfTriangleVectors = 5;
 uniform int uNumOfTriangle;
+uniform int uNumOfTriangleVectors;
 
 uniform int uNumOfBoundingSpheres;
 uniform int uNumOfTrianglesBounded;
@@ -176,8 +176,6 @@ void buildTriangle(inout Triangle t, vec3 a, vec3 b, vec3 c, vec3 color, vec3 no
 	t.n = normal;
 }
 
-Plane plane;
-
 void IntersectWithHitSpheres(in Ray r, inout Intersection i)
 {
 	for (int c = 0; c < uNumOfSpheres; c++)
@@ -186,19 +184,21 @@ void IntersectWithHitSpheres(in Ray r, inout Intersection i)
 	}
 	
 	Triangle triangle;
-	int index = uNumOfTriangle * numOfTriangleVectors, startingindex = index;
+	int index = uNumOfTriangle * uNumOfTriangleVectors, startingindex = index;
 	vec3 centerPoint, rs;
-	float radius, B, C, D, sqrtOfD, t, tPlus;
+	float radius, radiusSquared, B, C, D, sqrtOfD, t, tPlus;
 	for(int hitIndex = 0 ; hitIndex < uNumOfBoundingSpheres; hitIndex++) {
 		centerPoint = (texelFetch(bufferData, index)).xyz;
 		radius = texelFetch(bufferData, index+1).x;
-		index += 2;
+		radiusSquared = texelFetch(bufferData, index+1).y;
+		
 		rs = r.org - centerPoint;
 		B = dot(rs, r.dir);
-		C = dot(rs, rs) - (radius * radius);
+		C = dot(rs, rs) - radiusSquared;
 		D = B * B - C;
 	
-		if (D > 0.0) {
+		if (D > 0.0) 
+		{
 			sqrtOfD = sqrt(D);
 			t = -B - sqrtOfD;
 			tPlus = B + sqrtOfD;
@@ -206,20 +206,39 @@ void IntersectWithHitSpheres(in Ray r, inout Intersection i)
 			// Check if the sphere is closer than the current intersection or the ray is inside the sphere
 			if((t > 0.0) && (t < i.t) || (t < 0.0) && (tPlus > 0.0))
 			{
-				int pointIndex = hitIndex * numOfTriangleVectors * uNumOfTrianglesBounded;
+				int pointIndex = hitIndex * uNumOfTriangleVectors * uNumOfTrianglesBounded;
 				
-				for (int c = 0; c < uNumOfTrianglesBounded && pointIndex < startingindex; c++)
+				for (int c = 0; c < uNumOfTrianglesBounded && pointIndex < startingindex; c++) 
 				{
-					buildTriangle(triangle, texelFetch(bufferData, pointIndex).xyz, texelFetch(bufferData, pointIndex+1).xyz, texelFetch(bufferData, pointIndex+2).xyz, 
-														texelFetch(bufferData, pointIndex+3).xyz, texelFetch(bufferData, pointIndex+4).xyz);
-					pointIndex += 5;
-					triangle_intersect(triangle, r, i);
+					centerPoint = (texelFetch(bufferData, pointIndex+5)).xyz;
+					radius = texelFetch(bufferData, pointIndex+6).x;
+					radiusSquared = texelFetch(bufferData, pointIndex+6).y;
+					rs = r.org - centerPoint;
+					B = dot(rs, r.dir);
+					C = dot(rs, rs) - radiusSquared;
+					D = B * B - C;
+				
+					if (D > 0.0) {
+						sqrtOfD = sqrt(D);
+						t = -B - sqrtOfD;
+						tPlus = B + sqrtOfD;
+						
+						// Check if the sphere is closer than the current intersection or the ray is inside the sphere
+						if((t > 0.0) && (t < i.t) || (t < 0.0) && (tPlus > 0.0))
+						{
+							buildTriangle(triangle, texelFetch(bufferData, pointIndex).xyz, texelFetch(bufferData, pointIndex+1).xyz, texelFetch(bufferData, pointIndex+2).xyz, 
+																texelFetch(bufferData, pointIndex+3).xyz, texelFetch(bufferData, pointIndex+4).xyz);
+							triangle_intersect(triangle, r, i);
+						}
+					}
+					
+					pointIndex += uNumOfTriangleVectors;
 				}
 			}
 		}
+		
+		index += 2;
 	}
-	
-	//plane_intersect(plane, r, i);
 }
 
 vec3 computeLightShadow(in Intersection isect)
@@ -234,7 +253,7 @@ vec3 computeLightShadow(in Intersection isect)
 				  isect.p.y + eps * isect.n.y,
 				  isect.p.z + eps * isect.n.z);
 
-	vec3 lightPoint = (vec4(0, 0, 5, 1)).xyz;
+	vec3 lightPoint = (vec4(0, 0, 10, 1)).xyz;
 	Ray ray;
 	ray.org = p;
 	ray.dir = normalize(lightPoint - p);
@@ -252,7 +271,6 @@ vec3 computeLightShadow(in Intersection isect)
 		shade = pow(shade,3.0) + shade * 0.5;
 		return vec3(shade,shade,shade);
 	}
-	
 }
 
 // test intersection functions
@@ -283,12 +301,54 @@ float rand(in vec2 co){
     return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
 }
 
+// View hit spheres
+void test2_main() {
+
+	Ray r;
+	r.org = org;
+	r.dir = normalize(dir);
+	vec4 color = vec4(0,0,0,1);
+	
+	Intersection i;
+	i.hit = 0;
+	i.t = 1.0e+30;
+	i.n = i.p = i.color = vec3(0, 0, 0);
+	
+	float eps  = 0.0001;
+
+	int index = uNumOfTriangle * uNumOfTriangleVectors, startingindex = index;
+	vec3 centerPoint, rs;
+	float radius, radiusSquared, B, C, D, sqrtOfD, t, tPlus;
+	for(int hitIndex = 0 ; hitIndex < uNumOfBoundingSpheres; hitIndex++) 
+	{
+		centerPoint = (texelFetch(bufferData, index)).xyz;
+		radius = texelFetch(bufferData, index+1).x;
+		radiusSquared = texelFetch(bufferData, index+1).y;
+		
+		rs = r.org - centerPoint;
+		B = dot(rs, r.dir);
+		C = dot(rs, rs) - radiusSquared;
+		D = B * B - C;
+	
+		if (D > 0.0) {
+			sqrtOfD = sqrt(D);
+			t = -B - sqrtOfD;
+
+			float t = -B - sqrt(D);
+			if ( (t > 0.0) && (t < i.t) )
+			{
+				color = vec4(1,1,1,1);
+			}
+		}
+		
+		index += 2;
+	}
+	
+	gl_FragColor = color;
+}
+
 void main()
 {	
-	plane.p = (vec4(0,-0.5, 0, 1.0)).xyz;
-	plane.n = (vec4(0, 1.0, 0, 1.0)).xyz;
-	plane.color = vec3(1,1, 1);
-	
 	Ray r;
 	r.org = org;
 	r.dir = normalize(dir);

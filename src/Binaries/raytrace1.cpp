@@ -37,6 +37,7 @@ GLint uSphereColors = -1;
 GLint uNumOfSpheres = -1;
 
 GLint uNumOfTriangle = -1;
+GLint uNumOfTriangleVectors = -1;
 
 GLint uNumOfBoundingSpheres = - 1;
 GLint uNumOfTrianglesBounded = -1;
@@ -57,7 +58,8 @@ std::vector<vec3> trianglePoints;
 int numOfBoundingSpheres = 0;
 std::vector<GLfloat> bufferData;
 
-int numOfTrianglesBounded = 2;
+int numOfTriangleVectors = 7;
+int numOfTrianglesBounded = 12;
 
 /**
  * Redraw the scene.
@@ -233,6 +235,7 @@ void display( void ) {
   glUniform3fv( uSphereColors, numSpheres, sphereColors );
   
   glUniform1i( uNumOfTriangle, numTriangles );
+  glUniform1i( uNumOfTriangleVectors, numOfTriangleVectors );
 
   glUniform1i( uNumOfBoundingSpheres, numOfBoundingSpheres );
   glUniform1i( uNumOfTrianglesBounded, numOfTrianglesBounded );
@@ -294,6 +297,42 @@ void addTriangle(const vec3& a, const vec3& b, const vec3& c, const vec3& color)
   bufferData.push_back(normal.x);
   bufferData.push_back(normal.y);
   bufferData.push_back(normal.z);
+
+  float centerX, centerY, centerZ, x, y, z;
+
+  centerX = (a.x + b.x + c.x) / 3;
+  centerY = (a.y + b.y + c.y) / 3;
+  centerZ = (a.z + b.z + c.z) / 3;
+
+  float distance = 0.0;
+  float tempDistance = 0.0;
+
+
+  x = centerX - a.x;
+  y = centerY - a.y;
+  z = centerZ - a.z;
+  tempDistance = sqrtf((x * x) + (y * y) + (z * z));
+  if(tempDistance > distance) distance = tempDistance;
+
+  x = centerX - b.x;
+  y = centerY - b.y;
+  z = centerZ - b.z;
+  tempDistance = sqrtf((x * x) + (y * y) + (z * z));
+  if(tempDistance > distance) distance = tempDistance;
+
+  x = centerX - c.x;
+  y = centerY - c.y;
+  z = centerZ - c.z;
+  tempDistance = sqrtf((x * x) + (y * y) + (z * z));
+  if(tempDistance > distance) distance = tempDistance;
+  distance += 0.0001;
+
+  bufferData.push_back(centerX);
+  bufferData.push_back(centerY);
+  bufferData.push_back(centerZ);
+  bufferData.push_back(distance);
+  bufferData.push_back(distance * distance);
+  bufferData.push_back(0.0);
 
   numTriangles++;
 }
@@ -374,7 +413,7 @@ void pushDataToBuffer() {
     distance += 0.0001;
 
     bufferData.push_back(distance);
-    bufferData.push_back(0.0);
+    bufferData.push_back(distance * distance);
     bufferData.push_back(0.0);
 
     //printf("distance %f\n", distance);
@@ -389,7 +428,7 @@ void pushDataToBuffer() {
   glGenBuffers(1, &bufObj);
   glBindBuffer(GL_TEXTURE_BUFFER, bufObj);
   // Size of float * number of floats in a vector * number of vectors in a triangle (a, b, c, color) * number of triangles
-  GLsizeiptr triangleSize = 3 * 5 * numTriangles;
+  GLsizeiptr triangleSize = 3 * numOfTriangleVectors * numTriangles;
   GLsizeiptr boundingSphereSize = 3 * 2 * numOfBoundingSpheres;
   glBufferData(GL_TEXTURE_BUFFER, sizeof(GLfloat) * (triangleSize + boundingSphereSize), bufferData.data(), GL_STATIC_DRAW);
   glTexBuffer(GL_TEXTURE_BUFFER, GL_RGB32F, bufObj);
@@ -420,17 +459,26 @@ void genereateScene() {
   addTriangle(vec3(-10.0, -10.0, -6.0), vec3(10.0, -10.0, -6.0), vec3(10.0, 10.0, -6.0), vec3(1.0, 1.0, 1.0));
   addTriangle(vec3(-10.0, -10.0, -6.0), vec3(10.0, 10.0, -6.0), vec3(-10.0, 10.0, -6.0), vec3(0.0, 1.0, 1.0));
 
+
 /*
-  float xPos, yPos;
-  for(xPos = -8; xPos <= 8; xPos += 2) {
-    for(yPos = -8; yPos <= 8; yPos += 2) {
-      addCube(vec3(xPos, yPos, -5.0), vec3(1.0, 1.0, 1.0));
+  vec3 colors[] = {vec3(1.0, 1.0, 0.0), vec3(1.0, 0.0, 1.0), vec3(0.0, 1.0, 1.0)};
+
+  int colorIndex = 0;
+  float xPos, yPos, zPos;
+  for(xPos = -6; xPos < 6.1; xPos += 2) {
+    for(yPos = -6; yPos < 6.1; yPos += 2) {
+      for(zPos = -6; zPos < 6.1; zPos += 2) {
+        colorIndex++;
+        colorIndex %= 3;
+        addCube(vec3(xPos, yPos, zPos), colors[colorIndex]);
+      }
     }
   }
-
+*/
+  /*
   addTriangle(vec3(-5.0, -5.0, -6.0), vec3(5.0, -5.0, -6.0), vec3(5.0, 5.0, -6.0), vec3(1.0, 0.0, 0.0));
   addTriangle(vec3(-5.0, -5.0, -6.0), vec3(5.0, 5.0, -6.0), vec3(-5.0, 5.0, -6.0), vec3(0.0, 1.0, 0.0));
-*/
+   */
   pushDataToBuffer();
 }
 
@@ -460,6 +508,7 @@ void init( void ) {
   uSphereColors = glGetUniformLocation( program, "uSphereColors" );
   
   uNumOfTriangle = glGetUniformLocation( program, "uNumOfTriangle" );
+  uNumOfTriangleVectors = glGetUniformLocation( program, "uNumOfTriangleVectors" );
 
   uNumOfBoundingSpheres = glGetUniformLocation( program, "uNumOfBoundingSpheres" );
   uNumOfTrianglesBounded = glGetUniformLocation( program, "uNumOfTrianglesBounded" );
