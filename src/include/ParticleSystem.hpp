@@ -64,8 +64,8 @@ private:
 
   vector<ParticleP> particles;
   int    numParticles;   // Number of particles that each instance of ParticleSystem will manage
-  float  maxLife;
   float  minLife;
+  float  maxLife;
 
   vec4* positions;
   

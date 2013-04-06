@@ -28,7 +28,6 @@ ParticleSystem::ParticleSystem( int particleAmt, const std::string &name,
                                 GLuint shader ) :
     Object( name, shader ), numParticles( particleAmt ), minLife( 0.1 ),
     maxLife( 1 ) {
-  positions = new vec4[numParticles];
 
   addParticles();
 }
@@ -51,7 +50,7 @@ void ParticleSystem::addParticles( void ) {
       Particle *p = new Particle(vec4(0.0, 0.0, 0.0, 1.0), 1, rangeRandom(minLife, maxLife));
       particles.push_back(p);
 
-	 positions[i] = p->getPosition();
+      _vertices.push_back(p->getPosition());
     }
 }
 
@@ -91,8 +90,8 @@ ParticleSystem::Buffer()
   glBindVertexArray(_vao);
 
   glBindBuffer(GL_ARRAY_BUFFER, _buffer[VERTICES]);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(Angel::vec4) * numParticles,
-  			positions, GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(Angel::vec4) * _vertices.size(), 
+	       &(_vertices[0]), GL_STATIC_DRAW);
 
   glBindVertexArray(0);
 }

@@ -45,7 +45,6 @@ bool fixed_yaw = true;
 void init() 
 {
 
-  GLuint shader;
   GLuint testShader;
   Screen *primScreen = Engine::instance()->mainScreen();
   Scene *rootScene = Engine::instance()->rootScene();
@@ -59,19 +58,19 @@ void init()
 
   primScreen->_camList.addCamera( "Camera1" );
   primScreen->_camList.next();
-  //  primScreen->_camList->active()->changePerspective( Camera::IDENTITY );
 
-  Object *testObj = rootScene->addObject("testObj");
-  ObjLoader::loadModelFromFile(testObj, "../models/bottle-a.obj");
+  /*  Object *testObj = rootScene->addObject("testObj");
+      ObjLoader::loadModelFromFile(testObj, "../models/bottle-a.obj");
 
   testObj->buffer();
   testObj->_trans._scale.set(1);
   testObj->_trans._offset.setY(5);
-  /*
-  Object *particleSystem = new ParticleSystem( 5, "ParticleSystem", shader );
-  rootScene->InsertObject( "ParticleSystem", particleSystem );
-  particleSystem->Buffer();
   */
+  
+  Object *particleSystem = new ParticleSystem( 5, "ParticleSystem", testShader );
+  rootScene->insertObject( particleSystem );
+  particleSystem->buffer();
+  
   // Generic OpenGL setup: Enable the depth buffer and set a nice background color.
   glEnable( GL_DEPTH_TEST );
   glClearColor( 0.3, 0.5, 0.9, 1.0 );

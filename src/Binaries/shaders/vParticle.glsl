@@ -4,6 +4,7 @@
 
 attribute vec4 vPosition;
 attribute vec4 vColor;
+
 uniform vec3 cameraPos;
 varying vec3 gCamPos;
 varying vec4 gColor;
@@ -15,13 +16,12 @@ uniform mat4 T;
 uniform mat4 CTM; // CTM is either PRT or TRP, depending.
 uniform mat4 OTM;
 
-// variables for transformations needed? or calculated on CPU?
-
-
 void main()
 {
+	gColor = vec4(1.0, 1.0, 1.0, 1.0);
+
   	gl_Position = P * CTM * OTM * vPosition;
 	//gl_Position = vPosition;  // add transformation?
 	gCamPos = cameraPos;
-	gColor = vColor;
+	//gColor = vColor;
 }
