@@ -39,7 +39,6 @@ void main ()
 	Pos.y += particleSize;
 	gl_Position = Pos ;
 	EmitVertex();
-
 			
 	EndPrimitive();
 }

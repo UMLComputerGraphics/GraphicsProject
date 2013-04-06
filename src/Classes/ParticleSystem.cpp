@@ -94,7 +94,7 @@ void ParticleSystem::setNumParticles( int newNumParticles ) {
 }
 
 void
-ParticleSystem::buffer()
+ParticleSystem::buffer( void )
 {
   glBindVertexArray(_vao);
 
@@ -106,7 +106,7 @@ ParticleSystem::buffer()
 }
 
 void
-ParticleSystem::draw()
+ParticleSystem::draw( void )
 {
 
   glBindVertexArray(_vao);
