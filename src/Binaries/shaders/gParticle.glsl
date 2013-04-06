@@ -14,10 +14,15 @@
 uniform mat4 gVP;     // Veiw/Projection matrix
 uniform vec3 gCamPos; // Camera Position
 
+varying vec4 gColor;
+varying vec4 fColor;
+
 vec2 TexCoord;        // Texture coordinates
 
 void main () 
 {
+		//Pass through color
+		fColor = gColor;
 
 		vec4 Pos = gl_PositionIn[0];
 

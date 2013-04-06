@@ -50,25 +50,9 @@ void init()
   Screen *primScreen = Engine::instance()->mainScreen();
   Scene *rootScene = Engine::instance()->rootScene();
   
-  // Load shaders and use the resulting shader program. 
-  /*shader = Angel::InitShader( "shaders/vterrain.glsl",
-			      "shaders/fParticle.glsl", 
-			      "shaders/gPassThru.glsl");*/
-
-  /*
-  shader = Angel::InitShader( "shaders/vParticle.glsl",
-			      "shaders/fParticle.glsl", 
-			      "shaders/gPassThru.glsl");
-  */
-
-
-
-
-  //testShader = Angel::InitShader("shaders/vterrain.glsl", "shaders/fterrain.glsl");
-
   testShader = Angel::InitShader("shaders/vParticle.glsl",
 				 "shaders/fParticle.glsl", 
-				 "shaders/gDouble.glsl");
+				 "shaders/gParticle.glsl");
 
   rootScene->shader(testShader);
   primScreen->_camList.shader(testShader);
