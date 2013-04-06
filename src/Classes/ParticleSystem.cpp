@@ -44,10 +44,19 @@ void ParticleSystem::addParticles( void ) {
   int numParticles = getNumParticles();
   int numToAdd = numParticles - particles.size();
   
+  std::cout << "Adding " << numToAdd << " particles" << std::endl;
+
   if ( numToAdd > 0 )
     for ( int i = 0 ; i < numToAdd ; i++ )
     {
       Particle *p = new Particle(vec4(0.0, 0.0, 0.0, 1.0), 1, rangeRandom(minLife, maxLife));
+      
+      float tempXV, tempYV, tempZV;
+      tempXV = rangeRandom( -0.001f, 0.001f );
+      tempYV = rangeRandom( -0.001f, 0.001f );
+      tempZV = rangeRandom( -0.001f, 0.001f );
+      p->setVel( vec3( tempXV, tempYV, tempZV ) );
+
       particles.push_back(p);
 
       _vertices.push_back(p->getPosition());
@@ -85,7 +94,7 @@ void ParticleSystem::setNumParticles( int newNumParticles ) {
 }
 
 void
-ParticleSystem::Buffer()
+ParticleSystem::buffer()
 {
   glBindVertexArray(_vao);
 
@@ -97,8 +106,9 @@ ParticleSystem::Buffer()
 }
 
 void
-ParticleSystem::Draw()
+ParticleSystem::draw()
 {
+
   glBindVertexArray(_vao);
 
   GLint currShader;
@@ -117,11 +127,26 @@ ParticleSystem::Draw()
 
   glBindVertexArray(0);
   Scene::draw();
+
+  //Get the particles moved/rebuffered for the next draw call
+  update();
 }
 
-// Other functions
-
+//Update the particles in our system
 void ParticleSystem::update() {
+
+  _vertices.clear();
+
+  vector<ParticleP>::iterator i;
+
+  for(i = particles.begin(); i != particles.end(); ++i) {
+
+    (*i)->updateSelf();
+    _vertices.push_back((*i)->getPosition());
+
+  }
+  buffer();
+
 }
 
 // Private Functions

@@ -67,7 +67,7 @@ void init()
   testObj->_trans._offset.setY(5);
   */
   
-  Object *particleSystem = new ParticleSystem( 5, "ParticleSystem", testShader );
+  Object *particleSystem = new ParticleSystem( 35, "ParticleSystem", testShader );
   rootScene->insertObject( particleSystem );
   particleSystem->buffer();
   

@@ -1,9 +1,8 @@
 /**
  * @file Particle.cpp
- * @author FIXME
- * @authors FIXME
+ * @author Nick Ver Voort, nicholas_vervoort@student.uml.edu
  * @date 2013-03-15
- * @brief FIXME: Needs documentation from NVV/CC.
+ * @brief FIXME: Needs documentation from NVV/CC
  */
 #include <string>
 #include <stdexcept>
@@ -22,7 +21,8 @@ using Angel::mat4;
 
 // Constructor(s)
 Particle::Particle( vec4 position, float scale, float lifeSpan ) :
-    mPos( position ), mScale( scale ), lifespan( lifeSpan ) {
+  _pos( position ), _scale( scale ), _vel(vec3(0.0, 0.0, 0.0)), 
+  _lifespan( lifeSpan ) {
   
 }
 
@@ -31,46 +31,56 @@ Particle::~Particle() {
   
 }
 
-// Setters (Will we need getters? Probably not)
+// Update position and other properties
+void Particle::updateSelf( void ) {
 
+  _pos.x += _vel.x;
+  _pos.y += _vel.y;
+  _pos.z += _vel.z;
+
+  //add more stuff
+
+}
+
+// Setters (Will we need getters? Probably not)
 void Particle::changeVel( vec3 newVel ) {
-  mVel += newVel;
+  _vel += newVel;
 }
 
 float Particle::getLifespan( void ) {
-  return lifespan;
+  return _lifespan;
 }
 
 void Particle::setAlpha( float newAlpha ) {
-  color.w = newAlpha;
+  _color.w = newAlpha;
 }
 
 void Particle::setColor( vec4 newColor ) {
-  color = newColor;
+  _color = newColor;
 }
 
 void Particle::setLifespan( float newLifespan ) {
-  lifespan = newLifespan;
+  _lifespan = newLifespan;
 }
 
 void Particle::setPos( vec4 newPos ) {
-  mPos = newPos;
+  _pos = newPos;
 }
 
 void Particle::setScale( vec3 newScale ) {
-  mScale = newScale;
+  _scale = newScale;
 }
 
 void Particle::setVel( vec3 newVel ) {
-  mVel = newVel;
+  _vel = newVel;
 }
 
 void Particle::setTexFile( string newFilename ) {
-  texFilename = newFilename;
+  _texFilename = newFilename;
 }
 
 vec4
 Particle::getPosition( void )
 {
-  return mPos;
+  return _pos;
 }

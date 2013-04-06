@@ -52,8 +52,8 @@ public:
    on each call to Draw(). That's the idea, anyway. */
   void update();
 
-  virtual void Buffer();
-  virtual void Draw();
+  virtual void buffer( void );
+  virtual void draw( void );
 
 protected:
   
