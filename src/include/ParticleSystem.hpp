@@ -52,10 +52,10 @@ public:
    on each call to Draw(). That's the idea, anyway. */
   void update();
 
-  virtual void Buffer();
-  virtual void Draw();
+  virtual void buffer( void );
+  virtual void draw( void );
 
-protected:
+//protected:
   
 private:
   
@@ -64,10 +64,10 @@ private:
 
   vector<ParticleP> particles;
   int    numParticles;   // Number of particles that each instance of ParticleSystem will manage
-  float  maxLife;
   float  minLife;
+  float  maxLife;
 
-  vec4* positions;
+  //vec4* positions;
   
   // Pass-through variable... maybe not be needed and function can pass through
   vec4   color;

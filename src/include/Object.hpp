@@ -100,13 +100,13 @@ public:
   /**
    * draw method: Render this object to the screen _buffer.
    */
-  void draw( void );
+  virtual void draw( void );
 
   /**
    * buffer all of our data: Vertices, TexUVs, Normals,
    * Indices, Colors and Morph Buffers.
    */
-  void buffer( void );
+  virtual void buffer( void );
 
   /**
    * buffer only the Morph-related buffers.
