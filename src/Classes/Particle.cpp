@@ -38,6 +38,8 @@ void Particle::updateSelf( void ) {
   _pos.y += _vel.y;
   _pos.z += _vel.z;
 
+  _lifespan -= 0.05;
+
   //add more stuff
 
 }

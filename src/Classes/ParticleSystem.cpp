@@ -142,6 +142,10 @@ void ParticleSystem::update() {
   for(i = particles.begin(); i != particles.end(); ++i) {
 
     (*i)->updateSelf();
+    if((*i)->getLifespan() <= 0 ) {
+      (*i)->setPos( position() );
+      (*i)->setLifespan( rangeRandom(minLife, maxLife) );
+    }
     _vertices.push_back((*i)->getPosition());
 
   }
