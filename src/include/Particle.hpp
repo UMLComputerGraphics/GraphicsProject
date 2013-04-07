@@ -38,11 +38,11 @@ public:
 
   void changeVel( vec3 newVel );
 
-  float getLifespan( void );
+  float getLifetime( void );
 
   void setAlpha( float newAlpha );
   void setColor( vec4 newColor );
-  void setLifespan( float newLifespan );
+  void setLifetime( float newLifetime );
   void setPos( vec4 newPos );
   void setScale( vec3 newScale );
   //void setSpin( float newSpin );
@@ -57,7 +57,7 @@ private:
   vec3 _scale;
   vec3 _vel;
   vec4 _color;
-  float _lifespan;
+  float _lifetime;
   //  float spin;
   
   string _texFilename;

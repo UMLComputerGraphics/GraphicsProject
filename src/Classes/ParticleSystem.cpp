@@ -95,7 +95,7 @@ void ParticleSystem::setNumParticles( int newNumParticles ) {
 }
 
 void
-ParticleSystem::buffer()
+ParticleSystem::buffer( void )
 {
   glBindVertexArray(_vao);
 
@@ -117,10 +117,12 @@ ParticleSystem::buffer()
 }
 
 void
-ParticleSystem::draw()
+ParticleSystem::draw( void )
 {
+
   //std::cerr << "invoking ps draw" << std::endl;
 
+  // we should consider moving the update() call to the idle() loop
   update();
   buffer();
 
@@ -143,18 +145,6 @@ ParticleSystem::draw()
   //glDrawArrays( GL_POINTS, 0, numParticles );
   glDrawArrays( GL_POINTS, 0, _vertices.size() );
 
-
-  /*   // move all the positions into the _vertices buffer inherited from Object
-  this->_vertices.clear();
-  for ( int i = 0 ; i < this->getNumParticles() ; i++ ) {
-	 this-> _vertices.push_back(p->getPosition());
-	 //if ( i > getNumParticles() ) cerr << "" << std::endl;
-  }*/
-  //Get the particles moved/rebuffered for the next draw call
-
-
-  // FIXME the particle rebuffering should be /separate/ from the position updating
-
   glBindVertexArray(0);
   Scene::draw();
 
@@ -170,10 +160,18 @@ void ParticleSystem::update() {
   for(i = particles.begin(); i != particles.end(); ++i) {
 
     (*i)->updateSelf();
-    for(int j = 0 ; j<3 ; ++j )
-	  _vertices.push_back((*i)->getPosition());
+    //for(int j = 0 ; j<3 ; ++j )
+    _vertices.push_back((*i)->getPosition());
 
+    // sorry nick! this is commented temporarily: needs a few more lines to be ready
+    /*if((*i)->getLifetime() <= 0 ) {
+      (*i)->setPos( position() );
+      (*i)->setLifetime( rangeRandom(minLife, maxLife) );
+    }
+    */
   }
+  
+  // should we really tie the buffering to the update() call??
   //buffer();
 
 }

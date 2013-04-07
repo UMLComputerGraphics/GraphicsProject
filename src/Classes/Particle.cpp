@@ -20,9 +20,9 @@ using Angel::vec4;
 using Angel::mat4;
 
 // Constructor(s)
-Particle::Particle( vec4 position, float scale, float lifeSpan ) :
+Particle::Particle( vec4 position, float scale, float lifetime ) :
   _pos( position ), _scale( scale ), _vel(vec3(0.0, 0.0, 0.0)), 
-  _lifespan( lifeSpan ) {
+  _lifetime( lifetime ) {
   
 }
 
@@ -41,10 +41,10 @@ void Particle::updateSelf( void ) {
   _pos.y += _vel.y * scale ;
   _pos.z += _vel.z * scale ;
 
-  //add more stuff
+  _lifetime -= 0.05;
 
   //increase alive time (not lifeSPAN)
-  //if life is over (alive time >= lifeSPAN) then respawn particle.
+  //if ( _lifetime <= 0.0 ) _pos.x = _pos.y = _pos.z = 0.0 ;
 
 }
 
@@ -53,8 +53,8 @@ void Particle::changeVel( vec3 newVel ) {
   _vel += newVel;
 }
 
-float Particle::getLifespan( void ) {
-  return _lifespan;
+float Particle::getLifetime( void ) {
+  return _lifetime;
 }
 
 void Particle::setAlpha( float newAlpha ) {
@@ -65,8 +65,8 @@ void Particle::setColor( vec4 newColor ) {
   _color = newColor;
 }
 
-void Particle::setLifespan( float newLifespan ) {
-  _lifespan = newLifespan;
+void Particle::setLifetime( float newLifetime ) {
+  _lifetime = newLifetime;
 }
 
 void Particle::setPos( vec4 newPos ) {
