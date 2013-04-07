@@ -1,8 +1,10 @@
-////////////////////////////////////////////////////////////////////////////
-//
-//  --- vec.h ---
-//
-////////////////////////////////////////////////////////////////////////////
+/**
+ * @file vec.hpp
+ * @date 2013-03-29
+ * @author Ed Angel
+ * @brief Headers for vec2, vec3, and vec4.
+ * @details Headers for 2D, 3D and 4D vectors, as well as supporting utility functions.
+ */
 
 #ifndef __ANGEL_VEC_H__
 #define __ANGEL_VEC_H__
@@ -10,9 +12,18 @@
 #include "OpenGL.h"
 #include <iostream>
 
+/**
+ * Namespace to encompass Ed Angel's functions and classes.
+ * @author Ed Angel
+ * @date 2013-03-30
+ */
 namespace Angel {
 
-  //  vec2.h - 2D vector
+/**
+ * vec2: 2D vector.
+ * @author Ed Angel
+ * @date 2013-03-30
+ */
   struct vec2 {
 
     GLfloat x;
@@ -57,7 +68,11 @@ namespace Angel {
   GLfloat length( const vec2& v );
   vec2 normalize( const vec2& v );
 
-  //  vec3.h - 3D vector
+/**
+ * vec3 - 3D vector.
+ * @author Ed Angel
+ * @date 2013-03-30
+ */
   struct vec3 {
 
     GLfloat x;
@@ -106,7 +121,11 @@ namespace Angel {
   vec3 normalize( const vec3& v );
   vec3 cross( const vec3& a, const vec3& b );
 
-  //  vec4 - 4D vector
+/**
+ * vec4 - 4D vector.
+ * @author Ed Angel
+ * @date 2013-03-30
+ */
   struct vec4 {
 
     GLfloat x;
@@ -156,13 +175,13 @@ namespace Angel {
   GLfloat length( const vec4& v );
   vec4 normalize( const vec4& v );
   vec3 cross( const vec4& a, const vec4& b );
-  vec3 XYZ( const vec4& a );
+  vec3 xyz( const vec4& a );
 
 }  // namespace Angel
 
 /** Simple alias of Angel::vec4 to emphasize semantic meaning. */
-typedef Angel::vec4 color4;
+typedef Angel::vec4 Color4;
 /** Simple alias of Angel::vec4 to emphasize semantic meaning. */
-typedef Angel::vec4 point4;
+typedef Angel::vec4 Point4;
 
 #endif // __ANGEL_VEC_H__
