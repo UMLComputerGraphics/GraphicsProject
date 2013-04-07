@@ -1,11 +1,13 @@
 #version 150 
 // FragmentProgram
 const int raytraceDepth = 3;
+const float eps  = 0.0001;
 
 uniform mat4 ModelView;
 
-const int numberOfLights = 5;
-uniform vec3 LightAmbient, uLightPositions[numberOfLights], uLightDiffuse[numberOfLights], uLightSpecular[numberOfLights];
+const int maxNumberOfLights = 5;
+uniform int uNumberOfLights;
+uniform vec3 LightAmbient, uLightPositions[maxNumberOfLights], uLightDiffuse[maxNumberOfLights], uLightSpecular[maxNumberOfLights];
 
 const int maxNumSphere = 5;
 uniform int uNumOfSpheres;
@@ -336,10 +338,6 @@ void test_main()
 	gl_FragColor = diffuse;
 }
 
-float rand(in vec2 co){
-    return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
-}
-
 // View hit spheres
 void test2_main() {
 
@@ -391,13 +389,11 @@ void main()
 	Ray r;
 	r.org = org;
 	r.dir = normalize(dir);
-	vec4 color = vec4(0,0,0,1);
+	vec4 color = vec4(0, 0, 0, 1);
 	
 	Intersection isect;
-	
-	float eps  = 0.0001;
 	vec3 bcolor = vec3(1,1,1);
-	
+
 	for (int j = 0; j < raytraceDepth; j++)
 	{
 		isect.hit = 0;
@@ -414,11 +410,12 @@ void main()
 		{
 			break;
 		}
-				
+
 		r.org = vec3(isect.p.x + eps * isect.n.x,
 					 isect.p.y + eps * isect.n.y,
 					 isect.p.z + eps * isect.n.z);
 		r.dir = reflect(r.dir, vec3(isect.n.x, isect.n.y, isect.n.z));
 	}
+	
 	gl_FragColor = color;
 }

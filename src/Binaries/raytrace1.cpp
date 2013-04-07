@@ -22,6 +22,7 @@
 GLuint program;
 
 GLint vRayPosition = -1;
+GLint uDisplay;
 
 /** Rotation matrix uniform shader variable location **/
 GLuint uRotationMatrix = -1;
@@ -30,6 +31,8 @@ GLint uCameraPosition = -1;
 
 /** Logical camera object. **/
 SpelchkCamera camera( vec4( 0.0, 0.0, 10.0, 0.0 ) );
+SpelchkCamera cameraLeft( vec4( 0.0, 0.0, 10.0, 0.0 ) );
+SpelchkCamera cameraRight( vec4( 0.0, 0.0, 10.0, 0.0 ) );
 
 GLint uSphereCenterPoints = -1;
 GLint uSphereRadius = -1;
@@ -254,12 +257,12 @@ void display( void ) {
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
   tick.sendTime();
-
-  mat4 mv = camera.getRotationMatrix();
-  glUniformMatrix4fv( uRotationMatrix, 1, GL_TRUE, mv );
   
-  vec4 cameraPosition = camera.getCameraPosition();
-  glUniform4fv( uCameraPosition, 1, cameraPosition );
+  cameraLeft.copyCamera(&camera);
+  cameraLeft.moveCamera(-0.1, 0.0, 0.0);
+
+  cameraRight.copyCamera(&camera);
+  cameraRight.moveCamera(0.1, 0.0, 0.0);
 
   int numSpheres = 1;
   glUniform1i( uNumOfSpheres, numSpheres );
@@ -290,7 +293,10 @@ void display( void ) {
   glUniform3fv( uLightDiffuse, 1, lightDiffuse );
   glUniform3fv( uLightSpecular, 1, lightSpecular );
 
-  GLfloat vertices[] = { 1.0, 1.0, -1.0, 1.0, 1.0, -1.0, -1.0, -1.0, };
+  GLfloat vertices[] = { 1.0, 1.0,
+                         -1.0, 1.0,
+                         1.0, -1.0,
+                         -1.0, -1.0, };
   
   GLuint vbo_vertices;
   glGenBuffers( 1, &vbo_vertices );
@@ -308,7 +314,16 @@ void display( void ) {
       0                   // offset of first element
       );
   
+  glUniform1i( uDisplay, -1 );
+  glUniformMatrix4fv( uRotationMatrix, 1, GL_TRUE, cameraLeft.getRotationMatrix() );
+  glUniform4fv( uCameraPosition, 1, cameraLeft.getCameraPosition() );
   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+  glUniform1i( uDisplay, 1 );
+  glUniformMatrix4fv( uRotationMatrix, 1, GL_TRUE, cameraRight.getRotationMatrix() );
+  glUniform4fv( uCameraPosition, 1, cameraRight.getCameraPosition() );
+  glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
   glutSwapBuffers();
   glDisableVertexAttribArray( vRayPosition );
 
@@ -368,7 +383,6 @@ void addTriangle(const vec3& a, const vec3& b, const vec3& c, const vec3& diffus
 
   float distance = 0.0;
   float tempDistance = 0.0;
-
 
   x = centerX - a.x;
   y = centerY - a.y;
@@ -564,6 +578,7 @@ void init( void ) {
   glUseProgram( program );
   
   vRayPosition = glGetAttribLocation( program, "vRayPosition" );
+  uDisplay = glGetUniformLocation( program, "uDisplay" );
 
   uRotationMatrix = glGetUniformLocation( program, "uRotationMatrix" );
   uCameraPosition = glGetUniformLocation( program, "uCameraPosition" );
@@ -606,7 +621,7 @@ int main( int argc, char **argv ) {
   glutInit( &argc, argv );
   
   glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE ); // set rendering context
-  glutInitWindowSize( 512, 512 );
+  glutInitWindowSize( 900, 450 );
   glutCreateWindow( "Project" ); // title
       
   glewInit(); // set OpenGL state and initialize shaders
