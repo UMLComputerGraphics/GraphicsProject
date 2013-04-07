@@ -1,31 +1,19 @@
 /**
  @file MONOLITH.cpp
- @author EVERYBODI
- @date yesterday
+ @author UMLComputerGraphics <https://github.com/UMLComputerGraphics>
+ @date 2013-03-29
  @brief This is a monolith of every component.
- @details ROUND ONE... FIGHT
+ @details Final project rough draft.
  Original engine based on Ed Angel's book code.
- This file features a severely reduced linecount for demo purposes.
- @see THE FUTURE for a fully-featured example.
  **/
 
-/* Multi-platform support and OpenGL headers. */
-#include "globals.h"
-#include "platform.h"
-/* Engine Classes */
-#include "Camera.hpp"
-#include "Cameras.hpp"
-#include "Screen.hpp"
-#include "Object.hpp"
-#include "Timer.hpp"
-#include "Scene.hpp"
+/* OpenGL and "The Engine" */
 #include "Engine.hpp"
 /* Utilities and Common */
 #include "model.hpp"
 #include "InitShader.hpp"
 #include "glut_callbacks.h"
 #include "ObjLoader.hpp"
-#include "eric_rules.hpp"
 
 /**
  * Initialization: load and compile shaders, initialize camera(s), load models.
@@ -60,6 +48,11 @@ void init() {
   // Scale the bottle down!
   bottle->_trans._scale.set( 0.01 );
   
+  for (uint i=0; i < bottle->_colors.size(); i++)
+  {
+    bottle->_colors[i].w = 0.4;
+  }
+
   // _buffer the object onto the GPU. This does not happen by default,
   // To allow you to make many changes and _buffer only once,
   // or to _buffer changes selectively.
@@ -86,13 +79,18 @@ void init() {
   ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle-b.obj" );
   bottleMorphTarget->_trans._scale.set( 0.01 );
   
+  for (uint i=0; i < bottle->_colors.size(); i++)
+  {
+    bottleMorphTarget->_colors[i].w = 0.4;
+  }
+
   // YES THIS IS THE REAL OBJECT, NOT THE TARGET. 
   // IT SENDS THE MORPH VERTICES TO THE SHADER, NOT TO THE DRAW LIST TO BE DRAWN!
   bottle->bufferMorphOnly();
   
   // Generic OpenGL setup: Enable the depth _buffer and set a nice background color.
   glEnable( GL_DEPTH_TEST );
-  glClearColor( 0.3, 0.5, 0.9, 1.0 );
+  glClearColor( 0.0, 0.0, 0.0, 1.0 );
   
 }
 
@@ -100,7 +98,7 @@ void init() {
  * Cleans up our scene graph.
  */
 void cleanup( void ) {
-  //Engine::instance()->rootScene()->DestroyObject();
+  Engine::instance()->rootScene()->delObject();
 }
 
 /**
@@ -124,14 +122,13 @@ void display( void ) {
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
   
   //tell the shader WHAT TIME IT IS
-  tick.foxtrotUniformCharlieKilo();
+  tick.sendTime();
 
   // Tell camList to draw using our 'draw' rendering function.
   camList->view( draw );
   
   // Swap to the next _buffer.
   glutSwapBuffers();
-  
 }
 
 /**
@@ -148,8 +145,7 @@ void idle( void ) {
   tick.tock();
   
   // Animation variables.
-  static double timer = 0.0;
-  if ( (timer += 0.005) > 360.0 ) timer = 0.0;
+  double timer = glutGet( GLUT_ELAPSED_TIME ) / 500.0;
   float percent = (sin( timer ) + 1) / 2;
   
   // Update the morph percentage.
@@ -164,7 +160,6 @@ void idle( void ) {
   
   // Inform GLUT we'd like to render a new frame.
   glutPostRedisplay();
-  
 }
 
 /**
@@ -186,7 +181,7 @@ int main( int argc, char **argv ) {
 #ifdef __APPLE__
   CGSetLocalEventsSuppressionInterval( 0.0 );
 #endif
-  VooDoo::InitRelativePaths(argc, argv);
+  Util::InitRelativePaths(argc, argv);
   
   glutInit( &argc, argv );
   glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH );
@@ -200,14 +195,14 @@ int main( int argc, char **argv ) {
   
   /* Register our Callbacks */
   glutDisplayFunc( display );
-  glutKeyboardFunc( keyboard );
-  glutKeyboardUpFunc( keylift );
-  glutSpecialFunc( keyboard_ctrl );
-  glutMouseFunc( mouse );
-  glutMotionFunc( mouseroll );
-  glutPassiveMotionFunc( mouselook );
+  glutKeyboardFunc( engineKeyboard );
+  glutKeyboardUpFunc( engineKeylift );
+  glutSpecialFunc( engineSpecialKeyboard );
+  glutMouseFunc( engineMouse );
+  glutMotionFunc( engineMouseMotion );
+  glutPassiveMotionFunc( EngineMousePassive );
   glutIdleFunc( idle );
-  glutReshapeFunc( resizeEvent );
+  glutReshapeFunc( engineResize );
   
   /* PULL THE TRIGGER */
   glutMainLoop();

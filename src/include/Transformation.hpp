@@ -16,19 +16,34 @@
 class Transformation {
   
 public:
+
+  typedef enum Subtype {
+    GENERIC,
+    ROTATION,
+    TRANSLATION,
+    SCALE
+  } Subtype;
+
   /*
    These are all default and are not currently needed.
-   Transformation( void );
    Transformation( const Transformation &copy );
    Transformation &operator=( const Transformation &assignment );
    */
+  Transformation( void );
   virtual ~Transformation( void );
 
   const Angel::mat4 &matrix( void ) const;
   Angel::mat4 operator*( const Angel::mat4 &rhs ) const;
   Angel::mat4 operator*( const Transformation &rhs ) const;
 
+  virtual Angel::mat4 inverse( void ) const = 0;
+  virtual Transformation::Subtype type( void ) const = 0;
+  bool inheritable( void ) const;
+  void markNew( void );
+
 protected:
+  bool _inheritable;
+  bool _new;
   Angel::mat4 mat;
   
 };
@@ -46,7 +61,9 @@ public:
   const RotMat &rotateY( const GLfloat theta, bool postmult = true );
   const RotMat &rotateZ( const GLfloat theta, bool postmult = true );
   const RotMat &adjust( const Angel::mat4 &Adjustment, bool postmult = true );
-  
+  virtual Angel::mat4 inverse( void ) const;
+  virtual Transformation::Subtype type( void ) const;
+
 };
 
 /** Translations **/
@@ -64,7 +81,9 @@ public:
 
   const TransMat &delta( const float x, const float y, const float z );
   const TransMat &delta( const Angel::vec3 &arg );
-  
+  virtual Angel::mat4 inverse( void ) const;
+  virtual Transformation::Subtype type( void ) const;
+
 };
 
 class ScaleMat : public Transformation {
@@ -76,6 +95,8 @@ public:
 
   const ScaleMat &adjust( const float x, const float y, const float z );
   const ScaleMat &adjust( const float pct );
+  virtual Angel::mat4 inverse( void ) const;
+  virtual Transformation::Subtype type( void ) const;
   
 };
 

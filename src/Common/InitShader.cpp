@@ -8,14 +8,14 @@
  **/
 
 #include <cstdio>
-#include <string.h>
+#include <cstring>
 #include <string>
 #include <sstream>
 #include <iostream>
 #include <vector>
 #include "platform.h"
 #include "InitShader.hpp"
-#include "eric_rules.hpp"
+#include "Util.hpp"
 
 /**
  * @def GEOMETRY_VERTICES_OUT_EXT
@@ -51,7 +51,7 @@ namespace Angel {
    */
   static char *readShaderSource( const char* shaderFile ) {
     
-    FILE* fp = fopen( VooDoo::getRelativePath(shaderFile), "r" );
+    FILE* fp = fopen( Util::getRelativePath(shaderFile), "r" );
 
     if ( fp == NULL ) {
       return NULL;

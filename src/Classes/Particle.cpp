@@ -48,7 +48,7 @@ void Particle::updateSelf( void ) {
 
 }
 
-// Setters (Will we need getters? Probably not)
+
 void Particle::changeVel( vec3 newVel ) {
   _vel += newVel;
 }

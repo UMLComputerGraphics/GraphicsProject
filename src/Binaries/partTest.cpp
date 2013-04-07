@@ -7,17 +7,8 @@
  @details This is a tech demo for a particle system
  */
 
-#include "globals.h"
-#include "platform.h"
-/* Engine Classes */
-#include "Camera.hpp"
-#include "Cameras.hpp"
 #include "Engine.hpp"
-#include "Object.hpp"
 #include "ParticleSystem.hpp"
-#include "Scene.hpp"
-#include "Screen.hpp"
-#include "Timer.hpp"
 /* Utilities and Common */
 #include "glut_callbacks.h"
 #include "InitShader.hpp"
@@ -28,7 +19,6 @@
 #include <sstream>
 #include <cstdlib>
 #include <time.h>
-#include "eric_rules.hpp"
 
 // Type Aliases
 using Angel::vec3;
@@ -44,7 +34,7 @@ bool fixed_yaw = true;
 void init() {
   
   GLuint shader;
-  GLuint testShader;
+  //GLuint testShader;
   Screen *primScreen = Engine::instance()->mainScreen();
   Scene *rootScene = Engine::instance()->rootScene();
   
@@ -52,6 +42,10 @@ void init() {
   /* vShaderFile, fShaderFile, gShaderFile, gs_inType, gs_outType, gs_numVertOut */
 
   // Load shaders and use the resulting shader program. 
+  /*
+  shader = Angel::InitShader( "shaders/vParticle.glsl",
+                              "shaders/fParticle.glsl");
+			      */
   shader = Angel::InitShader( "shaders/vParticle.glsl",
                               "shaders/fParticle.glsl",
                               "shaders/gParticle.glsl",
@@ -59,6 +53,7 @@ void init() {
 			      GL_TRIANGLE_STRIP,
 			      4 );
   
+
   rootScene->shader(shader);
   primScreen->_camList.shader(shader);
 
@@ -73,7 +68,7 @@ void init() {
   //  testObj->trans.scale.Set(1);
   //  testObj->trans.offset.SetY(5);
   
-  Object *particleSystem = new ParticleSystem( 5, "ParticleSystem", shader );
+  Object *particleSystem = new ParticleSystem( 30, "ParticleSystem", shader );
   rootScene->insertObject( particleSystem );
   particleSystem->buffer();
 
@@ -132,7 +127,7 @@ int main( int argc, char **argv ) {
 #ifdef __APPLE__
   CGSetLocalEventsSuppressionInterval( 0.0 );
 #endif
-  VooDoo::InitRelativePaths(argc, argv);
+  Util::InitRelativePaths(argc, argv);
   
 
   glutInit( &argc, argv );
@@ -144,17 +139,18 @@ int main( int argc, char **argv ) {
   
   GLEW_INIT();
   init();
+  glPointSize( 10.0 ) ;
   
   /* Register our Callbacks */
   glutDisplayFunc( display );
-  glutKeyboardFunc( keyboard );
-  glutKeyboardUpFunc( keylift );
-  glutSpecialFunc( keyboard_ctrl );
-  glutMouseFunc( mouse );
-  glutMotionFunc( mouseroll );
-  glutPassiveMotionFunc( mouselook );
+  glutKeyboardFunc( engineKeyboard );
+  glutKeyboardUpFunc( engineKeylift );
+  glutSpecialFunc( engineSpecialKeyboard );
+  glutMouseFunc( engineMouse );
+  glutMotionFunc( engineMouseMotion );
+  glutPassiveMotionFunc( EngineMousePassive );
   glutIdleFunc( idle );
-  glutReshapeFunc( resizeEvent );
+  glutReshapeFunc( engineResize );
   
   /* PULL THE TRIGGER */
   glutMainLoop();

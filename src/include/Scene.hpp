@@ -71,10 +71,10 @@ public:
    * for the Scene prior to the call.
    *
    * @param objName The name of the new Object to add.
-   * @param Object_Shader The shader that should be used to render this object.
+   * @param shader The shader that should be used to render this object.
    * @return A pointer to the new Object.
    */
-  Object *addObject( const std::string &objName, GLuint Object_Shader = 0 );
+  Object *addObject( const std::string &objName, GLuint shader = 0 );
 
   /**
    * delObject will remove from the Scene graph the object with the given name.
@@ -93,24 +93,61 @@ public:
    */
   void popObject( void );
 
+  /**
+   * insertObject will register a new Object in the scene graph.
+   * WARNING! This Object now "Belongs to" the scene graph and
+   * the scene graph will manage the object for you. Do not free it!
+   *
+   * @param obj The object pointer to register with the Scene graph.
+   */
+  void insertObject( Object *obj );
+
+  /**
+   * Select as the "active object" the next object in the list.
+   * If there is no "Next" object, cycle back to the first.
+   * @return A pointer to the Next object in the list.
+   */
   Object *next( void );
+
+  /**
+   * Selects as the active object the previous item in the list.
+   * If there is no previous item, cycles back to the last item in the list.
+   * @return A pointer to the Previous object in the list.
+   */
   Object *prev( void );
+
+  /**
+   * Returns a pointer to the "active" object in the scene graph.
+   * @return An Object pointer to the active object at this level.
+   */
   Object *active( void ) const;
 
+  /**
+   * Calls the draw method on all children.
+   * @return void.
+   */
   void draw( void );
 
+  /**
+   * Fetch an Object pointer from the scene graph with the matching name.
+   * @param objname The name of the object to fetch.
+   * @return The requested Object pointer.
+   */
   Object *operator[]( const std::string &objname );
 
-  /* WARNING: Copies do NOT copy Children... ! */
-  Scene( const Scene &copy );
+  /**
+   * "Copies" a scene into a new scene: Objects and Active state
+   * are left behind, though, so it's not much of a copy.
+   * @param copy The scene to copy from.
+   * @return A reference to the scene we copied into.
+   */
   Scene &operator=( const Scene &copy );
 
   /**
-   * Register a created object with the scene graph.
-   * @param name The name of the object (For the associative map),
-   * @param obj The Object pointer to add to the scene.
+   * Copy constructor: Uses Scene::operator= to do its dirty work.
+   * @param copy The scene to copy from.
    */
-  void insertObject( Object *obj );
+  Scene( const Scene &copy );
 
 protected:
   /**

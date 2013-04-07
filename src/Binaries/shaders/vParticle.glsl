@@ -18,10 +18,10 @@ uniform mat4 OTM;
 
 void main()
 {
-	//gColor = vec4(1.0, 1.0, 1.0, 1.0);
 
   	gl_Position = P * CTM * OTM * vPosition;
-	//gl_Position = vPosition;  // add transformation?
-	gCamPos = cameraPos;
-	gColor = vColor;
+
+	//gCamPos = cameraPos;
+	//gColor = vColor;
+	//gColor = vec4(1.0, 1.0, 1.0, 1.0);
 }

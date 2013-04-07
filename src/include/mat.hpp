@@ -20,6 +20,11 @@
 #include <cstdio>
 #include "vec.hpp"
 
+/**
+ * Namespace to encompass Ed Angel's functions and classes.
+ * @author Ed Angel
+ * @date 2013-03-30
+ */
 namespace Angel {
   
   //  mat2 - 2D square matrix

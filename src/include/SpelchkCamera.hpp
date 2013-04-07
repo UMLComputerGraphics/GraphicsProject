@@ -40,12 +40,16 @@ private:
   vec4 _translationVector;
   vec4 _oldTranslationVector;
 
+  vec4 _cameraPosition;
+  vec4 _oldCameraPosition;
+
   mat4 _modelViewMatrix;
 
   int _inboundHeadData;
   vec4 _initialHeadPosition;
 
   void calculateTranslationVector();
+  void calculateCameraPosition();
 
 public:
   SpelchkCamera( vec4 initialTranslationVector );
@@ -54,6 +58,9 @@ public:
   mat4 getProjectionMatrix();
   mat4 getModelViewMatrix();
   vec4 getTranslationVector();
+
+  mat4 getRotationMatrix();
+  vec4 getCameraPosition();
 
   // Displaces camera from its current location
   void moveCamera( float xDepth, float yDepth, float zDepth );

@@ -10,6 +10,11 @@
 #include "mat.hpp"
 #include "Transformation.hpp"
 #include "platform.h" //OpenGL types.
+
+Transformation::Transformation( void ) {
+  _inheritable = true;
+  _new = false;
+}
 Transformation::~Transformation( void ) {
   // Nihil. Provided for inheritance only.
 }
@@ -24,6 +29,14 @@ Angel::mat4 Transformation::operator*( const Angel::mat4 &rhs ) const {
 
 Angel::mat4 Transformation::operator*( const Transformation &rhs ) const {
   return mat * rhs.matrix();
+}
+
+bool Transformation::inheritable( void ) const {
+  return _inheritable;
+}
+
+void Transformation::markNew( void ) {
+  _new = true;
 }
 
 Angel::mat4 operator*( const Angel::mat4 &lhs, const Transformation &rhs ) {
@@ -57,6 +70,16 @@ const RotMat &RotMat::adjust( const Angel::mat4 &adjustment, bool postmult ) {
   // really do come last.
   else mat = mat * adjustment;
   return (*this);
+}
+
+Angel::mat4 RotMat::inverse( void ) const {
+
+  return transpose( mat );
+
+}
+
+Transformation::Subtype RotMat::type( void ) const {
+  return Transformation::ROTATION;
 }
 
 /* TRANSLATION */
@@ -101,6 +124,19 @@ const TransMat &TransMat::delta( const Angel::vec3 &arg ) {
   return delta( arg.x, arg.y, arg.z );
 }
 
+Angel::mat4 TransMat::inverse( void ) const {
+
+  return Angel::mat4( 1, 0, 0, -mat[0][3],
+                      0, 1, 0, -mat[1][3],
+                      0, 0, 1, -mat[2][3],
+                      0, 0, 0, 1);
+
+}
+
+Transformation::Subtype TransMat::type( void ) const {
+  return Transformation::TRANSLATION;
+}
+
 /* SCALE */
 
 const ScaleMat &ScaleMat::set( const float x, const float y, const float z ) {
@@ -126,4 +162,18 @@ const ScaleMat &ScaleMat::adjust( const float x, const float y,
 
 const ScaleMat &ScaleMat::adjust( const float pct ) {
   return adjust( pct, pct, pct );
+}
+
+Angel::mat4 ScaleMat::inverse( void ) const {
+
+  return Angel::mat4( (1/mat[0][0]), 0, 0, 0,
+                      0, (1/mat[1][1]), 0, 0,
+                      0, 0, (1/mat[2][2]), 0,
+                      0, 0, 0, 1);
+
+}
+
+
+Transformation::Subtype ScaleMat::type( void ) const {
+  return Transformation::SCALE;
 }

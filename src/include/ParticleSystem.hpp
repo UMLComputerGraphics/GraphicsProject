@@ -57,8 +57,7 @@ public:
 
 //protected:
   
-private:
-  
+private:  
 
   float rangeRandom( float min, float max );
 

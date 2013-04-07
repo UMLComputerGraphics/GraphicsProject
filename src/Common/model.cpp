@@ -5,6 +5,7 @@
  * @brief Functions related to constructing simple geometry.
  */
 
+#include "Util.hpp"
 #include "globals.h"
 #include "Object.hpp"
 #include "Timer.hpp"
@@ -319,24 +320,6 @@ void colorCube( Object *obj, GLfloat size ) {
 }
 
 /**
- * Return a randomized float value!
- *
- * @return A random float, just for you!
- */
-float randFloat( void ) {
-  return rand() / (float) RAND_MAX;
-}
-
-/**
- * Returns a random float between [-H,H].
- * @param H The range for the random float.
- * @return a random float between [-H,H].
- */
-double jitter( double H ) {
-  return (-H) + rand() * (H - (-H)) / RAND_MAX;
-}
-
-/**
  * Calculate the vector normal to the triangle formed by three _vertices.
  * @param a First vertex.
  * @param b Second vertex.
@@ -347,12 +330,6 @@ double jitter( double H ) {
 vec3 calcNormal( Point4 &a, Point4 &b, Point4 &c ) {
   return cross( c - b, b - a );
 }
-
-/*
- * vec3 calcNormal( Point4 &a, Point4 &b, Point4 &c, Point4 &d ) {
- return cross( c - b, b - a );
- }
- */
 
 // The following are helper macros for landGen.
 // They help you simulate a 2D array of height values
@@ -465,9 +442,9 @@ double landGen( Object *obj, int N, float H ) {
                           + COLOR_AT(x,z+sideLength)
                           + COLOR_AT(x+sideLength,z+sideLength))
                          / 4.0;
-        vec4 color_jitter = vec4( jitter( CH ), jitter( CH ), jitter( CH ), 0 );
+        vec4 color_jitter = vec4( Util::jitter( CH ), Util::jitter( CH ), Util::jitter( CH ), 0 );
         
-        HEIGHT_AT( x + halfSide, z + halfSide ) = avg + jitter( H );
+        HEIGHT_AT( x + halfSide, z + halfSide ) = avg + Util::jitter( H );
         COLOR_AT( x + halfSide, z + halfSide ) = color_avg + color_jitter;
       } // for z
     } // for x
@@ -493,9 +470,9 @@ double landGen( Object *obj, int N, float H ) {
                           + COLOR_AT( x, z + halfSide % S )
                           + COLOR_AT( x, (z - halfSide + S) % S ))
                          / 4.0;
-        vec4 color_jitter = vec4( jitter( CH ), jitter( CH ), jitter( CH ), 0 );
+        vec4 color_jitter = vec4( Util::jitter( CH ), Util::jitter( CH ), Util::jitter( CH ), 0 );
         
-        HEIGHT_AT( x, z ) = avg + jitter( H );
+        HEIGHT_AT( x, z ) = avg + Util::jitter( H );
         COLOR_AT( x, z ) = color_avg + color_jitter;
         
         // Wrapping:

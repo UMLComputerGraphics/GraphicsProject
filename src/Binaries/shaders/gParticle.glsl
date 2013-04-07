@@ -23,8 +23,12 @@ void main ()
 
 	vec4 Pos = gl_PositionIn[0];
 
+
 	// 'Grow' quad around a point
 	gl_Position = Pos ;
+
+	// uh actually if you want the quad /AROUND/ the point, we need to first:
+	Pos.x -= particleSize;
 	EmitVertex();
 
 	Pos.y += particleSize;

@@ -14,25 +14,12 @@
 #include <cstdlib>
 #include <time.h>
 // Multi-platform support and OpenGL headers
-#include "platform.h"
-#include "globals.h"
-// Ed Angel's Math Classes
-#include "vec.hpp"
-#include "mat.hpp"
-// Utilities and Classes
 #include "Engine.hpp"
-#include "Camera.hpp"
-#include "Cameras.hpp"
-#include "Screen.hpp"
-#include "Object.hpp"
-#include "Timer.hpp"
-#include "Scene.hpp"
 // Utilities
 #include "model.hpp"
 #include "InitShader.hpp"
 #include "glut_callbacks.h"
 #include "ObjLoader.hpp"
-#include "eric_rules.hpp"
 
 // Type Aliases
 using Angel::vec3;
@@ -46,8 +33,9 @@ CWii Wii;
 bool usingWii = false;
 #endif
 
-// Textures
-// Obtained from www.goodtextures.com
+/**
+ * Here's a gross blob of texture constants used for terrain generation!
+ */
 const char* terrainTex[] = { "../Textures/GoodTextures_0013423.jpg", // Dirt/Mud
     "../Textures/GoodTextures_0013779.jpg",  // Sand
     "../Textures/GrassGreenTexture0002.jpg", // Grass (who'da thunk?)
@@ -117,7 +105,7 @@ void init() {
   // Let's create some objects.
   Object *terrain = theScene->addObject( "terrain" );
   glUseProgram( gShader );// Temporary hack until I refine the texturing management subsystem.
-  terrain->texture( terrainTex );
+  terrain->terrainTexture( terrainTex );
   terrain->drawMode( GL_TRIANGLE_STRIP );
   randomize_terrain();// This call depends upon "terrain" existing within theScene.
   
@@ -206,6 +194,14 @@ void init() {
   cam->_trans._scale.set( 0.05 );
   cam->_trans._preRotation.rotateY( 180 );
   cam->propagate();
+
+  Object *rcam = cam->addObject( "right-cam" );
+  ObjLoader::loadModelFromFile( rcam, "../models/rainbow_dashT.obj" );
+  rcam->buffer();
+  rcam->drawMode( GL_TRIANGLES );
+  rcam->_trans._offset.set( 10, 0, 0 );
+  cam->propagate();
+  rcam->propagate();
   
   // Add the propagate method to the Scene Graph directly, instead of this:
   // Note: Terrain doesn't/shouldn't have children ...
@@ -227,37 +223,9 @@ void cleanup( void ) {
   
 }
 
-/** 
- displayViewport is responsible for drawing a single viewport.
-
- @return void.
- **/
-void displayViewport( void ) {
-  
-  // draw free-floating objects
-  Engine::instance()->rootScene()->draw();
-  // draw camera-attached objects
-  Engine::instance()->cams()->draw();
-  
-}
-
 /**
- display is responsible for drawing an entire screen.
-
- @return void.
- **/
-void display( void ) {
-  // Clear the screen and begin rendering.
-  glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-  
-  // Tell camList to draw using our displayViewport rendering function.
-  Engine::instance()->cams()->view( displayViewport );
-  
-  // Utilize multi-buffering.
-  glutSwapBuffers();
-}
-
-// This global switch controls if we generate terrain or not.
+ * This global switch controls our terrain generation.
+ */
 bool switchingTerrain = false;
 
 /**
@@ -356,15 +324,32 @@ void wiilook( Camera &WiiCamera, const Angel::vec3 &NewTheta,
   
 }
 
+/**
+ * A simple animation callback.
+ * Rotates the object about its Y axis.
+ * @param obj The object to rotate.
+ */
 void simpleRotateY( TransCache &obj ) {
   obj._rotation.rotateY( tick.scale() * 1.5 );
 }
+
+/**
+ * A simple animation callback.
+ * Rotates the object about its Y axis,
+ * as it orbits the object around a point about the Y axis.
+ * @param obj The object to animate.
+ */
 void simpleRotateAnim( TransCache &obj ) {
   obj._rotation.rotateY( tick.scale() * 1.5 );
   obj._offset.set( 1.5, 0, 0 );
   obj._orbit.rotateY( tick.scale() * -1.0 );
 }
 
+/**
+ * An animation callback that tests a variety of transformations
+ * in the scene graph.
+ * @param obj The object to animate.
+ */
 void animationTest( TransCache &obj ) {
   double timeScale = tick.scale();
   double theta = timeScale * 0.1;
@@ -396,19 +381,19 @@ void animationTest( TransCache &obj ) {
   //obj.displacement.set( 5, 0, 0 ); 
 }
 
-/// hackity hack hack hackey doo!
+/** Scale used for terrain generation animation. **/
 float heightScale = 0.0;
+/** Timer used for terrain generation animation. **/
 float ticker = 0.0;
 
-void idle( void ) {
+/**
+ * Idle function that is called from the GLUT mainloop.
+ * Applies animations, camera motion, and Wii input.
+ */
+void terrain_idle( void ) {
   
   Scene &theScene = (*Engine::instance()->rootScene());
-  
-  tick.tock();
-  
-  if ( DEBUG_MOTION )
-    fprintf( stderr, "Time since last idle: %lu\n", tick.delta() );
-  
+
   Object &Terrain = *(theScene["terrain"]);
   Object &Pyramid = *(theScene["pyramid"]);
   Pyramid.animation( animationTest );
@@ -453,32 +438,39 @@ void idle( void ) {
 
   }
 #endif
-  
-  // Move all camera(s).
-  Engine::instance()->cams()->idleMotion();
-  glutPostRedisplay();
-  
+
 }
 
 //--------------------------------------------------------------------
 
+/**
+ * menufunc is registered with GLUT to handle callbacks from
+ * the simple menu that it generates.
+ * @param value Integer representing the option the user chose from the menu.
+ */
 void menufunc( int value ) {
   
   Engine *EN = Engine::instance();
   Scene *theScene = EN->rootScene();
   
   switch ( value ) {
-  case 0:
+  case 0: // Generate Terrain
     landGen( (*theScene)["terrain"], 12, 40.0 );
     (*theScene)["terrain"]->buffer();
     break;
-  case 1:
+  case 1: // Toggle fixed-yaw.
     EN->flip( "fixed_yaw" );
     break;
   }
   
 }
 
+/**
+ * Terrain generation demonstration!
+ * @param argc Ignored.
+ * @param argv Ignored.
+ * @return EXIT_SUCCESS.
+ */
 int main( int argc, char **argv ) {
   
 #ifdef WII
@@ -487,37 +479,9 @@ int main( int argc, char **argv ) {
   }
 #endif
   
-  // OS X suppresses events after mouse warp.  This resets the suppression 
-  // interval to 0 so that events will not be suppressed. This also found
-  // at http://stackoverflow.com/questions/728049/
-  // glutpassivemotionfunc-and-glutwarpmousepointer
-#ifdef __APPLE__
-  CGSetLocalEventsSuppressionInterval( 0.0 );
-#endif
-  VooDoo::InitRelativePaths(argc, argv);
-  
-  glutInit( &argc, argv );
-  glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH );
-  //glutInitWindowSize( 0, 0 );
-  glutCreateWindow( "Terrain" );
-  glutFullScreen();
-  glutSetCursor( GLUT_CURSOR_NONE );
-  
-  GLEW_INIT();
+  Engine::init( &argc, argv, "Terrain Generation Flythrough" );
   init();
-  
-  /* Register our Callbacks */
-  glutDisplayFunc( display );
-  glutKeyboardFunc( keyboard );
-  glutKeyboardUpFunc( keylift );
-  glutSpecialFunc( keyboard_ctrl );
-  glutMouseFunc( mouse );
-  glutMotionFunc( mouseroll );
-  glutPassiveMotionFunc( mouselook );
-  glutIdleFunc( idle );
-  glutReshapeFunc( resizeEvent );
-  
-  if ( DEBUG ) {
+    if ( DEBUG ) {
     fprintf( stderr, "GL_VENDOR: %s\n", glGetString( GL_VENDOR ) );
     fprintf( stderr, "GL_RENDERER: %s\n", glGetString( GL_RENDERER ) );
     fprintf( stderr, "GL_VERSION: %s\n", glGetString( GL_VERSION ) );
@@ -532,6 +496,8 @@ int main( int argc, char **argv ) {
   glutAddMenuEntry( "Toggle Free Rotation", 1 );
   glutAttachMenu( GLUT_RIGHT_BUTTON );
   
+  Engine::instance()->registerIdle( terrain_idle );
+
   /* PULL THE TRIGGER */
   glutMainLoop();
   return EXIT_SUCCESS;

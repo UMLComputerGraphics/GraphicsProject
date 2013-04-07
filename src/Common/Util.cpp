@@ -1,20 +1,19 @@
-/*
- * eric_rules.cpp
- *
- *  Created on: Mar 29, 2013
- *      Author: Eric McCann
+/**
+ * @file Util.cpp
+ * @author Eric McCann
+ * @date 2013-03-29
+ * @brief String utilities.
+ * @details Formerly named "eric_rules.cpp", but he had to know that wouldn't last too long.
  */
 
 #include <cstdio>
-#include <string.h>
+#include <cstring>
+#include <cstdlib>
 #include <string>
 #include <sstream>
 #include <iostream>
 #include <vector>
-#include "platform.h"
-#include "InitShader.hpp"
-#include "eric_rules.hpp"
-
+#include "Util.hpp"
 
 // http://stackoverflow.com/questions/236129/splitting-a-string-in-c
 std::vector< std::string > &split( const std::string &s, char delim,
@@ -31,8 +30,7 @@ std::vector< std::string > split( const std::string &s, char delim ) {
   return split( s, delim, elems );
 }
 
-namespace VooDoo
-{
+namespace Util {
   /**
    * InitRelativePaths is a preparation step allowing files referred to relative to the executable to be referred to relative to the working dir AND the executable
    *
@@ -49,9 +47,9 @@ namespace VooDoo
     //slapchop[0..length-2] == path without executable name
     if ( slapchop.size() > 1 ) {
       std::stringstream cat;
-      for ( int i = 0; i < slapchop.size() - 1; i++ )
+      for ( size_t i = 0; i < slapchop.size() - 1; i++ )
         cat << slapchop[i] << "/";
-      getRelativePath(cat.str().c_str());
+      getRelativePath( cat.str().c_str() );
     }
   }
 
@@ -62,25 +60,39 @@ namespace VooDoo
    *
    * @return the real path
    */
-  const char *getRelativePath(const char *path )
-  {
+  const char *getRelativePath( const char *path ) {
     static std::string dondeestalosshaders;
-    if (dondeestalosshaders.size() == 0)
-    {
-      if (strlen(path) == 0)
-      {
-        char** fake = (char**)malloc(sizeof(char*));
-        fake[0] = (char*)"";
-        InitRelativePaths(-1, fake);
-        free(fake);
-      }
-      else
-      {
-        dondeestalosshaders = std::string(path);
+    if ( dondeestalosshaders.size() == 0 ) {
+      if ( strlen( path ) == 0 ) {
+        char** fake = (char**) malloc( sizeof(char*) );
+        fake[0] = (char*) "";
+        InitRelativePaths( -1, fake );
+        free( fake );
+      } else {
+        dondeestalosshaders = std::string( path );
       }
     }
     std::stringstream wholepath;
     wholepath << dondeestalosshaders << path;
     return wholepath.str().c_str();
   }
+
+/**
+ * Return a randomized float value between [0,1].
+ * @return A random float, just for you!
+ * @see also: jitter
+ */
+float randFloat( void ) {
+  return rand() / (float) RAND_MAX;
+}
+
+/**
+ * Returns a random float between [-H,H].
+ * @param H The range for the random float.
+ * @return a random float between [-H,H].
+ */
+double jitter( double H ) {
+  return (-H) + rand() * (H - (-H)) / RAND_MAX;
+}
+
 }

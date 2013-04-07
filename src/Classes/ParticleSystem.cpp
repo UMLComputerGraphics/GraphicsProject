@@ -27,13 +27,14 @@ using namespace Angel;
 ParticleSystem::ParticleSystem( int particleAmt, const std::string &name,
                                 GLuint shader ) :
     Object( name, shader ), numParticles( particleAmt ), minLife( 0.1 ),
-    maxLife( 1 ) {
-
-  addParticles();
+    maxLife( 1 ) 
+{
+   this->drawMode(GL_POINTS) ;
+   this->addParticles();
 }
 
 ParticleSystem::~ParticleSystem( void ) {
-  for ( int i = 0; i < particles.size(); i++ ) {
+  for ( size_t i = 0; i < particles.size(); i++ ) {
     free( particles[i] );
   }
   particles.clear();
@@ -99,8 +100,7 @@ ParticleSystem::buffer()
   glBindVertexArray(_vao);
 
   glBindBuffer(GL_ARRAY_BUFFER, _buffer[VERTICES]);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(Angel::vec4) * _vertices.size(), 
-	       &(_vertices[0]), GL_DYNAMIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(Angel::vec4) * _vertices.size(), &(_vertices[0]), GL_DYNAMIC_DRAW);
 
   // Copy/Pasted this from Object::Buffer()
   // Who knows if we will be texturing the spots?
@@ -119,10 +119,12 @@ ParticleSystem::buffer()
 void
 ParticleSystem::draw()
 {
+  //std::cerr << "invoking ps draw" << std::endl;
 
-  // bind the vao and 
+  update();
+  buffer();
+
   glBindVertexArray(_vao);
-
   // if it isn't already loaded, switch in the appropriate shader. 
   // TODO make this bit of code a (private) function in Object?
   GLint currShader;
@@ -134,16 +136,12 @@ ParticleSystem::draw()
     activeCamera->view();
   }
 
-  // XXX THIS DISAPPEARED -- FIX IT?
-
-  // >> listen to the woman; calm down, just calm down 
-  // ~Abe Lincoln
-
-
   // send uniform information to the shader.
   //send( Object::camPos ); 
   send( Object::OBJECT_CTM  ) ;
-  glDrawArrays( GL_POINTS, 0, numParticles );
+
+  //glDrawArrays( GL_POINTS, 0, numParticles );
+  glDrawArrays( GL_POINTS, 0, _vertices.size() );
 
 
   /*   // move all the positions into the _vertices buffer inherited from Object
@@ -153,7 +151,7 @@ ParticleSystem::draw()
 	 //if ( i > getNumParticles() ) cerr << "" << std::endl;
   }*/
   //Get the particles moved/rebuffered for the next draw call
-  update();
+
 
   // FIXME the particle rebuffering should be /separate/ from the position updating
 
@@ -172,7 +170,8 @@ void ParticleSystem::update() {
   for(i = particles.begin(); i != particles.end(); ++i) {
 
     (*i)->updateSelf();
-    _vertices.push_back((*i)->getPosition());
+    for(int j = 0 ; j<3 ; ++j )
+	  _vertices.push_back((*i)->getPosition());
 
   }
   //buffer();

@@ -127,7 +127,13 @@ public:
    *
    * @param filename an array of strings to load textures from.
    */
-  void texture( const char** filename );
+  void terrainTexture( const char** filename );
+
+  /**
+   * Binds a texture to this Object.
+   * @param filename The filename of the texture to load.
+   */
+  void texture( const char* filename );
 
   /**
    * Retrieve the _name of this Object.
@@ -263,6 +269,18 @@ public:
    * state of this object.
    */
   TransCache _trans;
+
+  /**
+   * Retrieve a vec3 containing the maximum x,y,z values found in this Object.
+   * @return vec3( maxX, maxY, maxZ )
+   */
+  Angel::vec3 getMax( void );
+
+  /**
+   * Retrieve a vec3 containing the minimum x,y,z values found in this Object.
+   * @return vec3( minX, minY, minZ )
+   */
+  Angel::vec3 getMin( void );
 
 protected:
   /** _name is used as an identifying handle for the object. **/
