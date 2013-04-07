@@ -7,16 +7,11 @@
  */
 #include <string>
 #include <vector>
-#include "Texture.hpp"
 #include <stdexcept>
+#include <cstdio>
 
-#include "platform.h"
 #include "Engine.hpp"
-#include "vec.hpp"
-#include "mat.hpp"
 #include "Object.hpp"
-#include "globals.h"
-#include "Timer.hpp"
 
 using Angel::vec4;
 using Angel::mat4;
@@ -276,9 +271,9 @@ void Object::drawMode( GLenum new_mode ) {
  *
  * @param filename an array of strings to load textures from.
  */
-void Object::texture( const char** filename ) {
+void Object::terrainTexture( const char** filename ) {
 
-  Tick.Tock();
+  tick.tock();
   glBindVertexArray( _vao );
 
   Texture **textures = (Texture **) malloc( sizeof(Texture*) * 5 );
@@ -293,12 +288,16 @@ void Object::texture( const char** filename ) {
   textures[2]->load( filename[2] );
   textures[3]->load( filename[3] );
   textures[4]->load( filename[4] );
+  tick.tock();
+  fprintf( stderr, "Texture loads: %lu\n", tick.delta() );
 
   textures[0]->buffer();
   textures[1]->buffer();
   textures[2]->buffer();
   textures[3]->buffer();
   textures[4]->buffer();
+  tick.tock();
+  fprintf( stderr, "Texture buffering: %lu\n", tick.delta() );
 
   textures[0]->bind( GL_TEXTURE0 );
   textures[1]->bind( GL_TEXTURE1 );
@@ -316,11 +315,26 @@ void Object::texture( const char** filename ) {
   glUniform1i( gSampler3, 3 );
   GLuint gSampler4 = glGetUniformLocation( shader(), "gSampler4" );
   glUniform1i( gSampler4, 4 );
+  tick.tock();
+  fprintf( stderr, "Texture binding and sending sampler uniforms: %lu\n", tick.delta() );
 
   glBindVertexArray( 0 );
+}
 
-  Tick.Tock();
-  fprintf( stderr, "took %lu usec to finalize textures.\n", Tick.Delta() );
+/**
+ * Binds a texture to this Object.
+ * @param filename The filename of the texture to load.
+ */
+void Object::texture( const char* filename ) {
+
+  TextureManagement *tx = Engine::instance()->texMan();
+  Texture *newTex = new Texture( GL_TEXTURE_2D );
+  newTex->load( filename );
+  newTex->buffer();
+
+  _textureID = tx->assign( newTex );
+  send( Object::TEX_SAMPLER );
+
 }
 
 /**
@@ -376,7 +390,7 @@ void Object::send( Object::UniformEnum which ) {
 
   case Object::OBJECT_CTM:
     glUniformMatrix4fv( _handles[Object::OBJECT_CTM], 1, GL_TRUE,
-                        this->_trans.OTM() );
+                        this->_trans.otm() );
     break;
 
   case Object::MORPH_PCT:
@@ -455,16 +469,16 @@ void Object::propagate( void ) {
 
   //std::cerr << "Calling CALCCTM:\n";
   //Update my Object's CTM...
-  this->_trans.CalcCTM();
+  this->_trans.calcCTM();
 
-  //send my OTM as the PTM to all of my children.
+  //send my otm as the ptm to all of my children.
   for ( it = _list.begin(); it != _list.end(); ++it ) {
-    (*it)->_trans.PTM( this->_trans.OTM() );
+    (*it)->_trans.ptm( this->_trans.otm() );
     //Tell that child to update his CTM and propagate.
     (*it)->propagate();
   }
 
-  //std::cerr << "{" << _name << "::OTM:" << this->_trans.OTM() << "}\n";
+  //std::cerr << "{" << _name << "::otm:" << this->_trans.otm() << "}\n";
 
 }
 
@@ -474,7 +488,7 @@ void Object::propagate( void ) {
  */
 vec4 Object::position( void ) const {
 
-  mat4 theOTM = this->_trans.OTM();
+  mat4 theOTM = this->_trans.otm();
 
   return vec4( theOTM[0][3], theOTM[1][3], theOTM[2][3], 1.0 );
 }
@@ -542,3 +556,36 @@ int Object::numberOfPoints( void ) {
   return _vertices.size();
 }
 
+/**
+ * Retrieve a vec3 containing the maximum x,y,z values found in this Object.
+ * @return vec3( maxX, maxY, maxZ )
+ */
+Angel::vec3 Object::getMax( void ) {
+
+  Angel::vec3 max = Angel::vec3( -INFINITY, -INFINITY, -INFINITY );
+  for (size_t i = 0; i < _vertices.size(); ++i ) {
+    if ( _vertices[i].x > max.x ) max.x = _vertices[i].x;
+    if ( _vertices[i].y > max.y ) max.y = _vertices[i].y;
+    if ( _vertices[i].z > max.z ) max.z = _vertices[i].z;
+  }
+
+  return max;
+
+}
+
+/**
+ * Retrieve a vec3 containing the minimum x,y,z values found in this Object.
+ * @return vec3( minX, minY, minZ )
+ */
+Angel::vec3 Object::getMin( void ) {
+
+  Angel::vec3 min = Angel::vec3( INFINITY, INFINITY, INFINITY );
+  for (size_t i = 0; i < _vertices.size(); ++i ) {
+    if ( _vertices[i].x < min.x ) min.x = _vertices[i].x;
+    if ( _vertices[i].y < min.y ) min.y = _vertices[i].y;
+    if ( _vertices[i].z < min.z ) min.z = _vertices[i].z;
+  }
+
+  return min;
+
+}

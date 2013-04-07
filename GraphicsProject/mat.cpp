@@ -1,17 +1,16 @@
 /**
-   @file mat.cpp
-   @author Ed Angel
-   @date 2012-12-04
-   @brief Implementation for the mat2, mat3, and mat4 classes.
-   @details
-   Modified heavily from code available from Ed Angel's website,
-   http://www.cs.unm.edu/~angel/BOOK/INTERACTIVE_COMPUTER_GRAPHICS/SIXTH_EDITION/
-   Published from his book,
-   Interactive Computer Graphics
-   A Top-Down Approach with OpenGL, Sixth Edition
-   Addison-Wesley 2012
-**/
-
+ * @file mat.cpp
+ * @author Ed Angel
+ * @date 2012-12-04
+ * @brief Implementation for the mat2, mat3, and mat4 classes.
+ * @details
+ * Modified heavily from code available from Ed Angel's website,
+ * http://www.cs.unm.edu/~angel/BOOK/INTERACTIVE_COMPUTER_GRAPHICS/SIXTH_EDITION/
+ * Published from his book,
+ * Interactive Computer Graphics
+ * A Top-Down Approach with OpenGL, Sixth Edition
+ * Addison-Wesley 2012
+ **/
 
 #include "platform.h" /* Multi-platform support and OpenGL includes. */
 #include "vec.hpp"
@@ -62,30 +61,29 @@ namespace Angel {
   }
 
   mat2 mat2::operator+( const mat2 &m ) const {
-    return mat2( _m[0]+m[0], _m[1]+m[1] );
+    return mat2( _m[0] + m[0], _m[1] + m[1] );
   }
 
   mat2 mat2::operator-( const mat2 &m ) const {
-    return mat2( _m[0]-m[0], _m[1]-m[1] );
+    return mat2( _m[0] - m[0], _m[1] - m[1] );
   }
 
   mat2 mat2::operator*( const GLfloat s ) const {
-    return mat2( s*_m[0], s*_m[1] );
+    return mat2( s * _m[0], s * _m[1] );
   }
 
   mat2 mat2::operator/( const GLfloat s ) const {
 
 #ifdef DEBUG
     {
-      if ( std::fabs(s) < DIVIDE_BY_ZERO_TOLERANCE ) {
-    std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] "
-          << "Division by zero" << std::endl;
-    return mat2();
+      if ( std::fabs( s ) < DIVIDE_BY_ZERO_TOLERANCE ) {
+        std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] "
+                  << "Division by zero" << std::endl;
+        return mat2();
       }
     }
 #endif // DEBUG
-
-    GLfloat r = GLfloat(1.0) / s;
+    GLfloat r = GLfloat( 1.0 ) / s;
     return *this * r;
   }
 
@@ -94,9 +92,9 @@ namespace Angel {
 
     for ( int i = 0; i < 2; ++i ) {
       for ( int j = 0; j < 2; ++j ) {
-    for ( int k = 0; k < 2; ++k ) {
-      a[i][j] += _m[i][k] * m[k][j];
-    }
+        for ( int k = 0; k < 2; ++k ) {
+          a[i][j] += _m[i][k] * m[k][j];
+        }
       }
     }
 
@@ -126,9 +124,9 @@ namespace Angel {
 
     for ( int i = 0; i < 2; ++i ) {
       for ( int j = 0; j < 2; ++j ) {
-    for ( int k = 0; k < 2; ++k ) {
-      a[i][j] += _m[i][k] * m[k][j];
-    }
+        for ( int k = 0; k < 2; ++k ) {
+          a[i][j] += _m[i][k] * m[k][j];
+        }
       }
     }
 
@@ -138,34 +136,33 @@ namespace Angel {
   mat2 &mat2::operator/=( const GLfloat s ) {
 #ifdef DEBUG
     {
-      if ( std::fabs(s) < DIVIDE_BY_ZERO_TOLERANCE ) {
-    std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] "
-          << "Division by zero" << std::endl;
-    return (*this = mat2());
+      if ( std::fabs( s ) < DIVIDE_BY_ZERO_TOLERANCE ) {
+        std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] "
+                  << "Division by zero" << std::endl;
+        return (*this = mat2());
       }
     }
 #endif // DEBUG
-
-    GLfloat r = GLfloat(1.0) / s;
+    GLfloat r = GLfloat( 1.0 ) / s;
     return *this *= r;
   }
 
   /**
-     Returns the result of the operation M*v.
-     Assumes v is a one column, two row matrix.
-  **/
+   Returns the result of the operation M*v.
+   Assumes v is a one column, two row matrix.
+   **/
   vec2 mat2::operator*( const vec2 &v ) const {
 
-    return vec2( _m[0][0]*v.x + _m[0][1]*v.y,
-         _m[1][0]*v.x + _m[1][1]*v.y );
+    return vec2( _m[0][0] * v.x + _m[0][1] * v.y,
+                 _m[1][0] * v.x + _m[1][1] * v.y );
   }
 
-  mat2::operator const GLfloat* () const {
-    return static_cast<const GLfloat*>( &_m[0].x );
+  mat2::operator const GLfloat*() const {
+    return static_cast< const GLfloat* >( &_m[0].x );
   }
 
-  mat2::operator GLfloat* () {
-    return static_cast<GLfloat*>( &_m[0].x );
+  mat2::operator GLfloat*() {
+    return static_cast< GLfloat* >( &_m[0].x );
   }
 
 // Non-class mat2 Methods ---
@@ -184,19 +181,17 @@ namespace Angel {
   }
 
   mat2 matrixCompMult( const mat2 &A, const mat2 &B ) {
-    return mat2( A[0][0]*B[0][0], A[0][1]*B[0][1],
-         A[1][0]*B[1][0], A[1][1]*B[1][1] );
+    return mat2( A[0][0] * B[0][0], A[0][1] * B[0][1], A[1][0] * B[1][0],
+                 A[1][1] * B[1][1] );
   }
 
   mat2 transpose( const mat2 &A ) {
-    return mat2( A[0][0], A[1][0],
-         A[0][1], A[1][1] );
+    return mat2( A[0][0], A[1][0], A[0][1], A[1][1] );
   }
 
 ////////////////////////////////////////////////////////////////////////////
 // Class: mat3
 ////////////////////////////////////////////////////////////////////////////
-
 
 // Constructors and Destructors
 ////////////////////////////////////////////////////////////////////////////
@@ -213,9 +208,8 @@ namespace Angel {
     _m[2] = c;
   }
 
-  mat3::mat3( GLfloat m00, GLfloat m10, GLfloat m20,
-          GLfloat m01, GLfloat m11, GLfloat m21,
-          GLfloat m02, GLfloat m12, GLfloat m22 ) {
+  mat3::mat3( GLfloat m00, GLfloat m10, GLfloat m20, GLfloat m01, GLfloat m11,
+              GLfloat m21, GLfloat m02, GLfloat m12, GLfloat m22 ) {
     _m[0] = vec3( m00, m01, m02 );
     _m[1] = vec3( m10, m11, m12 );
     _m[2] = vec3( m20, m21, m22 );
@@ -241,29 +235,28 @@ namespace Angel {
   }
 
   mat3 mat3::operator+( const mat3 &m ) const {
-    return mat3( _m[0]+m[0], _m[1]+m[1], _m[2]+m[2] );
+    return mat3( _m[0] + m[0], _m[1] + m[1], _m[2] + m[2] );
   }
 
   mat3 mat3::operator-( const mat3 &m ) const {
-    return mat3( _m[0]-m[0], _m[1]-m[1], _m[2]-m[2] );
+    return mat3( _m[0] - m[0], _m[1] - m[1], _m[2] - m[2] );
   }
 
   mat3 mat3::operator*( const GLfloat s ) const {
-    return mat3( s*_m[0], s*_m[1], s*_m[2] );
+    return mat3( s * _m[0], s * _m[1], s * _m[2] );
   }
 
   mat3 mat3::operator/( const GLfloat s ) const {
 #ifdef DEBUG
     {
-      if ( std::fabs(s) < DIVIDE_BY_ZERO_TOLERANCE ) {
-    std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] "
-          << "Division by zero" << std::endl;
-    return mat3();
+      if ( std::fabs( s ) < DIVIDE_BY_ZERO_TOLERANCE ) {
+        std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] "
+                  << "Division by zero" << std::endl;
+        return mat3();
       }
     }
 #endif // DEBUG
-
-    GLfloat r = GLfloat(1.0) / s;
+    GLfloat r = GLfloat( 1.0 ) / s;
     return *this * r;
   }
 
@@ -272,9 +265,9 @@ namespace Angel {
 
     for ( int i = 0; i < 3; ++i ) {
       for ( int j = 0; j < 3; ++j ) {
-    for ( int k = 0; k < 3; ++k ) {
-      a[i][j] += _m[i][k] * m[k][j];
-    }
+        for ( int k = 0; k < 3; ++k ) {
+          a[i][j] += _m[i][k] * m[k][j];
+        }
       }
     }
 
@@ -289,12 +282,16 @@ namespace Angel {
   }
 
   mat3 &mat3::operator-=( const mat3 &m ) {
-    _m[0] -= m[0];  _m[1] -= m[1];  _m[2] -= m[2];
+    _m[0] -= m[0];
+    _m[1] -= m[1];
+    _m[2] -= m[2];
     return *this;
   }
 
   mat3 &mat3::operator*=( const GLfloat s ) {
-    _m[0] *= s;  _m[1] *= s;  _m[2] *= s;
+    _m[0] *= s;
+    _m[1] *= s;
+    _m[2] *= s;
     return *this;
   }
 
@@ -303,9 +300,9 @@ namespace Angel {
 
     for ( int i = 0; i < 3; ++i ) {
       for ( int j = 0; j < 3; ++j ) {
-    for ( int k = 0; k < 3; ++k ) {
-      a[i][j] += _m[i][k] * m[k][j];
-    }
+        for ( int k = 0; k < 3; ++k ) {
+          a[i][j] += _m[i][k] * m[k][j];
+        }
       }
     }
 
@@ -314,29 +311,28 @@ namespace Angel {
 
   mat3 &mat3::operator/=( const GLfloat s ) {
 #ifdef DEBUG
-    if ( std::fabs(s) < DIVIDE_BY_ZERO_TOLERANCE ) {
+    if ( std::fabs( s ) < DIVIDE_BY_ZERO_TOLERANCE ) {
       std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] "
-        << "Division by zero" << std::endl;
+                << "Division by zero" << std::endl;
       return (*this = mat3());
     }
 #endif // DEBUG
-
-    GLfloat r = GLfloat(1.0) / s;
+    GLfloat r = GLfloat( 1.0 ) / s;
     return *this *= r;
   }
 
   vec3 mat3::operator*( const vec3 &v ) const {  // m * v
-    return vec3( _m[0][0]*v.x + _m[0][1]*v.y + _m[0][2]*v.z,
-         _m[1][0]*v.x + _m[1][1]*v.y + _m[1][2]*v.z,
-         _m[2][0]*v.x + _m[2][1]*v.y + _m[2][2]*v.z );
+    return vec3( _m[0][0] * v.x + _m[0][1] * v.y + _m[0][2] * v.z,
+                 _m[1][0] * v.x + _m[1][1] * v.y + _m[1][2] * v.z,
+                 _m[2][0] * v.x + _m[2][1] * v.y + _m[2][2] * v.z );
   }
 
-  mat3::operator const GLfloat* () const {
-    return static_cast<const GLfloat*>( &_m[0].x );
+  mat3::operator const GLfloat*() const {
+    return static_cast< const GLfloat* >( &_m[0].x );
   }
 
-  mat3::operator GLfloat* () {
-    return static_cast<GLfloat*>( &_m[0].x );
+  mat3::operator GLfloat*() {
+    return static_cast< GLfloat* >( &_m[0].x );
   }
 
 // Non-class mat3 Methods
@@ -347,10 +343,8 @@ namespace Angel {
   }
 
   std::ostream &operator<<( std::ostream &os, const mat3 &m ) {
-    return os << std::endl
-          << m[0] << std::endl
-          << m[1] << std::endl
-          << m[2] << std::endl;
+    return os << std::endl << m[0] << std::endl << m[1] << std::endl << m[2]
+              << std::endl;
   }
 
   std::istream &operator>>( std::istream &is, mat3 &m ) {
@@ -358,15 +352,14 @@ namespace Angel {
   }
 
   mat3 matrixCompMult( const mat3 &A, const mat3 &B ) {
-    return mat3( A[0][0]*B[0][0], A[0][1]*B[0][1], A[0][2]*B[0][2],
-         A[1][0]*B[1][0], A[1][1]*B[1][1], A[1][2]*B[1][2],
-         A[2][0]*B[2][0], A[2][1]*B[2][1], A[2][2]*B[2][2] );
+    return mat3( A[0][0] * B[0][0], A[0][1] * B[0][1], A[0][2] * B[0][2],
+                 A[1][0] * B[1][0], A[1][1] * B[1][1], A[1][2] * B[1][2],
+                 A[2][0] * B[2][0], A[2][1] * B[2][1], A[2][2] * B[2][2] );
   }
 
   mat3 transpose( const mat3 &A ) {
-    return mat3( A[0][0], A[1][0], A[2][0],
-         A[0][1], A[1][1], A[2][1],
-         A[0][2], A[1][2], A[2][2] );
+    return mat3( A[0][0], A[1][0], A[2][0], A[0][1], A[1][1], A[2][1], A[0][2],
+                 A[1][2], A[2][2] );
   }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -388,10 +381,10 @@ namespace Angel {
     _m[3] = d;
   }
 
-  mat4::mat4( GLfloat m00, GLfloat m01, GLfloat m02, GLfloat m03,
-          GLfloat m10, GLfloat m11, GLfloat m12, GLfloat m13,
-          GLfloat m20, GLfloat m21, GLfloat m22, GLfloat m23,
-          GLfloat m30, GLfloat m31, GLfloat m32, GLfloat m33 ) {
+  mat4::mat4( GLfloat m00, GLfloat m01, GLfloat m02, GLfloat m03, GLfloat m10,
+              GLfloat m11, GLfloat m12, GLfloat m13, GLfloat m20, GLfloat m21,
+              GLfloat m22, GLfloat m23, GLfloat m30, GLfloat m31, GLfloat m32,
+              GLfloat m33 ) {
     _m[0] = vec4( m00, m01, m02, m03 );
     _m[1] = vec4( m10, m11, m12, m13 );
     _m[2] = vec4( m20, m21, m22, m23 );
@@ -419,27 +412,26 @@ namespace Angel {
   }
 
   mat4 mat4::operator+( const mat4 &m ) const {
-    return mat4( _m[0]+m[0], _m[1]+m[1], _m[2]+m[2], _m[3]+m[3] );
+    return mat4( _m[0] + m[0], _m[1] + m[1], _m[2] + m[2], _m[3] + m[3] );
   }
 
   mat4 mat4::operator-( const mat4 &m ) const {
-    return mat4( _m[0]-m[0], _m[1]-m[1], _m[2]-m[2], _m[3]-m[3] );
+    return mat4( _m[0] - m[0], _m[1] - m[1], _m[2] - m[2], _m[3] - m[3] );
   }
 
   mat4 mat4::operator*( const GLfloat s ) const {
-    return mat4( s*_m[0], s*_m[1], s*_m[2], s*_m[3] );
+    return mat4( s * _m[0], s * _m[1], s * _m[2], s * _m[3] );
   }
 
   mat4 mat4::operator/( const GLfloat s ) const {
 #ifdef DEBUG
-    if ( std::fabs(s) < DIVIDE_BY_ZERO_TOLERANCE ) {
+    if ( std::fabs( s ) < DIVIDE_BY_ZERO_TOLERANCE ) {
       std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] "
-        << "Division by zero" << std::endl;
+                << "Division by zero" << std::endl;
       return mat4();
     }
 #endif // DEBUG
-
-    GLfloat r = GLfloat(1.0) / s;
+    GLfloat r = GLfloat( 1.0 ) / s;
     return *this * r;
   }
 
@@ -448,9 +440,9 @@ namespace Angel {
 
     for ( int i = 0; i < 4; ++i ) {
       for ( int j = 0; j < 4; ++j ) {
-    for ( int k = 0; k < 4; ++k ) {
-      a[i][j] += _m[i][k] * m[k][j];
-    }
+        for ( int k = 0; k < 4; ++k ) {
+          a[i][j] += _m[i][k] * m[k][j];
+        }
       }
     }
 
@@ -486,9 +478,9 @@ namespace Angel {
 
     for ( int i = 0; i < 4; ++i ) {
       for ( int j = 0; j < 4; ++j ) {
-    for ( int k = 0; k < 4; ++k ) {
-      a[i][j] += _m[i][k] * m[k][j];
-    }
+        for ( int k = 0; k < 4; ++k ) {
+          a[i][j] += _m[i][k] * m[k][j];
+        }
       }
     }
 
@@ -497,32 +489,30 @@ namespace Angel {
 
   mat4 &mat4::operator/=( const GLfloat s ) {
 #ifdef DEBUG
-    if ( std::fabs(s) < DIVIDE_BY_ZERO_TOLERANCE ) {
+    if ( std::fabs( s ) < DIVIDE_BY_ZERO_TOLERANCE ) {
       std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] "
-        << "Division by zero" << std::endl;
+                << "Division by zero" << std::endl;
       return (*this = mat4());
     }
 #endif // DEBUG
-
-    GLfloat r = GLfloat(1.0) / s;
+    GLfloat r = GLfloat( 1.0 ) / s;
     return *this *= r;
   }
 
   vec4 mat4::operator*( const vec4 &v ) const {
     return vec4(
-        _m[0][0]*v.x + _m[0][1]*v.y + _m[0][2]*v.z + _m[0][3]*v.w,
-        _m[1][0]*v.x + _m[1][1]*v.y + _m[1][2]*v.z + _m[1][3]*v.w,
-        _m[2][0]*v.x + _m[2][1]*v.y + _m[2][2]*v.z + _m[2][3]*v.w,
-        _m[3][0]*v.x + _m[3][1]*v.y + _m[3][2]*v.z + _m[3][3]*v.w
-        );
+        _m[0][0] * v.x + _m[0][1] * v.y + _m[0][2] * v.z + _m[0][3] * v.w,
+        _m[1][0] * v.x + _m[1][1] * v.y + _m[1][2] * v.z + _m[1][3] * v.w,
+        _m[2][0] * v.x + _m[2][1] * v.y + _m[2][2] * v.z + _m[2][3] * v.w,
+        _m[3][0] * v.x + _m[3][1] * v.y + _m[3][2] * v.z + _m[3][3] * v.w );
   }
 
-  mat4::operator const GLfloat* () const {
-    return static_cast<const GLfloat*>( &_m[0].x );
+  mat4::operator const GLfloat*() const {
+    return static_cast< const GLfloat* >( &_m[0].x );
   }
 
-  mat4::operator GLfloat* () {
-    return static_cast<GLfloat*>( &_m[0].x );
+  mat4::operator GLfloat*() {
+    return static_cast< GLfloat* >( &_m[0].x );
   }
 
   // Non-class mat4 Methods
@@ -534,19 +524,15 @@ namespace Angel {
 
   vec4 operator*( const vec4 &v, const mat4 &_m ) {
     return vec4(
-        _m[0][0]*v.x + _m[1][0]*v.y + _m[2][0]*v.z + _m[3][0]*v.w,
-        _m[0][1]*v.x + _m[1][1]*v.y + _m[2][1]*v.z + _m[3][1]*v.w,
-        _m[0][2]*v.x + _m[1][2]*v.y + _m[2][2]*v.z + _m[3][2]*v.w,
-        _m[0][3]*v.x + _m[1][3]*v.y + _m[2][3]*v.z + _m[3][3]*v.w
-        );
+        _m[0][0] * v.x + _m[1][0] * v.y + _m[2][0] * v.z + _m[3][0] * v.w,
+        _m[0][1] * v.x + _m[1][1] * v.y + _m[2][1] * v.z + _m[3][1] * v.w,
+        _m[0][2] * v.x + _m[1][2] * v.y + _m[2][2] * v.z + _m[3][2] * v.w,
+        _m[0][3] * v.x + _m[1][3] * v.y + _m[2][3] * v.z + _m[3][3] * v.w );
   }
 
   std::ostream &operator<<( std::ostream &os, const mat4 &m ) {
-    return os << std::endl
-          << m[0] << std::endl
-          << m[1] << std::endl
-          << m[2] << std::endl
-          << m[3] << std::endl;
+    return os << std::endl << m[0] << std::endl << m[1] << std::endl << m[2]
+              << std::endl << m[3] << std::endl;
   }
 
   std::istream &operator>>( std::istream &is, mat4 &m ) {
@@ -554,26 +540,26 @@ namespace Angel {
   }
 
   mat4 matrixCompMult( const mat4 &A, const mat4 &B ) {
-    return mat4(
-        A[0][0]*B[0][0], A[0][1]*B[0][1], A[0][2]*B[0][2], A[0][3]*B[0][3],
-        A[1][0]*B[1][0], A[1][1]*B[1][1], A[1][2]*B[1][2], A[1][3]*B[1][3],
-        A[2][0]*B[2][0], A[2][1]*B[2][1], A[2][2]*B[2][2], A[2][3]*B[2][3],
-        A[3][0]*B[3][0], A[3][1]*B[3][1], A[3][2]*B[3][2], A[3][3]*B[3][3] );
+    return mat4( A[0][0] * B[0][0], A[0][1] * B[0][1], A[0][2] * B[0][2],
+                 A[0][3] * B[0][3], A[1][0] * B[1][0], A[1][1] * B[1][1],
+                 A[1][2] * B[1][2], A[1][3] * B[1][3], A[2][0] * B[2][0],
+                 A[2][1] * B[2][1], A[2][2] * B[2][2], A[2][3] * B[2][3],
+                 A[3][0] * B[3][0], A[3][1] * B[3][1], A[3][2] * B[3][2],
+                 A[3][3] * B[3][3] );
   }
 
   mat4 transpose( const mat4& A ) {
-    return mat4( A[0][0], A[1][0], A[2][0], A[3][0],
-         A[0][1], A[1][1], A[2][1], A[3][1],
-         A[0][2], A[1][2], A[2][2], A[3][2],
-         A[0][3], A[1][3], A[2][3], A[3][3] );
+    return mat4( A[0][0], A[1][0], A[2][0], A[3][0], A[0][1], A[1][1], A[2][1],
+                 A[3][1], A[0][2], A[1][2], A[2][2], A[3][2], A[0][3], A[1][3],
+                 A[2][3], A[3][3] );
   }
 
   mat4 RotateX( const GLfloat theta ) {
     GLfloat angle = DEGREES_TO_RADIANS * theta;
 
     mat4 c;
-    c[2][2] = c[1][1] = cos(angle);
-    c[2][1] = sin(angle);
+    c[2][2] = c[1][1] = cos( angle );
+    c[2][1] = sin( angle );
     c[1][2] = -c[2][1];
     return c;
   }
@@ -582,8 +568,8 @@ namespace Angel {
     GLfloat angle = DEGREES_TO_RADIANS * theta;
 
     mat4 c;
-    c[2][2] = c[0][0] = cos(angle);
-    c[0][2] = sin(angle);
+    c[2][2] = c[0][0] = cos( angle );
+    c[0][2] = sin( angle );
     c[2][0] = -c[0][2];
     return c;
   }
@@ -592,8 +578,8 @@ namespace Angel {
     GLfloat angle = DEGREES_TO_RADIANS * theta;
 
     mat4 c;
-    c[0][0] = c[1][1] = cos(angle);
-    c[1][0] = sin(angle);
+    c[0][0] = c[1][1] = cos( angle );
+    c[1][0] = sin( angle );
     c[0][1] = -c[1][0];
     return c;
   }
@@ -635,59 +621,57 @@ namespace Angel {
   //          "zNear" to reprsent "near", and "zFar" to reprsent "far".
   //
 
-  mat4 Ortho( const GLfloat left, const GLfloat right,
-             const GLfloat bottom, const GLfloat top,
-             const GLfloat zNear, const GLfloat zFar ) {
+  mat4 Ortho( const GLfloat left, const GLfloat right, const GLfloat bottom,
+              const GLfloat top, const GLfloat zNear, const GLfloat zFar ) {
     mat4 c;
-    c[0][0] = 2.0/(right - left);
-    c[1][1] = 2.0/(top - bottom);
-    c[2][2] = 2.0/(zNear - zFar);
+    c[0][0] = 2.0 / (right - left);
+    c[1][1] = 2.0 / (top - bottom);
+    c[2][2] = 2.0 / (zNear - zFar);
     c[3][3] = 1.0;
-    c[0][3] = -(right + left)/(right - left);
-    c[1][3] = -(top + bottom)/(top - bottom);
-    c[2][3] = -(zFar + zNear)/(zFar - zNear);
+    c[0][3] = -(right + left) / (right - left);
+    c[1][3] = -(top + bottom) / (top - bottom);
+    c[2][3] = -(zFar + zNear) / (zFar - zNear);
     return c;
   }
 
-  mat4 Ortho2D( const GLfloat left, const GLfloat right,
-               const GLfloat bottom, const GLfloat top ) {
+  mat4 Ortho2D( const GLfloat left, const GLfloat right, const GLfloat bottom,
+                const GLfloat top ) {
     return Ortho( left, right, bottom, top, -1.0, 1.0 );
   }
 
-  mat4 Frustum( const GLfloat left, const GLfloat right,
-               const GLfloat bottom, const GLfloat top,
-               const GLfloat zNear, const GLfloat zFar ) {
+  mat4 Frustum( const GLfloat left, const GLfloat right, const GLfloat bottom,
+                const GLfloat top, const GLfloat zNear, const GLfloat zFar ) {
     mat4 c;
-    c[0][0] = 2.0*zNear/(right - left);
-    c[0][2] = (right + left)/(right - left);
-    c[1][1] = 2.0*zNear/(top - bottom);
-    c[1][2] = (top + bottom)/(top - bottom);
-    c[2][2] = -(zFar + zNear)/(zFar - zNear);
-    c[2][3] = -2.0*zFar*zNear/(zFar - zNear);
+    c[0][0] = 2.0 * zNear / (right - left);
+    c[0][2] = (right + left) / (right - left);
+    c[1][1] = 2.0 * zNear / (top - bottom);
+    c[1][2] = (top + bottom) / (top - bottom);
+    c[2][2] = -(zFar + zNear) / (zFar - zNear);
+    c[2][3] = -2.0 * zFar * zNear / (zFar - zNear);
     c[3][2] = -1.0;
     return c;
   }
 
   mat4 Perspective( const GLfloat fovy, const GLfloat aspect,
-               const GLfloat zNear, const GLfloat zFar) {
-    GLfloat top = tan(fovy*DEGREES_TO_RADIANS/2) * zNear;
+                    const GLfloat zNear, const GLfloat zFar ) {
+    GLfloat top = tan( fovy * DEGREES_TO_RADIANS / 2 ) * zNear;
     GLfloat right = top * aspect;
 
     mat4 c;
-    c[0][0] = zNear/right;
-    c[1][1] = zNear/top;
-    c[2][2] = -(zFar + zNear)/(zFar - zNear);
-    c[2][3] = -2.0*zFar*zNear/(zFar - zNear);
+    c[0][0] = zNear / right;
+    c[1][1] = zNear / top;
+    c[2][2] = -(zFar + zNear) / (zFar - zNear);
+    c[2][3] = -2.0 * zFar * zNear / (zFar - zNear);
     c[3][2] = -1.0;
     return c;
   }
 
   mat4 LookAt( const vec4& eye, const vec4& at, const vec4& up ) {
-    vec4 n = normalize(eye - at);
-    vec4 u = normalize(cross(up,n));
-    vec4 v = normalize(cross(n,u));
-    vec4 t = vec4(0.0, 0.0, 0.0, 1.0);
-    mat4 c = mat4(u, v, n, t);
+    vec4 n = normalize( eye - at );
+    vec4 u = normalize( cross( up, n ) );
+    vec4 v = normalize( cross( n, u ) );
+    vec4 t = vec4( 0.0, 0.0, 0.0, 1.0 );
+    mat4 c = mat4( u, v, n, t );
     return c * Translate( -eye );
   }
 
