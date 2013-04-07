@@ -42,17 +42,16 @@ void init() {
   /* vShaderFile, fShaderFile, gShaderFile, gs_inType, gs_outType, gs_numVertOut */
 
   // Load shaders and use the resulting shader program. 
-  /*
   shader = Angel::InitShader( "shaders/vParticle.glsl",
                               "shaders/fParticle.glsl");
-			      */
+			      /*
   shader = Angel::InitShader( "shaders/vParticle.glsl",
                               "shaders/fParticle.glsl",
                               "shaders/gParticle.glsl",
 			      GL_POINTS,
 			      GL_TRIANGLE_STRIP,
 			      4 );
-  
+  */
 
   rootScene->shader(shader);
   primScreen->_camList.shader(shader);
