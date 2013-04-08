@@ -102,31 +102,6 @@ void cleanup( void ) {
 
 //--------------------------------------------------------------------
 
-// Implementation of drawing the display with regards to a single viewport.
-void draw( void ) {
-  static Scene *theScene = Engine::instance()->rootScene();
-  static Cameras *camList = Engine::instance()->cams();
-
-  theScene->draw();
-  camList->draw();
-}
-
-// GLUT display callback. Effectively calls displayViewport per-each Camera.
-void display( void ) {
-  static Cameras *camList = Engine::instance()->cams();
-
-  // Clear the buffer.
-  glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-
-  // Tell camList to draw using our 'draw' rendering function.
-  camList->view( draw );
-
-  // Swap to the next buffer.
-  glutSwapBuffers();
-
-}
-
-
 void simpleRotateAnim( TransCache &obj ) {
 
   obj._rotation.rotateY( tick.scale() * 1.5 );
@@ -135,13 +110,9 @@ void simpleRotateAnim( TransCache &obj ) {
 
 }
 
+void zach_idle( void ) {
 
-
-void idle( void ) {
-
-  static Cameras *camList = Engine::instance()->cams();
   static Scene *rootScene = Engine::instance()->rootScene();
-  tick.tock();
 
   //zach m  - in order to eventually allow for user specified equations,
   //          we need to think of equations between 0 and 1.
@@ -168,50 +139,15 @@ void idle( void ) {
   //if ( (timer += 0.05 ) > 360.0 ) timer = 0.0 ;
   //float percent = ( sin(timer) + 1 ) / 2 ;
   (*rootScene)["bottle"]->morphPercentage(percent);
-
-  if (DEBUG_MOTION) 
-    fprintf( stderr, "Time since last idle: %lu\n", tick.delta() );
-
-  // Move all cameras: Apply velocity and acceleration adjustments.
-  // If no cameras are currently moving, this will do nothing ;)
-  camList->idleMotion();
-
-  // Inform GLUT we'd like to render a new frame.
-  glutPostRedisplay();
   
 }
 
 int main( int argc, char **argv ) {
 
-  // OS X suppresses events after mouse warp.  This resets the suppression 
-  // interval to 0 so that events will not be suppressed. This also found
-  // at http://stackoverflow.com/questions/728049/
-  // glutpassivemotionfunc-and-glutwarpmousepointer
-#ifdef __APPLE__
-  CGSetLocalEventsSuppressionInterval( 0.0 );
-#endif
-  Util::InitRelativePaths(argc, argv);
   
-  glutInit( &argc, argv );
-  glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH );
-  //glutInitWindowSize( myScreen.Width(), myScreen.Height() );
-  glutCreateWindow( "Zach's Morphing Demo" );
-  glutFullScreen();
-  glutSetCursor( GLUT_CURSOR_NONE );
-
-  GLEW_INIT();
+  Engine::instance()->init( &argc, argv, "Zach's Morphing Demo" );
+  Engine::instance()->registerIdle( zach_idle );
   init();
-
-  /* Register our Callbacks */
-  glutDisplayFunc( display );
-  glutKeyboardFunc( engineKeyboard );
-  glutKeyboardUpFunc( engineKeylift );
-  glutSpecialFunc( engineSpecialKeyboard );
-  glutMouseFunc( engineMouse );
-  glutMotionFunc( engineMouseMotion );
-  glutPassiveMotionFunc( EngineMousePassive );
-  glutIdleFunc( idle );
-  glutReshapeFunc( engineResize );
 
   if (DEBUG) {
     fprintf( stderr, "GL_VENDOR: %s\n", glGetString( GL_VENDOR ));

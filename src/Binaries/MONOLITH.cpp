@@ -101,48 +101,13 @@ void cleanup( void ) {
   Engine::instance()->rootScene()->delObject();
 }
 
-/**
- * Implementation of drawing the display with regards to a single viewport.
- */
-void draw( void ) {
-  static Scene *theScene = Engine::instance()->rootScene();
-  static Cameras *camList = Engine::instance()->cams();
-  
-  theScene->draw();
-  camList->draw();
-}
 
 /**
- * Display/Render the entire screen.
+ * Apply animations and whatever else your heart desires.
  */
-void display( void ) {
-  static Cameras *camList = Engine::instance()->cams();
+void monolith_idle( void ) {
   
-  // Clear the _buffer.
-  glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-  
-  //tell the shader WHAT TIME IT IS
-  tick.sendTime();
-
-  // Tell camList to draw using our 'draw' rendering function.
-  camList->view( draw );
-  
-  // Swap to the next _buffer.
-  glutSwapBuffers();
-}
-
-/**
- * Compute time since last idle, update camera positions, redisplay.
- * Apply new animations.
- */
-void idle( void ) {
-  
-  static Cameras *camList = Engine::instance()->cams();
   static Scene *rootScene = Engine::instance()->rootScene();
-  
-  // Compute the time since last idle().
-  // This is a global, stateful operation.
-  tick.tock();
   
   // Animation variables.
   double timer = glutGet( GLUT_ELAPSED_TIME ) / 500.0;
@@ -151,15 +116,6 @@ void idle( void ) {
   // Update the morph percentage.
   (*rootScene)["bottle"]->morphPercentage( percent );
   
-  if ( DEBUG_MOTION )
-    fprintf( stderr, "Time since last idle: %lu\n", tick.delta() );
-  
-  // Move all cameras: Apply velocity and acceleration adjustments.
-  // If no cameras are currently moving, this will do nothing ;)
-  camList->idleMotion();
-  
-  // Inform GLUT we'd like to render a new frame.
-  glutPostRedisplay();
 }
 
 /**
@@ -172,37 +128,12 @@ void idle( void ) {
  *
  */
 int main( int argc, char **argv ) {
-  printf("PUT THINGS IN THIS.\n");
-  
-  // OS X suppresses events after mouse warp.  This resets the suppression 
-  // interval to 0 so that events will not be suppressed. This also found
-  // at http://stackoverflow.com/questions/728049/
-  // glutpassivemotionfunc-and-glutwarpmousepointer
-#ifdef __APPLE__
-  CGSetLocalEventsSuppressionInterval( 0.0 );
-#endif
-  Util::InitRelativePaths(argc, argv);
-  
-  glutInit( &argc, argv );
-  glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH );
-  glutInitWindowSize( 0, 0 );
-  glutCreateWindow( "WE ARE THE BORG. RESISTANCE IS FUTILE!" );
-  glutFullScreen();
-  glutSetCursor( GLUT_CURSOR_NONE );
-  
-  GLEW_INIT();
+
+  fprintf( stderr, "Error: Your project is unfinished and you're going to fail and everyone is going to laugh at you and it's a really bad day sorry\n" );
+
+  Engine::instance()->init( &argc, argv, "WE ARE THE BORG. RESISTANCE IS FUTILE!" );
+  Engine::instance()->registerIdle( monolith_idle );
   init();
-  
-  /* Register our Callbacks */
-  glutDisplayFunc( display );
-  glutKeyboardFunc( engineKeyboard );
-  glutKeyboardUpFunc( engineKeylift );
-  glutSpecialFunc( engineSpecialKeyboard );
-  glutMouseFunc( engineMouse );
-  glutMotionFunc( engineMouseMotion );
-  glutPassiveMotionFunc( EngineMousePassive );
-  glutIdleFunc( idle );
-  glutReshapeFunc( engineResize );
   
   /* PULL THE TRIGGER */
   glutMainLoop();

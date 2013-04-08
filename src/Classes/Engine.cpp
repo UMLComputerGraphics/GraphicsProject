@@ -224,6 +224,8 @@ void Engine::displayScreen( void ) {
 
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
+  tick.sendTime();
+
   // Tell camList to draw using our 'draw' rendering function.
   camList->view( Engine::displayViewport );
 

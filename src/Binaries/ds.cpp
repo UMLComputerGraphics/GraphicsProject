@@ -93,47 +93,6 @@ void cleanup( void ) {
 //--------------------------------------------------------------------
 
 /**
- * Implementation of drawing the display with regards to a single viewport.
- */
-void draw( void ) {
-  static Scene *theScene = Engine::instance()->rootScene();
-  static Cameras *camList = Engine::instance()->cams();
-  
-  theScene->draw();
-  camList->draw();
-}
-
-/**
- * Display/Render the entire screen.
- */
-void display( void ) {
-  static Cameras *camList = Engine::instance()->cams();
-  
-  glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-  
-  // Tell camList to draw using our 'draw' rendering function.
-  camList->view( draw );
-  
-  glutSwapBuffers();
-}
-
-/**
- * Compute time since last idle, update camera positions, redisplay.
- */
-void idle( void ) {
-  
-  static Cameras *camList = Engine::instance()->cams();
-  
-  // Compute the time since last idle().
-  tick.tock();
-  
-  // Move all camera(s).
-  camList->idleMotion();
-  glutPostRedisplay();
-  
-}
-
-/**
  * This is a dual-shader demo! It looks very simple,
  * but it illustrates quickly and effectively how to use two shaders.
  *
@@ -144,39 +103,9 @@ void idle( void ) {
  */
 int main( int argc, char **argv ) {
   
-  // OS X suppresses events after mouse warp.  This resets the suppression 
-  // interval to 0 so that events will not be suppressed. This also found
-  // at http://stackoverflow.com/questions/728049/
-  // glutpassivemotionfunc-and-glutwarpmousepointer
-#ifdef __APPLE__
-  CGSetLocalEventsSuppressionInterval( 0.0 );
-#endif
-  Util::InitRelativePaths(argc, argv);
-  glutInit( &argc, argv );
-  glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH );
-  glutInitWindowSize( 0, 0 );
-  glutCreateWindow( "Linear Interpolation Morphing Demo" );
-  glutFullScreen();
-  glutSetCursor( GLUT_CURSOR_NONE );
-  
-  GLEW_INIT();
+  Engine::instance()->init( &argc, argv, "Multi-Shader Demo" );
   init();
   
-  /* Register our Callbacks */
-  glutDisplayFunc( display );
-  glutKeyboardFunc( engineKeyboard );
-  glutKeyboardUpFunc( engineKeylift );
-  glutSpecialFunc( engineSpecialKeyboard );
-  glutMouseFunc( engineMouse );
-  glutMotionFunc( engineMouseMotion );
-  glutPassiveMotionFunc( EngineMousePassive );
-  glutIdleFunc( idle );
-  glutReshapeFunc( engineResize );
-
-  fprintf( stderr, "GL_TEXTURE0: %x\n", GL_TEXTURE0 );
-  fprintf( stderr, "GL_TEXTURE1: %x\n", GL_TEXTURE1 );
-  
-  /* PULL THE TRIGGER */
   glutMainLoop();
   return EXIT_SUCCESS;
   
