@@ -55,6 +55,8 @@ public:
   SpelchkCamera( vec4 initialTranslationVector );
   virtual ~SpelchkCamera();
 
+  void copyCamera(SpelchkCamera *camera);
+
   mat4 getProjectionMatrix();
   mat4 getModelViewMatrix();
   vec4 getTranslationVector();

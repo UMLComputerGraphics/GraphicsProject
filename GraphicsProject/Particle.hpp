@@ -1,3 +1,11 @@
+/**
+ * @file Particle.hpp
+ * @author FIXME
+ * @authors FIXME
+ * @date 2013-03-15
+ * @brief FIXME: Needs documentation from NVV/CC.
+ */
+
 #ifndef __PARTICLE_H
 #define __PARTICLE_H
 
@@ -13,19 +21,19 @@ using Angel::mat4;
 using std::string;
 
 /**
-   @authors Nick Ver Voort, Chris Compton
-            nicholas_vervoort@student.uml.edu, christopher_compton@student.uml.edu
-   @since 23 Feb 2013
+ @author Nick Ver Voort, nicholas_vervoort@student.uml.edu
+ @since 23 Feb 2013
+ @authors Nick Ver Voort, Chris Compton
+ nicholas_vervoort@student.uml.edu, christopher_compton@student.uml.edu
+ @brief TODO: You know you've been bad.
+ **/
 
-   @brief todo
-
-**/
 class Particle {
 
 public:
 
   Particle( vec4 position, float scale, float lifeSpan );
-  ~Particle( void ) ;
+  ~Particle( void );
 
   void changeVel( vec3 newVel );
 
@@ -39,15 +47,13 @@ public:
   void setSpin( float newSpin );
   void setVel( vec3 newVel );
   void setTexFile( string newFilename );
-
   vec4 getPosition( void );
 
- private:
+private:
   vec4 mPos;
   vec3 mScale;
   vec3 mVel;
-
-  vec4  color;
+  vec4 color;
   float lifespan;
   //  float spin;
 

@@ -171,10 +171,6 @@ void Engine::init( int *argc, char *argv[], const char *title ) {
 
   GLEW_INIT();
 
-  glutCreateWindow( "Linear Interpolation Morphing Demo" );
-  glutFullScreen();
-  glutSetCursor( GLUT_CURSOR_NONE );
-
   /* Register our Callbacks */
   glutDisplayFunc( Engine::displayScreen );
   glutKeyboardFunc( engineKeyboard );
