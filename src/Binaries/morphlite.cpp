@@ -109,8 +109,11 @@ int main( int argc, char **argv ) {
   init();
 
   Engine::instance()->registerIdle( bottle_idle );
+
+
+  //glutDisplayFunc( Engine::displayScreen );
+
   
-  /* PULL THE TRIGGER */
   glutMainLoop();
   return EXIT_SUCCESS;
   
