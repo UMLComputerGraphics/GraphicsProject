@@ -32,8 +32,9 @@ using std::string;
 class Particle {
   
 public:
-  
-  Particle( vec4 position, float scale, float lifeSpan );
+
+  Particle( vec4 position, float lifetime );
+  Particle( vec4 position, float scale, float lifetime );
   ~Particle( void );
 
   void changeVel( vec3 newVel );

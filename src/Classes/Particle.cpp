@@ -1,3 +1,4 @@
+
 /**
  * @file Particle.cpp
  * @author Nick Ver Voort, nicholas_vervoort@student.uml.edu
@@ -26,6 +27,12 @@ Particle::Particle( vec4 position, float scale, float lifetime ) :
   
 }
 
+Particle::Particle( vec4 position, float lifetime ) :
+  _pos( position ), _vel(vec3(0.0, 0.0, 0.0)), 
+  _lifetime( lifetime ) {
+  
+}
+
 // Destructor(s)
 Particle::~Particle() {
   
@@ -41,7 +48,7 @@ void Particle::updateSelf( void ) {
   _pos.y += _vel.y * scale ;
   _pos.z += _vel.z * scale ;
 
-  _lifetime -= 0.05;
+  _lifetime -= 0.05 * scale;
 
   //increase alive time (not lifeSPAN)
   //if ( _lifetime <= 0.0 ) _pos.x = _pos.y = _pos.z = 0.0 ;

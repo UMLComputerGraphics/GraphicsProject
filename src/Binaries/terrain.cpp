@@ -478,6 +478,7 @@ int main( int argc, char **argv ) {
     std::cerr << "Not using Wii controls for this runthrough.\n";
   }
 #endif
+
   
   Engine::init( &argc, argv, "Terrain Generation Flythrough" );
   init();
@@ -496,6 +497,7 @@ int main( int argc, char **argv ) {
   glutAddMenuEntry( "Toggle Free Rotation", 1 );
   glutAttachMenu( GLUT_RIGHT_BUTTON );
   
+
   Engine::instance()->registerIdle( terrain_idle );
 
   /* PULL THE TRIGGER */

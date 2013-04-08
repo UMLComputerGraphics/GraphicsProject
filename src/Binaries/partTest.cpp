@@ -20,7 +20,7 @@
 #include <cstdlib>
 #include <time.h>
 
-// NON-IMPORTANT variable used to initialize the particle system
+// variable used to initialize the particle system
 // If there is an argv[1], we will use it to initialize the particle system.
 int numberOfParticles = 100 ;
 
@@ -38,38 +38,95 @@ bool fixed_yaw = true;
 void init() 
 {
 
-  GLuint  testShader;
+  GLuint  particleSystemShader, bottleShader;
   Screen *primScreen = Engine::instance()->mainScreen();
   Scene  *rootScene = Engine::instance()->rootScene();
 
-  testShader = Angel::InitShader("shaders/vParticle.glsl",
-				 "shaders/fParticle.glsl");
-				 //"shaders/gParticle.glsl");
-				 //"shaders/gParticle.glsl");
 
+  bottleShader         = Angel::InitShader("shaders/vmorph.glsl",
+					   "shaders/fmorph.glsl");
 
-  rootScene->shader(testShader);
-  primScreen->_camList.shader(testShader);
+  particleSystemShader = Angel::InitShader("shaders/vParticle.glsl",
+					   "shaders/fParticle.glsl");
+                                         //"shaders/gParticle.glsl");
+
+  rootScene->shader(particleSystemShader);
+  primScreen->_camList.shader(particleSystemShader);
 
   primScreen->_camList.addCamera( "Camera1" );
   primScreen->_camList.next();
 
-  /*  Object *testObj = rootScene->addObject("testObj");
-  ObjLoader::loadModelFromFile(testObj, "../models/bottle-a.obj");
-  testObj->buffer();
-  testObj->_trans._scale.set(1);
-  testObj->_trans._offset.setY(5);*/
+  /*
+  {
+    Object *bottle = rootScene->addObject( "bottle" );
+    ObjLoader::loadModelFromFile( bottle, "../models/bottle-a.obj" );
+    bottle->_trans._scale.set( 0.01 );
+    bottle->buffer();
+  }
+  */
 
-  Object *particleSystem = new ParticleSystem( numberOfParticles, "ParticleSystem", testShader );
-  rootScene->insertObject( particleSystem );
-  particleSystem->buffer();
+  /*
+  {
+
+    Object *my_sphere = rootScene->addObject( "sphere" );
+    sphere(my_sphere);
+
+
+  }
+  */
+
+
+  {
+    ParticleSystem *particleSystem = new ParticleSystem( numberOfParticles, "ParticleSystem1", particleSystemShader );
+    particleSystem->setLifespan(15.0,17.5);    particleSystem->setLifespan(25.0, 26.0);
+    rootScene->insertObject( particleSystem );
+    particleSystem->propagate();
+    particleSystem->buffer();
+  }
+
+  {
+    ParticleSystem *particleSystem = new ParticleSystem( numberOfParticles, "ParticleSystem2", particleSystemShader );
+    particleSystem->setLifespan(15.0,17.5);    particleSystem->setLifespan(25.0, 26.0);
+    rootScene->insertObject( particleSystem );
+    particleSystem->_trans._displacement.set(0.20, 0.0, 0.0);
+    particleSystem->propagate();
+    particleSystem->buffer();
+  }
+  /*
+  {
+    ParticleSystem *particleSystem = new ParticleSystem( numberOfParticles, "ParticleSystem3", particleSystemShader );
+    particleSystem->setLifespan(15.0,17.5);    particleSystem->setLifespan(8.0, 18.0);
+    rootScene->insertObject( particleSystem );
+    particleSystem->_trans._displacement.set(0.0, 0.20, 0.0);
+    particleSystem->propagate();
+    particleSystem->buffer();
+  }
+
+  {
+    ParticleSystem *particleSystem = new ParticleSystem( numberOfParticles, "ParticleSystem4", particleSystemShader );
+    particleSystem->setLifespan(8.0,18.0);
+    rootScene->insertObject( particleSystem );
+    particleSystem->_trans._displacement.set(-0.20, 0.0, 0.0);
+    particleSystem->propagate();
+    particleSystem->buffer();
+  }
+
+  {
+    ParticleSystem *particleSystem = new ParticleSystem( numberOfParticles, "ParticleSystem5", particleSystemShader );
+    particleSystem->setLifespan(8.0, 18.0);
+    rootScene->insertObject( particleSystem );
+    particleSystem->_trans._displacement.set(0.0, -0.20, 0.0);
+    particleSystem->propagate();
+    particleSystem->buffer();
+  }
+  */
 
   // Generic OpenGL setup: Enable the depth buffer and set a nice background color.
   glEnable( GL_DEPTH_TEST );
   glClearColor( 0.1, 0.3, 0.7, 1.0 );
 
   // also need this to render visible points
-  glPointSize( 0.5 );
+  glPointSize( 0.875 );
 }
 
 void cleanup( void ) 
