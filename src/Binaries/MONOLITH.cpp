@@ -11,6 +11,7 @@
 #include "Engine.hpp"
 /* Utilities and Common */
 #include "model.hpp"
+#include "modelFunctions.hpp"
 #include "InitShader.hpp"
 #include "glut_callbacks.h"
 #include "ObjLoader.hpp"
@@ -86,6 +87,8 @@ void init() {
 
   // YES THIS IS THE REAL OBJECT, NOT THE TARGET. 
   // IT SENDS THE MORPH VERTICES TO THE SHADER, NOT TO THE DRAW LIST TO BE DRAWN!
+  matchInitialPoints(bottle, bottleMorphTarget);
+  makeModelsSameSize(bottle, bottleMorphTarget);
   bottle->bufferMorphOnly();
   
   // Generic OpenGL setup: Enable the depth _buffer and set a nice background color.
