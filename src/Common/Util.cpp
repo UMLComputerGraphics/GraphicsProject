@@ -69,7 +69,7 @@ namespace Util {
         InitRelativePaths( -1, fake );
         free( fake );
       } else {
-        dondeestalosshaders = std::string( path );
+        dondeestalosshaders = std::string( "" );
       }
     }
     std::stringstream wholepath;
