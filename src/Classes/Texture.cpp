@@ -59,6 +59,51 @@ bool Texture::load( const std::string &filename ) {
  */
 void Texture::buffer( void ) {
   
+/* We need to bind this texture as active in order to set some properties
+ * of it and buffer the data. Therefore, we're going to poll the card
+ * to see what the currently active texture(s) are, and re-set them
+ * when we're done doing what we need to.
+ */
+
+  GLenum query;
+  int result;
+
+  switch (_textureTarget) {
+  case GL_TEXTURE_1D:
+    query = GL_TEXTURE_BINDING_1D;
+    break;
+  case GL_TEXTURE_1D_ARRAY:
+    query = GL_TEXTURE_BINDING_1D_ARRAY;
+    break;
+  default:
+  case GL_TEXTURE_2D:
+    query = GL_TEXTURE_BINDING_2D;
+    break;
+  case GL_TEXTURE_2D_ARRAY:
+    query =  GL_TEXTURE_BINDING_2D_ARRAY;
+    break;
+  case GL_TEXTURE_2D_MULTISAMPLE:
+    query =  GL_TEXTURE_BINDING_2D_MULTISAMPLE;
+    break;
+  case GL_TEXTURE_2D_MULTISAMPLE_ARRAY:
+    query =    GL_TEXTURE_BINDING_2D_MULTISAMPLE_ARRAY;
+    break;
+  case GL_TEXTURE_3D:
+    query =    GL_TEXTURE_BINDING_3D;
+    break;
+  case GL_TEXTURE_BUFFER:
+    query =   GL_TEXTURE_BINDING_BUFFER;
+    break;
+  case GL_TEXTURE_CUBE_MAP:
+    query =   GL_TEXTURE_BINDING_CUBE_MAP;
+    break;
+  case GL_TEXTURE_RECTANGLE:
+    query =   GL_TEXTURE_BINDING_RECTANGLE;
+    break;
+  }
+
+  glGetIntegerv( query, &result );
+
   glGenTextures( 1, &_textureObj );
   glBindTexture( _textureTarget, _textureObj );
   glTexImage2D( _textureTarget, 0, GL_RGB, _image->columns(), _image->rows(),
@@ -66,6 +111,9 @@ void Texture::buffer( void ) {
   glTexParameterf( _textureTarget, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
   glTexParameterf( _textureTarget, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
   
+  // Put back the previous texture where we found it.
+  glBindTexture( _textureTarget, result );
+
 }
 
 /**
