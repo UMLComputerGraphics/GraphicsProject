@@ -31,12 +31,10 @@ using namespace Angel;
 ParticleSystem::ParticleSystem( int particleAmt, const std::string &name,
                                 GLuint shader ) :
     Object( name, shader ), numParticles( particleAmt ), minLife( 0.1 ),
-    maxLife( 1 ) 
+    maxLife( 1 ), _emitterRadius(0.0), pauseTheSystem(false) 
 {
    this->drawMode(GL_POINTS) ;
-   this->fillSystemWithParticles();
-
-   this->pauseTheSystem = false;
+   //this->fillSystemWithParticles();
 }
 
 ParticleSystem::~ParticleSystem( void ) {
@@ -46,29 +44,39 @@ ParticleSystem::~ParticleSystem( void ) {
   particles.clear();
 }
 
+vec4
+ParticleSystem::getRandomCircularSpawnPoint(void)
+{
+
+    vec4 ret;
+    // Generate a random position on a circle of radius radius (passed as arg)
+    float randomTheta ;
+
+    // I LOVE THIS FUNCTION SO MUCH
+    //randomTheta = rangeRandom( 0.0, 360.0 ); // if degrees
+    randomTheta = rangeRandom( 0.0, 2.0*M_PI ); //if radians
+
+    ret.x = cos(randomTheta)*(this->_emitterRadius);
+    ret.y = 0.0 ;
+    ret.z = sin(randomTheta)*(this->_emitterRadius);
+    ret.w = 1.0 ; // ??? I don't know if this matters
+
+    return ret;
+
+}
+
 Particle*
 ParticleSystem::newRandomParticle(void)
 {
     vec4  spawnPosition ;
 
-    if ( this->_emitterRadius > MIN_EMITTER_RADIUS ) {
+    if ( this->_emitterRadius < MIN_EMITTER_RADIUS ) {
 
         spawnPosition.x = spawnPosition.y = spawnPosition.z = 0.0 ;
 	spawnPosition.w = 1.0 ;
 
-    } else {
-	
-      // Generate a random position on a circle of radius radius (passed as arg)
-      float randomTheta ;
-
-      // I LOVE THIS FUNCTION SO MUCH
-      randomTheta = rangeRandom( 0.0, 360.0 ); // if degrees
-      //randomTheta = rangeRandom( 0.0, 2.0*M_PI ); //if radians
-
-      spawnPosition.x = cos(randomTheta)*(this->_emitterRadius);
-      spawnPosition.y = 0.0 ;
-      spawnPosition.z = sin(randomTheta)*(this->_emitterRadius);
-      spawnPosition.w = 1.0 ; // ??? I don't know if this matters
+    } else {	
+        spawnPosition = this->getRandomCircularSpawnPoint();
     } 
 
     //generate a particle on the random position (if radius was big enough)
@@ -258,6 +266,13 @@ ParticleSystem::draw( void )
 
 }
 
+
+void
+ParticleSystem::setEmitterRadius( float r )
+{
+  this->_emitterRadius = r ;
+}
+
 //Update the particles in our system >>> AND ALSO UPDATE OUR DRAW BUFFER
 void
 ParticleSystem::update() {
@@ -278,7 +293,8 @@ ParticleSystem::update() {
       _vertices.push_back((*i)->getPosition());
 
       if( (*i)->getLifetime() <= 0.0 ) {
-	(*i)->setPos( position() );
+	//(*i)->setPos( position() );
+	(*i)->setPos( this->getRandomCircularSpawnPoint() );
 	(*i)->setLifetime( rangeRandom(getMinLife(), getMaxLife() ));
 	float tempXV, tempYV, tempZV ;
 	tempXV = rangeRandom( -0.001f, 0.001f );

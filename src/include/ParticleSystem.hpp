@@ -53,6 +53,7 @@ public:
   void setColor( vec4 newColor );
   void setLifespan( float minLifespan, float maxLifespan );
   void setNumParticles( int newNumParticles );
+  void setEmitterRadius(float);
 
   /* The Do-All function.  Will do everything needed in order
    to have the particles behave according to our specification
@@ -67,6 +68,7 @@ public:
 private:  
 
   float rangeRandom( float min, float max );
+  vec4  getRandomCircularSpawnPoint(void);
 
   vector<ParticleP> particles;
   int    numParticles;   // Number of particles that each instance of ParticleSystem will manage
