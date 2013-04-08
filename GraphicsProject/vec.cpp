@@ -526,7 +526,7 @@ namespace Angel {
                  a.x * b.y - a.y * b.x );
   }
 
-  vec3 XYZ( const vec4& a ) {
+  vec3 xyz( const vec4& a ) {
 
     return vec3( a.x, a.y, a.z );
 
