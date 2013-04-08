@@ -84,12 +84,25 @@ ParticleSystem::newRandomParticle(void)
 				1,
 				rangeRandom(this->minLife, this->maxLife) );
 
+    //finally, set the velocity
+
+    /* // cube-generating method
     float tempXV, tempYV, tempZV ;
     tempXV = rangeRandom( -0.001f, 0.001f );
     tempYV = rangeRandom( -0.001f, 0.001f );
     tempZV = rangeRandom( -0.001f, 0.001f );
     p->setVel( vec3( tempXV, tempYV, tempZV ) );
+    */
 
+    // sphere generating method      calc 3 ftw
+    float row   = rangeRandom( 0.001f, 0.002f ); // equivalent to magnitude
+    float phi   = rangeRandom( 0.0f,     M_PI );
+    float theta = rangeRandom( 0.0f, 2 * M_PI );
+
+
+    p->setVel( vec3( row*sin(phi)*cos(theta),
+		     row*sin(phi)*sin(theta),
+		     row*cos(phi) ));
 
   return p ;
 }
@@ -296,11 +309,25 @@ ParticleSystem::update() {
 	//(*i)->setPos( position() );
 	(*i)->setPos( this->getRandomCircularSpawnPoint() );
 	(*i)->setLifetime( rangeRandom(getMinLife(), getMaxLife() ));
+
+	/* //square gen method
 	float tempXV, tempYV, tempZV ;
 	tempXV = rangeRandom( -0.001f, 0.001f );
 	tempYV = rangeRandom( -0.001f, 0.001f );
 	tempZV = rangeRandom( -0.001f, 0.001f );
 	(*i)->setVel( vec3( tempXV, tempYV, tempZV ) );
+	*/
+
+
+	// sphere generating method
+	float row   = rangeRandom( 0.001f, 0.002f ); // equivalent to magnitude
+	float phi   = rangeRandom( 0.0f,     M_PI );
+	float theta = rangeRandom( 0.0f, 2 * M_PI );
+
+
+	(*i)->setVel( vec3( row*sin(phi)*cos(theta),
+			    row*sin(phi)*sin(theta),
+			    row*cos(phi) ));
 
 
       }

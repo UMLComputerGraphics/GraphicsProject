@@ -13,7 +13,7 @@ void main()
 	//gl_FragColor = vec4(0.90, 0.45, 0.1, 1.0)/(distance*distance*64.0);
 	//gl_FragColor = vec4(0.90, 0.45, distance, 1.0)/(distance*distance*64.0);
 
-	gl_FragColor = vec4(0.90, 0.45, 0.1, 1.0)/(distance*8.0);
+	gl_FragColor = vec4(0.90, 0.45, distance*distance*16.0, 1.0)/(distance*8.0);
 
 	// also pleasant!
 	//gl_FragColor = vec4(1.0, 0.5, 0.0, 1.0)/(distance*distance*distance*1000.0);

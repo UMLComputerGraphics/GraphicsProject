@@ -22,7 +22,7 @@
 
 // variable used to initialize the particle system
 // If there is an argv[1], we will use it to initialize the particle system.
-int numberOfParticles = 100 ;
+int numberOfParticles = 400000 ;
 
 // Type Aliases
 using Angel::vec3;
@@ -81,6 +81,7 @@ void init()
     particleSystem->setLifespan(15.0,17.5);    particleSystem->setLifespan(25.0, 26.0);
     particleSystem->setEmitterRadius( 0.4 ) ;
     rootScene->insertObject( particleSystem );
+    particleSystem->_trans._rotation.rotateY(M_PI);
     particleSystem->propagate();
     particleSystem->fillSystemWithParticles();
     particleSystem->buffer();
@@ -96,7 +97,7 @@ void init()
     particleSystem->buffer();
   }
 
-
+  /*
   {
     ParticleSystem *particleSystem = new ParticleSystem( numberOfParticles, "ParticleSystem2", particleSystemShader );
     particleSystem->setLifespan(15.0,17.5);    particleSystem->setLifespan(25.0, 26.0);
@@ -105,7 +106,7 @@ void init()
     particleSystem->propagate();
     particleSystem->buffer();
   }
-
+  */
   /*
   {
     ParticleSystem *particleSystem = new ParticleSystem( numberOfParticles, "ParticleSystem3", particleSystemShader );
@@ -137,10 +138,10 @@ void init()
 
   // Generic OpenGL setup: Enable the depth buffer and set a nice background color.
   glEnable( GL_DEPTH_TEST );
-  glClearColor( 0.1, 0.3, 0.7, 1.0 );
+  glClearColor( 0.2, 0.1, 0.1, 1.0 );
 
   // also need this to render visible points
-  glPointSize( 0.875 );
+  glPointSize( 1.1 );
 }
 
 void cleanup( void ) 
