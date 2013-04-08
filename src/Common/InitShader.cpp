@@ -1,3 +1,4 @@
+
 /**
  * @file InitShader.cpp
  * @authors Ed Angel, Nick St.Pierre
@@ -67,7 +68,23 @@ namespace Angel {
     
     return buf;
   }
-  
+
+  /**
+   * InitShader takes two shader sourcefiles and compiles them into a
+   * shader program.
+   *
+   * @param vShaderFile the vertex shader source file
+   * @param fShaderFile the fragment shader source file
+   *
+   * @return A handle to the compiled glsl program.
+   */
+  GLuint InitShader( const char* vShaderFile, const char* fShaderFile) {
+
+    /* this is merely a pass-through function */  
+    return InitShader(vShaderFile, fShaderFile, NULL);
+
+  }
+
   /**
    * InitShader takes two shader sourcefiles and compiles them into a
    * shader program.
@@ -87,7 +104,8 @@ namespace Angel {
       GLchar* source;
     } shaders[3] = { { vShaderFile, GL_VERTEX_SHADER, NULL },
                      { fShaderFile, GL_FRAGMENT_SHADER, NULL },
-                     { gShaderFile, GL_GEOMETRY_SHADER, NULL } };
+		     { gShaderFile, GL_GEOMETRY_SHADER, NULL } };
+
     
     GLuint program = glCreateProgram();
     
@@ -159,4 +177,102 @@ namespace Angel {
     glUseProgram(program);
     return program;
   }
+
+  // Close namespace Angel block
+
+
+  /**
+   * InitShader takes three shader sourcefiles and compiles them into a
+   * shader program.
+   *
+   * @param vShaderFile the vertex shader source file
+   * @param gShaderFile the geometry shader source file
+   * @param fShaderFile the fragment shader source file
+   *
+   * @return A handle to the compiled glsl program.
+   */
+  GLuint InitShader( const char* vShaderFile, const char* fShaderFile,
+                     const char* gShaderFile, GLenum gs_inType, GLenum gs_outType,
+		     int gs_numVertOut ) {
+
+    struct Shader {
+      const char* filename;
+      GLenum type;
+      GLchar* source;
+    } shaders[3] = { { vShaderFile, GL_VERTEX_SHADER,   NULL }, 
+		     { gShaderFile, GL_GEOMETRY_SHADER, NULL },
+                     { fShaderFile, GL_FRAGMENT_SHADER, NULL } };
+
+    GLuint program = glCreateProgram();
+
+    for ( int i = 0; i < 3; ++i ) {
+
+      Shader& s = shaders[i];
+      s.source = readShaderSource( s.filename );
+      if ( shaders[i].source == NULL ) {
+        std::cerr << "Failed to read " << s.filename << std::endl;
+        exit( EXIT_FAILURE );
+      }
+
+      GLuint shader = glCreateShader( s.type );
+      glShaderSource( shader, 1, (const GLchar**) &s.source, NULL );
+      glCompileShader( shader );
+
+      GLint compiled;
+      glGetShaderiv( shader, GL_COMPILE_STATUS, &compiled );
+      if ( !compiled ) {
+        std::cerr << s.filename << " failed to compile:" << std::endl;
+        GLint logSize;
+        glGetShaderiv( shader, GL_INFO_LOG_LENGTH, &logSize );
+        char* logMsg = new char[logSize];
+        glGetShaderInfoLog( shader, logSize, NULL, logMsg );
+        std::cerr << logMsg << std::endl;
+        delete[] logMsg;
+
+        /*exit( EXIT_FAILURE );*/
+      }
+
+      delete[] s.source;
+
+      if ( s.type == GL_GEOMETRY_SHADER ) {// Gshader init requires a few extra things
+
+        //GLint n;
+        //glGetIntegerv( GL_MAX_GEOMETRY_OUTPUT_COMPONENTS, &n );
+
+        glProgramParameteriEXT( shader, GL_GEOMETRY_INPUT_TYPE_EXT,
+                                gs_inType );
+
+        glProgramParameteriEXT( shader, GL_GEOMETRY_OUTPUT_TYPE_EXT,
+                                gs_outType );
+
+      }
+
+      glAttachShader( program, shader );
+    }
+    
+    // Gshader gak
+    glProgramParameteriEXT( program, GEOMETRY_VERTICES_OUT_EXT, gs_numVertOut );
+
+    /* link  and error check */glLinkProgram( program );
+    /* test */glLinkProgram( program );
+
+    GLint linked;
+    glGetProgramiv( program, GL_LINK_STATUS, &linked );
+    if ( !linked ) {
+      std::cerr << "Shader program failed to link" << std::endl;
+      GLint logSize;
+      glGetProgramiv( program, GL_INFO_LOG_LENGTH, &logSize );
+      char* logMsg = new char[logSize];
+      glGetProgramInfoLog( program, logSize, NULL, logMsg );
+      std::cerr << logMsg << std::endl;
+      delete[] logMsg;
+
+      exit( EXIT_FAILURE );
+    }
+
+    /* use program object */
+    //glUseProgram(program);
+    return program;
+  }
+
 }  // Close namespace Angel block

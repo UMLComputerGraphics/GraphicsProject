@@ -26,19 +26,19 @@ void init() {
   
   // Load shaders and use the resulting shader program. 
   GLuint gShader = Angel::InitShader( "shaders/vMONOLITH.glsl",
-                                      "shaders/fMONOLITH.glsl" /*,    HAD TO REMOVE THE GEOMETRY SHADER BECAUSE IT'S SEVERELY BROKEN!!!!!
+                                      "shaders/fMONOLITH.glsl" /*,    HAD TO REMOVE THE GEOMETRY SHADER BECAUSE IT'S not done.
                                       "shaders/gMONOLITH.glsl"*/ );
-  
+
   tick.setTimeUniform(glGetUniformLocation( gShader, "ftime" ));
 
   // Let the other objects know which shader to use by default.
   rootScene->shader( gShader );
   primScreen->_camList.shader( gShader );
-  
+ 
   // We start with no cameras, by default. Add one and set it "active" by using next().
   primScreen->_camList.addCamera( "Camera1" );
   primScreen->_camList.next();
-  
+
   // Create an object and add it to the scene with the name "bottle".
   Object *bottle = rootScene->addObject( "bottle" );
   

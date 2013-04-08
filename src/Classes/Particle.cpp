@@ -1,9 +1,9 @@
+
 /**
  * @file Particle.cpp
- * @author FIXME
- * @authors FIXME
+ * @author Nick Ver Voort, nicholas_vervoort@student.uml.edu
  * @date 2013-03-15
- * @brief FIXME: Needs documentation from NVV/CC.
+ * @brief FIXME: Needs documentation from NVV/CC
  */
 #include <string>
 #include <stdexcept>
@@ -21,8 +21,15 @@ using Angel::vec4;
 using Angel::mat4;
 
 // Constructor(s)
-Particle::Particle( vec4 position, float scale, float lifeSpan ) :
-    mPos( position ), mScale( scale ), lifespan( lifeSpan ) {
+Particle::Particle( vec4 position, float scale, float lifetime ) :
+  _pos( position ), _scale( scale ), _vel(vec3(0.0, 0.0, 0.0)), 
+  _lifetime( lifetime ) {
+  
+}
+
+Particle::Particle( vec4 position, float lifetime ) :
+  _pos( position ), _vel(vec3(0.0, 0.0, 0.0)), 
+  _lifetime( lifetime ) {
   
 }
 
@@ -31,46 +38,62 @@ Particle::~Particle() {
   
 }
 
-// Setters (Will we need getters? Probably not)
+// Update position and other properties
+void Particle::updateSelf( void ) {
 
-void Particle::changeVel( vec3 newVel ) {
-  mVel += newVel;
+  // use the timer so the particle movement will look the same for everyone
+  float scale = tick.scale() ;
+
+  _pos.x += _vel.x * scale ;
+  _pos.y += _vel.y * scale ;
+  _pos.z += _vel.z * scale ;
+
+  _lifetime -= 0.05 * scale;
+
+  //increase alive time (not lifeSPAN)
+  //if ( _lifetime <= 0.0 ) _pos.x = _pos.y = _pos.z = 0.0 ;
+
 }
 
-float Particle::getLifespan( void ) {
-  return lifespan;
+
+void Particle::changeVel( vec3 newVel ) {
+  _vel += newVel;
+}
+
+float Particle::getLifetime( void ) {
+  return _lifetime;
 }
 
 void Particle::setAlpha( float newAlpha ) {
-  color.w = newAlpha;
+  _color.w = newAlpha;
 }
 
 void Particle::setColor( vec4 newColor ) {
-  color = newColor;
+  _color = newColor;
 }
 
-void Particle::setLifespan( float newLifespan ) {
-  lifespan = newLifespan;
+void Particle::setLifetime( float newLifetime ) {
+  _lifetime = newLifetime;
 }
 
 void Particle::setPos( vec4 newPos ) {
-  mPos = newPos;
+  _pos = newPos;
 }
 
 void Particle::setScale( vec3 newScale ) {
-  mScale = newScale;
+  _scale = newScale;
 }
 
 void Particle::setVel( vec3 newVel ) {
-  mVel = newVel;
+  _vel = newVel;
 }
 
 void Particle::setTexFile( string newFilename ) {
-  texFilename = newFilename;
+  _texFilename = newFilename;
 }
 
 vec4
 Particle::getPosition( void )
 {
-  return mPos;
+  return _pos;
 }
