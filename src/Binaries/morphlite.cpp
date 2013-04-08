@@ -104,15 +104,9 @@ void bottle_idle( void ) {
  */
 int main( int argc, char **argv ) {
   
-  
   Engine::init( &argc, argv, "Linear Interpolation Morphing Demo" );
-  init();
-
   Engine::instance()->registerIdle( bottle_idle );
-
-
-  //glutDisplayFunc( Engine::displayScreen );
-
+  init();
   
   glutMainLoop();
   return EXIT_SUCCESS;
