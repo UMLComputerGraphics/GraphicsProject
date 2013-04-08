@@ -31,6 +31,7 @@ std::vector< std::string > split( const std::string &s, char delim ) {
 }
 
 namespace Util {
+  static std::string dondeestalosshaders;
   /**
    * InitRelativePaths is a preparation step allowing files referred to relative to the executable to be referred to relative to the working dir AND the executable
    *
@@ -49,7 +50,7 @@ namespace Util {
       std::stringstream cat;
       for ( size_t i = 0; i < slapchop.size() - 1; i++ )
         cat << slapchop[i] << "/";
-      getRelativePath( cat.str().c_str() );
+      dondeestalosshaders = cat.str();
     }
   }
 
@@ -61,19 +62,9 @@ namespace Util {
    * @return the real path
    */
   const char *getRelativePath( const char *path ) {
-    static std::string dondeestalosshaders;
-    if ( dondeestalosshaders.size() == 0 ) {
-      if ( strlen( path ) == 0 ) {
-        char** fake = (char**) malloc( sizeof(char*) );
-        fake[0] = (char*) "";
-        InitRelativePaths( -1, fake );
-        free( fake );
-      } else {
-        dondeestalosshaders = std::string( "" );
-      }
-    }
     std::stringstream wholepath;
     wholepath << dondeestalosshaders << path;
+    printf("Looking for \"%s\"\tExecutable is in \"%s\"\tResolving to \"%s\"\n", path, dondeestalosshaders.c_str(), wholepath.str().c_str());
     return wholepath.str().c_str();
   }
 
