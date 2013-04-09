@@ -171,10 +171,6 @@ void Engine::init( int *argc, char *argv[], const char *title ) {
 
   GLEW_INIT();
 
-  glutCreateWindow( "Linear Interpolation Morphing Demo" );
-  glutFullScreen();
-  glutSetCursor( GLUT_CURSOR_NONE );
-
   /* Register our Callbacks */
   glutDisplayFunc( Engine::displayScreen );
   glutKeyboardFunc( engineKeyboard );
@@ -227,6 +223,8 @@ void Engine::displayScreen( void ) {
   static Cameras *camList = Engine::instance()->cams();
 
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+
+  tick.sendTime();
 
   // Tell camList to draw using our 'draw' rendering function.
   camList->view( Engine::displayViewport );

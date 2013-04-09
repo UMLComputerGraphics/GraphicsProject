@@ -28,7 +28,10 @@ SOURCES += main.cpp\
     ParticleSystem.cpp \
     Particle.cpp \
     Texture.cpp \
-    glwidget.cpp
+    glwidget.cpp \
+    meshMapping.cpp \
+    SplchkCamera.cpp \
+    TextureMan.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \
@@ -51,7 +54,12 @@ HEADERS  += mainwindow.h \
     Particle.hpp \
     Texture.hpp \
     Timer.hpp \
-    glwidget.h
+    glwidget.h \
+    meshMapping.hpp \
+    modelFunctions.hpp \
+    ObjLoader.hpp \
+    TextureMan.hpp \
+    Util.h
 
 unix:!macx {
 LIBS += -lGL -lGLU -lGLEW -lglu -lm

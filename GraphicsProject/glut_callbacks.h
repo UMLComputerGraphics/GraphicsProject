@@ -19,7 +19,7 @@
  * @param x The x coordinate of the mouse at the time the key was released.
  * @param y The y coordinate of the mouse at the time the key was released.
  */
-void keylift( unsigned char key, int x, int y );
+void engineKeylift( unsigned char key, int x, int y );
 
 /**
  * keyboard is a callback registered with GLUT.
@@ -29,7 +29,7 @@ void keylift( unsigned char key, int x, int y );
  * @param x The x coordinate of the mouse when the key was pressed.
  * @param y The y coordinate of the mouse when the key was pressed.
  */
-void keyboard( unsigned char key, int x, int y );
+void engineKeyboard( unsigned char key, int x, int y );
 
 /**
  * keyboard_ctrl is registered as a GLUT callback.
@@ -39,7 +39,7 @@ void keyboard( unsigned char key, int x, int y );
  * @param x The x coordinate of the mouse when the key was pressed.
  * @param y The y coordinate of the mouse when the key was pressed.
  */
-void keyboard_ctrl( int key, int x, int y );
+void engineSpecialKeyboard( int key, int x, int y );
 
 /**
  * mouse is registered as a GLUT callback.
@@ -50,7 +50,7 @@ void keyboard_ctrl( int key, int x, int y );
  * @param x the x coordinate of the mouse.
  * @param y the y coordinate of the mouse.
  */
-void mouse( int button, int state, int x, int y );
+void engineMouse( int button, int state, int x, int y );
 
 /**
  * mouseroll is registered as a GLUT callback.
@@ -60,7 +60,7 @@ void mouse( int button, int state, int x, int y );
  * @param x the x coordinate of the mouse pointer.
  * @param y the y coordinate of the mouse pointer.
  */
-void mouseroll( int x, int y );
+void engineMouseMotion( int x, int y );
 
 /**
  * mouselook is registered as a GLUT callback.
@@ -70,7 +70,7 @@ void mouseroll( int x, int y );
  * @param x the x coordinate of the mouse pointer.
  * @param y the y coordinate of the mouse pointer.
  */
-void mouselook( int x, int y );
+void EngineMousePassive( int x, int y );
 
 /**
  * resizeEvent is registered as a glut callback for when
@@ -86,6 +86,6 @@ void mouselook( int x, int y );
  *
  * @return void.
  */
-void resizeEvent( int width, int height );
+void engineResize( int width, int height );
 
 #endif

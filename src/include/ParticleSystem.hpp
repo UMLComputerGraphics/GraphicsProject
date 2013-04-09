@@ -34,40 +34,51 @@ public:
   ParticleSystem( int particleAmt, const std::string &name, GLuint shader );
   ~ParticleSystem( void );
 
-  void addParticles( void );
+  //particle creation methods
+
+  void addParticle(void);
+  void addOneParticleAtOrigin( void );
+  void addSomeParticles( int );
+  void fillSystemWithParticles( void );
+
+  Particle *newRandomParticle(void);
 
   // Getters and Setters
-  vec4 getColor( void );
+  vec4  getColor( void );
   float getLifespan( void );
   float getMaxLife( void );
   float getMinLife( void );
-  int getNumParticles( void );
+  int   getNumParticles( void );
 
   void setColor( vec4 newColor );
   void setLifespan( float minLifespan, float maxLifespan );
   void setNumParticles( int newNumParticles );
+  void setEmitterRadius(float);
 
   /* The Do-All function.  Will do everything needed in order
    to have the particles behave according to our specification
    on each call to Draw(). That's the idea, anyway. */
   void update();
 
-  virtual void Buffer();
-  virtual void Draw();
+  virtual void buffer( void );
+  virtual void draw( void );
 
-protected:
+//protected:
   
 private:  
 
   float rangeRandom( float min, float max );
+  vec4  getRandomCircularSpawnPoint(void);
 
   vector<ParticleP> particles;
   int    numParticles;   // Number of particles that each instance of ParticleSystem will manage
-  float  maxLife;
   float  minLife;
-
-  vec4* positions;
+  float  maxLife;
+  float  _emitterRadius;
+  bool   pauseTheSystem;
   
+  bool   updateRequired;
+
   // Pass-through variable... maybe not be needed and function can pass through
   vec4   color;
 };

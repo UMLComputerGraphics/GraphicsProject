@@ -5,9 +5,9 @@ SOURCESRAW=$(filter-out Incomplete/%.cpp Common/%.cpp Classes/%.cpp,$(wildcard *
 COMMONRAW=$(wildcard Common/*.cpp)
 CLASSESRAW=$(wildcard Classes/*.cpp)
 
-
+#Binaries/particleBottle.cpp
 #things not needed or that break build
-DIAF=Classes/KinectInator.cpp
+DIAF=Classes/KinectInator.cpp  Binaries/proofOfConcept.cpp Binaries/raytrace1.cpp
 
 ifndef WII
 DIAF += \
@@ -50,7 +50,9 @@ endif
 
 ifeq ($(UNAME), Darwin)
     CXXINCS += -I/opt/local/include/ImageMagick
-    LDLIBS += -framework Carbon -framework OpenGL -framework GLUT -L/opt/local/lib
+   #LDLIBS += -framework Carbon -framework OpenGL -framework GLUT -L/opt/local/lib
+   # if you can't find imgMagick, then try the line above. be sure to comment the line below
+    LDLIBS += -framework Carbon -framework OpenGL -framework GLUT -L/opt/local/lib -lMagick++
 endif
 
 ifdef DEBUG
@@ -99,3 +101,7 @@ rmtargets: _rmtargets
 
 clobber: _clean _rmtargets
 	@echo "Removed objects and executables."
+
+
+
+#>>>>>>> d2fe654ff4a5cad4acfccb2aecc1aba89bb7b37b

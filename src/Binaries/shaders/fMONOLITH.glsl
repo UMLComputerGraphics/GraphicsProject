@@ -31,7 +31,7 @@ vec4 aRomanticEvening()
   if (lasttime != ftime)
   {
     float r = fract(sin(dot(vec2(ftime, ftime) ,vec2(12.9898,78.233))) * 43758.5453);
-    lightness += ((floor(r) == round(r)) ? dlight : -dlight);
+    lightness += ((floor(r) == floor(r + 0.5)) ? dlight : -dlight);
     lasttime = ftime;
     if (lightness < 0.0) lightness = 0.0;
     if (lightness > 1.0) lightness = 1.0;    
