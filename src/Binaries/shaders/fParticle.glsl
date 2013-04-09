@@ -61,7 +61,7 @@ void main()
 	//gl_FragColor = hyper( ttime ) / (distance*8.0);
 
 	// Greg Giannone
-	gl_FragColor = hyper( tmp_feles );
+	//gl_FragColor = hyper( tmp_feles );
 
 	// also pleasant!
 	//gl_FragColor = vec4(1.0, 0.5, 0.0, 1.0)/(distance*distance*distance*1000.0);
