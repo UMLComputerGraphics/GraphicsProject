@@ -182,14 +182,16 @@ void TransCache::clean( void ) {
     // rhs = (B*A) or (E*F)
     // _ctm = lhs * _ctm * rhs;
 
+
     for ( it = _transformations.begin(); it != _transformations.end(); ++it ) {
-      if ((*it)->isNew())
-        ;
-        // Add to cumulative ...
+      if ((*it)->isNew()) {
+        if ( _premult ) {
+        }
+        else {
+        }
+      }
       else break;
     }
-
-
     // TODO: stub ...
 
     // Get the lower block to compute
