@@ -26,6 +26,7 @@
 Texture::Texture( GLenum textureTarget ) {
   _textureTarget = textureTarget;
   _image = NULL;
+  _textureObj = -1;
 }
 
 /**

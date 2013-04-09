@@ -39,6 +39,15 @@ void Transformation::markNew( void ) {
   _new = true;
 }
 
+void Transformation::markOld( void ) {
+  _new = false;
+}
+
+bool Transformation::isNew( void ) {
+  return _new;
+}
+
+
 Angel::mat4 operator*( const Angel::mat4 &lhs, const Transformation &rhs ) {
   return lhs * rhs.matrix();
 }
