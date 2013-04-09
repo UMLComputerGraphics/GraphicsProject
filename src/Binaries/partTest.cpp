@@ -125,6 +125,8 @@ void init()
   }
   */
 
+  tick.setTimeUniform(glGetUniformLocation( particleSystemShader, "ftime" ));
+
   // Generic OpenGL setup: Enable the depth buffer and set a nice background color.
   glEnable( GL_DEPTH_TEST );
   glClearColor( 0.2, 0.1, 0.1, 1.0 );

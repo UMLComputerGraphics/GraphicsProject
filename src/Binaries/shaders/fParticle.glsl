@@ -7,6 +7,8 @@ uniform sampler2D gColorMap;
 vec2 TexCoord; 
 varying vec4 fColor;
 varying float distance;
+uniform int ftime;
+uniform float mmtime;
 
 vec4 hyper( float hue ) {
 
@@ -39,12 +41,22 @@ void main()
 
 	float tmp;
 	tmp = (sin( distance * 10.0 ) / 2.0) + 0.5;
-
+	
+	float ttime;
+	ttime = float(ftime) / 10000.0;
+	ttime = ttime - floor( ttime );
+	
 	//gl_FragColor = vec4(0.90, 0.45, 0.1, 1.0)/(distance*distance*64.0);
 	//gl_FragColor = vec4(0.90, 0.45, distance, 1.0)/(distance*distance*64.0);
 
+	// Nick St.Pierre's "Firework":
 	gl_FragColor = vec4(0.90, 0.45, distance*distance*16.0, 1.0)/(distance*8.0);
-	gl_FragColor = hyper( tmp );
+	
+	// Rainbow color based on distance:
+	//gl_FragColor = hyper( tmp );
+	
+	// Uniform color with intensity based on distance and hue based on time:
+	//gl_FragColor = hyper( ttime ) / (distance*8.0);
 
 	// also pleasant!
 	//gl_FragColor = vec4(1.0, 0.5, 0.0, 1.0)/(distance*distance*distance*1000.0);

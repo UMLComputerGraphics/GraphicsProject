@@ -16,6 +16,8 @@ class TransCache {
   
 public:
   
+  typedef std::deque< Transformation* > TransformationDeque;
+
   TransCache( void );
 
   void ptm( const Angel::mat4 &ptm_in, bool postmult = true );
@@ -60,7 +62,7 @@ private:
   Angel::mat4 _ctm; /* Current Transformation Matrix */
   Angel::mat4 _itm; // Inheritable Trans Mat: CTM, minus transformations we don't want our kids to have.
   Angel::mat4 _otm; /* Cached Result Transformation Matrix: e.g; ctm * ptm */
-  std::deque< Transformation* > _transformations; // Transformation Stack
+  TransformationDeque _transformations; // Transformation Stack
   
   bool _premult; // Should we premult instead of postmult?
   bool _new;     // CTM needs new additions flag
