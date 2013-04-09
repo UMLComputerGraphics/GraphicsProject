@@ -37,6 +37,8 @@ ParticleSystem *funInTheSin;
 
 double theta = 0.0;
 
+GLuint thetaLoc;
+
 // Initialization: load and compile shaders, initialize camera(s), load models.
 void init() 
 {
@@ -52,6 +54,8 @@ void init()
   particleSystemShader = Angel::InitShader("shaders/vParticle.glsl",
 					   "shaders/fParticle.glsl");
                                          //"shaders/gParticle.glsl");
+
+  thetaLoc = glGetUniformLocation(particleSystemShader, "theta");
 
   rootScene->shader(particleSystemShader);
   primScreen->_camList.shader(particleSystemShader);
@@ -167,6 +171,7 @@ void idle()
 {
 	funInTheSin->setEmitterRadius(sin(theta));
 	theta += 0.01;
+	glUniform1f(thetaLoc, theta);
 }
 
 //--------------------------------------------------------------------
