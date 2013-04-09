@@ -22,6 +22,9 @@
 // variable used to initialize the particle system
 // If there is an argv[1], we will use it to initialize the particle system.
 int numberOfParticles = 400000 ;
+ParticleSystem *funInTheSin;
+double theta = 0.0;
+GLuint thetaLoc;
 
 // Initialization: load and compile shaders, initialize camera(s), load models.
 void init() 
@@ -39,6 +42,8 @@ void init()
 					   "shaders/fParticle.glsl");
                                          //"shaders/gParticle.glsl");
 
+  thetaLoc = glGetUniformLocation(particleSystemShader, "theta");
+
   rootScene->shader(particleSystemShader);
   primScreen->_camList.shader(particleSystemShader);
 
@@ -51,6 +56,7 @@ void init()
     ObjLoader::loadModelFromFile( bottle, "../models/bottle-a.obj" );
     bottle->_trans._scale.set( 0.01 );
     bottle->buffer();
+
   }
   */
 
@@ -64,7 +70,7 @@ void init()
   }
   */
 
-
+/*j
   {
     ParticleSystem *particleSystem = new ParticleSystem( numberOfParticles, "ParticleSystem1", particleSystemShader );
     particleSystem->setLifespan(15.0,17.5);    particleSystem->setLifespan(25.0, 26.0);
@@ -85,6 +91,16 @@ void init()
     particleSystem->fillSystemWithParticles();
     particleSystem->buffer();
   }
+*/
+  funInTheSin = new ParticleSystem(numberOfParticles, "FunInTheSine", particleSystemShader);
+  funInTheSin->setLifespan(0.5, 11.0);  
+  funInTheSin->setEmitterRadius( 0.1 ) ;
+  rootScene->insertObject( funInTheSin );
+  funInTheSin->propagate();
+  funInTheSin->fillSystemWithParticles();
+  funInTheSin->buffer();
+  
+
 
   /*
   {
@@ -140,6 +156,14 @@ void cleanup( void )
   Engine::instance()->rootScene()->delObject();
 }
 
+
+void part_idle()
+{
+	funInTheSin->setEmitterRadius(sin(theta));
+	theta += 0.01;
+	glUniform1f(thetaLoc, theta);
+}
+
 //--------------------------------------------------------------------
 
 int main( int argc, char **argv ) {
@@ -152,6 +176,7 @@ int main( int argc, char **argv ) {
 	      << "****************************************************************" << std::endl;
 
   Engine::instance()->init( &argc, argv, "Particle Test" );
+  Engine::instance()->registerIdle(part_idle);
   init();
 
   /* PULL THE TRIGGER */
