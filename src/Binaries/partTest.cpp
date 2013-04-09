@@ -27,13 +27,13 @@ int numberOfParticles = 400000 ;
 void init() 
 {
 
-  GLuint  particleSystemShader, bottleShader;
+  GLuint  particleSystemShader/*, bottleShader*/;
   Screen *primScreen = Engine::instance()->mainScreen();
   Scene  *rootScene = Engine::instance()->rootScene();
 
 
-  bottleShader         = Angel::InitShader("shaders/vmorph.glsl",
-					   "shaders/fmorph.glsl");
+  /*  bottleShader         = Angel::InitShader("shaders/vmorph.glsl",
+      "shaders/fmorph.glsl");*/
 
   particleSystemShader = Angel::InitShader("shaders/vParticle.glsl",
 					   "shaders/fParticle.glsl");
