@@ -44,7 +44,7 @@ void init() {
   Object *bottle = rootScene->addObject( "bottle" );
   
   // Use the object loader to actually fill out the vertices and-so-on of the bottle.
-  ObjLoader::loadModelFromFile( bottle, "../models/bottle-a.obj" );
+  ObjLoader::loadModelFromFile( bottle, "../models/bottle_wine_high.obj" );
   
   // Scale the bottle down!
   bottle->_trans._scale.set( 0.01 );
@@ -77,7 +77,7 @@ void init() {
   Object *bottleMorphTarget = bottle->morphTarget();
   
   // with this model, we can use all the preexisting Object class functionality
-  ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle-b.obj" );
+  ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle_liquor_high.obj" );
   bottleMorphTarget->_trans._scale.set( 0.01 );
   
   for (uint i=0; i < bottle->_colors.size(); i++)
