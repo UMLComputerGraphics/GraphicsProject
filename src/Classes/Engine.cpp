@@ -40,6 +40,7 @@ Engine *Engine::instance( void ) {
  */
 Engine::Engine( void ) {
   _idleFunc = NULL;
+  opt("fixed_yaw", true);
 }
 
 /**
@@ -57,6 +58,8 @@ Engine::~Engine( void ) {
  */
 Engine::Engine( const Engine &copy ) {
   throw std::logic_error( "Engine is a Singleton. You can't make more!" );
+  // To quiet Eclipse warnings:
+  _idleFunc = NULL;
 }
 
 /**

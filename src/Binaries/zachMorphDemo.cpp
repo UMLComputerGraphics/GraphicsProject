@@ -46,18 +46,18 @@ void init() {
   Object *bottle = rootScene->addObject( "bottle" );
 
   // Use the object loader to actually fill out the vertices and-so-on of the bottle.
-  ObjLoader::loadModelFromFile( bottle, "../models/bottle-b.obj" );
+  ObjLoader::loadModelFromFile( bottle, "../models/bottle_wine_high.obj" );
 
   // Objects has-a pointer to an object which is their "morph target."
   // they are created and buffered as follows:
 
   bottle->genMorphTarget( gShader ) ; // this makes a new object and links it to the source object. it returns the addr of the new obj..
   Object *bottleMorphTarget = bottle->morphTarget() ; // we can get the addr of the morph object like this, also.
-  ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle-a.obj" ); // with this model, we can use all the preexisting Object class functionality
+  ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle_liquor_high.obj" ); // with this model, we can use all the preexisting Object class functionality
 
   printf("Number Vertices Model1: %d\n",bottle->numberOfPoints());
   printf("Number Vertices Model2: %d\n",bottleMorphTarget->numberOfPoints());
-
+/*
   Angel::vec3 lowBoundSrc = bottle->getMin();
   Angel::vec3 maxBoundSrc = bottle->getMax();
   Angel::vec3 lowBoundDst = bottleMorphTarget->getMin();
@@ -70,19 +70,32 @@ void init() {
 					 fminf(float(lowBoundSrc.y),
 					       float(lowBoundDst.y)),
 					 fmaxf(float(maxBoundSrc.y),
-					       float(maxBoundDst.y)));
-
-  printf("\nBottom Left Square X Start: %f\n",squareMap->bottomLeft->xStart);
-  printf("Bottom RIght Square Y Start: %f\n",squareMap->bottomLeft->yStart);
-  printf("Top Right Square X End: %f\n",squareMap->topRight->xEnd);
-  printf("Top Right Square Y End: %f\n\n", squareMap->topRight->yEnd);
-
+					       float(maxBoundDst.y)),
+					 fminf(float(lowBoundSrc.z),
+						   float(lowBoundDst.z)),
+					 fmaxf(float(maxBoundSrc.z),
+						   float(maxBoundDst.z)));
+	*/
 
   matchInitialPoints(bottle, bottleMorphTarget);
   makeModelsSameSize(bottle, bottleMorphTarget);
 
-  printf("Number Vertices Model1: %d\n",bottle->numberOfPoints());
-  printf("Number Vertices Model2: %d\n",bottleMorphTarget->numberOfPoints());
+  //populateSrcSquare(squareMap,bottle->_vertices);
+  //populateDestSquare(squareMap,bottleMorphTarget->_vertices);
+  //expandSquareMap(squareMap);
+/*
+  printf("Front Vertices Src:  %d\n",int(squareMap->front->srcTriangles.size()));
+  printf("Back  Vertices Src:  %d\n",int(squareMap->back->srcTriangles.size()));
+  printf("Left  Vertices Src:  %d\n",int(squareMap->left->srcTriangles.size()));
+  printf("Right Vertices Src:  %d\n\n",int(squareMap->right->srcTriangles.size()));
+
+  printf("Front Vertices Dest: %d\n",int(squareMap->front->destTriangles.size()));
+  printf("Back  Vertices Dest: %d\n",int(squareMap->back->destTriangles.size()));
+  printf("Left  Vertices Dest: %d\n",int(squareMap->left->destTriangles.size()));
+  printf("Right Vertices Dest: %d\n",int(squareMap->right->destTriangles.size()));
+*/
+  //printf("Number Vertices Model1: %d\n",bottle->numberOfPoints());
+  //printf("Number Vertices Model2: %d\n",bottleMorphTarget->numberOfPoints());
 
   bottle->_trans._scale.set( 0.01 );
   bottleMorphTarget->_trans._scale.set( 0.01 );
