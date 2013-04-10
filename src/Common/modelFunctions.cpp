@@ -21,7 +21,6 @@ int findTriangleWithMinimumDistance( Object* largerModel, Object* smallerModel,
                                      int index ) {
   int minIndex = -1;
   float minDistance = INFINITY;
-  
   for ( int i = 0; i < smallerModel->numberOfPoints(); i += 3 ) {
     float distance = 0.0;
     for ( int j = 0; j < 3; j++ ) {
@@ -68,6 +67,8 @@ int findTriangleWithMinimumDistanceFromCenter(Object* largerModel, Object* small
 }
 
 void makeModelsSameSize(Object* model1, Object* model2){
+	printf("Make Same Size Points: %d\n",model1->numberOfPoints());
+	printf("Make Same Size Points: %d\n",model2->numberOfPoints());
 	if(model1->numberOfPoints()>model2->numberOfPoints()){
 		while(model2->numberOfPoints() < (model1->numberOfPoints())){
 			int index = findTriangleWithMinimumDistance(model1,model2,model2->numberOfPoints());
@@ -90,9 +91,13 @@ void makeModelsSameSize(Object* model1, Object* model2){
 	}else{
 		printf("Models already the same size\n");
 	}
+	printf("Make Same Size Points: %d\n",model1->numberOfPoints());
+	printf("Make Same Size Points: %d\n",model2->numberOfPoints());
 }
 
 void matchInitialPoints(Object* model1, Object* model2){
+	printf("Match Initial Points: %d\n",model1->numberOfPoints());
+	printf("Match Initial Points: %d\n",model2->numberOfPoints());
 	if(model1->numberOfPoints()>model2->numberOfPoints()){
 		for(int i=0; i<model2->numberOfPoints();i+=3){
 			int matchIndex = 0;
@@ -146,4 +151,6 @@ void matchInitialPoints(Object* model1, Object* model2){
 			}
 		}
 	}
+	printf("Match Initial Points: %d\n",model1->numberOfPoints());
+	printf("Match Initial Points: %d\n",model2->numberOfPoints());
 }

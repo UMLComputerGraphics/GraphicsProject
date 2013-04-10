@@ -256,6 +256,13 @@ void quad( Object *obj, const Point4 &a, const Point4 &b, const Point4 &c,
   
 }
 
+void quad( Object *obj, const Point4 &a, const Point4 &b, const Point4 &c,
+           const Point4 &d, const Color4 &COLOR ) {
+
+  quad( obj, a, b, c, d, COLOR, COLOR, COLOR, COLOR );
+
+}
+
 /**
  * @def QUAD
  * A macro to help quickly call quad() with correct parameters.

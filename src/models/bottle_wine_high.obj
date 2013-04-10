@@ -1,7 +1,7 @@
 # Blender v2.63 (sub 0) OBJ File: 'bottle_wine_high.blend'
 # www.blender.org
 mtllib bottle_wine_high.mtl
-o Circle_Circle.001
+o wine_bottle_Circle.001
 v -1.415285 0.509261 -0.139393
 v -0.670389 0.509261 -1.254210
 v 0.902190 0.509261 -1.099325

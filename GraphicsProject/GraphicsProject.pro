@@ -31,12 +31,12 @@ SOURCES += main.cpp\
     glwidget.cpp \
     meshMapping.cpp \
     SplchkCamera.cpp \
-    TextureMan.cpp
+    TextureMan.cpp \
+    Util.cpp
 
 HEADERS  += mainwindow.h \
     globals.h \
     glut_callbacks.h \
-    OpenGL.h \
     platform.h \
     Camera.hpp \
     Cameras.hpp \
@@ -59,7 +59,9 @@ HEADERS  += mainwindow.h \
     modelFunctions.hpp \
     ObjLoader.hpp \
     TextureMan.hpp \
-    Util.h
+    Util.h \
+    Util.hpp \
+    OpenGL.h
 
 unix:!macx {
 LIBS += -lGL -lGLU -lGLEW -lglu -lm
