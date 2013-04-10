@@ -36,7 +36,7 @@ using Angel::vec4;
 class Object : public Scene {
 
 public:
-
+  
   /**
    * These enumerations describe the types of buffers
    * we want on the GPU per-object.
@@ -100,13 +100,13 @@ public:
   /**
    * draw method: Render this object to the screen _buffer.
    */
-  void draw( void );
+  virtual void draw( void );
 
   /**
    * buffer all of our data: Vertices, TexUVs, Normals,
    * Indices, Colors and Morph Buffers.
    */
-  void buffer( void );
+  virtual void buffer( void );
 
   /**
    * buffer only the Morph-related buffers.
@@ -142,7 +142,7 @@ public:
   const std::string &name( void ) const;
 
   // OpenGL Methods ===========================================================
-
+  
   /**
    * link a specified Uniform against the shader's variable _name.
    *
@@ -179,7 +179,7 @@ public:
   virtual void shader( GLuint newShader );
 
   // animation and Related ====================================================
-
+  
   /**
    * Apply an animation callback function to this Object.
    * Works once only: Does not save the function or automatically run on idle.
@@ -194,7 +194,7 @@ public:
   void propagate( void );
 
   // Getters ==================================================================
-
+  
   /**
    * Obtain the vec4 representative of the Object's current position in space.
    * @return vec4 representing the Object's position in space.
@@ -202,7 +202,7 @@ public:
   vec4 position() const;
 
   // Morph Methods ============================================================
-
+  
   /**
    * Retrieve a pointer to this object's morph target.
    * @return An Object pointer to the morph target.
@@ -250,7 +250,7 @@ public:
   void textureID( GLint newTextureID ) {
     _textureID = newTextureID;
   }
-
+  
   // FIXME: Should these members be protected?
   /** vertex buffer. **/
   std::vector< Angel::vec4 > _vertices;
@@ -299,7 +299,7 @@ protected:
   bool _isTextured;
 
   // Morphing/Tweening Things
-
+  
   /**
    * The percentage of the morph. 0.0 means 100% the original, current object.
    * 100.0 means 100% the new, targeted object.
@@ -317,7 +317,7 @@ protected:
    */
   std::map< Object::UniformEnum, std::string > _uniformMap;
 
-  /**
+  /** 
    Handles to Uniforms on the shader.
    Protected to allow derived classes
    to extend it as needed.
@@ -328,7 +328,7 @@ protected:
    * The texture unit index this Object uses.
    */
   GLint _textureID;
-
+  
 };
 
 #endif

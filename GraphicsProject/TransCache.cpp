@@ -13,18 +13,18 @@
 #include "mat.hpp"
 
 void TransCache::ptm( const Angel::mat4 &new_ptm, bool postmult ) {
-
+  
   /* Update our cached ptm. */
   this->_ptm = new_ptm;
-
+  
   /* Update our Result Matrix. */
   if ( postmult ) _otm = _ptm * _ctm;
   else _otm = _ctm * _ptm;
-
+  
 }
 
 void TransCache::calcCTM( bool postmult ) {
-
+  
   if ( postmult ) {
     /* Recompute our ctm */
     _ctm = _displacement * _orbit * _offset * _rotation * _scale * _preRotation;
@@ -157,6 +157,41 @@ void TransCache::clean( void ) {
   if ( _rebuild ) return rebuild();
 
   if ( _new ) {
+    Angel::mat4 lhs, rhs;
+    TransformationDeque::iterator it;
+
+    // If the transformation we want is A->B->C->D->E->F
+    // We will have pushed in that order,
+    // So our stack will look like A-B-C-D-E.
+    // Let's assume that our new matrices are E-F, and A-B.
+    // So we have the existing product:
+    //
+    // _ctm = D*C
+    // post = F*E
+    // pre = B*A
+    // _ctm = post * _ctm * pre
+    //
+    // or
+    //
+    // _ctm = C*D
+    // pre = A*B
+    // post = E*F
+    // _ctm = pre * _ctm * post
+
+    // lhs = (F*E) or (A*B)
+    // rhs = (B*A) or (E*F)
+    // _ctm = lhs * _ctm * rhs;
+
+
+    for ( it = _transformations.begin(); it != _transformations.end(); ++it ) {
+      if ((*it)->isNew()) {
+        if ( _premult ) {
+        }
+        else {
+        }
+      }
+      else break;
+    }
     // TODO: stub ...
 
     // Get the lower block to compute

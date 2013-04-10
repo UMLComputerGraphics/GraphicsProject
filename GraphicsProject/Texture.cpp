@@ -26,13 +26,14 @@
 Texture::Texture( GLenum textureTarget ) {
   _textureTarget = textureTarget;
   _image = NULL;
+  _textureObj = -1;
 }
 
 /**
  * Default destructor.
  */
 Texture::~Texture( void ) {
-
+  
 }
 
 /**
@@ -41,7 +42,7 @@ Texture::~Texture( void ) {
  * @return bool: true if we succeed, false otherwise.
  */
 bool Texture::load( const std::string &filename ) {
-
+  
   try {
     _image = new Magick::Image( Util::getRelativePath(filename.c_str()) );
     _image->write( &_blob, "RGBA" );
@@ -51,13 +52,58 @@ bool Texture::load( const std::string &filename ) {
     return false;
   }
   return true;
-
+  
 }
 
 /**
  * Registers the texture with OpenGL.
  */
 void Texture::buffer( void ) {
+  
+/* We need to bind this texture as active in order to set some properties
+ * of it and buffer the data. Therefore, we're going to poll the card
+ * to see what the currently active texture(s) are, and re-set them
+ * when we're done doing what we need to.
+ */
+
+  GLenum query;
+  int result;
+
+  switch (_textureTarget) {
+  case GL_TEXTURE_1D:
+    query = GL_TEXTURE_BINDING_1D;
+    break;
+  case GL_TEXTURE_1D_ARRAY:
+    query = GL_TEXTURE_BINDING_1D_ARRAY;
+    break;
+  default:
+  case GL_TEXTURE_2D:
+    query = GL_TEXTURE_BINDING_2D;
+    break;
+  case GL_TEXTURE_2D_ARRAY:
+    query =  GL_TEXTURE_BINDING_2D_ARRAY;
+    break;
+  case GL_TEXTURE_2D_MULTISAMPLE:
+    query =  GL_TEXTURE_BINDING_2D_MULTISAMPLE;
+    break;
+  case GL_TEXTURE_2D_MULTISAMPLE_ARRAY:
+    query =    GL_TEXTURE_BINDING_2D_MULTISAMPLE_ARRAY;
+    break;
+  case GL_TEXTURE_3D:
+    query =    GL_TEXTURE_BINDING_3D;
+    break;
+  case GL_TEXTURE_BUFFER:
+    query =   GL_TEXTURE_BINDING_BUFFER;
+    break;
+  case GL_TEXTURE_CUBE_MAP:
+    query =   GL_TEXTURE_BINDING_CUBE_MAP;
+    break;
+  case GL_TEXTURE_RECTANGLE:
+    query =   GL_TEXTURE_BINDING_RECTANGLE;
+    break;
+  }
+
+  glGetIntegerv( query, &result );
 
   glGenTextures( 1, &_textureObj );
   glBindTexture( _textureTarget, _textureObj );
@@ -65,6 +111,9 @@ void Texture::buffer( void ) {
                 -0.5, GL_RGBA, GL_UNSIGNED_BYTE, _blob.data() );
   glTexParameterf( _textureTarget, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
   glTexParameterf( _textureTarget, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+  
+  // Put back the previous texture where we found it.
+  glBindTexture( _textureTarget, result );
 
 }
 

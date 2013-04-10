@@ -28,11 +28,11 @@ Engine *Engine::_engineSingleton = NULL;
  * @return A pointer to the Engine object.
  */
 Engine *Engine::instance( void ) {
-
+  
   if ( _engineSingleton == NULL ) _engineSingleton = new Engine();
-
+  
   return _engineSingleton;
-
+  
 }
 
 /**
@@ -40,6 +40,7 @@ Engine *Engine::instance( void ) {
  */
 Engine::Engine( void ) {
   _idleFunc = NULL;
+  opt("fixed_yaw", true);
 }
 
 /**
@@ -57,6 +58,8 @@ Engine::~Engine( void ) {
  */
 Engine::Engine( const Engine &copy ) {
   throw std::logic_error( "Engine is a Singleton. You can't make more!" );
+  // To quiet Eclipse warnings:
+  _idleFunc = NULL;
 }
 
 /**
@@ -75,9 +78,9 @@ Engine &Engine::operator=( Engine &assign ) {
  * @return A pointer to the Camera List.
  */
 Cameras *Engine::cams( void ) {
-
+  
   return &(_screen._camList);
-
+  
 }
 
 /**
@@ -85,9 +88,9 @@ Cameras *Engine::cams( void ) {
  * @return A pointer to the Root-level Scene graph.
  */
 Scene *Engine::rootScene( void ) {
-
+  
   return &_scene;
-
+  
 }
 
 /**
@@ -95,9 +98,9 @@ Scene *Engine::rootScene( void ) {
  * @return A pointer to the core 'Screen' object.
  */
 Screen *Engine::mainScreen( void ) {
-
+  
   return &_screen;
-
+  
 }
 
 /**
@@ -171,10 +174,6 @@ void Engine::init( int *argc, char *argv[], const char *title ) {
 
   GLEW_INIT();
 
-  glutCreateWindow( "Linear Interpolation Morphing Demo" );
-  glutFullScreen();
-  glutSetCursor( GLUT_CURSOR_NONE );
-
   /* Register our Callbacks */
   glutDisplayFunc( Engine::displayScreen );
   glutKeyboardFunc( engineKeyboard );
@@ -227,6 +226,8 @@ void Engine::displayScreen( void ) {
   static Cameras *camList = Engine::instance()->cams();
 
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+
+  tick.sendTime();
 
   // Tell camList to draw using our 'draw' rendering function.
   camList->view( Engine::displayViewport );
