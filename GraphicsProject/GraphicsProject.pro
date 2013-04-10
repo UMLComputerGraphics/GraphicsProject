@@ -59,7 +59,7 @@ HEADERS  += mainwindow.h \
         meshMapping.hpp \
         model.hpp \
         modelFunctions.hpp \
-        ObjectLoader.hpp \
+        ObjLoader.hpp \
         platform.h \
         Scene.hpp \
         Screen.hpp \
