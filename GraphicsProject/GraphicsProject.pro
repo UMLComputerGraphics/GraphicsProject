@@ -14,7 +14,6 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         # Classes
-        mainwindow.cpp \
         Camera.cpp \
         Cameras.cpp \
         Engine.cpp \
@@ -40,13 +39,13 @@ SOURCES += main.cpp\
         modelFunctions.cpp \
         ObjLoader.cpp \
         Util.cpp \
+    mainwindow.cpp
         #WiiUtil.cpp\
         #Qt
-        mainwindow.cpp
 
 
 
-HEADERS  += mainwindow.h \
+HEADERS  += \
         # include
         Camera.hpp \
         Cameras.hpp \
@@ -60,6 +59,7 @@ HEADERS  += mainwindow.h \
         model.hpp \
         modelFunctions.hpp \
         ObjLoader.hpp \
+        OpenGL.h \
         platform.h \
         Scene.hpp \
         Screen.hpp \
@@ -71,9 +71,9 @@ HEADERS  += mainwindow.h \
         Transformation.hpp \
         Util.hpp \
         vec.hpp \
+    mainwindow.h
         #WiiUtil.h\
         #Qt
-        mainwindow.h
 
 
 unix:!macx {
@@ -90,7 +90,8 @@ INCLUDEPATH +=. /opt/local/include/ImageMagick/
 LIBS += -L/opt/local/lib -lMagick++
 }
 
-FORMS    += mainwindow.ui
+FORMS    += \
+    mainwindow.ui
 
 OTHER_FILES += \
     ../src/models/wineglass.obj \
