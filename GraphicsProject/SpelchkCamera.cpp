@@ -6,7 +6,7 @@
  * @details FIXME
  */
 
-#include "../src/include/SpelchkCamera.hpp"
+#include "SpelchkCamera.hpp"
 
 SpelchkCamera::SpelchkCamera( vec4 initialTranslationVector ) {
   _timeRef = 0;

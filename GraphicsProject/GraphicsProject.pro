@@ -84,7 +84,7 @@ LIBS += -lMagick++
 }
 
 macx {
-LIBS += -framework OpenGL -framework GLUT
+LIBS += -framework Carbon -framework OpenGL -framework GLUT
 
 INCLUDEPATH +=. /opt/local/include/ImageMagick/
 LIBS += -L/opt/local/lib -lMagick++
