@@ -1,5 +1,5 @@
 /**
- * @file ds.cpp
+ * @file modelTest.cpp
  * @author John Huston
  * @authors John Huston, Greg Giannone
  * @date 2013-02-20

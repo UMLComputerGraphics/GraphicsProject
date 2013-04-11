@@ -14,6 +14,7 @@
 
 #ifdef __APPLE__ // include Mac OS X versions of headers
 #include <Magick++.h>
+#include <OpenGL/gl3.h>
 #else // non-Mac OS X operating systems
 #include <ImageMagick/Magick++.h>
 #endif // __APPLE__
@@ -66,7 +67,7 @@ private:
   Magick::Image *_image;
   /** Raw RGBA buffer object that we will load into the GPU. **/
   Magick::Blob _blob;
-
+  
 };
 
 #endif

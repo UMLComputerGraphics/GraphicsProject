@@ -13,8 +13,10 @@
 #include <deque>
 
 class TransCache {
-
+  
 public:
+  
+  typedef std::deque< Transformation* > TransformationDeque;
 
   TransCache( void );
 
@@ -34,7 +36,7 @@ public:
   TransMat _offset; /* Radius, or _offset from origin. */
   RotMat _orbit; /* Rotation about the origin */
   TransMat _displacement; /* Offset of entire animation from origin. */
-
+  
   /* Updates our ctm. Private Use. */
   void calcCTM( bool postmult = true );
 
@@ -54,14 +56,14 @@ public:
   void cascade( bool newState );
 
 private:
-
+  
   // Cached Result Matrices
   Angel::mat4 _ptm; /* Parent's Cumulative Transformation Matrix */
   Angel::mat4 _ctm; /* Current Transformation Matrix */
   Angel::mat4 _itm; // Inheritable Trans Mat: CTM, minus transformations we don't want our kids to have.
   Angel::mat4 _otm; /* Cached Result Transformation Matrix: e.g; ctm * ptm */
-  std::deque< Transformation* > _transformations; // Transformation Stack
-
+  TransformationDeque _transformations; // Transformation Stack
+  
   bool _premult; // Should we premult instead of postmult?
   bool _new;     // CTM needs new additions flag
   bool _rebuild; // Cache needs to be rebuilt, no optimizations.
