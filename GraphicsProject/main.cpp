@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include <QApplication>
+#include <QThread>
 #include "OpenGL.h"
 
 /* OpenGL and "The Engine" */
@@ -10,6 +11,9 @@
 #include "InitShader.hpp"
 #include "glut_callbacks.h"
 #include "ObjLoader.hpp"
+
+
+using namespace std ;
 
 
 /**
@@ -165,22 +169,60 @@ void monolith_idle( void ) {
 
 }
 
+class monoThread : public QThread
+{
+public:
+    monoThread( int x, char** y )
+    {
+        first = x ;
+        second = y ;
+    }
+    void run()
+    {
+        Engine::instance()->init( &first, second,
+                                  "WE ARE THE BORG. RESISTANCE IS FUTILE!" );
+        Engine::instance()->registerIdle( monolith_idle );
+        init();
+
+        glutMainLoop();
+    }
+private:
+    int first ;
+    char** second ;
+} ;
+
 int main(int argc, char *argv[])
 {
     fprintf(
          stderr,
          "Error: Your project is unfinished and you're going to fail and everyone is going to laugh at you and it's a really bad day sorry\n" );
 
-     Engine::instance()->init( &argc, argv,
+     /*Engine::instance()->init( &argc, argv,
                                "WE ARE THE BORG. RESISTANCE IS FUTILE!" );
      Engine::instance()->registerIdle( monolith_idle );
-     init();
+     init();*/
 
-    QApplication a(argc, argv);
+    int X = argc ;
+    char** Y = argv ;
+
+    QApplication a(X, Y);
     MainWindow w;
     w.setWindowTitle("First Graphics Demo");
     w.show();
+
+    //monoThread thread = new monoThread( argc, argv ) ;
+    monoThread thread( X, Y ) ;
+
+    thread.start() ;
+
     a.exec();
+
     /* PULL THE TRIGGER */
-    glutMainLoop();
+    //glutMainLoop();
+
+    //qtThread( argc, argv ) ;
+    //monoThread( argc, argv ) ;
+
+    return 0 ;
+
 }
