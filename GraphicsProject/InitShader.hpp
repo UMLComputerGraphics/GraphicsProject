@@ -38,7 +38,35 @@ namespace Angel {
    *
    * @return A handle to the compiled glsl program.
    */
-  GLuint InitShader( const char* vShaderFile, const char* fShaderFile, const char* gShaderFile = NULL );
+  GLuint InitShader( const char* vShaderFile, const char* fShaderFile,
+                     const char* gShaderFile );
+
+  /**
+   * InitShader takes two or three shader sourcefiles and compiles them into a
+   * shader program.
+   *
+   * @param vShaderFile the vertex shader source file
+   * @param fShaderFile the fragment shader source file
+   *
+   * @return A handle to the compiled glsl program.
+   */
+  GLuint InitShader( const char* vShaderFile, const char* fShaderFile );
+
+  /** TODO: udate this
+   * InitShader takes three shader sourcefiles and compiles them into a
+   * shader program.
+   *
+   * @param vShaderFile the vertex shader source file
+   * @param gShaderFile the geometry shader source file
+   * @param fShaderFile the fragment shader source file
+   *
+   * @return A handle to the compiled glsl program.
+   */
+  GLuint InitShader( const char* vShaderFile, const char* fShaderFile,
+                     const char* gShaderFile, GLuint gs_inType, GLuint gs_outType,
+                     int gs_numVertOut ) ;
+
+
 }
 
 #endif
