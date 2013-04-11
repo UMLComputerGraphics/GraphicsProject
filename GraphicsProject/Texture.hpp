@@ -66,7 +66,7 @@ private:
   Magick::Image *_image;
   /** Raw RGBA buffer object that we will load into the GPU. **/
   Magick::Blob _blob;
-
+  
 };
 
 #endif

@@ -18,14 +18,14 @@
  * @date 2013-03-30
  */
 namespace Angel {
-
+  
 /**
  * vec2: 2D vector.
  * @author Ed Angel
  * @date 2013-03-30
  */
   struct vec2 {
-
+    
     GLfloat x;
     GLfloat y;
 
@@ -62,19 +62,19 @@ namespace Angel {
     operator const GLfloat*() const;
     operator GLfloat*();
   };
-
+  
   //  Non-class vec2 Methods
   GLfloat dot( const vec2& u, const vec2& v );
   GLfloat length( const vec2& v );
   vec2 normalize( const vec2& v );
-
+  
 /**
  * vec3 - 3D vector.
  * @author Ed Angel
  * @date 2013-03-30
  */
   struct vec3 {
-
+    
     GLfloat x;
     GLfloat y;
     GLfloat z;
@@ -112,22 +112,22 @@ namespace Angel {
     //  --- Conversion Operators ---
     operator const GLfloat*() const;
     operator GLfloat*();
-
+    
   };
-
+  
   //  Non-class vec3 Methods
   GLfloat dot( const vec3& u, const vec3& v );
   GLfloat length( const vec3& v );
   vec3 normalize( const vec3& v );
   vec3 cross( const vec3& a, const vec3& b );
-
+  
 /**
  * vec4 - 4D vector.
  * @author Ed Angel
  * @date 2013-03-30
  */
   struct vec4 {
-
+    
     GLfloat x;
     GLfloat y;
     GLfloat z;
@@ -167,9 +167,9 @@ namespace Angel {
     //  --- Conversion Operators ---
     operator const GLfloat*() const;
     operator GLfloat*();
-
+    
   };
-
+  
   //  Non-class vec4 Methods
   GLfloat dot( const vec4& u, const vec4& v );
   GLfloat length( const vec4& v );

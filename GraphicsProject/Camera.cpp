@@ -17,21 +17,21 @@
 using namespace Angel;
 
 void Camera::commonInit( void ) {
-
+  
   // Extend the Uniforms array.
   if ( DEBUG )
     fprintf( stderr, "Extending Uniforms Array to %d\n", Camera::END );
   this->_handles.resize( Camera::END, -1 );
-
+  
   /* Default Variable Links */
   link( Camera::TRANSLATION, "T" );
   link( Camera::ROTATION, "R" );
   link( Camera::VIEW, "P" );
   link( Camera::CTM, "CTM" );
-
+  
   for ( size_t i = (size_t) Camera::DIR_BEGIN; i != (size_t) DIR_END; ++i )
     _motion[i] = false;
-
+  
   this->_speed = 0;
   this->_speed_cap = 0;
   this->_maxAccel = 10;
@@ -62,11 +62,11 @@ Camera::Camera( const std::string &name, GLuint gShader, vec4 &in ) :
 }
 
 Camera::~Camera( void ) {
-
+  
 }
 
 void Camera::x( const float &in, const bool &update ) {
-
+  
   _ctm._offset.setX( -in );
   _trans._offset.setX( in );
   if ( update ) {
@@ -146,7 +146,7 @@ void Camera::dPos( const vec4 &by ) {
 }
 
 void Camera::adjustRotation( const mat4 &adjustment, const bool &fixed ) {
-
+  
   /*
    By default, the 'order' bool represents the PREMULT behavior.
    However, if the fixed bool is present, toggle the order bool.
@@ -155,11 +155,11 @@ void Camera::adjustRotation( const mat4 &adjustment, const bool &fixed ) {
    */
   bool order = POSTMULT;
   if ( fixed ) order = !order;
-
+  
   // Apply our rotational adjustment to the camera.
   // Unintuitively, we need to adjust the Orbit.
   _ctm._orbit.adjust( adjustment, order );
-
+  
   /*
    Next, our Camera may have a physical object whose
    Rotations need to be calculated as well.
@@ -167,14 +167,14 @@ void Camera::adjustRotation( const mat4 &adjustment, const bool &fixed ) {
    So Transpose the Adjustment to obtain that.
    */
   _trans._rotation.adjust( transpose( adjustment ), !order );
-
+  
   // Update our state.
   _trans.calcCTM();
   _ctm.calcCTM();
   send( ROTATION );
 }
 
-/**
+/** 
  ROTATE_OFFSET is a macro which is used to normalize
  the six camera motion directions with respect to the
  current camera _rotation. It is used in heave(), sway() and surge().
@@ -221,7 +221,7 @@ void Camera::roll( const float &by, const bool &fixed ) {
 }
 
 void Camera::accel( const vec3 &raw_accel ) {
-
+  
   /*
    This scale factor is the cumulation of several scaling factors.
    (A) (MaxAccel/SQRT3)
@@ -244,7 +244,7 @@ void Camera::accel( const vec3 &raw_accel ) {
 
   float Scale = (_maxAccel / SQRT3) * (1 - POW5(_speed_cap)) * (tick.scale());
   vec3 accel = raw_accel * Scale;
-
+  
   if ( DEBUG_MOTION ) {
     fprintf( stderr, "Accel(); raw_accel = (%f,%f,%f)\n", raw_accel.x,
              raw_accel.y, raw_accel.z );
@@ -257,13 +257,13 @@ void Camera::accel( const vec3 &raw_accel ) {
     fprintf( stderr, "Accle(); accel = raw_accel * Scale = (%f,%f,%f)\n",
              accel.x, accel.y, accel.z );
   }
-
+  
   //The acceleration is finally applied to the velocity vector.
   _velocity += accel;
-
+  
   //speed and speed_cap must now be recalculated.
   _speed_cap = (_speed = length( _velocity )) / _maxSpeed;
-
+  
   if ( DEBUG_MOTION )
     fprintf( stderr, "Applied Acceleration to Velocity, Is now: (%f,%f,%f)\n",
              _velocity.x, _velocity.y, _velocity.z );
@@ -278,7 +278,7 @@ void Camera::stop( const Camera::Direction &Dir ) {
 }
 
 void Camera::idle( void ) {
-
+  
   /* Apply the automated motion instructions, if any --
    These are primarily from the keyboard. */
   if ( _motion[Camera::DIR_FORWARD] ) accel( vec3( 0, 0, 1 ) );
@@ -287,7 +287,7 @@ void Camera::idle( void ) {
   if ( _motion[Camera::DIR_LEFT] ) accel( vec3( 0, -1, 0 ) );
   if ( _motion[Camera::DIR_UP] ) accel( vec3( 1, 0, 0 ) );
   if ( _motion[Camera::DIR_DOWN] ) accel( vec3( -1, 0, 0 ) );
-
+  
   if ( _speed ) {
     /* Apply the velocity vectors computed from accel,
      which includes instructions from keyboard and the Balance Board. */
@@ -297,15 +297,15 @@ void Camera::idle( void ) {
      between different hardware. */
     float UnitScale = (1.0 / 20000.0);
     float Scale = tick.scale() * UnitScale;
-
+    
     if ( DEBUG_MOTION )
       fprintf( stderr, "Applying Translation: + (%f,%f,%f)\n",
                _velocity.x * Scale, _velocity.y * Scale, _velocity.z * Scale );
-
+    
     heave( _velocity.x * Scale );
     sway( _velocity.y * Scale );
     surge( _velocity.z * Scale );
-
+    
     // Friction Calculations
     if ( _speed < (_frictionMagnitude * tick.scale()) ) {
       if ( DEBUG_MOTION )
@@ -316,11 +316,11 @@ void Camera::idle( void ) {
     } else {
       // Friction is a vector that is the opposite of velocity.
       vec3 frictionVec = -_velocity;
-      /* By dividing friction by (speed/FrictionMagnitude),
+      /* By dividing friction by (speed/FrictionMagnitude), 
        we guarantee that the magnitude is FrictionMagnitude. */
       frictionVec = frictionVec / (_speed / _frictionMagnitude);
       frictionVec *= tick.scale();
-
+      
       if ( DEBUG_MOTION )
         fprintf( stderr, "Applying friction to Velocity: + (%f,%f,%f)\n",
                  frictionVec.x, frictionVec.y, frictionVec.z );
@@ -357,18 +357,18 @@ void Camera::fieldOfView( const float &in ) {
 }
 
 void Camera::changePerspective( const ViewType &vType ) {
-
+  
   _currentView = vType;
   refreshPerspective();
-
+  
 }
 
 void Camera::refreshPerspective( void ) {
-
+  
   // Some constants. For your pleasure.
   static const GLfloat zNear = 0.001;
   static const GLfloat zFar = 100.0;
-
+  
   switch ( _currentView ) {
   case PERSPECTIVE:
     _view = Perspective( _fovy, _aspectRatio, zNear, zFar );
@@ -401,7 +401,7 @@ void Camera::viewport( size_t _X, size_t _Y, size_t _Width, size_t _Height ) {
 }
 
 void Camera::send( Object::UniformEnum which ) {
-
+  
   switch ( which ) {
   case TRANSLATION:
     if ( _handles[which] != -1 )
@@ -432,7 +432,7 @@ void Camera::send( Object::UniformEnum which ) {
 }
 
 void Camera::view( void ) {
-
+  
   glViewport( _viewportPosition.x, _viewportPosition.y, _viewportSize.x,
               _viewportSize.y );
   /* send all of our matrices, who knows what the shader's gonna do with 'em */
@@ -440,13 +440,13 @@ void Camera::view( void ) {
   send( ROTATION );
   send( VIEW );
   send( CTM );
-
+  
 }
 
 void Camera::resetRotation( void ) {
-
+  
   // The transpose of any _rotation is its inverse.
   // Thus, this resets the rotational matrix.
   this->_ctm._orbit.adjust( transpose( this->_ctm._rotation.matrix() ) );
-
+  
 }
