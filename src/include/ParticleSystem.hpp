@@ -27,6 +27,14 @@ using std::vector;
 
 typedef Particle* ParticleP;
 
+typedef enum {
+
+  PARTICLE_CUBE,
+  PARTICLE_SPHERE,
+  PARTICLE_FLAME
+
+} PARTICLE_SYSTEM_SHAPE;
+
 class ParticleSystem : public Object {
   
 public:
@@ -63,6 +71,8 @@ public:
   virtual void buffer( void );
   virtual void draw( void );
 
+  void setVectorField(vec3 (*vectorFieldFunc)(vec4) );
+
 //protected:
   
 private:  
@@ -78,6 +88,12 @@ private:
   bool   pauseTheSystem;
   
   bool   updateRequired;
+
+
+  //  void setVectorField(vec3 (*vectorFieldFunc)(vec4) )
+  //{
+
+  vec3 (*_vecFieldFunc)(vec4 posIn);
 
   // Pass-through variable... maybe not be needed and function can pass through
   vec4   color;

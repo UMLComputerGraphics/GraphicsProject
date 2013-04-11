@@ -12,37 +12,49 @@ uniform vec3 gCamPos; // Camera Position
 varying vec4 gColor;
 varying vec4 fColor;
 
+varying float distance;
+varying float distanceF;
+
 vec2 TexCoord;        // Texture coordinates
 
 void main () 
 {
-	float particleSize = 0.25;
+
+	// PASS THRU //
+	distanceF = distance ;	
+
+
+	//float particleSize = 0.25;
+	float particleSize = 0.01;
 
 	//Pass through color
 	fColor = gColor;
 
-	vec4 Pos = gl_PositionIn[0];
+	for ( int i = 0 ; i < gl_VerticesIn ; i++ )
+	{
 
+		vec4 Pos = gl_PositionIn[i];
 
-	// 'Grow' quad around a point
-	gl_Position = Pos ;
+		Pos.x -= (particleSize/2.0);
+		Pos.y -= (particleSize/2.0);
+		gl_Position = Pos ;
+		EmitVertex();
 
-	// uh actually if you want the quad /AROUND/ the point, we need to first:
-	Pos.x -= particleSize;
-	EmitVertex();
+		Pos.x += particleSize;
+		gl_Position = Pos ;
+		EmitVertex();
 
-	Pos.y += particleSize;
-	gl_Position = Pos ;
-	EmitVertex();
+		Pos.x -= particleSize;
+		Pos.y += particleSize;
+		gl_Position = Pos ;
+		EmitVertex();
 
-	Pos.y -= particleSize;
-	Pos.x += particleSize;
-	gl_Position = Pos ;
-	EmitVertex();
+		Pos.x += particleSize;
+		gl_Position = Pos ;
+		EmitVertex();
 
-	Pos.y += particleSize;
-	gl_Position = Pos ;
-	EmitVertex();
-			
-	EndPrimitive();
+		EndPrimitive();
+
+	}
+
 }

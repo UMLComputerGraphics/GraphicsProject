@@ -75,7 +75,7 @@ void init()
   }
   */
 
-
+  
   {
     ParticleSystem *particleSystem = new ParticleSystem( numberOfParticles, "ParticleSystem1", particleSystemShader );
     particleSystem->setLifespan(15.0,17.5);    particleSystem->setLifespan(25.0, 26.0);
@@ -96,17 +96,18 @@ void init()
     particleSystem->fillSystemWithParticles();
     particleSystem->buffer();
   }
-
   /*
+    
   {
     ParticleSystem *particleSystem = new ParticleSystem( numberOfParticles, "ParticleSystem2", particleSystemShader );
-    particleSystem->setLifespan(15.0,17.5);    particleSystem->setLifespan(25.0, 26.0);
+    particleSystem->setLifespan(1.0,9.0);    //particleSystem->setLifespan(25.0, 26.0);
     rootScene->insertObject( particleSystem );
-    particleSystem->_trans._displacement.set(0.20, 0.0, 0.0);
+    particleSystem->_trans._displacement.set(0.0, 0.25, 0.0);
+    particleSystem->setEmitterRadius( 0.1 );
     particleSystem->propagate();
     particleSystem->buffer();
   }
-  */
+  */  
   /*
   {
     ParticleSystem *particleSystem = new ParticleSystem( numberOfParticles, "ParticleSystem3", particleSystemShader );

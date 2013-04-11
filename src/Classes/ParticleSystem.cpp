@@ -24,7 +24,11 @@
 using namespace Angel;
 
 #ifndef MIN_EMITTER_RADIUS
-#define MIN_EMITTER_RADIUS 1.0/512.0
+#define MIN_EMITTER_RADIUS 1.0/1024.0
+#endif
+
+#ifndef NUM_PARTICLES_TO_ADD_ON_UPDATE
+#define NUM_PARTICLES_TO_ADD_ON_UPDATE 3
 #endif
 
 // Constructor(s)
@@ -33,7 +37,8 @@ ParticleSystem::ParticleSystem( int particleAmt, const std::string &name,
     Object( name, shader ), numParticles( particleAmt ), minLife( 0.1 ),
     maxLife( 1 ), _emitterRadius(0.0), pauseTheSystem(false) 
 {
-   this->drawMode(GL_POINTS) ;
+   this->drawMode(GL_TRIANGLES) ;
+   this->_vecFieldFunc = NULL   ;
    //this->fillSystemWithParticles();
 }
 
@@ -95,9 +100,9 @@ ParticleSystem::newRandomParticle(void)
     */
 
     // sphere generating method      calc 3 ftw
-    float row   = rangeRandom( 0.001f, 0.002f ); // equivalent to magnitude
+    float row   = rangeRandom( 0.0005f, 0.002f ); // equivalent to magnitude
     float phi   = rangeRandom( 0.0f,     M_PI );
-    float theta = rangeRandom( 0.0f, 2 * M_PI );
+    float theta = rangeRandom( 0.0f, 2.0 * M_PI );
 
 
     p->setVel( vec3( row*sin(phi)*cos(theta),
@@ -169,7 +174,11 @@ void
 ParticleSystem::fillSystemWithParticles( void ) {
 
     int numParticles = getNumParticles();
+
+    while( numParticles % 3 ) numParticles++;
+
     int numToAdd = numParticles - particles.size();
+
   
     //std::cout << "Adding " << numToAdd << " particles" << std::endl;
 
@@ -272,6 +281,7 @@ ParticleSystem::draw( void )
     send( Object::OBJECT_CTM  ) ;
 
     //glDrawArrays( GL_POINTS, 0, numParticles );
+    //glDrawArrays( GL_POINTS, 0, _vertices.size() );
     glDrawArrays( GL_POINTS, 0, _vertices.size() );
 
     glBindVertexArray(0);
@@ -286,6 +296,7 @@ ParticleSystem::setEmitterRadius( float r )
   this->_emitterRadius = r ;
 }
 
+
 //Update the particles in our system >>> AND ALSO UPDATE OUR DRAW BUFFER
 void
 ParticleSystem::update() {
@@ -294,11 +305,21 @@ ParticleSystem::update() {
       return;
     }
 
+
+    if ( particles.size() < this->numParticles )
+      addSomeParticles( NUM_PARTICLES_TO_ADD_ON_UPDATE );
+
+
+
     _vertices.clear();
 
     vector<ParticleP>::iterator i;
     
-    for( i = particles.begin(); i != particles.end(); ++i) {
+    for( i = particles.begin() ; i != particles.end() ; ++i) {
+
+      // apply the vector field to the particle
+      if ( this->_vecFieldFunc != NULL ) 
+	(*i)->setVel( (*_vecFieldFunc)((*i)->getPosition() ) ) ;
 
       // call the update function on each particle
       (*i)->updateSelf();
@@ -320,8 +341,8 @@ ParticleSystem::update() {
 
 
 	// sphere generating method
-	float row   = rangeRandom( 0.001f, 0.002f ); // equivalent to magnitude
-	float phi   = rangeRandom( 0.0f,     M_PI );
+	float row   = rangeRandom( -0.001f, 0.002f ); // equivalent to magnitude
+	float phi   = rangeRandom( 0.0f, 2 * M_PI );
 	float theta = rangeRandom( 0.0f, 2 * M_PI );
 
 
@@ -333,11 +354,23 @@ ParticleSystem::update() {
       }
       
     }
-  
-    // should we really tie the buffering to the update() call??
-    //buffer();
 
 }
+
+
+
+
+void ParticleSystem::setVectorField(vec3 (*vectorFieldFunc)(vec4) )
+{
+
+    this->_vecFieldFunc = vectorFieldFunc ;
+
+}
+
+
+
+
+
 
 //
 // Private Functions
