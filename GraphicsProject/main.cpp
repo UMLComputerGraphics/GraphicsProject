@@ -23,11 +23,11 @@ void init() {
   Scene *rootScene = Engine::instance()->rootScene();
   Screen *primScreen = Engine::instance()->mainScreen();
 
-  shader[0] = Angel::InitShader( "/home/john/gitTest/GraphicsProject/src/Binaries/shaders/vMONOLITH.glsl",
-                                 "/home/john/gitTest/GraphicsProject/src/Binaries/shaders/fMONOLITH.glsl" );
-  shader[1] = Angel::InitShader( "/home/john/gitTest/GraphicsProject/src/Binaries/shaders/vterrain.glsl", "/home/john/gitTest/GraphicsProject/src/Binaries/shaders/ftex.glsl" );
-  shader[2] = Angel::InitShader( "/home/john/gitTest/GraphicsProject/src/Binaries/shaders/vParticle.glsl",
-                                 "/home/john/gitTest/GraphicsProject/src/Binaries/shaders/fFlameParticle.glsl" );
+  shader[0] = Angel::InitShader( "../src/Binaries/shaders/vMONOLITH.glsl",
+                                 "../src/Binaries/shaders/fMONOLITH.glsl" );
+  shader[1] = Angel::InitShader( "../src/Binaries/shaders/vterrain.glsl", "../src/Binaries/shaders/ftex.glsl" );
+  shader[2] = Angel::InitShader( "../src/Binaries/shaders/vParticle.glsl",
+                                 "../src/Binaries/shaders/fFlameParticle.glsl" );
 
   tick.setTimeUniform( glGetUniformLocation( shader[1], "ftime" ) );
 
@@ -41,7 +41,7 @@ void init() {
   // Create the Bottle Object handle...
   Object *bottle = rootScene->addObject( "bottle" );
   // Load model from file.
-  ObjLoader::loadModelFromFile( bottle, "/home/john/gitTest/GraphicsProject/src/models/bottle_wine_high.obj" );
+  ObjLoader::loadModelFromFile( bottle, "../src/models/bottle_wine_high.obj" );
   {
     // Scale the bottle down!
     bottle->_trans._scale.set( 0.30 );
@@ -75,7 +75,7 @@ void init() {
 
     // with this model, we can use all the preexisting Object class functionality
     ObjLoader::loadModelFromFile( bottleMorphTarget,
-                                  "/home/john/gitTest/GraphicsProject/src/models/bottle_liquor_high.obj" );
+                                  "../src/models/bottle_liquor_high.obj" );
     bottleMorphTarget->_trans._scale.set( 0.30 );
 
     for ( uint i = 0; i < bottle->_colors.size(); i++ ) {
@@ -99,7 +99,7 @@ void init() {
 
   // Load up that goddamned candle
   Object *candle = rootScene->addObject( "Candle", shader[1] );
-  ObjLoader::loadModelFromFile( candle, "/home/john/gitTest/GraphicsProject/src/models/candle.obj" );
+  ObjLoader::loadModelFromFile( candle, "../src/models/candle.obj" );
   vec4 min = candle->getMin();
   vec4 max = candle->getMax();
   fprintf( stderr, "Min: (%f,%f,%f)\nMax: (%f,%f,%f)\n", min.x, min.y, min.z,
