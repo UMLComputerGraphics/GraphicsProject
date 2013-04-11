@@ -47,8 +47,10 @@ void init() {
   // Load model from file.
   ObjLoader::loadModelFromFile( bottle, "../models/bottle_wine_high.obj" );
   {
+    vec4 min = bottle->getMin();
     // Scale the bottle down!
     bottle->_trans._scale.set( 0.30 );
+    bottle->_trans._offset.set( 0, (-min.y), 0 );
 
     for ( uint i = 0; i < bottle->_colors.size(); i++ ) {
       bottle->_colors[i].w = 0.4;
@@ -145,7 +147,6 @@ void cleanup( void ) {
  */
 void simpleRotateAnim( TransCache &obj ) {
   obj._rotation.rotateY( tick.scale() * 1.5 );
-  //obj._offset.set( 1.5, 0, 0 );
   obj._orbit.rotateY( tick.scale() * -0.5 );
 }
 
