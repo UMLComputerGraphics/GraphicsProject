@@ -21,6 +21,7 @@
 #include "Scene.hpp"
 #include "Texture.hpp"
 #include "TextureMan.hpp"
+#include "ParticleSystem.hpp"
 
 /* System */
 #include <string>

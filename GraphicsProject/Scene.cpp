@@ -35,12 +35,12 @@ Scene::Scene() {
  * You should, of course, never register objects from the stack.
  */
 Scene::~Scene() {
-
+  
   /* Traverse the list and free all Objects. */
   std::list< Object* >::reverse_iterator it;
   for ( it = _list.rbegin(); it != _list.rend(); ++it )
     delete *it;
-
+  
 }
 
 /**
@@ -78,20 +78,20 @@ GLuint Scene::shader( void ) {
  * @return A pointer to the new Object.
  */
 Object *Scene::addObject( const std::string &objName, GLuint shader ) {
-
+  
   // Note that 'shader' defaults to 0.
   if ( (!shader) && (!_gShader) )
     throw std::invalid_argument(
         "A call to AddObject() was made without "
         "specifying either the object-specific shader,\n"
         "\tor informing the parent Scene of a default shader to use." );
-
+  
   Object *obj = new Object( objName, ((shader) ? shader : _gShader) );
-
+  
   insertObject( obj );
-
+  
   return obj;
-
+  
 }
 
 /**
@@ -137,17 +137,17 @@ void Scene::insertObject( Object *obj ) {
  * @return A pointer to the Next object in the list.
  */
 Object *Scene::next( void ) {
-
+  
   // If the list is empty, we can't cycle.
   if ( _list.size() == 0 )
     throw std::logic_error( "Next() called, but there are no Objects"
                             " in this list." );
-
+  
   // Move to the next one. Cycle back if needed.
   if ( ++_currentObj == _list.end() ) _currentObj = _list.begin();
-
+  
   return *_currentObj;
-
+  
 }
 
 /**
@@ -156,16 +156,16 @@ Object *Scene::next( void ) {
  * @return A pointer to the Previous object in the list.
  */
 Object *Scene::prev( void ) {
-
+  
   if ( _list.size() == 0 )
     throw std::logic_error( "Prev() called, but there are no objects"
                             " in this list." );
-
+  
   if ( _currentObj == _list.begin() ) _currentObj = --_list.end();
   else --_currentObj;
-
+  
   return *_currentObj;
-
+  
 }
 
 /**
@@ -173,13 +173,13 @@ Object *Scene::prev( void ) {
  * @return An Object pointer to the active object at this level.
  */
 Object *Scene::active( void ) const {
-
+  
   if ( _list.size() == 0 ) throw std::logic_error(
       "Active() called, but the object list is empty." );
   else if ( _currentObj == _list.end() ) throw std::logic_error(
       "Active() called, but the active object is out-of-bounds." );
   else return *_currentObj;
-
+  
 }
 
 /**
@@ -199,15 +199,15 @@ void Scene::draw( void ) {
  * @return The requested Object pointer.
  */
 Object *Scene::operator[]( std::string const &objname ) {
-
+  
   std::map< std::string, Object* >::iterator ret;
   ret = _map.find( objname );
-
+  
   //if ( ret == _map.end() ) return NULL;
   if (ret == _map.end())
     throw std::out_of_range("Requested scene object \"" + objname + "\" not in scene");
   return ret->second;
-
+  
 }
 
 /**
@@ -217,13 +217,13 @@ Object *Scene::operator[]( std::string const &objname ) {
  * @return A reference to the scene we copied into.
  */
 Scene &Scene::operator=( const Scene &copy ) {
-
+  
   this->_gShader = copy._gShader;
   this->_map.clear();
   this->_list.clear();
   this->_currentObj = _list.end();
   return *this;
-
+  
 }
 
 /**

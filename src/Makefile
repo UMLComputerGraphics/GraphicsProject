@@ -50,7 +50,7 @@ endif
 
 ifeq ($(UNAME), Darwin)
     CXXINCS += -I/opt/local/include/ImageMagick
-   #LDLIBS += -framework Carbon -framework OpenGL -framework GLUT -L/opt/local/lib
+   # LDLIBS += -framework Carbon -framework OpenGL -framework GLUT -L/opt/local/lib
    # if you can't find imgMagick, then try the line above. be sure to comment the line below
     LDLIBS += -framework Carbon -framework OpenGL -framework GLUT -L/opt/local/lib -lMagick++
 endif

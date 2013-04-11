@@ -31,7 +31,7 @@ Timer::Timer( void ) :
   gettimeofday( &_t1, NULL );
   gettimeofday( &_t2, NULL );
 #endif
-
+  
   _keyFrameRate = (DEFAULT_KEYFRAME_RATE);
 }
 
@@ -115,7 +115,10 @@ void Timer::setTimeUniform( GLuint uniform ) {
  * Sends the current time over to the shader.
  */
 void Timer::sendTime( void ) {
-  if ( _uniform > 0 )
-  glUniform1f( _uniform, glutGet( GLUT_ELAPSED_TIME ) );
+
+  if ( _uniform > 0 ) {
+    int t = glutGet( GLUT_ELAPSED_TIME );
+    glUniform1i( _uniform, t );
+  }
 }
 

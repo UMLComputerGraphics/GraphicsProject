@@ -20,9 +20,9 @@ using Angel::vec2;
  * @date 2013-03-30
  */
 class Screen {
-
+  
 public:
-
+  
   /**
    * Initializes the Screen with a width and a height.
    * @param x The width: defaults to 0.
@@ -92,7 +92,7 @@ public:
   Cameras _camList;
 
 private:
-
+  
   /**
    * The current size of the screen.
    */
@@ -102,7 +102,7 @@ private:
    * The current midpoint of the screen.
    */
   vec2 _center;
-
+  
 };
 
 #endif

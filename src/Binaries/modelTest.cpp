@@ -1,5 +1,5 @@
 /**
- * @file ds.cpp
+ * @file modelTest.cpp
  * @author John Huston
  * @authors John Huston, Greg Giannone
  * @date 2013-02-20
@@ -16,12 +16,14 @@
 #include "glut_callbacks.h"
 #include "ObjLoader.hpp"
 
+const char *modelname;
+
 /**
  * Initialization: load and compile shaders, initialize camera(s), load models.
  */
 void init() {
   
-  GLuint shader[1];
+  GLuint shader[2];
   Cameras *camList = Engine::instance()->cams();
   Scene *rootScene = Engine::instance()->rootScene();
   
@@ -33,16 +35,27 @@ void init() {
   // Setting a default and adding objects without:
   rootScene->shader( shader[0] );
 
-  Object *E = rootScene->addObject( "Bottle!" );
-  ObjLoader::loadModelFromFile( E, "../models/bottle_liquor_high.obj" );
-  E->_trans._scale.set( 0.10 );
-  E->propagate();
-  E->buffer();
+  Object *model = rootScene->addObject( "Arbitrary Model" );
+  ObjLoader::loadModelFromFile( model, modelname );
+
+  vec4 min = model->getMin();
+  vec4 max = model->getMax();
+  fprintf( stderr, "Min: (%f,%f,%f)\nMax: (%f,%f,%f)\n", 
+	   min.x, min.y, min.z,
+	   max.x, max.y, max.z );
+  model->_trans._offset.set( 0, -min.y, 0 );
+  model->propagate();
+  model->buffer();
+
+  Object *floor = rootScene->addObject( "floor" );
+  quad( floor, 
+	vec4( -10, 0, 10, 1.0 ), vec4( -10, 0, -10, 1.0),
+	 vec4( 10, 0, -10, 1.0 ),vec4( 10, 0, 10, 1.0 ),
+	vec4( 0.4, 0.4, 0.4, 0.9 ) );
+  floor->buffer();
 
   glEnable( GL_DEPTH_TEST );
   glClearColor( 0, 0, 0, 1.0 );
-
-  Engine::instance()->texMan()->rebind();
 }
 
 /**
@@ -65,6 +78,9 @@ void cleanup( void ) {
  */
 int main( int argc, char **argv ) {
   
+  if (argc > 1) modelname = argv[1];
+  else modelname = "../models/candle.obj";
+
   Engine::init( &argc, argv, "Model Demonstration" );
   init();
 

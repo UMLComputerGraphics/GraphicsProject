@@ -100,6 +100,7 @@ ParticleSystem::newRandomParticle(void)
     */
 
     // sphere generating method      calc 3 ftw
+
     float row   = rangeRandom( 0.0005f, 0.002f ); // equivalent to magnitude
     float phi   = rangeRandom( 0.0f,     M_PI );
     float theta = rangeRandom( 0.0f, 2.0 * M_PI );
@@ -341,6 +342,7 @@ ParticleSystem::update() {
 
 
 	// sphere generating method
+
 	float row   = rangeRandom( -0.001f, 0.002f ); // equivalent to magnitude
 	float phi   = rangeRandom( 0.0f, 2 * M_PI );
 	float theta = rangeRandom( 0.0f, 2 * M_PI );

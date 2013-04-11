@@ -35,9 +35,9 @@ using std::string;
  automatically move along the x, y, or z axes.
  **/
 class Camera : public Object {
-
+  
 public:
-
+  
   /**
    The Direction enumeration lists all of the possible directions
    the camera may travel in. 'BEGIN' and 'END' are special sentinel
@@ -64,7 +64,7 @@ public:
     PERSPECTIVE, ORTHO, ORTHO2D, IDENTITY, FRUSTUM
   } ViewType;
 
-  /**
+  /** 
    The glsl_var enumeration lists the various variables the
    Camera class is capable of sending to the shader.
    The NumGlslVars variable is a sentinel value that is ignored
@@ -381,7 +381,7 @@ public:
   void resetRotation( void );
 
 private:
-
+  
   /**
    adjustRotation is an internal function that rotates the camera.
    Technically, any transformation, not just a rotation, is possible.
@@ -435,10 +435,10 @@ private:
 
   /** Camera's Drawbox x,y Coordinate (Upper-Left Pixel) **/
   Angel::vec2 _viewportPosition; // XPos and YPos
-
+  
   /** Booleans correlating to the different motion directions. **/
   bool _motion[Camera::DIR_END];
-
+  
 };
 
 #endif

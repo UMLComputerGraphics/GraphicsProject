@@ -1,5 +1,5 @@
 /**
-   @file dumb.cpp
+   @file partTest.cpp
    @author Nicholas St.Pierre
    @authors John Huston, Nicholas VerVoort, Chris Compton
    @date 2013-02-23
@@ -9,7 +9,6 @@
 #include "Engine.hpp"
 #include "ParticleSystem.hpp"
 /* Utilities and Common */
-#include "glut_callbacks.h"
 #include "ObjLoader.hpp"
 #include "InitShader.hpp"
 #include "model.hpp"
@@ -23,32 +22,27 @@
 // variable used to initialize the particle system
 // If there is an argv[1], we will use it to initialize the particle system.
 int numberOfParticles = 400000 ;
-
-// Type Aliases
-using Angel::vec3;
-using Angel::vec4;
-typedef Angel::vec4 color4;
-typedef Angel::vec4 point4;
-
-// Global objects for magical camera success
-Screen myScreen( 800, 600 );
-bool fixed_yaw = true;
+ParticleSystem *funInTheSin;
+double theta = 0.0;
+GLuint thetaLoc;
 
 // Initialization: load and compile shaders, initialize camera(s), load models.
 void init() 
 {
 
-  GLuint  particleSystemShader, bottleShader;
+  GLuint  particleSystemShader/*, bottleShader*/;
   Screen *primScreen = Engine::instance()->mainScreen();
   Scene  *rootScene = Engine::instance()->rootScene();
 
 
-  bottleShader         = Angel::InitShader("shaders/vmorph.glsl",
-					   "shaders/fmorph.glsl");
+  /*  bottleShader         = Angel::InitShader("shaders/vmorph.glsl",
+      "shaders/fmorph.glsl");*/
 
   particleSystemShader = Angel::InitShader("shaders/vParticle.glsl",
 					   "shaders/fParticle.glsl");
                                          //"shaders/gParticle.glsl");
+
+  thetaLoc = glGetUniformLocation(particleSystemShader, "theta");
 
   rootScene->shader(particleSystemShader);
   primScreen->_camList.shader(particleSystemShader);
@@ -62,80 +56,27 @@ void init()
     ObjLoader::loadModelFromFile( bottle, "../models/bottle-a.obj" );
     bottle->_trans._scale.set( 0.01 );
     bottle->buffer();
+
   }
   */
 
   /*
   {
-
     Object *my_sphere = rootScene->addObject( "sphere" );
     sphere(my_sphere);
-
-
   }
   */
 
+
+  funInTheSin = new ParticleSystem(numberOfParticles, "FunInTheSine", particleSystemShader);
+  funInTheSin->setLifespan(0.5, 11.0);  
+  funInTheSin->setEmitterRadius( 0.1 ) ;
+  rootScene->insertObject( funInTheSin );
+  funInTheSin->propagate();
+  funInTheSin->fillSystemWithParticles();
+  funInTheSin->buffer();
   
-  {
-    ParticleSystem *particleSystem = new ParticleSystem( numberOfParticles, "ParticleSystem1", particleSystemShader );
-    particleSystem->setLifespan(15.0,17.5);    particleSystem->setLifespan(25.0, 26.0);
-    particleSystem->setEmitterRadius( 0.4 ) ;
-    rootScene->insertObject( particleSystem );
-    particleSystem->_trans._rotation.rotateY(M_PI);
-    particleSystem->propagate();
-    particleSystem->fillSystemWithParticles();
-    particleSystem->buffer();
-  }
-
-  {
-    ParticleSystem *particleSystem = new ParticleSystem( numberOfParticles, "ParticleSystem1b", particleSystemShader );
-    particleSystem->setLifespan(15.0,17.5);    particleSystem->setLifespan(25.0, 26.0);
-    particleSystem->setEmitterRadius( 0.1 ) ;
-    rootScene->insertObject( particleSystem );
-    particleSystem->propagate();
-    particleSystem->fillSystemWithParticles();
-    particleSystem->buffer();
-  }
-  /*
-    
-  {
-    ParticleSystem *particleSystem = new ParticleSystem( numberOfParticles, "ParticleSystem2", particleSystemShader );
-    particleSystem->setLifespan(1.0,9.0);    //particleSystem->setLifespan(25.0, 26.0);
-    rootScene->insertObject( particleSystem );
-    particleSystem->_trans._displacement.set(0.0, 0.25, 0.0);
-    particleSystem->setEmitterRadius( 0.1 );
-    particleSystem->propagate();
-    particleSystem->buffer();
-  }
-  */  
-  /*
-  {
-    ParticleSystem *particleSystem = new ParticleSystem( numberOfParticles, "ParticleSystem3", particleSystemShader );
-    particleSystem->setLifespan(15.0,17.5);    particleSystem->setLifespan(8.0, 18.0);
-    rootScene->insertObject( particleSystem );
-    particleSystem->_trans._displacement.set(0.0, 0.20, 0.0);
-    particleSystem->propagate();
-    particleSystem->buffer();
-  }
-
-  {
-    ParticleSystem *particleSystem = new ParticleSystem( numberOfParticles, "ParticleSystem4", particleSystemShader );
-    particleSystem->setLifespan(8.0,18.0);
-    rootScene->insertObject( particleSystem );
-    particleSystem->_trans._displacement.set(-0.20, 0.0, 0.0);
-    particleSystem->propagate();
-    particleSystem->buffer();
-  }
-
-  {
-    ParticleSystem *particleSystem = new ParticleSystem( numberOfParticles, "ParticleSystem5", particleSystemShader );
-    particleSystem->setLifespan(8.0, 18.0);
-    rootScene->insertObject( particleSystem );
-    particleSystem->_trans._displacement.set(0.0, -0.20, 0.0);
-    particleSystem->propagate();
-    particleSystem->buffer();
-  }
-  */
+  tick.setTimeUniform(glGetUniformLocation( particleSystemShader, "ftime" ));
 
   // Generic OpenGL setup: Enable the depth buffer and set a nice background color.
   glEnable( GL_DEPTH_TEST );
@@ -150,44 +91,15 @@ void cleanup( void )
   Engine::instance()->rootScene()->delObject();
 }
 
+
+void part_idle()
+{
+	funInTheSin->setEmitterRadius(sin(theta));
+	theta += 0.01;
+	glUniform1f(thetaLoc, theta);
+}
+
 //--------------------------------------------------------------------
-
-void draw( void )
-{
-  static Scene *theScene  = Engine::instance()->rootScene();
-  static Cameras *camList = Engine::instance()->cams();
-
-  theScene->draw();
-  camList->draw();
-}
-
-// GLUT display callback. Effectively calls displayViewport per-each Camera.
-void display( void ) 
-{
-  static Cameras *camList = Engine::instance()->cams();
-  
-  // Clear the buffer.
-  glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-
-  // Tell camList to draw using our 'draw' rendering function.
-  camList->view( draw );
-
-  // Swap to the next buffer.
-  glutSwapBuffers();
-
-}
-
-void idle( void ) 
-{
-  static Cameras *camList = Engine::instance()->cams();
-
-  // Compute the time since last idle().
-  tick.tock();
-
-  // Move all camera(s).
-  camList->idleMotion();
-  glutPostRedisplay();
-}
 
 int main( int argc, char **argv ) {
 
@@ -198,35 +110,9 @@ int main( int argc, char **argv ) {
 	      << "* PLEASE RUN THIS PROGRAM WITH A NUMBER AS ITS FIRST ARGUMENT! *" << std::endl
 	      << "****************************************************************" << std::endl;
 
-  // OS X suppresses events after mouse warp.  This resets the suppression 
-  // interval to 0 so that events will not be suppressed. This also found
-  // at http://stackoverflow.com/questions/728049/
-  // glutpassivemotionfunc-and-glutwarpmousepointer
-#ifdef __APPLE__
-  CGSetLocalEventsSuppressionInterval( 0.0 );
-#endif
-  Util::InitRelativePaths(argc, argv);
-
-  glutInit( &argc, argv );
-  glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH );
-  glutInitWindowSize( myScreen.width(), myScreen.height() );
-  glutCreateWindow( "Particle Test" );
-  glutFullScreen();
-  glutSetCursor( GLUT_CURSOR_NONE );
-
-  GLEW_INIT();
+  Engine::instance()->init( &argc, argv, "Particle Test" );
+  Engine::instance()->registerIdle(part_idle);
   init();
-
-  /* Register our Callbacks */
-  glutDisplayFunc( display );
-  glutKeyboardFunc( engineKeyboard );
-  glutKeyboardUpFunc( engineKeylift );
-  glutSpecialFunc( engineSpecialKeyboard );
-  glutMouseFunc( engineMouse );
-  glutMotionFunc( engineMouseMotion );
-  glutPassiveMotionFunc( EngineMousePassive );
-  glutIdleFunc( idle );
-  glutReshapeFunc( engineResize );
 
   /* PULL THE TRIGGER */
   glutMainLoop();

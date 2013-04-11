@@ -39,7 +39,10 @@ public:
   virtual Angel::mat4 inverse( void ) const = 0;
   virtual Transformation::Subtype type( void ) const = 0;
   bool inheritable( void ) const;
+
   void markNew( void );
+  void markOld( void );
+  bool isNew( void );
 
 protected:
   bool _inheritable;

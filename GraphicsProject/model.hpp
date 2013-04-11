@@ -118,6 +118,9 @@ void quad( Object *obj, const Point4 &a, const Point4 &b, const Point4 &c,
            const Point4 &d, const Color4 &A, const Color4 &B, const Color4 &C,
            const Color4 &D );
 
+void quad( Object *obj, const Point4 &a, const Point4 &b, const Point4 &c,
+           const Point4 &d, const Color4 &COLOR );
+
 /**
  * Create a cube of a given size fixed at the origin, using the
  * eight colors specified.

@@ -27,9 +27,9 @@ using std::vector;
  **/
 
 class Cameras : public Scene {
-
+  
 public:
-
+  
   /**
    * Default constructor. Nothing special.
    */
@@ -57,7 +57,7 @@ public:
   //void DelCamera( const std::string &name );
   //void DelCamera( void );
   //void DestroyCamera( void );
-
+  
   /* Inherited and Overloaded */
   /**
    * Sets the active camera to the next available one in the collection.
@@ -141,12 +141,12 @@ public:
   Camera *obj2Cam( std::list< Object* >::iterator &it );
 
 private:
-
+  
   /**
    * _size is a simple vec2 (x,y) that contains the size of the screen.
    */
   Angel::vec2 _size;
-
+  
 };
 
 #endif
