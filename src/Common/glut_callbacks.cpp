@@ -98,7 +98,7 @@ void engineKeyboard( unsigned char key, int x, int y ) {
     try 
     {
       fprintf( stderr, "Active Object: %s\n",
-	       theScene->active()->Name().c_str() );
+	       theScene->active()->name().c_str() );
     }
 
     catch( std::logic_error& e ) 
