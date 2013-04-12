@@ -6,7 +6,7 @@ COMMONRAW=$(wildcard Common/*.cpp)
 CLASSESRAW=$(wildcard Classes/*.cpp)
 
 #things not needed or that break build
-DIAF=Classes/KinectInator.cpp Binaries/morphkeysound.cpp
+DIAF=Classes/KinectInator.cpp Binaries/morphkeysound.cpp fMod/3d_example.cpp fMod/playsound_example.cpp
 
 ifndef WII
 DIAF += \
@@ -40,7 +40,7 @@ ifdef WII
 endif
 
 #FMOD stuff:
-FMODLIBDIR = fMod/lib
+#FMODLIBDIR = fMod/lib
 
 # Platform-dependent configuration.
 UNAME := $(shell uname)
@@ -48,10 +48,10 @@ ifeq ($(UNAME), Linux)
     CXXINCS += -I/usr/include/ImageMagick/
     CXXDEFS += -DFREEGLUT_STATIC -DGLEW_STATIC
     LDLIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm 
-    FMODNAME = libfmodex.so
-    FMODLIB = $(FMODLIBDIR)/$(FMODLIBNAME)
-   # If linux, we don't need any extra build steps
-    FMODLINK = true
+    #FMODNAME = libfmodex.so
+    #FMODLIB = $(FMODLIBDIR)/$(FMODLIBNAME)
+	#If linux, we don't need any extra build steps
+    #FMODLINK = true
 endif
 
 ifeq ($(UNAME), Darwin)
@@ -72,13 +72,13 @@ else
 endif
 
 
-USE_FMOD = 1
-ifdef USE_FMOD
-    LDLIBS += $(FMODLIB)
-else
+#USE_FMOD = 1
+#ifdef USE_FMOD
+#    LDLIBS += $(FMODLIB)
+#else
 #in this context, true means "do nothing successfully"
-    FMODLINK = true
-endif
+#    FMODLINK = true
+#endif
 
 
 CXXFLAGS = $(CXXOPTS) $(CXXDEFS) $(CXXINCS)
@@ -94,7 +94,7 @@ $(TARGETS): $(OBJS)
 
 %: %.cpp
 	$(CXX) $(CXXFLAGS) $^ $(LDFLAGS) -o $@
-	$(FMODLINK) $@
+#	$(FMODLINK) $@
 
 #-----------------------------------------------------------------------------
 
