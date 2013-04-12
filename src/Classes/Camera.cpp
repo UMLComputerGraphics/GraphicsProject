@@ -344,7 +344,7 @@ float Camera::z( void ) const {
 }
 
 vec4 Camera::pos( void ) const {
-  return vec4( x(), y(), z(), 1.0 );
+  return -1.0*vec4( x(), y(), z(), 1.0 );
 }
 
 float Camera::fieldOfView( void ) const {
@@ -450,3 +450,23 @@ void Camera::resetRotation( void ) {
   this->_ctm._orbit.adjust( transpose( this->_ctm._rotation.matrix() ) );
   
 }
+
+/**
+   dPos returns the camera's velocity.
+   @return The current velocity of the camera.
+**/
+vec3 Camera::dPos( void ) const { return _velocity; }
+
+
+/**
+   forward returns a vector pointing in the same direction as the camera
+   @return a vector pointing forwards, relative to the current camera rotation
+ **/
+vec4 Camera::forward ( void ) const { return vec4( 0.0, 0.0, 1.0, 1.0 ) * this->_ctm.rotation.Matrix() ; }
+
+
+/**
+   up returns a vector pointing in the same direction as the camera
+   @return a vector pointing up, relative to the current camera rotation
+ **/
+vec4 Camera::up ( void ) const { return vec4( 0.0, 1.0, 0.0, 1.0 ) * this->_ctm.rotation.Matrix() ; }

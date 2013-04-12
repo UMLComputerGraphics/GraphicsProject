@@ -358,6 +358,16 @@ public:
    **/
   vec4 pos( void ) const;
 
+  /* Get Velocity */
+  vec3 dPos ( void ) const;
+
+  /* Get directional vectors */
+  vec4 forward ( void ) const;
+  vec4 up ( void ) const;
+
+
+
+
   /* OpenGL Methods */
   /**
    send will send a glsl variable to the shader.
