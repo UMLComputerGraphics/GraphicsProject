@@ -38,9 +38,9 @@ Object::Object( const std::string &name, GLuint gShader ) {
   shader( gShader );
   
   // Set our _name from the constructor...
-  this->_name = name;
+  _name = name;
   
-  /* Initialize our draw mode to GL_TRIANGLES until informed otherwise. */
+  // Initialize our draw mode to GL_TRIANGLES until informed otherwise.
   _drawMode = GL_TRIANGLES;
   
   // Get Uniform _handles for the following shader variables
@@ -49,13 +49,15 @@ Object::Object( const std::string &name, GLuint gShader ) {
   link( Object::MORPH_PCT, "morphPercentage" );
   link( Object::TEX_SAMPLER, "sampler" );
   
-  //Default to "Not Textured"
-  this->_isTextured = false;
-  
+  // Default to "Not Textured"
+  _isTextured = false;
+  _textureID = -1;  
+
   // Linear Interpolation Demo: Morph Percentage
-  this->_morphPercentage = 1.0;
+  _morphPercentage = 1.0;
+
   // Pointer to an Object to Morph to.
-  this->_morphTarget = NULL;
+  _morphTarget = NULL;
   
   /* Create our VAO, which is our handle to all 
    the rest of the following information. */glGenVertexArrays( 1, &_vao );
@@ -63,8 +65,9 @@ Object::Object( const std::string &name, GLuint gShader ) {
   GLuint glsl_uniform;
   
   /* Create (Eight) VBOs: One each for Positions, Colors, Normals, 
-   Textures, draw Order; Three for Morphing (Position,Colors,Normals.) */glGenBuffers(
-      NUM_BUFFERS, _buffer );
+   Textures, draw Order; Three for Morphing (Position,Colors,Normals.) */
+
+  glGenBuffers( NUM_BUFFERS, _buffer );
   
   /* Create the Vertex _buffer and link it with the shader. */glBindBuffer(
       GL_ARRAY_BUFFER, _buffer[VERTICES] );

@@ -5,9 +5,9 @@ SOURCESRAW=$(filter-out Incomplete/%.cpp Common/%.cpp Classes/%.cpp,$(wildcard *
 COMMONRAW=$(wildcard Common/*.cpp)
 CLASSESRAW=$(wildcard Classes/*.cpp)
 
-#Binaries/particleBottle.cpp
 #things not needed or that break build
-DIAF=Classes/KinectInator.cpp Binaries/raytrace1.cpp Binaries/raytraceIntegrated.cpp
+
+DIAF=Classes/KinectInator.cpp
 
 ifndef WII
 DIAF += \
@@ -56,7 +56,7 @@ ifeq ($(UNAME), Darwin)
 endif
 
 ifdef DEBUG
-	CXXOPTS += -DDEBUG -O0 -g
+	CXXOPTS += -DDEBUG -O0 -ggdb
 else
 	CXXOPTS += -O3
 endif

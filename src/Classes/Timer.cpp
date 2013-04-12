@@ -42,7 +42,7 @@ Timer::Timer( void ) :
  * Nanoseconds if _RT was enabled.
  */
 unsigned long Timer::tick( void ) {
-  return this->tock();
+  return tock();
 }
 
 /**

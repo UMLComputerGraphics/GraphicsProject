@@ -86,7 +86,7 @@ GLfloat sphereShininess[] = { 1.0,
 
 GLfloat lightPositions[] = { 1.0, 1.0, 10.0 };
 GLfloat lightDiffuse[] = { 1.0, 1.0, 1.0 };
-GLfloat lightSpecular[] { 1.0, 1.0, 1.0 };
+GLfloat lightSpecular[] = { 1.0, 1.0, 1.0 };
 
 int numTriangles = 0;
 std::vector<vec3> trianglePoints;

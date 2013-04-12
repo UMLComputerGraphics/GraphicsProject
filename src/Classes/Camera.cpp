@@ -17,11 +17,11 @@
 using namespace Angel;
 
 void Camera::commonInit( void ) {
-  
+
   // Extend the Uniforms array.
   if ( DEBUG )
     fprintf( stderr, "Extending Uniforms Array to %d\n", Camera::END );
-  this->_handles.resize( Camera::END, -1 );
+  _handles.resize( Camera::END, -1 );
   
   /* Default Variable Links */
   link( Camera::TRANSLATION, "T" );
@@ -32,14 +32,15 @@ void Camera::commonInit( void ) {
   for ( size_t i = (size_t) Camera::DIR_BEGIN; i != (size_t) DIR_END; ++i )
     _motion[i] = false;
   
-  this->_speed = 0;
-  this->_speed_cap = 0;
-  this->_maxAccel = 10;
-  this->_maxSpeed = 2000;
-  this->_frictionMagnitude = 4;
-  this->_aspectRatio = 1;
-  this->_currentView = PERSPECTIVE;
-  this->_fovy = 45.0;
+  _speed = 0;
+  _speed_cap = 0;
+  _maxAccel = 10;
+  _maxSpeed = 2000;
+  _frictionMagnitude = 4;
+  _aspectRatio = 1;
+  _currentView = PERSPECTIVE;
+  _fovy = 45.0;
+
 }
 
 Camera::Camera( const std::string &name, GLuint gShader, float x, float y,
@@ -277,6 +278,24 @@ void Camera::stop( const Camera::Direction &Dir ) {
   _motion[Dir] = false;
 }
 
+void Camera::stopAll( void ) {
+
+	// This function is a compilation of the 6 directions of stop functions
+	// intended for use in resetPosition, but can apply elsewhere if needed
+
+	// Putting the brakes on acceleration
+	_velocity = vec3( 0, 0, 0 );
+
+	// Halting all movement input temporarily
+	if ( _motion[Camera::DIR_FORWARD] ) stop( Camera::DIR_FORWARD );
+	if ( _motion[Camera::DIR_BACKWARD] ) stop( Camera::DIR_BACKWARD );
+    if ( _motion[Camera::DIR_RIGHT] ) stop( Camera::DIR_RIGHT );
+	if ( _motion[Camera::DIR_LEFT] ) stop( Camera::DIR_LEFT );
+	if ( _motion[Camera::DIR_UP] ) stop( Camera::DIR_UP );
+	if ( _motion[Camera::DIR_DOWN] ) stop( Camera::DIR_DOWN );
+
+}
+
 void Camera::idle( void ) {
   
   /* Apply the automated motion instructions, if any --
@@ -449,4 +468,17 @@ void Camera::resetRotation( void ) {
   // Thus, this resets the rotational matrix.
   this->_ctm._orbit.adjust( transpose( this->_ctm._rotation.matrix() ) );
   
+}
+
+void Camera::resetPosition( void ) {
+
+  // This function is here to reset position back to (0,0,0)
+  // Before doing so, it stops movement in order to prevent weirdness, then reenables it
+
+  // This part of the function would reset the rotation, but it is broken and does nothing.
+  //resetRotation();
+
+  stopAll();
+  pos(0,0,0);
+
 }
