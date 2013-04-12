@@ -10,6 +10,22 @@
 #ifdef __APPLE__ // include Mac OS X versions of headers
 #include <Magick++.h>
 
+/* FIXME Mac defs
+#define GL_TEXTURE_1D_ARRAY 				GL_TEXTURE_1D_ARRAY_EXT
+#define GL_TEXTURE_BINDING_1D_ARRAY 		GL_TEXTURE_BINDING_1D_ARRAY_EXT
+#define GL_TEXTURE_2D_ARRAY 				GL_TEXTURE_2D_ARRAY_EXT
+#define GL_TEXTURE_BINDING_2D_ARRAY 		GL_TEXTURE_BINDING_2D_ARRAY_EXT
+#define GL_TEXTURE_RECTANGLE				GL_TEXTURE_RECTANGLE_EXT
+#define GL_TEXTURE_BINDING_RECTANGLE		GL_TEXTURE_BINDING_RECTANGLE_EXT
+
+// These do not exist on Mac SDK
+//#define GL_TEXTURE_2D_MULTISAMPLE			GL_TEXTURE_2D_MULTISAMPLE_EXT
+//#define GL_TEXTURE_BINDING_2D_MULTISAMPLE	GL_TEXTURE_BINDING_2D_MULTISAMPLE_EXT
+//#define GL_TEXTURE_2D_MULTISAMPLE_ARRAY	GL_TEXTURE_2D_MULTISAMPLE_ARRAY_EXT
+//#define GL_TEXTURE_BUFFER					GL_TEXTURE_BUFFER_EXT
+//#define GL_TEXTURE_BINDING_BUFFER			GL_TEXTURE_BINDING_BUFFER_EXT
+*/
+
 #else // non-Mac OS X operating systems
 #include <ImageMagick/Magick++.h>
 #endif // __APPLE__
@@ -69,7 +85,7 @@ void Texture::buffer( void ) {
   GLenum query;
   int result;
 
-  switch (_textureTarget) {
+ /* switch (_textureTarget) {
   case GL_TEXTURE_1D:
     query = GL_TEXTURE_BINDING_1D;
     break;
@@ -104,7 +120,7 @@ void Texture::buffer( void ) {
   }
 
   glGetIntegerv( query, &result );
-
+*/
   glGenTextures( 1, &_textureObj );
   glBindTexture( _textureTarget, _textureObj );
   glTexImage2D( _textureTarget, 0, GL_RGB, _image->columns(), _image->rows(),
@@ -113,7 +129,7 @@ void Texture::buffer( void ) {
   glTexParameterf( _textureTarget, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
   
   // Put back the previous texture where we found it.
-  glBindTexture( _textureTarget, result );
+  //glBindTexture( _textureTarget, result );
 
 }
 
