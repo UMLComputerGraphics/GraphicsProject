@@ -277,6 +277,24 @@ void Camera::stop( const Camera::Direction &Dir ) {
   _motion[Dir] = false;
 }
 
+void Camera::stopAll( void ) {
+
+	// This function is a compilation of the 6 directions of stop functions
+	// intended for use in resetPosition, but can apply elsewhere if needed
+
+	// Putting the brakes on acceleration
+	_velocity = vec3( 0, 0, 0 );
+
+	// Halting all movement input temporarily
+	if ( _motion[Camera::DIR_FORWARD] ) stop( Camera::DIR_FORWARD );
+	if ( _motion[Camera::DIR_BACKWARD] ) stop( Camera::DIR_BACKWARD );
+    if ( _motion[Camera::DIR_RIGHT] ) stop( Camera::DIR_RIGHT );
+	if ( _motion[Camera::DIR_LEFT] ) stop( Camera::DIR_LEFT );
+	if ( _motion[Camera::DIR_UP] ) stop( Camera::DIR_UP );
+	if ( _motion[Camera::DIR_DOWN] ) stop( Camera::DIR_DOWN );
+
+}
+
 void Camera::idle( void ) {
   
   /* Apply the automated motion instructions, if any --
@@ -449,4 +467,17 @@ void Camera::resetRotation( void ) {
   // Thus, this resets the rotational matrix.
   this->_ctm._orbit.adjust( transpose( this->_ctm._rotation.matrix() ) );
   
+}
+
+void Camera::resetPosition( void ) {
+
+  // This function is here to reset position back to (0,0,0)
+  // Before doing so, it stops movement in order to prevent weirdness, then reenables it
+
+  // This part of the function would reset the rotation, but it is broken and does nothing.
+  //resetRotation();
+
+  stopAll();
+  pos(0,0,0);
+
 }
