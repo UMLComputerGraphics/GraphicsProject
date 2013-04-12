@@ -16,7 +16,7 @@
 void TransCache::ptm( const Angel::mat4 &new_ptm, bool postmult ) {
   
   /* Update our cached ptm. */
-  this->_ptm = new_ptm;
+  _ptm = new_ptm;
   
   /* Update our Result Matrix. */
   if ( postmult ) _otm = _ptm * _ctm;

@@ -21,7 +21,7 @@ void Camera::commonInit( void ) {
   // Extend the Uniforms array.
   if ( DEBUG )
     fprintf( stderr, "Extending Uniforms Array to %d\n", Camera::END );
-  this->_handles.resize( Camera::END, -1 );
+  _handles.resize( Camera::END, -1 );
   
   /* Default Variable Links */
   link( Camera::TRANSLATION, "T" );
@@ -32,14 +32,14 @@ void Camera::commonInit( void ) {
   for ( size_t i = (size_t) Camera::DIR_BEGIN; i != (size_t) DIR_END; ++i )
     _motion[i] = false;
   
-  this->_speed = 0;
-  this->_speed_cap = 0;
-  this->_maxAccel = 10;
-  this->_maxSpeed = 2000;
-  this->_frictionMagnitude = 4;
-  this->_aspectRatio = 1;
-  this->_currentView = PERSPECTIVE;
-  this->_fovy = 45.0;
+  _speed = 0;
+  _speed_cap = 0;
+  _maxAccel = 10;
+  _maxSpeed = 2000;
+  _frictionMagnitude = 4;
+  _aspectRatio = 1;
+  _currentView = PERSPECTIVE;
+  _fovy = 45.0;
 
 }
 

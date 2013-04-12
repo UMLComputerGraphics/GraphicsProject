@@ -81,7 +81,7 @@ private:
   vec4  getRandomCircularSpawnPoint(void);
 
   vector<ParticleP> particles;
-  int    numParticles;   // Number of particles that each instance of ParticleSystem will manage
+  unsigned numParticles;   // Number of particles that each instance of ParticleSystem will manage
   float  minLife;
   float  maxLife;
   float  _emitterRadius;
