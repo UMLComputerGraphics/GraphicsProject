@@ -17,7 +17,7 @@
 using namespace Angel;
 
 void Camera::commonInit( void ) {
-  
+
   // Extend the Uniforms array.
   if ( DEBUG )
     fprintf( stderr, "Extending Uniforms Array to %d\n", Camera::END );
@@ -40,6 +40,7 @@ void Camera::commonInit( void ) {
   this->_aspectRatio = 1;
   this->_currentView = PERSPECTIVE;
   this->_fovy = 45.0;
+
 }
 
 Camera::Camera( const std::string &name, GLuint gShader, float x, float y,
