@@ -7,7 +7,7 @@ CLASSESRAW=$(wildcard Classes/*.cpp)
 
 #Binaries/particleBottle.cpp
 #things not needed or that break build
-DIAF=Classes/KinectInator.cpp  Binaries/proofOfConcept.cpp Binaries/raytrace1.cpp
+DIAF=Classes/KinectInator.cpp Binaries/raytrace1.cpp Binaries/raytraceIntegrated.cpp
 
 ifndef WII
 DIAF += \

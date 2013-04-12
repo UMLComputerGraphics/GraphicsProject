@@ -59,6 +59,7 @@ public:
   int   getNumParticles( void );
 
   void setColor( vec4 newColor );
+  void setSlaughterHeight( float );
   void setLifespan( float minLifespan, float maxLifespan );
   void setNumParticles( int newNumParticles );
   void setEmitterRadius(float);
@@ -86,6 +87,8 @@ private:
   float  maxLife;
   float  _emitterRadius;
   bool   pauseTheSystem;
+
+  float  _slaughterHeight;
   
   bool   updateRequired;
 
