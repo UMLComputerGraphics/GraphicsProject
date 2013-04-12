@@ -15,6 +15,7 @@
 #include "InitShader.hpp"
 #include "glut_callbacks.h"
 #include "ObjLoader.hpp"
+#include "ParticleFieldFunctions.hpp"
 
 /**
  * Initialization: load and compile shaders, initialize camera(s), load models.
@@ -116,10 +117,12 @@ void init() {
 
   ParticleSystem *ps = new ParticleSystem( 10000, "ps1", shader[2] );
   ps->setLifespan(5,7.5);
-  ps->setEmitterRadius( 0.001 ) ;
+  ps->setEmitterRadius( 0.01 ) ;
+  ps->setVectorField( ParticleFieldFunctions::flame );
+  ps->setSlaughterHeight(0.20);
   candle->insertObject( ps );
   ps->_trans._offset.set(0,min.y+(max.y-min.y),0);
-  ps->fillSystemWithParticles();
+  //ps->fillSystemWithParticles();
   //ps->propagate();
   ps->buffer();
 

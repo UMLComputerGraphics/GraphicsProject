@@ -37,7 +37,7 @@ ParticleSystem::ParticleSystem( int particleAmt, const std::string &name,
     Object( name, shader ), numParticles( particleAmt ), minLife( 0.1 ),
     maxLife( 1 ), _emitterRadius(0.0), pauseTheSystem(false) 
 {
-   this->drawMode(GL_TRIANGLES) ;
+   this->drawMode(GL_POINTS) ;
    this->_vecFieldFunc = NULL   ;
    //this->fillSystemWithParticles();
 }
@@ -140,6 +140,13 @@ ParticleSystem::addOneParticleAtOrigin( void ) {
 
 }
 
+
+void
+ParticleSystem::setSlaughterHeight(float f){
+
+  this->_slaughterHeight = f ;
+
+}
 
 void
 ParticleSystem::addSomeParticles( int numToAdd ) {
@@ -281,9 +288,7 @@ ParticleSystem::draw( void )
     //send( Object::camPos ); 
     send( Object::OBJECT_CTM  ) ;
 
-    //glDrawArrays( GL_POINTS, 0, numParticles );
-    //glDrawArrays( GL_POINTS, 0, _vertices.size() );
-    glDrawArrays( GL_POINTS, 0, _vertices.size() );
+    glDrawArrays( _drawMode, 0, _vertices.size() );
 
     glBindVertexArray(0);
     Scene::draw();
@@ -302,20 +307,26 @@ ParticleSystem::setEmitterRadius( float r )
 void
 ParticleSystem::update() {
 
+    static bool waitFlag = false ;
+
     if ( this->pauseTheSystem ) {
       return;
     }
 
+    if ( particles.size() < (unsigned int) this->numParticles ){
+ 
+      if ( !waitFlag )
+	addSomeParticles( NUM_PARTICLES_TO_ADD_ON_UPDATE );
 
-    if ( particles.size() < this->numParticles )
-      addSomeParticles( NUM_PARTICLES_TO_ADD_ON_UPDATE );
+      waitFlag = !waitFlag ;
 
-
+    }
 
     _vertices.clear();
 
     vector<ParticleP>::iterator i;
-    
+    float maxHeight = this->_slaughterHeight ;
+
     for( i = particles.begin() ; i != particles.end() ; ++i) {
 
       // apply the vector field to the particle
@@ -327,8 +338,8 @@ ParticleSystem::update() {
 
       _vertices.push_back((*i)->getPosition());
 
-      if( (*i)->getLifetime() <= 0.0 ) {
-	//(*i)->setPos( position() );
+   
+      if( ((*i)->getLifetime() <= 0.0) || ((*i)->getPosition().y >= maxHeight) ) {
 	(*i)->setPos( this->getRandomCircularSpawnPoint() );
 	(*i)->setLifetime( rangeRandom(getMinLife(), getMaxLife() ));
 
@@ -361,23 +372,10 @@ ParticleSystem::update() {
 
 
 
-
 void ParticleSystem::setVectorField(vec3 (*vectorFieldFunc)(vec4) )
 {
-
     this->_vecFieldFunc = vectorFieldFunc ;
-
 }
-
-
-
-
-
-
-//
-// Private Functions
-//
-
 
 
 /**
