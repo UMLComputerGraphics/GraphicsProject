@@ -17,7 +17,7 @@
  * Default constructor. Nothing special.
  */
 Cameras::Cameras( void ) {
-  this->_size = Angel::vec2( 0, 0 );
+  _size = Angel::vec2( 0, 0 );
 }
 
 /**
@@ -128,7 +128,7 @@ void Cameras::idleMotion( void ) {
  * @return void.
  */
 void Cameras::resize( int width, int height ) {
-  this->_size = Angel::vec2( width, height );
+  _size = Angel::vec2( width, height );
   if ( DEBUG )
     std::cerr << "Setting Cameras WxH: " << width << "x" << height << "\n";
   calculateViewports();

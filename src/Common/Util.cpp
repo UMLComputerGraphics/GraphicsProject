@@ -61,11 +61,12 @@ namespace Util {
    *
    * @return the real path
    */
-  const char *getRelativePath( const char *path ) {
+  std::string getRelativePath( const char *path ) {
     std::stringstream wholepath;
+
     wholepath << dondeestalosshaders << path;
     printf("Looking for \"%s\"\tExecutable is in \"%s\"\tResolving to \"%s\"\n", path, dondeestalosshaders.c_str(), wholepath.str().c_str());
-    return wholepath.str().c_str();
+    return wholepath.str();
   }
 
 /**
