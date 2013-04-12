@@ -289,8 +289,10 @@ namespace ObjLoader {
    */
   void loadModelFromFile( Object *object, const char *filename ) {
     
+    const char *realFilename = Util::getRelativePath(filename).c_str();
+
     // file input stream
-    std::ifstream in( Util::getRelativePath(filename), std::ios::in );
+    std::ifstream in( realFilename, std::ios::in );
     
     if ( !in ) {
       throw std::runtime_error( "Could not open file." );

@@ -144,8 +144,6 @@ Object::~Object( void ) {
  */
 void Object::draw( void ) {
   
-  fprintf( stderr, "DRAWING %s\n", _name.c_str() );
-
   glBindVertexArray( _vao );
   
   // Check to see if the correct shader program is engaged.
