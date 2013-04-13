@@ -1,5 +1,7 @@
 SHELL = /usr/bin/env bash
 
+UNAME := $(shell uname)
+
 #BUILD EVERYTHING FROM A FOLDER OTHER THAN COMMON OR CLASSES AS AN EXECUTABLE!
 SOURCESRAW=$(filter-out Incomplete/%.cpp Common/%.cpp Classes/%.cpp,$(wildcard */*.cpp))
 COMMONRAW=$(wildcard Common/*.cpp)
@@ -12,6 +14,10 @@ DIAF=Classes/KinectInator.cpp
 ifndef WII
 DIAF += \
 	Common/WiiUtil.cpp
+endif
+
+ifeq ($(UNAME), Darwin)
+DIAF += Binaries/raytrace1.cpp Binaries/raytraceIntegrated.cpp
 endif
 
 SOURCES=$(filter-out $(DIAF),$(SOURCESRAW))
@@ -41,7 +47,7 @@ ifdef WII
 endif
 
 # Platform-dependent configuration.
-UNAME := $(shell uname)
+
 ifeq ($(UNAME), Linux)
     CXXINCS += -I/usr/include/ImageMagick/
     CXXDEFS += -DFREEGLUT_STATIC -DGLEW_STATIC
