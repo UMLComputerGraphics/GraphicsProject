@@ -56,14 +56,16 @@ ParticleSystem::getRandomCircularSpawnPoint(void)
     vec4 ret;
     // Generate a random position on a circle of radius radius (passed as arg)
     float randomTheta ;
+    float jitteredRadius ;
 
     // I LOVE THIS FUNCTION SO MUCH
     //randomTheta = rangeRandom( 0.0, 360.0 ); // if degrees
     randomTheta = rangeRandom( 0.0, 2.0*M_PI ); //if radians
+    jitteredRadius = rangeRandom(this->_emitterRadius/100, this->_emitterRadius);
 
-    ret.x = cos(randomTheta)*(this->_emitterRadius);
+    ret.x = cos(randomTheta)*(jitteredRadius);
     ret.y = 0.0 ;
-    ret.z = sin(randomTheta)*(this->_emitterRadius);
+    ret.z = sin(randomTheta)*(jitteredRadius);
     ret.w = 1.0 ; // ??? I don't know if this matters
 
     return ret;

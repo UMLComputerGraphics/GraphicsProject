@@ -17,6 +17,7 @@ uniform mat4 CTM; // CTM is either PRT or TRP, depending.
 uniform mat4 OTM;
 
 varying float distance ;
+
 void main()
 {
 

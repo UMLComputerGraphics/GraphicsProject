@@ -49,7 +49,6 @@ vec3 ParticleFieldFunctions::tornado(vec4 pos)
 
     return xyz(retVal);
 
-
 }
 
 
@@ -69,20 +68,20 @@ vec3 ParticleFieldFunctions::flame(vec4 pos)
 
     //double theta = getTheta(pos);
 
-    double scale = sin(0.8+(pos.y*M_PI*10))/60.0;
+    double scale = sin( 0.5+(pos.y*M_PI*8))/32.0;
     retVal.x = pos.x*scale;
     retVal.z = pos.z*scale;
     if ( ! pos.y >= 0.5 )
     {
       retVal *= -1.0 ;
     }
-    retVal.y = 0.002 ;
+    retVal.y = 0.004 ;
 
     //attractor code!!!
     attractor atr_top ;
 
     atr_top.power    = 0.00006 ;
-    atr_top.position = vec3(0.0, 0.21, 0.0) ;
+    atr_top.position = vec3(0.0, 0.251, 0.0) ;
 
     // get the distance from the attractor
     vec3 woah = atr_top.position - xyz(pos) ; 
@@ -94,7 +93,7 @@ vec3 ParticleFieldFunctions::flame(vec4 pos)
 
 
     retVal.x = retVal.x + woah.x ;
-    retVal.y = retVal.y + woah.y ;
+    //retVal.y = retVal.y + woah.y ;
     retVal.z = retVal.z + woah.z ;
 
 
