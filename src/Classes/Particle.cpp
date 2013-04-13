@@ -22,15 +22,13 @@ using Angel::mat4;
 
 // Constructor(s)
 Particle::Particle( vec4 position, float scale, float lifetime ) :
-  _pos( position ), _scale( scale ), _vel(vec3(0.0, 0.0, 0.0)), 
-  _lifetime( lifetime ) {
-  
+  _pos( position ), _scale( scale ), _vel(vec3(0.0, 0.0, 0.0)){
+  setMaxLifetime(lifetime);
 }
 
 Particle::Particle( vec4 position, float lifetime ) :
-  _pos( position ), _vel(vec3(0.0, 0.0, 0.0)), 
-  _lifetime( lifetime ) {
-  
+  _pos( position ), _vel(vec3(0.0, 0.0, 0.0)){
+  setMaxLifetime(lifetime);
 }
 
 // Destructor(s)
@@ -48,8 +46,7 @@ void Particle::updateSelf( void ) {
   _pos.y += _vel.y * scale ;
   _pos.z += _vel.z * scale ;
 
-  _lifetime -= 0.05 * scale;
-
+  this->_lifetime -= 0.05 * scale;
   //increase alive time (not lifeSPAN)
   //if ( _lifetime <= 0.0 ) _pos.x = _pos.y = _pos.z = 0.0 ;
 
@@ -76,6 +73,10 @@ void Particle::setLifetime( float newLifetime ) {
   _lifetime = newLifetime;
 }
 
+void Particle::setMaxLifetime( float newMaxLife ) {
+	_maxLifetime = _lifetime = newMaxLife;
+}
+
 void Particle::setPos( vec4 newPos ) {
   _pos = newPos;
 }
@@ -97,3 +98,10 @@ Particle::getPosition( void )
 {
   return _pos;
 }
+
+float
+Particle::getMaxLifetime()
+{
+	return _maxLifetime;
+}
+

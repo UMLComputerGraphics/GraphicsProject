@@ -1,16 +1,23 @@
 SHELL = /usr/bin/env bash
 
+UNAME := $(shell uname)
+
 #BUILD EVERYTHING FROM A FOLDER OTHER THAN COMMON OR CLASSES AS AN EXECUTABLE!
 SOURCESRAW=$(filter-out Incomplete/%.cpp Common/%.cpp Classes/%.cpp,$(wildcard */*.cpp))
 COMMONRAW=$(wildcard Common/*.cpp)
 CLASSESRAW=$(wildcard Classes/*.cpp)
 
 #things not needed or that break build
-DIAF=Classes/KinectInator.cpp Binaries/morphkeysound.cpp fMod/3d_example.cpp fMod/playsound_example.cpp
+
+DIAF=Classes/KinectInator.cpp Binaries/morphkeysound.cpp Binaries/raytrace1.cpp Binaries/raytraceIntegrated.cpp Binaries/morphkeysound.cpp fMod/3d_example.cpp fMod/playsound_example.cpp
 
 ifndef WII
 DIAF += \
 	Common/WiiUtil.cpp
+endif
+
+ifeq ($(UNAME), Darwin)
+DIAF += Binaries/raytrace1.cpp Binaries/raytraceIntegrated.cpp
 endif
 
 SOURCES=$(filter-out $(DIAF),$(SOURCESRAW))
@@ -43,7 +50,6 @@ endif
 FMODLIBDIR = fMod/lib
 
 # Platform-dependent configuration.
-UNAME := $(shell uname)
 
 #LINUX SETTINGS
 ifeq ($(UNAME), Linux)
