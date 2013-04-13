@@ -35,6 +35,8 @@ GLint uSphereDiffuse = -1;
 GLint uSphereAmbient = -1;
 GLint uSphereSpecular = -1;
 GLint uSphereShininess = -1;
+GLint uSphereReflect = -1;
+GLint uSphereRefract = -1;
 GLint uNumOfSpheres = -1;
 
 GLint uNumOfTriangle = -1;
@@ -79,6 +81,16 @@ GLfloat sphereShininess[] = { 1.0,
                               1.0,
                               1.0 };
 
+GLfloat sphereReflect[] = { 1.0,
+                            1.0,
+                            1.0,
+                            1.0 };
+
+GLfloat sphereRefract[] = { 1.0,
+                            1.0,
+                            1.0,
+                            1.0 };
+
 GLfloat lightPositions[] = { 1.0, 1.0, 10.0 };
 GLfloat lightDiffuse[] = { 1.0, 1.0, 1.0 };
 GLfloat lightSpecular[] = { 1.0, 1.0, 1.0 };
@@ -111,6 +123,8 @@ void customDisplay( void ) {
   glUniform3fv( uSphereAmbient, numSpheres, sphereAmbient );
   glUniform3fv( uSphereSpecular, numSpheres, sphereSpecular );
   glUniform1fv( uSphereShininess, numSpheres, sphereShininess );
+  glUniform1fv( uSphereReflect, numSpheres, sphereReflect );
+  glUniform1fv( uSphereRefract, numSpheres, sphereRefract );
   
   glUniform1i( uNumOfTriangle, numTriangles );
   glUniform1i( uNumOfTriangleVectors, numOfTriangleVectors );
@@ -153,6 +167,15 @@ void customDisplay( void ) {
       0                   // offset of first element
       );
 
+
+  mat4 rotationMatrix = Angel::RotateX(0.0);
+  vec4 cameraPosition(0.0, 0.0, 10.0, 0.0);
+
+  glUniform1i( uDisplay, 0 );
+  glUniformMatrix4fv( uRotationMatrix, 1, GL_TRUE, rotationMatrix );
+  glUniform4fv( uCameraPosition, 1, cameraPosition );
+  glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
   glutSwapBuffers();
   glDisableVertexAttribArray( vRayPosition );
 
@@ -166,7 +189,7 @@ void customDisplay( void ) {
   }
 }
 
-void addTriangle(const vec3& a, const vec3& b, const vec3& c, const vec3& diffuse, const vec3& ambient, const vec3& specular, float shininess) {
+void addTriangle(const vec3& a, const vec3& b, const vec3& c, const vec3& diffuse, const vec3& ambient, const vec3& specular, float shininess, float reflect, float refract) {
   trianglePoints.push_back(a);
   trianglePoints.push_back(b);
   trianglePoints.push_back(c);
@@ -196,8 +219,8 @@ void addTriangle(const vec3& a, const vec3& b, const vec3& c, const vec3& diffus
   bufferData.push_back(specular.z);
 
   bufferData.push_back(shininess);
-  bufferData.push_back(0.0);
-  bufferData.push_back(0.0);
+  bufferData.push_back(reflect);
+  bufferData.push_back(refract);
 
   vec3 normal = normalize(cross(b - a, c - b));
   bufferData.push_back(normal.x);
@@ -258,28 +281,28 @@ void addCube(vec3 position, vec3 diffuse) {
   vec3 specular = vec3(0.0, 0.0, 0.0);
 
   //front
-  addTriangle(vertices[1] + position, vertices[0] + position, vertices[3] + position, diffuse, ambient, specular, 1.0);
-  addTriangle(vertices[1] + position, vertices[3] + position, vertices[2] + position, diffuse, ambient, specular, 1.0);
+  addTriangle(vertices[1] + position, vertices[0] + position, vertices[3] + position, diffuse, ambient, specular, 1.0, 1.0, 0.0);
+  addTriangle(vertices[1] + position, vertices[3] + position, vertices[2] + position, diffuse, ambient, specular, 1.0, 1.0, 0.0);
 
   //back
-  addTriangle(vertices[6] + position, vertices[7] + position, vertices[4] + position, diffuse, ambient, specular, 1.0);
-  addTriangle(vertices[6] + position, vertices[4] + position, vertices[5] + position, diffuse, ambient, specular, 1.0);
+  addTriangle(vertices[6] + position, vertices[7] + position, vertices[4] + position, diffuse, ambient, specular, 1.0, 1.0, 0.0);
+  addTriangle(vertices[6] + position, vertices[4] + position, vertices[5] + position, diffuse, ambient, specular, 1.0, 1.0, 0.0);
 
   //right
-  addTriangle(vertices[2] + position, vertices[3] + position, vertices[7] + position, diffuse, ambient, specular, 1.0);
-  addTriangle(vertices[2] + position, vertices[7] + position, vertices[6] + position, diffuse, ambient, specular, 1.0);
+  addTriangle(vertices[2] + position, vertices[3] + position, vertices[7] + position, diffuse, ambient, specular, 1.0, 1.0, 0.0);
+  addTriangle(vertices[2] + position, vertices[7] + position, vertices[6] + position, diffuse, ambient, specular, 1.0, 1.0, 0.0);
 
   //left
-  addTriangle(vertices[5] + position, vertices[4] + position, vertices[0] + position, diffuse, ambient, specular, 1.0);
-  addTriangle(vertices[5] + position, vertices[0] + position, vertices[1] + position, diffuse, ambient, specular, 1.0);
+  addTriangle(vertices[5] + position, vertices[4] + position, vertices[0] + position, diffuse, ambient, specular, 1.0, 1.0, 0.0);
+  addTriangle(vertices[5] + position, vertices[0] + position, vertices[1] + position, diffuse, ambient, specular, 1.0, 1.0, 0.0);
 
   //top
-  addTriangle(vertices[5] + position, vertices[1] + position, vertices[2] + position, diffuse, ambient, specular, 1.0);
-  addTriangle(vertices[5] + position, vertices[2] + position, vertices[6] + position, diffuse, ambient, specular, 1.0);
+  addTriangle(vertices[5] + position, vertices[1] + position, vertices[2] + position, diffuse, ambient, specular, 1.0, 1.0, 0.0);
+  addTriangle(vertices[5] + position, vertices[2] + position, vertices[6] + position, diffuse, ambient, specular, 1.0, 1.0, 0.0);
 
   //bottom
-  addTriangle(vertices[0] + position, vertices[4] + position, vertices[7] + position, diffuse, ambient, specular, 1.0);
-  addTriangle(vertices[0] + position, vertices[7] + position, vertices[3] + position, diffuse, ambient, specular, 1.0);
+  addTriangle(vertices[0] + position, vertices[4] + position, vertices[7] + position, diffuse, ambient, specular, 1.0, 1.0, 0.0);
+  addTriangle(vertices[0] + position, vertices[7] + position, vertices[3] + position, diffuse, ambient, specular, 1.0, 1.0, 0.0);
 }
 
 void pushDataToBuffer() {
@@ -335,10 +358,7 @@ void pushDataToBuffer() {
   glActiveTexture(GL_TEXTURE0);
   glGenBuffers(1, &bufObj);
   glBindBuffer(GL_TEXTURE_BUFFER, bufObj);
-  // Size of float * number of floats in a vector * number of vectors in a triangle (a, b, c, color) * number of triangles
-  GLsizeiptr triangleSize = 3 * numOfTriangleVectors * numTriangles;
-  GLsizeiptr boundingSphereSize = 3 * 2 * numOfBoundingSpheres;
-  glBufferData(GL_TEXTURE_BUFFER, sizeof(GLfloat) * (triangleSize + boundingSphereSize), bufferData.data(), GL_STATIC_DRAW);
+  glBufferData(GL_TEXTURE_BUFFER, sizeof(GLfloat) * bufferData.size(), bufferData.data(), GL_STATIC_DRAW);
   glTexBuffer(GL_TEXTURE_BUFFER, GL_RGB32F, bufObj);
 }
 
@@ -351,7 +371,6 @@ void genereateScene() {
   ObjLoader::loadModelFromFile( bottle, "../models/bottle-b.obj" );
 
   vec4 *vertices = bottle->_vertices.data();
-  vec4 *colors = bottle->_colors.data();
   unsigned long int count = 0;
   while(count < bottle->_vertices.size()) {
     vec4 vertex = vertices[count++];
@@ -361,13 +380,11 @@ void genereateScene() {
     vertex = vertices[count++];
     vec3 c = vec3(vertex.x, vertex.y, vertex.z);
 
-    vec4 color = colors[count - 1];
-
-    addTriangle(a, b, c, vec3(color.x, color.y, color.z), ambient, specular, 1.0);
+    addTriangle(a, b, c, vec3(0.0, 1.0, 0.0), ambient, specular, 1.0, 1.0, 0.0);
   }
 
-  addTriangle(vec3(-10.0, -10.0, -6.0), vec3(10.0, -10.0, -6.0), vec3(10.0, 10.0, -6.0), vec3(1.0, 1.0, 1.0), ambient, vec3(1.0, 1.0, 1.0), 10.0);
-  addTriangle(vec3(-10.0, -10.0, -6.0), vec3(10.0, 10.0, -6.0), vec3(-10.0, 10.0, -6.0), vec3(0.0, 0.0, 1.0), ambient, vec3(0.0, 0.0, 1.0), 10.0);
+  addTriangle(vec3(-10.0, -10.0, -6.0), vec3(10.0, -10.0, -6.0), vec3(10.0, 10.0, -6.0), vec3(1.0, 1.0, 1.0), ambient, vec3(1.0, 1.0, 1.0), 10.0, 1.0, 0.0);
+  addTriangle(vec3(-10.0, -10.0, -6.0), vec3(10.0, 10.0, -6.0), vec3(-10.0, 10.0, -6.0), vec3(0.0, 0.0, 1.0), ambient, vec3(0.0, 0.0, 1.0), 10.0, 1.0, 0.0);
 
 /*
   vec3 colors[] = {vec3(1.0, 1.0, 0.0), vec3(1.0, 0.0, 1.0), vec3(0.0, 1.0, 1.0)};
@@ -411,7 +428,7 @@ void init( void ) {
 
   uRotationMatrix = glGetUniformLocation( program, "uRotationMatrix" );
   uCameraPosition = glGetUniformLocation( program, "uCameraPosition" );
-  
+
   uNumOfSpheres = glGetUniformLocation( program, "uNumOfSpheres" );
   uSphereCenterPoints = glGetUniformLocation( program, "uSphereCenterPoints" );
   uSphereRadius = glGetUniformLocation( program, "uSphereRadius" );
@@ -419,7 +436,9 @@ void init( void ) {
   uSphereAmbient = glGetUniformLocation( program, "uSphereAmbient" );
   uSphereSpecular = glGetUniformLocation( program, "uSphereSpecular" );
   uSphereShininess = glGetUniformLocation( program, "uSphereShininess" );
-  
+  uSphereReflect = glGetUniformLocation( program, "uSphereReflect" );
+  uSphereRefract = glGetUniformLocation( program, "uSphereRefract" );
+
   uNumOfTriangle = glGetUniformLocation( program, "uNumOfTriangle" );
   uNumOfTriangleVectors = glGetUniformLocation( program, "uNumOfTriangleVectors" );
 
