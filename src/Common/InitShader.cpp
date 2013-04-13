@@ -51,9 +51,11 @@ namespace Angel {
    */
   static char *readShaderSource( const char* shaderFile ) {
     
-    const char *adjShaderFile = Util::getRelativePath(shaderFile).c_str();
+    // Copy to a temporary string that will persist
+    // at least until we exit this function.
+    std::string adjustedPath = Util::getRelativePath(shaderFile);
 
-    FILE* fp = fopen( adjShaderFile, "r" );
+    FILE* fp = fopen( adjustedPath.c_str(), "r" );
 
     if ( fp == NULL ) {
       return NULL;
@@ -193,6 +195,7 @@ namespace Angel {
    *
    * @return A handle to the compiled glsl program.
    */
+
   GLuint InitShader( const char* vShaderFile, const char* fShaderFile,
                      const char* gShaderFile, GLenum gs_inType, GLenum gs_outType,
 		     int gs_numVertOut ) {

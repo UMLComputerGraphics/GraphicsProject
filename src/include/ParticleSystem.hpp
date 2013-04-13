@@ -81,7 +81,7 @@ private:
   float rangeRandom( float min, float max );
   float generateLifespan();
   vec4  getRandomCircularSpawnPoint(void);
-
+  vec4 getRandomHemisphericalSpawnPoint(void);
   vector<ParticleP> particles;
   unsigned numParticles;   // Number of particles that each instance of ParticleSystem will manage
   float  minLife;

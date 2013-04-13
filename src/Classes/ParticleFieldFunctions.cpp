@@ -49,7 +49,6 @@ vec3 ParticleFieldFunctions::tornado(vec4 pos)
 
 	return xyz(retVal);
 
-
 }
 
 
@@ -82,6 +81,7 @@ vec3 ParticleFieldFunctions::flame(vec4 pos)
 	//attractor code!!!
 	attractor atr_top ;
 
+
 	atr_top.power    = 0.05 ;
 	atr_top.position = vec3(0.0, 0.15, 0.0) ;
 	atr_top.range =	.02;
@@ -101,7 +101,6 @@ vec3 ParticleFieldFunctions::flame(vec4 pos)
 		retVal.y = retVal.y + woah.y ;
 		retVal.z = retVal.z + woah.z ;
 	}
-
 
 	return retVal;
 

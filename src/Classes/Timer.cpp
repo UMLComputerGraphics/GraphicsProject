@@ -115,10 +115,12 @@ void Timer::setTimeUniform( GLuint uniform ) {
  * Sends the current time over to the shader.
  */
 void Timer::sendTime( void ) {
-
   if ( _uniform > 0 ) {
     int t = glutGet( GLUT_ELAPSED_TIME );
     glUniform1i( _uniform, t );
+    if (glGetError()) {
+      fprintf( stderr, "glUniform1i failed in sendTime: glUniform1i( %u, %u )\n",
+	       _uniform, t );
+    }
   }
 }
-

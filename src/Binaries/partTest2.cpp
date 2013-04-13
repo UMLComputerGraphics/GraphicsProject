@@ -34,7 +34,7 @@ typedef Angel::vec4 point4;
 
 // Global objects for magical camera success
 Screen myScreen( 800, 600 );
-bool fixed_yaw = true;
+bool fixed_yaw = false;
 
 
 // Initialization: load and compile shaders, initialize camera(s), load models.
@@ -76,12 +76,13 @@ void init()
     ParticleSystem *particleSystem = new ParticleSystem( numberOfParticles, 
 							 "ParticleSystem1b", 
 							 particleSystemShader );
+
     particleSystem->setLifespan(4.0, 8.0);
     particleSystem->setVectorField( ParticleFieldFunctions::flame ) ;
-    particleSystem->setEmitterRadius( 0.01 ) ;
-    particleSystem->drawMode( GL_TRIANGLES ) ;
+    particleSystem->setEmitterRadius( 0.02 ) ;
+    particleSystem->drawMode( GL_TRIANGLES ) ; // NEED THIS IF WE USE A GEOMETRY SHADER!
     rootScene->insertObject( particleSystem );
-    //particleSystem->setSlaughterHeight(0.20);
+    //particleSystem->setSlaughterHeight(0.2455);
     //particleSystem->_trans._displacement.set(0.0, 0.25, 0.0);
     //particleSystem->setEmitterRadius( 0.1 );
     particleSystem->propagate();

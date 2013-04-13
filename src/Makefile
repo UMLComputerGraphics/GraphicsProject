@@ -9,7 +9,7 @@ CLASSESRAW=$(wildcard Classes/*.cpp)
 
 #things not needed or that break build
 
-DIAF=Classes/KinectInator.cpp
+DIAF=Classes/KinectInator.cpp Binaries/morphkeysound.cpp Binaries/raytrace1.cpp Binaries/raytraceIntegrated.cpp Binaries/morphkeysound.cpp fMod/3d_example.cpp fMod/playsound_example.cpp
 
 ifndef WII
 DIAF += \
@@ -46,12 +46,19 @@ ifdef WII
     LDLIBS += -lwiic -lwiicpp
 endif
 
+#FMOD stuff:
+#FMODLIBDIR = fMod/lib
+
 # Platform-dependent configuration.
 
 ifeq ($(UNAME), Linux)
     CXXINCS += -I/usr/include/ImageMagick/
     CXXDEFS += -DFREEGLUT_STATIC -DGLEW_STATIC
     LDLIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm 
+    #FMODNAME = libfmodex.so
+    #FMODLIB = $(FMODLIBDIR)/$(FMODLIBNAME)
+	#If linux, we don't need any extra build steps
+    #FMODLINK = true
 endif
 
 ifeq ($(UNAME), Darwin)
@@ -59,6 +66,10 @@ ifeq ($(UNAME), Darwin)
    # LDLIBS += -framework Carbon -framework OpenGL -framework GLUT -L/opt/local/lib
    # if you can't find imgMagick, then try the line above. be sure to comment the line below
     LDLIBS += -framework Carbon -framework OpenGL -framework GLUT -L/opt/local/lib -lMagick++
+    FMODLIBNAME = libfmodex.dylib
+   # If apple, we do need a funky post-compile build step
+    FMODLIB = $(FMODLIBDIR)/$(FMODLIBNAME)
+    FMODLINK = install_name_tool -change ./$(FMODLIBNAME) ../$(FMODLIB)
 endif
 
 ifdef DEBUG
@@ -66,6 +77,16 @@ ifdef DEBUG
 else
 	CXXOPTS += -O3
 endif
+
+
+#USE_FMOD = 1
+#ifdef USE_FMOD
+#    LDLIBS += $(FMODLIB)
+#else
+#in this context, true means "do nothing successfully"
+#    FMODLINK = true
+#endif
+
 
 CXXFLAGS = $(CXXOPTS) $(CXXDEFS) $(CXXINCS)
 LDFLAGS = $(LDOPTS) $(LDDIRS) $(LDLIBS)
@@ -80,6 +101,7 @@ $(TARGETS): $(OBJS)
 
 %: %.cpp
 	$(CXX) $(CXXFLAGS) $^ $(LDFLAGS) -o $@
+#	$(FMODLINK) $@
 
 #-----------------------------------------------------------------------------
 
@@ -108,6 +130,3 @@ rmtargets: _rmtargets
 clobber: _clean _rmtargets
 	@echo "Removed objects and executables."
 
-
-
-#>>>>>>> d2fe654ff4a5cad4acfccb2aecc1aba89bb7b37b

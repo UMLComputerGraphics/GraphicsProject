@@ -54,22 +54,56 @@ vec4
 ParticleSystem::getRandomCircularSpawnPoint(void)
 {
 
-	vec4 ret;
-	// Generate a random position on a circle of radius radius (passed as arg)
-	float randomTheta ;
+    vec4 ret;
+    // Generate a random position on a circle of radius radius (passed as arg)
+    float randomTheta ;
+    float jitteredRadius ;
 
-	// I LOVE THIS FUNCTION SO MUCH
-	//randomTheta = rangeRandom( 0.0, 360.0 ); // if degrees
-	randomTheta = rangeRandom( 0.0, 2.0*M_PI ); //if radians
+    // I LOVE THIS FUNCTION SO MUCH
+    //randomTheta = rangeRandom( 0.0, 360.0 ); // if degrees
+    randomTheta = rangeRandom( 0.0, 2.0*M_PI ); //if radians
+    jitteredRadius = rangeRandom(this->_emitterRadius/100, this->_emitterRadius);
 
-	ret.x = cos(randomTheta)*(this->_emitterRadius);
-	ret.y = 0.0 ;
-	ret.z = sin(randomTheta)*(this->_emitterRadius);
-	ret.w = 1.0 ; // ??? I don't know if this matters
+    ret.x = cos(randomTheta)*(jitteredRadius);
+    ret.y = 0.0 ;
+    ret.z = sin(randomTheta)*(jitteredRadius);
+    ret.w = 1.0 ; // ??? I don't know if this matters
 
-	return ret;
+
+    return ret;
 
 }
+
+
+vec4
+ParticleSystem::getRandomHemisphericalSpawnPoint(void)
+{
+
+    vec4 ret;
+    // Generate a random position on a circle of radius radius (passed as arg)
+    float randomTheta ;
+    float randomPhi ;
+    float jitteredRadius ;
+
+    // I LOVE THIS FUNCTION SO MUCH
+    //randomTheta = rangeRandom( 0.0, 360.0 ); // if degrees
+    randomTheta = rangeRandom( 0.0, 2.0 * M_PI ); //if radians
+    randomPhi   = rangeRandom( 0.0,       M_PI ); //if radians
+
+    jitteredRadius = rangeRandom(this->_emitterRadius/100, this->_emitterRadius);
+
+    // dont reindent this
+    ret.x = sin(randomPhi) * cos(randomTheta)*(jitteredRadius);
+    ret.y = cos(randomPhi) *                  (jitteredRadius);
+    ret.z = sin(randomPhi) * sin(randomTheta)*(jitteredRadius);
+    ret.w = 1.0 ; // ??? I don't know if this matters
+
+
+    return ret;
+
+
+}
+
 
 Particle*
 ParticleSystem::newRandomParticle(void)
@@ -84,7 +118,8 @@ ParticleSystem::newRandomParticle(void)
 		spawnPosition.w = 1.0 ;
 
 	} else {
-		spawnPosition = this->getRandomCircularSpawnPoint();
+	  //spawnPosition = this->getRandomCircularSpawnPoint();
+		spawnPosition = this->getRandomHemisphericalSpawnPoint();
 	}
 
 	// Generate a particle on the random position (if radius was big enough)
@@ -283,6 +318,10 @@ ParticleSystem::setEmitterRadius( float r )
 }
 
 
+
+
+
+
 //Update the particles in our system >>> AND ALSO UPDATE OUR DRAW BUFFER
 void
 ParticleSystem::update() {
@@ -320,10 +359,10 @@ ParticleSystem::update() {
 
 
 		if( ((*i)->getLifetime() <= 0.0) /*|| ((*i)->getPosition().y >= maxHeight)*/ ) {
-			(*i)->setPos( this->getRandomCircularSpawnPoint() );
+			(*i)->setPos( this->getRandomHemisphericalSpawnPoint() );
 			(*i)->setLifetime( (*i)->getMaxLifetime() );
 
-			/* //square gen method
+       /* //square gen method
 	float tempXV, tempYV, tempZV ;
 	tempXV = rangeRandom( -0.001f, 0.001f );
 	tempYV = rangeRandom( -0.001f, 0.001f );
@@ -332,17 +371,17 @@ ParticleSystem::update() {
 
 
 
-			// sphere generating method
+	// sphere generating method
 
-			float row   = rangeRandom( -0.001f, 0.002f ); // equivalent to magnitude
-			float phi   = rangeRandom( 0.0f, 2 * M_PI );
-			float theta = rangeRandom( 0.0f, 2 * M_PI );
+	float row   = rangeRandom( -0.001f, 0.002f ); // equivalent to magnitude
+	float phi   = rangeRandom( 0.0f, 2 * M_PI );
+	float theta = rangeRandom( 0.0f, 2 * M_PI );
 
 
-			(*i)->setVel( vec3( row*sin(phi)*cos(theta),
-					row*sin(phi)*sin(theta),
-					row*cos(phi) ));
-			 */
+	(*i)->setVel( vec3( row*sin(phi)*cos(theta),
+	row*sin(phi)*sin(theta),
+	row*cos(phi) ));
+       */
 
 		}
 
