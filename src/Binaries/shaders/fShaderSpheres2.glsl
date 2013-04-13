@@ -198,9 +198,9 @@ Sphere buildSphere(in vec3 centerPoint, in float radius, in vec3 diffuse) {
 }
 
 void buildTriangle(inout Triangle t, vec3 a, vec3 b, vec3 c, vec3 diffuse, vec3 ambient, vec3 specular, vec3 material, vec3 normal) {
-	t.a = (vec4(a, 1.0)).xyz;
-	t.b = (vec4(b, 1.0)).xyz;
-	t.c = (vec4(c, 1.0)).xyz;
+	t.a = a;
+	t.b = b;
+	t.c = c;
 	t.diffuse = diffuse;
 	t.ambient = ambient;
 	t.specular = specular;
@@ -422,6 +422,8 @@ void main()
 		{
 			break;
 		}
+		
+		if(isect.reflect < eps) break;
 
 		r.org = vec3(isect.p.x + eps * isect.n.x,
 					 isect.p.y + eps * isect.n.y,

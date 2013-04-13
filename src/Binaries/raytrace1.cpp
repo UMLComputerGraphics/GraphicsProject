@@ -109,6 +109,8 @@ std::vector<GLfloat> bufferData;
 int numOfTriangleVectors = 10;
 int numOfTrianglesBounded = 12;
 
+bool stereo = true;
+
 /**
  * Redraw the scene.
  */
@@ -163,9 +165,7 @@ void customkeyboard( unsigned char key, int x, int y ) {
     camera.moveCamera( 0.0, 0.0, -0.2 );
     break;
   case '1': //move somewhere
-    camera.reset();
-    camera.moveCamera( 0.0, 0.0, -4.0 );
-    //camera.rotateCamera(0.0, 90.0, 0.0);
+    stereo = !stereo;
     break;
   case ' ': // reset values to their defaults
     camera.reset();
@@ -270,12 +270,6 @@ void display( void ) {
 
   tick.sendTime();
   
-  cameraLeft.copyCamera(&camera);
-  cameraLeft.moveCamera(-0.1, 0.0, 0.0);
-
-  cameraRight.copyCamera(&camera);
-  cameraRight.moveCamera(0.1, 0.0, 0.0);
-
   int numSpheres = 1;
   glUniform1i( uNumOfSpheres, numSpheres );
   glUniform3fv( uSphereCenterPoints, numSpheres, sphereCenterPoints );
@@ -328,15 +322,30 @@ void display( void ) {
       0                   // offset of first element
       );
   
-  glUniform1i( uDisplay, -1 );
-  glUniformMatrix4fv( uRotationMatrix, 1, GL_TRUE, cameraLeft.getRotationMatrix() );
-  glUniform4fv( uCameraPosition, 1, cameraLeft.getCameraPosition() );
-  glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+  if(stereo) {
+    cameraLeft.copyCamera(&camera);
+    cameraLeft.moveCamera(-0.1, 0.0, 0.0);
 
-  glUniform1i( uDisplay, 1 );
-  glUniformMatrix4fv( uRotationMatrix, 1, GL_TRUE, cameraRight.getRotationMatrix() );
-  glUniform4fv( uCameraPosition, 1, cameraRight.getCameraPosition() );
-  glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+    cameraRight.copyCamera(&camera);
+    cameraRight.moveCamera(0.1, 0.0, 0.0);
+
+    glUniform1i( uDisplay, -1 );
+    glUniformMatrix4fv( uRotationMatrix, 1, GL_TRUE, cameraLeft.getRotationMatrix() );
+    glUniform4fv( uCameraPosition, 1, cameraLeft.getCameraPosition() );
+    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+    glUniform1i( uDisplay, 1 );
+    glUniformMatrix4fv( uRotationMatrix, 1, GL_TRUE, cameraRight.getRotationMatrix() );
+    glUniform4fv( uCameraPosition, 1, cameraRight.getCameraPosition() );
+    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+  } else {
+    glUniform1i( uDisplay, 0 );
+    glUniformMatrix4fv( uRotationMatrix, 1, GL_TRUE, camera.getRotationMatrix() );
+    glUniform4fv( uCameraPosition, 1, camera.getCameraPosition() );
+    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+  }
+
+
 
   glutSwapBuffers();
   glDisableVertexAttribArray( vRayPosition );
@@ -545,8 +554,8 @@ void genereateScene() {
     addTriangle(a, b, c, vec3(0.0, 1.0, 0.0), ambient, specular, 1.0, 1.0, 0.0);
   }
 
-  addTriangle(vec3(-10.0, -10.0, -6.0), vec3(10.0, -10.0, -6.0), vec3(10.0, 10.0, -6.0), vec3(1.0, 1.0, 1.0), ambient, vec3(1.0, 1.0, 1.0), 10.0, 1.0, 0.0);
-  addTriangle(vec3(-10.0, -10.0, -6.0), vec3(10.0, 10.0, -6.0), vec3(-10.0, 10.0, -6.0), vec3(0.0, 0.0, 1.0), ambient, vec3(0.0, 0.0, 1.0), 10.0, 1.0, 0.0);
+  addTriangle(vec3(-10.0, -10.0, -6.0), vec3(10.0, -10.0, -6.0), vec3(10.0, 10.0, -6.0), vec3(1.0, 1.0, 1.0), ambient, vec3(1.0, 1.0, 1.0), 10.0, 0.0, 0.0);
+  addTriangle(vec3(-10.0, -10.0, -6.0), vec3(10.0, 10.0, -6.0), vec3(-10.0, 10.0, -6.0), vec3(0.0, 0.0, 1.0), ambient, vec3(0.0, 0.0, 1.0), 10.0, 0.0, 0.0);
 
 /*
   vec3 colors[] = {vec3(1.0, 1.0, 0.0), vec3(1.0, 0.0, 1.0), vec3(0.0, 1.0, 1.0)};
