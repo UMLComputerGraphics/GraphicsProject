@@ -79,6 +79,7 @@ public:
 private:  
 
   float rangeRandom( float min, float max );
+  float generateLifespan();
   vec4  getRandomCircularSpawnPoint(void);
 
   vector<ParticleP> particles;

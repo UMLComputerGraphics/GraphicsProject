@@ -23,13 +23,13 @@ using Angel::mat4;
 // Constructor(s)
 Particle::Particle( vec4 position, float scale, float lifetime ) :
   _pos( position ), _scale( scale ), _vel(vec3(0.0, 0.0, 0.0)), 
-  _lifetime( lifetime ) {
+  _maxLifetime( lifetime ) {
   
 }
 
 Particle::Particle( vec4 position, float lifetime ) :
   _pos( position ), _vel(vec3(0.0, 0.0, 0.0)), 
-  _lifetime( lifetime ) {
+  _maxLifetime( lifetime ) {
   
 }
 
@@ -74,6 +74,10 @@ void Particle::setColor( vec4 newColor ) {
 
 void Particle::setLifetime( float newLifetime ) {
   _lifetime = newLifetime;
+}
+
+void Particle::setMaxLifetime( float newMaxLife ) {
+	_maxLifetime = _lifetime = newMaxLife;
 }
 
 void Particle::setPos( vec4 newPos ) {

@@ -44,6 +44,7 @@ public:
   void setAlpha( float newAlpha );
   void setColor( vec4 newColor );
   void setLifetime( float newLifetime );
+  void setMaxLifetime( float newMaxLife );
   void setPos( vec4 newPos );
   void setScale( vec3 newScale );
   //void setSpin( float newSpin );
@@ -59,6 +60,7 @@ private:
   vec3 _vel;
   vec4 _color;
   float _lifetime;
+  float _maxLifetime;
   //  float spin;
   
   string _texFilename;

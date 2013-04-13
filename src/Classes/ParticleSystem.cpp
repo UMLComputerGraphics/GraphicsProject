@@ -73,21 +73,22 @@ ParticleSystem::getRandomCircularSpawnPoint(void)
 Particle*
 ParticleSystem::newRandomParticle(void)
 {
-    vec4  spawnPosition ;
+
+
+	vec4  spawnPosition ;
 
     if ( this->_emitterRadius < MIN_EMITTER_RADIUS ) {
 
         spawnPosition.x = spawnPosition.y = spawnPosition.z = 0.0 ;
-	spawnPosition.w = 1.0 ;
+        spawnPosition.w = 1.0 ;
 
     } else {	
         spawnPosition = this->getRandomCircularSpawnPoint();
     } 
 
-    //generate a particle on the random position (if radius was big enough)
-    Particle *p = new Particle( spawnPosition,
-				1,
-				rangeRandom(this->minLife, this->maxLife) );
+	// Generate a particle on the random position (if radius was big enough)
+    Particle *p = new Particle( spawnPosition, 1, generateLifespan() );
+
 
     //finally, set the velocity
 
@@ -307,16 +308,16 @@ ParticleSystem::setEmitterRadius( float r )
 void
 ParticleSystem::update() {
 
-    static bool waitFlag = false ;
+	static bool waitFlag = false ;
 
-    if ( this->pauseTheSystem ) {
-      return;
-    }
+	if ( this->pauseTheSystem ) {
+		return;
+	}
 
     if ( particles.size() < (unsigned int) this->numParticles ){
  
       if ( !waitFlag )
-	addSomeParticles( NUM_PARTICLES_TO_ADD_ON_UPDATE );
+    	  addSomeParticles( NUM_PARTICLES_TO_ADD_ON_UPDATE );
 
       waitFlag = !waitFlag ;
 
@@ -325,13 +326,13 @@ ParticleSystem::update() {
     _vertices.clear();
 
     vector<ParticleP>::iterator i;
-    float maxHeight = this->_slaughterHeight ;
+    //float maxHeight = this->_slaughterHeight ;
 
     for( i = particles.begin() ; i != particles.end() ; ++i) {
 
       // apply the vector field to the particle
       if ( this->_vecFieldFunc != NULL ) 
-	(*i)->setVel( (*_vecFieldFunc)((*i)->getPosition() ) ) ;
+    	  (*i)->setVel( (*_vecFieldFunc)((*i)->getPosition() ) ) ;
 
       // call the update function on each particle
       (*i)->updateSelf();
@@ -339,9 +340,9 @@ ParticleSystem::update() {
       _vertices.push_back((*i)->getPosition());
 
    
-      if( ((*i)->getLifetime() <= 0.0) || ((*i)->getPosition().y >= maxHeight) ) {
+      if( ((*i)->getLifetime() <= 0.0) /*|| ((*i)->getPosition().y >= maxHeight)*/ ) {
 	(*i)->setPos( this->getRandomCircularSpawnPoint() );
-	(*i)->setLifetime( rangeRandom(getMinLife(), getMaxLife() ));
+	(*i)->setLifetime( getMaxLife() );
 
 	/* //square gen method
 	float tempXV, tempYV, tempZV ;
@@ -389,4 +390,33 @@ ParticleSystem::rangeRandom( float min, float max ) {
   float diff = max - min;
   
   return fmod( (float) random(), diff ) + min;
+}
+
+/**
+ * ParticleSystem::generateLifespan()
+ * Randomly generates a lifespan within a min and max range. Random die
+ * roll allows for 1 out of N particles to live longer than maxLifeMinor.
+ * @return a randomly generated "weighted" lifespan
+ */
+float
+ParticleSystem::generateLifespan(){
+	// maxLifeMinor set to 75% of possible life range.
+	float maxLifeMinor = ((this->maxLife - this->minLife) * .75) + this->minLife;
+	int dieRoll = rand() % 15000;
+	float life = 0.0;
+
+	// Keep rolling for random life until it is less than maxLifeMinor or
+	// greater than maxLifeMinor and successful die roll.
+	while (1){
+		life = rangeRandom(this->minLife, this->maxLife);
+		// 1 of every 10000 particles live longer than maxLifeMinor
+		if( dieRoll == 1 && life > maxLifeMinor)
+		{
+			return life;
+		}
+		else if ( life < maxLifeMinor )
+		{
+			return life;
+		}
+	}
 }

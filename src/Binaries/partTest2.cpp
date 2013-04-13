@@ -76,12 +76,12 @@ void init()
     ParticleSystem *particleSystem = new ParticleSystem( numberOfParticles, 
 							 "ParticleSystem1b", 
 							 particleSystemShader );
-    particleSystem->setLifespan(25.0, 26.0);
+    particleSystem->setLifespan(1.5, 3.0);
     particleSystem->setVectorField( ParticleFieldFunctions::flame ) ;
     particleSystem->setEmitterRadius( 0.01 ) ;
     particleSystem->drawMode( GL_TRIANGLES ) ;
     rootScene->insertObject( particleSystem );
-    particleSystem->setSlaughterHeight(0.20);
+    //particleSystem->setSlaughterHeight(0.20);
     //particleSystem->_trans._displacement.set(0.0, 0.25, 0.0);
     //particleSystem->setEmitterRadius( 0.1 );
     particleSystem->propagate();
