@@ -40,20 +40,31 @@ ifdef WII
 endif
 
 #FMOD stuff:
-#FMODLIBDIR = fMod/lib
+FMODLIBDIR = fMod/lib
 
 # Platform-dependent configuration.
 UNAME := $(shell uname)
+
+#LINUX SETTINGS
 ifeq ($(UNAME), Linux)
     CXXINCS += -I/usr/include/ImageMagick/
     CXXDEFS += -DFREEGLUT_STATIC -DGLEW_STATIC
     LDLIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm 
-    #FMODNAME = libfmodex.so
-    #FMODLIB = $(FMODLIBDIR)/$(FMODLIBNAME)
-	#If linux, we don't need any extra build steps
-    #FMODLINK = true
+
+ifeq ($(getconf LONG_BIT), 64 )
+    FMODNAME = libfmodex64.so
+    CXXOPTS += -m64
+else
+    FMODNAME = libfmodex.so
+    CXXOPTS += -m32
 endif
 
+    FMODLIB = $(FMODLIBDIR)/$(FMODLIBNAME)
+   #If linux, we don't need any extra build steps
+    FMODLINK = true
+endif
+
+#MAC SETTINGS
 ifeq ($(UNAME), Darwin)
     CXXINCS += -I/opt/local/include/ImageMagick
    # LDLIBS += -framework Carbon -framework OpenGL -framework GLUT -L/opt/local/lib
@@ -71,14 +82,14 @@ else
 	CXXOPTS += -O3
 endif
 
-
-#USE_FMOD = 1
-#ifdef USE_FMOD
-#    LDLIBS += $(FMODLIB)
-#else
+#FMOD ENABLE
+USE_FMOD = 1
+ifdef USE_FMOD
+    LDLIBS += $(FMODLIB)
+else
 #in this context, true means "do nothing successfully"
-#    FMODLINK = true
-#endif
+    FMODLINK = true
+endif
 
 
 CXXFLAGS = $(CXXOPTS) $(CXXDEFS) $(CXXINCS)
@@ -94,7 +105,7 @@ $(TARGETS): $(OBJS)
 
 %: %.cpp
 	$(CXX) $(CXXFLAGS) $^ $(LDFLAGS) -o $@
-#	$(FMODLINK) $@
+	$(FMODLINK) $@
 
 #-----------------------------------------------------------------------------
 
