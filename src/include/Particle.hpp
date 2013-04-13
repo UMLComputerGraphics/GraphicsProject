@@ -51,6 +51,7 @@ public:
   void setVel( vec3 newVel );
   void setTexFile( string newFilename );
   vec4 getPosition( void );
+  float getMaxLifetime(void);
 
   void updateSelf( void );
 
