@@ -24,6 +24,7 @@ typedef std::pair< std::string, Object * > NameObjPair;
  */
 Scene::Scene() {
   _currentObj = _list.end();
+  // This is a sentinel value: A real program will never have a handle of 0.
   _gShader = 0;
 }
 
