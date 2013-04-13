@@ -32,7 +32,7 @@ Texture::Texture( GLenum textureTarget ) {
  * Default destructor.
  */
 Texture::~Texture( void ) {
-  
+  if (_image) delete _image;  
 }
 
 /**
@@ -43,10 +43,11 @@ Texture::~Texture( void ) {
 bool Texture::load( const std::string &filename ) {
   
   try {
-    _image = new Magick::Image( Util::getRelativePath(filename.c_str()) );
+    std::string relativePath = Util::getRelativePath( filename.c_str() );
+    _image = new Magick::Image( relativePath.c_str() );
     _image->write( &_blob, "RGBA" );
   } catch ( Magick::Error& Error ) {
-    std::cerr << "Error loading texture '" << Util::getRelativePath(filename.c_str()) << "': " << Error.what()
+    std::cerr << "Error loading texture '" << filename.c_str() << "': " << Error.what()
               << std::endl;
     return false;
   }
