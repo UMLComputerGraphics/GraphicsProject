@@ -185,6 +185,14 @@ void Engine::init( int *argc, char *argv[], const char *title ) {
   glutIdleFunc( Engine::idle );
   glutReshapeFunc( engineResize );
 
+  if ( DEBUG ) {
+    fprintf( stderr, "GL_VENDOR: %s\n", glGetString( GL_VENDOR ) );
+    fprintf( stderr, "GL_RENDERER: %s\n", glGetString( GL_RENDERER ) );
+    fprintf( stderr, "GL_VERSION: %s\n", glGetString( GL_VERSION ) );
+    fprintf( stderr, "GL_SHADING_LANGUAGE_VERSION: %s\n",
+             glGetString( GL_SHADING_LANGUAGE_VERSION ) );
+  }
+
 }
 
 

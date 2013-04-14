@@ -16,6 +16,7 @@
 #include "mat.hpp"
 #include "Scene.hpp"
 #include "TransCache.hpp"
+#include "Texture.hpp"
 
 using Angel::vec4;
 
@@ -283,6 +284,7 @@ public:
   Angel::vec3 getMin( void );
 
 protected:
+
   /** _name is used as an identifying handle for the object. **/
   std::string _name;
 
@@ -291,6 +293,7 @@ protected:
 
   /** Handles to our buffers (Vertices, TexUVs, etc.) **/
   GLuint _buffer[NUM_BUFFERS];
+  GLint _attribIndex[NUM_BUFFERS];
 
   /** Drawing mode for this object. GL_TRIANGLES, GL_LINE_LOOP, etc. **/
   GLenum _drawMode;
@@ -324,10 +327,21 @@ protected:
    **/
   std::vector< GLint > _handles;
 
+  std::vector< GLint > _texIDs;
+  std::vector< Texture * > _textures;
+  GLuint _numTextures;
+
   /**
    * The texture unit index this Object uses.
    */
   GLint _textureID;
+
+private:
+
+  // Create and activate a Vertex Attrib Array and bind to a VBO
+  GLuint createAndBind( GLenum target, enum Object::BufferType typeIndex, const char *name,
+			GLint size, GLenum type, GLboolean normalized, GLsizei stride,
+			const GLvoid *ptr );
   
 };
 

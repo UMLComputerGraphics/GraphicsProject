@@ -41,7 +41,7 @@ bool fixed_yaw = false;
 void init() 
 {
 
-  GLuint  particleSystemShader, bottleShader;
+  GLuint  particleSystemShader;
   Screen *primScreen = Engine::instance()->mainScreen();
   Scene  *rootScene  = Engine::instance()->rootScene();
 
