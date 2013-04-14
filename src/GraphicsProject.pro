@@ -49,8 +49,9 @@ SOURCES += Qt/main.cpp\
  	#Common/WiiUtil.cpp\
         Common/Util.cpp \
    	#Qt
-	Qt/mainwindow.cpp
-        #Qt
+	Qt/mainwindow.cpp\
+        #Binaries
+	Binaries/MONOLITH.cpp
 
 
 
@@ -80,7 +81,8 @@ HEADERS  += \
         include/Transformation.hpp \
         include/Util.hpp \
         include/vec.hpp \
-  	include/mainwindow.h
+  	include/mainwindow.h\
+	include/MONOLITH.hpp
         #WiiUtil.h\
         #Qt
 
