@@ -26,6 +26,8 @@
 #include <stdexcept>
 #include <exception>
 
+//globalz
+float centerX, centerY;
 
 /**
  * keylift is registered as a GLUT callback for when a user
@@ -347,11 +349,18 @@ void engineMouseMotion( int x, int y ) {
  * @param y the y coordinate of the mouse pointer.
  */
 void EngineMousePassive( int x, int y ) {
-  
   static Screen *myScreen = Engine::instance()->mainScreen();
 
-  const double dx = ((double) x - myScreen->midpointX()) * MAGIC_MOUSE_SCALAR / ((double)myScreen->width());
-  const double dy = ((double) myScreen->midpointY() - y) * MAGIC_MOUSE_SCALAR / ((double)myScreen->height());
+  //estimate mouse center position
+  if (centerX + centerY < 0 || abs(centerX - x)>100 || abs(centerY-y)>100)
+  {
+      centerX = (round(x / 10.0)) * 10;
+      centerY = (round(y / 10.0)) * 10;
+      printf("Center found at %f, %f\n",centerX, centerY);
+  }
+
+  const double dx = ((double) x - centerX) * MAGIC_MOUSE_SCALAR / ((double)myScreen->width());
+  const double dy = ((double) centerY - y) * MAGIC_MOUSE_SCALAR / ((double)myScreen->height());
 
   if (dx == 0 || dy == 0) return;
   if ( myScreen->_camList.numCameras() > 0 ) {
@@ -367,7 +376,7 @@ void EngineMousePassive( int x, int y ) {
     }
   }
   
-  glutWarpPointer( myScreen->midpointX(), myScreen->midpointY() );
+  glutWarpPointer( centerX, centerY );
 
 }
 
@@ -392,6 +401,9 @@ void engineResize( int width, int height ) {
   
   // Update the size, which propagates changes to cameras and viewports.
   scr->size( width, height );
+
+  centerX=-1;
+  centerY=-1;
   
   // move the pointer so that there isn't a big jump next time we move it.
   glutWarpPointer( scr->midpointX(), scr->midpointY() );
