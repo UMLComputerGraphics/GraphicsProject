@@ -134,11 +134,16 @@ clobber: _clean _rmtargets
 
 
 .PHONY: qt
-qt:
+qt: freeglut
 	qmake -o qMakefile
 	make -f qMakefile
 	@$(RM) Binaries/MONOLITH
 	ln debug/GraphicsProject Binaries/MONOLITH
+	@echo ""
+	@echo "******************************************************"
+	@echo "For ld to find the customized freeglut library, run: "
+	@echo '     "export LD_LIBRARY_PATH=`pwd`:$$LD_LIBRARY_PATH"'
+	@echo "******************************************************"
 
 .PHONY: freeglut
 freeglut:
