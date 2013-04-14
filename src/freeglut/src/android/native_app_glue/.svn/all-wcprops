@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svnroot/freeglut/!svn/ver/1256/trunk/freeglut/freeglut/src/android/native_app_glue
+END
+android_native_app_glue.c
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svnroot/freeglut/!svn/ver/1101/trunk/freeglut/freeglut/src/android/native_app_glue/android_native_app_glue.c
+END
+android_native_app_glue.h
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svnroot/freeglut/!svn/ver/1256/trunk/freeglut/freeglut/src/android/native_app_glue/android_native_app_glue.h
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svnroot/freeglut/!svn/ver/1101/trunk/freeglut/freeglut/src/android/native_app_glue/README
+END
