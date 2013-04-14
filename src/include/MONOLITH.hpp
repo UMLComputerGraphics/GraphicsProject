@@ -32,6 +32,10 @@
 #include <cstdlib>
 #include <time.h>
 
+#ifndef WITHOUT_QT
+#include <qtimer.h>
+#endif
+
 class MONOLITH
 #ifndef WITHOUT_QT
     : public QObject
@@ -79,10 +83,16 @@ public:
 #ifndef WITHOUT_QT
 public slots:
     
+    void doMainLoop();
 signals:
 #endif
     
 private:
+
+    //this indicates to the main loop hack that it should stop trying to loop using QTimer
+#ifndef WITHOUT_QT
+    bool isQtWindowDead;
+#endif
 
     /**
      * A simple animation callback.
