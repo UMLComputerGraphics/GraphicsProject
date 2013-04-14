@@ -39,6 +39,15 @@ void Transformation::markNew( void ) {
   _new = true;
 }
 
+void Transformation::markOld( void ) {
+  _new = false;
+}
+
+bool Transformation::isNew( void ) {
+  return _new;
+}
+
+
 Angel::mat4 operator*( const Angel::mat4 &lhs, const Transformation &rhs ) {
   return lhs * rhs.matrix();
 }
@@ -140,12 +149,12 @@ Transformation::Subtype TransMat::type( void ) const {
 /* SCALE */
 
 const ScaleMat &ScaleMat::set( const float x, const float y, const float z ) {
-
+  
   mat[0][0] = x;
   mat[1][1] = y;
   mat[2][2] = z;
   return (*this);
-
+  
 }
 
 const ScaleMat &ScaleMat::set( const float pct ) {

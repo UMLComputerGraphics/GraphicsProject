@@ -14,7 +14,7 @@
 #include "vec.hpp"
 #include "platform.h" //OpenGL types.
 class Transformation {
-
+  
 public:
 
   typedef enum Subtype {
@@ -39,13 +39,16 @@ public:
   virtual Angel::mat4 inverse( void ) const = 0;
   virtual Transformation::Subtype type( void ) const = 0;
   bool inheritable( void ) const;
+
   void markNew( void );
+  void markOld( void );
+  bool isNew( void );
 
 protected:
   bool _inheritable;
   bool _new;
   Angel::mat4 mat;
-
+  
 };
 
 Angel::mat4 operator*( const Angel::mat4 &lhs, const Transformation &rhs );
@@ -53,9 +56,9 @@ Angel::mat4 operator*( const Angel::mat4 &lhs, const Transformation &rhs );
 /** Rotations **/
 
 class RotMat : public Transformation {
-
+  
 public:
-
+  
   const RotMat &reset( const Angel::mat4 &NewState );
   const RotMat &rotateX( const GLfloat theta, bool postmult = true );
   const RotMat &rotateY( const GLfloat theta, bool postmult = true );
@@ -69,9 +72,9 @@ public:
 /** Translations **/
 
 class TransMat : public Transformation {
-
+  
 public:
-
+  
   const TransMat &setX( const float x );
   const TransMat &setY( const float y );
   const TransMat &setZ( const float z );
@@ -87,9 +90,9 @@ public:
 };
 
 class ScaleMat : public Transformation {
-
+  
 public:
-
+  
   const ScaleMat &set( const float x, const float y, const float z );
   const ScaleMat &set( const float pct );
 
@@ -97,7 +100,7 @@ public:
   const ScaleMat &adjust( const float pct );
   virtual Angel::mat4 inverse( void ) const;
   virtual Transformation::Subtype type( void ) const;
-
+  
 };
 
 #endif

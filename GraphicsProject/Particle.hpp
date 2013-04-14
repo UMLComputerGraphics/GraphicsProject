@@ -25,40 +25,44 @@ using std::string;
  @since 23 Feb 2013
  @authors Nick Ver Voort, Chris Compton
  nicholas_vervoort@student.uml.edu, christopher_compton@student.uml.edu
- @brief TODO: You know you've been bad.
+ @brief The Particle class, many of which will be handled simultaneously by a
+ ParticleSystem.
  **/
 
 class Particle {
-
+  
 public:
 
-  Particle( vec4 position, float scale, float lifeSpan );
+  Particle( vec4 position, float lifetime );
+  Particle( vec4 position, float scale, float lifetime );
   ~Particle( void );
 
   void changeVel( vec3 newVel );
 
-  float getLifespan( void );
+  float getLifetime( void );
 
-  void setAlpha( float newAlpha );  // changes the alpha level of color
+  void setAlpha( float newAlpha );
   void setColor( vec4 newColor );
-  void setLifespan( float newLifespan );
+  void setLifetime( float newLifetime );
   void setPos( vec4 newPos );
   void setScale( vec3 newScale );
-  void setSpin( float newSpin );
+  //void setSpin( float newSpin );
   void setVel( vec3 newVel );
   void setTexFile( string newFilename );
   vec4 getPosition( void );
 
+  void updateSelf( void );
+
 private:
-  vec4 mPos;
-  vec3 mScale;
-  vec3 mVel;
-  vec4 color;
-  float lifespan;
+  vec4 _pos;
+  vec3 _scale;
+  vec3 _vel;
+  vec4 _color;
+  float _lifetime;
   //  float spin;
-
-  string texFilename;
-
+  
+  string _texFilename;
+  
 };
 
 #endif

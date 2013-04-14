@@ -14,7 +14,10 @@
 #ifdef __APPLE__  // include Mac OS X verions of headers
 #  include <Carbon/Carbon.h>
 #  include <OpenGL/OpenGL.h>
+//#  include <OpenGL/gl3.h>
 #  include <GLUT/glut.h>
+#  include <OpenGL/glext.h>
+//#  include <OpenGL/glext.h>
 //#  include <CoreGraphics/CGGeometry.h>
 //#  include <CoreGraphics/CGRemoteOperation.h>
 #else // non-Mac OS X operating systems                                     

@@ -55,6 +55,10 @@ unsigned TextureManagement::assign( Texture *newTexture ) {
       assignedTexUnit = getTexUnit(i);
       newTexture->bind( assignedTexUnit );
       _texUnits[i] = newTexture;
+
+      // FIXME: Mac OSX Hack
+      rebind();
+
       // Return which texture unit we bound this texture to.
       return i;
     }

@@ -167,9 +167,9 @@ void Engine::init( int *argc, char *argv[], const char *title ) {
   Util::InitRelativePaths(*argc, argv);
   glutInit( argc, argv );
   glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH );
-  glutInitWindowSize( 0, 0 );
+  glutInitWindowSize( 500, 500 );
   glutCreateWindow( title );
-  glutFullScreen();
+  //glutFullScreen();
   glutSetCursor( GLUT_CURSOR_NONE );
 
   GLEW_INIT();

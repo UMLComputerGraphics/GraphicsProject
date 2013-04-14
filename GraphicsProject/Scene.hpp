@@ -28,7 +28,7 @@ class Object;
  * @author John Huston
  */
 class Scene {
-
+  
 public:
   /**
    * Nullary constructor.
@@ -181,7 +181,7 @@ protected:
    * @param obj The object to delete.
    */
   void deleteObject( Object *obj );
-
+  
 };
 
 #endif

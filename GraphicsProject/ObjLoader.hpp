@@ -20,7 +20,7 @@ using std::vector;
 using std::exception;
 
 namespace ObjLoader {
-
+  
   /**
    * Split a string by an arbitrary delimeter.
    * @param str The string to split.
@@ -28,7 +28,7 @@ namespace ObjLoader {
    * @return A std::vector<std::string> of all the tokens.
    */
   const vector< string > split( const string &str, const char delim );
-
+  
   /**
    * loadObj loads all available objects from a .obj file into the provided scene.
    *
@@ -39,7 +39,7 @@ namespace ObjLoader {
    */
   Object *loadObj( const Scene &scene, const char* filename, const char *objName =
                        NULL );
-
+  
   /**
    * Split a string by an arbitrary delimeter.
    * @param str The string to split.
@@ -47,7 +47,7 @@ namespace ObjLoader {
    * @return A std::vector<std::string> of all the tokens.
    */
   Angel::vec4 parseVertex( const string &line );
-
+  
   /**
    * Obtain a 2D TexUV coordinate from a std::string line.
    *
@@ -55,7 +55,7 @@ namespace ObjLoader {
    * @return a vec2 containing the parsed texUV.
    */
   Angel::vec2 parseTextureUV( const string &line );
-
+  
   /**
    * Obtain a 3D normal vector from a std::string line.
    *
@@ -63,7 +63,7 @@ namespace ObjLoader {
    * @return a vec3 containing the parsed normal.
    */
   Angel::vec3 parseNormal( const string &line );
-
+  
   /**
    * parses face elements into a vector of 3 vectors of 3 ints
    * from an .obj line
@@ -71,7 +71,7 @@ namespace ObjLoader {
    * @return vector containing 3 vectors of 3 ints each.
    */
   vector< vector< int > > parseFaceElements( const string &line );
-
+  
   /**
    * Helper function that splits an obj element listing
    * (x/y/z) into their proper components (vertices, UVs, normals.)
@@ -84,7 +84,7 @@ namespace ObjLoader {
   void parseElementTriple( const string &triple, vector< int > &v_elements,
                            vector< int > &uv_elements,
                            vector< int > &n_elements );
-
+  
   /**
    * Legacy function until I make everything suck less:
    * Loads a single model from an OBJ and stores it into

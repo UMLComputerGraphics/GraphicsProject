@@ -16,6 +16,29 @@
 using Angel::vec4;
 using Angel::mat4;
 
+
+GLuint createAndBind( GLenum target, GLuint buffer, GLuint shader, const char *name ) {
+
+  GLint glslUniformHandle;
+
+  glBindBuffer( target, buffer );
+  glslUniformHandle = glGetAttribLocation( shader, name );
+  if (glslUniformHandle != -1)
+    glEnableVertexAttribArray( glslUniformHandle );
+  else
+    fprintf( stderr, "Warning: Failed to enable VBO for %s\n", name );
+
+  return glslUniformHandle;
+
+}
+
+void glVertexAttribPointerProxy( GLint index, GLint size, GLenum type,
+                                 GLboolean normalized, GLsizei stride, const GLvoid* ptr ) {
+ if (index != -1)
+   glVertexAttribPointer( index, size, type, normalized, stride, ptr );
+
+}
+
 /**
  * Constructor. Requires at minimum a _name and a shader handle.
  * @param name The _name of this object.
@@ -38,9 +61,9 @@ Object::Object( const std::string &name, GLuint gShader ) {
   shader( gShader );
   
   // Set our _name from the constructor...
-  this->_name = name;
+  _name = name;
   
-  /* Initialize our draw mode to GL_TRIANGLES until informed otherwise. */
+  // Initialize our draw mode to GL_TRIANGLES until informed otherwise.
   _drawMode = GL_TRIANGLES;
   
   // Get Uniform _handles for the following shader variables
@@ -49,79 +72,75 @@ Object::Object( const std::string &name, GLuint gShader ) {
   link( Object::MORPH_PCT, "morphPercentage" );
   link( Object::TEX_SAMPLER, "sampler" );
   
-  //Default to "Not Textured"
-  this->_isTextured = false;
-  
+  // Default to "Not Textured"
+  _isTextured = false;
+  _textureID = -1;
+
   // Linear Interpolation Demo: Morph Percentage
-  this->_morphPercentage = 1.0;
+  _morphPercentage = 1.0;
+
   // Pointer to an Object to Morph to.
-  this->_morphTarget = NULL;
+  _morphTarget = NULL;
   
   /* Create our VAO, which is our handle to all 
-   the rest of the following information. */glGenVertexArrays( 1, &_vao );
+   the rest of the following information. */
+  glGenVertexArrays( 1, &_vao );
   glBindVertexArray( _vao );
-  GLuint glsl_uniform;
+  GLint glsl_uniform;
   
+  if (gShader == 0) {
+    fprintf( stderr, "WARNING: Object %s created without a valid shader.\n", _name.c_str() );
+    fprintf( stderr, "Disabling use of renderable geometry for this object.\n" );
+    glBindVertexArray( 0 );
+    return;
+  }
+
   /* Create (Eight) VBOs: One each for Positions, Colors, Normals, 
-   Textures, draw Order; Three for Morphing (Position,Colors,Normals.) */glGenBuffers(
-      NUM_BUFFERS, _buffer );
+   Textures, draw Order; Three for Morphing (Position,Colors,Normals.) */
+
+  glGenBuffers( NUM_BUFFERS, _buffer );
+
+  // Create the Vertex _buffer and link it with the shader.
+  glsl_uniform = createAndBind( GL_ARRAY_BUFFER, _buffer[VERTICES], gShader, "vPosition" );
+  glVertexAttribPointerProxy( glsl_uniform, 4, GL_FLOAT, GL_FALSE, 0, 0 );
+
+  // Create the MORPH Vertex _buffer and link it with the shader.
+  glsl_uniform = createAndBind( GL_ARRAY_BUFFER, _buffer[VERTICES_MORPH], gShader, "vPositionMorph" );
+  glVertexAttribPointerProxy( glsl_uniform, 4, GL_FLOAT, GL_FALSE, 0, 0 );
   
-  /* Create the Vertex _buffer and link it with the shader. */glBindBuffer(
-      GL_ARRAY_BUFFER, _buffer[VERTICES] );
-  glsl_uniform = glGetAttribLocation( gShader, "vPosition" );
-  glEnableVertexAttribArray( glsl_uniform );
-  glVertexAttribPointer( glsl_uniform, 4, GL_FLOAT, GL_FALSE, 0, 0 );
+  // Create the Normal _buffer and link it with the shader.
+  glsl_uniform = createAndBind( GL_ARRAY_BUFFER, _buffer[NORMALS], gShader, "vNormal" );
+  glVertexAttribPointerProxy( glsl_uniform, 3, GL_FLOAT, GL_FALSE, 0, 0 );
   
-  /* Create the MORPH Vertex _buffer and link it with the shader. */glBindBuffer(
-      GL_ARRAY_BUFFER, _buffer[VERTICES_MORPH] );
-  glsl_uniform = glGetAttribLocation( gShader, "vPositionMorph" );
-  glEnableVertexAttribArray( glsl_uniform );
-  glVertexAttribPointer( glsl_uniform, 4, GL_FLOAT, GL_FALSE, 0, 0 );
+  // Create the Normal MORPH _buffer and link it with the shader. 
+  glsl_uniform = createAndBind( GL_ARRAY_BUFFER, _buffer[NORMALS_MORPH], gShader, "vNormalMorph" );
+  glVertexAttribPointerProxy( glsl_uniform, 3, GL_FLOAT, GL_FALSE, 0, 0 );
   
-  /* Create the Normal _buffer and link it with the shader. */glBindBuffer(
-      GL_ARRAY_BUFFER, _buffer[NORMALS] );
-  glsl_uniform = glGetAttribLocation( gShader, "vNormal" );
-  glEnableVertexAttribArray( glsl_uniform );
-  glVertexAttribPointer( glsl_uniform, 3, GL_FLOAT, GL_FALSE, 0, 0 );
-  
-  /* Create the Normal MORPH _buffer and link it with the shader. */glBindBuffer(
-      GL_ARRAY_BUFFER, _buffer[NORMALS_MORPH] );
-  glsl_uniform = glGetAttribLocation( gShader, "vNormalMorph" );
-  glEnableVertexAttribArray( glsl_uniform );
-  glVertexAttribPointer( glsl_uniform, 3, GL_FLOAT, GL_FALSE, 0, 0 );
-  
-  /* Create the Color _buffer and link it with the shader. */glBindBuffer(
-      GL_ARRAY_BUFFER, _buffer[COLORS] );
+  // Create the Color _buffer and link it with the shader.
+  glsl_uniform = createAndBind( GL_ARRAY_BUFFER, _buffer[COLORS], gShader, "vColor" );
   glEnable( GL_BLEND );
   glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-  glsl_uniform = glGetAttribLocation( gShader, "vColor" );
-  glEnableVertexAttribArray( glsl_uniform );
-  glVertexAttribPointer( glsl_uniform, 4, GL_FLOAT, GL_FALSE, 0, 0 );
-  
-  /* Create the Color Morph _buffer and link it with the shader. */glBindBuffer(
-      GL_ARRAY_BUFFER, _buffer[COLORS_MORPH] );
+  glVertexAttribPointerProxy( glsl_uniform, 4, GL_FLOAT, GL_FALSE, 0, 0 );
+
+  // Create the Color Morph _buffer and link it with the shader.
+  glsl_uniform = createAndBind( GL_ARRAY_BUFFER, _buffer[COLORS_MORPH], gShader, "vColorMorph" );
   glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-  glsl_uniform = glGetAttribLocation( gShader, "vColorMorph" );
-  glEnableVertexAttribArray( glsl_uniform );
-  glVertexAttribPointer( glsl_uniform, 4, GL_FLOAT, GL_FALSE, 0, 0 );
+  glVertexAttribPointerProxy( glsl_uniform, 4, GL_FLOAT, GL_FALSE, 0, 0 );
   
-  /* Create the texture Coordinate _buffer and link it with the shader. */glBindBuffer(
-      GL_ARRAY_BUFFER, _buffer[TEXCOORDS] );
-  glsl_uniform = glGetAttribLocation( gShader, "vTex" );
-  glEnableVertexAttribArray( glsl_uniform );
-  glVertexAttribPointer( glsl_uniform, 2, GL_FLOAT, GL_FALSE, 0, 0 );
+  // Create the texture Coordinate _buffer and link it with the shader.
+  glsl_uniform = createAndBind( GL_ARRAY_BUFFER, _buffer[TEXCOORDS], gShader, "vTex" );
+  glVertexAttribPointerProxy( glsl_uniform, 2, GL_FLOAT, GL_FALSE, 0, 0 );
+
+  // Create the drawing order _buffer, but we don't need to link it
+  // with any uniform, because we won't be accessing this data directly.
+  // I.e, the numbers here are not important once we are in the vshader.
+  glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, _buffer[INDICES] );
   
   if ( DEBUG )
     fprintf( stderr, "buffhandles: %u %u %u %u %u %u %u %u\n",
              _buffer[VERTICES], _buffer[NORMALS], _buffer[COLORS],
              _buffer[TEXCOORDS], _buffer[INDICES], _buffer[VERTICES_MORPH],
              _buffer[NORMALS_MORPH], _buffer[COLORS_MORPH] );
-  
-  /* Create the Drawing Order _buffer, but we don't need to link it 
-   with any uniform,
-   because we won't be accessing this data directly. (I.e, the numbers here
-   are not important once we are in the Vertex shader. */glBindBuffer(
-      GL_ELEMENT_ARRAY_BUFFER, _buffer[INDICES] );
   
   /* Unset the VAO context. */
   glBindVertexArray( 0 );
@@ -168,6 +187,8 @@ void Object::draw( void ) {
   send( Object::TEX_SAMPLER );
   
   //  this->morphPercentage() == -1.0 ? ; : send( Object::MORPH_PCT );
+  fprintf( stderr, "OBJECT: %s; VERTICES: %lu\n", _name.c_str(),
+           _vertices.size() );
   
   /* Are we using a draw order? */
   if ( _indices.size() > 1 ) glDrawElements( _drawMode, _indices.size(),
@@ -316,7 +337,8 @@ void Object::terrainTexture( const char** filename ) {
   GLuint gSampler4 = glGetUniformLocation( shader(), "gSampler4" );
   glUniform1i( gSampler4, 4 );
   tick.tock();
-  fprintf( stderr, "Texture binding and sending sampler uniforms: %lu\n", tick.delta() );
+  fprintf( stderr, "Texture binding and sending sampler uniforms: %lu\n",
+           tick.delta() );
   
   glBindVertexArray( 0 );
 }
@@ -370,7 +392,19 @@ void Object::link( UniformEnum which, const std::string &name ) {
     fprintf( stderr, "Linking enum[%u] with %s for object %s\n", which,
              name.c_str(), this->_name.c_str() );
   
+
+  if (shader() == 0) {
+    if (DEBUG) fprintf( stderr, "Skipping link: [%s][%s]: No shader set.\n",
+                        _name.c_str(), name.c_str() );
+    return;
+  }
+
   _handles[which] = glGetUniformLocation( shader(), name.c_str() );
+  if (glGetError()) {
+    fprintf( stderr, "ERROR: [%s] failed to call glGetUniformLocation( %u, %s );\n",
+    _name.c_str(), shader(), name.c_str() );
+  }
+
   if ( DEBUG )
     fprintf( stderr, "Linking handles[%d] to %s; got %d.\n", which,
              name.c_str(), _handles[which] );
@@ -395,16 +429,22 @@ void Object::send( Object::UniformEnum which ) {
     
   case Object::MORPH_PCT:
     glUniform1f( _handles[Object::MORPH_PCT], this->morphPercentage() );
-    
     break;
     
   case Object::TEX_SAMPLER:
-    glUniform1i( _handles[Object::TEX_SAMPLER], _textureID );
+    if (_isTextured)
+      glUniform1i( _handles[Object::TEX_SAMPLER], _textureID );
     break;
     
   default:
     throw std::invalid_argument( "Unknown Uniform Handle Enumeration." );
   }
+
+  if (glGetError()) {
+    fprintf( stderr, "ERROR: Object::send() failed for [%s][%u]\n", _name.c_str(), which );
+    exit(EXIT_FAILURE);
+  }
+
 }
 
 /**
@@ -562,8 +602,8 @@ int Object::numberOfPoints( void ) {
  */
 Angel::vec3 Object::getMax( void ) {
   
-  Angel::vec3 max = Angel::vec3( -INFINITY, -INFINITY, -INFINITY );
-  for (size_t i = 0; i < _vertices.size(); ++i ) {
+  Angel::vec3 max = Angel::vec3( -INFINITY, -INFINITY, -INFINITY);
+  for ( size_t i = 0; i < _vertices.size(); ++i ) {
     if ( _vertices[i].x > max.x ) max.x = _vertices[i].x;
     if ( _vertices[i].y > max.y ) max.y = _vertices[i].y;
     if ( _vertices[i].z > max.z ) max.z = _vertices[i].z;
@@ -579,8 +619,8 @@ Angel::vec3 Object::getMax( void ) {
  */
 Angel::vec3 Object::getMin( void ) {
   
-  Angel::vec3 min = Angel::vec3( INFINITY, INFINITY, INFINITY );
-  for (size_t i = 0; i < _vertices.size(); ++i ) {
+  Angel::vec3 min = Angel::vec3( INFINITY, INFINITY, INFINITY);
+  for ( size_t i = 0; i < _vertices.size(); ++i ) {
     if ( _vertices[i].x < min.x ) min.x = _vertices[i].x;
     if ( _vertices[i].y < min.y ) min.y = _vertices[i].y;
     if ( _vertices[i].z < min.z ) min.z = _vertices[i].z;
