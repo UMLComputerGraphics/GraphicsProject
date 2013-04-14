@@ -358,9 +358,21 @@ namespace ObjLoader {
     
     if ( object->_texUVs.size() < object->_vertices.size() )
       for ( size_t i = 0; i < object->_vertices.size(); ++i ) {
-        object->_colors.push_back(
-            vec4( RAND_FLOAT, RAND_FLOAT, RAND_FLOAT, 1.0 ) );
+        object->_colors.push_back(vec4( RAND_FLOAT, RAND_FLOAT, RAND_FLOAT, 1.0 ) );
       }
-    
-  }
-}
+
+    for ( size_t i = 0; i < object->_texUVs.size(); ++i ) {
+      Angel::vec2 &txy = object->_texUVs[i];
+
+      if ((txy.x < 0.0) || (txy.x > 1.0) || (txy.y < 0.0) || (txy.y > 1.0))
+	fprintf( stderr, "WARNING: Texture UV is out of bounds. (%f,%f)\n", txy.x, txy.y );
+
+      if (txy.x < 0.0) txy.x = 0.0;
+      if (txy.x > 1.0) txy.x = 1.0;
+      if (txy.y < 0.0) txy.y = 0.0;
+      if (txy.y > 1.0) txy.y = 1.0;
+    }
+
+  } // End Object Loader
+
+} // End Namespace
