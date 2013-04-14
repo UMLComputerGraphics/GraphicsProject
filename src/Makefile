@@ -1,4 +1,4 @@
 .PHONY: all
 all:
-	qmake
-	make
+	qmake -o qMakefile
+	make -f qMakefile
