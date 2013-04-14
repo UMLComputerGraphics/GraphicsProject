@@ -7,6 +7,7 @@
  **/
 #include <stdexcept>
 #include <string>
+#include <cstring>
 #include <map>
 
 #include "Engine.hpp"
@@ -169,7 +170,10 @@ void Engine::init( int *argc, char *argv[], const char *title ) {
   glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH );
   glutInitWindowSize( 500, 500 );
   glutCreateWindow( title );
-  //glutFullScreen();
+  
+  char *gtfs = getenv( "GLUT_FULLSCREEN" );
+  if (gtfs && (strncmp(gtfs, "TRUE", 4) == 0)) glutFullScreen();
+
   glutSetCursor( GLUT_CURSOR_NONE );
 
   GLEW_INIT();

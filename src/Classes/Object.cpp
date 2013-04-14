@@ -217,7 +217,8 @@ void Object::buffer( void ) {
   if (_texUVs.size() == 0) {
     // Disable Textures ...
     _isTextured = false;
-    glDisableVertexAttribArray( _attribIndex[ TEXCOORDS ] );
+    if ( _attribIndex[TEXCOORDS] != -1 )
+      glDisableVertexAttribArray( _attribIndex[ TEXCOORDS ] );
 
     // Enable Colors.
     glBindBuffer( GL_ARRAY_BUFFER, _buffer[COLORS] );
@@ -231,7 +232,8 @@ void Object::buffer( void ) {
 		  (_texUVs.size() ? &(_texUVs[0]) : NULL), GL_STATIC_DRAW );
 
     // Disable Colors.
-    glDisableVertexAttribArray( _attribIndex[ COLORS ] );
+    if (_attribIndex[COLORS] != -1)
+      glDisableVertexAttribArray( _attribIndex[ COLORS ] );
   }
   
   /* Without the following workaround code,
