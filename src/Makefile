@@ -23,7 +23,7 @@ TARGETS = $(basename $(strip $(SOURCES)))
 OBJS = $(subst .cpp,.o,$(COMMON)) \
        $(subst .cpp,.o,$(CLASSES)) \
 
-CXXOPTS = -fmessage-length=0 -ansi -Wall -pedantic 
+CXXOPTS = -fmessage-length=0 -ansi -Wall -pedantic -DWITHOUT_QT
 CXXINCS = "-I$(CURDIR)/include"
 
 DIRT = $(wildcard */*.o */*.so */*.d *.i *~ */*~ *.log)
@@ -117,16 +117,19 @@ _rmtargets:
 
 clean: _clean
 	@echo "Removed everything except compiled executables."
+	@$(RM) -R debug
+	@$(RM) qMakefile
 
 rmtargets: _rmtargets
 	@echo "Removed executables."
 
 clobber: _clean _rmtargets
 	@echo "Removed objects and executables."
-	rm -f qMakefile
 
 
 .PHONY: qt
 qt:
 	qmake -o qMakefile
 	make -f qMakefile
+	@$(RM) Binaries/MONOLITH
+	ln debug/GraphicsProject Binaries/MONOLITH

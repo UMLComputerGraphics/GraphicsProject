@@ -11,7 +11,11 @@
 
 
 /* Default and only constructor */
-MONOLITH::MONOLITH(QObject *parent)
+MONOLITH::MONOLITH(
+#ifndef WITHOUT_QT
+    QObject *parent
+#endif
+    )
 {
     
 }
@@ -183,3 +187,30 @@ void MONOLITH::simpleRotateAnim( TransCache &obj )
     //obj._offset.set( 1.5, 0, 0 );
     obj._orbit.rotateY( tick.scale() * -0.5 );
 }
+
+#ifdef WITHOUT_QT
+/**
+ * This is a bottle morphing demo!
+ * It illustrates simply how to do a simple linear interpolation morph.
+ *
+ * @param argc Not used.
+ * @param argv Not used.
+ * @return EXIT_SUCCESS.
+ *
+ */
+int main( int argc, char **argv ) {
+
+  fprintf(
+      stderr,
+      "Error: Your project is unfinished and you're going to fail and everyone is going to laugh at you and it's a really bad day sorry\n" );
+
+  MONOLITH *monolith = new MONOLITH();
+  monolith->run(argc, argv);
+
+  /* PULL THE TRIGGER */
+  glutMainLoop();
+  free(monolith);
+  return EXIT_SUCCESS;
+
+}
+#endif

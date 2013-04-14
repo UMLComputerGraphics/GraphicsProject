@@ -19,9 +19,11 @@
 #include "glut_callbacks.h"
 #include "ObjLoader.hpp"
 
+#ifndef WITHOUT_QT
 /* Qt */
 #include "OpenGL.h"
 #include <QObject>
+#endif
 
 /* System Headers */
 #include <cmath>
@@ -30,15 +32,24 @@
 #include <cstdlib>
 #include <time.h>
 
-class MONOLITH: public QObject
+class MONOLITH
+#ifndef WITHOUT_QT
+    : public QObject
 {
     Q_OBJECT
-    
+#else
+{
+#endif
+
 public:
     
     
     // Constructor and destructor for MONOTLITH
-    MONOLITH( QObject *parent = 0 );
+    MONOLITH(
+#ifndef WITHOUT_QT
+        QObject *parent = 0
+#endif
+        );
     
     ~MONOLITH();
 
@@ -65,10 +76,11 @@ public:
     void run(int &argc, char* argv[]);
     
     
-    
+#ifndef WITHOUT_QT
 public slots:
     
 signals:
+#endif
     
 private:
     
