@@ -17,6 +17,8 @@ uniform vec3 uSphereDiffuse[maxNumSphere];
 uniform vec3 uSphereAmbient[maxNumSphere];
 uniform vec3 uSphereSpecular[maxNumSphere];
 uniform float uSphereShininess[maxNumSphere];
+uniform float uSphereReflect[maxNumSphere];
+uniform float uSphereRefract[maxNumSphere];
 
 uniform int uNumOfTriangle;
 uniform int uNumOfTriangleVectors;
@@ -37,6 +39,7 @@ struct Ray
 {
 	vec3 org;
 	vec3 dir;
+	float rIndex;
 };
 struct Sphere
 {
@@ -60,6 +63,8 @@ struct Triangle
 	vec3 ambient;
 	vec3 specular;
 	float shininess;
+	float reflect;
+	float refract;
 };
 
 struct Intersection
@@ -72,6 +77,8 @@ struct Intersection
 	vec3 ambient;
 	vec3 specular;
 	float shininess;
+	float reflect;
+	float refract;
 };
 
 void triangle_intersect(in Triangle triangle, in Ray ray, inout Intersection isect)
@@ -110,6 +117,8 @@ void triangle_intersect(in Triangle triangle, in Ray ray, inout Intersection ise
 		isect.ambient = triangle.ambient;
 		isect.specular = triangle.specular;
 		isect.shininess = triangle.shininess;
+		isect.reflect = triangle.reflect;
+		isect.refract = triangle.refract;
 	}
 }
 
@@ -122,7 +131,8 @@ void sphere_intersect(in int c, in Ray ray, inout Intersection isect)
 
 	if (D > 0.0)
 	{
-		float t = -B - sqrt(D);
+		float sqrtD = sqrt(D);
+		float t = -B - sqrtD;
 		if ( (t > 0.0) && (t < isect.t) )
 		{
 			isect.t = t;
@@ -140,6 +150,8 @@ void sphere_intersect(in int c, in Ray ray, inout Intersection isect)
 			isect.ambient = uSphereAmbient[c];
 			isect.specular = uSphereSpecular[c];
 			isect.shininess = uSphereShininess[c];
+			isect.reflect = uSphereReflect[c];
+			isect.refract = uSphereRefract[c];
 		}
 	}
 }
@@ -185,14 +197,16 @@ Sphere buildSphere(in vec3 centerPoint, in float radius, in vec3 diffuse) {
 	return s;
 }
 
-void buildTriangle(inout Triangle t, vec3 a, vec3 b, vec3 c, vec3 diffuse, vec3 ambient, vec3 specular, float shininess, vec3 normal) {
-	t.a = (vec4(a, 1.0)).xyz;
-	t.b = (vec4(b, 1.0)).xyz;
-	t.c = (vec4(c, 1.0)).xyz;
+void buildTriangle(inout Triangle t, vec3 a, vec3 b, vec3 c, vec3 diffuse, vec3 ambient, vec3 specular, vec3 material, vec3 normal) {
+	t.a = a;
+	t.b = b;
+	t.c = c;
 	t.diffuse = diffuse;
 	t.ambient = ambient;
 	t.specular = specular;
-	t.shininess = shininess;
+	t.shininess = material.x;
+	t.reflect = material.y;
+	t.refract = material.z;
 	t.n = normal;
 }
 
@@ -205,7 +219,7 @@ void IntersectWithHitSpheres(in Ray r, inout Intersection i)
 	
 	Triangle triangle;
 	int index = uNumOfTriangle * uNumOfTriangleVectors, startingindex = index;
-	vec3 centerPoint, rs;
+	vec3 centerPoint, rs, triangleNormal, temp;
 	float radius, radiusSquared, B, C, D, sqrtOfD, t, tPlus;
 	for(int hitIndex = 0 ; hitIndex < uNumOfBoundingSpheres; hitIndex++) {
 		centerPoint = (texelFetch(bufferData, index)).xyz;
@@ -220,11 +234,9 @@ void IntersectWithHitSpheres(in Ray r, inout Intersection i)
 		if (D > 0.0) 
 		{
 			sqrtOfD = sqrt(D);
-			t = -B - sqrtOfD;
-			tPlus = B + sqrtOfD;
+			tPlus = -B + sqrtOfD;
 			
-			// Check if the sphere is closer than the current intersection or the ray is inside the sphere
-			if((t > 0.0) && (t < i.t) || (t < 0.0) && (tPlus > 0.0))
+			if(tPlus > 0.0)
 			{
 				int pointIndex = hitIndex * uNumOfTriangleVectors * uNumOfTrianglesBounded;
 				
@@ -240,18 +252,22 @@ void IntersectWithHitSpheres(in Ray r, inout Intersection i)
 				
 					if (D > 0.0) {
 						sqrtOfD = sqrt(D);
-						t = -B - sqrtOfD;
-						tPlus = B + sqrtOfD;
+						tPlus = -B + sqrtOfD;
 						
-						// Check if the sphere is closer than the current intersection or the ray is inside the sphere
-						if((t > 0.0) && (t < i.t) || (t < 0.0) && (tPlus > 0.0))
+						if(tPlus > 0.0)
 						{
-							buildTriangle(triangle, texelFetch(bufferData, pointIndex).xyz, texelFetch(bufferData, pointIndex+1).xyz, texelFetch(bufferData, pointIndex+2).xyz, 
-																texelFetch(bufferData, pointIndex+3).xyz, texelFetch(bufferData, pointIndex+4).xyz, texelFetch(bufferData, pointIndex+5).xyz,
-																texelFetch(bufferData, pointIndex+6).x,
-																texelFetch(bufferData, pointIndex+7).xyz
-																);
-							triangle_intersect(triangle, r, i);
+							triangleNormal = texelFetch(bufferData, pointIndex+7).xyz;
+						
+							temp = r.dir + triangleNormal;
+							if(temp.x < 1.5 && temp.y < 1.5 && temp.z < 1.5)
+							{
+								buildTriangle(triangle, texelFetch(bufferData, pointIndex).xyz, texelFetch(bufferData, pointIndex+1).xyz, texelFetch(bufferData, pointIndex+2).xyz, 
+																	texelFetch(bufferData, pointIndex+3).xyz, texelFetch(bufferData, pointIndex+4).xyz, texelFetch(bufferData, pointIndex+5).xyz,
+																	texelFetch(bufferData, pointIndex+6).xyz,
+																	triangleNormal
+																	);
+								triangle_intersect(triangle, r, i);
+							}
 						}
 					}
 					
@@ -299,10 +315,6 @@ vec3 computeLightShadow(in Intersection isect)
 	    
 	    float Kd = max( dot(L, isect.n), 0.0 );
 	    vec3 diffuse = Kd * lightDiffuse * isect.diffuse;
-	
-	    //vec3 materialSpecular = isect.diffuse;
-	    vec3 materialSpecular = vec3(1.0, 0.0, 0.0);
-	    float materialShininess = 10.0;
 		
 	    float Ks = pow( max(dot(isect.n, H), 0.0), isect.shininess);
 	    vec3  specular = Ks * uLightSpecular[0] * isect.specular;
@@ -404,18 +416,20 @@ void main()
 		if (isect.hit != 0)
 		{
 			color.rgb += isect.ambient + bcolor * computeLightShadow(isect);
-			bcolor *= isect.diffuse;
+			bcolor *= isect.reflect * isect.diffuse;
 		}
 		else
 		{
 			break;
 		}
+		
+		if(isect.reflect < eps) break;
 
 		r.org = vec3(isect.p.x + eps * isect.n.x,
 					 isect.p.y + eps * isect.n.y,
 					 isect.p.z + eps * isect.n.z);
 		r.dir = reflect(r.dir, vec3(isect.n.x, isect.n.y, isect.n.z));
 	}
-	
+
 	gl_FragColor = color;
 }

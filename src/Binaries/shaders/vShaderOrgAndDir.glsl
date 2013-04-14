@@ -31,10 +31,13 @@ void main()
     
     float xPos = vRayPosition.x / 2;
     float yPos = vRayPosition.y;
-    if(uDisplay < 0) {
+    
+    if(uDisplay == -1) {
 		xPos -= 0.5;
-    } else {
+    } else if(uDisplay == 1) {
     	xPos += 0.5;
+    } else {
+    	xPos = vRayPosition.x;
     }
     
     gl_Position = vec4(xPos, -yPos, -1.0, 1.0);

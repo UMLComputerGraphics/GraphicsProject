@@ -23,6 +23,10 @@
 //This counteracts mouse rotation slugishness when screen dimensions are considered in calculating movement
 #define MAGIC_MOUSE_SCALAR (45.0)
 
+#include <stdexcept>
+#include <exception>
+
+
 /**
  * keylift is registered as a GLUT callback for when a user
  * releases a depressed key.
@@ -90,8 +94,19 @@ void engineKeyboard( unsigned char key, int x, int y ) {
     break;
     
   case ';': // Print Info
-    fprintf( stderr, "Active Object: %s\n",
-             theScene->active()->name().c_str() );
+    // Active() will throw if there is no active object, or if the requested object doesn't exist
+    try 
+    {
+      fprintf( stderr, "Active Object: %s\n",
+	       theScene->active()->name().c_str() );
+    }
+
+    catch( std::logic_error& e ) 
+    {
+      fprintf( stderr, "There is currently no Active Object, or no more Objects in the scene\n");
+    }
+
+
     break;
     
   case '~':
@@ -160,7 +175,12 @@ void engineKeyboard( unsigned char key, int x, int y ) {
   case 'b':
     cam.changePerspective( Camera::IDENTITY );
     break;
-    
+
+  case 'r':
+	//testing stopAll function
+	cam.resetPosition();
+    break;
+
   case 't':
     fprintf( stderr, "turning on terrain_regen\n" );
     Engine::instance()->opt( "terrain_regen", true );
@@ -217,6 +237,45 @@ void engineSpecialKeyboard( int key, int x, int y ) {
       fprintf(stderr, "Active object could be retrieved from scene: %s\n", ex.what());
       s = NULL;
     }
+    /*
+    try
+    {
+	 theScene->active()->Mode( GL_POINTS );
+    }
+    catch( std::logic_error& e ) 
+     {
+       fprintf(stderr, "Error: Attempt to change active object draw mode failed\nReason: %s\n", e.what() ) ;
+     }
+    break;
+  case GLUT_KEY_F2:
+    try
+    {
+	 theScene->active()->Mode( GL_LINE_STRIP );
+    }
+    catch( std::logic_error& e ) 
+     {
+       fprintf(stderr, "Error: Attempt to change active object draw mode failed\nReason: %s\n", e.what() ) ;
+     }
+    break;
+  case GLUT_KEY_F3:
+    try
+    {
+	 theScene->active()->Mode( GL_TRIANGLE_STRIP );
+    }
+    catch( std::logic_error& e ) 
+     {
+       fprintf(stderr, "Error: Attempt to change active object draw mode failed\nReason: %s\n", e.what() ) ;
+     }
+    break;
+  case GLUT_KEY_F4:
+    try
+    {
+	 theScene->active()->Mode( GL_TRIANGLES );
+    }
+    catch( std::logic_error& e ) 
+     {
+       fprintf(stderr, "Error: Attempt to change active object draw mode failed\nReason: %s\n", e.what() ) ;
+       }*/
     break;
   }
   

@@ -9,7 +9,6 @@
 
 #ifdef __APPLE__ // include Mac OS X versions of headers
 #include <Magick++.h>
-
 #else // non-Mac OS X operating systems
 #include <ImageMagick/Magick++.h>
 #endif // __APPLE__
@@ -33,7 +32,7 @@ Texture::Texture( GLenum textureTarget ) {
  * Default destructor.
  */
 Texture::~Texture( void ) {
-  
+  if (_image) delete _image;  
 }
 
 /**
@@ -44,10 +43,11 @@ Texture::~Texture( void ) {
 bool Texture::load( const std::string &filename ) {
   
   try {
-    _image = new Magick::Image( Util::getRelativePath(filename.c_str()) );
+    std::string relativePath = Util::getRelativePath( filename.c_str() );
+    _image = new Magick::Image( relativePath.c_str() );
     _image->write( &_blob, "RGBA" );
   } catch ( Magick::Error& Error ) {
-    std::cerr << "Error loading texture '" << Util::getRelativePath(filename.c_str()) << "': " << Error.what()
+    std::cerr << "Error loading texture '" << filename.c_str() << "': " << Error.what()
               << std::endl;
     return false;
   }
@@ -66,9 +66,9 @@ void Texture::buffer( void ) {
  * when we're done doing what we need to.
  */
 
+ /* 
   GLenum query;
   int result;
-
   switch (_textureTarget) {
   case GL_TEXTURE_1D:
     query = GL_TEXTURE_BINDING_1D;
@@ -102,8 +102,8 @@ void Texture::buffer( void ) {
     query =   GL_TEXTURE_BINDING_RECTANGLE;
     break;
   }
-
   glGetIntegerv( query, &result );
+*/
 
   glGenTextures( 1, &_textureObj );
   glBindTexture( _textureTarget, _textureObj );
@@ -113,7 +113,7 @@ void Texture::buffer( void ) {
   glTexParameterf( _textureTarget, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
   
   // Put back the previous texture where we found it.
-  glBindTexture( _textureTarget, result );
+  // glBindTexture( _textureTarget, result );
 
 }
 

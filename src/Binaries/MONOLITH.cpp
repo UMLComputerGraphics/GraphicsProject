@@ -7,6 +7,7 @@
  Original engine based on Ed Angel's book code.
  **/
 
+
 #include "MONOLITH.hpp"
 
 /* Default and only constructor */
@@ -131,7 +132,49 @@ void MONOLITH::init(void)
     glEnable( GL_DEPTH_TEST );
     glClearColor( 0.0, 0.0, 0.0, 1.0 );
 
-}
+    // YES THIS IS THE REAL OBJECT, NOT THE TARGET.
+    // IT SENDS THE MORPH VERTICES TO THE SHADER, NOT TO THE DRAW LIST TO BE DRAWN!
+    matchInitialPoints( bottle, bottleMorphTarget );
+    makeModelsSameSize( bottle, bottleMorphTarget );
+    bottle->bufferMorphOnly();
+    bottle->propagate();
+  }
+  
+  // Let the bodies hit the floor
+  Object *floor = rootScene->addObject( "floor", shader[1] );
+  quad( floor, vec4( -10, 0, 10, 1.0 ), vec4( -10, 0, -10, 1.0 ),
+        vec4( 10, 0, -10, 1.0 ), vec4( 10, 0, 10, 1.0 ),
+        vec4( 0.4, 0.4, 0.4, 0.9 ) );
+  floor->buffer();
+
+  // Load up that goddamned candle
+  Object *candle = rootScene->addObject( "Candle", shader[1] );
+  ObjLoader::loadModelFromFile( candle, "../models/candle.obj" );
+  vec4 min = candle->getMin();
+  vec4 max = candle->getMax();
+  fprintf( stderr, "Min: (%f,%f,%f)\nMax: (%f,%f,%f)\n", min.x, min.y, min.z,
+           max.x, max.y, max.z );
+  candle->_trans._offset.set( 2.5, -min.y, 2.5 );
+  //candle->propagate();
+  candle->buffer();
+
+  ParticleSystem *ps = new ParticleSystem( 10000, "ps1", shader[2] );
+  ps->setLifespan(5,7.5);
+  ps->setEmitterRadius( 0.01 ) ;
+  ps->setVectorField( ParticleFieldFunctions::flame );
+  ps->setSlaughterHeight(0.20);
+  candle->insertObject( ps );
+  ps->_trans._offset.set(0,min.y+(max.y-min.y),0);
+  //ps->fillSystemWithParticles();
+  //ps->propagate();
+  ps->buffer();
+
+  candle->propagate();
+
+  // Generic OpenGL setup: Enable the depth _buffer and set a nice background color.
+  glEnable( GL_DEPTH_TEST );
+  glClearColor( 0.0, 0.0, 0.0, 1.0 );
+
 
 /**
  * Cleans up our scene graph.

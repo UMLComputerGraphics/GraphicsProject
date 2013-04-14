@@ -24,6 +24,7 @@ typedef std::pair< std::string, Object * > NameObjPair;
  */
 Scene::Scene() {
   _currentObj = _list.end();
+  // This is a sentinel value: A real program will never have a handle of 0.
   _gShader = 0;
 }
 
@@ -53,7 +54,7 @@ Scene::~Scene() {
  @return void.
  **/
 void Scene::shader( GLuint gShader ) {
-  this->_gShader = gShader;
+  _gShader = gShader;
 }
 
 /**
@@ -218,10 +219,10 @@ Object *Scene::operator[]( std::string const &objname ) {
  */
 Scene &Scene::operator=( const Scene &copy ) {
   
-  this->_gShader = copy._gShader;
-  this->_map.clear();
-  this->_list.clear();
-  this->_currentObj = _list.end();
+  _gShader = copy._gShader;
+  _map.clear();
+  _list.clear();
+  _currentObj = _list.end();
   return *this;
   
 }
