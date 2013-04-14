@@ -2,7 +2,7 @@
 #include <QApplication>
 #include "OpenGL.h"
 #include "MONOLITH.hpp"
-
+#include "partTest.hpp"
 int main( int argc, char **argv ) {
 
   fprintf(
@@ -11,6 +11,9 @@ int main( int argc, char **argv ) {
 
    MONOLITH monolith;
    monolith.run(argc, argv);
+   partTest partTest;
+   partTest.run(argc, argv);
+
    QApplication a(argc, argv);
    MainWindow w;
    w.setWindowTitle("First Graphics Demo");

@@ -23,6 +23,13 @@
 #include <QObject>
 #include <QtGui>
 
+/* System Headers */
+#include <cmath>
+#include <cstdio>
+#include <sstream>
+#include <cstdlib>
+#include <time.h>
+
 class MONOLITH: public QObject
 {
     Q_OBJECT
@@ -50,7 +57,7 @@ public:
     /**
      * Apply animations and whatever else your heart desires.
      */
-    static void monolith_idle(void);
+    static void idle(void);
     
     /**
      * This will initialize and run MONOLITH

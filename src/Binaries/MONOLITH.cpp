@@ -145,7 +145,7 @@ void MONOLITH::cleanup(void)
 /**
  * Apply animations and whatever else your heart desires.
  */
-void MONOLITH::monolith_idle(void)
+void MONOLITH::idle(void)
 {
     static Scene *rootScene = Engine::instance()->rootScene();
     
@@ -167,7 +167,7 @@ void MONOLITH::run(int &argc, char* argv[])
 {
     Engine::instance()->init( &argc, argv,
                              "WE ARE THE BORG. RESISTANCE IS FUTILE!" );
-    Engine::instance()->registerIdle( monolith_idle );
+    Engine::instance()->registerIdle( idle );
     init();
     
 }
