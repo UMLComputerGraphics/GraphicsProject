@@ -3,6 +3,8 @@
 #include "OpenGL.h"
 #include "MONOLITH.hpp"
 #include "partTest.hpp"
+#include <boost/thread.hpp>
+#include <boost/thread/mutex.hpp>
 int main( int argc, char **argv ) {
 
   fprintf(
@@ -18,7 +20,8 @@ int main( int argc, char **argv ) {
    MainWindow w;
    w.setWindowTitle("First Graphics Demo");
    w.show();
-   a.exec();
+   //this blocks, so let's thread it.
+   boost::thread(a.exec);
    /* PULL THE TRIGGER */
    glutMainLoop();
    return 1;
