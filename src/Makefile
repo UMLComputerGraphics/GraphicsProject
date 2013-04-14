@@ -24,7 +24,7 @@ OBJS = $(subst .cpp,.o,$(COMMON)) \
        $(subst .cpp,.o,$(CLASSES)) \
 
 CXXOPTS = -fmessage-length=0 -ansi -Wall -pedantic -DWITHOUT_QT
-CXXINCS = "-I$(CURDIR)/include" "-I$(CURDIR)/freeglut/include"
+CXXINCS = -I$(CURDIR)/include -I$(CURDIR)/expensiveglut/include/GL
 
 DIRT = $(wildcard */*.o */*.so */*.d *.i *~ */*~ *.log)
 
@@ -48,7 +48,7 @@ UNAME := $(shell uname)
 ifeq ($(UNAME), Linux)
     CXXINCS += -I/usr/include/ImageMagick/
     CXXDEFS += -DFREEGLUT_STATIC -DGLEW_STATIC
-    LDLIBS += -lGL -lGLU -lGLEW "-L$(CURDIR)/freeglut/build/lib/libglut.so" -lX11 -lm 
+    LDLIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm 
     #FMODNAME = libfmodex.so
     #FMODLIB = $(FMODLIBDIR)/$(FMODLIBNAME)
 	#If linux, we don't need any extra build steps
@@ -59,7 +59,7 @@ ifeq ($(UNAME), Darwin)
     CXXINCS += -I/opt/local/include/ImageMagick
    # LDLIBS += -framework Carbon -framework OpenGL -framework GLUT -L/opt/local/lib
    # if you can't find imgMagick, then try the line above. be sure to comment the line below
-    LDLIBS += -framework Carbon -framework OpenGL "-L$(CURDIR)/freeglut/build/lib/libglut.so" -L/opt/local/lib -lMagick++
+    LDLIBS += -framework Carbon -framework OpenGL -lglut -L/opt/local/lib -lMagick++
     FMODLIBNAME = libfmodex.dylib
    # If apple, we do need a funky post-compile build step
     FMODLIB = $(FMODLIBDIR)/$(FMODLIBNAME)
@@ -71,7 +71,6 @@ ifdef DEBUG
 else
 	CXXOPTS += -O3
 endif
-
 
 #USE_FMOD = 1
 #ifdef USE_FMOD
@@ -94,13 +93,13 @@ default all: freeglut $(TARGETS)
 $(TARGETS): $(OBJS)
 
 %: %.cpp
-	$(CXX) $(CXXFLAGS) $^ $(LDFLAGS) -o $@
+	LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(CURDIR)/expensiveglut/lib $(CXX) $(CXXFLAGS) $^ $(LDFLAGS) -o $@
 #	$(FMODLINK) $@
 
 #-----------------------------------------------------------------------------
 
 %.i: %.cpp
-	$(CXX) -E $(CXXFLAGS) $< | uniq > $@
+	LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(CURDIR)/expensiveglut/lib $(CXX) -E $(CXXFLAGS) $< | uniq > $@
 
 #-----------------------------------------------------------------------------
 
@@ -117,6 +116,7 @@ _clean:
 _rmtargets:
 	@$(RM) $(TARGETS)
 	cd freeglut; make clean
+	rm -Rf expensiveglut
 
 clean: _clean
 	@echo "Removed everything except compiled executables."
