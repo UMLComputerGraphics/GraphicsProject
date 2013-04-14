@@ -48,7 +48,7 @@ UNAME := $(shell uname)
 ifeq ($(UNAME), Linux)
     CXXINCS += -I/usr/include/ImageMagick/
     CXXDEFS += -DFREEGLUT_STATIC -DGLEW_STATIC
-    LDLIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm 
+    LDLIBS += -lGL -lGLU -lGLEW -L$(CURDIR)/expensiveglut/lib -lexpensiveglut -lX11 -lm 
     #FMODNAME = libfmodex.so
     #FMODLIB = $(FMODLIBDIR)/$(FMODLIBNAME)
 	#If linux, we don't need any extra build steps
@@ -59,7 +59,7 @@ ifeq ($(UNAME), Darwin)
     CXXINCS += -I/opt/local/include/ImageMagick
    # LDLIBS += -framework Carbon -framework OpenGL -framework GLUT -L/opt/local/lib
    # if you can't find imgMagick, then try the line above. be sure to comment the line below
-    LDLIBS += -framework Carbon -framework OpenGL -lglut -L/opt/local/lib -lMagick++
+    LDLIBS += -framework Carbon -framework OpenGL -L$(CURDIR)/expensiveglut/lib -lglut -L/opt/local/lib -lMagick++
     FMODLIBNAME = libfmodex.dylib
    # If apple, we do need a funky post-compile build step
     FMODLIB = $(FMODLIBDIR)/$(FMODLIBNAME)
@@ -89,17 +89,22 @@ LDFLAGS = $(LDOPTS) $(LDDIRS) $(LDLIBS)
 .PHONY: Makefile
 
 default all: freeglut $(TARGETS)
+	@echo ""
+	@echo "******************************************************"
+	@echo "For ld to find the customized freeglut library, run: "
+	@echo '     "export LD_LIBRARY_PATH=`pwd`:$$LD_LIBRARY_PATH"'
+	@echo "******************************************************"
 
 $(TARGETS): $(OBJS)
 
 %: %.cpp
-	LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(CURDIR)/expensiveglut/lib $(CXX) $(CXXFLAGS) $^ $(LDFLAGS) -o $@
+	$(CXX) $(CXXFLAGS) $^ $(CURDIR)/expensiveglut/lib/libexpensiveglut.so $(LDFLAGS) -o $@
 #	$(FMODLINK) $@
 
 #-----------------------------------------------------------------------------
 
 %.i: %.cpp
-	LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(CURDIR)/expensiveglut/lib $(CXX) -E $(CXXFLAGS) $< | uniq > $@
+	$(CXX) -E $(CXXFLAGS)  $(CURDIR)/expensiveglut/lib/libexpensiveglut.so $< | uniq > $@
 
 #-----------------------------------------------------------------------------
 

@@ -346,7 +346,7 @@ ELSE()
     ELSEIF(FREEGLUT_GLES1)
       SET(LIBNAME freeglut-gles1)
     ELSE()
-      SET(LIBNAME glut)
+      SET(LIBNAME expensiveglut)
     ENDIF()
 
     SET_TARGET_PROPERTIES(freeglut PROPERTIES VERSION 3.9.0 SOVERSION 3 OUTPUT_NAME ${LIBNAME})
@@ -474,7 +474,7 @@ ELSE()
 ENDIF()
 # Client applications need to define FreeGLUT GLES version to
 # bootstrap headers inclusion in freeglut_std.h:
-SET(PC_LIBNAME "glut")
+SET(PC_LIBNAME "expensiveglut")
 SET(PC_FILENAME "freeglut.pc")
 IF(FREEGLUT_GLES2)
   SET(PC_CFLAGS "-DFREEGLUT_GLES2")

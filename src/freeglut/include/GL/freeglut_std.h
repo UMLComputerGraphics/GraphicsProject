@@ -421,6 +421,9 @@ FGAPI void    FGAPIENTRY glutInitDisplayString( const char* displayMode );
 /*
  * Process loop function, see freeglut_main.c
  */
+FGAPI void    FGAPIENTRY glutMainLoopInitialize( void );
+FGAPI void    FGAPIENTRY glutMainLoopDeinitialize( void );
+FGAPI int    FGAPIENTRY glutMainLoopUpdate( void );
 FGAPI void    FGAPIENTRY glutMainLoop( void );
 
 /*
