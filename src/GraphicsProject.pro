@@ -90,7 +90,7 @@ HEADERS  += \
 
 
 unix:!macx {
-LIBS += -lGL -lGLU -lGLEW -lglu -lm
+LIBS += -lGL -lGLU -lGLEW -lglut -lm
 
 INCLUDEPATH +=. /usr/include/ImageMagick/ include/
 

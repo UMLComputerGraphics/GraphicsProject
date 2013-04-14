@@ -20,8 +20,8 @@
 #include "ObjLoader.hpp"
 
 /* Qt */
+#include "OpenGL.h"
 #include <QObject>
-#include <QtGui>
 
 /* System Headers */
 #include <cmath>

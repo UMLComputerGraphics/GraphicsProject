@@ -12,7 +12,6 @@ terrain.o
 morphlite
 partTest
 melt
-MONOLITH
 modelTest
 raytraceIntegrated
 partTest2
