@@ -110,15 +110,15 @@ docs:
 	pushd ../Doxygen && doxygen 2>warnings.log && popd;
 
 _clean:	
-	@$(RM) $(DIRT)
+	@$(RM) $(DIRT)	
+	@$(RM) -R debug
+	@$(RM) qMakefile
 
 _rmtargets:
 	@$(RM) $(TARGETS)
 
 clean: _clean
 	@echo "Removed everything except compiled executables."
-	@$(RM) -R debug
-	@$(RM) qMakefile
 
 rmtargets: _rmtargets
 	@echo "Removed executables."
