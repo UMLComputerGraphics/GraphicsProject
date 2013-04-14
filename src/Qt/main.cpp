@@ -11,8 +11,8 @@ int main( int argc, char **argv ) {
 
    MONOLITH monolith;
    monolith.run(argc, argv);
-   partTest partTest;
-   partTest.run(argc, argv);
+//   partTest partTest;
+//   partTest.run(argc, argv);
 
    QApplication a(argc, argv);
    MainWindow w;

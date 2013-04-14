@@ -52,7 +52,7 @@ SOURCES += Qt/main.cpp\
 	Qt/mainwindow.cpp\
         #Binaries
 	Binaries/MONOLITH.cpp\
-	Binaries/partTest.cpp
+	#Binaries/partTest.cpp
 
 
 
@@ -84,7 +84,7 @@ HEADERS  += \
         include/vec.hpp \
   	include/mainwindow.h\
 	include/MONOLITH.hpp\
-	include/partTest.hpp\
+	#include/partTest.hpp\
         #WiiUtil.h\
         #Qt
 
