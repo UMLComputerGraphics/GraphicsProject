@@ -99,9 +99,19 @@ clean: _clean
 rmtargets: _rmtargets
 	@echo "Removed executables."
 
-clobber: _clean _rmtargets
+clobber: _clean _rmtargets clean-qt
 	@echo "Removed objects and executables."
 
+.PHONY: qt
+qt: qMakefile
+	make -f qMakefile
 
+.PHONY: clean-qt
+clean-qt: qMakefile
+	make -f qMakefile clean
+	rm -f qMakefile
+
+qMakefile:
+	qmake -o qMakefile
 
 #>>>>>>> d2fe654ff4a5cad4acfccb2aecc1aba89bb7b37b
