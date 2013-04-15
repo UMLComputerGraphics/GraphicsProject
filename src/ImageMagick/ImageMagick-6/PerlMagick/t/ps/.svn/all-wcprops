@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/t/ps
+END
+write.t
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/t/ps/write.t
+END
+read.t
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/t/ps/read.t
+END
+input.miff
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/t/ps/input.miff
+END
+input.ps
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/t/ps/input.ps
+END
+input.eps
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/t/ps/input.eps
+END

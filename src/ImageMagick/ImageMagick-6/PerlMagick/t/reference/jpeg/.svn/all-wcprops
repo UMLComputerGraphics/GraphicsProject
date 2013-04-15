@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/t/reference/jpeg
+END
+write_non_interlaced.miff
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/t/reference/jpeg/write_non_interlaced.miff
+END
+read_non_interlaced.miff
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/t/reference/jpeg/read_non_interlaced.miff
+END
+write_plane_interlaced.miff
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/t/reference/jpeg/write_plane_interlaced.miff
+END
+read_plane_interlaced.miff
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/t/reference/jpeg/read_plane_interlaced.miff
+END

@@ -7,11 +7,6 @@
  * @details Based -very- heavily on Etay Meiri's work at ogldev.
  **/
 
-#ifdef __APPLE__ // include Mac OS X versions of headers
-#include <Magick++.h>
-#else // non-Mac OS X operating systems
-#include <ImageMagick/Magick++.h>
-#endif // __APPLE__
 #include <iostream>
 #include <cstdlib>
 #include "Texture.hpp"

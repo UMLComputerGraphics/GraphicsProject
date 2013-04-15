@@ -1,0 +1,95 @@
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/Magick++/tests
+END
+tests.tap
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/Magick++/tests/tests.tap
+END
+coalesceImages.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/Magick++/tests/coalesceImages.cpp
+END
+coderInfo.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/Magick++/tests/coderInfo.cpp
+END
+morphImages.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/Magick++/tests/morphImages.cpp
+END
+readWriteImages.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/Magick++/tests/readWriteImages.cpp
+END
+color.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/Magick++/tests/color.cpp
+END
+test_image.miff
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/Magick++/tests/test_image.miff
+END
+montageImages.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/Magick++/tests/montageImages.cpp
+END
+exceptions.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/Magick++/tests/exceptions.cpp
+END
+test_image_anim.miff
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/Magick++/tests/test_image_anim.miff
+END
+readWriteBlob.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/Magick++/tests/readWriteBlob.cpp
+END
+attributes.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/Magick++/tests/attributes.cpp
+END
+colorHistogram.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/Magick++/tests/colorHistogram.cpp
+END
+appendImages.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/Magick++/tests/appendImages.cpp
+END
+averageImages.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/Magick++/tests/averageImages.cpp
+END
