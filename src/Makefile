@@ -7,7 +7,9 @@ CLASSESRAW=$(wildcard Classes/*.cpp)
 
 #Binaries/particleBottle.cpp
 #things not needed or that break build
-DIAF=Classes/KinectInator.cpp  Binaries/proofOfConcept.cpp Binaries/raytrace1.cpp
+DIAF=Classes/KinectInator.cpp \
+     fMod/playsound_example.cpp fMod/3d_example.cpp Binaries/morphkeysound.cpp \
+     Binaries/qtPartTest.cpp Qt/main.cpp Qt/mainwindow.cpp
 
 ifndef WII
 DIAF += \
@@ -23,12 +25,12 @@ TARGETS = $(basename $(strip $(SOURCES)))
 OBJS = $(subst .cpp,.o,$(COMMON)) \
        $(subst .cpp,.o,$(CLASSES)) \
 
-CXXOPTS = -fmessage-length=0 -ansi -Wall -pedantic 
-CXXINCS = "-I$(CURDIR)/include"
-
 DIRT = $(wildcard */*.o */*.so */*.d *.i *~ */*~ *.log)
 
-LDLIBS = -lMagick++
+CXXOPTS = -fmessage-length=0 -ansi -Wall -pedantic 
+CXXINCS = "-I$(CURDIR)/include"
+CXXDEFS = -DWITHOUT_QT
+LDLIBS = -lMagick++ -lboost_thread-mt
 
 # Configuration Options
 ifdef POSTMULT
@@ -109,8 +111,9 @@ qt: qMakefile
 .PHONY: clean-qt
 clean-qt: qMakefile
 	make -f qMakefile distclean
+	rm -rf debug/ release/
 	rm -f qMakefile
-	rm -rf build/ release/
+
 
 qMakefile:
 	qmake -o qMakefile

@@ -27,6 +27,7 @@ const float DISTANCEFACTOR = 100.0f;          // Units per meter.  I.e feet woul
 #include "Engine.hpp"
 /* Utilities and Common */
 #include "model.hpp"
+#include "ObjLoader.hpp"
 #include "InitShader.hpp"
 #include "glut_callbacks.h"
 
@@ -406,8 +407,7 @@ void play3dSound( vec4 pos, vec4 vel, FMOD::Channel *a_channel, FMOD::Sound *a_s
 
 void morphKeySoundIdle( void ) {
 
-  static Cameras *camList = Engine::instance()->cams();
-  static Scene *rootScene = Engine::instance()->rootScene();
+ static Scene *rootScene = Engine::instance()->rootScene();
 
   // Animation variables.
   float percent = driveTheMorph();
