@@ -30,7 +30,7 @@
 
 // variable used to initialize the particle system
 // If there is an argv[1], we will use it to initialize the particle system.
-int numberOfParticles = 99999 ;
+int numberOfParticles = 66666 ;
 
 
 const float DISTANCEFACTOR = 100.0f;          // Units per meter.  I.e feet would = 3.28. cm would = 100.
@@ -157,8 +157,11 @@ void fModInit(void){
   result = bg->setMode(FMOD_LOOP_NORMAL);
   ERRCHECK(result);
 
+  // play the background music
   {
     result = fSystem->playSound(FMOD_CHANNEL_FREE, bg, true, &bgChannel);
+    ERRCHECK(result);
+    result = bgChannel->setVolume(0.4); // 0 is silent, 1 is max
     ERRCHECK(result);
     result = bgChannel->setPaused(false);
     ERRCHECK(result);

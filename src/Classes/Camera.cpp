@@ -482,14 +482,14 @@ vec3 Camera::dPos( void ) const { return _velocity; }
    forward returns a vector pointing in the same direction as the camera
    @return a vector pointing forwards, relative to the current camera rotation
  **/
-vec4 Camera::forward ( void ) const { return vec4( 0.0, 0.0, 1.0, 1.0 ) * this->_ctm._rotation.matrix() ; }
-
+vec4 Camera::forward ( void ) const { return vec4( 0.0, 0.0, 1.0, 1.0 ) * this->_ctm._orbit.matrix() ; }
+//-_ctm._offset.matrix()
 
 /**
    up returns a vector pointing in the same direction as the camera
    @return a vector pointing up, relative to the current camera rotation
  **/
-vec4 Camera::up ( void ) const { return vec4( 0.0, 1.0, 0.0, 1.0 ) * this->_ctm._rotation.matrix() ; }
+vec4 Camera::up      ( void ) const { return vec4( 0.0, 1.0, 0.0, 1.0 ) * this->_ctm._orbit.matrix() ; }
 
 
 void Camera::resetPosition( void ) {
