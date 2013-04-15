@@ -23,8 +23,8 @@ TARGETS = $(basename $(strip $(SOURCES)))
 OBJS = $(subst .cpp,.o,$(COMMON)) \
        $(subst .cpp,.o,$(CLASSES)) \
 
-CXXOPTS = -fmessage-length=0 -ansi -Wall -pedantic -DWITHOUT_QT
-CXXINCS = -I$(CURDIR)/include -I$(CURDIR)/expensiveglut/include
+CXXOPTS = -fmessage-length=0 -ansi -Wall -pedantic -DWITHOUT_QT -Wno-cpp
+CXXINCS = -I$(CURDIR)/include -I$(CURDIR)/expensiveglut/include  -I$(CURDIR)/expensiveglut/GL
 
 DIRT = $(wildcard */*.o */*.so */*.d *.i *~ */*~ *.log)
 
@@ -44,9 +44,9 @@ endif
 # Platform-dependent configuration.
 UNAME := $(shell uname)
 ifeq ($(UNAME), Linux)
-    CXXINCS += -I/usr/include/ImageMagick/
+    CXXINCS += -I$(CURDIR)/ImageVoodoo/include  -I$(CURDIR)/ImageVoodoo/include/ImageMagick-6
     CXXDEFS += -DFREEGLUT_STATIC -DGLEW_STATIC
-    LDLIBS += -lGL -lGLU -lGLEW -L$(CURDIR)/expensiveglut/lib -lexpensiveglut -lX11 -lm -lboost_thread-mt -lMagick++
+    LDLIBS += -lGL -lGLU -lGLEW -L$(CURDIR)/expensiveglut/lib -lexpensiveglut -lX11 -lm -lboost_thread-mt -L$(CURDIR)/ImageVoodoo/lib -lMagick++
     EXPENSIVEGLUT = $(CURDIR)/expensiveglut/lib/libexpensiveglut.so
     #FMODNAME = libfmodex.so
     #FMODLIB = $(FMODLIBDIR)/$(FMODLIBNAME)
@@ -57,12 +57,12 @@ endif
 ifeq ($(UNAME), Darwin)
     CXXOPTS -= -mmacosx-version-min=10.6
     CXXOPTS += -std=c++11 -stdlib=libc++ -mmacosx-version-min=10.7 
-    CXXINCS += -I/opt/local/include -I/opt/local/include/ImageMagick -I/usr/X11R6/include -L/usr/X11R6/lib 
+    CXXINCS += -I/opt/local/include -I$(CURDIR)/ImageVoodoo/include -I$(CURDIR)/ImageVoodoo/include/ImageMagick-6 -I/usr/X11R6/include -L/usr/X11R6/lib 
    # LDLIBS += -framework Carbon -framework OpenGL -framework GLUT -L/opt/local/lib
    # if you can't find imgMagick, then try the line above. be sure to comment the line below
     LDOPTS -= -mmacosx-version-min=10.6
     LDOPTS += -stdlib=libc++ -mmacosx-version-min=10.7
-    LDLIBS += -L/usr/X11R6/lib -lGL -lGLU -lGLEW -L$(CURDIR)/expensiveglut/lib -lexpensiveglut -lX11 -lm -L /opt/local/lib -lMagick++ -lboost_thread-mt 
+    LDLIBS += -L/usr/X11R6/lib -lGL -lGLU -lGLEW -L$(CURDIR)/expensiveglut/lib -lexpensiveglut -lX11 -lm -L$(CURDIR)/ImageVoodoo/lib -lMagick++ -lboost_thread-mt 
     EXPENSIVEGLUT = $(CURDIR)/expensiveglut/lib/libexpensiveglut.dylib
     FMODLIBNAME = libfmodex.dylib
    # If apple, we do need a funky post-compile build step
@@ -125,7 +125,9 @@ _clean:
 _rmtargets:
 	@$(RM) $(TARGETS)
 	cd freeglut; make clean
+	cd ImageMagick; make clean
 	rm -Rf expensiveglut
+	rm -Rf ImageVoodoo
 
 clean: _clean
 	@echo "Removed everything except compiled executables."
@@ -172,7 +174,7 @@ ifeq ($(UNAME), Darwin)
       --x-includes=/usr/X11R6/include --x-libraries=/usr/X11R6/lib/ \
       --without-perl
 else
-	cd ImageMagick; ./configure --prefix=$(CURDIR)/ImageVoodoo
+	cd ImageMagick; ./configure --prefix=$(CURDIR)/ImageVoodoo --disable-dependency-tracking --without-perl
 endif
 
 .PHONY: compilemagick
@@ -180,4 +182,4 @@ compilemagick:
 	cd ImageMagick; make; make install
 
 .PHONY: magick
-magick: configuremagick compilemagick
+magick: configmagick compilemagick
