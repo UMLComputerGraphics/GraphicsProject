@@ -9,7 +9,6 @@
 
 #include <iostream>
 #include <cstdlib>
-#include <ImageMagick/Magick++.h>
 #include "Texture.hpp"
 #include "platform.h"
 #include "Util.hpp"

@@ -94,7 +94,7 @@ LIBS += -lGL -lGLU -lGLEW -L$(CURDIR)/expensiveglut/lib -lexpensiveglut -lm -lbo
 
 INCLUDEPATH +=. ImageVoodoo/include ImageVoodoo/include/ImageMagick-6 include/ expensiveglut/include
 
-LIBS += -L$(CURDIR)/ImageVoodoo/lib -lMagick++ 
+LIBS += -L$(CURDIR)/ImageVoodoo/lib -lMagick++-6.Q16
 }
 
 macx {
@@ -102,7 +102,7 @@ LIBS += -lGL -lGLU -lGLEW -L$(CURDIR)/expensiveglut/lib -lexpensiveglut -lm -lbo
 
 INCLUDEPATH +=. ImageVoodoo/include ImageVoodoo/include/ImageMagick-6  include/ expensiveglut/include
 
-LIBS += -L$(CURDIR)/ImageVoodoo/lib -lMagick++ 
+LIBS += -L$(CURDIR)/ImageVoodoo/lib -lMagick++-6.Q16
 }
 
 FORMS    += \

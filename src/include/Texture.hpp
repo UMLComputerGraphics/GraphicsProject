@@ -12,7 +12,7 @@
 
 #include "platform.h"
 
-#include <ImageMagick/Magick++.h>
+#include <ImageMagick-6/Magick++.h>
 /**
  * Texture as a class represents the state and data needed to
  * accurately track and bind a single Texture in OpenGL.
