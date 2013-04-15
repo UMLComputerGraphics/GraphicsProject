@@ -9,13 +9,19 @@
 
 #include "OpenGL.h"
 
-// Code for peasants as follows:
+#ifdef __APPLE__
+#  define glGenVertexArrays( X, Y ) glGenVertexArraysAPPLE( X, Y )
+#  define glBindVertexArray( X ) glBindVertexArrayAPPLE( X )
+#  define GLEW_INIT() ;
+#  define glutLeaveMainLoop() exit( EXIT_SUCCESS )
+#else
 #define GLEW_INIT()						\
   glewExperimental = GL_FALSE;					\
   GLenum rc = glewInit();					\
   if (rc) fprintf( stderr, "%s\n", glewGetErrorString(rc) );
 #endif
 
+#endif
 /**
  * @def GLEW_INIT()
  * A macro defined to initialize GLEW on Linux,
