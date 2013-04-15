@@ -58,7 +58,7 @@ endif
 ifeq ($(UNAME), Darwin)
 #    CXXOPTS -= -mmacosx-version-min=10.6
 #    CXXOPTS += -mmacosx-version-min=10.7 -std=c++11 -stdlib=libc++ -m64
-    CXXINCS += -I/opt/local/include -I$(CURDIR)/ImageVoodoo/include -I$(CURDIR)/ImageVoodoo/include/ImageMagick-6 -I/usr/X11R6/include -L/usr/X11R6/lib 
+    CXXINCS += -I/opt/local/include -I$(CURDIR)/ImageVoodoo/include -I$(CURDIR)/ImageVoodoo/include/ImageMagick-6 -I/usr/X11R6/include 
    # LDLIBS += -framework Carbon -framework OpenGL -framework GLUT -L/opt/local/lib
    # if you can't find imgMagick, then try the line above. be sure to comment the line below
 #    LDOPTS -= -mmacosx-version-min=10.6
