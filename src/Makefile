@@ -55,9 +55,13 @@ ifeq ($(UNAME), Linux)
 endif
 
 ifeq ($(UNAME), Darwin)
-    CXXINCS += $(shell Magick++-config --cxxflags --cppflags) -I/opt/local/include -I/usr/X11R6/include -L/usr/X11R6/lib 
+    CXXOPTS -= -mmacosx-version-min=10.6
+    CXXOPTS += -std=c++11 -stdlib=libc++ -mmacosx-version-min=10.7 
+    CXXINCS += -I/opt/local/include -I/usr/X11R6/include -L/usr/X11R6/lib 
    # LDLIBS += -framework Carbon -framework OpenGL -framework GLUT -L/opt/local/lib
    # if you can't find imgMagick, then try the line above. be sure to comment the line below
+    LDOPTS -= -mmacosx-version-min=10.6
+    LDOPTS += -stdlib=libc++ -mmacosx-version-min=10.7
     LDLIBS += -L/usr/X11R6/lib -lGL -lGLU -lGLEW -L$(CURDIR)/expensiveglut/lib -lexpensiveglut -lX11 -lm -L /opt/local/lib -lMagick++ -lboost_thread-mt 
     EXPENSIVEGLUT = $(CURDIR)/expensiveglut/lib/libexpensiveglut.dylib
     FMODLIBNAME = libfmodex.dylib
