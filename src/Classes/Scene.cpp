@@ -250,3 +250,21 @@ void Scene::deleteObject( Object *obj ) {
   delete obj;
 
 }
+
+/**
+ * Propagate all changes throughout the Scene graph.
+ */
+void Scene::propagate( void ) {
+
+  std::list< Object* >::iterator it;
+
+  for ( it = _list.begin(); it != _list.end(); ++it ) {
+    // Update this child's transformations.
+    (*it)->_trans.clean();
+    // Instruct this child to send his transformations to his kids, if any.
+    (*it)->sceneCascade();
+    // Begin propagating from the child-down.
+    (*it)->propagate();
+  }
+
+}

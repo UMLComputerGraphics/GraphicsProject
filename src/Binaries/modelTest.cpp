@@ -44,7 +44,7 @@ void init() {
 	   min.x, min.y, min.z,
 	   max.x, max.y, max.z );
   model->_trans._offset.set( 0, -min.y, 0 );
-  model->propagate();
+  model->propagateOLD();
   model->buffer();
 
   Object *floor = rootScene->addObject( "floor" );

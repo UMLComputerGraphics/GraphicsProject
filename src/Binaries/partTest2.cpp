@@ -84,7 +84,7 @@ void init()
     particleSystem->setSlaughterHeight(0.2455);
     //particleSystem->_trans._displacement.set(0.0, 0.25, 0.0);
     //particleSystem->setEmitterRadius( 0.1 );
-    particleSystem->propagate();
+    particleSystem->propagateOLD();
     //particleSystem->fillSystemWithParticles();
     particleSystem->buffer();
   }
