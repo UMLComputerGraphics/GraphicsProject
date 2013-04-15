@@ -98,11 +98,11 @@ LIBS += -lMagick++
 }
 
 macx {
-LIBS += -framework Carbon -framework OpenGL -L$(CURDIR)/expensiveglut/lib -lexpensiveglut
+LIBS += -lGL -lGLU -lGLEW -L$(CURDIR)/expensiveglut/lib -lexpensiveglut -lm -lboost_thread
 
-INCLUDEPATH +=. /opt/local/include/ImageMagick/ include/ expensiveglut/include
+INCLUDEPATH +=. /opt/local/include /opt/local/include/ImageMagick/ include/ expensiveglut/include
 
-LIBS += -L/opt/local/lib -lMagick++
+LIBS += -L/opt/local/lib -L/opt/local/include/ImageMagick/ -lMagick++
 }
 
 FORMS    += \
