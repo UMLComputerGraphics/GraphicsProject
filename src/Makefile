@@ -6,6 +6,9 @@ COMMONRAW=$(wildcard Common/*.cpp)
 CLASSESRAW=$(wildcard Classes/*.cpp)
 
 #things not needed or that break build
+DIAF=Classes/KinectInator.cpp \
+     fMod/playsound_example.cpp fMod/3d_example.cpp Binaries/morphkeysound.cpp \
+     Binaries/qtPartTest.cpp Qt/main.cpp Qt/mainwindow.cpp
 
 DIAF=Classes/KinectInator.cpp Binaries/morphkeysound.cpp fMod/3d_example.cpp fMod/playsound_example.cpp Binaries/qtFinalProject.cpp Binaries/qtPartTest.cpp Qt/mainwindow.cpp Qt/main.cpp
 
@@ -24,11 +27,11 @@ OBJS = $(subst .cpp,.o,$(COMMON)) \
        $(subst .cpp,.o,$(CLASSES)) \
 
 CXXOPTS = -fmessage-length=0 -ansi -Wall -pedantic -DWITHOUT_QT
-CXXINCS = "-I$(CURDIR)/include"
-
 DIRT = $(wildcard */*.o */*.so */*.d *.i *~ */*~ *.log)
 
-LDLIBS = -lMagick++
+CXXINCS = "-I$(CURDIR)/include"
+CXXDEFS = -DWITHOUT_QT
+LDLIBS = -lMagick++ -lboost_thread-mt
 
 # Configuration Options
 ifdef POSTMULT
@@ -133,8 +136,9 @@ qt: qMakefile
 .PHONY: clean-qt
 clean-qt: qMakefile
 	make -f qMakefile distclean
+	rm -rf debug/ release/
 	rm -f qMakefile
-	rm -rf build/ release/
+
 
 qMakefile:
 	qmake -o qMakefile
