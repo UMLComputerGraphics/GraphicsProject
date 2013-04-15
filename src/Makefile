@@ -148,7 +148,7 @@ qt: freeglut
 .PHONY: configfreeglut
 configfreeglut:
 ifeq ($(UNAME), Darwin)
-	cd freeglut; ./configure --prefix=$(CURDIR)/expensiveglut
+	cd freeglut; ./configure --prefix=$(CURDIR)/expensiveglut -DCPPFLAGS="-I/usr/X11R6/include -L/usr/X11R6/lib" -DLDFLAGS="-L/usr/X11R6/lib"
 else
 	cd freeglut; ./configure --prefix=$(CURDIR)/expensiveglut
 endif
