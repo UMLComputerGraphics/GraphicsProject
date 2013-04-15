@@ -90,19 +90,19 @@ HEADERS  += \
 
 
 unix:!macx {
-LIBS += -lGL -lGLU -lGLEW -L$(CURDIR)/expensiveglut/lib -lexpensiveglut -lm -lboost_thread
+LIBS += -lGL -lGLU -lGLEW -lglu -lm
 
-INCLUDEPATH +=. /usr/include/ImageMagick/ include/ expensiveglut/include
+INCLUDEPATH +=. /usr/include/ImageMagick/ include/
 
 LIBS += -lMagick++
 }
 
 macx {
-LIBS += -framework Carbon -framework OpenGL -L$(CURDIR)/expensiveglut/lib -lexpensiveglut
+LIBS += -framework Carbon -framework OpenGL -framework GLUT
 
-INCLUDEPATH +=. /opt/local/include/ImageMagick/ include/ expensiveglut/include
+INCLUDEPATH +=. -I/opt/local/include -I/opt/local/include/ImageMagick -I/usr/X11R6/include -L/usr/X11R6/lib include/
 
-LIBS += -L/opt/local/lib -lMagick++
+LIBS += -L/usr/X11R6/lib -lGL -lGLU -lGLEW -L$(CURDIR)/expensiveglut/lib -lexpensiveglut -lX11 -lm -L/opt/local/lib -lMagick++ -lboost_thread-mt
 }
 
 FORMS    += \
