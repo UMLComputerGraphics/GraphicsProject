@@ -154,7 +154,7 @@ void fModInit(void){
 
   result = fSystem->createSound("../sounds/BN-ForeverEndless.wav", FMOD_SOFTWARE, 0, &bg);
   ERRCHECK(result);
-  result = bg->setMode(FMOD_LOOP_ON);
+  result = bg->setMode(FMOD_LOOP_NORMAL);
   ERRCHECK(result);
 
   {
