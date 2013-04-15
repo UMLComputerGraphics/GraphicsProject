@@ -28,7 +28,9 @@ uniform int uNumOfTrianglesBounded;
 
 uniform samplerBuffer bufferData;
 
-uniform float ftime;
+uniform int ftime;
+
+float piover4 = atan(1.0);
 
 const float dlight = 0.025;
 float lightness = 0.5;
@@ -221,6 +223,17 @@ void IntersectWithHitSpheres(in Ray r, inout Intersection i)
 	int index = uNumOfTriangle * uNumOfTriangleVectors, startingindex = index;
 	vec3 centerPoint, rs, triangleNormal, temp;
 	float radius, radiusSquared, B, C, D, sqrtOfD, t, tPlus;
+	
+	//normal modulation guts
+	vec3 v1=vec3(1,0,0), v2, v3, v4;
+	mat3 m1,m2,tmp;
+	float mcos,msin;
+	mat4 fromUnit;
+  float rotx=piover4*cos(ftime/125.0)/8.0;
+  float rotz=piover4*sin(ftime/125.0)/8.0;
+  float crotx=cos(rotx),srotx=sin(rotx),crotz=cos(rotz),srotz=sin(rotz);
+  float rotmag,cosmagx,sinmagx,cosmagz,sinmagz;
+	
 	for(int hitIndex = 0 ; hitIndex < uNumOfBoundingSpheres; hitIndex++) {
 		centerPoint = (texelFetch(bufferData, index)).xyz;
 		radius = texelFetch(bufferData, index+1).x;
@@ -257,15 +270,58 @@ void IntersectWithHitSpheres(in Ray r, inout Intersection i)
 						if(tPlus > 0.0)
 						{
 							triangleNormal = texelFetch(bufferData, pointIndex+7).xyz;
+
+              //////////////////////////////////////
+              //modulation of triangle normals
+              //////////////////////////////////////
+              
+              //find transformation of (1,0,0) that results in the triangleNormal
+              /*v2=triangleNormal;
+              v3=normalize(cross(v1,v2));
+              v4=cross(v4,v1);
+              m1=mat3(v1,v4,v3);
+              mcos=dot(v2,v1);
+              msin=dot(v2,v4);
+              m2=mat3(mcos, msin, 0,
+                      -msin, mcos, 0,
+                      0, 0, 1);
+              tmp=inverse(m1)*m2*m1;
+              fromUnit=mat4(vec4(tmp[0], 0.0), vec4(tmp[1], 0.0), vec4(tmp[2], 0.0), vec4(0.0, 0.0, 0.0, 1.0));              
+              
+              mat4(vec4(1.0,0.0,0.0,0.0),vec4(0.0,cos(rotx),sin(rotx),0.0),vec4(0.0,-sin(rotx),cos(rotx),0.0),vec4(0.0,0.0,0.0,1.0)) *
+                                mat4(vec4(cos(rotz),sin(rotz),0.0,0.0),vec4(-sin(rotz),cos(rotz),0.0,0.0),vec4(0.0,0.0,1.0,0.0),vec4(0.0,0.0,0.0,1.0)) * 
+                                fromUnit * vec4(1.0,0.0,0.0,1.0)
+              */
+              
+              /*cosmagx=cos(atan(triangleNormal[1]/triangleNormal[0]));
+              sinmagx=sin(atan(triangleNormal[1]/triangleNormal[0]));
+              cosmagz=cos(atan(triangleNormal[1]/triangleNormal[2]));
+              sinmagz=sin(atan(triangleNormal[1]/triangleNormal[2]));*/
+              //vec3 ownage = (ModelView * vec4(org,1.0)).xyz;;
+              //cosmagx=sinmagx=cosmagz=sinmagz=sqrt((ownage[0]-centerPoint[0])*(ownage[0]-centerPoint[0])+(ownage[1]-centerPoint[1])*(ownage[1]-centerPoint[1]));
+              cosmagx=sinmagx=cosmagz=sinmagz=1.0;
+              
+              //do some noodling
+              triangleNormal = normalize(mat3(vec3(1.0,0.0,0.0),vec3(0.0,cosmagx*crotx,sinmagx*srotx),vec3(0.0,-sinmagx*srotx,cosmagx*crotx)) *
+                               mat3(vec3(cosmagx*crotx,0.0,sinmagz*srotz),vec3(0.0,1.0,0.0),vec3(-sinmagx*srotx,0.0,cosmagz*crotz)) *
+                               mat3(vec3(cosmagz*crotz,sinmagz*srotz,0.0),vec3(-sinmagz*srotz,cosmagz*crotz,0.0),vec3(0.0,0.0,1.0)) 
+                                * triangleNormal);
+                                
+              
+              ///////////////////////////////////////
+              //END of modulation of triangle normals
+              /////////////////////////////////////// 
+              
 						
 							temp = r.dir + triangleNormal;
 							if(temp.x < 1.5 && temp.y < 1.5 && temp.z < 1.5)
-							{
+							{							
 								buildTriangle(triangle, texelFetch(bufferData, pointIndex).xyz, texelFetch(bufferData, pointIndex+1).xyz, texelFetch(bufferData, pointIndex+2).xyz, 
 																	texelFetch(bufferData, pointIndex+3).xyz, texelFetch(bufferData, pointIndex+4).xyz, texelFetch(bufferData, pointIndex+5).xyz,
 																	texelFetch(bufferData, pointIndex+6).xyz,
 																	triangleNormal
 																	);
+								
 								triangle_intersect(triangle, r, i);
 							}
 						}
