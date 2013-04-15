@@ -1,0 +1,119 @@
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/tiff
+END
+input_truecolor_tiled32x32.tiff
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/tiff/input_truecolor_tiled32x32.tiff
+END
+input_gray_12bit.tiff
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/tiff/input_gray_12bit.tiff
+END
+input_256_matte.tiff
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/tiff/input_256_matte.tiff
+END
+input_gray_16bit.tiff
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/tiff/input_gray_16bit.tiff
+END
+read.t
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/tiff/read.t
+END
+input_mono.tiff
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/tiff/input_mono.tiff
+END
+input_256_planar_contig.tiff
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/tiff/input_256_planar_contig.tiff
+END
+input_256.tiff
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/tiff/input_256.tiff
+END
+input_truecolor.tiff
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/tiff/input_truecolor.tiff
+END
+input_gray_4bit_matte.tiff
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/tiff/input_gray_4bit_matte.tiff
+END
+input_16_matte.tiff
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/tiff/input_16_matte.tiff
+END
+input_gray_8bit_matte.tiff
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/tiff/input_gray_8bit_matte.tiff
+END
+input_truecolor_16.tiff
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/tiff/input_truecolor_16.tiff
+END
+input_gray_4bit.tiff
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/tiff/input_gray_4bit.tiff
+END
+input_16.tiff
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/tiff/input_16.tiff
+END
+write.t
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/tiff/write.t
+END
+input_truecolor_stripped.tiff
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/tiff/input_truecolor_stripped.tiff
+END
+input_gray_8bit.tiff
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/tiff/input_gray_8bit.tiff
+END
+input_256_planar_separate.tiff
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/tiff/input_256_planar_separate.tiff
+END

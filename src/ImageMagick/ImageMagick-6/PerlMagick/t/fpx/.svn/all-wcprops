@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/t/fpx
+END
+input_bw.fpx
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/t/fpx/input_bw.fpx
+END
+input_grayscale.fpx
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/t/fpx/input_grayscale.fpx
+END
+input_256.fpx
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/t/fpx/input_256.fpx
+END
+input_truecolor.fpx
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/t/fpx/input_truecolor.fpx
+END
+write.t
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/t/fpx/write.t
+END
+read.t
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/t/fpx/read.t
+END
+input_jpeg.fpx
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/t/fpx/input_jpeg.fpx
+END

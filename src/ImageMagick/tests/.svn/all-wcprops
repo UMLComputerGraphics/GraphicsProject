@@ -1,0 +1,155 @@
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/tests
+END
+validate-import.tap
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/tests/validate-import.tap
+END
+cli-pipe.tap
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/tests/cli-pipe.tap
+END
+validate-identify.tap
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/tests/validate-identify.tap
+END
+validate-formats-on-disk.tap
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/tests/validate-formats-on-disk.tap
+END
+sequence.miff
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/tests/sequence.miff
+END
+validate-convert.tap
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/tests/validate-convert.tap
+END
+validate-formats-in-memory.tap
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/tests/validate-formats-in-memory.tap
+END
+validate-compare.tap
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/tests/validate-compare.tap
+END
+rose.pnm
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/tests/rose.pnm
+END
+input_gray.miff
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/tests/input_gray.miff
+END
+validate-montage.tap
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/tests/validate-montage.tap
+END
+validate-stream.tap
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/tests/validate-stream.tap
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/tests/Makefile.am
+END
+common.shi
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/tests/common.shi
+END
+validate.c
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/tests/validate.c
+END
+wandtest.c
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/tests/wandtest.c
+END
+validate-composite.tap
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/tests/validate-composite.tap
+END
+wandtest.tap
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/tests/wandtest.tap
+END
+input_truecolor.miff
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/tests/input_truecolor.miff
+END
+input_256c.miff
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/tests/input_256c.miff
+END
+drawtest.c
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/tests/drawtest.c
+END
+validate.h
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/tests/validate.h
+END
+drawtest.tap
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/tests/drawtest.tap
+END
+input_bilevel.miff
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/tests/input_bilevel.miff
+END
+cli-colorspace.tap
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/tests/cli-colorspace.tap
+END

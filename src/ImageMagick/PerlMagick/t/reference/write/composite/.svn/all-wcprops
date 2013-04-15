@@ -1,0 +1,119 @@
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/composite
+END
+CopyRed.miff
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/composite/CopyRed.miff
+END
+In.miff
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/composite/In.miff
+END
+Out.miff
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/composite/Out.miff
+END
+Xor.miff
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/composite/Xor.miff
+END
+Copy.miff
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/composite/Copy.miff
+END
+Over.miff
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/composite/Over.miff
+END
+Multiply.miff
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/composite/Multiply.miff
+END
+CopyBlue.miff
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/composite/CopyBlue.miff
+END
+Plus.miff
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/composite/Plus.miff
+END
+Clear.miff
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/composite/Clear.miff
+END
+Subtract.miff
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/composite/Subtract.miff
+END
+Add.miff
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/composite/Add.miff
+END
+Difference.miff
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/composite/Difference.miff
+END
+Minus.miff
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/composite/Minus.miff
+END
+CopyGreen.miff
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/composite/CopyGreen.miff
+END
+Rotate.miff
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/composite/Rotate.miff
+END
+Bumpmap.miff
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/composite/Bumpmap.miff
+END
+CopyOpacity.miff
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/composite/CopyOpacity.miff
+END
+Atop.miff
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/composite/Atop.miff
+END

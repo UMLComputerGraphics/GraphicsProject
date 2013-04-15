@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/scripts
+END
+txt2html
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/scripts/txt2html
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/scripts/Makefile.am
+END
+xsnap
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/scripts/xsnap
+END
+format_c_api_docs
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/scripts/format_c_api_docs
+END

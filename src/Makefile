@@ -92,11 +92,11 @@ LDFLAGS = $(LDOPTS) $(LDDIRS) $(LDLIBS)
 
 .PHONY: Makefile
 
-default all: freeglut $(TARGETS)
+default all: magick freeglut $(TARGETS)
 	@echo ""
 	@echo "******************************************************"
 	@echo "For ld to find the customized freeglut library, run: "
-	@echo '     "export LD_LIBRARY_PATH=`pwd`/expensiveglut/lib:$$LD_LIBRARY_PATH"'
+	@echo '     "export LD_LIBRARY_PATH=`pwd`/expensiveglut/lib:`pwd`/ImageVoodoo/lib:$$LD_LIBRARY_PATH"'
 	@echo "******************************************************"
 
 $(TARGETS): $(OBJS)
@@ -138,7 +138,7 @@ clobber: _clean _rmtargets
 
 
 .PHONY: qt
-qt: freeglut
+qt: magick freeglut
 	qmake -o qMakefile
 	make -f qMakefile
 	@$(RM) Binaries/MONOLITH
@@ -146,7 +146,7 @@ qt: freeglut
 	@echo ""
 	@echo "******************************************************"
 	@echo "For ld to find the customized freeglut library, run: "
-	@echo '     "export LD_LIBRARY_PATH=`pwd`/expensiveglut/lib:$$LD_LIBRARY_PATH"'
+	@echo '     "export LD_LIBRARY_PATH=`pwd`/expensiveglut/lib:`pwd`/ImageVoodoo/lib:$$LD_LIBRARY_PATH"'
 	@echo "******************************************************"
 
 .PHONY: configfreeglut
@@ -163,3 +163,21 @@ compilefreeglut:
 
 .PHONY: freeglut
 freeglut: configfreeglut compilefreeglut
+
+.PHONY: configmagick
+configmagick:
+ifeq ($(UNAME), Darwin)
+	cd ImageMagick; ./configure --prefix=$(CURDIR)/ImageVoodoo --with-quantum-depth=16 \
+      --disable-dependency-tracking --with-x=yes \
+      --x-includes=/usr/X11R6/include --x-libraries=/usr/X11R6/lib/ \
+      --without-perl
+else
+	cd ImageMagick; ./configure --prefix=$(CURDIR)/ImageVoodoo
+endif
+
+.PHONY: compilemagick
+compilemagick:
+	cd ImageMagick; make; make install
+
+.PHONY: magick
+magick: configuremagick compilemagick
