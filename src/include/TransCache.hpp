@@ -16,15 +16,7 @@ class TransCache {
   
 public:
   
-  typedef std::deque< Transformation* > TransformationDeque;
-
-  TransCache( void );
-
-  void ptm( const Angel::mat4 &ptm_in, bool postmult = true );
-
-  const Angel::mat4 &ptm( void ) const;
-  const Angel::mat4 &ctm( void ) const;
-  const Angel::mat4 &otm( void ) const;
+  void ptmOLD( const Angel::mat4 &ptm_in, bool postmult = true );
 
   // Hacky: For Camera.
   TransMat _preOffset;
@@ -43,12 +35,22 @@ public:
   // Scene Graph V2.0 //
   // Everything below here will eventually replace everything above.
 
+  typedef std::deque< Transformation* > TransformationDeque;
+
+  TransCache( void );
+
+  const Angel::mat4 &ptm( void ) const;  // Retrieve current parent transformation
+  const Angel::mat4 &ctm( void ) const;  // Retrieve current isolated object transformation
+  const Angel::mat4 &otm( void ) const;  // Retrieve current cumulative object transformation
+  const Angel::mat4 &itm( void ) const;  // Retrieve current inheritable object transformations
+
+  void ptm( const Angel::mat4 &ptm_in ); // Set new Parent Transform.
+
   void push( Transformation *newTrans ); // Add New Transformation
   void pop( void );                      // Remove Transformation
   void clear( void );                    // Clear all Transformations
   void rebuild( void );                  // Recalculate Cache
   void clean( void );                    // Smartly Update Cache
-  void adopt( const Angel::mat4 &ptm_in ); // Set new Parent Transform.
 
   bool dirty( void );
   void dirty( bool newState );
@@ -61,7 +63,7 @@ private:
   Angel::mat4 _ptm; /* Parent's Cumulative Transformation Matrix */
   Angel::mat4 _ctm; /* Current Transformation Matrix */
   Angel::mat4 _itm; // Inheritable Trans Mat: CTM, minus transformations we don't want our kids to have.
-  Angel::mat4 _otm; /* Cached Result Transformation Matrix: e.g; ctm * ptm */
+  Angel::mat4 _otm; /* Cached Result Transformation Matrix: e.g; ctm * ptmOLD */
   TransformationDeque _transformations; // Transformation Stack
   
   bool _premult; // Should we premult instead of postmult?

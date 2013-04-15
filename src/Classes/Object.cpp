@@ -80,6 +80,7 @@ Object::Object( const std::string &name, GLuint gShader ) {
   // Default to "Not Textured"
   _isTextured = false;
   _textureID = -1;
+  _numTextures = 0;
 
   // Linear Interpolation Demo: Morph Percentage
   _morphPercentage = 1.0;
@@ -295,35 +296,6 @@ void Object::drawMode( GLenum new_mode ) {
   _drawMode = new_mode;
 }
 
-/**
- * FIXME: This is a junk, nonflexible method.
- * It would be better if you didn't think of this as being here.
- *
- * @param filename an array of strings to load textures from.
- */
-void Object::terrainTexture( const char** filename ) {
-  
-  glBindVertexArray( _vao );
-
-  texture( filename[0] );
-  texture( filename[1] );
-  texture( filename[2] );
-  texture( filename[3] );
-  texture( filename[4] );
-
-  GLuint gSampler0 = glGetUniformLocation( shader(), "gSampler0" );
-  glUniform1i( gSampler0, _texIDs[0] );
-  GLuint gSampler1 = glGetUniformLocation( shader(), "gSampler1" );
-  glUniform1i( gSampler1, _texIDs[1] );
-  GLuint gSampler2 = glGetUniformLocation( shader(), "gSampler2" );
-  glUniform1i( gSampler2, _texIDs[2] );
-  GLuint gSampler3 = glGetUniformLocation( shader(), "gSampler3" );
-  glUniform1i( gSampler3, _texIDs[3] );
-  GLuint gSampler4 = glGetUniformLocation( shader(), "gSampler4" );
-  glUniform1i( gSampler4, _texIDs[4] );
-  
-  glBindVertexArray( 0 );
-}
 
 /**
  * Binds a texture to this Object.
@@ -418,8 +390,11 @@ void Object::send( Object::UniformEnum which ) {
     break;
     
   case Object::TEX_SAMPLER:
-    if (_isTextured)
-      glUniform1i( _handles[Object::TEX_SAMPLER], _textureID );
+    if (_isTextured) {
+      //glUniform1i( _handles[Object::TEX_SAMPLER], _textureID );
+      glUniform1iv( _handles[Object::TEX_SAMPLER], _numTextures, &_texIDs[0]);
+      //fprintf( stderr, "Sending sampler uniform: %d textures\n", _numTextures );
+    }
     break;
     
   default:
@@ -479,17 +454,18 @@ void Object::shader( GLuint newShader ) {
  */
 void Object::animation( void (*anim_func)( TransCache &arg ) ) {
   anim_func( this->_trans );
-  Object::propagate();
+  Object::propagateOLD();
 }
 
 /**
  * Scene-graph changes are not automatically applied to children.
- * For efficiency reasons, you need to call propagate() manually.
+ * For efficiency reasons, you need to call propagateOLD() manually.
+ * TODO: Deprecated.
  */
-void Object::propagate( void ) {
+void Object::propagateOLD( void ) {
   
   //fprintf( stderr, "\n" );
-  //fprintf( stderr, "propagate called on %s\n", _name.c_str() );
+  //fprintf( stderr, "propagateOLD called on %s\n", _name.c_str() );
   
   std::list< Object* >::iterator it;
   
@@ -497,15 +473,28 @@ void Object::propagate( void ) {
   //Update my Object's CTM...
   this->_trans.calcCTM();
   
-  //send my otm as the ptm to all of my children.
+  //send my otm as the ptmOLD to all of my children.
   for ( it = _list.begin(); it != _list.end(); ++it ) {
-    (*it)->_trans.ptm( this->_trans.otm() );
-    //Tell that child to update his CTM and propagate.
-    (*it)->propagate();
+    (*it)->_trans.ptmOLD( this->_trans.otm() );
+    //Tell that child to update his CTM and propagateOLD.
+    (*it)->propagateOLD();
   }
   
   //std::cerr << "{" << _name << "::otm:" << this->_trans.otm() << "}\n";
   
+}
+
+/**
+ * sceneCascade sends our current inheritable transformation matrix
+ * to all of our children, /if/ it is marked as needing to be updated.
+ */
+void Object::sceneCascade( void ) {
+  if (_trans.cascade()) {
+    std::list< Object* >::iterator it;
+    for ( it = _list.begin(); it != _list.end(); ++it ) {
+      (*it)->_trans.ptm( _trans.itm() );
+    }
+  }
 }
 
 /**

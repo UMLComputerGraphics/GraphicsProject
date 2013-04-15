@@ -72,7 +72,7 @@ void init()
   funInTheSin->setLifespan(0.5, 11.0);  
   funInTheSin->setEmitterRadius( 0.1 ) ;
   rootScene->insertObject( funInTheSin );
-  funInTheSin->propagate();
+  funInTheSin->propagateOLD();
   funInTheSin->fillSystemWithParticles();
   funInTheSin->buffer();
   

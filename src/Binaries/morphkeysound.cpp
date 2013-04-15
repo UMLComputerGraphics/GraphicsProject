@@ -9,8 +9,6 @@
    This is mostly based on ed angel's code from his book.
 **/
 
-
-
 /* 
    TO DO's. (JUMP ON IN KIDDOS)
    @todos: - move all this into a singleton, similar to our Engine object
@@ -19,24 +17,13 @@
 	   - make a heavy orbit the bottle and have it make noise
 */
 
-
 #ifndef USE_FMOD
 #define USE_FMOD
 #endif
 
 const float DISTANCEFACTOR = 100.0f;          // Units per meter.  I.e feet would = 3.28. cm would = 100.
 
-
 /* Multi-platform support and OpenGL headers. */
-#include "globals.h"
-#include "platform.h"
-/* Engine Classes */
-#include "Camera.hpp"
-#include "Cameras.hpp"
-#include "Screen.hpp"
-#include "Object.hpp"
-#include "Timer.hpp"
-#include "Scene.hpp"
 #include "Engine.hpp"
 /* Utilities and Common */
 #include "model.hpp"
@@ -47,7 +34,6 @@ const float DISTANCEFACTOR = 100.0f;          // Units per meter.  I.e feet woul
 #include "../fMod/include/wincompat.h"
 #include "../fMod/include/fmod.hpp"
 #include "../fMod/include/fmod_errors.h"
-
 
 /* use an enum to control which way we are morphing */
 /* 'A' represents the 'first' model and 'B' represents the morph target*/
@@ -63,9 +49,7 @@ bool pause_morph = false ;
 
 /* end morphing globals blob */
 
-
 /* begin fMod globals blob */
-
 
 FMOD::System     *fSystem ;
 FMOD::Sound      *ding1, *ding2, *heavy ;
@@ -271,26 +255,26 @@ void init() {
   GLuint gShader = Angel::InitShader( "shaders/vmorph.glsl", "shaders/fmorph.glsl" );
 
   // Let the other objects know which shader to use by default.
-  rootScene->Shader( gShader );
-  primScreen->_camList.Shader( gShader );
+  rootScene->shader( gShader );
+  primScreen->_camList.shader( gShader );
 
   // We start with no cameras, by default. Add one and set it "active" by using Next().
   primScreen->_camList.addCamera( "Camera1" );
   primScreen->_camList.next();
 
   // Create an object and add it to the scene with the name "bottle".
-  Object *bottle = rootScene->AddObject( "bottle" );
+  Object *bottle = rootScene->addObject( "bottle" );
 
   // Use the object loader to actually fill out the vertices and-so-on of the bottle.
-  loadModelFromFile( bottle, "../models/bottle-a.obj" );
+  ObjLoader::loadModelFromFile( bottle, "../models/bottle-a.obj" );
 
   // Scale the bottle down!
-  bottle->trans.scale.Set( 0.01 );
+  bottle->_trans._scale.set( 0.01 );
 
   // Buffer the object onto the GPU. This does not happen by default,
   // To allow you to make many changes and buffer only once,
   // or to buffer changes selectively.
-  bottle->Buffer();
+  bottle->buffer();
 
   // Object class has-a pointer to an object which is the morph target.
   // they are created and buffered as follows:
@@ -299,15 +283,15 @@ void init() {
   bottle->genMorphTarget( gShader ) ; 
 
   // we can get the addr of the morph object like this, also.
-  Object *bottleMorphTarget = bottle->getMorphTargetPtr() ; 
+  Object *bottleMorphTarget = bottle->morphTarget() ;
 
   // with this model, we can use all the preexisting Object class functionality
-  loadModelFromFile( bottleMorphTarget, "../models/bottle-b.obj" ); 
-  bottleMorphTarget->trans.scale.Set( 0.01 );
+  ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle-b.obj" );
+  bottleMorphTarget->_trans._scale.set( 0.01 );
 
   // YES THIS IS THE REAL OBJECT, NOT THE TARGET. 
   // IT SENDS THE MORPH VERTICES TO THE SHADER, NOT TO THE DRAW LIST TO BE DRAWN!
-  bottle->BufferMorphOnly(); 
+  bottle->bufferMorphOnly();
 
   // Generic OpenGL setup: Enable the depth buffer and set a nice background color.
   glEnable( GL_DEPTH_TEST );
@@ -315,35 +299,7 @@ void init() {
 
 }
 
-void cleanup( void ) {
-  Engine::instance()->rootScene()->DestroyObject();
-}
-
 //--------------------------------------------------------------------
-
-// Implementation of drawing the display with regards to a single viewport.
-void draw( void ) {
-  static Scene *theScene = Engine::instance()->rootScene();
-  static Cameras *camList = Engine::instance()->cams();
-
-  theScene->Draw();
-  camList->Draw();
-}
-
-// GLUT display callback. Effectively calls displayViewport per-each Camera.
-void display( void ) {
-  static Cameras *camList = Engine::instance()->cams();
-
-  // Clear the buffer.
-  glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-
-  // Tell camList to draw using our 'draw' rendering function.
-  camList->view( draw );
-
-  // Swap to the next buffer.
-  glutSwapBuffers();
-
-}
 
 
 float driveTheMorph(void){
@@ -385,7 +341,7 @@ float driveTheMorph(void){
 		     &bottleChannel,
 		     ding1 );
       }
-      else percent = (timer/180.0) * Tick.Scale();
+      else percent = (timer/180.0) * tick.scale();
       break;
 
 
@@ -407,7 +363,7 @@ void play3dSound( vec4 pos, vec4 vel, FMOD::Channel *a_channel, FMOD::Sound *a_s
 		     &bottleChannel,
 		     ding2 );
       }
-      else percent = (timer/180.0) * Tick.Scale();
+      else percent = (timer/180.0) * tick.scale();
       break;
 
    case TO_A_SMOOTH:
@@ -421,7 +377,7 @@ void play3dSound( vec4 pos, vec4 vel, FMOD::Channel *a_channel, FMOD::Sound *a_s
 		     &bottleChannel,
 		     ding1 );
       }
-      else percent = ((1.0-cos(timer*DegreesToRadians))/2.0) * Tick.Scale();
+      else percent = ((1.0-cos(timer*DegreesToRadians))/2.0) * tick.scale();
 
       break ;
 
@@ -437,7 +393,7 @@ void play3dSound( vec4 pos, vec4 vel, FMOD::Channel *a_channel, FMOD::Sound *a_s
 		     &bottleChannel,
 		     ding2 );
       }
-      else percent = ((1.0-cos(timer*DegreesToRadians))/2.0) * Tick.Scale();
+      else percent = ((1.0-cos(timer*DegreesToRadians))/2.0) * tick.scale();
 
       break ;
 
@@ -448,45 +404,25 @@ void play3dSound( vec4 pos, vec4 vel, FMOD::Channel *a_channel, FMOD::Sound *a_s
 
 }
 
-
-void idle( void ) {
+void morphKeySoundIdle( void ) {
 
   static Cameras *camList = Engine::instance()->cams();
   static Scene *rootScene = Engine::instance()->rootScene();
 
-  // Compute the time since last idle().
-  // This is a global, stateful operation.
-  Tick.Tock();
-
   // Animation variables.
   float percent = driveTheMorph();
-  (*rootScene)["bottle"]->setMorphPercentage(percent);
+  (*rootScene)["bottle"]->morphPercentage(percent);
   //(*rootScene)["heavy"]->setMorphPercentage(percent);
 
-
   // Update the morph percentage.
-
-
-  if (DEBUG_MOTION) 
-    fprintf( stderr, "Time since last idle: %lu\n", Tick.Delta() );
-
-  // Move all cameras: Apply velocity and acceleration adjustments.
-  // If no cameras are currently moving, this will do nothing ;)
-  camList->idleMotion();
-
 
 #ifdef USE_FMOD
   updateListener();  // update the 3d sound stuff
 #endif
 
-  // Inform GLUT we'd like to render a new frame.
-  glutPostRedisplay();
-
 }
 
-
 /**
-
    A hackey keyboard handling function.
    so uh, yeah. this is sort of a filter function. It will catch presses to
    the 'p', 'i', 'o', 'j', and 'k' keys, and let all others go be sent to the 
@@ -536,15 +472,14 @@ void keyboard_morph(unsigned char key, int x, int y) {
     if  ( a_morph_status == TO_A_SMOOTH || a_morph_status == TO_B_SMOOTH) {
       ; // @todo: fix jumpiness when switching modes
     }
-
+break;
 
   default:
-    keyboard( key, x, y ) ;
+    engineKeyboard( key, x, y ) ;
 
   }
 
 }
-
 
 void updateListener( void ) {
 
@@ -577,7 +512,7 @@ void updateListener( void ) {
 #endif
   */
 
-  framesToSeconds = 60 * Tick.Scale();
+  framesToSeconds = 60 * tick.scale();
   //framesToSeconds = Tick.Rate() * Tick.Scale();
 
   vel.x *= framesToSeconds ;
@@ -610,8 +545,6 @@ void updateListener( void ) {
 
 }
 
-
-
 /*
 FMOD::System     *fSystem ;
 FMOD::Sound      *dingl, *ding2, *heavy ;
@@ -624,37 +557,15 @@ int main( int argc, char **argv ) {
   fprintf(stderr,"This file is executing from the following directory\nall relative paths are relative to THIS directory:\n");
   system("pwd");
 
-  // OS X suppresses events after mouse warp.  This resets the suppression 
-  // interval to 0 so that events will not be suppressed. This also found
-  // at http://stackoverflow.com/questions/728049/
-  // glutpassivemotionfunc-and-glutwarpmousepointer
-#ifdef __APPLE__
-  CGSetLocalEventsSuppressionInterval( 0.0 );
-#endif
-
-  glutInit( &argc, argv );
-  glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH );
-  glutInitWindowSize( 0, 0 );
-  glutCreateWindow( "Linear Interpolation Morphing Demo" );
-  glutFullScreen();
-  glutSetCursor( GLUT_CURSOR_NONE );
-
+  Engine::instance()->init( &argc, argv, "fMod Demo" );
+  Engine::instance()->registerIdle( morphKeySoundIdle );
   fModInit();
-  GLEW_INIT();
   init();
 
-  /* Register our Callbacks */
-  glutDisplayFunc( display );
+  // Hijack the Keyboard Function
   glutKeyboardFunc( keyboard_morph );
-  glutKeyboardUpFunc( keylift );
-  glutSpecialFunc( keyboard_ctrl );
-  glutMouseFunc( mouse );
-  glutMotionFunc( mouseroll );
-  glutPassiveMotionFunc( mouselook );
-  glutIdleFunc( idle );
-  glutReshapeFunc( resizeEvent );
 
-  /* PULL THE TRIGGER */
+    /* PULL THE TRIGGER */
   glutMainLoop();
 
   // Fmod cleanup
@@ -665,8 +576,6 @@ int main( int argc, char **argv ) {
 
   ERRCHECK(fSystem->close()  );
   ERRCHECK(fSystem->release());
-
-
 
   return EXIT_SUCCESS;
 

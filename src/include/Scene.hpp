@@ -182,6 +182,11 @@ protected:
    */
   void deleteObject( Object *obj );
   
+  /**
+   * Propagate all changes throughout the Scene graph.
+   */
+  void propagate( void );
+
 };
 
 #endif
