@@ -108,7 +108,7 @@ qt: qMakefile
 
 .PHONY: clean-qt
 clean-qt: qMakefile
-	make -f qMakefile clean
+	make -f qMakefile distclean
 	rm -f qMakefile
 
 qMakefile:
