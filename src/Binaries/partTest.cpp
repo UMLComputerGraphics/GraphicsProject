@@ -62,85 +62,20 @@ void init()
 
   /*
   {
-
     Object *my_sphere = rootScene->addObject( "sphere" );
     sphere(my_sphere);
-
-
   }
   */
 
-/*j
-  {
-    ParticleSystem *particleSystem = new ParticleSystem( numberOfParticles, "ParticleSystem1", particleSystemShader );
-    particleSystem->setLifespan(15.0,17.5);    particleSystem->setLifespan(25.0, 26.0);
-    particleSystem->setEmitterRadius( 0.4 ) ;
-    rootScene->insertObject( particleSystem );
-    particleSystem->_trans._rotation.rotateY(M_PI);
-    particleSystem->propagate();
-    particleSystem->fillSystemWithParticles();
-    particleSystem->buffer();
-  }
 
-  {
-    ParticleSystem *particleSystem = new ParticleSystem( numberOfParticles, "ParticleSystem1b", particleSystemShader );
-    particleSystem->setLifespan(15.0,17.5);    particleSystem->setLifespan(25.0, 26.0);
-    particleSystem->setEmitterRadius( 0.1 ) ;
-    rootScene->insertObject( particleSystem );
-    particleSystem->propagate();
-    particleSystem->fillSystemWithParticles();
-    particleSystem->buffer();
-  }
-*/
   funInTheSin = new ParticleSystem(numberOfParticles, "FunInTheSine", particleSystemShader);
   funInTheSin->setLifespan(0.5, 11.0);  
   funInTheSin->setEmitterRadius( 0.1 ) ;
   rootScene->insertObject( funInTheSin );
-  funInTheSin->propagate();
+  funInTheSin->propagateOLD();
   funInTheSin->fillSystemWithParticles();
   funInTheSin->buffer();
   
-
-
-  /*
-  {
-    ParticleSystem *particleSystem = new ParticleSystem( numberOfParticles, "ParticleSystem2", particleSystemShader );
-    particleSystem->setLifespan(15.0,17.5);    particleSystem->setLifespan(25.0, 26.0);
-    rootScene->insertObject( particleSystem );
-    particleSystem->_trans._displacement.set(0.20, 0.0, 0.0);
-    particleSystem->propagate();
-    particleSystem->buffer();
-  }
-  */
-  /*
-  {
-    ParticleSystem *particleSystem = new ParticleSystem( numberOfParticles, "ParticleSystem3", particleSystemShader );
-    particleSystem->setLifespan(15.0,17.5);    particleSystem->setLifespan(8.0, 18.0);
-    rootScene->insertObject( particleSystem );
-    particleSystem->_trans._displacement.set(0.0, 0.20, 0.0);
-    particleSystem->propagate();
-    particleSystem->buffer();
-  }
-
-  {
-    ParticleSystem *particleSystem = new ParticleSystem( numberOfParticles, "ParticleSystem4", particleSystemShader );
-    particleSystem->setLifespan(8.0,18.0);
-    rootScene->insertObject( particleSystem );
-    particleSystem->_trans._displacement.set(-0.20, 0.0, 0.0);
-    particleSystem->propagate();
-    particleSystem->buffer();
-  }
-
-  {
-    ParticleSystem *particleSystem = new ParticleSystem( numberOfParticles, "ParticleSystem5", particleSystemShader );
-    particleSystem->setLifespan(8.0, 18.0);
-    rootScene->insertObject( particleSystem );
-    particleSystem->_trans._displacement.set(0.0, -0.20, 0.0);
-    particleSystem->propagate();
-    particleSystem->buffer();
-  }
-  */
-
   tick.setTimeUniform(glGetUniformLocation( particleSystemShader, "ftime" ));
 
   // Generic OpenGL setup: Enable the depth buffer and set a nice background color.

@@ -7,6 +7,7 @@
  **/
 #include <stdexcept>
 #include <string>
+#include <cstring>
 #include <map>
 
 #include "Engine.hpp"
@@ -155,21 +156,16 @@ bool Engine::flip( const std::string &Option ) {
 /**
  * Initialize GLEW, GLUT and our Engine.
  */
-void Engine::init( int *argc, char *argv[], const char *title ) {
-
-  // OS X suppresses events after mouse warp.  This resets the suppression
-  // interval to 0 so that events will not be suppressed. This also found
-  // at http://stackoverflow.com/questions/728049/
-  // glutpassivemotionfunc-and-glutwarpmousepointer
-#ifdef __APPLE__
-  CGSetLocalEventsSuppressionInterval( 0.0 );
-#endif
+void Engine::init( int *argc, char *argv[], const char *title ) { 
   Util::InitRelativePaths(*argc, argv);
   glutInit( argc, argv );
   glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH );
-  glutInitWindowSize( 0, 0 );
+  glutInitWindowSize( 500, 500 );
   glutCreateWindow( title );
-  glutFullScreen();
+  
+  char *gtfs = getenv( "GLUT_FULLSCREEN" );
+  if (gtfs && (strncmp(gtfs, "TRUE", 4) == 0)) glutFullScreen();
+
   glutSetCursor( GLUT_CURSOR_NONE );
 
   GLEW_INIT();
@@ -184,6 +180,14 @@ void Engine::init( int *argc, char *argv[], const char *title ) {
   glutPassiveMotionFunc( EngineMousePassive );
   glutIdleFunc( Engine::idle );
   glutReshapeFunc( engineResize );
+
+  if ( DEBUG ) {
+    fprintf( stderr, "GL_VENDOR: %s\n", glGetString( GL_VENDOR ) );
+    fprintf( stderr, "GL_RENDERER: %s\n", glGetString( GL_RENDERER ) );
+    fprintf( stderr, "GL_VERSION: %s\n", glGetString( GL_VERSION ) );
+    fprintf( stderr, "GL_SHADING_LANGUAGE_VERSION: %s\n",
+             glGetString( GL_SHADING_LANGUAGE_VERSION ) );
+  }
 
 }
 

@@ -16,6 +16,34 @@
 using Angel::vec4;
 using Angel::mat4;
 
+
+/**
+ * Bind a VBO and associate it with a variable on the shader.
+ * Fail if the variable is not located,
+ * And cache the attribute location for later if we later need to disable it.
+ **/
+GLuint Object::createAndBind( GLenum target, enum Object::BufferType typeIndex, const char *name,
+			      GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid* ptr ) {
+
+  GLuint &buffer = _buffer[typeIndex];
+  GLint &index = _attribIndex[typeIndex];
+
+  glBindBuffer( target, buffer );
+  index = glGetAttribLocation( shader(), name );
+  
+  if ( index == -1 ) {
+    fprintf( stderr, "WARNING: Failed to enable VBO for %s\n", name );
+    return -1;
+  }
+  
+  glEnableVertexAttribArray( index );
+  glVertexAttribPointer( index, size, type, normalized, stride, ptr );
+
+  return index;
+
+}
+
+
 /**
  * Constructor. Requires at minimum a _name and a shader handle.
  * @param name The _name of this object.
@@ -38,9 +66,9 @@ Object::Object( const std::string &name, GLuint gShader ) {
   shader( gShader );
   
   // Set our _name from the constructor...
-  this->_name = name;
+  _name = name;
   
-  /* Initialize our draw mode to GL_TRIANGLES until informed otherwise. */
+  // Initialize our draw mode to GL_TRIANGLES until informed otherwise.
   _drawMode = GL_TRIANGLES;
   
   // Get Uniform _handles for the following shader variables
@@ -49,79 +77,68 @@ Object::Object( const std::string &name, GLuint gShader ) {
   link( Object::MORPH_PCT, "morphPercentage" );
   link( Object::TEX_SAMPLER, "sampler" );
   
-  //Default to "Not Textured"
-  this->_isTextured = false;
-  
+  // Default to "Not Textured"
+  _isTextured = false;
+  _textureID = -1;
+  _numTextures = 0;
+
   // Linear Interpolation Demo: Morph Percentage
-  this->_morphPercentage = 1.0;
+  _morphPercentage = 1.0;
+
   // Pointer to an Object to Morph to.
-  this->_morphTarget = NULL;
+  _morphTarget = NULL;
   
   /* Create our VAO, which is our handle to all 
-   the rest of the following information. */glGenVertexArrays( 1, &_vao );
+   the rest of the following information. */
+  glGenVertexArrays( 1, &_vao );
   glBindVertexArray( _vao );
-  GLuint glsl_uniform;
   
+  if (gShader == 0) {
+    fprintf( stderr, "WARNING: Object %s created without a valid shader.\n", _name.c_str() );
+    fprintf( stderr, "Disabling use of renderable geometry for this object.\n" );
+    glBindVertexArray( 0 );
+    return;
+  }
+
   /* Create (Eight) VBOs: One each for Positions, Colors, Normals, 
-   Textures, draw Order; Three for Morphing (Position,Colors,Normals.) */glGenBuffers(
-      NUM_BUFFERS, _buffer );
+   Textures, draw Order; Three for Morphing (Position,Colors,Normals.) */
+
+  glGenBuffers( NUM_BUFFERS, _buffer );
+
+  // Create the Vertex _buffer and link it with the shader.
+  createAndBind( GL_ARRAY_BUFFER, VERTICES, "vPosition", 4, GL_FLOAT, GL_FALSE, 0, 0 );
+
+  // Create the MORPH Vertex _buffer and link it with the shader.
+  createAndBind( GL_ARRAY_BUFFER, VERTICES_MORPH, "vPositionMorph", 4, GL_FLOAT, GL_FALSE, 0, 0 );
   
-  /* Create the Vertex _buffer and link it with the shader. */glBindBuffer(
-      GL_ARRAY_BUFFER, _buffer[VERTICES] );
-  glsl_uniform = glGetAttribLocation( gShader, "vPosition" );
-  glEnableVertexAttribArray( glsl_uniform );
-  glVertexAttribPointer( glsl_uniform, 4, GL_FLOAT, GL_FALSE, 0, 0 );
+  // Create the Normal _buffer and link it with the shader.
+  createAndBind( GL_ARRAY_BUFFER, NORMALS, "vNormal", 3, GL_FLOAT, GL_FALSE, 0, 0 );
   
-  /* Create the MORPH Vertex _buffer and link it with the shader. */glBindBuffer(
-      GL_ARRAY_BUFFER, _buffer[VERTICES_MORPH] );
-  glsl_uniform = glGetAttribLocation( gShader, "vPositionMorph" );
-  glEnableVertexAttribArray( glsl_uniform );
-  glVertexAttribPointer( glsl_uniform, 4, GL_FLOAT, GL_FALSE, 0, 0 );
+  // Create the Normal MORPH _buffer and link it with the shader. 
+  createAndBind( GL_ARRAY_BUFFER, NORMALS_MORPH, "vNormalMorph", 3, GL_FLOAT, GL_FALSE, 0, 0 );
   
-  /* Create the Normal _buffer and link it with the shader. */glBindBuffer(
-      GL_ARRAY_BUFFER, _buffer[NORMALS] );
-  glsl_uniform = glGetAttribLocation( gShader, "vNormal" );
-  glEnableVertexAttribArray( glsl_uniform );
-  glVertexAttribPointer( glsl_uniform, 3, GL_FLOAT, GL_FALSE, 0, 0 );
-  
-  /* Create the Normal MORPH _buffer and link it with the shader. */glBindBuffer(
-      GL_ARRAY_BUFFER, _buffer[NORMALS_MORPH] );
-  glsl_uniform = glGetAttribLocation( gShader, "vNormalMorph" );
-  glEnableVertexAttribArray( glsl_uniform );
-  glVertexAttribPointer( glsl_uniform, 3, GL_FLOAT, GL_FALSE, 0, 0 );
-  
-  /* Create the Color _buffer and link it with the shader. */glBindBuffer(
-      GL_ARRAY_BUFFER, _buffer[COLORS] );
+  // Create the Color _buffer and link it with the shader.
+  createAndBind( GL_ARRAY_BUFFER, COLORS, "vColor", 4, GL_FLOAT, GL_FALSE, 0, 0 );
   glEnable( GL_BLEND );
   glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-  glsl_uniform = glGetAttribLocation( gShader, "vColor" );
-  glEnableVertexAttribArray( glsl_uniform );
-  glVertexAttribPointer( glsl_uniform, 4, GL_FLOAT, GL_FALSE, 0, 0 );
-  
-  /* Create the Color Morph _buffer and link it with the shader. */glBindBuffer(
-      GL_ARRAY_BUFFER, _buffer[COLORS_MORPH] );
+
+  // Create the Color Morph _buffer and link it with the shader.
+  createAndBind( GL_ARRAY_BUFFER, COLORS_MORPH, "vColorMorph", 4, GL_FLOAT, GL_FALSE, 0, 0 );
   glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-  glsl_uniform = glGetAttribLocation( gShader, "vColorMorph" );
-  glEnableVertexAttribArray( glsl_uniform );
-  glVertexAttribPointer( glsl_uniform, 4, GL_FLOAT, GL_FALSE, 0, 0 );
   
-  /* Create the texture Coordinate _buffer and link it with the shader. */glBindBuffer(
-      GL_ARRAY_BUFFER, _buffer[TEXCOORDS] );
-  glsl_uniform = glGetAttribLocation( gShader, "vTex" );
-  glEnableVertexAttribArray( glsl_uniform );
-  glVertexAttribPointer( glsl_uniform, 2, GL_FLOAT, GL_FALSE, 0, 0 );
+  // Create the texture Coordinate _buffer and link it with the shader.
+  createAndBind( GL_ARRAY_BUFFER, TEXCOORDS, "vTex", 2, GL_FLOAT, GL_FALSE, 0, 0 );
+
+  // Create the drawing order _buffer, but we don't need to link it
+  // with any uniform, because we won't be accessing this data directly.
+  // I.e, the numbers here are not important once we are in the vshader.
+  glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, _buffer[INDICES] );
   
   if ( DEBUG )
     fprintf( stderr, "buffhandles: %u %u %u %u %u %u %u %u\n",
              _buffer[VERTICES], _buffer[NORMALS], _buffer[COLORS],
              _buffer[TEXCOORDS], _buffer[INDICES], _buffer[VERTICES_MORPH],
              _buffer[NORMALS_MORPH], _buffer[COLORS_MORPH] );
-  
-  /* Create the Drawing Order _buffer, but we don't need to link it 
-   with any uniform,
-   because we won't be accessing this data directly. (I.e, the numbers here
-   are not important once we are in the Vertex shader. */glBindBuffer(
-      GL_ELEMENT_ARRAY_BUFFER, _buffer[INDICES] );
   
   /* Unset the VAO context. */
   glBindVertexArray( 0 );
@@ -198,25 +215,39 @@ void Object::buffer( void ) {
   glBufferData( GL_ARRAY_BUFFER, sizeof(Angel::vec3) * _normals.size(),
                 &(_normals[0]), GL_STATIC_DRAW );
   
-  glBindBuffer( GL_ARRAY_BUFFER, _buffer[COLORS] );
-  glBufferData( GL_ARRAY_BUFFER, sizeof(Angel::vec4) * _colors.size(),
-                &(_colors[0]), GL_STATIC_DRAW );
+  if (_texUVs.size() == 0) {
+    // Disable Textures ...
+    _isTextured = false;
+    if ( _attribIndex[TEXCOORDS] != -1 )
+      glDisableVertexAttribArray( _attribIndex[ TEXCOORDS ] );
+
+    // Enable Colors.
+    glBindBuffer( GL_ARRAY_BUFFER, _buffer[COLORS] );
+    glBufferData( GL_ARRAY_BUFFER, sizeof(Angel::vec4) * _colors.size(),
+		  &(_colors[0]), GL_STATIC_DRAW );
+  } else {
+    // Enable Textures ...
+    _isTextured = true;
+    glBindBuffer( GL_ARRAY_BUFFER, _buffer[TEXCOORDS] );
+    glBufferData( GL_ARRAY_BUFFER, sizeof(Angel::vec2) * _texUVs.size(),
+		  (_texUVs.size() ? &(_texUVs[0]) : NULL), GL_STATIC_DRAW );
+
+    // Disable Colors.
+    if (_attribIndex[COLORS] != -1)
+      glDisableVertexAttribArray( _attribIndex[ COLORS ] );
+  }
   
   /* Without the following workaround code,
    Mac OSX will segfault attempting to access
    the texcoordinate buffers on nontextured objects. */
-  if ( _texUVs.size() == 0 && _isTextured == false ) {
-    _texUVs.push_back( Angel::vec2( -1, -1 ) );
-  } else if ( _texUVs.size() > 1 ) {
+  //  if ( _texUVs.size() == 0 && _isTextured == false ) {
+  //  _texUVs.push_back( Angel::vec2( -1, -1 ) );
+  //} else if ( _texUVs.size() > 1 ) {
     /* Yes, this workaround prevents us from having
      textured objects with only one point.
      Oops. */
-    _isTextured = true;
-  }
-  
-  glBindBuffer( GL_ARRAY_BUFFER, _buffer[TEXCOORDS] );
-  glBufferData( GL_ARRAY_BUFFER, sizeof(Angel::vec2) * _texUVs.size(),
-                (_texUVs.size() ? &(_texUVs[0]) : NULL), GL_STATIC_DRAW );
+  //  _isTextured = true;
+  // }
   
   glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, _buffer[INDICES] );
   glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * _indices.size(),
@@ -265,61 +296,6 @@ void Object::drawMode( GLenum new_mode ) {
   _drawMode = new_mode;
 }
 
-/**
- * FIXME: This is a junk, nonflexible method.
- * It would be better if you didn't think of this as being here.
- *
- * @param filename an array of strings to load textures from.
- */
-void Object::terrainTexture( const char** filename ) {
-  
-  tick.tock();
-  glBindVertexArray( _vao );
-  
-  Texture **textures = (Texture **) malloc( sizeof(Texture*) * 5 );
-  textures[0] = new Texture( GL_TEXTURE_2D );
-  textures[1] = new Texture( GL_TEXTURE_2D );
-  textures[2] = new Texture( GL_TEXTURE_2D );
-  textures[3] = new Texture( GL_TEXTURE_2D );
-  textures[4] = new Texture( GL_TEXTURE_2D );
-  
-  textures[0]->load( filename[0] );
-  textures[1]->load( filename[1] );
-  textures[2]->load( filename[2] );
-  textures[3]->load( filename[3] );
-  textures[4]->load( filename[4] );
-  tick.tock();
-  fprintf( stderr, "Texture loads: %lu\n", tick.delta() );
-  
-  textures[0]->buffer();
-  textures[1]->buffer();
-  textures[2]->buffer();
-  textures[3]->buffer();
-  textures[4]->buffer();
-  tick.tock();
-  fprintf( stderr, "Texture buffering: %lu\n", tick.delta() );
-  
-  textures[0]->bind( GL_TEXTURE0 );
-  textures[1]->bind( GL_TEXTURE1 );
-  textures[2]->bind( GL_TEXTURE2 );
-  textures[3]->bind( GL_TEXTURE3 );
-  textures[4]->bind( GL_TEXTURE4 );
-  
-  GLuint gSampler0 = glGetUniformLocation( shader(), "gSampler0" );
-  glUniform1i( gSampler0, 0 );
-  GLuint gSampler1 = glGetUniformLocation( shader(), "gSampler1" );
-  glUniform1i( gSampler1, 1 );
-  GLuint gSampler2 = glGetUniformLocation( shader(), "gSampler2" );
-  glUniform1i( gSampler2, 2 );
-  GLuint gSampler3 = glGetUniformLocation( shader(), "gSampler3" );
-  glUniform1i( gSampler3, 3 );
-  GLuint gSampler4 = glGetUniformLocation( shader(), "gSampler4" );
-  glUniform1i( gSampler4, 4 );
-  tick.tock();
-  fprintf( stderr, "Texture binding and sending sampler uniforms: %lu\n", tick.delta() );
-  
-  glBindVertexArray( 0 );
-}
 
 /**
  * Binds a texture to this Object.
@@ -333,6 +309,10 @@ void Object::texture( const char* filename ) {
   newTex->buffer();
 
   _textureID = tx->assign( newTex );
+  _texIDs.push_back( _textureID );
+  _textures.push_back( newTex );
+  _numTextures = _texIDs.size();
+
   send( Object::TEX_SAMPLER );
 
 }
@@ -370,7 +350,19 @@ void Object::link( UniformEnum which, const std::string &name ) {
     fprintf( stderr, "Linking enum[%u] with %s for object %s\n", which,
              name.c_str(), this->_name.c_str() );
   
+
+  if (shader() == 0) {
+    if (DEBUG) fprintf( stderr, "Skipping link: [%s][%s]: No shader set.\n",
+                        _name.c_str(), name.c_str() );
+    return;
+  }
+
   _handles[which] = glGetUniformLocation( shader(), name.c_str() );
+  if (glGetError()) {
+    fprintf( stderr, "ERROR: [%s] failed to call glGetUniformLocation( %u, %s );\n",
+    _name.c_str(), shader(), name.c_str() );
+  }
+
   if ( DEBUG )
     fprintf( stderr, "Linking handles[%d] to %s; got %d.\n", which,
              name.c_str(), _handles[which] );
@@ -395,16 +387,25 @@ void Object::send( Object::UniformEnum which ) {
     
   case Object::MORPH_PCT:
     glUniform1f( _handles[Object::MORPH_PCT], this->morphPercentage() );
-    
     break;
     
   case Object::TEX_SAMPLER:
-    glUniform1i( _handles[Object::TEX_SAMPLER], _textureID );
+    if (_isTextured) {
+      //glUniform1i( _handles[Object::TEX_SAMPLER], _textureID );
+      glUniform1iv( _handles[Object::TEX_SAMPLER], _numTextures, &_texIDs[0]);
+      //fprintf( stderr, "Sending sampler uniform: %d textures\n", _numTextures );
+    }
     break;
     
   default:
     throw std::invalid_argument( "Unknown Uniform Handle Enumeration." );
   }
+
+  if (glGetError()) {
+    fprintf( stderr, "ERROR: Object::send() failed for [%s][%u]\n", _name.c_str(), which );
+    exit(EXIT_FAILURE);
+  }
+
 }
 
 /**
@@ -453,17 +454,18 @@ void Object::shader( GLuint newShader ) {
  */
 void Object::animation( void (*anim_func)( TransCache &arg ) ) {
   anim_func( this->_trans );
-  Object::propagate();
+  Object::propagateOLD();
 }
 
 /**
  * Scene-graph changes are not automatically applied to children.
- * For efficiency reasons, you need to call propagate() manually.
+ * For efficiency reasons, you need to call propagateOLD() manually.
+ * TODO: Deprecated.
  */
-void Object::propagate( void ) {
+void Object::propagateOLD( void ) {
   
   //fprintf( stderr, "\n" );
-  //fprintf( stderr, "propagate called on %s\n", _name.c_str() );
+  //fprintf( stderr, "propagateOLD called on %s\n", _name.c_str() );
   
   std::list< Object* >::iterator it;
   
@@ -471,15 +473,28 @@ void Object::propagate( void ) {
   //Update my Object's CTM...
   this->_trans.calcCTM();
   
-  //send my otm as the ptm to all of my children.
+  //send my otm as the ptmOLD to all of my children.
   for ( it = _list.begin(); it != _list.end(); ++it ) {
-    (*it)->_trans.ptm( this->_trans.otm() );
-    //Tell that child to update his CTM and propagate.
-    (*it)->propagate();
+    (*it)->_trans.ptmOLD( this->_trans.otm() );
+    //Tell that child to update his CTM and propagateOLD.
+    (*it)->propagateOLD();
   }
   
   //std::cerr << "{" << _name << "::otm:" << this->_trans.otm() << "}\n";
   
+}
+
+/**
+ * sceneCascade sends our current inheritable transformation matrix
+ * to all of our children, /if/ it is marked as needing to be updated.
+ */
+void Object::sceneCascade( void ) {
+  if (_trans.cascade()) {
+    std::list< Object* >::iterator it;
+    for ( it = _list.begin(); it != _list.end(); ++it ) {
+      (*it)->_trans.ptm( _trans.itm() );
+    }
+  }
 }
 
 /**
@@ -562,8 +577,8 @@ int Object::numberOfPoints( void ) {
  */
 Angel::vec3 Object::getMax( void ) {
   
-  Angel::vec3 max = Angel::vec3( -INFINITY, -INFINITY, -INFINITY );
-  for (size_t i = 0; i < _vertices.size(); ++i ) {
+  Angel::vec3 max = Angel::vec3( -INFINITY, -INFINITY, -INFINITY);
+  for ( size_t i = 0; i < _vertices.size(); ++i ) {
     if ( _vertices[i].x > max.x ) max.x = _vertices[i].x;
     if ( _vertices[i].y > max.y ) max.y = _vertices[i].y;
     if ( _vertices[i].z > max.z ) max.z = _vertices[i].z;
@@ -579,8 +594,8 @@ Angel::vec3 Object::getMax( void ) {
  */
 Angel::vec3 Object::getMin( void ) {
   
-  Angel::vec3 min = Angel::vec3( INFINITY, INFINITY, INFINITY );
-  for (size_t i = 0; i < _vertices.size(); ++i ) {
+  Angel::vec3 min = Angel::vec3( INFINITY, INFINITY, INFINITY);
+  for ( size_t i = 0; i < _vertices.size(); ++i ) {
     if ( _vertices[i].x < min.x ) min.x = _vertices[i].x;
     if ( _vertices[i].y < min.y ) min.y = _vertices[i].y;
     if ( _vertices[i].z < min.z ) min.z = _vertices[i].z;

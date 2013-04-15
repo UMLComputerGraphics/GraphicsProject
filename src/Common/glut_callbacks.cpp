@@ -23,6 +23,12 @@
 //This counteracts mouse rotation slugishness when screen dimensions are considered in calculating movement
 #define MAGIC_MOUSE_SCALAR (45.0)
 
+#include <stdexcept>
+#include <exception>
+
+//globalz
+float centerX, centerY;
+
 /**
  * keylift is registered as a GLUT callback for when a user
  * releases a depressed key.
@@ -90,8 +96,19 @@ void engineKeyboard( unsigned char key, int x, int y ) {
     break;
     
   case ';': // Print Info
-    fprintf( stderr, "Active Object: %s\n",
-             theScene->active()->name().c_str() );
+    // Active() will throw if there is no active object, or if the requested object doesn't exist
+    try 
+    {
+      fprintf( stderr, "Active Object: %s\n",
+	       theScene->active()->name().c_str() );
+    }
+
+    catch( std::logic_error& e ) 
+    {
+      fprintf( stderr, "There is currently no Active Object, or no more Objects in the scene\n");
+    }
+
+
     break;
     
   case '~':
@@ -160,7 +177,12 @@ void engineKeyboard( unsigned char key, int x, int y ) {
   case 'b':
     cam.changePerspective( Camera::IDENTITY );
     break;
-    
+
+  case 'r':
+	//testing stopAll function
+	cam.resetPosition();
+    break;
+
   case 't':
     fprintf( stderr, "turning on terrain_regen\n" );
     Engine::instance()->opt( "terrain_regen", true );
@@ -217,6 +239,45 @@ void engineSpecialKeyboard( int key, int x, int y ) {
       fprintf(stderr, "Active object could be retrieved from scene: %s\n", ex.what());
       s = NULL;
     }
+    /*
+    try
+    {
+	 theScene->active()->Mode( GL_POINTS );
+    }
+    catch( std::logic_error& e ) 
+     {
+       fprintf(stderr, "Error: Attempt to change active object draw mode failed\nReason: %s\n", e.what() ) ;
+     }
+    break;
+  case GLUT_KEY_F2:
+    try
+    {
+	 theScene->active()->Mode( GL_LINE_STRIP );
+    }
+    catch( std::logic_error& e ) 
+     {
+       fprintf(stderr, "Error: Attempt to change active object draw mode failed\nReason: %s\n", e.what() ) ;
+     }
+    break;
+  case GLUT_KEY_F3:
+    try
+    {
+	 theScene->active()->Mode( GL_TRIANGLE_STRIP );
+    }
+    catch( std::logic_error& e ) 
+     {
+       fprintf(stderr, "Error: Attempt to change active object draw mode failed\nReason: %s\n", e.what() ) ;
+     }
+    break;
+  case GLUT_KEY_F4:
+    try
+    {
+	 theScene->active()->Mode( GL_TRIANGLES );
+    }
+    catch( std::logic_error& e ) 
+     {
+       fprintf(stderr, "Error: Attempt to change active object draw mode failed\nReason: %s\n", e.what() ) ;
+       }*/
     break;
   }
   
@@ -288,11 +349,18 @@ void engineMouseMotion( int x, int y ) {
  * @param y the y coordinate of the mouse pointer.
  */
 void EngineMousePassive( int x, int y ) {
-  
   static Screen *myScreen = Engine::instance()->mainScreen();
 
-  const double dx = ((double) x - myScreen->midpointX()) * MAGIC_MOUSE_SCALAR / ((double)myScreen->width());
-  const double dy = ((double) myScreen->midpointY() - y) * MAGIC_MOUSE_SCALAR / ((double)myScreen->height());
+  //estimate mouse center position
+  if (centerX + centerY < 0 || abs(centerX - x)>100 || abs(centerY-y)>100)
+  {
+      centerX = (round(x / 10.0)) * 10;
+      centerY = (round(y / 10.0)) * 10;
+      printf("Center found at %f, %f\n",centerX, centerY);
+  }
+
+  const double dx = ((double) x - centerX) * MAGIC_MOUSE_SCALAR / ((double)myScreen->width());
+  const double dy = ((double) centerY - y) * MAGIC_MOUSE_SCALAR / ((double)myScreen->height());
 
   if (dx == 0 || dy == 0) return;
   if ( myScreen->_camList.numCameras() > 0 ) {
@@ -308,7 +376,7 @@ void EngineMousePassive( int x, int y ) {
     }
   }
   
-  glutWarpPointer( myScreen->midpointX(), myScreen->midpointY() );
+  glutWarpPointer( centerX, centerY );
 
 }
 
@@ -333,6 +401,9 @@ void engineResize( int width, int height ) {
   
   // Update the size, which propagates changes to cameras and viewports.
   scr->size( width, height );
+
+  centerX=-1;
+  centerY=-1;
   
   // move the pointer so that there isn't a big jump next time we move it.
   glutWarpPointer( scr->midpointX(), scr->midpointY() );

@@ -27,6 +27,14 @@ using std::vector;
 
 typedef Particle* ParticleP;
 
+typedef enum {
+
+  PARTICLE_CUBE,
+  PARTICLE_SPHERE,
+  PARTICLE_FLAME
+
+} PARTICLE_SYSTEM_SHAPE;
+
 class ParticleSystem : public Object {
   
 public:
@@ -51,6 +59,7 @@ public:
   int   getNumParticles( void );
 
   void setColor( vec4 newColor );
+  void setSlaughterHeight( float );
   void setLifespan( float minLifespan, float maxLifespan );
   void setNumParticles( int newNumParticles );
   void setEmitterRadius(float);
@@ -63,6 +72,8 @@ public:
   virtual void buffer( void );
   virtual void draw( void );
 
+  void setVectorField(vec3 (*vectorFieldFunc)(vec4) );
+
 //protected:
   
 private:  
@@ -71,13 +82,21 @@ private:
   vec4  getRandomCircularSpawnPoint(void);
 
   vector<ParticleP> particles;
-  int    numParticles;   // Number of particles that each instance of ParticleSystem will manage
+  unsigned numParticles;   // Number of particles that each instance of ParticleSystem will manage
   float  minLife;
   float  maxLife;
   float  _emitterRadius;
   bool   pauseTheSystem;
+
+  float  _slaughterHeight;
   
   bool   updateRequired;
+
+
+  //  void setVectorField(vec3 (*vectorFieldFunc)(vec4) )
+  //{
+
+  vec3 (*_vecFieldFunc)(vec4 posIn);
 
   // Pass-through variable... maybe not be needed and function can pass through
   vec4   color;

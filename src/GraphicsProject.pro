@@ -11,6 +11,14 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = GraphicsProject
 TEMPLATE = app
 
+release: DESTDIR = release/
+debug:   DESTDIR = debug/
+
+OBJECTS_DIR =  $$DESTDIR/obj/
+MOC_DIR =  $$DESTDIR/moc/
+RCC_DIR =  $$DESTDIR/rcc/
+UI_DIR =  $$DESTDIR/ui/
+
 SOURCES += main.cpp \
            # Classes
            Classes/Camera.cpp \
@@ -71,6 +79,15 @@ HEADERS  += include/Camera.hpp \
             include/WiiUtil.h \
             mainwindow.h
 
+
+SOURCES += Qt/main.cpp\
+	Qt/mainwindow.cpp\
+
+HEADERS  += \
+  	include/mainwindow.h
+
+
+
 # Common Settings
 INCLUDEPATH += . ./include/
 LIBS += -lMagick++
@@ -89,7 +106,7 @@ LIBS += -L/opt/local/lib
 }
 
 FORMS    += \
-    mainwindow.ui
+    Qt/mainwindow.ui
 
 OTHER_FILES += \
     ../src/models/wineglass.obj \
@@ -128,4 +145,4 @@ OTHER_FILES += \
     ../src/Textures/GoodTextures_0013779.jpg \
     ../src/Textures/GoodTextures_0013423.jpg \
     ../src/Textures/GoodTextures_0013418.jpg \
-    ../src/Textures/GoodTextures_0013291.jpg \
+    ../src/Textures/GoodTextures_0013291.jpg

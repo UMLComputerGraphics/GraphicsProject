@@ -11,11 +11,17 @@
 #include "TransCache.hpp"
 #include "Transformation.hpp"
 #include "mat.hpp"
+#include <stdexcept>
 
-void TransCache::ptm( const Angel::mat4 &new_ptm, bool postmult ) {
-  
-  /* Update our cached ptm. */
-  this->_ptm = new_ptm;
+void TransCache::ptmOLD( const Angel::mat4 &ptm_in, bool postmult ) {
+
+  // Update our cache of our Parent's Matrix
+  _ptm = ptm_in;
+
+  // Mark that we have a new Parent matrix,
+  // And we need to update our children, too.
+  _parent = true;
+  _cascade = true;
   
   /* Update our Result Matrix. */
   if ( postmult ) _otm = _ptm * _ctm;
@@ -38,16 +44,6 @@ void TransCache::calcCTM( bool postmult ) {
   }
 }
 
-const Angel::mat4 &TransCache::ptm( void ) const {
-  return _ptm;
-}
-const Angel::mat4 &TransCache::ctm( void ) const {
-  return _ctm;
-}
-const Angel::mat4 &TransCache::otm( void ) const {
-  return _otm;
-}
-
 //
 // TransCache v2.0
 //
@@ -57,6 +53,31 @@ TransCache::TransCache( void ) {
   dirty( false );
   _premult = false;
   _cascade = false;
+
+}
+
+const Angel::mat4 &TransCache::ptm( void ) const {
+  return _ptm;
+}
+const Angel::mat4 &TransCache::ctm( void ) const {
+  return _ctm;
+}
+const Angel::mat4 &TransCache::otm( void ) const {
+  return _otm;
+}
+const Angel::mat4 &TransCache::itm( void ) const {
+  return _itm;
+}
+
+void TransCache::ptm( const Angel::mat4 &ptm_in ) {
+
+  // Update our cache of our Parent's Matrix
+  _ptm = ptm_in;
+
+  // Mark that we have a new Parent matrix,
+  // And we need to update our children, too.
+  _parent = true;
+  _cascade = true;
 
 }
 
@@ -126,15 +147,12 @@ void TransCache::rebuild( void ) {
   // And our [C]urrent [T]ransformation [M]atrix.
   _itm = _ctm = Angel::mat4();
 
-  if ( _premult ) {
-    for ( rit = _transformations.rbegin(); rit != _transformations.rend();
-        ++rit ) {
+  for ( rit = _transformations.rbegin(); rit != _transformations.rend();
+      ++rit ) {
+    if ( _premult ) {
       _ctm = _ctm * (**rit);
       if ( (*rit)->inheritable() ) _itm = _itm * (**rit);
-    }
-  } else {
-    for ( rit = _transformations.rbegin(); rit != _transformations.rend();
-        ++rit ) {
+    } else {
       _ctm = (**rit) * _ctm;
       if ( (*rit)->inheritable() ) _itm = (**rit) * _itm;
     }
@@ -144,9 +162,11 @@ void TransCache::rebuild( void ) {
   // The result of our parent's and our own transformations combined.
   _otm = _ctm * _ptm;
 
+  // Mark our node as clean.
   dirty( false );
-  _cascade = true;
 
+  // Mark that we need to send updates to our children. (Using the _itm!)
+  _cascade = true;
 }
 
 /**
@@ -157,12 +177,18 @@ void TransCache::clean( void ) {
   if ( _rebuild ) return rebuild();
 
   if ( _new ) {
-    Angel::mat4 lhs, rhs;
+    Angel::mat4 lhs, rhs, ilhs, irhs;
     TransformationDeque::iterator it;
+
+    // Run a quick scan to see if any of the new matrices are inheritable.
+    // Mark this node as needing to cascade to children if so.
+    for ( it = _transformations.begin(); it != _transformations.end(); ++it ) {
+      if ((*it)->inheritable()) _cascade = true;
+    }
 
     // If the transformation we want is A->B->C->D->E->F
     // We will have pushed in that order,
-    // So our stack will look like A-B-C-D-E.
+    // So our stack will look like A-B-C-D-E-F.
     // Let's assume that our new matrices are E-F, and A-B.
     // So we have the existing product:
     //
@@ -182,17 +208,62 @@ void TransCache::clean( void ) {
     // rhs = (B*A) or (E*F)
     // _ctm = lhs * _ctm * rhs;
 
-
+    // Calculate new transformations on one end of the stack.
+    // We're going to see new transformations that should be applied before others.
+    // So we'll be seeing A-B-C ... [Old Transformations] ... X-Y-Z.
     for ( it = _transformations.begin(); it != _transformations.end(); ++it ) {
-      if ((*it)->isNew()) {
-        if ( _premult ) {
-        }
-        else {
-        }
+
+      // If we find non-new transformations, ignore them and skip to the next step.
+      if ( !(*it)->isNew() ) break;
+
+      if ( _premult ) {
+        lhs = lhs * (**it);
+        if ((*it)->inheritable()) ilhs = ilhs * (**it);
+        //lhs = I * A
+        //lhs = A * B
+        //lhs = (A*B) * C
+        //lhs gets (ABC).
+      } else {
+        rhs = (**it) * rhs;
+        if ((*it)->inheritable()) irhs = (**it) * irhs;
+        //rhs = A * I;
+        //rhs = B * A
+        //rhs = C * (B*A)
+        //rhs gets (CBA)
       }
-      else break;
+
+      (*it)->markOld();
+
     }
-    // TODO: stub ...
+
+    // Fast forward through "Old" transformations.
+    for ( ; it != _transformations.end(); ++it ) {
+      if ( (*it)->isNew() ) break;
+    }
+
+    // Compute new post-transformations.
+    // I.e, for A-B-C-...[OLD]...-X-Y-Z, we'll be looking at X-Y-Z in that order.
+    for ( ; it != _transformations.end(); ++it ) {
+      if (!(*it)->isNew())
+        throw std::logic_error( "TransCache SceneGraph error: Non-new post transformations found.\n"
+                                "What? It means that the TransCache::clean() function is broken,\n"
+                                "And you should blame jhuston@cs.uml.edu." );
+      if ( _premult ) {
+        rhs = rhs * (**it);
+        if ((*it)->inheritable()) irhs = irhs * (**it);
+      } else {
+        lhs = (**it) * lhs;
+        if ((*it)->inheritable()) ilhs = (**it) * ilhs;
+      }
+
+      (*it)->markOld();
+
+    }
+
+    // Recompute our transformation matrix component.
+    _ctm = lhs * _ctm * rhs;
+    // Recompute our inheritable transformation matrix component.
+    _itm = ilhs * _itm * irhs;
 
     // Get the lower block to compute
     // our new _otm for us by pretending
@@ -207,19 +278,8 @@ void TransCache::clean( void ) {
     else _otm = _ptm * _ctm;
     _parent = false;
   }
+
   dirty( false );
-
-}
-
-void TransCache::adopt( const Angel::mat4 &ptm_in ) {
-
-  // Update our cache of our Parent's Matrix
-  _ptm = ptm_in;
-
-  // Mark that we have a new Parent matrix,
-  // And we need to update our children, too.
-  _parent = true;
-  _cascade = true;
 
 }
 
@@ -238,4 +298,12 @@ void TransCache::dirty( bool newState ) {
     _new = _parent = false;
     _rebuild = true;
   }
+}
+
+bool TransCache::cascade( void ) {
+  return _cascade;
+}
+
+void TransCache::cascade( bool newState ) {
+  _cascade = newState;
 }
