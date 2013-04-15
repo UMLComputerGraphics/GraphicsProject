@@ -1,0 +1,131 @@
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svnroot/freeglut/!svn/ver/1615/trunk/freeglut/freeglut/src/x11
+END
+fg_window_x11.c
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svnroot/freeglut/!svn/ver/1580/trunk/freeglut/freeglut/src/x11/fg_window_x11.c
+END
+fg_cursor_x11.c
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svnroot/freeglut/!svn/ver/1550/trunk/freeglut/freeglut/src/x11/fg_cursor_x11.c
+END
+fg_gamemode_x11.c
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svnroot/freeglut/!svn/ver/1380/trunk/freeglut/freeglut/src/x11/fg_gamemode_x11.c
+END
+fg_display_x11_glx.c
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svnroot/freeglut/!svn/ver/1197/trunk/freeglut/freeglut/src/x11/fg_display_x11_glx.c
+END
+fg_state_x11.c
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svnroot/freeglut/!svn/ver/1259/trunk/freeglut/freeglut/src/x11/fg_state_x11.c
+END
+fg_internal_x11.h
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svnroot/freeglut/!svn/ver/1577/trunk/freeglut/freeglut/src/x11/fg_internal_x11.h
+END
+fg_window_x11_glx.c
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svnroot/freeglut/!svn/ver/1259/trunk/freeglut/freeglut/src/x11/fg_window_x11_glx.c
+END
+fg_main_x11.c
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svnroot/freeglut/!svn/ver/1615/trunk/freeglut/freeglut/src/x11/fg_main_x11.c
+END
+fg_spaceball_x11.c
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svnroot/freeglut/!svn/ver/1112/trunk/freeglut/freeglut/src/x11/fg_spaceball_x11.c
+END
+fg_window_x11_glx.h
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svnroot/freeglut/!svn/ver/1197/trunk/freeglut/freeglut/src/x11/fg_window_x11_glx.h
+END
+fg_xinput_x11.c
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svnroot/freeglut/!svn/ver/1496/trunk/freeglut/freeglut/src/x11/fg_xinput_x11.c
+END
+fg_state_x11_glx.c
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svnroot/freeglut/!svn/ver/1259/trunk/freeglut/freeglut/src/x11/fg_state_x11_glx.c
+END
+fg_internal_x11_glx.h
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svnroot/freeglut/!svn/ver/1197/trunk/freeglut/freeglut/src/x11/fg_internal_x11_glx.h
+END
+fg_glutfont_definitions_x11.c
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svnroot/freeglut/!svn/ver/1112/trunk/freeglut/freeglut/src/x11/fg_glutfont_definitions_x11.c
+END
+fg_state_x11_glx.h
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svnroot/freeglut/!svn/ver/1259/trunk/freeglut/freeglut/src/x11/fg_state_x11_glx.h
+END
+fg_joystick_x11.c
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svnroot/freeglut/!svn/ver/1258/trunk/freeglut/freeglut/src/x11/fg_joystick_x11.c
+END
+fg_ext_x11.c
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svnroot/freeglut/!svn/ver/1214/trunk/freeglut/freeglut/src/x11/fg_ext_x11.c
+END
+fg_structure_x11.c
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svnroot/freeglut/!svn/ver/1258/trunk/freeglut/freeglut/src/x11/fg_structure_x11.c
+END
+fg_input_devices_x11.c
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svnroot/freeglut/!svn/ver/1258/trunk/freeglut/freeglut/src/x11/fg_input_devices_x11.c
+END
+fg_init_x11.c
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svnroot/freeglut/!svn/ver/1502/trunk/freeglut/freeglut/src/x11/fg_init_x11.c
+END
+fg_menu_x11.c
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svnroot/freeglut/!svn/ver/1112/trunk/freeglut/freeglut/src/x11/fg_menu_x11.c
+END

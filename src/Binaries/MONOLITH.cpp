@@ -8,7 +8,8 @@
  **/
 
 #include "MONOLITH.hpp"
-
+#include <boost/bind.hpp>
+#include <boost/function.hpp>
 
 /* Default and only constructor */
 MONOLITH::MONOLITH(
@@ -16,14 +17,43 @@ MONOLITH::MONOLITH(
     QObject *parent
 #endif
     )
+#ifndef WITHOUT_QT
+  : isQtWindowDead(false)
+#endif
 {
-    
 }
 
 MONOLITH::~MONOLITH(void)
 {
-    
+#ifndef WITHOUT_QT
+    isQtWindowDead = true;
+#endif
 }
+
+
+/*
+ * This function is used by the QT version of MONOLITH to humancentipede itself,
+ * thereby driving the glut mainloop with qt's main loop.
+ */
+#ifndef WITHOUT_QT
+void MONOLITH::doMainLoop()
+{
+  try{
+    if (!isQtWindowDead && glutMainLoopUpdate())
+      QTimer::singleShot(0, this, SLOT(doMainLoop()));
+    else if (isQtWindowDead)
+    {
+      //we may have been decapitated, but we aren't dead yet... let's use the real glut main loop now
+      glutMainLoopDeinitialize();
+      glutMainLoop();
+    }
+  }
+  catch(std::exception& e)
+  {
+    printf("ZOMGS AN EXCEPTION! %s", e.what());
+  }
+}
+#endif
 
 /**
  * Initialization: load and compile shaders, initialize camera(s), load models.
@@ -173,6 +203,9 @@ void MONOLITH::run(int &argc, char* argv[])
                              "WE ARE THE BORG. RESISTANCE IS FUTILE!" );
     Engine::instance()->registerIdle( idle );
     init();
+#ifndef WITHOUT_QT
+    QTimer::singleShot(0, this, SLOT(doMainLoop()));
+#endif
     
 }
 /**

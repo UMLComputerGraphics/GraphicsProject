@@ -24,7 +24,7 @@ OBJS = $(subst .cpp,.o,$(COMMON)) \
        $(subst .cpp,.o,$(CLASSES)) \
 
 CXXOPTS = -fmessage-length=0 -ansi -Wall -pedantic -DWITHOUT_QT
-CXXINCS = "-I$(CURDIR)/include"
+CXXINCS = -I$(CURDIR)/include -I$(CURDIR)/expensiveglut/include/GL
 
 DIRT = $(wildcard */*.o */*.so */*.d *.i *~ */*~ *.log)
 
@@ -48,7 +48,7 @@ UNAME := $(shell uname)
 ifeq ($(UNAME), Linux)
     CXXINCS += -I/usr/include/ImageMagick/
     CXXDEFS += -DFREEGLUT_STATIC -DGLEW_STATIC
-    LDLIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm 
+    LDLIBS += -lGL -lGLU -lGLEW -L$(CURDIR)/expensiveglut/lib -lexpensiveglut -lX11 -lm -lboost_thread
     #FMODNAME = libfmodex.so
     #FMODLIB = $(FMODLIBDIR)/$(FMODLIBNAME)
 	#If linux, we don't need any extra build steps
@@ -59,7 +59,7 @@ ifeq ($(UNAME), Darwin)
     CXXINCS += -I/opt/local/include/ImageMagick
    # LDLIBS += -framework Carbon -framework OpenGL -framework GLUT -L/opt/local/lib
    # if you can't find imgMagick, then try the line above. be sure to comment the line below
-    LDLIBS += -framework Carbon -framework OpenGL -framework GLUT -L/opt/local/lib -lMagick++
+    LDLIBS += -framework Carbon -framework OpenGL -L$(CURDIR)/expensiveglut/lib -lglut -L/opt/local/lib -lMagick++ -lboost_thread
     FMODLIBNAME = libfmodex.dylib
    # If apple, we do need a funky post-compile build step
     FMODLIB = $(FMODLIBDIR)/$(FMODLIBNAME)
@@ -71,7 +71,6 @@ ifdef DEBUG
 else
 	CXXOPTS += -O3
 endif
-
 
 #USE_FMOD = 1
 #ifdef USE_FMOD
@@ -89,18 +88,23 @@ LDFLAGS = $(LDOPTS) $(LDDIRS) $(LDLIBS)
 
 .PHONY: Makefile
 
-default all: $(TARGETS)
+default all: freeglut $(TARGETS)
+	@echo ""
+	@echo "******************************************************"
+	@echo "For ld to find the customized freeglut library, run: "
+	@echo '     "export LD_LIBRARY_PATH=`pwd`/expensiveglut/lib:$$LD_LIBRARY_PATH"'
+	@echo "******************************************************"
 
 $(TARGETS): $(OBJS)
 
 %: %.cpp
-	$(CXX) $(CXXFLAGS) $^ $(LDFLAGS) -o $@
+	$(CXX) $(CXXFLAGS) $^ $(CURDIR)/expensiveglut/lib/libexpensiveglut.so $(LDFLAGS) -o $@
 #	$(FMODLINK) $@
 
 #-----------------------------------------------------------------------------
 
 %.i: %.cpp
-	$(CXX) -E $(CXXFLAGS) $< | uniq > $@
+	$(CXX) -E $(CXXFLAGS)  $(CURDIR)/expensiveglut/lib/libexpensiveglut.so $< | uniq > $@
 
 #-----------------------------------------------------------------------------
 
@@ -116,6 +120,8 @@ _clean:
 
 _rmtargets:
 	@$(RM) $(TARGETS)
+	cd freeglut; make clean
+	rm -Rf expensiveglut
 
 clean: _clean
 	@echo "Removed everything except compiled executables."
@@ -128,8 +134,17 @@ clobber: _clean _rmtargets
 
 
 .PHONY: qt
-qt:
+qt: freeglut
 	qmake -o qMakefile
 	make -f qMakefile
 	@$(RM) Binaries/MONOLITH
 	ln debug/GraphicsProject Binaries/MONOLITH
+	@echo ""
+	@echo "******************************************************"
+	@echo "For ld to find the customized freeglut library, run: "
+	@echo '     "export LD_LIBRARY_PATH=`pwd`/expensiveglut/lib:$$LD_LIBRARY_PATH"'
+	@echo "******************************************************"
+
+.PHONY: freeglut
+freeglut:
+	cd freeglut; make cmake; make compile

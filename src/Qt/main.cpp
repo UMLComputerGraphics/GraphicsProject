@@ -3,6 +3,8 @@
 #include "OpenGL.h"
 #include "MONOLITH.hpp"
 #include "partTest.hpp"
+#include <boost/thread.hpp>
+#include <boost/thread/mutex.hpp>
 int main( int argc, char **argv ) {
 
   fprintf(
@@ -18,9 +20,13 @@ int main( int argc, char **argv ) {
    MainWindow w;
    w.setWindowTitle("First Graphics Demo");
    w.show();
+
+   //We can't have 2 simultaneous mainloops on the same thread, so let's make QT run the lobotomized freeglut mainloop for us.
+   glutMainLoopInitialize();
+
+   //PULL THE TRIGGER
    a.exec();
-   /* PULL THE TRIGGER */
-   glutMainLoop();
+   glutMainLoopDeinitialize();
    return 1;
 
 }
