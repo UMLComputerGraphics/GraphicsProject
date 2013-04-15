@@ -92,17 +92,17 @@ HEADERS  += \
 unix:!macx {
 LIBS += -lGL -lGLU -lGLEW -L$(CURDIR)/expensiveglut/lib -lexpensiveglut -lm -lboost_thread
 
-INCLUDEPATH +=. /usr/include/ImageMagick/ include/ expensiveglut/include
+INCLUDEPATH +=. ImageVoodoo/include ImageVoodoo/include/ImageMagick-6 include/ expensiveglut/include
 
-LIBS += -lMagick++
+LIBS += -L$(CURDIR)/ImageVoodoo/lib -lMagick++ 
 }
 
 macx {
 LIBS += -lGL -lGLU -lGLEW -L$(CURDIR)/expensiveglut/lib -lexpensiveglut -lm -lboost_thread
 
-INCLUDEPATH +=. /opt/local/include /opt/local/include/ImageMagick/ include/ expensiveglut/include
+INCLUDEPATH +=. ImageVoodoo/include ImageVoodoo/include/ImageMagick-6  include/ expensiveglut/include
 
-LIBS += -L/opt/local/lib -L/opt/local/include/ImageMagick/ -lMagick++
+LIBS += -L$(CURDIR)/ImageVoodoo/lib -lMagick++ 
 }
 
 FORMS    += \
