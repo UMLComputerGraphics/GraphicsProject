@@ -1487,14 +1487,9 @@ void FGAPIENTRY glutMainLoopEvent( void )
     fgCloseWindows( );
 }
 
-/*
- * Enters the freeglut processing loop.
- * Stays until the "ExecState" changes to "GLUT_EXEC_STATE_STOP".
- */
-void FGAPIENTRY glutMainLoop( void )
+//NUCLEARMISTAKE WAS HERE
+void FGAPIENTRY glutMainLoopInitialize( void )
 {
-    int action;
-
 #if TARGET_HOST_MS_WINDOWS
     SFG_Window *window = (SFG_Window *)fgStructure.Windows.First ;
 #endif
@@ -1526,48 +1521,78 @@ void FGAPIENTRY glutMainLoop( void )
 #endif
 
     fgState.ExecState = GLUT_EXEC_STATE_RUNNING ;
-    while( fgState.ExecState == GLUT_EXEC_STATE_RUNNING )
-    {
-        SFG_Window *window;
+}
 
-        glutMainLoopEvent( );
-        /*
-         * Step through the list of windows, seeing if there are any
-         * that are not menus
-         */
-        for( window = ( SFG_Window * )fgStructure.Windows.First;
-             window;
-             window = ( SFG_Window * )window->Node.Next )
-            if ( ! ( window->IsMenu ) )
-                break;
+//NUCLEARMISTAKE WAS HERE
+void FGAPIENTRY glutMainLoopDeinitialize( void )
+{
 
-        if( ! window )
-            fgState.ExecState = GLUT_EXEC_STATE_STOP;
-        else
-        {
-            if( fgState.IdleCallback )
-            {
-                if( fgStructure.CurrentWindow &&
-                    fgStructure.CurrentWindow->IsMenu )
-                    /* fail safe */
-                    fgSetWindow( window );
-                fgState.IdleCallback( );
-            }
+  int action;
 
-            fghSleepForEvents( );
-        }
-    }
+  /*
+   * When this loop terminates, destroy the display, state and structure
+   * of a freeglut session, so that another glutInit() call can happen
+   *
+   * Save the "ActionOnWindowClose" because "fgDeinitialize" resets it.
+   */
+  action = fgState.ActionOnWindowClose;
+  fgDeinitialize( );
+  if( action == GLUT_ACTION_EXIT )
+      exit( 0 );
+}
 
+//NUCLEARMISTAKE WAS HERE
+int FGAPIENTRY glutMainLoopUpdate( void )
+{
+  SFG_Window *window;
+
+  if (fgState.ExecState == GLUT_EXEC_STATE_RUNNING)
+  {
+    SFG_Window *window;
+
+    glutMainLoopEvent( );
     /*
-     * When this loop terminates, destroy the display, state and structure
-     * of a freeglut session, so that another glutInit() call can happen
-     *
-     * Save the "ActionOnWindowClose" because "fgDeinitialize" resets it.
+     * Step through the list of windows, seeing if there are any
+     * that are not menus
      */
-    action = fgState.ActionOnWindowClose;
-    fgDeinitialize( );
-    if( action == GLUT_ACTION_EXIT )
-        exit( 0 );
+    for( window = ( SFG_Window * )fgStructure.Windows.First;
+         window;
+         window = ( SFG_Window * )window->Node.Next )
+        if ( ! ( window->IsMenu ) )
+            break;
+
+    if( ! window )
+        fgState.ExecState = GLUT_EXEC_STATE_STOP;
+    else
+    {
+        if( fgState.IdleCallback )
+        {
+            if( fgStructure.CurrentWindow &&
+                fgStructure.CurrentWindow->IsMenu )
+                /* fail safe */
+                fgSetWindow( window );
+            fgState.IdleCallback( );
+        }
+
+        fghSleepForEvents( );
+    }
+  }
+
+  return (fgState.ExecState == GLUT_EXEC_STATE_RUNNING);
+}
+
+
+/*
+ * Enters the freeglut processing loop.
+ * Stays until the "ExecState" changes to "GLUT_EXEC_STATE_STOP".
+ */
+void FGAPIENTRY glutMainLoop( void )
+{
+    glutMainLoopInitialize();
+    while( glutMainLoopUpdate() )
+    {        
+    }
+    glutMainLoopDeinitialize();
 }
 
 /*

@@ -146,19 +146,16 @@ qt: freeglut
 	@echo "******************************************************"
 
 .PHONY: configfreeglut
-cmake:
+configfreeglut:
 ifeq ($(UNAME), Darwin)
-	cd freeglut; ./configure
+	cd freeglut; ./configure --prefix=$(CURDIR)/expensiveglut
 else
-	cd freeglut; ./configure
+	cd freeglut; ./configure --prefix=$(CURDIR)/expensiveglut
 endif
 
 .PHONY: compilefreeglut
-compile:
+compilefreeglut:
 	cd freeglut; make; make install
-
-clean:
-	rm -Rf build
 
 .PHONY: freeglut
 freeglut: configfreeglut compilefreeglut
