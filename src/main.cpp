@@ -10,7 +10,7 @@
 #include "InitShader.hpp"
 #include "glut_callbacks.h"
 #include "ObjLoader.hpp"
-
+#include <unistd.h>
 
 using namespace std ;
 
@@ -178,11 +178,9 @@ public:
     }
     void run()
     {
-        Engine::instance()->init( &first, second,
-                                  "WE ARE THE BORG. RESISTANCE IS FUTILE!" );
+        Engine::instance()->init( &first, second, "Final Project GLUT Window" );
         Engine::instance()->registerIdle( monolith_idle );
         init();
-
         glutMainLoop();
     }
 private:
@@ -202,7 +200,8 @@ int main(int argc, char *argv[]) {
 
     monoThread thread( X, Y ) ;
     thread.start() ;
-    a.exec();
 
-    return 0 ;
+    a.exec();
+    return 0;
+
 }

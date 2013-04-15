@@ -71,18 +71,21 @@ HEADERS  += include/Camera.hpp \
             include/WiiUtil.h \
             mainwindow.h
 
+# Common Settings
+INCLUDEPATH += . ./include/
+LIBS += -lMagick++
+
+# Linux Settings
 unix:!macx {
 LIBS += -lGL -lGLU -lGLEW -lglut -lm
-
-INCLUDEPATH +=. /usr/include/ImageMagick/ ./include/
-LIBS += -lMagick++
+INCLUDEPATH += /usr/include/ImageMagick/
 }
 
+# Mac OSX Settings
 macx {
 LIBS += -framework Carbon -framework OpenGL -framework GLUT
-
-INCLUDEPATH +=. /opt/local/include/ImageMagick/
-LIBS += -L/opt/local/lib -lMagick++
+INCLUDEPATH += /opt/local/include/ImageMagick/
+LIBS += -L/opt/local/lib
 }
 
 FORMS    += \
