@@ -24,7 +24,7 @@ OBJS = $(subst .cpp,.o,$(COMMON)) \
        $(subst .cpp,.o,$(CLASSES)) \
 
 CXXOPTS = -fmessage-length=0 -ansi -Wall -pedantic -DWITHOUT_QT
-CXXINCS = -I$(CURDIR)/include -I$(CURDIR)/expensiveglut/include/GL
+CXXINCS = "-I$(CURDIR)/include" "-I$(CURDIR)/expensiveglut/include/GL"
 
 DIRT = $(wildcard */*.o */*.so */*.d *.i *~ */*~ *.log)
 
@@ -48,7 +48,7 @@ UNAME := $(shell uname)
 ifeq ($(UNAME), Linux)
     CXXINCS += -I/usr/include/ImageMagick/
     CXXDEFS += -DFREEGLUT_STATIC -DGLEW_STATIC
-    LDLIBS += -lGL -lGLU -lGLEW -L$(CURDIR)/expensiveglut/lib -lexpensiveglut -lX11 -lm -lboost_thread
+    LDLIBS += -lGL -lGLU -lGLEW "-L$(CURDIR)/expensiveglut/lib" -lexpensiveglut -lX11 -lm -lboost_thread-mt
     #FMODNAME = libfmodex.so
     #FMODLIB = $(FMODLIBDIR)/$(FMODLIBNAME)
 	#If linux, we don't need any extra build steps
@@ -59,7 +59,7 @@ ifeq ($(UNAME), Darwin)
     CXXINCS += -I/opt/local/include/ImageMagick
    # LDLIBS += -framework Carbon -framework OpenGL -framework GLUT -L/opt/local/lib
    # if you can't find imgMagick, then try the line above. be sure to comment the line below
-    LDLIBS += -framework Carbon -framework OpenGL -L$(CURDIR)/expensiveglut/lib -lglut -L/opt/local/lib -lMagick++ -lboost_thread
+    LDLIBS += -framework Carbon -framework OpenGL "-L$(CURDIR)/expensiveglut/lib" -lglut -L/opt/local/lib -lMagick++ -lboost_thread
     FMODLIBNAME = libfmodex.dylib
    # If apple, we do need a funky post-compile build step
     FMODLIB = $(FMODLIBDIR)/$(FMODLIBNAME)
@@ -98,13 +98,13 @@ default all: freeglut $(TARGETS)
 $(TARGETS): $(OBJS)
 
 %: %.cpp
-	$(CXX) $(CXXFLAGS) $^ $(CURDIR)/expensiveglut/lib/libexpensiveglut.so $(LDFLAGS) -o $@
+	$(CXX) $(CXXFLAGS) $^ "$(CURDIR)/expensiveglut/lib/libexpensiveglut.so" $(LDFLAGS) -o $@
 #	$(FMODLINK) $@
 
 #-----------------------------------------------------------------------------
 
 %.i: %.cpp
-	$(CXX) -E $(CXXFLAGS)  $(CURDIR)/expensiveglut/lib/libexpensiveglut.so $< | uniq > $@
+	$(CXX) -E $(CXXFLAGS)  "$(CURDIR)/expensiveglut/lib/libexpensiveglut.so" $< | uniq > $@
 
 #-----------------------------------------------------------------------------
 
