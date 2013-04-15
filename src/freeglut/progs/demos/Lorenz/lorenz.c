@@ -220,7 +220,8 @@ void mouse_cb ( int button, int updown, int x, int y )
 {
   if ( updown == GLUT_DOWN )
   {
-    /*double dist = 1.0e20 ;   A very large number */
+    double dist = 1.0e20 ;  /* A very large number */
+    dist = 0.0 ;  /* so we don't get "unused variable" compiler warning */
     /* The idea here is that we go into "pick" mode and pick the nearest point
        to the mouse click position.  Unfortunately I don't have the time to implement
        it at the moment. */

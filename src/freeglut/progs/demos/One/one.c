@@ -23,7 +23,6 @@
 
 int g_LeaveGameMode = 0;
 int g_InGameMode = 0;
-int g_mainwin1, g_mainwin2, g_sw1, g_sw2, g_gamemodewin;
 
 /*
  * Call this function to have some text drawn at given coordinates
@@ -94,86 +93,54 @@ void PrintText( int nX, int nY, char* pszText )
 /*
  * This is the display routine for our sample FreeGLUT windows
  */
+static float g_fTime = 0.0f;
+
 void SampleDisplay( void )
 {
-    int win = glutGetWindow();
+    /*
+     * Clear the screen
+     */
+    glClearColor( 0, 0.5, 1, 1 );
+    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-    if (g_InGameMode && win!=g_gamemodewin)
-        /* Don't draw other windows when in gamemode, those aren't visible
-         * anyway. Drawing them continuously nonetheless can cause flicker trouble
-         * on my machine. This only seems to occur only when there are child windows
-         * among the non-visible windows 
-         */
-        return;
+    /*
+     * Have the cube rotated
+     */
+    glMatrixMode( GL_MODELVIEW );
+    glPushMatrix();
 
-    if (win==g_sw1)
-    {
-        /*
-         * Clear the screen
-         */
-        glClearColor(0.7f,0.7f,0.7f,1);
-        glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-        glutPostWindowRedisplay(g_mainwin2);
-    }
-    else if (win==g_sw2)
-    {
-        /*
-         * Clear the screen
-         */
-        glClearColor(0.3f,0.3f,0.3f,1);
-        glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-        glutPostWindowRedisplay(g_mainwin2);
-    }
+    glRotatef( g_fTime, 0, 0, 1 );
+    glRotatef( g_fTime, 0, 1, 0 );
+    glRotatef( g_fTime, 1, 0, 0 );
+
+    /*
+     * And then drawn...
+     */
+    glColor3f( 1, 1, 0 );
+    /* glutWireCube( 20.0 ); */
+    glutWireTeapot( 20.0 );
+    /* glutWireSpher( 15.0, 15, 15 ); */
+    /* glColor3f( 0, 1, 0 ); */
+    /* glutWireCube( 30.0 ); */
+    /* glutSolidCone( 10, 20, 10, 2 ); */
+
+    /*
+     * Don't forget about the model-view matrix
+     */
+    glPopMatrix( );
+
+    /*
+     * Draw a silly text
+     */
+    if( g_InGameMode == 0 )
+        PrintText( 20, 20, "Hello there cruel world!" );
     else
-    {
-        const GLfloat time = glutGet(GLUT_ELAPSED_TIME) / 1000.f * 40;
-
-        /*
-         * Clear the screen
-         */
-        glClearColor( 0, 0.5, 1, 1 );
-        glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-
-        /*
-         * Have the cube rotated
-         */
-        glMatrixMode( GL_MODELVIEW );
-        glPushMatrix();
-
-        glRotatef( time, 0, 0, 1 );
-        glRotatef( time, 0, 1, 0 );
-        glRotatef( time, 1, 0, 0 );
-
-        /*
-         * And then drawn...
-         */
-        glColor3f( 1, 1, 0 );
-        /* glutWireCube( 20.0 ); */
-        glutWireTeapot( 20.0 );
-        /* glutWireSphere( 15.0, 15, 15 ); */
-        /* glColor3f( 0, 1, 0 ); */
-        /* glutWireCube( 30.0 ); */
-        /* glutSolidCone( 10, 20, 10, 2 ); */
-
-        /*
-         * Don't forget about the model-view matrix
-         */
-        glPopMatrix( );
-
-        /*
-         * Draw a silly text
-         */
-        if( g_InGameMode == 0 )
-            PrintText( 20, 20, "Hello there cruel world!" );
-        else
-            PrintText( 20, 20, "Press ESC to leave the game mode!" );
-    }
+        PrintText( 20, 20, "Press ESC to leave the game mode!" );
 
     /*
      * And swap this context's buffers
      */
     glutSwapBuffers( );
-    glutPostWindowRedisplay(win);
 }
 
 /*
@@ -181,24 +148,14 @@ void SampleDisplay( void )
  */
 void SampleIdle( void )
 {
+    g_fTime += 0.5f;
+
     if( g_LeaveGameMode == 1 )
     {
-        /* One could do all this just as well in SampleGameModeKeyboard... */
-        printf("leaving gamemode...\n");
         glutLeaveGameMode( );
         g_LeaveGameMode = 0;
         g_InGameMode = 0;
-        glutPostWindowRedisplay(g_mainwin1);
-        glutPostWindowRedisplay(g_mainwin2);
-        glutPostWindowRedisplay(g_sw1);
-        glutPostWindowRedisplay(g_sw2);
     }
-}
-
-void SampleEntry(int state)
-{
-    int window = glutGetWindow () ;
-    printf ( "Window %d Entry Callback: %d\n", window, state ) ;
 }
 
 /*
@@ -282,15 +239,10 @@ void SampleSpecial( int nSpecial, int nMouseX, int nMouseY )
  */
 void SampleMenu( int menuID )
 {
+    /*
+     * Just print something funny
+     */
     printf( "SampleMenu() callback executed, menuID is %i\n", menuID );
-}
-
-/*
- * A sample menu status callback
- */
-void SampleMenuStatus( int status, int x, int y )
-{
-    printf ( "SampleMenu() callback executed, MenuStatus is %i at (%i,%i)\n", status, x, y );
 }
 
 /*
@@ -307,8 +259,6 @@ int main( int argc, char** argv )
     glutInit( &argc, argv );
 
     glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE,GLUT_ACTION_GLUTMAINLOOP_RETURNS);
-    glutMenuStatusFunc( SampleMenuStatus );
-    glutIdleFunc( SampleIdle );
 
     subMenuA = glutCreateMenu( SampleMenu );
     glutAddMenuEntry( "Sub menu A1 (01)", 1 );
@@ -330,34 +280,22 @@ int main( int argc, char** argv )
     glutAddSubMenu( "Enter sub menu A", subMenuA );
     glutAddSubMenu( "Enter sub menu B", subMenuB );
 
-    g_mainwin1 = glutCreateWindow( "Hello world!" );
+    glutCreateWindow( "Hello world!" );
     glutDisplayFunc( SampleDisplay );
     glutReshapeFunc( SampleReshape );
     glutKeyboardFunc( SampleKeyboard );
     glutSpecialFunc( SampleSpecial );
-    glutEntryFunc( SampleEntry );
+    glutIdleFunc( SampleIdle );
     glutAttachMenu( GLUT_LEFT_BUTTON );
 
     glutInitWindowPosition( 200, 200 );
-    g_mainwin2 = glutCreateWindow( "I am not Jan B." );
+    glutCreateWindow( "I am not Jan B." );
     glutDisplayFunc( SampleDisplay );
     glutReshapeFunc( SampleReshape );
     glutKeyboardFunc( SampleKeyboard );
     glutSpecialFunc( SampleSpecial );
-    glutEntryFunc( SampleEntry );
+    glutIdleFunc( SampleIdle );
     glutAttachMenu( GLUT_LEFT_BUTTON );
-    glutSetMenu(subMenuA);
-    glutAttachMenu( GLUT_RIGHT_BUTTON );
-
-    g_sw1=glutCreateSubWindow(g_mainwin2,200,0,100,100);
-    glutDisplayFunc( SampleDisplay );
-    glutSetMenu(subMenuB);
-    glutAttachMenu( GLUT_LEFT_BUTTON );
-
-    g_sw2=glutCreateSubWindow(g_sw1,50,0,50,50);
-    glutDisplayFunc( SampleDisplay );
-    glutSetMenu(menuID);
-    glutAttachMenu( GLUT_RIGHT_BUTTON );
 
     printf( "Testing game mode string parsing, don't panic!\n" );
     glutGameModeString( "320x240:32@100" );
@@ -370,15 +308,14 @@ int main( int argc, char** argv )
     glutEnterGameMode();
 
     glutGameModeString( "800x600" );    /* this one is likely to succeed */
-    g_gamemodewin = glutEnterGameMode();
+    glutEnterGameMode();
 
     if (glutGameModeGet(GLUT_GAME_MODE_ACTIVE))
         g_InGameMode = 1;
     glutDisplayFunc( SampleDisplay );
     glutReshapeFunc( SampleReshape );
     glutKeyboardFunc( SampleGameModeKeyboard );
-    glutEntryFunc( SampleEntry );
-    glutSetMenu(menuID);
+    glutIdleFunc( SampleIdle );
     glutAttachMenu( GLUT_LEFT_BUTTON );
 
     printf( "current window is %ix%i at (%i,%i)\n",
@@ -387,22 +324,15 @@ int main( int argc, char** argv )
     );
 
     /*
-     * Describe pixel format
-     */
-    printf("The current window has %i red bits, %i green bits, %i blue bits and %i alpha bits for a total buffer size of %i bits\n",glutGet(GLUT_WINDOW_RED_SIZE),glutGet(GLUT_WINDOW_GREEN_SIZE),glutGet(GLUT_WINDOW_BLUE_SIZE),glutGet(GLUT_WINDOW_ALPHA_SIZE),glutGet(GLUT_WINDOW_BUFFER_SIZE));
-    printf("It furthermore has %i depth bits and %i stencil bits\n",glutGet(GLUT_WINDOW_DEPTH_SIZE),glutGet(GLUT_WINDOW_STENCIL_SIZE));
-
-    /*
      * Enter the main FreeGLUT processing loop
      */
     glutMainLoop();
 
-    /*
-     * returned from mainloop after window closed
-     * see glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE,GLUT_ACTION_GLUTMAINLOOP_RETURNS); above
-     */
     printf( "glutMainLoop() termination works fine!\n" );
 
+    /*
+     * This is never reached in FreeGLUT. Is that good?
+     */
     return EXIT_SUCCESS;
 }
 

@@ -145,6 +145,20 @@ qt: freeglut
 	@echo '     "export LD_LIBRARY_PATH=`pwd`/expensiveglut/lib:$$LD_LIBRARY_PATH"'
 	@echo "******************************************************"
 
+.PHONY: configfreeglut
+cmake:
+ifeq ($(UNAME), Darwin)
+	cd freeglut; ./configure
+else
+	cd freeglut; ./configure
+endif
+
+.PHONY: compilefreeglut
+compile:
+	cd freeglut; make; make install
+
+clean:
+	rm -Rf build
+
 .PHONY: freeglut
-freeglut:
-	cd freeglut; make cmake; make compile
+freeglut: configfreeglut compilefreeglut
