@@ -90,7 +90,7 @@ void init() {
     matchInitialPoints( bottle, bottleMorphTarget );
     makeModelsSameSize( bottle, bottleMorphTarget );
     bottle->bufferMorphOnly();
-    bottle->propagate();
+    bottle->propagateOLD();
   }
 
   // Let the bodies hit the floor
@@ -108,7 +108,7 @@ void init() {
   fprintf( stderr, "Min: (%f,%f,%f)\nMax: (%f,%f,%f)\n", min.x, min.y, min.z,
            max.x, max.y, max.z );
   candle->_trans._offset.set( 2.5, -min.y, 2.5 );
-  //candle->propagate();
+  //candle->propagateOLD();
   candle->buffer();
 
   ParticleSystem *ps = new ParticleSystem( 10000, "ps1", shader[2] );
@@ -117,10 +117,10 @@ void init() {
   candle->insertObject( ps );
   ps->_trans._offset.set(0,min.y+(max.y-min.y),0);
   ps->fillSystemWithParticles();
-  //ps->propagate();
+  //ps->propagateOLD();
   ps->buffer();
 
-  candle->propagate();
+  candle->propagateOLD();
 
   // Generic OpenGL setup: Enable the depth _buffer and set a nice background color.
   glEnable( GL_DEPTH_TEST );

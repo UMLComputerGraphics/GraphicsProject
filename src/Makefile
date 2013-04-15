@@ -110,8 +110,7 @@ qt: qMakefile
 clean-qt: qMakefile
 	make -f qMakefile distclean
 	rm -f qMakefile
+	rm -rf build/ release/
 
 qMakefile:
 	qmake -o qMakefile
-
-#>>>>>>> d2fe654ff4a5cad4acfccb2aecc1aba89bb7b37b
