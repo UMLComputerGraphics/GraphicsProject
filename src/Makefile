@@ -23,7 +23,7 @@ TARGETS = $(basename $(strip $(SOURCES)))
 OBJS = $(subst .cpp,.o,$(COMMON)) \
        $(subst .cpp,.o,$(CLASSES)) \
 
-CXXOPTS = -fmessage-length=0 -ansi -Wall -pedantic -DWITHOUT_QT -Wno-cpp
+CXXOPTS = -fmessage-length=0 -ansi -Wall -pedantic -DWITHOUT_QT
 CXXINCS = -I$(CURDIR)/include -I$(CURDIR)/expensiveglut/include  -I$(CURDIR)/expensiveglut/GL
 
 DIRT = $(wildcard */*.o */*.so */*.d *.i *~ */*~ *.log)
@@ -48,7 +48,7 @@ ifeq ($(UNAME), Linux)
     CXXINCS += -I$(CURDIR)/ImageVoodoo/include  -I$(CURDIR)/ImageVoodoo/include/ImageMagick-6
     CXXDEFS += -DFREEGLUT_STATIC -DGLEW_STATIC
     LDLIBS += -lGL -lGLU -lGLEW -L$(CURDIR)/expensiveglut/lib -lexpensiveglut -lX11 -lm -lboost_thread-mt -L$(CURDIR)/ImageVoodoo/lib -lMagick++-6.Q16
-    EXPENSIVEGLUT = $(CURDIR)/expensiveglut/lib/libexpensiveglut.so
+    EXPENSIVEGLUT = $(CURDIR)/expensiveglut/lib/libexpensiveglut.so $(CURDIR)/ImageVoodoo/lib/libMagic++-6.Q16.so
     #FMODNAME = libfmodex.so
     #FMODLIB = $(FMODLIBDIR)/$(FMODLIBNAME)
 	#If linux, we don't need any extra build steps
@@ -56,15 +56,15 @@ ifeq ($(UNAME), Linux)
 endif
 
 ifeq ($(UNAME), Darwin)
-    CXXOPTS -= -mmacosx-version-min=10.6
-    CXXOPTS += -mmacosx-version-min=10.7 
+#    CXXOPTS -= -mmacosx-version-min=10.6
+#    CXXOPTS += -mmacosx-version-min=10.7 -std=c++11 -stdlib=libc++ -m64
     CXXINCS += -I/opt/local/include -I$(CURDIR)/ImageVoodoo/include -I$(CURDIR)/ImageVoodoo/include/ImageMagick-6 -I/usr/X11R6/include -L/usr/X11R6/lib 
    # LDLIBS += -framework Carbon -framework OpenGL -framework GLUT -L/opt/local/lib
    # if you can't find imgMagick, then try the line above. be sure to comment the line below
-    LDOPTS -= -mmacosx-version-min=10.6
-    LDOPTS += -stdlib=libc++ -mmacosx-version-min=10.7
-    LDLIBS += -L/usr/X11R6/lib -lGL -lGLU -lGLEW -L$(CURDIR)/expensiveglut/lib -lexpensiveglut -lX11 -lm -L$(CURDIR)/ImageVoodoo/lib -lMagick++-6.Q16 -lboost_thread-mt 
-    EXPENSIVEGLUT = $(CURDIR)/expensiveglut/lib/libexpensiveglut.dylib
+#    LDOPTS -= -mmacosx-version-min=10.6
+#    LDOPTS += -stdlib=libc++ -mmacosx-version-min=10.7
+    LDLIBS += -L/opt/local/lib -L/usr/X11R6/lib -lGL -lGLU -lGLEW -L$(CURDIR)/expensiveglut/lib -lexpensiveglut -lX11 -lm -L$(CURDIR)/ImageVoodoo/lib -lMagick++-6.Q16 -lboost_thread-mt 
+    EXPENSIVEGLUT = $(CURDIR)/expensiveglut/lib/libexpensiveglut.dylib $(CURDIR)/ImageVoodoo/lib/libMagick++-6.Q16.dylib
     FMODLIBNAME = libfmodex.dylib
    # If apple, we do need a funky post-compile build step
     FMODLIB = $(FMODLIBDIR)/$(FMODLIBNAME)
