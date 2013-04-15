@@ -123,14 +123,6 @@ public:
   void drawMode( GLenum new_mode );
 
   /**
-   * FIXME: This is a junk, nonflexible method.
-   * It would be better if you didn't think of this as being here.
-   *
-   * @param filename an array of strings to load textures from.
-   */
-  void terrainTexture( const char** filename );
-
-  /**
    * Binds a texture to this Object.
    * @param filename The filename of the texture to load.
    */
@@ -190,9 +182,16 @@ public:
 
   /**
    * Scene-graph changes are not automatically applied to children.
-   * For efficiency reasons, you need to call propagate() manually.
+   * For efficiency reasons, you need to call propagateOLD() manually.
+   * TODO: Deprecated.
    */
-  void propagate( void );
+  void propagateOLD( void );
+
+  /**
+   * sceneCascade sends our current inheritable transformation matrix
+   * to all of our children, /if/ it is marked as needing to be updated.
+   */
+  void sceneCascade( void );
 
   // Getters ==================================================================
   

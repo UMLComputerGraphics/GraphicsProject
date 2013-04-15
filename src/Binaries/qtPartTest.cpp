@@ -62,7 +62,7 @@ void partTest::init(void)
     _funInTheSin->setLifespan(0.5, 11.0);
     _funInTheSin->setEmitterRadius( 0.1 ) ;
     rootScene->insertObject( _funInTheSin );
-    _funInTheSin->propagate();
+    _funInTheSin->propagateOLD();
     _funInTheSin->fillSystemWithParticles();
     _funInTheSin->buffer();
     
