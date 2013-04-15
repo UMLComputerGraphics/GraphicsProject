@@ -11,7 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = GraphicsProject
 TEMPLATE = app
 
-SOURCES += main.cpp \
+SOURCES += \
            # Classes
            Classes/Camera.cpp \
            Classes/Cameras.cpp \
@@ -39,7 +39,9 @@ SOURCES += main.cpp \
            Common/ObjLoader.cpp \
            Common/Util.cpp \
            #Common/WiiUtil.cpp \
-           mainwindow.cpp
+           # QT
+           Qt/mainwindow.cpp \
+           Qt/main.cpp
 
 HEADERS  += include/Camera.hpp \
             include/Cameras.hpp \
@@ -69,7 +71,8 @@ HEADERS  += include/Camera.hpp \
             include/Util.hpp \ 
             include/vec.hpp \ 
             include/WiiUtil.h \
-            mainwindow.h
+            # QT
+            include/mainwindow.h
 
 # Common Settings
 INCLUDEPATH += . ./include/

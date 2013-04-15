@@ -134,10 +134,7 @@ qt: qMakefile
 clean-qt: qMakefile
 	make -f qMakefile distclean
 	rm -f qMakefile
+	rm -rf build/ release/
 
-.PHONY: qt
-qt:
+qMakefile:
 	qmake -o qMakefile
-	make -f qMakefile
-	@$(RM) Binaries/MONOLITH
-	ln debug/GraphicsProject Binaries/MONOLITH
