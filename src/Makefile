@@ -48,7 +48,7 @@ ifeq ($(UNAME), Linux)
     CXXINCS += -I$(CURDIR)/ImageVoodoo/include  -I$(CURDIR)/ImageVoodoo/include/ImageMagick-6
     CXXDEFS += -DFREEGLUT_STATIC -DGLEW_STATIC
     LDLIBS += -lGL -lGLU -lGLEW -L$(CURDIR)/expensiveglut/lib -lexpensiveglut -lX11 -lm -lboost_thread-mt -L$(CURDIR)/ImageVoodoo/lib -lMagick++-6.Q16
-    EXPENSIVEGLUT = $(CURDIR)/expensiveglut/lib/libexpensiveglut.so $(CURDIR)/ImageVoodoo/lib/libMagic++-6.Q16.so
+    EXPENSIVEGLUT = $(CURDIR)/expensiveglut/lib/libexpensiveglut.so $(CURDIR)/ImageVoodoo/lib/libMagick++-6.Q16.so
     #FMODNAME = libfmodex.so
     #FMODLIB = $(FMODLIBDIR)/$(FMODLIBNAME)
 	#If linux, we don't need any extra build steps
