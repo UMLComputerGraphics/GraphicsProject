@@ -24,11 +24,9 @@ OBJS = $(subst .cpp,.o,$(COMMON)) \
        $(subst .cpp,.o,$(CLASSES)) \
 
 CXXOPTS = -fmessage-length=0 -ansi -Wall -pedantic -DWITHOUT_QT
-CXXINCS = -I$(CURDIR)/include -I$(CURDIR)/expensiveglut/include/GL
+CXXINCS = -I$(CURDIR)/include -I$(CURDIR)/expensiveglut/include
 
 DIRT = $(wildcard */*.o */*.so */*.d *.i *~ */*~ *.log)
-
-LDLIBS = -lMagick++
 
 # Configuration Options
 ifdef POSTMULT
@@ -48,7 +46,7 @@ UNAME := $(shell uname)
 ifeq ($(UNAME), Linux)
     CXXINCS += -I/usr/include/ImageMagick/
     CXXDEFS += -DFREEGLUT_STATIC -DGLEW_STATIC
-    LDLIBS += -lGL -lGLU -lGLEW -L$(CURDIR)/expensiveglut/lib -lexpensiveglut -lX11 -lm -lboost_thread-mt
+    LDLIBS += -lGL -lGLU -lGLEW -L$(CURDIR)/expensiveglut/lib -lexpensiveglut -lX11 -lm -lboost_thread-mt -lMagick++
     EXPENSIVEGLUT = $(CURDIR)/expensiveglut/lib/libexpensiveglut.so
     #FMODNAME = libfmodex.so
     #FMODLIB = $(FMODLIBDIR)/$(FMODLIBNAME)
@@ -57,10 +55,10 @@ ifeq ($(UNAME), Linux)
 endif
 
 ifeq ($(UNAME), Darwin)
-    CXXINCS += -I/opt/local/include/ImageMagick -I/opt/local/include
+    CXXINCS += $(shell Magick++-config --cxxflags --cppflags) -I/opt/local/include -I/usr/X11R6/include -L/usr/X11R6/lib 
    # LDLIBS += -framework Carbon -framework OpenGL -framework GLUT -L/opt/local/lib
    # if you can't find imgMagick, then try the line above. be sure to comment the line below
-    LDLIBS += -framework Carbon -framework OpenGL -L$(CURDIR)/expensiveglut/lib -lexpensiveglut -L/opt/local/lib -lMagick++ -lboost_thread-mt
+    LDLIBS += -L/usr/X11R6/lib -lGL -lGLU -lGLEW -L$(CURDIR)/expensiveglut/lib -lexpensiveglut -lX11 -lm -L /opt/local/lib -lMagick++ -lboost_thread-mt 
     EXPENSIVEGLUT = $(CURDIR)/expensiveglut/lib/libexpensiveglut.dylib
     FMODLIBNAME = libfmodex.dylib
    # If apple, we do need a funky post-compile build step
