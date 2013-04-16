@@ -8,8 +8,6 @@
  **/
 
 #include "MONOLITH.hpp"
-#include <boost/bind.hpp>
-#include <boost/function.hpp>
 
 /* Default and only constructor */
 MONOLITH::MONOLITH(

@@ -1,10 +1,8 @@
 /**
- * @file raytraceIntegrated.cpp
+ * @file raytrace1.cpp
  * @author Hoanh Nguyen
- * @authors Hoanh Nguyen, John Huston
  * @date 2013-03-15
- * @brief Raytracer Engine Integration Attempt.
- * @details Definitely a WORK IN PROGRESS.
+ * @brief Geometric Raytracing Demo
  */
 
 #include <cmath>
@@ -12,6 +10,7 @@
 #include <cstdio>
 #include <cstring>
 #include <vector>
+#include <boost/thread.hpp>
 
 #include "Engine.hpp"
 #include "InitShader.hpp"
@@ -104,17 +103,39 @@ std::vector<GLfloat> bufferData;
 int numOfTriangleVectors = 10;
 int numOfTrianglesBounded = 12;
 
+bool stereo = true;
+
+//flicker at constant rate, regardless of update loop
+bool extinguish = false;
+void aRomanticEvening()
+{
+  while(!extinguish)
+  {
+    // random number between 0 and 1
+    float lightness = (float)rand()/(float)RAND_MAX;
+    // between 0 and .3
+    lightness = lightness * 3.0 / 10.0;
+
+    lightness += .7;
+    lightDiffuse[0] = lightness;
+    lightDiffuse[1] = lightness;
+    lightDiffuse[2] = lightness;
+
+    usleep(10000000);
+  }
+}
+
 int frameCount = 0;
 float previousTime = 0.0;
 
 /**
  * Handle the re-display of the scene.
  */
-void customDisplay( void ) {
+void display( void ) {
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
   tick.sendTime();
-
+  
   int numSpheres = 1;
   glUniform1i( uNumOfSpheres, numSpheres );
   glUniform3fv( uSphereCenterPoints, numSpheres, sphereCenterPoints );
@@ -131,16 +152,6 @@ void customDisplay( void ) {
 
   glUniform1i( uNumOfBoundingSpheres, numOfBoundingSpheres );
   glUniform1i( uNumOfTrianglesBounded, numOfTrianglesBounded );
-
-  // random number between 0 and 1
-  float lightness = (float)rand()/(float)RAND_MAX;
-  // between 0 and .3
-  lightness = lightness * 3.0 / 10.0;
-
-  lightness += .7;
-  lightDiffuse[0] = lightness;
-  lightDiffuse[1] = lightness;
-  lightDiffuse[2] = lightness;
 
   glUniform3fv( uLightPositions, 1, lightPositions );
   glUniform3fv( uLightDiffuse, 1, lightDiffuse );
@@ -166,15 +177,16 @@ void customDisplay( void ) {
       0,                  // no extra data between each position
       0                   // offset of first element
       );
-
-
-  mat4 rotationMatrix = Angel::RotateX(0.0);
-  vec4 cameraPosition(0.0, 0.0, 10.0, 0.0);
-
-  glUniform1i( uDisplay, 0 );
-  glUniformMatrix4fv( uRotationMatrix, 1, GL_TRUE, rotationMatrix );
-  glUniform4fv( uCameraPosition, 1, cameraPosition );
-  glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+  
+  if(stereo) {
+    glUniform1i( uDisplay, -1 );
+    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+    glUniform1i( uDisplay, 1 );
+    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+  } else {
+    glUniform1i( uDisplay, 0 );
+    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+  }
 
   glutSwapBuffers();
   glDisableVertexAttribArray( vRayPosition );
@@ -383,8 +395,8 @@ void genereateScene() {
     addTriangle(a, b, c, vec3(0.0, 1.0, 0.0), ambient, specular, 1.0, 1.0, 0.0);
   }
 
-  addTriangle(vec3(-10.0, -10.0, -6.0), vec3(10.0, -10.0, -6.0), vec3(10.0, 10.0, -6.0), vec3(1.0, 1.0, 1.0), ambient, vec3(1.0, 1.0, 1.0), 10.0, 1.0, 0.0);
-  addTriangle(vec3(-10.0, -10.0, -6.0), vec3(10.0, 10.0, -6.0), vec3(-10.0, 10.0, -6.0), vec3(0.0, 0.0, 1.0), ambient, vec3(0.0, 0.0, 1.0), 10.0, 1.0, 0.0);
+  addTriangle(vec3(-10.0, -10.0, -6.0), vec3(10.0, -10.0, -6.0), vec3(10.0, 10.0, -6.0), vec3(1.0, 1.0, 1.0), ambient, vec3(1.0, 1.0, 1.0), 10.0, 0.0, 0.0);
+  addTriangle(vec3(-10.0, -10.0, -6.0), vec3(10.0, 10.0, -6.0), vec3(-10.0, 10.0, -6.0), vec3(0.0, 0.0, 1.0), ambient, vec3(0.0, 0.0, 1.0), 10.0, 0.0, 0.0);
 
 /*
   vec3 colors[] = {vec3(1.0, 1.0, 0.0), vec3(1.0, 0.0, 1.0), vec3(0.0, 1.0, 1.0)};
@@ -412,17 +424,17 @@ void genereateScene() {
  * Initialization of objects and OpenGL state.
  */
 void init( void ) {
-  
+
   // Create a vertex array object
   GLuint vao;
   glGenVertexArrays( 1, &vao );
   glBindVertexArray( vao );
-  
+
   // Load shaders and use the resulting shader program
   GLuint program = Angel::InitShader( "shaders/vShaderOrgAndDir.glsl",
                                       "shaders/fShaderSpheres2.glsl" );
   glUseProgram( program );
-  
+
   vRayPosition = glGetAttribLocation( program, "vRayPosition" );
   uDisplay = glGetUniformLocation( program, "uDisplay" );
 
@@ -450,7 +462,7 @@ void init( void ) {
   uLightSpecular = glGetUniformLocation( program, "uLightSpecular" );
 
   tick.setTimeUniform(glGetUniformLocation( program, "ftime" ));
-  
+
   glShadeModel( GL_FLAT );
   glEnable( GL_DEPTH_TEST );
   glClearColor( 0.1, 0.1, 0.1, 1.0 );
@@ -465,12 +477,18 @@ void init( void ) {
  * @return 0.
  */
 int main( int argc, char **argv ) {
-  
+
   Engine::instance()->init( &argc, argv, "Raytracer" );
   init();
-  glutDisplayFunc( customDisplay ); // register callback w/Window System
+
+  boost::thread zipo(aRomanticEvening);
+  
+  glutDisplayFunc( display ); // register callback w/Window System
   
   glutMainLoop();
-  return 0;
 
+  extinguish = true;
+  zipo.join();
+
+  return 0;
 }
