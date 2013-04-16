@@ -14,6 +14,7 @@
 #include "Object.hpp"
 
 using Angel::vec4;
+using Angel::vec3;
 using Angel::mat4;
 
 
@@ -569,6 +570,21 @@ void Object::destroyMorphTarget( void ) {
  */
 int Object::numberOfPoints( void ) {
   return _vertices.size();
+}
+
+/**
+* Adds material data to the object
+* @param diffuse The diffuse color
+**/
+void Object::addMaterial(Angel::vec3 diffuse) {
+ 
+  this->color = diffuse;
+
+  _colors.clear();
+
+  for ( size_t i = 0; i < _vertices.size(); ++i ) {
+    _colors.push_back(vec4(color, 1));
+  }
 }
 
 /**
