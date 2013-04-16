@@ -1,0 +1,107 @@
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/Magick++/lib/Magick++
+END
+BlobRef.h
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/Magick++/lib/Magick++/BlobRef.h
+END
+Color.h
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/Magick++/lib/Magick++/Color.h
+END
+Blob.h
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/Magick++/lib/Magick++/Blob.h
+END
+ImageRef.h
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/Magick++/lib/Magick++/ImageRef.h
+END
+Drawable.h
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/Magick++/lib/Magick++/Drawable.h
+END
+Image.h
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/Magick++/lib/Magick++/Image.h
+END
+Include.h
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/Magick++/lib/Magick++/Include.h
+END
+TypeMetric.h
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/Magick++/lib/Magick++/TypeMetric.h
+END
+Montage.h
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/Magick++/lib/Magick++/Montage.h
+END
+Options.h
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/Magick++/lib/Magick++/Options.h
+END
+Geometry.h
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/Magick++/lib/Magick++/Geometry.h
+END
+Exception.h
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/Magick++/lib/Magick++/Exception.h
+END
+STL.h
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/Magick++/lib/Magick++/STL.h
+END
+Pixels.h
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/Magick++/lib/Magick++/Pixels.h
+END
+Thread.h
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/Magick++/lib/Magick++/Thread.h
+END
+Functions.h
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/Magick++/lib/Magick++/Functions.h
+END
+CoderInfo.h
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/Magick++/lib/Magick++/CoderInfo.h
+END

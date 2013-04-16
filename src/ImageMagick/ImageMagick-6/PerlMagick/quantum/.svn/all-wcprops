@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/quantum
+END
+quantum.pm.in
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/quantum/quantum.pm.in
+END
+Makefile.PL.in
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/quantum/Makefile.PL.in
+END
+typemap.in
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/quantum/typemap.in
+END
+quantum.pm
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/quantum/quantum.pm
+END
+quantum.xs.in
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/quantum/quantum.xs.in
+END

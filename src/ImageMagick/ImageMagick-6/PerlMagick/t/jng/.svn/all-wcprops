@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/t/jng
+END
+input_gray_prog.jng
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/t/jng/input_gray_prog.jng
+END
+input_gray_prog_idat.jng
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/t/jng/input_gray_prog_idat.jng
+END
+input_jdaa.jng
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/t/jng/input_jdaa.jng
+END
+write.t
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/t/jng/write.t
+END
+input_gray_jdaa.jng
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/t/jng/input_gray_jdaa.jng
+END
+input_idat.jng
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/t/jng/input_idat.jng
+END
+read.t
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/t/jng/read.t
+END
+input_gray.jng
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/t/jng/input_gray.jng
+END
+input_gray_idat.jng
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/t/jng/input_gray_idat.jng
+END
+input_prog_jdaa.jng
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/t/jng/input_prog_jdaa.jng
+END
+input_prog.jng
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/t/jng/input_prog.jng
+END
+input_gray_prog_jdaa.jng
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/t/jng/input_gray_prog_jdaa.jng
+END
+input_prog_idat.jng
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/t/jng/input_prog_idat.jng
+END
+input_rose.jng
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/PerlMagick/t/jng/input_rose.jng
+END

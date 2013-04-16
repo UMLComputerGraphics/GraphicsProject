@@ -19,6 +19,8 @@ varying vec4 fPosition;
 
 uniform bool fIsTextured;
 
+uniform sampler2D sampler; // Array of sampler2D associated with this object.
+
 uniform sampler2D gSampler0; // Dirt
 uniform sampler2D gSampler1; // Sand
 uniform sampler2D gSampler2; // Grss

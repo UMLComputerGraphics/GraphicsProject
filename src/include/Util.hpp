@@ -9,11 +9,13 @@
 #ifndef ERIC_RULES_HPP_
 #define ERIC_RULES_HPP_
 
+#include <string>
+
 namespace Util {
 
   void InitRelativePaths( int argc, char** argv );
 
-  const char *getRelativePath( const char *path );
+  std::string getRelativePath( const char *path );
 
   /**
    * Return a randomized float value between [0,1].

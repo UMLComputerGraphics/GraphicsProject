@@ -1,0 +1,371 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api
+END
+composite.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/composite.html
+END
+display.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/display.html
+END
+memory.html
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/memory.html
+END
+pixel-wand.html
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/pixel-wand.html
+END
+annotate.html
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/annotate.html
+END
+fourier.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/fourier.html
+END
+paint.html
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/paint.html
+END
+layer.html
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/layer.html
+END
+colormap.html
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/colormap.html
+END
+mogrify.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/mogrify.html
+END
+magick-property.html
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/magick-property.html
+END
+color.html
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/color.html
+END
+magick-deprecate.html
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/magick-deprecate.html
+END
+decorate.html
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/decorate.html
+END
+resource.html
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/resource.html
+END
+distort.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/distort.html
+END
+image-view.html
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/image-view.html
+END
+colorspace.html
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/colorspace.html
+END
+montage.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/montage.html
+END
+feature.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/feature.html
+END
+magick.html
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/magick.html
+END
+stream.html
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/stream.html
+END
+effect.html
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/effect.html
+END
+deprecate.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/deprecate.html
+END
+draw.html
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/draw.html
+END
+morphology.html
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/morphology.html
+END
+profile.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/profile.html
+END
+quantize.html
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/quantize.html
+END
+enhance.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/enhance.html
+END
+wand-view.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/wand-view.html
+END
+segment.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/segment.html
+END
+shear.html
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/shear.html
+END
+attribute.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/attribute.html
+END
+cache.html
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/cache.html
+END
+statistic.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/statistic.html
+END
+registry.html
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/registry.html
+END
+channel.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/channel.html
+END
+pixel-iterator.html
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/pixel-iterator.html
+END
+cipher.html
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/cipher.html
+END
+cache-view.html
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/cache-view.html
+END
+list.html
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/list.html
+END
+magick-image.html
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/magick-image.html
+END
+transform.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/transform.html
+END
+magick++-classes.html
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/magick++-classes.html
+END
+fx.html
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/fx.html
+END
+animate.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/animate.html
+END
+blob.html
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/blob.html
+END
+image.html
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/image.html
+END
+drawing-wand.html
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/drawing-wand.html
+END
+magick-wand.html
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/magick-wand.html
+END
+property.html
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/property.html
+END
+module.html
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/module.html
+END
+version.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/version.html
+END
+compare.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/compare.html
+END
+monitor.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/monitor.html
+END
+pixel-view.html
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/pixel-view.html
+END
+histogram.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/histogram.html
+END
+exception.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/exception.html
+END
+constitute.html
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/constitute.html
+END
+resize.html
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/resize.html
+END
+signature.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/www/api/signature.html
+END

@@ -322,6 +322,12 @@ public:
    **/
   void stop( const Camera::Direction &Dir );
   /**
+   stopAll is a compilation of the 6 directions of stop functions.
+   Intended for use in resetPosition, but can apply elsewhere if needed.
+   @return Void.
+   **/
+  void stopAll( void );
+  /**
    idle moves the camera forward in whichever directions it is
    configured to move in. Call it in the glut idle function.
    @return Void.
@@ -358,6 +364,16 @@ public:
    **/
   vec4 pos( void ) const;
 
+  /* Get Velocity */
+  vec3 dPos ( void ) const;
+
+  /* Get directional vectors */
+  vec4 forward ( void ) const;
+  vec4 up ( void ) const;
+
+
+
+
   /* OpenGL Methods */
   /**
    send will send a glsl variable to the shader.
@@ -379,6 +395,14 @@ public:
    @return void.
    **/
   void resetRotation( void );
+
+  /**
+     resetPosition adjusts the camera's position back to
+     its default state (The origin at (0,0,0))
+
+     @return void.
+  **/
+  void resetPosition( void );
 
 private:
   

@@ -1,0 +1,173 @@
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/m4
+END
+ac_func_fseeko.m4
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/m4/ac_func_fseeko.m4
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/m4/Makefile.am
+END
+ltoptions.m4
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/m4/ltoptions.m4
+END
+framework.m4
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/m4/framework.m4
+END
+ax_lang_compiler_ms.m4
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/m4/ax_lang_compiler_ms.m4
+END
+libtool.m4
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/m4/libtool.m4
+END
+ax_cxx_bool.m4
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/m4/ax_cxx_bool.m4
+END
+ax_check_compile_flag.m4
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/m4/ax_check_compile_flag.m4
+END
+ax_cflags_warn_all.m4
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/m4/ax_cflags_warn_all.m4
+END
+magick_func_mmap_fileio.m4
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/m4/magick_func_mmap_fileio.m4
+END
+ax_opencl.m4
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/m4/ax_opencl.m4
+END
+lt~obsolete.m4
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/m4/lt~obsolete.m4
+END
+ax_gcc_archflag.m4
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/m4/ax_gcc_archflag.m4
+END
+ax_gcc_x86_cpuid.m4
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/m4/ax_gcc_x86_cpuid.m4
+END
+ax_compiler_vendor.m4
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/m4/ax_compiler_vendor.m4
+END
+ax_pthread.m4
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/m4/ax_pthread.m4
+END
+ax_cxx_namespace_std.m4
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/m4/ax_cxx_namespace_std.m4
+END
+ax_prefix_config_h.m4
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/m4/ax_prefix_config_h.m4
+END
+ltsugar.m4
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/m4/ltsugar.m4
+END
+pkg.m4
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/m4/pkg.m4
+END
+ax_compare_version.m4
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/m4/ax_compare_version.m4
+END
+ld-version-script.m4
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/m4/ld-version-script.m4
+END
+ltversion.m4
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/m4/ltversion.m4
+END
+magick_check_pthread_lib.m4
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/m4/magick_check_pthread_lib.m4
+END
+ax_prog_perl_version.m4
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/m4/ax_prog_perl_version.m4
+END
+cxx_have_std_libs.m4
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/m4/cxx_have_std_libs.m4
+END
+ax_cxx_namespaces.m4
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/m4/ax_cxx_namespaces.m4
+END
+ax_c___attribute__.m4
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/subversion/!svn/ver/11536/ImageMagick/branches/ImageMagick-6.8.4/ImageMagick-6/m4/ax_c___attribute__.m4
+END

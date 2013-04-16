@@ -1,0 +1,215 @@
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config
+END
+type-ghostscript.xml.in
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config/type-ghostscript.xml.in
+END
+ltmain.sh
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config/ltmain.sh
+END
+config.sub
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config/config.sub
+END
+policy.xml
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config/policy.xml
+END
+colors.xml
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config/colors.xml
+END
+type-dejavu.xml.in
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config/type-dejavu.xml.in
+END
+delegates.xml.in
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config/delegates.xml.in
+END
+MagickCore.dox.in
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config/MagickCore.dox.in
+END
+test-driver
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config/test-driver
+END
+quantization-table.xml
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config/quantization-table.xml
+END
+thresholds.xml
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config/thresholds.xml
+END
+magic.xml
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config/magic.xml
+END
+mkinstalldirs
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config/mkinstalldirs
+END
+configure.xml.in
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config/configure.xml.in
+END
+type.xml.in
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config/type.xml.in
+END
+tap-driver.sh
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config/tap-driver.sh
+END
+english.xml
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config/english.xml
+END
+coder.xml
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config/coder.xml
+END
+locale.xml
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config/locale.xml
+END
+config.h.in
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config/config.h.in
+END
+ImageMagick.rc
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config/ImageMagick.rc
+END
+MagickWand.dox.in
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config/MagickWand.dox.in
+END
+missing
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config/missing
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config/Makefile.am
+END
+ImageMagick.rdf.in
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config/ImageMagick.rdf.in
+END
+type-windows.xml.in
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config/type-windows.xml.in
+END
+install-sh
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config/install-sh
+END
+Magick++.dox.in
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config/Magick++.dox.in
+END
+log.xml
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config/log.xml
+END
+lndir.sh
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config/lndir.sh
+END
+francais.xml
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config/francais.xml
+END
+mime.xml
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config/mime.xml
+END
+depcomp
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config/depcomp
+END
+compile
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config/compile
+END
+config.guess
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/config/config.guess
+END

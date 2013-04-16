@@ -1,0 +1,341 @@
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter
+END
+Charcoal.miff
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Charcoal.miff
+END
+Border.miff
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Border.miff
+END
+Equalize.miff
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Equalize.miff
+END
+Colorize.miff
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Colorize.miff
+END
+Emboss.miff
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Emboss.miff
+END
+Solarize.miff
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Solarize.miff
+END
+Implode.miff
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Implode.miff
+END
+Chop.miff
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Chop.miff
+END
+Frame.miff
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Frame.miff
+END
+MotionBlur.miff
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/MotionBlur.miff
+END
+Flip.miff
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Flip.miff
+END
+Minify.miff
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Minify.miff
+END
+Convolve.miff
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Convolve.miff
+END
+Threshold.miff
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Threshold.miff
+END
+Contrast.miff
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Contrast.miff
+END
+Rotate.miff
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Rotate.miff
+END
+Flop.miff
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Flop.miff
+END
+Resize.miff
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Resize.miff
+END
+Segment.miff
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Segment.miff
+END
+Shear.miff
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Shear.miff
+END
+Wave.miff
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Wave.miff
+END
+Raise.miff
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Raise.miff
+END
+MedianFilter.miff
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/MedianFilter.miff
+END
+Crop.miff
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Crop.miff
+END
+Blur.miff
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Blur.miff
+END
+Edge.miff
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Edge.miff
+END
+ReduceNoise.miff
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/ReduceNoise.miff
+END
+Level.miff
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Level.miff
+END
+Channel.miff
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Channel.miff
+END
+Annotate.miff
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Annotate.miff
+END
+ColorFloodfill.miff
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/ColorFloodfill.miff
+END
+OilPaint.miff
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/OilPaint.miff
+END
+RadialBlur.miff
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/RadialBlur.miff
+END
+Sample.miff
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Sample.miff
+END
+Gamma.miff
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Gamma.miff
+END
+Shade.miff
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Shade.miff
+END
+SigmoidalContrast.miff
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/SigmoidalContrast.miff
+END
+Scale.miff
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Scale.miff
+END
+Opaque.miff
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Opaque.miff
+END
+Magnify.miff
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Magnify.miff
+END
+Set.miff
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Set.miff
+END
+UnsharpMask.miff
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/UnsharpMask.miff
+END
+Draw.miff
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Draw.miff
+END
+GaussianBlur.miff
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/GaussianBlur.miff
+END
+Despeckle.miff
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Despeckle.miff
+END
+Quantize.miff
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Quantize.miff
+END
+Normalize.miff
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Normalize.miff
+END
+Sharpen.miff
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Sharpen.miff
+END
+Swirl.miff
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Swirl.miff
+END
+Negate.miff
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Negate.miff
+END
+MatteFloodfill.miff
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/MatteFloodfill.miff
+END
+Shave.miff
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Shave.miff
+END
+Roll.miff
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Roll.miff
+END
+AdaptiveThreshold.miff
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/AdaptiveThreshold.miff
+END
+Modulate.miff
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Modulate.miff
+END
+Trim.miff
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/subversion/!svn/ver/11534/ImageMagick/branches/ImageMagick-6.8.4/PerlMagick/t/reference/write/filter/Trim.miff
+END

@@ -24,6 +24,7 @@ typedef std::pair< std::string, Object * > NameObjPair;
  */
 Scene::Scene() {
   _currentObj = _list.end();
+  // This is a sentinel value: A real program will never have a handle of 0.
   _gShader = 0;
 }
 
@@ -53,7 +54,7 @@ Scene::~Scene() {
  @return void.
  **/
 void Scene::shader( GLuint gShader ) {
-  this->_gShader = gShader;
+  _gShader = gShader;
 }
 
 /**
@@ -218,10 +219,10 @@ Object *Scene::operator[]( std::string const &objname ) {
  */
 Scene &Scene::operator=( const Scene &copy ) {
   
-  this->_gShader = copy._gShader;
-  this->_map.clear();
-  this->_list.clear();
-  this->_currentObj = _list.end();
+  _gShader = copy._gShader;
+  _map.clear();
+  _list.clear();
+  _currentObj = _list.end();
   return *this;
   
 }
@@ -247,5 +248,23 @@ void Scene::deleteObject( Object *obj ) {
   _list.remove( obj );
   _map.erase( obj->name() );
   delete obj;
+
+}
+
+/**
+ * Propagate all changes throughout the Scene graph.
+ */
+void Scene::propagate( void ) {
+
+  std::list< Object* >::iterator it;
+
+  for ( it = _list.begin(); it != _list.end(); ++it ) {
+    // Update this child's transformations.
+    (*it)->_trans.clean();
+    // Instruct this child to send his transformations to his kids, if any.
+    (*it)->sceneCascade();
+    // Begin propagating from the child-down.
+    (*it)->propagate();
+  }
 
 }
