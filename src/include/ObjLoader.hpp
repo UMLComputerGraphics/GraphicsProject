@@ -39,7 +39,6 @@ namespace ObjLoader {
    */
   Object *loadObj( const Scene &scene, const char* filename, const char *objName =
                        NULL );
-  
   /**
    * Split a string by an arbitrary delimeter.
    * @param str The string to split.
@@ -95,6 +94,23 @@ namespace ObjLoader {
    * @param filename the OBJ file to load.
    */
   void loadModelFromFile( Object *object, const char *filename );
+
+  /**
+   * Parses a diffuse color from a line in the .mtl file
+   *
+   * @param line The line containing the color data
+   * @return A vec3 containing the color in rgb format
+   */
+
+  Angel::vec3 parseDiffuseColor(const string &line);
+
+  /**
+   * Loads a material file into an object
+   *
+   * @param object The object to add the material into.
+   * @param filename the MTL file to load.
+   */
+  void loadMaterialFromFile(Object* object, const char *filename);
 
 }
 

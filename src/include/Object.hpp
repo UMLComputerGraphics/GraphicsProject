@@ -243,6 +243,12 @@ public:
   int numberOfPoints();
 
   /**
+  * Adds material data to the object
+  * @param diffuse The diffuse color
+  **/
+  void addMaterial(Angel::vec3 diffuse);
+
+  /**
    * Set the Texture ID / Texture Unit for this Object.
    * @param newTextureID The new Texture Unit ID/Index for this Object.
    * @return None.
@@ -259,6 +265,7 @@ public:
   /** Draw Order Index buffer. If not used, engine assumes GL_DRAW_ARRAYS. **/
   std::vector< unsigned int > _indices;
   /** Colors buffer. **/
+
   std::vector< Angel::vec4 > _colors;
   /** Texture Coordinates buffer. **/
   std::vector< Angel::vec2 > _texUVs;
@@ -334,6 +341,9 @@ protected:
    * The texture unit index this Object uses.
    */
   GLint _textureID;
+
+  /** The diffuse color of the object **/
+  Angel::vec3 color;
 
 private:
 

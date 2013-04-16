@@ -85,6 +85,7 @@ void MONOLITH::init(void)
     Object *bottle = rootScene->addObject( "bottle" );
     // Load model from file.
     ObjLoader::loadModelFromFile( bottle, "../models/bottle_wine_high.obj" );
+    ObjLoader::loadMaterialFromFile(bottle, "../models/bottle_wine_high.mtl");
     {
         // Scale the bottle down!
         bottle->_trans._scale.set( 0.30 );
@@ -119,6 +120,8 @@ void MONOLITH::init(void)
         // with this model, we can use all the preexisting Object class functionality
         ObjLoader::loadModelFromFile( bottleMorphTarget,
                                      "../models/bottle_liquor_high.obj" );
+	   ObjLoader::loadMaterialFromFile(bottleMorphTarget,
+	   						  "../models/bottle_liquor_high.mtl");
         bottleMorphTarget->_trans._scale.set( 0.30 );
         
         for ( uint i = 0; i < bottle->_colors.size(); i++ ) {
@@ -132,17 +135,18 @@ void MONOLITH::init(void)
         bottle->bufferMorphOnly();
         bottle->propagateOLD();
     }
-    
-    // Let the bodies hit the floor
-    Object *floor = rootScene->addObject( "floor", shader[1] );
-    quad( floor, vec4( -10, 0, 10, 1.0 ), vec4( -10, 0, -10, 1.0 ),
-         vec4( 10, 0, -10, 1.0 ), vec4( 10, 0, 10, 1.0 ),
-         vec4( 0.4, 0.4, 0.4, 0.9 ) );
-    floor->buffer();
+    // Load table
+    Object *table = rootScene->addObject("table", shader[1]);
+    ObjLoader::loadModelFromFile(table, "../models/table.obj");
+    ObjLoader::loadMaterialFromFile(table, "../models/table.mtl");
+    table->_trans._scale.set( 0.30 );
+    table->buffer();
+    table->propagateOLD();
     
     // Load up that goddamned candle
     Object *candle = rootScene->addObject( "Candle", shader[1] );
     ObjLoader::loadModelFromFile( candle, "../models/candle.obj" );
+    ObjLoader::loadMaterialFromFile( candle, "../models/candle.mtl");
     vec4 min = candle->getMin();
     vec4 max = candle->getMax();
     fprintf( stderr, "Min: (%f,%f,%f)\nMax: (%f,%f,%f)\n", min.x, min.y, min.z,
@@ -150,6 +154,7 @@ void MONOLITH::init(void)
     candle->_trans._offset.set( 2.5, -min.y, 2.5 );
     //candle->propagateOLD();
     candle->buffer();
+
     
     ParticleSystem *ps = new ParticleSystem( 10000, "ps1", shader[2] );
     ps->setLifespan(5,7.5);

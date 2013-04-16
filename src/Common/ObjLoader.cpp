@@ -159,6 +159,27 @@ namespace ObjLoader {
         (i>=2?n_elements:(i==1?uv_elements:v_elements))
           .push_back(atoi(raw_elements[i].c_str()));
   }
+
+  /**
+   * Parses a diffuse color from a line in the .mtl file
+   *
+   * @param line The line containing the color data
+   * @return A vec3 containing the color in rgb format
+   */
+
+  vec3 parseDiffuseColor(const string &line)
+  {
+    vec3 color;
+    
+    istringstream s( line.substr( 3 ) );
+    s >> color.x;
+    s >> color.y;
+    s >> color.z;
+    
+    return color;
+  }
+
+   
   
   /**
    * loadObj loads all available objects from a .obj file into the provided scene.
@@ -170,8 +191,10 @@ namespace ObjLoader {
    */
   Object *loadObj(Scene scene, const char* filename,
                    const char *defaultObjName ) {
+
     // file input stream
     std::ifstream in( filename, std::ios::in );
+    
     
     if ( !in ) {
       throw std::runtime_error( "Could not open file." );
@@ -374,5 +397,38 @@ namespace ObjLoader {
     }
 
   } // End Object Loader
+
+  /**
+   * Loads a material file into an object
+   *
+   * @param object The object to add the material into.
+   * @param filename the MTL file to load.
+   */
+  void loadMaterialFromFile(Object* object, const char *filename) {
+
+    std::string relativePath = Util::getRelativePath(filename);
+
+    // file input stream
+    std::ifstream in( relativePath.c_str(), std::ios::in );
+
+    string line;
+
+    vec3 diffuseColor;
+    
+    if ( !in ) {
+      throw std::runtime_error( "Could not open file." );
+    }
+
+    // parse the .mtl file for its data
+    while ( getline( in, line ) ) {
+	 // line starting with 'Kd ' is diffuse color
+      if ( line.substr( 0, 3 ) == "Kd " ) {
+	   diffuseColor = parseDiffuseColor(line);
+      }
+    }
+
+    object->addMaterial(diffuseColor);    
+	
+  }
 
 } // End Namespace
