@@ -31,15 +31,15 @@ public:
     
     
     // Constructor and destructor for MONOTLITH
-    MONOLITH( QObject *parent = 0 );
+    MONOLITH( int argc, char* argv[] );
     
     ~MONOLITH();
 
-    /**
-     * Initialization: load and compile shaders, initialize camera(s), load models.
-     */
-
-    void init(void);
+//    /**
+//     * Initialization: load and compile shaders, initialize camera(s), load models.
+//     */
+//
+//    void init(void);
     
     /**
      * Cleans up our scene graph.
@@ -55,7 +55,7 @@ public:
     /**
      * This will initialize and run MONOLITH
      */
-    void run(int &argc, char* argv[]);
+    void run();
     
     
     
@@ -72,6 +72,21 @@ private:
      * @param obj The object to animate.
      */
     static void simpleRotateAnim( TransCache &obj );
+    
+    GLuint shader[3];
+    
+    Scene *rootScene;
+    Screen *primScreen;
+    Object *bottle;
+    
+    Object *floor;
+    
+    Object *candle;
+    
+    ParticleSystem *ps;
+ 
+    
+    
 };
 
 

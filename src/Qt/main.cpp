@@ -8,9 +8,9 @@ int main( int argc, char **argv ) {
   fprintf(
       stderr,
       "Error: Your project is unfinished and you're going to fail and everyone is going to laugh at you and it's a really bad day sorry\n" );
-
-   MONOLITH monolith;
-   monolith.run(argc, argv);
+   #ifdef __APPLE__
+   MONOLITH monolith(argc, argv);
+   monolith.run();
    QApplication a(argc, argv);
    MainWindow w;
    w.setWindowTitle("First Graphics Demo");
@@ -18,6 +18,23 @@ int main( int argc, char **argv ) {
    a.exec();
    /* PULL THE TRIGGER */
    glutMainLoop();
-   return 1;
+   
+
+#else
+  
+    
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.setWindowTitle("First Graphics Demo");
+    w.show();
+    
+    MONOLITH monolith(argc, argv);
+    monolith.start();
+   
+    
+    a.exec();
+    #endif
+    
+    return EXIT_SUCCESS;
 
 }

@@ -10,27 +10,22 @@
 #include "MONOLITH.hpp"
 
 
-/* Default and only constructor */
-MONOLITH::MONOLITH(QObject *parent)
-{
-    
-}
-
 MONOLITH::~MONOLITH(void)
 {
     
 }
 
-/**
- * Initialization: load and compile shaders, initialize camera(s), load models.
- */
-void MONOLITH::init(void)
+/* Default and only constructor */
+MONOLITH::MONOLITH(int argc, char* argv[])
 {
-    GLuint shader[3];
+    
+    Engine::instance()->init( &argc, argv,
+                             "WE ARE THE BORG. RESISTANCE IS FUTILE!" );
+    Engine::instance()->registerIdle( monolith_idle );
     
     // Get handles to the Scene and the Screen.
-    Scene *rootScene = Engine::instance()->rootScene();
-    Screen *primScreen = Engine::instance()->mainScreen();
+    rootScene = Engine::instance()->rootScene();
+    primScreen = Engine::instance()->mainScreen();
     
     shader[0] = Angel::InitShader( "shaders/vMONOLITH.glsl",
                                   "shaders/fMONOLITH.glsl" );
@@ -48,7 +43,7 @@ void MONOLITH::init(void)
     primScreen->_camList.next();
     
     // Create the Bottle Object handle...
-    Object *bottle = rootScene->addObject( "bottle" );
+    bottle = rootScene->addObject( "bottle" );
     // Load model from file.
     ObjLoader::loadModelFromFile( bottle, "../models/bottle_wine_high.obj" );
     {
@@ -100,14 +95,14 @@ void MONOLITH::init(void)
     }
     
     // Let the bodies hit the floor
-    Object *floor = rootScene->addObject( "floor", shader[1] );
+    floor = rootScene->addObject( "floor", shader[1] );
     quad( floor, vec4( -10, 0, 10, 1.0 ), vec4( -10, 0, -10, 1.0 ),
          vec4( 10, 0, -10, 1.0 ), vec4( 10, 0, 10, 1.0 ),
          vec4( 0.4, 0.4, 0.4, 0.9 ) );
     floor->buffer();
     
     // Load up that goddamned candle
-    Object *candle = rootScene->addObject( "Candle", shader[1] );
+    candle = rootScene->addObject( "Candle", shader[1] );
     ObjLoader::loadModelFromFile( candle, "../models/candle.obj" );
     vec4 min = candle->getMin();
     vec4 max = candle->getMax();
@@ -117,7 +112,7 @@ void MONOLITH::init(void)
     //candle->propagate();
     candle->buffer();
     
-    ParticleSystem *ps = new ParticleSystem( 10000, "ps1", shader[2] );
+    ps = new ParticleSystem( 10000, "ps1", shader[2] );
     ps->setLifespan(5,7.5);
     ps->setEmitterRadius( 0.001 ) ;
     candle->insertObject( ps );
@@ -163,12 +158,12 @@ void MONOLITH::monolith_idle(void)
 /**
  * This will initialize and run MONOLITH
  */
-void MONOLITH::run(int &argc, char* argv[])
+void MONOLITH::run()
 {
-    Engine::instance()->init( &argc, argv,
-                             "WE ARE THE BORG. RESISTANCE IS FUTILE!" );
-    Engine::instance()->registerIdle( monolith_idle );
-    init();
+    
+#ifndef __APPLE__
+    glutMainLoop();
+#endif
     
 }
 /**
