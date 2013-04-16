@@ -13,9 +13,9 @@
 #include <algorithm>
 
 float threeDimensionalDistance( vec4 points1, vec4 points2 ) {
-  return sqrt(
+  return
       pow( (points1.x - points2.x), 2 ) + pow( (points1.y - points2.y), 2 )
-      + pow( (points1.z - points2.z), 2 ) );
+      + pow( (points1.z - points2.z), 2 );
 }
 
 int findTriangleWithMinimumDistance( Object* largerModel, Object* smallerModel,
@@ -39,14 +39,14 @@ int findTriangleWithMinimumDistance( Object* largerModel, Object* smallerModel,
 }
 
 float threeDimensionalDistanceFromCenter(vec4 points1, vec4 points2){
-	return sqrt(pow((points1.x - points2.x),2) + pow((points1.y - points2.y),2) + pow((points1.z - points2.z),2));
+	return pow((points1.x - points2.x),2) + pow((points1.y - points2.y),2) + pow((points1.z - points2.z),2);
 }
 
 float threeDimensionalDistanceWithOrigin(vec4 points1, vec4 points2){
 	if(abs(points1.z) > abs(points2.z)){
-		return sqrt(pow((points1.x - points2.x),2) + pow((points1.y - points2.y),2) + pow((points1.z - points2.z),2)) + threeDimensionalDistance(points2, vec4(0.0,0.0,0.0,0.0));
+		return pow((points1.x - points2.x),2) + pow((points1.y - points2.y),2) + pow((points1.z - points2.z),2) + threeDimensionalDistance(points2, vec4(0.0,0.0,0.0,0.0));
 	}else{
-		return sqrt(pow((points1.x - points2.x),2) + pow((points1.y - points2.y),2) + pow((points1.z - points2.z),2)) + threeDimensionalDistance(points1, vec4(0.0,0.0,0.0,0.0));
+		return pow((points1.x - points2.x),2) + pow((points1.y - points2.y),2) + pow((points1.z - points2.z),2) + threeDimensionalDistance(points1, vec4(0.0,0.0,0.0,0.0));
 	} 
 	
 }
@@ -63,90 +63,54 @@ vec4 findCenter(vec4 point1, vec4 point2, vec4 point3){
 void findOptimalOrientation(vec4 a, vec4 b, vec4 c, std::vector< Angel::vec4 > model, int index, vec4& point1, vec4& point2, vec4& point3){
 	//abc
 	float distance1 = threeDimensionalDistance(a,model[index])+threeDimensionalDistance(b,model[index+1])+threeDimensionalDistance(c,model[index+2]);
-	//acb
-	float distance2 = threeDimensionalDistance(a,model[index])+threeDimensionalDistance(c,model[index+1])+threeDimensionalDistance(b,model[index+2]);
-	//bac
-	float distance3 = threeDimensionalDistance(b,model[index])+threeDimensionalDistance(a,model[index+1])+threeDimensionalDistance(c,model[index+2]);
 	//bca
 	float distance4 = threeDimensionalDistance(b,model[index])+threeDimensionalDistance(c,model[index+1])+threeDimensionalDistance(a,model[index+2]);
 	//cab
 	float distance5 = threeDimensionalDistance(c,model[index])+threeDimensionalDistance(a,model[index+1])+threeDimensionalDistance(b,model[index+2]);
-	//cba
-	float distance6 = threeDimensionalDistance(c,model[index])+threeDimensionalDistance(b,model[index+1])+threeDimensionalDistance(a,model[index+2]);
-	float distances[] = {distance1,distance2,distance3,distance4,distance5,distance6};
-	float minimum = *std::min_element(distances,distances+6);	
+	float distances[] = {distance1,distance4,distance5};
+	float minimum = *std::min_element(distances,distances+3);	
 	if(minimum==distance1){
 		point1=a;point2=b;point3=c;return;
-	}else if(minimum==distance2){
-		point1=a;point2=c;point3=b;return;
-	}else if(minimum==distance3){
-		point1=b;point2=a;point3=c;return;
 	}else if(minimum==distance4){
 		point1=b;point2=c;point3=a;return;
-	}else if(minimum==distance5){
+	}else{
 		point1=c;point2=a;point3=b;return;
-	}else if(minimum==distance6){
-		point1=c;point2=b;point3=a;return;
 	}
 }
 
 void findOptimalOrientation(vec4 a, vec4 b, vec4 c, Object* model, int index, vec4& point1, vec4& point2, vec4& point3){
 	//abc
 	float distance1 = threeDimensionalDistance(a,model->_vertices[index])+threeDimensionalDistance(b,model->_vertices[index+1])+threeDimensionalDistance(c,model->_vertices[index+2]);
-	//acb
-	float distance2 = threeDimensionalDistance(a,model->_vertices[index])+threeDimensionalDistance(c,model->_vertices[index+1])+threeDimensionalDistance(b,model->_vertices[index+2]);
-	//bac
-	float distance3 = threeDimensionalDistance(b,model->_vertices[index])+threeDimensionalDistance(a,model->_vertices[index+1])+threeDimensionalDistance(c,model->_vertices[index+2]);
 	//bca
 	float distance4 = threeDimensionalDistance(b,model->_vertices[index])+threeDimensionalDistance(c,model->_vertices[index+1])+threeDimensionalDistance(a,model->_vertices[index+2]);
 	//cab
 	float distance5 = threeDimensionalDistance(c,model->_vertices[index])+threeDimensionalDistance(a,model->_vertices[index+1])+threeDimensionalDistance(b,model->_vertices[index+2]);
-	//cba
-	float distance6 = threeDimensionalDistance(c,model->_vertices[index])+threeDimensionalDistance(b,model->_vertices[index+1])+threeDimensionalDistance(a,model->_vertices[index+2]);
-	float distances[] = {distance1,distance2,distance3,distance4,distance5,distance6};
-	float minimum = *std::min_element(distances,distances+6);	
+	float distances[] = {distance1,distance4,distance5};
+	float minimum = *std::min_element(distances,distances+3);	
 	if(minimum==distance1){
 		point1=a;point2=b;point3=c;return;
-	}else if(minimum==distance2){
-		point1=a;point2=c;point3=b;return;
-	}else if(minimum==distance3){
-		point1=b;point2=a;point3=c;return;
 	}else if(minimum==distance4){
 		point1=b;point2=c;point3=a;return;
-	}else if(minimum==distance5){
+	}else{
 		point1=c;point2=a;point3=b;return;
-	}else if(minimum==distance6){
-		point1=c;point2=b;point3=a;return;
 	}
 }
 
 void findOptimalOrientation(vec4 a, vec4 b, vec4 c, Object* model, int index, int& point1, int& point2, int& point3){
 	//abc
 	float distance1 = threeDimensionalDistance(a,model->_vertices[index])+threeDimensionalDistance(b,model->_vertices[index+1])+threeDimensionalDistance(c,model->_vertices[index+2]);
-	//acb
-	float distance2 = threeDimensionalDistance(a,model->_vertices[index])+threeDimensionalDistance(c,model->_vertices[index+1])+threeDimensionalDistance(b,model->_vertices[index+2]);
-	//bac
-	float distance3 = threeDimensionalDistance(b,model->_vertices[index])+threeDimensionalDistance(a,model->_vertices[index+1])+threeDimensionalDistance(c,model->_vertices[index+2]);
 	//bca
 	float distance4 = threeDimensionalDistance(b,model->_vertices[index])+threeDimensionalDistance(c,model->_vertices[index+1])+threeDimensionalDistance(a,model->_vertices[index+2]);
 	//cab
 	float distance5 = threeDimensionalDistance(c,model->_vertices[index])+threeDimensionalDistance(a,model->_vertices[index+1])+threeDimensionalDistance(b,model->_vertices[index+2]);
-	//cba
-	float distance6 = threeDimensionalDistance(c,model->_vertices[index])+threeDimensionalDistance(b,model->_vertices[index+1])+threeDimensionalDistance(a,model->_vertices[index+2]);
-	float distances[] = {distance1,distance2,distance3,distance4,distance5,distance6};
-	float minimum = *std::min_element(distances,distances+6);	
+	float distances[] = {distance1,distance4,distance5};
+	float minimum = *std::min_element(distances,distances+3);	
 	if(minimum==distance1){
 		point1=1;point2=2;point3=3;return;
-	}else if(minimum==distance2){
-		point1=1;point2=3;point3=2;return;
-	}else if(minimum==distance3){
-		point1=2;point2=1;point3=3;return;
 	}else if(minimum==distance4){
 		point1=2;point2=3;point3=1;return;
-	}else if(minimum==distance5){
+	}else{
 		point1=3;point2=1;point3=2;return;
-	}else if(minimum==distance6){
-		point1=3;point2=2;point3=1;return;
 	}
 }
 
