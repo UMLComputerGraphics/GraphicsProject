@@ -46,23 +46,23 @@ void init() {
   Object *bottle = rootScene->addObject( "bottle" );
 
   // Use the object loader to actually fill out the vertices and-so-on of the bottle.
-  ObjLoader::loadModelFromFile( bottle, "../models/bottle_wine_high.obj" );
+  ObjLoader::loadModelFromFile( bottle, "../models/bottle-a.obj" );
 
   // Objects has-a pointer to an object which is their "morph target."
   // they are created and buffered as follows:
 
   bottle->genMorphTarget( gShader ) ; // this makes a new object and links it to the source object. it returns the addr of the new obj..
   Object *bottleMorphTarget = bottle->morphTarget() ; // we can get the addr of the morph object like this, also.
-  ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle_liquor_high.obj" ); // with this model, we can use all the preexisting Object class functionality
+  ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle-b.obj" ); // with this model, we can use all the preexisting Object class functionality
 
   printf("Number Vertices Model1: %d\n",bottle->numberOfPoints());
-  printf("Number Vertices Model2: %d\n",bottleMorphTarget->numberOfPoints());
-/*
+  printf("Number Vertices Model2: %d\n\n",bottleMorphTarget->numberOfPoints());
+
   Angel::vec3 lowBoundSrc = bottle->getMin();
   Angel::vec3 maxBoundSrc = bottle->getMax();
   Angel::vec3 lowBoundDst = bottleMorphTarget->getMin();
   Angel::vec3 maxBoundDst = bottleMorphTarget->getMax();
-
+/*
   SquareMap* squareMap = createSquareMap(fminf(float(lowBoundSrc.x),
 					       float(lowBoundDst.x)),
 					 fmaxf(float(maxBoundSrc.x),
@@ -76,8 +76,13 @@ void init() {
 					 fmaxf(float(maxBoundSrc.z),
 						   float(maxBoundDst.z)));
 	*/
-
-  matchInitialPoints(bottle, bottleMorphTarget);
+	
+	//segment parts of bottle to determine problem areas
+	//splitProblemTriangles(bottle, bottleMorphTarget);
+	segmentModels(bottle, lowBoundSrc, maxBoundSrc, bottleMorphTarget, lowBoundDst, maxBoundDst);
+  //matchInitialPoints(bottle, bottleMorphTarget);
+  printf("Number Vertices Model1: %d\n",bottle->numberOfPoints());
+  printf("Number Vertices Model2: %d\n\n",bottleMorphTarget->numberOfPoints());
   makeModelsSameSize(bottle, bottleMorphTarget);
 
   //populateSrcSquare(squareMap,bottle->_vertices);
@@ -137,12 +142,12 @@ void zach_idle( void ) {
   static double timer = 0.0 ;
   static bool trigger = false;
   if(trigger == false){
-	  if( (timer += 0.01) >1 ){
+	  if( (timer += 0.0001) >1 ){
 		  timer = 1.0;
 		  trigger = true;
 	  }
   }else{
-	  if( (timer -= 0.01) < 0){
+	  if( (timer -= 0.0001) < 0){
 		  timer = 0.0;
 		  trigger = false;
 	  }
