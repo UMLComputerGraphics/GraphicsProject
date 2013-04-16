@@ -46,10 +46,10 @@ endif
 UNAME := $(shell uname)
 ifeq ($(UNAME), Linux)
     CXXOPTS += -std=c++0x
-    CXXINCS += -I$(CURDIR)/ImageVoodoo/include  -I$(CURDIR)/ImageVoodoo/include/ImageMagick-6
+    CXXINCS += "-I$(CURDIR)/ImageVoodoo/include"  "-I$(CURDIR)/ImageVoodoo/include/ImageMagick-6"
     CXXDEFS += -DFREEGLUT_STATIC -DGLEW_STATIC
     LDLIBS += -lGL -lGLU -lGLEW "-L$(CURDIR)/expensiveglut/lib" -lexpensiveglut -lX11 -lm -lboost_thread-mt "-L$(CURDIR)/ImageVoodoo/lib" -lMagick++-6.Q16
-    EXPENSIVEGLUT = "$(CURDIR)/expensiveglut/lib/libexpensiveglut.so" "$(CURDIR)/ImageVoodoo/lib/libMagic++-6.Q16.so"
+    EXPENSIVEGLUT = "$(CURDIR)/expensiveglut/lib/libexpensiveglut.so" "$(CURDIR)/ImageVoodoo/lib/libMagick++-6.Q16.so"
     #FMODNAME = libfmodex.so
     #FMODLIB = $(FMODLIBDIR)/$(FMODLIBNAME)
 	#If linux, we don't need any extra build steps
@@ -59,7 +59,7 @@ endif
 ifeq ($(UNAME), Darwin)
 #    CXXOPTS -= -mmacosx-version-min=10.6
 #    CXXOPTS += -mmacosx-version-min=10.7 -std=c++11 -stdlib=libc++ -m64
-    CXXINCS += -I/opt/local/include "-I$(CURDIR)/ImageVoodoo/include" "-I$(CURDIR)/ImageVoodoo/include/ImageMagick-6" -I/usr/X11R6/include -L/usr/X11R6/lib 
+    CXXINCS += -I/opt/local/include "-I$(CURDIR)/ImageVoodoo/include" "-I$(CURDIR)/ImageVoodoo/include/ImageMagick-6" -I/usr/X11R6/include 
    # LDLIBS += -framework Carbon -framework OpenGL -framework GLUT -L/opt/local/lib
    # if you can't find imgMagick, then try the line above. be sure to comment the line below
 #    LDOPTS -= -mmacosx-version-min=10.6
