@@ -29,6 +29,8 @@
 //globalz
 float centerX, centerY;
 
+bool warpPointer = true;
+
 /**
  * keylift is registered as a GLUT callback for when a user
  * releases a depressed key.
@@ -188,6 +190,9 @@ void engineKeyboard( unsigned char key, int x, int y ) {
     Engine::instance()->opt( "terrain_regen", true );
     break;
     
+  case 'p':
+  	Engine::instance()->flip("trap_pointer");	
+	break;
   }
 }
 
@@ -376,8 +381,9 @@ void EngineMousePassive( int x, int y ) {
     }
   }
   
-  glutWarpPointer( centerX, centerY );
-
+  if (Engine::instance()->opt("trap_pointer")) {
+	  glutWarpPointer( centerX, centerY );
+  } 
 }
 
 /**
@@ -405,7 +411,9 @@ void engineResize( int width, int height ) {
   centerX=-1;
   centerY=-1;
   
-  // move the pointer so that there isn't a big jump next time we move it.
-  glutWarpPointer( scr->midpointX(), scr->midpointY() );
+  if (Engine::instance()->opt("trap_pointer")) {
+	// move the pointer so that there isn't a big jump next time we move it.
+    glutWarpPointer( scr->midpointX(), scr->midpointY() );
+  }
   
 }
