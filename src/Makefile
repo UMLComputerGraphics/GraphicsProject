@@ -139,7 +139,7 @@ clean-qt: qMakefile
 	make -f qMakefile distclean
 	rm -rf debug/ release/
 	rm -f qMakefile
-	rm Binaries/MONOLITH
+	rm -f Binaries/MONOLITH
 
 qMakefile:
 	qmake -o qMakefile
