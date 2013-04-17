@@ -51,7 +51,7 @@ UNAME := $(shell uname)
 ifeq ($(UNAME), Linux)
     CXXINCS += -I/usr/include/ImageMagick/
     CXXDEFS += -DFREEGLUT_STATIC -DGLEW_STATIC
-    LDLIBS += -lGL -lGLU -lGLEW -lX11 -lm -lboost_thread-mt
+    LDLIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm -lboost_thread-mt
     #FMODNAME = libfmodex.so
     #FMODLIB = $(FMODLIBDIR)/$(FMODLIBNAME)
 	#If linux, we don't need any extra build steps
