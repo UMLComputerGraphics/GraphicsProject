@@ -189,12 +189,12 @@ namespace ObjLoader {
    * @param defaultObjName The name to use for any objects that are found.
    * @return A pointer to the most recently created object.
    */
-  Object *loadObj(Scene scene, const char* filename,
+  std::vector<Object *> loadObj(Scene scene, const char* filename,
                    const char *defaultObjName ) {
 
     // file input stream
     std::ifstream in( filename, std::ios::in );
-    
+    std::vector<Object*> results;
     
     if ( !in ) {
       throw std::runtime_error( "Could not open file." );
@@ -238,6 +238,7 @@ namespace ObjLoader {
         // Add this object up-in-here.
         fprintf( stderr, "CREATING OBJECT1: %s\n", objName.c_str() );
         Object *thisObj = scene.addObject( objName );
+	results.push_back( thisObj );
         thisObj->_vertices = vertices;
         thisObj->_texUVs = textureUVs;
         thisObj->_normals = normals;
@@ -290,12 +291,12 @@ namespace ObjLoader {
     fprintf( stderr, "CREATING OBJECT: %s\n", objName.c_str() );
     if ( objName.length() == 0 ) objName = defaultObjName;
     Object *thisObj = scene.addObject( objName );
+    results.push_back( thisObj );
     thisObj->_vertices = vertices;
     thisObj->_texUVs = textureUVs;
     thisObj->_normals = normals;
     
-    return thisObj;
-    
+    return results;
   }
   
   /** RAND_FLOAT returns a random float from (0,1). */
