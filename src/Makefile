@@ -92,7 +92,7 @@ LDFLAGS = $(LDOPTS) $(LDDIRS) $(LDLIBS)
 
 .PHONY: Makefile
 
-default all: $(TARGETS)
+default all: clean-qt $(TARGETS)
 
 $(TARGETS): $(OBJS)
 
@@ -132,13 +132,14 @@ clobber: _clean _rmtargets clean-qt
 .PHONY: qt
 qt: qMakefile
 	make -f qMakefile
+	ln -f debug/GraphicsProject Binaries/MONOLITH 
 
 .PHONY: clean-qt
 clean-qt: qMakefile
 	make -f qMakefile distclean
 	rm -rf debug/ release/
 	rm -f qMakefile
-
+	rm Binaries/MONOLITH
 
 qMakefile:
 	qmake -o qMakefile

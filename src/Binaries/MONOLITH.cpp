@@ -16,18 +16,12 @@ MONOLITH::MONOLITH(
     QObject *parent
 #endif
     )
-#ifndef WITHOUT_QT
-  : isQtWindowDead(false)
-#endif
 {
     
 }
 
 MONOLITH::~MONOLITH(void)
 {
-#ifndef WITHOUT_QT
-    isQtWindowDead = true;
-#endif
 }
 
 /**
