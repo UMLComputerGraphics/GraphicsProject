@@ -23,8 +23,13 @@
 #include <QObject>
 #include <QtGui>
 
+#ifdef __ APPLE__
 class MONOLITH: public QObject
 {
+#else
+class MONOLITH: public QThread
+{
+#endif
     Q_OBJECT
     
 public:
