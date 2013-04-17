@@ -37,7 +37,7 @@ namespace ObjLoader {
    * @param defaultObjName The name to use for any objects that are found.
    * @return A pointer to the most recently created object.
    */
-  Object *loadObj( const Scene &scene, const char* filename, const char *objName =
+  std::vector<Object*> loadObj( const Scene &scene, const char* filename, const char *objName =
                        NULL );
   /**
    * Split a string by an arbitrary delimeter.
