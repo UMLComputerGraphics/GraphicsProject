@@ -23,7 +23,7 @@
 #include <QObject>
 #include <QtGui>
 
-#ifdef __ APPLE__
+#ifdef __APPLE__
 class MONOLITH: public QObject
 {
 #else
