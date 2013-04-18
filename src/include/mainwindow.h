@@ -35,7 +35,6 @@ public slots:
 
 signals:
 
-
 private:
     Ui::MainWindow *ui;
 };

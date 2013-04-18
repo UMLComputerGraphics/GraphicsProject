@@ -8,34 +8,25 @@ int main( int argc, char **argv ) {
   fprintf(
       stderr,
       "Error: Your project is unfinished and you're going to fail and everyone is going to laugh at you and it's a really bad day sorry\n" );
-   #ifdef __APPLE__
+
    MONOLITH monolith(argc, argv);
-   monolith.run();
+   #ifdef __APPLE__
+    monolith.run();
+    #else
+   monolith.start();
+    #endif
    QApplication a(argc, argv);
    MainWindow w;
    w.setWindowTitle("First Graphics Demo");
-   QObject::connect(w.slider, SIGNAL(valueChanged(int)), &monolith, SLOT(ParticleAdd(int)));
+   QObject::connect(w.slider, SIGNAL(valueChanged(int)), &monolith, SLOT(ParticleAdd()));
    w.show();
    a.exec();
+
+   #ifdef __APPLE__
    /* PULL THE TRIGGER */
    glutMainLoop();
-   
+   #endif
 
-#else
-  
-    
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.setWindowTitle("First Graphics Demo");
-    w.show();
-    
-    MONOLITH monolith(argc, argv);
-    monolith.start();
-   
-    
-    a.exec();
-    #endif
-    
-    return EXIT_SUCCESS;
+   return EXIT_SUCCESS;
 
 }

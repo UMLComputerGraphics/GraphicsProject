@@ -65,7 +65,7 @@ public:
     
     
 public slots:
-    void ParticleAdd(int numParticles);
+    void ParticleAdd();
 signals:
     
 private:
