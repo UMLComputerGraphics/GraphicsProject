@@ -17,7 +17,7 @@
  * Default constructor. Nothing special.
  */
 Cameras::Cameras( void ) {
-  this->_size = Angel::vec2( 0, 0 );
+  _size = Angel::vec2( 0, 0 );
 }
 
 /**
@@ -34,13 +34,15 @@ Cameras::~Cameras( void ) {
  */
 Camera *Cameras::addCamera( const std::string &name ) {
   
-  Camera *cam = new Camera( name, _gShader );
-  
+  Camera *cam = new Camera( name, _gShader );  
   Scene::insertObject( cam );
+
+  // If this is the first camera,
+  // use next() to accomplish setting it as active.
+  if (numCameras() == 1) next();
   
   calculateViewports();
   return cam;
-  //Set active Camera?
   
 }
 
@@ -128,7 +130,7 @@ void Cameras::idleMotion( void ) {
  * @return void.
  */
 void Cameras::resize( int width, int height ) {
-  this->_size = Angel::vec2( width, height );
+  _size = Angel::vec2( width, height );
   if ( DEBUG )
     std::cerr << "Setting Cameras WxH: " << width << "x" << height << "\n";
   calculateViewports();

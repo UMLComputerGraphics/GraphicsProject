@@ -159,6 +159,27 @@ namespace ObjLoader {
         (i>=2?n_elements:(i==1?uv_elements:v_elements))
           .push_back(atoi(raw_elements[i].c_str()));
   }
+
+  /**
+   * Parses a diffuse color from a line in the .mtl file
+   *
+   * @param line The line containing the color data
+   * @return A vec3 containing the color in rgb format
+   */
+
+  vec3 parseDiffuseColor(const string &line)
+  {
+    vec3 color;
+    
+    istringstream s( line.substr( 3 ) );
+    s >> color.x;
+    s >> color.y;
+    s >> color.z;
+    
+    return color;
+  }
+
+   
   
   /**
    * loadObj loads all available objects from a .obj file into the provided scene.
@@ -168,10 +189,12 @@ namespace ObjLoader {
    * @param defaultObjName The name to use for any objects that are found.
    * @return A pointer to the most recently created object.
    */
-  Object *loadObj(Scene scene, const char* filename,
+  std::vector<Object *> loadObj(Scene scene, const char* filename,
                    const char *defaultObjName ) {
+
     // file input stream
     std::ifstream in( filename, std::ios::in );
+    std::vector<Object*> results;
     
     if ( !in ) {
       throw std::runtime_error( "Could not open file." );
@@ -215,6 +238,7 @@ namespace ObjLoader {
         // Add this object up-in-here.
         fprintf( stderr, "CREATING OBJECT1: %s\n", objName.c_str() );
         Object *thisObj = scene.addObject( objName );
+	results.push_back( thisObj );
         thisObj->_vertices = vertices;
         thisObj->_texUVs = textureUVs;
         thisObj->_normals = normals;
@@ -267,12 +291,12 @@ namespace ObjLoader {
     fprintf( stderr, "CREATING OBJECT: %s\n", objName.c_str() );
     if ( objName.length() == 0 ) objName = defaultObjName;
     Object *thisObj = scene.addObject( objName );
+    results.push_back( thisObj );
     thisObj->_vertices = vertices;
     thisObj->_texUVs = textureUVs;
     thisObj->_normals = normals;
     
-    return thisObj;
-    
+    return results;
   }
   
   /** RAND_FLOAT returns a random float from (0,1). */
@@ -289,8 +313,10 @@ namespace ObjLoader {
    */
   void loadModelFromFile( Object *object, const char *filename ) {
     
+    std::string relativePath = Util::getRelativePath(filename);
+
     // file input stream
-    std::ifstream in( Util::getRelativePath(filename), std::ios::in );
+    std::ifstream in( relativePath.c_str(), std::ios::in );
     
     if ( !in ) {
       throw std::runtime_error( "Could not open file." );
@@ -356,9 +382,54 @@ namespace ObjLoader {
     
     if ( object->_texUVs.size() < object->_vertices.size() )
       for ( size_t i = 0; i < object->_vertices.size(); ++i ) {
-        object->_colors.push_back(
-            vec4( RAND_FLOAT, RAND_FLOAT, RAND_FLOAT, 1.0 ) );
+        object->_colors.push_back(vec4( RAND_FLOAT, RAND_FLOAT, RAND_FLOAT, 1.0 ) );
       }
+
+    for ( size_t i = 0; i < object->_texUVs.size(); ++i ) {
+      Angel::vec2 &txy = object->_texUVs[i];
+
+      if ((txy.x < 0.0) || (txy.x > 1.0) || (txy.y < 0.0) || (txy.y > 1.0))
+	fprintf( stderr, "WARNING: Texture UV is out of bounds. (%f,%f)\n", txy.x, txy.y );
+
+      if (txy.x < 0.0) txy.x = 0.0;
+      if (txy.x > 1.0) txy.x = 1.0;
+      if (txy.y < 0.0) txy.y = 0.0;
+      if (txy.y > 1.0) txy.y = 1.0;
+    }
+
+  } // End Object Loader
+
+  /**
+   * Loads a material file into an object
+   *
+   * @param object The object to add the material into.
+   * @param filename the MTL file to load.
+   */
+  void loadMaterialFromFile(Object* object, const char *filename) {
+
+    std::string relativePath = Util::getRelativePath(filename);
+
+    // file input stream
+    std::ifstream in( relativePath.c_str(), std::ios::in );
+
+    string line;
+
+    vec3 diffuseColor;
     
+    if ( !in ) {
+      throw std::runtime_error( "Could not open file." );
+    }
+
+    // parse the .mtl file for its data
+    while ( getline( in, line ) ) {
+	 // line starting with 'Kd ' is diffuse color
+      if ( line.substr( 0, 3 ) == "Kd " ) {
+	   diffuseColor = parseDiffuseColor(line);
+      }
+    }
+
+    object->addMaterial(diffuseColor);    
+	
   }
-}
+
+} // End Namespace

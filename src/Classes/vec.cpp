@@ -47,7 +47,7 @@ namespace Angel {
   GLfloat& vec2::operator []( int i ) {
     return *(&x + i);
   }
-  const GLfloat vec2::operator []( int i ) const {
+  GLfloat vec2::operator []( int i ) const {
     return *(&x + i);
   }
   
@@ -207,7 +207,7 @@ namespace Angel {
   GLfloat& vec3::operator []( int i ) {
     return *(&x + i);
   }
-  const GLfloat vec3::operator []( int i ) const {
+  GLfloat vec3::operator []( int i ) const {
     return *(&x + i);
   }
   
@@ -388,7 +388,7 @@ namespace Angel {
   GLfloat& vec4::operator []( int i ) {
     return *(&x + i);
   }
-  const GLfloat vec4::operator []( int i ) const {
+  GLfloat vec4::operator []( int i ) const {
     return *(&x + i);
   }
   

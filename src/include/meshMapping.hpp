@@ -19,7 +19,7 @@
 
 using Angel::vec4;
 
-static int MaxBin = 1;
+//static int MaxBin = 1;
 
 struct Square {
 	float xStart;

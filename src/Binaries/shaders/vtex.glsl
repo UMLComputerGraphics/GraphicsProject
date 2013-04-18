@@ -1,5 +1,3 @@
-// A simple shader that draws blue vertices. Used for testing multi-shader code.
-
 // attributes
 attribute vec4 vPosition;
 attribute vec4 vColor;

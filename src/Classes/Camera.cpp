@@ -17,11 +17,11 @@
 using namespace Angel;
 
 void Camera::commonInit( void ) {
-  
+
   // Extend the Uniforms array.
   if ( DEBUG )
     fprintf( stderr, "Extending Uniforms Array to %d\n", Camera::END );
-  this->_handles.resize( Camera::END, -1 );
+  _handles.resize( Camera::END, -1 );
   
   /* Default Variable Links */
   link( Camera::TRANSLATION, "T" );
@@ -32,14 +32,15 @@ void Camera::commonInit( void ) {
   for ( size_t i = (size_t) Camera::DIR_BEGIN; i != (size_t) DIR_END; ++i )
     _motion[i] = false;
   
-  this->_speed = 0;
-  this->_speed_cap = 0;
-  this->_maxAccel = 10;
-  this->_maxSpeed = 2000;
-  this->_frictionMagnitude = 4;
-  this->_aspectRatio = 1;
-  this->_currentView = PERSPECTIVE;
-  this->_fovy = 45.0;
+  _speed = 0;
+  _speed_cap = 0;
+  _maxAccel = 10;
+  _maxSpeed = 2000;
+  _frictionMagnitude = 4;
+  _aspectRatio = 1;
+  _currentView = PERSPECTIVE;
+  _fovy = 45.0;
+
 }
 
 Camera::Camera( const std::string &name, GLuint gShader, float x, float y,
@@ -277,6 +278,24 @@ void Camera::stop( const Camera::Direction &Dir ) {
   _motion[Dir] = false;
 }
 
+void Camera::stopAll( void ) {
+
+	// This function is a compilation of the 6 directions of stop functions
+	// intended for use in resetPosition, but can apply elsewhere if needed
+
+	// Putting the brakes on acceleration
+	_velocity = vec3( 0, 0, 0 );
+
+	// Halting all movement input temporarily
+	if ( _motion[Camera::DIR_FORWARD] ) stop( Camera::DIR_FORWARD );
+	if ( _motion[Camera::DIR_BACKWARD] ) stop( Camera::DIR_BACKWARD );
+    if ( _motion[Camera::DIR_RIGHT] ) stop( Camera::DIR_RIGHT );
+	if ( _motion[Camera::DIR_LEFT] ) stop( Camera::DIR_LEFT );
+	if ( _motion[Camera::DIR_UP] ) stop( Camera::DIR_UP );
+	if ( _motion[Camera::DIR_DOWN] ) stop( Camera::DIR_DOWN );
+
+}
+
 void Camera::idle( void ) {
   
   /* Apply the automated motion instructions, if any --
@@ -344,7 +363,7 @@ float Camera::z( void ) const {
 }
 
 vec4 Camera::pos( void ) const {
-  return vec4( x(), y(), z(), 1.0 );
+  return -1.0*vec4( x(), y(), z(), 1.0 );
 }
 
 float Camera::fieldOfView( void ) const {
@@ -449,4 +468,39 @@ void Camera::resetRotation( void ) {
   // Thus, this resets the rotational matrix.
   this->_ctm._orbit.adjust( transpose( this->_ctm._rotation.matrix() ) );
   
+}
+
+
+/**
+   dPos returns the camera's velocity.
+   @return The current velocity of the camera.
+**/
+vec3 Camera::dPos( void ) const { return _velocity; }
+
+
+/**
+   forward returns a vector pointing in the same direction as the camera
+   @return a vector pointing forwards, relative to the current camera rotation
+ **/
+vec4 Camera::forward ( void ) const { return vec4( 0.0, 0.0, 1.0, 1.0 ) * this->_ctm._rotation.matrix() ; }
+
+
+/**
+   up returns a vector pointing in the same direction as the camera
+   @return a vector pointing up, relative to the current camera rotation
+ **/
+vec4 Camera::up ( void ) const { return vec4( 0.0, 1.0, 0.0, 1.0 ) * this->_ctm._rotation.matrix() ; }
+
+
+void Camera::resetPosition( void ) {
+
+  // This function is here to reset position back to (0,0,0)
+  // Before doing so, it stops movement in order to prevent weirdness, then reenables it
+
+  // This part of the function would reset the rotation, but it is broken and does nothing.
+  //resetRotation();
+
+  stopAll();
+  pos(0,0,0);
+
 }

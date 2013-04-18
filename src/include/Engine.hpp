@@ -11,7 +11,6 @@
 /* OpenGL and Globals */
 #include "platform.h"
 #include "globals.h"
-#include "Util.hpp"
 /* Engine Classes */
 #include "Camera.hpp"
 #include "Cameras.hpp"
@@ -22,6 +21,11 @@
 #include "Texture.hpp"
 #include "TextureMan.hpp"
 #include "ParticleSystem.hpp"
+/* Utilities */
+#include "Util.hpp"
+#include "model.hpp"
+#include "InitShader.hpp"
+#include "ObjLoader.hpp"
 
 /* System */
 #include <string>

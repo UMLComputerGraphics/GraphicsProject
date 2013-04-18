@@ -9,7 +9,8 @@ CLASSESRAW=$(wildcard Classes/*.cpp)
 #things not needed or that break build
 DIAF=Classes/KinectInator.cpp \
      fMod/playsound_example.cpp fMod/3d_example.cpp Binaries/morphkeysound.cpp \
-     Binaries/qtPartTest.cpp Qt/main.cpp Qt/mainwindow.cpp Binaries/raytrace1.cpp Binaries/raytraceIntegrated.cpp
+     Qt/main.cpp Qt/qtLite.cpp \
+     Qt/mainwindow.cpp Qt/FinalProject.cpp Binaries/raytrace1.cpp Binaries/raytraceIntegrated.cpp
 
 ifndef WII
 DIAF += \
@@ -117,3 +118,4 @@ clean-qt: qMakefile
 
 qMakefile:
 	qmake -o qMakefile
+
