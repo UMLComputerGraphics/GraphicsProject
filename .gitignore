@@ -7,3 +7,5 @@ src/.settings/language.settings.xml
 GraphicsProject/test.hpp
 
 src/qMakefile
+
+*.user
