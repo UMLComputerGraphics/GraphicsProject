@@ -207,6 +207,9 @@ void Engine::idle( void ) {
   // Compute the time since last idle().
   tick.tock();
 
+  // Matriculate Scene Graph Changes (Maybe!)
+  Engine::instance()->rootScene()->propagate();
+
   // Move all camera(s).
   camList->idleMotion();
 

@@ -49,7 +49,7 @@ using Angel::vec3;
 vec3 bbMagnitudes;
 WiiPollData pollResults;
 
-int ::ledMap[4] = { CWiimote::LED_1, CWiimote::LED_2, CWiimote::LED_3,
+int ledMap[4] = { CWiimote::LED_1, CWiimote::LED_2, CWiimote::LED_3,
                     CWiimote::LED_4 };
 
 bool initWii( CWii &wii ) {
