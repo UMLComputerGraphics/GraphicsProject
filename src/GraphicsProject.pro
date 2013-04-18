@@ -48,8 +48,8 @@ SOURCES += \
            Common/Util.cpp \
            #Common/WiiUtil.cpp \
            # QT
-           Qt/mainwindow.cpp \
-           Qt/main.cpp
+           #Qt/mainwindow.cpp \
+           Qt/qtLite.cpp
 
 HEADERS  += include/Camera.hpp \
             include/Cameras.hpp \
@@ -80,7 +80,7 @@ HEADERS  += include/Camera.hpp \
             include/vec.hpp \ 
             include/WiiUtil.h \
             # QT
-            include/mainwindow.h
+            #include/mainwindow.h
 
 # Common Settings
 INCLUDEPATH += . ./include/
@@ -99,8 +99,8 @@ INCLUDEPATH += /opt/local/include/ImageMagick/
 LIBS += -L/opt/local/lib
 }
 
-FORMS    += \
-    Qt/mainwindow.ui
+#FORMS    += \
+#    Qt/mainwindow.ui
 
 OTHER_FILES += \
     ../src/models/wineglass.obj \
