@@ -12,15 +12,15 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = GraphicsProject
 TEMPLATE = app
 
-release: DESTDIR = release/
-debug:   DESTDIR = debug/
+release: DESTDIR = Binaries/
+debug:   DESTDIR = Binaries/
 
-OBJECTS_DIR =  $$DESTDIR/obj/
-MOC_DIR =  $$DESTDIR/moc/
-RCC_DIR =  $$DESTDIR/rcc/
-UI_DIR =  $$DESTDIR/ui/
+OBJECTS_DIR =  Qt/obj/
+MOC_DIR =  Qt/moc/
+RCC_DIR =  Qt/rcc/
+UI_DIR =  Qt/ui/
 
-SOURCES += Qt/main.cpp\
+SOURCES += Binaries/main.cpp\
         # Classes
         Classes/Camera.cpp \
         Classes/Cameras.cpp \
@@ -50,8 +50,7 @@ SOURCES += Qt/main.cpp\
         Common/Util.cpp \
    	#Qt
 	Qt/mainwindow.cpp\
-        #Binaries
-	Binaries/MONOLITH.cpp
+	Classes/MONOLITH.cpp
 
 
 

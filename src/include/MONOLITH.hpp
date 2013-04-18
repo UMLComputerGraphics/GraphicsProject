@@ -19,9 +19,13 @@
 #include "glut_callbacks.h"
 #include "ObjLoader.hpp"
 
+#ifndef WITHOUT_QT
 /* Qt */
 #include <QObject>
 #include <QtGui>
+
+
+
 
 #ifdef __APPLE__
 class MONOLITH: public QObject
@@ -29,9 +33,13 @@ class MONOLITH: public QObject
 #else
 class MONOLITH: public QThread
 {
-#endif
+#endif // __APPLE__
     Q_OBJECT
+
+#else
+class MONOLITH {
     
+#endif // WITHOUT_QT
 public:
     
     
@@ -63,10 +71,11 @@ public:
     void run();
     
     
-    
+#ifndef WITHOUT_QT
 public slots:
     void ParticleAdd();
 signals:
+#endif
     
 private:
     
@@ -93,6 +102,5 @@ private:
     
     
 };
-
 
 #endif
