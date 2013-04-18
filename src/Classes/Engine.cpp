@@ -190,6 +190,9 @@ void Engine::init( int *argc, char *argv[], const char *title ) {
              glGetString( GL_SHADING_LANGUAGE_VERSION ) );
   }
 
+  glEnable( GL_DEPTH_TEST );
+  glClearColor( 0.0, 0.0, 0.0, 1.0 );
+
 }
 
 

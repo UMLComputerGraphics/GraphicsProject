@@ -21,9 +21,15 @@ void *launchQT( void *ptr ) {
 }
 
 void simpleRotate( TransCache &obj ) {
-  obj._rotation.rotateY( tick.scale() * 1.5 );
-  obj._rotation.rotateX( tick.scale() * 1.4 );
-  obj._rotation.rotateZ( tick.scale() * 1.3 );
+  RotMat *newrot = new RotMat;
+  newrot->rotateY( tick.scale() * 1.5 );
+  newrot->rotateX( tick.scale() * 1.4 );
+  newrot->rotateZ( tick.scale() * 1.3 );
+
+  obj.push( newrot );
+  //obj._rotation.rotateY( tick.scale() * 1.5 );
+  //obj._rotation.rotateX( tick.scale() * 1.4 );
+  //obj._rotation.rotateZ( tick.scale() * 1.3 );
 }
 
 void qtLiteIdle( void ) {

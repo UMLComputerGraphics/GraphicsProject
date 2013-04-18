@@ -147,7 +147,7 @@ void TransCache::clear( void ) {
  * Recompute entirely all transformational caches.
  */
 void TransCache::rebuild( void ) {
-  std::deque< Transformation* >::reverse_iterator rit;
+  TransformationsType::reverse_iterator rit;
   // Clear out our [I]nheritable [T]ransformation [M]atrix,
   // And our [C]urrent [T]ransformation [M]atrix.
   _itm = _ctm = Angel::mat4();
@@ -179,11 +179,13 @@ void TransCache::rebuild( void ) {
  */
 void TransCache::clean( void ) {
 
-  if ( _rebuild ) return rebuild();
+  if ( _rebuild ) {
+    rebuild();
+  }
 
   if ( _new ) {
     Angel::mat4 lhs, rhs, ilhs, irhs;
-    TransformationDeque::iterator it;
+    TransformationsType::iterator it;
 
     // Run a quick scan to see if any of the new matrices are inheritable.
     // Mark this node as needing to cascade to children if so.
@@ -285,14 +287,52 @@ void TransCache::clean( void ) {
     _parent = false;
   }
 
+  // Alright, our node state is self-consistent now.
   dirty( false );
+
+  // Let's condense our matrices if we can, though.
+  condense();
+
+}
+
+void TransCache::condense( void ) {
+
+  bool modified = false;
+  // A, B, C, D, E, F
+  // In a LTR scheme, we condense as AB, CD, EF...
+  // In a RTL scheme, we should condense as FE, DC, BA.
+
+  TransformationsType::iterator it;
+  for (it = _transformations.begin(); (it != _transformations.end())
+  && ((it + 1) != _transformations.end()); ) {
+    Transformation *lhs = *(it);
+    Transformation *rhs = *(it + 1);
+    if (lhs->type() == rhs->type()) {
+      modified = true;
+      if (_premult) {
+        lhs->coalesce(rhs);
+        _transformations.erase( it + 1 );
+        delete rhs;
+      } else {
+        rhs->coalesce(lhs);
+        _transformations.erase( it );
+        delete lhs;
+        // Do not advance iterator:
+        // Deleting the current iterator advances for us.
+        continue;
+      }
+    }
+    ++it;
+  }
+
+  if (modified && dirty()) _rebuild = true;
 
 }
 
 /**
  * Do we need to invoke clean()?
  */
-bool TransCache::dirty( void ) {
+bool TransCache::dirty( void ) const {
   return (_new || _rebuild || _parent);
 }
 
@@ -306,10 +346,14 @@ void TransCache::dirty( bool newState ) {
   }
 }
 
-bool TransCache::cascade( void ) {
+bool TransCache::cascade( void ) const {
   return _cascade;
 }
 
 void TransCache::cascade( bool newState ) {
   _cascade = newState;
+}
+
+unsigned TransCache::size(void) const {
+  return _transformations.size();
 }

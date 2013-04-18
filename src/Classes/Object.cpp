@@ -471,6 +471,7 @@ void Object::animation( void (*anim_func)( TransCache &arg ) ) {
  */
 void Object::propagateOLD( void ) {
   
+  if (_trans.size() > 0) return;
   //fprintf( stderr, "\n" );
   //fprintf( stderr, "propagateOLD called on %s\n", _name.c_str() );
   
