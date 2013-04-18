@@ -48,11 +48,16 @@ void TransCache::calcCTM( bool postmult ) {
 // TransCache v2.0
 //
 
-TransCache::TransCache( void ) {
+TransCache::TransCache( bool createInvertedSibling, bool isInverted ) {
 
   dirty( false );
   _premult = false;
   _cascade = false;
+
+  _inverted = isInverted;
+  if ( (_invert = createInvertedSibling) )
+    _invertedCache = new TransCache(  false, true );
+  else _invertedCache = NULL;
 
 }
 
@@ -183,7 +188,7 @@ void TransCache::clean( void ) {
     // Run a quick scan to see if any of the new matrices are inheritable.
     // Mark this node as needing to cascade to children if so.
     for ( it = _transformations.begin(); it != _transformations.end(); ++it ) {
-      if ((*it)->inheritable()) _cascade = true;
+      if ( (*it)->inheritable() ) _cascade = true;
     }
 
     // If the transformation we want is A->B->C->D->E->F
@@ -218,14 +223,14 @@ void TransCache::clean( void ) {
 
       if ( _premult ) {
         lhs = lhs * (**it);
-        if ((*it)->inheritable()) ilhs = ilhs * (**it);
+        if ( (*it)->inheritable() ) ilhs = ilhs * (**it);
         //lhs = I * A
         //lhs = A * B
         //lhs = (A*B) * C
         //lhs gets (ABC).
       } else {
         rhs = (**it) * rhs;
-        if ((*it)->inheritable()) irhs = (**it) * irhs;
+        if ( (*it)->inheritable() ) irhs = (**it) * irhs;
         //rhs = A * I;
         //rhs = B * A
         //rhs = C * (B*A)
@@ -244,16 +249,17 @@ void TransCache::clean( void ) {
     // Compute new post-transformations.
     // I.e, for A-B-C-...[OLD]...-X-Y-Z, we'll be looking at X-Y-Z in that order.
     for ( ; it != _transformations.end(); ++it ) {
-      if (!(*it)->isNew())
-        throw std::logic_error( "TransCache SceneGraph error: Non-new post transformations found.\n"
-                                "What? It means that the TransCache::clean() function is broken,\n"
-                                "And you should blame jhuston@cs.uml.edu." );
+      if ( !(*it)->isNew() )
+        throw std::logic_error(
+            "TransCache SceneGraph error: Non-new post transformations found.\n"
+            "What? It means that the TransCache::clean() function is broken,\n"
+            "And you should blame jhuston@cs.uml.edu." );
       if ( _premult ) {
         rhs = rhs * (**it);
-        if ((*it)->inheritable()) irhs = irhs * (**it);
+        if ( (*it)->inheritable() ) irhs = irhs * (**it);
       } else {
         lhs = (**it) * lhs;
-        if ((*it)->inheritable()) ilhs = (**it) * ilhs;
+        if ( (*it)->inheritable() ) ilhs = (**it) * ilhs;
       }
 
       (*it)->markOld();

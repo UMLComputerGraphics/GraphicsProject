@@ -37,7 +37,7 @@ public:
 
   typedef std::deque< Transformation* > TransformationDeque;
 
-  TransCache( void );
+  TransCache( bool _invert = false, bool _inverted = false );
 
   const Angel::mat4 &ptm( void ) const;  // Retrieve current parent transformation
   const Angel::mat4 &ctm( void ) const;  // Retrieve current isolated object transformation
@@ -71,5 +71,10 @@ private:
   bool _rebuild; // Cache needs to be rebuilt, no optimizations.
   bool _cascade; // Children need update flag
   bool _parent;  // New Parent Matrix.
+
+// ;)
+  bool _inverted; // Am I an inverted cache?
+  bool _invert;   // Am I responsible for keeping an inverted cache?
+  TransCache *_invertedCache; // Pointer to inverted cache if applicable.
 
 };
