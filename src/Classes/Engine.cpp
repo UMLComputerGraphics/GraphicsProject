@@ -42,6 +42,7 @@ Engine *Engine::instance( void ) {
 Engine::Engine( void ) {
   _idleFunc = NULL;
   opt("fixed_yaw", true);
+  opt("trap_pointer", true);
 }
 
 /**
@@ -207,7 +208,7 @@ void Engine::idle( void ) {
   // Compute the time since last idle().
   tick.tock();
 
-  // Update Scene Graph
+  // Matriculate Scene Graph Changes (Maybe!)
   Engine::instance()->rootScene()->propagate();
 
   // Move all camera(s).
