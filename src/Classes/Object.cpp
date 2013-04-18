@@ -471,6 +471,8 @@ void Object::animation( void (*anim_func)( TransCache &arg ) ) {
  */
 void Object::propagateOLD( void ) {
   
+  // This function is deprecated: If we detect the "new"
+  // Scene Graph is in use, do NOTHING.
   if (_trans.size() > 0) return;
   //fprintf( stderr, "\n" );
   //fprintf( stderr, "propagateOLD called on %s\n", _name.c_str() );
