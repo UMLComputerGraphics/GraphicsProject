@@ -44,7 +44,7 @@ void Screen::size( int x, int y ) {
  */
 void Screen::size( const vec2 &newSize ) {
   _size = newSize;
-  _center = newSize / 2;
+  _center = newSize / 2.0;
   _camList.resize( _size.x, _size.y );
 }
 

@@ -21,10 +21,6 @@
 #include "glut_callbacks.h"
 #include "ObjLoader.hpp"
 
-// Type Aliases
-using Angel::vec3;
-using Angel::vec4;
-
 // Wii Connectivity 
 #ifdef WII
 #include <wiicpp.h>  // WiiC++ API
@@ -32,16 +28,6 @@ using Angel::vec4;
 CWii Wii;
 bool usingWii = false;
 #endif
-
-/**
- * Here's a gross blob of texture constants used for terrain generation!
- */
-const char* terrainTex[] = { "../Textures/GoodTextures_0013423.jpg", // Dirt/Mud
-    "../Textures/GoodTextures_0013779.jpg",  // Sand
-    "../Textures/GrassGreenTexture0002.jpg", // Grass (who'da thunk?)
-    "../Textures/GoodTextures_0013418.jpg",  // Rock
-    "../Textures/GoodTextures_0013291.jpg"   // Snow
-    };
 
 /**
  randomize_terrain is called to regenerate the terrain in this application.
@@ -80,7 +66,7 @@ void init() {
   
   // Load the shaders.
   GLuint gShader = Angel::InitShader( "shaders/vterrain.glsl",
-                                      "shaders/fterrain.glsl" );
+                                      "shaders/fTerrainTex.glsl" );
   // Initialize engine setting: Enable "fixed yaw"... disable free-Y _rotation.
   Engine::instance()->opt( "fixed_yaw", true );
   
@@ -104,8 +90,13 @@ void init() {
 
   // Let's create some objects.
   Object *terrain = theScene->addObject( "terrain" );
-  glUseProgram( gShader );// Temporary hack until I refine the texturing management subsystem.
-  terrain->terrainTexture( terrainTex );
+  glUseProgram( gShader );
+
+  terrain->texture( "../Textures/GoodTextures_0013423.jpg" ); // Dirt/Mud
+  terrain->texture( "../Textures/GoodTextures_0013779.jpg" ); // Sand
+  terrain->texture( "../Textures/GrassGreenTexture0002.jpg" ); // Grass
+  terrain->texture( "../Textures/GoodTextures_0013418.jpg" ); // Rock
+  terrain->texture( "../Textures/GoodTextures_0013291.jpg" ); // Snow
   terrain->drawMode( GL_TRIANGLE_STRIP );
   randomize_terrain();// This call depends upon "terrain" existing within theScene.
   
@@ -193,19 +184,21 @@ void init() {
   cam->drawMode( GL_TRIANGLES );
   cam->_trans._scale.set( 0.05 );
   cam->_trans._preRotation.rotateY( 180 );
-  cam->propagate();
+  cam->propagateOLD();
 
+  /*
   Object *rcam = cam->addObject( "right-cam" );
   ObjLoader::loadModelFromFile( rcam, "../models/rainbow_dashT.obj" );
   rcam->buffer();
   rcam->drawMode( GL_TRIANGLES );
   rcam->_trans._offset.set( 10, 0, 0 );
-  cam->propagate();
-  rcam->propagate();
+  cam->propagateOLD();
+  rcam->propagateOLD();
+  */
   
-  // Add the propagate method to the Scene Graph directly, instead of this:
+  // Add the propagateOLD method to the Scene Graph directly, instead of this:
   // Note: Terrain doesn't/shouldn't have children ...
-  terrain->propagate();
+  terrain->propagateOLD();
   
 }
 
@@ -478,27 +471,16 @@ int main( int argc, char **argv ) {
     std::cerr << "Not using Wii controls for this runthrough.\n";
   }
 #endif
-
   
   Engine::init( &argc, argv, "Terrain Generation Flythrough" );
+  Engine::instance()->registerIdle( terrain_idle );
   init();
-    if ( DEBUG ) {
-    fprintf( stderr, "GL_VENDOR: %s\n", glGetString( GL_VENDOR ) );
-    fprintf( stderr, "GL_RENDERER: %s\n", glGetString( GL_RENDERER ) );
-    fprintf( stderr, "GL_VERSION: %s\n", glGetString( GL_VERSION ) );
-    fprintf( stderr, "GL_SHADING_LANGUAGE_VERSION: %s\n",
-             glGetString( GL_SHADING_LANGUAGE_VERSION ) );
-    fprintf( stderr, "GL_EXTENSIONS: %s\n", glGetString( GL_EXTENSIONS ) );
-  }
   
   int menu = glutCreateMenu( menufunc );
   glutSetMenu( menu );
   glutAddMenuEntry( "Randomize Terrain", 0 );
   glutAddMenuEntry( "Toggle Free Rotation", 1 );
-  glutAttachMenu( GLUT_RIGHT_BUTTON );
-  
-
-  Engine::instance()->registerIdle( terrain_idle );
+  glutAttachMenu( GLUT_RIGHT_BUTTON );  
 
   /* PULL THE TRIGGER */
   glutMainLoop();

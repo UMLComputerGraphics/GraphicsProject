@@ -3,9 +3,8 @@
 #*#src/.settings
 src/.settings/
 src/.settings/language.settings.xml
-
+.cproject
+.project
 GraphicsProject/test.hpp
-
 src/qMakefile
-
 *.user

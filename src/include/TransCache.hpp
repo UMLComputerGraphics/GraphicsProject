@@ -10,21 +10,15 @@
 
 #include "mat.hpp"
 #include "Transformation.hpp"
+#include <list>
 #include <deque>
+#include <vector>
 
 class TransCache {
   
 public:
   
-  typedef std::deque< Transformation* > TransformationDeque;
-
-  TransCache( void );
-
-  void ptm( const Angel::mat4 &ptm_in, bool postmult = true );
-
-  const Angel::mat4 &ptm( void ) const;
-  const Angel::mat4 &ctm( void ) const;
-  const Angel::mat4 &otm( void ) const;
+  void ptmOLD( const Angel::mat4 &ptm_in, bool postmult = true );
 
   // Hacky: For Camera.
   TransMat _preOffset;
@@ -43,17 +37,30 @@ public:
   // Scene Graph V2.0 //
   // Everything below here will eventually replace everything above.
 
+  typedef std::vector< Transformation* > TransformationsType;
+
+  TransCache( bool _invert = false, bool _inverted = false );
+
+  const Angel::mat4 &ptm( void ) const;  // Retrieve current parent transformation
+  const Angel::mat4 &ctm( void ) const;  // Retrieve current isolated object transformation
+  const Angel::mat4 &otm( void ) const;  // Retrieve current cumulative object transformation
+  const Angel::mat4 &itm( void ) const;  // Retrieve current inheritable object transformations
+
+  void ptm( const Angel::mat4 &ptm_in ); // Set new Parent Transform.
+
   void push( Transformation *newTrans ); // Add New Transformation
   void pop( void );                      // Remove Transformation
   void clear( void );                    // Clear all Transformations
   void rebuild( void );                  // Recalculate Cache
   void clean( void );                    // Smartly Update Cache
-  void adopt( const Angel::mat4 &ptm_in ); // Set new Parent Transform.
+  void condense( void );                 // Find adjoining transformations
+                                         // Of the same type, and join them.
 
-  bool dirty( void );
+  bool dirty( void ) const;
   void dirty( bool newState );
-  bool cascade( void );
+  bool cascade( void ) const;
   void cascade( bool newState );
+  unsigned size( void ) const;
 
 private:
   
@@ -61,13 +68,18 @@ private:
   Angel::mat4 _ptm; /* Parent's Cumulative Transformation Matrix */
   Angel::mat4 _ctm; /* Current Transformation Matrix */
   Angel::mat4 _itm; // Inheritable Trans Mat: CTM, minus transformations we don't want our kids to have.
-  Angel::mat4 _otm; /* Cached Result Transformation Matrix: e.g; ctm * ptm */
-  TransformationDeque _transformations; // Transformation Stack
+  Angel::mat4 _otm; /* Cached Result Transformation Matrix: e.g; ctm * ptmOLD */
+  TransformationsType _transformations; // Transformation Stack
   
   bool _premult; // Should we premult instead of postmult?
   bool _new;     // CTM needs new additions flag
   bool _rebuild; // Cache needs to be rebuilt, no optimizations.
   bool _cascade; // Children need update flag
   bool _parent;  // New Parent Matrix.
+
+// ;)
+  bool _inverted; // Am I an inverted cache?
+  bool _invert;   // Am I responsible for keeping an inverted cache?
+  TransCache *_invertedCache; // Pointer to inverted cache if applicable.
 
 };

@@ -16,6 +16,7 @@
 #include "mat.hpp"
 #include "Scene.hpp"
 #include "TransCache.hpp"
+#include "Texture.hpp"
 
 using Angel::vec4;
 
@@ -122,14 +123,6 @@ public:
   void drawMode( GLenum new_mode );
 
   /**
-   * FIXME: This is a junk, nonflexible method.
-   * It would be better if you didn't think of this as being here.
-   *
-   * @param filename an array of strings to load textures from.
-   */
-  void terrainTexture( const char** filename );
-
-  /**
    * Binds a texture to this Object.
    * @param filename The filename of the texture to load.
    */
@@ -189,9 +182,16 @@ public:
 
   /**
    * Scene-graph changes are not automatically applied to children.
-   * For efficiency reasons, you need to call propagate() manually.
+   * For efficiency reasons, you need to call propagateOLD() manually.
+   * TODO: Deprecated.
    */
-  void propagate( void );
+  void propagateOLD( void );
+
+  /**
+   * sceneCascade sends our current inheritable transformation matrix
+   * to all of our children, /if/ it is marked as needing to be updated.
+   */
+  void sceneCascade( void );
 
   // Getters ==================================================================
   
@@ -243,6 +243,12 @@ public:
   int numberOfPoints();
 
   /**
+  * Adds material data to the object
+  * @param diffuse The diffuse color
+  **/
+  void addMaterial(Angel::vec3 diffuse);
+
+  /**
    * Set the Texture ID / Texture Unit for this Object.
    * @param newTextureID The new Texture Unit ID/Index for this Object.
    * @return None.
@@ -259,6 +265,7 @@ public:
   /** Draw Order Index buffer. If not used, engine assumes GL_DRAW_ARRAYS. **/
   std::vector< unsigned int > _indices;
   /** Colors buffer. **/
+
   std::vector< Angel::vec4 > _colors;
   /** Texture Coordinates buffer. **/
   std::vector< Angel::vec2 > _texUVs;
@@ -283,6 +290,7 @@ public:
   Angel::vec3 getMin( void );
 
 protected:
+
   /** _name is used as an identifying handle for the object. **/
   std::string _name;
 
@@ -291,6 +299,7 @@ protected:
 
   /** Handles to our buffers (Vertices, TexUVs, etc.) **/
   GLuint _buffer[NUM_BUFFERS];
+  GLint _attribIndex[NUM_BUFFERS];
 
   /** Drawing mode for this object. GL_TRIANGLES, GL_LINE_LOOP, etc. **/
   GLenum _drawMode;
@@ -324,10 +333,24 @@ protected:
    **/
   std::vector< GLint > _handles;
 
+  std::vector< GLint > _texIDs;
+  std::vector< Texture * > _textures;
+  GLuint _numTextures;
+
   /**
    * The texture unit index this Object uses.
    */
   GLint _textureID;
+
+  /** The diffuse color of the object **/
+  Angel::vec3 color;
+
+private:
+
+  // Create and activate a Vertex Attrib Array and bind to a VBO
+  GLuint createAndBind( GLenum target, enum Object::BufferType typeIndex, const char *name,
+			GLint size, GLenum type, GLboolean normalized, GLsizei stride,
+			const GLvoid *ptr );
   
 };
 

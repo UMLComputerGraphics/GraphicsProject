@@ -36,7 +36,7 @@ namespace Angel {
 
     //  --- Indexing Operator ---
     GLfloat& operator []( int i );
-    const GLfloat operator []( int i ) const;
+    GLfloat operator []( int i ) const;
 
     //  --- (non-modifying) Arithematic Operators ---
     vec2 operator -() const; // unary minus operator
@@ -87,7 +87,7 @@ namespace Angel {
 
     //  --- Indexing Operator ---
     GLfloat& operator []( int i );
-    const GLfloat operator []( int i ) const;
+    GLfloat operator []( int i ) const;
 
     //  --- (non-modifying) Arithematic Operators ---
     vec3 operator -() const;
@@ -142,7 +142,7 @@ namespace Angel {
 
     //  --- Indexing Operator ---
     GLfloat& operator []( int i );
-    const GLfloat operator []( int i ) const;
+    GLfloat operator []( int i ) const;
 
     //  --- (non-modifying) Arithematic Operators ---
     vec4 operator -() const;

@@ -7,6 +7,7 @@
  */
 
 #include "meshMapping.hpp"
+#define MAXBIN (1)
 
 SquareMap* createSquareMap(float xstart, float xend, float ystart, float yend, float zstart, float zend){
 	return new SquareMap(xstart,xend,ystart,yend, zstart, zend);
@@ -51,7 +52,7 @@ void populateSrcSquare(SquareMap* squareMap, std::vector< Angel::vec4 > points){
 }
 
 void populateDestSquare(SquareMap* squareMap, std::vector< Angel::vec4 > points){
-	for(int i=0; i<points.size();i+=3){
+	for(size_t i=0; i<points.size();i+=3){
 		if(isInside(0.0,0.0,squareMap->xStart,squareMap->zStart,squareMap->xEnd,squareMap->zStart,float(points[i].x),float(points[i].z))){
 			//front
 			for(int j=0; j<3; j++){
@@ -101,8 +102,8 @@ void expandSquareMap(SquareMap* squareMap){
 }
 
 void expandMap(Square* square, float xStart, float xEnd, float yStart, float yEnd){
-	if((square->destBinSize > MaxBin)||(square->srcBinSize > MaxBin)){
-		for(int i=0; i<square->srcTriangles.size(); i+=3){
+	if((square->destBinSize > MAXBIN)||(square->srcBinSize > MAXBIN)){
+		for(size_t i=0; i<square->srcTriangles.size(); i+=3){
 			if((float(square->srcTriangles[i].x) > square->xStart)&&
 			   (float(square->srcTriangles[i].x) <= (square->xStart+(square->xEnd-square->xStart)/2))&&
 			   (float(square->srcTriangles[i].y) > square->yStart)&&
@@ -148,7 +149,7 @@ void expandMap(Square* square, float xStart, float xEnd, float yStart, float yEn
 				square->bottomRight->srcBinSize++;
 			}
 		}
-		for(int i=0; i<square->destTriangles.size(); i+=3){
+		for(size_t i=0; i<square->destTriangles.size(); i+=3){
 			if((float(square->destTriangles[i].x) > square->xStart)&&
 			   (float(square->destTriangles[i].x) <= (square->xStart+(square->xEnd-square->xStart)/2))&&
 			   (float(square->destTriangles[i].y) > square->yStart)&&

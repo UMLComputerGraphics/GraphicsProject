@@ -10,6 +10,7 @@
 #include "mat.hpp"
 #include "Transformation.hpp"
 #include "platform.h" //OpenGL types.
+#include <stdexcept>
 
 Transformation::Transformation( void ) {
   _inheritable = true;
@@ -20,15 +21,11 @@ Transformation::~Transformation( void ) {
 }
 
 const Angel::mat4 &Transformation::matrix( void ) const {
-  return mat;
+  return _mat;
 }
 
-Angel::mat4 Transformation::operator*( const Angel::mat4 &rhs ) const {
-  return mat * rhs;
-}
-
-Angel::mat4 Transformation::operator*( const Transformation &rhs ) const {
-  return mat * rhs.matrix();
+void Transformation::reset( void ) {
+  _mat = Angel::mat4();
 }
 
 bool Transformation::inheritable( void ) const {
@@ -47,15 +44,34 @@ bool Transformation::isNew( void ) {
   return _new;
 }
 
+/** Transformation x mat4 **/
+Angel::mat4 Transformation::operator*( const Angel::mat4 &rhs ) const {
+  return _mat * rhs;
+}
 
+/** Transformation x Transformation **/
+Angel::mat4 Transformation::operator*( const Transformation &rhs ) const {
+  return _mat * rhs.matrix();
+}
+
+/** mat4 x Transformation **/
 Angel::mat4 operator*( const Angel::mat4 &lhs, const Transformation &rhs ) {
   return lhs * rhs.matrix();
+}
+
+void Transformation::combine( Transformation *rhs ) {
+  if (type() != rhs->type()) {
+    throw std::logic_error( "Cannot combine two Transformations of dissimilar types." );
+  }
+
+  _mat *= rhs->matrix();
+  rhs->reset();
 }
 
 /* ROTATION */
 
 const RotMat &RotMat::reset( const Angel::mat4 &NewState ) {
-  mat = NewState;
+  _mat = NewState;
   return (*this);
 }
 
@@ -74,16 +90,16 @@ const RotMat &RotMat::rotateZ( GLfloat theta, bool postmult ) {
 const RotMat &RotMat::adjust( const Angel::mat4 &adjustment, bool postmult ) {
   // If we are post-multiplying, The default,
   // Adjustments, which come "last", must appear first.
-  if ( postmult ) mat = adjustment * mat;
+  if ( postmult ) _mat = adjustment * _mat;
   // Otherwise, we are pre-multiplying, and later adjustments
   // really do come last.
-  else mat = mat * adjustment;
+  else _mat = _mat * adjustment;
   return (*this);
 }
 
 Angel::mat4 RotMat::inverse( void ) const {
 
-  return transpose( mat );
+  return transpose( _mat );
 
 }
 
@@ -91,30 +107,45 @@ Transformation::Subtype RotMat::type( void ) const {
   return Transformation::ROTATION;
 }
 
+void RotMat::coalesce( Transformation *rhs ) {
+  if (NULL == dynamic_cast<RotMat*>(rhs)) {
+    throw std::logic_error( "Cannot coalesce two Transformations of differing types.\n" );
+  }
+
+  // Two rotations can be combined via (lhs * rhs).
+  // Not a lot of ways to escape that. We COULD optimize by
+  // Considering only the upper-left 3x3,
+  // But let's just let the hardware handle those zero multiplications
+  // and use the standard matrix multiply instead.
+  _mat *= rhs->matrix();
+  rhs->reset();
+}
+
+
 /* TRANSLATION */
 
 const TransMat &TransMat::setX( const float x ) {
   //fprintf( stderr, "setX( %f )\n", x );
-  mat[0][3] = x;
+  _mat[0][3] = x;
   return (*this);
 }
 
 const TransMat &TransMat::setY( const float y ) {
   //fprintf( stderr, "setY( %f )\n", y );
-  mat[1][3] = y;
+  _mat[1][3] = y;
   return (*this);
 }
 
 const TransMat &TransMat::setZ( const float z ) {
   //fprintf( stderr, "setZ( %f )\n", z );
-  mat[2][3] = z;
+  _mat[2][3] = z;
   return (*this);
 }
 
 const TransMat &TransMat::set( const float x, const float y, const float z ) {
-  mat[0][3] = x;
-  mat[1][3] = y;
-  mat[2][3] = z;
+  _mat[0][3] = x;
+  _mat[1][3] = y;
+  _mat[2][3] = z;
   return (*this);
 }
 
@@ -123,9 +154,9 @@ const TransMat &TransMat::set( const Angel::vec3 &arg ) {
 }
 
 const TransMat &TransMat::delta( const float x, const float y, const float z ) {
-  mat[0][3] += x;
-  mat[1][3] += y;
-  mat[2][3] += z;
+  _mat[0][3] += x;
+  _mat[1][3] += y;
+  _mat[2][3] += z;
   return (*this);
 }
 
@@ -135,9 +166,9 @@ const TransMat &TransMat::delta( const Angel::vec3 &arg ) {
 
 Angel::mat4 TransMat::inverse( void ) const {
 
-  return Angel::mat4( 1, 0, 0, -mat[0][3],
-                      0, 1, 0, -mat[1][3],
-                      0, 0, 1, -mat[2][3],
+  return Angel::mat4( 1, 0, 0, -_mat[0][3],
+                      0, 1, 0, -_mat[1][3],
+                      0, 0, 1, -_mat[2][3],
                       0, 0, 0, 1);
 
 }
@@ -146,13 +177,25 @@ Transformation::Subtype TransMat::type( void ) const {
   return Transformation::TRANSLATION;
 }
 
+void TransMat::coalesce( Transformation *rhs ) {
+  if (NULL == dynamic_cast<TransMat*>(rhs)) {
+    throw std::logic_error( "Cannot coalesce two Transformations of differing types.\n" );
+  }
+
+  // We can combine two translations by adding up the fourth column.
+  _mat[0][3] += rhs->matrix()[0][3];
+  _mat[1][3] += rhs->matrix()[1][3];
+  _mat[2][3] += rhs->matrix()[2][3];
+  rhs->reset();
+}
+
 /* SCALE */
 
 const ScaleMat &ScaleMat::set( const float x, const float y, const float z ) {
   
-  mat[0][0] = x;
-  mat[1][1] = y;
-  mat[2][2] = z;
+  _mat[0][0] = x;
+  _mat[1][1] = y;
+  _mat[2][2] = z;
   return (*this);
   
 }
@@ -163,9 +206,9 @@ const ScaleMat &ScaleMat::set( const float pct ) {
 
 const ScaleMat &ScaleMat::adjust( const float x, const float y,
                                   const float z ) {
-  mat[0][0] *= x;
-  mat[1][1] *= y;
-  mat[2][2] *= z;
+  _mat[0][0] *= x;
+  _mat[1][1] *= y;
+  _mat[2][2] *= z;
   return (*this);
 }
 
@@ -175,9 +218,9 @@ const ScaleMat &ScaleMat::adjust( const float pct ) {
 
 Angel::mat4 ScaleMat::inverse( void ) const {
 
-  return Angel::mat4( (1/mat[0][0]), 0, 0, 0,
-                      0, (1/mat[1][1]), 0, 0,
-                      0, 0, (1/mat[2][2]), 0,
+  return Angel::mat4( (1/_mat[0][0]), 0, 0, 0,
+                      0, (1/_mat[1][1]), 0, 0,
+                      0, 0, (1/_mat[2][2]), 0,
                       0, 0, 0, 1);
 
 }
@@ -185,4 +228,18 @@ Angel::mat4 ScaleMat::inverse( void ) const {
 
 Transformation::Subtype ScaleMat::type( void ) const {
   return Transformation::SCALE;
+}
+
+void ScaleMat::coalesce( Transformation *rhs ) {
+  if (NULL == dynamic_cast<ScaleMat*>(rhs)) {
+    throw std::logic_error( "Cannot coalesce two Transformations of differing types.\n" );
+  }
+
+  // Rotational Matrices contain only diagonal scaling elements.
+  // We can combine by multiplying only three elements.
+  _mat[0][0] *= rhs->matrix()[0][0];
+  _mat[1][1] *= rhs->matrix()[1][1];
+  _mat[2][2] *= rhs->matrix()[2][2];
+
+  rhs->reset();
 }
