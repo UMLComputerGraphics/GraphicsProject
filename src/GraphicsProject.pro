@@ -49,9 +49,9 @@ SOURCES += Qt/main.cpp\
  	#Common/WiiUtil.cpp\
         Common/Util.cpp \
    	#Qt
-	Qt/mainwindow.cpp\
+	Qt/mainwindow.cpp \
         #Binaries
-	Binaries/MONOLITH.cpp\
+	Binaries/MONOLITH.cpp
 	#Binaries/partTest.cpp
 
 

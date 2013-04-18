@@ -6,15 +6,13 @@ COMMONRAW=$(wildcard Common/*.cpp)
 CLASSESRAW=$(wildcard Classes/*.cpp)
 
 #things not needed or that break build
-DIAF=Classes/KinectInator.cpp \
-     fMod/playsound_example.cpp fMod/3d_example.cpp Binaries/morphkeysound.cpp \
-     Binaries/qtPartTest.cpp Qt/main.cpp Qt/mainwindow.cpp
-
 DIAF=Classes/KinectInator.cpp Binaries/morphkeysound.cpp fMod/3d_example.cpp fMod/playsound_example.cpp Binaries/qtFinalProject.cpp Binaries/qtPartTest.cpp Qt/mainwindow.cpp Qt/main.cpp
+ifeq ($(shell uname), Darwin)
+DIAF += Binaries/raytrace1.cpp
+endif
 
 ifndef WII
-DIAF += \
-	Common/WiiUtil.cpp
+DIAF += Common/WiiUtil.cpp
 endif
 
 SOURCES=$(filter-out $(DIAF),$(SOURCESRAW))
