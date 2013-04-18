@@ -14,6 +14,7 @@ int main( int argc, char **argv ) {
    QApplication a(argc, argv);
    MainWindow w;
    w.setWindowTitle("First Graphics Demo");
+   QObject::connect(w.slider, SIGNAL(valueChanged(int)), &monolith, SLOT(ParticleAdd(int)));
    w.show();
    a.exec();
    /* PULL THE TRIGGER */

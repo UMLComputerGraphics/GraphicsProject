@@ -155,6 +155,14 @@ void MONOLITH::monolith_idle(void)
     (*rootScene)["bottle"]->morphPercentage( percent );
 }
 
+void MONOLITH::ParticleAdd(int numParticles)
+{
+    ps->addSomeParticles(numParticles);
+    fprintf(
+        stderr,
+        "signals works, particle added" );
+}
+
 /**
  * This will initialize and run MONOLITH
  */
