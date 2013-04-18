@@ -11,7 +11,6 @@
 #define __TEXTURE_HPP
 
 #include "platform.h"
-#include <ImageMagick/Magick++.h>
 
 #ifdef __APPLE__ // include Mac OS X versions of headers
 #include <Magick++.h>
