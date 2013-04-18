@@ -8,6 +8,7 @@ QT       += core gui opengl
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+
 TARGET = GraphicsProject
 TEMPLATE = app
 
@@ -19,40 +20,37 @@ MOC_DIR =  Qt/moc/
 RCC_DIR =  Qt/rcc/
 UI_DIR =  Qt/ui/
 
-SOURCES += \
-	   Binaries/main.cpp\
-           # Classes
-           Classes/Camera.cpp \
-           Classes/Cameras.cpp \
-           Classes/Engine.cpp \
-           #Classes/KinectInator.cpp \
-           Classes/mat.cpp \
-           Classes/meshMapping.cpp \
-           Classes/Object.cpp \
-           Classes/Particle.cpp \
-           Classes/ParticleSystem.cpp \
-           Classes/Scene.cpp \
-           Classes/Screen.cpp \
-           Classes/SpelchkCamera.cpp \
-           Classes/Texture.cpp \
-           Classes/TextureMan.cpp \
-           Classes/Timer.cpp \
-           Classes/TransCache.cpp \ 
-           Classes/Transformation.cpp \
-           Classes/vec.cpp \
-           # Common
-           Common/glut_callbacks.cpp \
-           Common/InitShader.cpp \
-           Common/model.cpp \
-           Common/modelFunctions.cpp \
-           Common/ObjLoader.cpp \
-           Common/Util.cpp \
-           #Common/WiiUtil.cpp \
-           
-	   # QT Stuff >(^_^)>
-           Qt/mainwindow.cpp \
-           Classes/MONOLITH.cpp
-
+SOURCES += Qt/main.cpp\
+        # Classes
+        Classes/Camera.cpp \
+        Classes/Cameras.cpp \
+        Classes/Engine.cpp \
+        # KinectInator.cpp \
+        Classes/mat.cpp \
+        Classes/meshMapping.cpp \
+        Classes/Object.cpp \
+        Classes/Particle.cpp \
+        Classes/ParticleSystem.cpp \
+        Classes/Scene.cpp \
+        Classes/Screen.cpp \
+        Classes/SpelchkCamera.cpp \
+        Classes/Texture.cpp \
+        Classes/TextureMan.cpp \
+        Classes/Timer.cpp \
+        Classes/TransCache.cpp \
+        Classes/Transformation.cpp \
+        Classes/vec.cpp \
+        Classes/MONOLITH.cpp \
+        # Common
+        Common/glut_callbacks.cpp \
+        Common/InitShader.cpp \
+        Common/model.cpp \
+        Common/modelFunctions.cpp \
+        Common/ObjLoader.cpp \
+        #Common/WiiUtil.cpp\
+        Common/Util.cpp \
+        #Qt
+        Qt/mainwindow.cpp
 
 HEADERS  += include/Camera.hpp \
             include/Cameras.hpp \
