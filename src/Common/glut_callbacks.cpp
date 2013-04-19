@@ -26,9 +26,6 @@
 #include <stdexcept>
 #include <exception>
 
-//globalz
-float centerX, centerY;
-
 bool warpPointer = true;
 
 /**
@@ -356,18 +353,13 @@ void engineMouseMotion( int x, int y ) {
 void EngineMousePassive( int x, int y ) {
   static Screen *myScreen = Engine::instance()->mainScreen();
 
-  //estimate mouse center position
-  if (centerX + centerY < 0 || abs(centerX - x)>100 || abs(centerY-y)>100)
-  {
-      centerX = (round(x / 10.0)) * 10;
-      centerY = (round(y / 10.0)) * 10;
-      printf("Center found at %f, %f\n",centerX, centerY);
-  }
+  int centerX = myScreen->midpointX();
+  int centerY = myScreen->midpointY();
 
   const double dx = ((double) x - centerX) * MAGIC_MOUSE_SCALAR / ((double)myScreen->width());
   const double dy = ((double) centerY - y) * MAGIC_MOUSE_SCALAR / ((double)myScreen->height());
 
-  if (dx == 0 || dy == 0) return;
+  if (dx == 0 && dy == 0) return;
   if ( myScreen->_camList.numCameras() > 0 ) {
     if (_leftDown || _rightDown)
     {
@@ -408,9 +400,6 @@ void engineResize( int width, int height ) {
   // Update the size, which propagates changes to cameras and viewports.
   scr->size( width, height );
 
-  centerX=-1;
-  centerY=-1;
-  
   if (Engine::instance()->opt("trap_pointer")) {
 	// move the pointer so that there isn't a big jump next time we move it.
     glutWarpPointer( scr->midpointX(), scr->midpointY() );
