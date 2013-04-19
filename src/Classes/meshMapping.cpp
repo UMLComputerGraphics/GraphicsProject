@@ -96,9 +96,9 @@ bool isInside(float x1, float y1, float x2, float y2, float x3, float y3, float 
 
 void expandSquareMap(SquareMap* squareMap){
 	expandMap(squareMap->front,squareMap->front->xStart,squareMap->front->xEnd,squareMap->front->yStart,squareMap->front->yEnd);
-	//expandMap(squareMap->back, squareMap->back->xStart,squareMap->back->xEnd,squareMap->back->yStart,squareMap->back->yEnd);
-	//expandMap(squareMap->left, squareMap->left->xStart,squareMap->left->xEnd,squareMap->left->yStart,squareMap->left->yEnd);
-	//expandMap(squareMap->right, squareMap->right->xStart,squareMap->right->xEnd,squareMap->right->yStart,squareMap->right->yEnd);
+	expandMap(squareMap->back, squareMap->back->xStart,squareMap->back->xEnd,squareMap->back->yStart,squareMap->back->yEnd);
+	expandMap(squareMap->left, squareMap->left->xStart,squareMap->left->xEnd,squareMap->left->yStart,squareMap->left->yEnd);
+	expandMap(squareMap->right, squareMap->right->xStart,squareMap->right->xEnd,squareMap->right->yStart,squareMap->right->yEnd);
 }
 
 void expandMap(Square* square, float xStart, float xEnd, float yStart, float yEnd){

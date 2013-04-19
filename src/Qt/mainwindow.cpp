@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
     QWidget *widge = new QWidget();
 
     QCheckBox *box1 = new QCheckBox();
@@ -76,6 +77,7 @@ MainWindow::MainWindow(QWidget *parent) :
     slider5->setRange(0, 50);
     QSlider *slider6 = new QSlider(Qt::Horizontal);
     slider6->setRange(0, 100);
+
     //QObject::connect(slider, SIGNAL(valueChanged(int)), this, SLOT(printTest(int)));
     QObject::connect(slider2, SIGNAL(valueChanged(int)), this, SLOT(printTest2(int)));
     QObject::connect(slider3, SIGNAL(valueChanged(int)), this, SLOT(printTest3(int)));

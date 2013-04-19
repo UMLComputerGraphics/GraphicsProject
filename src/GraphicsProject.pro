@@ -9,7 +9,7 @@ QT       += core gui opengl
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 
-TARGET = GraphicsProject
+TARGET = FinalProject
 TEMPLATE = app
 
 release: DESTDIR = Binaries/
@@ -20,7 +20,7 @@ MOC_DIR =  Qt/moc/
 RCC_DIR =  Qt/rcc/
 UI_DIR =  Qt/ui/
 
-SOURCES += Qt/main.cpp\
+SOURCES += \
         # Classes
         Classes/Camera.cpp \
         Classes/Cameras.cpp \
@@ -50,7 +50,8 @@ SOURCES += Qt/main.cpp\
         #Common/WiiUtil.cpp\
         Common/Util.cpp \
         #Qt
-        Qt/mainwindow.cpp
+        Qt/mainwindow.cpp \
+        Binaries/FinalProject.cpp
 
 HEADERS  += include/Camera.hpp \
             include/Cameras.hpp \
@@ -88,7 +89,6 @@ HEADERS  += include/Camera.hpp \
 INCLUDEPATH += . ./include/
 LIBS += -lMagick++
 
-
 # Linux Settings
 unix:!macx {
 LIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm -lMagick++
@@ -98,8 +98,8 @@ INCLUDEPATH +=. /usr/include/ImageMagick/ include/
 # Mac OSX Settings
 macx {
 LIBS += -framework Carbon -framework OpenGL -framework GLUT
-INCLUDEPATH += /opt/local/include/ImageMagick/
-LIBS += -L/opt/local/lib
+INCLUDEPATH += . include /opt/local/include/ImageMagick/
+LIBS += -L/opt/local/lib -lMagick++
 }
 
 FORMS    += \

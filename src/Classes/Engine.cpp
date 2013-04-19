@@ -157,7 +157,15 @@ bool Engine::flip( const std::string &Option ) {
 /**
  * Initialize GLEW, GLUT and our Engine.
  */
-void Engine::init( int *argc, char *argv[], const char *title ) { 
+void Engine::init( int *argc, char *argv[], const char *title ) {
+
+  // OS X suppresses events after mouse warp.  This resets the suppression
+  // interval to 0 so that events will not be suppressed. This also found
+  // at http://stackoverflow.com/questions/728049/
+  // glutpassivemotionfunc-and-glutwarpmousepointer
+#ifdef __APPLE__
+  CGSetLocalEventsSuppressionInterval( 0.0 );
+#endif
   Util::InitRelativePaths(*argc, argv);
   glutInit( argc, argv );
   glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH );

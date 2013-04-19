@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include <QApplication>
+#include <QThread>
 #include "OpenGL.h"
 #include "MONOLITH.hpp"
 
@@ -15,6 +16,7 @@ int main( int argc, char **argv ) {
     #else
    monolith.start();
     #endif
+
    QApplication a(argc, argv);
    MainWindow w;
    w.setWindowTitle("First Graphics Demo");

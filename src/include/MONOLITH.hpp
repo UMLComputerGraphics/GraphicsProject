@@ -25,14 +25,10 @@
 #include <QtGui>
 
 
-
-
 #ifdef __APPLE__
-class MONOLITH: public QObject
-{
+class MONOLITH: public QObject {
 #else
-class MONOLITH: public QThread
-{
+class MONOLITH: public QThread {
 #endif // __APPLE__
     Q_OBJECT
 
@@ -73,7 +69,9 @@ public:
     
 #ifndef WITHOUT_QT
 public slots:
+
     void ParticleAdd();
+
 signals:
 #endif
     

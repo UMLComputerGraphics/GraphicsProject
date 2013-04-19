@@ -46,6 +46,7 @@ MONOLITH::MONOLITH(int argc, char* argv[])
     bottle = rootScene->addObject( "bottle" );
     // Load model from file.
     ObjLoader::loadModelFromFile( bottle, "../models/bottle_wine_high.obj" );
+    ObjLoader::loadMaterialFromFile(bottle, "../models/bottle_wine_high.mtl");
     {
         // Scale the bottle down!
         bottle->_trans._scale.set( 0.30 );
@@ -80,6 +81,8 @@ MONOLITH::MONOLITH(int argc, char* argv[])
         // with this model, we can use all the preexisting Object class functionality
         ObjLoader::loadModelFromFile( bottleMorphTarget,
                                      "../models/bottle_liquor_high.obj" );
+	   ObjLoader::loadMaterialFromFile(bottleMorphTarget,
+	   						  "../models/bottle_liquor_high.mtl");
         bottleMorphTarget->_trans._scale.set( 0.30 );
         
         for ( uint i = 0; i < bottle->_colors.size(); i++ ) {
@@ -104,6 +107,7 @@ MONOLITH::MONOLITH(int argc, char* argv[])
     // Load up that goddamned candle
     candle = rootScene->addObject( "Candle", shader[1] );
     ObjLoader::loadModelFromFile( candle, "../models/candle.obj" );
+    ObjLoader::loadMaterialFromFile( candle, "../models/candle.mtl");
     vec4 min = candle->getMin();
     vec4 max = candle->getMax();
     fprintf( stderr, "Min: (%f,%f,%f)\nMax: (%f,%f,%f)\n", min.x, min.y, min.z,
@@ -111,6 +115,7 @@ MONOLITH::MONOLITH(int argc, char* argv[])
     candle->_trans._offset.set( 2.5, -min.y, 2.5 );
     //candle->propagate();
     candle->buffer();
+
     
     ps = new ParticleSystem( 10000, "ps1", shader[2] );
     ps->setLifespan(5,7.5);

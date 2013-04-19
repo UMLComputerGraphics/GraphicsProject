@@ -22,6 +22,7 @@
 #endif
 
 #endif
+
 /**
  * @def GLEW_INIT()
  * A macro defined to initialize GLEW on Linux,

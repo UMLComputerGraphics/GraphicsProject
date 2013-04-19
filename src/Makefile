@@ -12,8 +12,7 @@ DIAF=Classes/KinectInator.cpp \
      Qt/main.cpp Qt/mainwindow.cpp Qt/qtLite.cpp
 
 ifndef WII
-DIAF += \
-	Common/WiiUtil.cpp
+DIAF += Common/WiiUtil.cpp
 endif
 
 SOURCES=$(filter-out $(DIAF),$(SOURCESRAW))
@@ -26,8 +25,8 @@ OBJS = $(subst .cpp,.o,$(COMMON)) \
        $(subst .cpp,.o,$(CLASSES)) \
 
 DIRT = $(wildcard */*.o */*.so */*.d *.i *~ */*~ *.log)
+CXXOPTS = -fmessage-length=0 -ansi -Wall -pedantic -DWITHOUT_QT
 
-CXXOPTS = -fmessage-length=0 -ansi -Wall -pedantic 
 CXXINCS = "-I$(CURDIR)/include"
 CXXDEFS = -DWITHOUT_QT
 LDLIBS = -lMagick++ -lboost_thread-mt
@@ -47,14 +46,23 @@ UNAME := $(shell uname)
 ifeq ($(UNAME), Linux)
     CXXINCS += -I/usr/include/ImageMagick/
     CXXDEFS += -DFREEGLUT_STATIC -DGLEW_STATIC
-    LDLIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm 
+    LDLIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm
+    #FMODNAME = libfmodex.so
+    #FMODLIB = $(FMODLIBDIR)/$(FMODLIBNAME)
+    #If linux, we don't need any extra build steps
+    #FMODLINK = true
 endif
 
 ifeq ($(UNAME), Darwin)
-    CXXINCS += -I/opt/local/include/ImageMagick
+    CXXINCS += -I/opt/local/include -I/opt/local/include/ImageMagick
    # LDLIBS += -framework Carbon -framework OpenGL -framework GLUT -L/opt/local/lib
    # if you can't find imgMagick, then try the line above. be sure to comment the line below
-    LDLIBS += -framework Carbon -framework OpenGL -framework GLUT -L/opt/local/lib -lMagick++
+    LDLIBS += -framework Carbon -framework OpenGL -framework GLUT -L/opt/local/lib
+
+    FMODLIBNAME = libfmodex.dylib
+   # If apple, we do need a funky post-compile build step
+    FMODLIB = $(FMODLIBDIR)/$(FMODLIBNAME)
+    FMODLINK = install_name_tool -change ./$(FMODLIBNAME) ../$(FMODLIB)
 endif
 
 ifdef DEBUG
@@ -63,6 +71,14 @@ else
 	CXXOPTS += -O3
 endif
 
+#USE_FMOD = 1
+#ifdef USE_FMOD
+#    LDLIBS += $(FMODLIB)
+#else
+#in this context, true means "do nothing successfully"
+#    FMODLINK = true
+#endif
+
 CXXFLAGS = $(CXXOPTS) $(CXXDEFS) $(CXXINCS)
 LDFLAGS = $(LDOPTS) $(LDDIRS) $(LDLIBS)
 
@@ -70,12 +86,13 @@ LDFLAGS = $(LDOPTS) $(LDDIRS) $(LDLIBS)
 
 .PHONY: Makefile
 
-default all: $(TARGETS)
+default all: clean-qt $(TARGETS)
 
 $(TARGETS): $(OBJS)
 
 %: %.cpp
 	$(CXX) $(CXXFLAGS) $^ $(LDFLAGS) -o $@
+#	$(FMODLINK) $@
 
 #-----------------------------------------------------------------------------
 
@@ -114,7 +131,7 @@ clean-qt: qMakefile
 	rm -rf debug/ release/
 	rm -f qMakefile
 
-
 qMakefile:
 	qmake -o qMakefile
+
 

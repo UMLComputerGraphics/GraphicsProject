@@ -128,7 +128,7 @@ void aRomanticEvening()
     lightDiffuse[1] = lightness;
     lightDiffuse[2] = lightness;
 
-    usleep(10000000);
+    sleep(0.01);
   }
 }
 
