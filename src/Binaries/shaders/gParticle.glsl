@@ -25,7 +25,7 @@ void main ()
 
 
 	//float particleSize = 0.25;
-	float particleSize = 0.006;
+	float particleSize = 0.004;
 
 	//Pass through color
 	fColor = gColor;

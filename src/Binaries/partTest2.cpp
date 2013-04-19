@@ -76,12 +76,13 @@ void init()
     ParticleSystem *particleSystem = new ParticleSystem( numberOfParticles, 
 							 "ParticleSystem1b", 
 							 particleSystemShader );
-    particleSystem->setLifespan(1.0, 8.0);
+
+    particleSystem->setLifespan(4.0, 8.0);
     particleSystem->setVectorField( ParticleFieldFunctions::flame ) ;
     particleSystem->setEmitterRadius( 0.02 ) ;
     particleSystem->drawMode( GL_TRIANGLES ) ; // NEED THIS IF WE USE A GEOMETRY SHADER!
     rootScene->insertObject( particleSystem );
-    particleSystem->setSlaughterHeight(0.2455);
+    //particleSystem->setSlaughterHeight(0.2455);
     //particleSystem->_trans._displacement.set(0.0, 0.25, 0.0);
     //particleSystem->setEmitterRadius( 0.1 );
     particleSystem->propagateOLD();
@@ -163,7 +164,7 @@ int main( int argc, char **argv ) {
   glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH );
   glutInitWindowSize( myScreen.width(), myScreen.height() );
   glutCreateWindow( "Particle Test" );
-  //glutFullScreen();
+  glutFullScreen();
   glutSetCursor( GLUT_CURSOR_NONE );
 
   GLEW_INIT();
