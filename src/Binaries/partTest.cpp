@@ -21,7 +21,7 @@
 
 // variable used to initialize the particle system
 // If there is an argv[1], we will use it to initialize the particle system.
-int numberOfParticles = 400000 ;
+int numberOfParticles = 40000 ;
 ParticleSystem *funInTheSin;
 double theta = 0.0;
 GLuint thetaLoc;

@@ -7,6 +7,8 @@
 SHELL = /usr/bin/env bash
 UNAME := $(shell uname)
 
+UNAME := $(shell uname)
+
 #BUILD EVERYTHING FROM A FOLDER OTHER THAN COMMON OR CLASSES AS AN EXECUTABLE!
 SOURCESRAW=$(filter-out Incomplete/%.cpp Common/%.cpp Classes/%.cpp,$(wildcard */*.cpp))
 COMMONRAW=$(wildcard Common/*.cpp)
@@ -22,7 +24,6 @@ DIAF=Classes/KinectInator.cpp \
 ifndef WII
     DIAF += Common/WiiUtil.cpp
 endif
-
 
 #todo Remove this when some hero fixes the GL_TEXTURE_BUFFER undefined error for Apple users
 ifeq ($(UNAME), Darwin)
@@ -58,6 +59,7 @@ ifdef WII
 endif
 
 # Platform-dependent configuration.
+
 # LINUX
 ifeq ($(UNAME), Linux)
     prepare = preparelinux
@@ -92,6 +94,7 @@ LDFLAGS = $(LDOPTS) $(LDDIRS) $(LDLIBS)
 #-----------------------------------------------------------------------------
 
 .PHONY: Makefile
+
 
 default all: $(prepare) clean-qt $(TARGETS)
 
