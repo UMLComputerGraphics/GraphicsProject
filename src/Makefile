@@ -46,12 +46,14 @@ endif
 # Platform-dependent configuration.
 UNAME := $(shell uname)
 ifeq ($(UNAME), Linux)
+    prepare = preparelinux
     CXXINCS += -I/usr/include/ImageMagick/
     CXXDEFS += -DFREEGLUT_STATIC -DGLEW_STATIC
     LDLIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm -lfmodex
 endif
 
 ifeq ($(UNAME), Darwin)
+    prepare = preparemac
     CXXINCS += -I/opt/local/include -I/opt/local/include/ImageMagick
    # LDLIBS += -framework Carbon -framework OpenGL -framework GLUT -L/opt/local/lib
    # if you can't find imgMagick, then try the line above. be sure to comment the line below
@@ -84,12 +86,16 @@ LDFLAGS = $(LDOPTS) $(LDDIRS) $(LDLIBS)
 
 .PHONY: Makefile
 
-default all: prepare clean-qt $(TARGETS)
+default all: $(prepare) clean-qt $(TARGETS)
 
 
-.PHONY: prepare
-prepare:
+.PHONY: preparelinux
+preparelinux:
 	Util/fMod/install.sh
+
+.PHONY: preparemac
+preparemac:
+	cd fMod && make
 
 $(TARGETS): $(OBJS)
 
