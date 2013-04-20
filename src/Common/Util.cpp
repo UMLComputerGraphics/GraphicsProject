@@ -36,12 +36,11 @@ std::vector< std::string > split( const std::string &s, char delim ) {
   std::vector< std::string > elems;
   return split( s, delim, elems );
 }
-
 bool dirExists(const std::string& where, const std::string& dir) {
   static struct stat s;
   std::stringstream str;
   str << where << dir;
-  gprint( PRINT_DEBUG, "Checking for existence of %s\n",str.str().c_str());
+  printf("Checking for existence of %s\n",str.str().c_str());
   int err = stat(str.str().c_str(), &s);
   if(-1 == err) {
     return false;
@@ -53,7 +52,6 @@ bool dirExists(const std::string& where, const std::string& dir) {
     }
   }
 }
-
 namespace Util {
   static std::string dondeestalosshaders;
   /**
@@ -73,7 +71,7 @@ namespace Util {
     if ( slapchop.size() > 1 ) {
       for (size_t last = slapchop.size() - 1; last >= 0; last=last-1)
       {       
-	gprint( PRINT_DEBUG, "last = %lu\n", last);
+	printf("last = %d\n", last);
         std::stringstream cat;
         for ( size_t i = 0; i < last; i++ )
           cat << slapchop[i] << "/";

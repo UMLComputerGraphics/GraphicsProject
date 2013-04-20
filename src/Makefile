@@ -144,6 +144,7 @@ clobber: _clean _rmtargets clean-qt
 .PHONY: qt
 qt: qMakefile
 	make -f qMakefile
+	@cp -f Binaries/FinalProject.app/Contents/MacOS/FinalProject Binaries/FinalProject
 
 .PHONY: clean-qt
 clean-qt: qMakefile
