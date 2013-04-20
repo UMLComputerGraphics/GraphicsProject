@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+if [[ "$EUID" -ne "0" ]]; then
+  echo "Hey, you have to run me as root, ok?"
+  exit 1
+fi
+
 arch=$(getconf LONG_BIT);
 if (( "$arch" == "64" )); then
   file=libfmodex64.so;
