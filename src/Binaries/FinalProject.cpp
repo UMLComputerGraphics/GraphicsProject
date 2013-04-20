@@ -15,30 +15,23 @@ int main( int argc, char **argv ) {
 
    MONOLITH monolith(argc, argv);
    
-    #ifndef WITHOUT_QT
-
-    #ifdef __APPLE__
-    monolith.run();
-    #else
-    monolith.start();
-    #endif //__APPLE__
-   
-    QApplication a(argc, argv);
+#ifdef WITHOUT_QT
+   monolith.run();
+#else
+   QApplication a(argc, argv);
    MainWindow w;
    w.setWindowTitle("First Graphics Demo");
    QObject::connect(w.slider, SIGNAL(valueChanged(int)), &monolith, SLOT(ParticleAdd()));
    w.show();
+
+#ifndef __APPLE__
+    monolith.start();
+#endif
    a.exec();
-
-   #ifdef __APPLE__
-   /* PULL THE TRIGGER */
-   glutMainLoop();
-   #endif __APPLE__
-    
-   #else
+#ifdef __APPLE__
     monolith.run();
-    #endif // WITHOUT_QT
-
+#endif
+#endif
    return EXIT_SUCCESS;
 
 }
