@@ -16,10 +16,53 @@ MONOLITH::~MONOLITH(void)
 }
 
 /* Default and only constructor */
-MONOLITH::MONOLITH(int argc, char* argv[])
+MONOLITH::MONOLITH(int argc, char** argv)
 {
+    _argc = argc;
+    _argv = argv;
+}
+
+/**
+ * Cleans up our scene graph.
+ */
+void MONOLITH::cleanup(void)
+{
+    Engine::instance()->rootScene()->delObject();
+}
+
+/**
+ * Apply animations and whatever else your heart desires.
+ */
+void MONOLITH::monolith_idle(void)
+{
+    static Scene *rootScene = Engine::instance()->rootScene();
     
-    Engine::instance()->init( &argc, argv,
+    // Animation variables.
+    double timer = glutGet( GLUT_ELAPSED_TIME ) / 500.0;
+    float percent = (sin( timer ) + 1) / 2;
+    
+    Object &candle = *((*rootScene)["Candle"]);
+    candle.animation( simpleRotateAnim );
+    
+    // Update the morph percentage.
+    (*rootScene)["bottle"]->morphPercentage( percent );
+}
+
+#ifndef WITHOUT_QT
+void MONOLITH::ParticleAdd()
+{
+    ps->addParticle();
+    fprintf(
+        stderr,
+        "signals works, particle added" );
+}
+#endif //WITHOUT_QT
+/**
+ * This will initialize and run MONOLITH
+ */
+void MONOLITH::run()
+{
+    Engine::instance()->init( &_argc, _argv,
                              "WE ARE THE BORG. RESISTANCE IS FUTILE!" );
     Engine::instance()->registerIdle( monolith_idle );
     
@@ -132,56 +175,8 @@ MONOLITH::MONOLITH(int argc, char* argv[])
     glEnable( GL_DEPTH_TEST );
     glClearColor( 0.0, 0.0, 0.0, 1.0 );
 
-}
-
-/**
- * Cleans up our scene graph.
- */
-void MONOLITH::cleanup(void)
-{
-    Engine::instance()->rootScene()->delObject();
-}
-
-/**
- * Apply animations and whatever else your heart desires.
- */
-void MONOLITH::monolith_idle(void)
-{
-    static Scene *rootScene = Engine::instance()->rootScene();
-    
-    // Animation variables.
-    double timer = glutGet( GLUT_ELAPSED_TIME ) / 500.0;
-    float percent = (sin( timer ) + 1) / 2;
-    
-    Object &candle = *((*rootScene)["Candle"]);
-    candle.animation( simpleRotateAnim );
-    
-    // Update the morph percentage.
-    (*rootScene)["bottle"]->morphPercentage( percent );
-}
-
-#ifndef WITHOUT_QT
-void MONOLITH::ParticleAdd()
-{
-    ps->addParticle();
-    fprintf(
-        stderr,
-        "signals works, particle added" );
-}
-#endif //WITHOUT_QT
-/**
- * This will initialize and run MONOLITH
- */
-void MONOLITH::run()
-{
-    
-#ifndef WITHOUT_QT
-    #ifndef __APPLE__
-        glutMainLoop();
-    #endif    
-#else
+    printf("LOOPING!\n");
     glutMainLoop();
-#endif //WITHOUT_QT
 }
 /**
  * A simple animation callback.

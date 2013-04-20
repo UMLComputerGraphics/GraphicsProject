@@ -34,10 +34,8 @@ class MONOLITH: public QObject {
 class MONOLITH: public QThread {
 #endif // __APPLE__
     Q_OBJECT
-
 #else
 class MONOLITH {
-    
 #endif // WITHOUT_QT
 public:
     
@@ -68,6 +66,11 @@ public:
      * This will initialize and run MONOLITH
      */
     void run();
+
+    /*
+     * to win it
+     */
+    void init();
     
     
 #ifndef WITHOUT_QT
@@ -100,7 +103,8 @@ private:
     
     ParticleSystem *ps;
  
-    
+    char **_argv;
+    int _argc;
     
 };
 
