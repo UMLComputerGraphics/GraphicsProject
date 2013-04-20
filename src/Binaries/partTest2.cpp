@@ -24,7 +24,7 @@
 
 // variable used to initialize the particle system
 // If there is an argv[1], we will use it to initialize the particle system.
-int numberOfParticles = 99999 ;
+int numberOfParticles = 9999 ;
 
 // Type Aliases
 using   Angel::vec3;
@@ -74,27 +74,29 @@ void init()
 
   {
     ParticleSystem *particleSystem = new ParticleSystem( numberOfParticles, 
-							 "ParticleSystem1b", 
+							 "emitter", 
 							 particleSystemShader );
-    particleSystem->setLifespan(1.0, 8.0);
+
+    particleSystem->setLifespan(4.0, 8.0);
     particleSystem->setVectorField( ParticleFieldFunctions::flame ) ;
     particleSystem->setEmitterRadius( 0.02 ) ;
     particleSystem->drawMode( GL_TRIANGLES ) ; // NEED THIS IF WE USE A GEOMETRY SHADER!
-    rootScene->insertObject( particleSystem );
-    particleSystem->setSlaughterHeight(0.2455);
+    particleSystem->setParticleSpace(true);
+    //particleSystem->setSlaughterHeight(0.2455);
     //particleSystem->_trans._displacement.set(0.0, 0.25, 0.0);
-    //particleSystem->setEmitterRadius( 0.1 );
+    //particleSystem->_trans._offset.set( 0.0, 0.2, 0.0 );
     particleSystem->propagateOLD();
     //particleSystem->fillSystemWithParticles();
-    particleSystem->buffer();
+    rootScene->insertObject( particleSystem );
+    // PARTICLE SYSTEMS buffer() THEMSELVES
   }
 
   // Generic OpenGL setup: Enable the depth buffer and set a nice background color.
   glEnable( GL_DEPTH_TEST );
-  glClearColor( 0.0, 0.0, 0.0, 1.0 );
+  glClearColor( 0.0, 0.0, 0.3, 1.0 );
 
-  // also need this to render visible points
-  glPointSize( 1.1 );
+  // if not using geo shader, we need this to render visible points
+  // glPointSize( 1.1 );
 }
 
 void cleanup( void ) 
@@ -129,12 +131,25 @@ void display( void )
 
 }
 
+void simpleRotateAnim( TransCache &obj ) {
+  obj._rotation.rotateY( tick.scale() * 1.0 );
+  obj._offset.set( 1.5, 0, 0 );
+  obj._orbit.rotateY( tick.scale() * -1.0 );
+}
+
 void idle( void ) 
 {
   static Cameras *camList = Engine::instance()->cams();
 
   // Compute the time since last idle().
   tick.tock();
+
+
+  Scene &theScene = (*Engine::instance()->rootScene());
+
+  Object &Emitter = *(theScene["emitter"]);
+  //Emitter.animation( simpleRotateAnim );
+
 
   // Move all camera(s).
   camList->idleMotion();
@@ -163,7 +178,7 @@ int main( int argc, char **argv ) {
   glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH );
   glutInitWindowSize( myScreen.width(), myScreen.height() );
   glutCreateWindow( "Particle Test" );
-  //glutFullScreen();
+  glutFullScreen();
   glutSetCursor( GLUT_CURSOR_NONE );
 
   GLEW_INIT();

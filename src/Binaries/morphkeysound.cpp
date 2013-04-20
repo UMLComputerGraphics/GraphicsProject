@@ -32,10 +32,14 @@ const float DISTANCEFACTOR = 100.0f;          // Units per meter.  I.e feet woul
 #include "glut_callbacks.h"
 
 /* fmod includes */
+#include "wincompat.h"
+#include "fmod.hpp"
+#include "fmod_errors.h"
+/*
 #include "../fMod/include/wincompat.h"
 #include "../fMod/include/fmod.hpp"
 #include "../fMod/include/fmod_errors.h"
-
+*/
 /* use an enum to control which way we are morphing */
 /* 'A' represents the 'first' model and 'B' represents the morph target*/
 
@@ -481,6 +485,7 @@ break;
 
 }
 
+// todo @inspectorconstructor clean this mess
 void updateListener( void ) {
 
   Camera &cam = *(Engine::instance()->mainScreen()->_camList.active());// *(myScreen.camList.Active());
@@ -553,9 +558,6 @@ FMOD_RESULT       result ; // doesn't need to be a global... @todo: make local w
 
  */
 int main( int argc, char **argv ) {
-
-  fprintf(stderr,"This file is executing from the following directory\nall relative paths are relative to THIS directory:\n");
-  system("pwd");
 
   Engine::instance()->init( &argc, argv, "fMod Demo" );
   Engine::instance()->registerIdle( morphKeySoundIdle );

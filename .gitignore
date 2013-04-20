@@ -8,3 +8,5 @@ src/.settings/language.settings.xml
 GraphicsProject/test.hpp
 src/qMakefile
 *.user
+
+src/Binaries/partTest2
