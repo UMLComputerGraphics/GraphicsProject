@@ -1,35 +1,63 @@
 Laziness
 ==
 
-- This is the README file for John Huston's, Nick St.Pierre's and 
+- This README is hideously out of date.
+
+
+- This is (mostly) README file for John Huston's, Nick St.Pierre's and 
   Chris Compton's Graphics I project for Fall 2012. It needs to
   be updated for Spring 2013!
 
-- Requires libmagick++-dev for textures, and libwiicpp for Wii interactivity,
-  if you choose to build it.
+License
+==
+TBD.
 
-HSC
-===
+Authors
+==
 
-- This is our Graphics I final project for Prof. Grinstein,
-  at UMass Lowell, Fall 2012.
+- John Fallon -- Graphical User Interface
 
-- It has been written ground-up without utilizing the fixed-pipeline
-  API of OpenGL. 
+- Greg Giannone -- Modelling, Shaders, Bugfixes
 
-- It implements a fully Object-Oriented scene graph, independent and
-  arbitrary cameras (realized via splitscreen), and multiple methods
-  of input.
+- John Huston -- Engine, Bugfixes, Wii Support, Integration
 
-- The project features prominently random terrain generation. This is
-  performed using the Diamond-Square algorithm; see below for additional
-  reading on the technique.
+- Franck Kamayou -- Graphical User Interface
 
-- This project utilizes a lot of code snippets, libraries and ideas from
-  a variety of authors. They are credited in-line where appropriate, but here's a list:
-  
+- Zach Maybury -- Model Morphing Logistics
+
+- Eric McCann -- Integration, Logistics, Bugfixes, 
+                 Raytracing, Lighting, Kinect Support, Git Guru
+
+- Hoanh Nguyen -- Raytracing, Lighting
+
+- Nick St.Pierre -- Particle Systems, Math, Sound
+
+- Luan Tran -- Graphical User Interface (Linux Support)
+
+- Nick VerVoort -- Particle Systems, Modelling
+
+
+Third-Party Libraries
+==
+
+- OpenGL, GLEW, Freeglut, and the usual suspects.
+
+- Libmagick++: Image loader, utilized for converting JPEG tetxures to RGBA.
+
+- LibWiiC/++: Wii Remote driver library, see Gabrielle Randelli below.
+
+- exprtk: C++ Mathematical Expression Library, Arash Parttow, http://www.partow.net/programming/exprtk/index.html
+
+- fModEX: Sound library, http://www.fmod.org/
+
+- QT: Multi-platform GUI library
+
+
+Credits and Acknowledgements
+==
+
   - Etay Mieri, olgdev.atspace.co.uk:
-    	 Invaluable tutorials on OpenGL.  
+    	 Invaluable tutorials on OpenGL, and 99.9% of our Texture class.
 
   - Daniel Beard, Paul Boxley and Paul Martz:
     	   Information and code for generating random terrain.
@@ -49,11 +77,32 @@ HSC
 
   - Dan Lecocq:
       For a really great blog post on how to draw a mesh with
-      GL_TRIANGLE_STRIPs.
+      GL_TRIANGLE_STRIPs. http://dan.lecocq.us/wordpress/2009/12/25/triangle-strip-for-grids-a-construction/
 
   - Simon Murray:
       Founder of www.goodtextures.com from which we obtained
       all of our terrain textures.
+
+
+Outdated HSC Readme
+===
+
+- This is our Graphics I final project for Prof. Grinstein,
+  at UMass Lowell, Fall 2012.
+
+- It has been written ground-up without utilizing the fixed-pipeline
+  API of OpenGL. 
+
+- It implements a fully Object-Oriented scene graph, independent and
+  arbitrary cameras (realized via splitscreen), and multiple methods
+  of input.
+
+- The project features prominently random terrain generation. This is
+  performed using the Diamond-Square algorithm; see below for additional
+  reading on the technique.
+
+- This project utilizes a lot of code snippets, libraries and ideas from
+  a variety of authors. They are credited above!
 
 - To build the project, pushd Flythrough && make;
   To run, pushd Flythrough && ./fly;
