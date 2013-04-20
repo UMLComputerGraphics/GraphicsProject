@@ -23,12 +23,12 @@ using Angel::mat4;
 // Constructor(s)
 Particle::Particle( vec4 position, float scale, float lifetime ) :
   _pos( position ), _scale( scale ), _vel(vec3(0.0, 0.0, 0.0)){
-  setMaxLifetime(lifetime);
+  setMaxLifetime(lifetime), setColor(vec4(1.0,0.0,1.0,1.0));
 }
 
 Particle::Particle( vec4 position, float lifetime ) :
   _pos( position ), _vel(vec3(0.0, 0.0, 0.0)){
-  setMaxLifetime(lifetime);
+  setMaxLifetime(lifetime), setColor(vec4(1.0,0.0,1.0,1.0));
 }
 
 // Destructor(s)
@@ -65,6 +65,10 @@ void Particle::setAlpha( float newAlpha ) {
   _color.w = newAlpha;
 }
 
+float Particle::setAlpha( void ) {
+  return _color.w;
+}
+
 void Particle::setColor( vec4 newColor ) {
   _color = newColor;
 }
@@ -89,10 +93,6 @@ void Particle::setVel( vec3 newVel ) {
   _vel = newVel;
 }
 
-void Particle::setTexFile( string newFilename ) {
-  _texFilename = newFilename;
-}
-
 vec4
 Particle::getPosition( void )
 {
@@ -105,3 +105,7 @@ Particle::getMaxLifetime()
 	return _maxLifetime;
 }
 
+vec4
+Particle::getColor( void ) {
+  return _color ;
+}

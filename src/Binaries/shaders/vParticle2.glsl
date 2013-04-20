@@ -5,9 +5,8 @@
 attribute vec4 vPosition;
 attribute vec4 vColor;
 
-uniform vec3 cameraPos;
 varying vec3 gCamPos;
-varying vec4 gColor;
+varying vec4 gColor ;
 
 // position/movement
 uniform mat4 P;
@@ -24,24 +23,19 @@ void main()
 	vec4 my_Position = OTM * vPosition;
   	gl_Position = P * CTM * my_Position;
 
-
-	//gCamPos = cameraPos;
-	//gColor = vColor;
-	//gColor = vec4(1.0, 1.0, 1.0, 1.0);
+	gl_FrontColor = vColor ;
 
 /*
 	distance = sqrt((my_Position.x * my_Position.x)
                	      + (my_Position.z * my_Position.z)
  	              + (my_Position.y * my_Position.y));
-*/
-
+*//*
 	distance = sqrt( (vPosition.x * vPosition.x) 
 		       + (vPosition.z * vPosition.z) 
 		       + (vPosition.y * vPosition.y));
-
+*/
 	//distance = sqrt((vPosition.x * vPosition.x) + (vPosition.z * vPosition.z) + (vPosition.y * vPosition.y));
-        // distance = 0.01;
-
+        //distance = 0.01;
 	//distance = abs(vPosition.y) + abs(vPosition.x) + abs(vPosition.z) ;
 
 }

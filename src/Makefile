@@ -92,7 +92,7 @@ LDFLAGS = $(LDOPTS) $(LDDIRS) $(LDLIBS)
 
 .PHONY: Makefile
 
-default all: clean-qt $(TARGETS)
+default all:  $(TARGETS)
 
 $(TARGETS): $(OBJS)
 

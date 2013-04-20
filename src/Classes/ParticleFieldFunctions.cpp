@@ -1,4 +1,5 @@
 #include "ParticleFieldFunctions.hpp"
+#include "ParticleSystem.hpp"
 #include "vec.hpp"
 #include "mat.hpp"
 
@@ -29,6 +30,17 @@ double getTheta(vec4 pos)
 
 }
 
+
+
+vec3 ParticleFieldFunctions::fixed(vec4 pos)
+{
+  return vec3(0.0,0.0,0.0);
+}
+
+vec3 ParticleFieldFunctions::up(vec4 pos)
+{
+  return vec3(0.0,0.01,0.0);
+}
 
 
 //FIXME DOCS PARAMETERS
@@ -76,11 +88,10 @@ vec3 ParticleFieldFunctions::flame(vec4 pos)
 	{
 		retVal *= -1.0 ;
 	}
-	retVal.y = 0.002 ;
+	retVal.y = ParticleSystem::rangeRandom(0.0015,0.0025) ;
 
 	//attractor code!!!
 	attractor atr_top ;
-
 
 	atr_top.power    = 0.05 ;
 	atr_top.position = vec3(0.0, 0.15, 0.0) ;
@@ -94,14 +105,14 @@ vec3 ParticleFieldFunctions::flame(vec4 pos)
 		woah /= distanceSquare ;
 	}
 	woah *= atr_top.power ;
-
+	/*
 	if( length(atr_top.position -xyz(pos)) < atr_top.range)
 	{
 		retVal.x = retVal.x + woah.x ;
 		retVal.y = retVal.y + woah.y ;
 		retVal.z = retVal.z + woah.z ;
 	}
-
+	*/
 	return retVal;
 
 }
