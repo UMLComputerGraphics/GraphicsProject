@@ -1,23 +1,28 @@
 #!/usr/bin/env bash
 
-if [[ "$EUID" -ne "0" ]]; then
-  echo "Hey, you have to run me as root, ok?"
-  exit 1
-fi
-
 arch=$(getconf LONG_BIT);
+libdir="lib"
 if (( "$arch" == "64" )); then
+  libdir="lib64"
   file=libfmodex64.so;
 else
   file=libfmodex.so;
 fi
 
-instdir="/usr/local/lib/fMod/";
-mkdir -p "$instdir";
+instdir="/usr/local/$libdir";
+
+[ -d $instdir/fMod ] && exit 0
+
+if [[ "$EUID" -ne "0" ]]; then
+  sudo $0
+  exit $?
+fi
+
+mkdir -p "$instdir/fMod";
 
 set -x
-install $file $instdir;
-ln -s "$instdir/$file" "/usr/local/lib/libfmodex.so"
+install `dirname $0`/$file $instdir/fMod;
+ln -s "$instdir/fMod/$file" "$instdir/libfmodex.so"
 ldconfig
 set +x
 

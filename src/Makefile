@@ -84,7 +84,12 @@ LDFLAGS = $(LDOPTS) $(LDDIRS) $(LDLIBS)
 
 .PHONY: Makefile
 
-default all: clean-qt $(TARGETS)
+default all: prepare clean-qt $(TARGETS)
+
+
+.PHONY: prepare
+prepare:
+	Util/fMod/install.sh
 
 $(TARGETS): $(OBJS)
 
