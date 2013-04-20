@@ -41,3 +41,5 @@ Binaries/MONOLITH
 debug
 release
 qMakefile
+Qt/ui
+Qt/moc
