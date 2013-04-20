@@ -8,8 +8,10 @@ CLASSESRAW=$(wildcard Classes/*.cpp)
 #Binaries/particleBottle.cpp
 #things not needed or that break build
 DIAF=Classes/KinectInator.cpp \
-     fMod/playsound_example.cpp fMod/3d_example.cpp Binaries/morphkeysound.cpp \
-     Qt/main.cpp Qt/mainwindow.cpp Qt/qtLite.cpp
+     Qt/main.cpp Qt/mainwindow.cpp Qt/qtLite.cpp \
+     fMod/playsound_example.cpp fMod/3d_example.cpp
+#     fMod/playsound_example.cpp fMod/3d_example.cpp Binaries/morphkeysound.cpp \
+#     Qt/main.cpp Qt/mainwindow.cpp Qt/qtLite.cpp
 
 ifndef WII
 DIAF += Common/WiiUtil.cpp
@@ -46,11 +48,7 @@ UNAME := $(shell uname)
 ifeq ($(UNAME), Linux)
     CXXINCS += -I/usr/include/ImageMagick/
     CXXDEFS += -DFREEGLUT_STATIC -DGLEW_STATIC
-    LDLIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm
-    #FMODNAME = libfmodex.so
-    #FMODLIB = $(FMODLIBDIR)/$(FMODLIBNAME)
-    #If linux, we don't need any extra build steps
-    #FMODLINK = true
+    LDLIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm -lfmodex
 endif
 
 ifeq ($(UNAME), Darwin)
