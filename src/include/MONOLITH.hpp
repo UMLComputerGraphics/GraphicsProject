@@ -22,12 +22,15 @@
 #ifndef WITHOUT_QT
 /* Qt */
 #include <QObject>
-#include <QtGui>
+//if this is included, then qopengl is linked against the qt open gl guts... which breaks everything.
+//    need to have the window's class import monolith.hpp and call non-QTGui-referencing set functions from the QTGUI handlers
+//#include <QtGui>  
 
 
 #ifdef __APPLE__
 class MONOLITH: public QObject {
 #else
+#include <QThread>
 class MONOLITH: public QThread {
 #endif // __APPLE__
     Q_OBJECT

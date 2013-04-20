@@ -12,7 +12,6 @@ SOURCESRAW=$(filter-out Incomplete/%.cpp Common/%.cpp Classes/%.cpp,$(wildcard *
 COMMONRAW=$(wildcard Common/*.cpp)
 CLASSESRAW=$(wildcard Classes/*.cpp)
 
-#Binaries/particleBottle.cpp
 #things not needed or that break build
 DIAF=Classes/KinectInator.cpp \
      Qt/main.cpp Qt/mainwindow.cpp Qt/qtLite.cpp \
@@ -61,6 +60,7 @@ endif
 # Platform-dependent configuration.
 # LINUX
 ifeq ($(UNAME), Linux)
+    prepare = preparelinux
     CXXINCS += -I/usr/include/ImageMagick/
     CXXDEFS += -DFREEGLUT_STATIC -DGLEW_STATIC
     LDLIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm -lfmodex
@@ -70,6 +70,7 @@ endif
 
 # APPLE OSX
 ifeq ($(UNAME), Darwin)
+    prepare = preparemac
     CXXINCS += -I/opt/local/include -I/opt/local/include/ImageMagick 
    # If apple, we need a funky post-compile build step
     FMODLIB = libfmodex.dylib
@@ -92,7 +93,17 @@ LDFLAGS = $(LDOPTS) $(LDDIRS) $(LDLIBS)
 
 .PHONY: Makefile
 
-default all: clean-qt $(TARGETS)
+default all: $(prepare) clean-qt $(TARGETS)
+
+
+.PHONY: preparelinux
+preparelinux:
+	Util/fMod/install.sh
+
+.PHONY: preparemac
+preparemac:
+# todo Move mac setup here?
+	true
 
 $(TARGETS): $(OBJS)
 
