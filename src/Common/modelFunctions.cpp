@@ -372,6 +372,7 @@ void matchPoints(std::vector< Angel::vec4 >& model1Vertices,std::vector< Angel::
 }
 
 void segmentModels(Object* model1, vec3 model1Low, vec3 model1High, Object* model2, vec3 model2Low, vec3 model2High){
+	//int partitionSize = 6;
 	std::vector< Angel::vec4 > model1Vertices[5];
 	std::vector< Angel::vec3 > model1Normals[5];
 	std::vector< Angel::vec4 > model1Colors[5];
@@ -462,9 +463,9 @@ void segmentModels(Object* model1, vec3 model1Low, vec3 model1High, Object* mode
 	//printf("Bottle Points Model1: %d\n", model1Vertices[2].size());
 	//printf("Bottle Points Model2: %d\n", model2Vertices[2].size());
 	for(int i=0; i<5; i++){
-		makeModelTopSameSize(model1Vertices[i],model1Normals[i],model1Colors[i],model1Textures[i],model2Vertices[i],model2Normals[i],model2Colors[i],model2Textures[i]);
-		matchPoints(model1Vertices[i],model1Normals[i],model1Colors[i],model1Textures[i],model2Vertices[i],model2Normals[i],model2Colors[i],model2Textures[i]);
-		//BipartiteGraph * bipartiteGraph = new BipartiteGraph(model1Vertices[i],model1Normals[i],model1Colors[i],model1Textures[i],model2Vertices[i],model2Normals[i],model2Colors[i],model2Textures[i]);
+		//makeModelTopSameSize(model1Vertices[i],model1Normals[i],model1Colors[i],model1Textures[i],model2Vertices[i],model2Normals[i],model2Colors[i],model2Textures[i]);
+		//matchPoints(model1Vertices[i],model1Normals[i],model1Colors[i],model1Textures[i],model2Vertices[i],model2Normals[i],model2Colors[i],model2Textures[i]);
+		BipartiteGraph * bipartiteGraph = new BipartiteGraph(model1Vertices[i],model1Normals[i],model1Colors[i],model1Textures[i],model2Vertices[i],model2Normals[i],model2Colors[i],model2Textures[i]);
 	}
 	applyToObjects(model1, model2, model1Vertices,model1Normals,model1Colors,model1Textures,model2Vertices,model2Normals,model2Colors,model2Textures);
 	
@@ -500,9 +501,9 @@ void makeModelTopSameSize(std::vector< Angel::vec4 >& model1Vertices,std::vector
 
 void applyToObjects(Object* model1, Object* model2, std::vector< Angel::vec4 > model1Vertices[],std::vector< Angel::vec3 > model1Normals[],std::vector< Angel::vec4 > model1Colors[],std::vector< Angel::vec2 > model1Textures[],std::vector< Angel::vec4 > model2Vertices[],std::vector< Angel::vec3 > model2Normals[],std::vector< Angel::vec4 > model2Colors[],std::vector< Angel::vec2 > model2Textures[]){
 	
-	model1->_vertices = model1Vertices[0];
-	model1->_normals = model1Normals[0];
-	model1->_colors = model1Colors[0];
+	model1->_vertices = model1Vertices[4];
+	model1->_normals = model1Normals[4];
+	model1->_colors = model1Colors[4];
 	/*for(size_t i=0; i<model1Vertices[1].size(); i++){
 		model1->_vertices.push_back(model1Vertices[1][i]);
 		model1->_normals.push_back(model1Normals[1][i]);
@@ -523,9 +524,9 @@ void applyToObjects(Object* model1, Object* model2, std::vector< Angel::vec4 > m
 		model1->_normals.push_back(model1Normals[4][i]);
 		model1->_colors.push_back(model1Colors[4][i]);
 	}*/
-	model2->_vertices = model2Vertices[0];
-	model2->_normals = model2Normals[0];
-	model2->_colors = model2Colors[0];
+	model2->_vertices = model2Vertices[4];
+	model2->_normals = model2Normals[4];
+	model2->_colors = model2Colors[4];
 	/*
 	for(size_t i=0; i<model2Vertices[1].size(); i++){
 		model2->_vertices.push_back(model2Vertices[1][i]);

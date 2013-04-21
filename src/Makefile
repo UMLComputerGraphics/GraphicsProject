@@ -19,7 +19,7 @@ DIAF=Classes/KinectInator.cpp \
      Qt/main.cpp Qt/mainwindow.cpp Qt/qtLite.cpp \
      fMod/playsound_example.cpp fMod/3d_example.cpp
 #     fMod/playsound_example.cpp fMod/3d_example.cpp Binaries/morphkeysound.cpp \
-#     Qt/main.cpp Qt/mainwindow.cpp Qt/qtLite.cpp
+#     Qt/main.cpp Qt/mainwindow.cpp Qt/qtLite.cpp Binaries/FinalProject.cpp
 
 ifndef WII
     DIAF += Common/WiiUtil.cpp
@@ -89,7 +89,7 @@ endif
 
 
 CXXFLAGS = $(CXXOPTS) $(CXXDEFS) $(CXXINCS)
-LDFLAGS = $(LDOPTS) $(LDDIRS) $(LDLIBS)
+LDFLAGS = $(LDOPTS) -headerpad_max_install_names $(LDDIRS) $(LDLIBS)
 
 #-----------------------------------------------------------------------------
 
