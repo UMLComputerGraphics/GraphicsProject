@@ -149,6 +149,11 @@ public:
    */
   Scene( const Scene &copy );
 
+  /**
+   * Propagate all changes throughout the Scene graph.
+   */
+  void propagate( void );
+
 protected:
   /**
    * For the purposes of rapid propagation of scene-graph changes,
@@ -181,11 +186,6 @@ protected:
    * @param obj The object to delete.
    */
   void deleteObject( Object *obj );
-  
-  /**
-   * Propagate all changes throughout the Scene graph.
-   */
-  void propagate( void );
 
 };
 

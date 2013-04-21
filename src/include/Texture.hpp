@@ -17,6 +17,7 @@
 #else // non-Mac OS X operating systems
 #include <ImageMagick/Magick++.h>
 #endif // __APPLE__
+
 /**
  * Texture as a class represents the state and data needed to
  * accurately track and bind a single Texture in OpenGL.

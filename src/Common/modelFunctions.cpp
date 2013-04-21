@@ -6,11 +6,12 @@
  * @details Functions related to morphing.
  */
 
-#include <vector>
 #include "modelFunctions.hpp"
 #include "Object.hpp"
 #include <stdexcept>
 #include <algorithm>
+#include <cfloat>
+#include <vector>
 
 float threeDimensionalDistance( vec4 points1, vec4 points2 ) {
   return
@@ -136,7 +137,7 @@ int findTriangleWithMinimumDistanceFromCenter(std::vector< Angel::vec4 > largerP
 	int minIndex = -1;
     float minDistance = INFINITY;
 
-		for(int i=0; i<smallerPoints.size();i+= 3){
+		for(size_t i=0; i<smallerPoints.size();i+= 3){
 			vec4 point1,point2,point3;
 			findOptimalOrientation(smallerPoints[index],smallerPoints[index+1],smallerPoints[index+2],largerPoints, i, point1, point2, point3);
 			float distance = threeDimensionalDistance(point1,largerPoints[i])+threeDimensionalDistance(point2,largerPoints[i+1])+threeDimensionalDistance(point3,largerPoints[i+2]);
@@ -251,9 +252,9 @@ void matchInitialPoints(Object* model1, Object* model2){
 			}
 		}
 	}else{
-		int correctlyMatchedPoints = 0;
+		//int correctlyMatchedPoints = 0;
 		for(int i=0; i<model1->numberOfPoints();i+=3){
-			int bestPoint1,bestPoint2,bestPoint3;
+			//int bestPoint1,bestPoint2,bestPoint3;
 			int matchIndex = 0;
 			float minDistance = INFINITY;
 			for(int j=0; j<model2->numberOfPoints();j+=3){
@@ -294,10 +295,10 @@ void matchInitialPoints(Object* model1, Object* model2){
 
 void matchPoints(std::vector< Angel::vec4 >& model1Vertices,std::vector< Angel::vec3 >& model1Normals,std::vector< Angel::vec4 >& model1Colors,std::vector< Angel::vec2 >& model1Textures, std::vector< Angel::vec4 >& model2Vertices,std::vector< Angel::vec3 >& model2Normals,std::vector< Angel::vec4 >& model2Colors,std::vector< Angel::vec2 >& model2Textures){
 	if(model1Vertices.size()>model2Vertices.size()){
-		for(int i=0; i<model2Vertices.size();i+=3){
+		for(size_t i=0; i<model2Vertices.size();i+=3){
 			int matchIndex = 0;
 			float minDistance = INFINITY;
-			for(int j=i; j<model1Vertices.size();j+=3){
+			for(size_t j=0; j<model1Vertices.size();j+=3){
 				float distance = 0.0;
 				for(int l=0; l<3; l++){
 					distance += threeDimensionalDistanceWithOrigin(model1Vertices[j+l],model2Vertices[i+l]);
@@ -327,12 +328,12 @@ void matchPoints(std::vector< Angel::vec4 >& model1Vertices,std::vector< Angel::
 			}
 		}
 	}else{
-		int correctlyMatchedPoints = 0;
-		for(int i=0; i<model1Vertices.size();i+=3){
-			int bestPoint1,bestPoint2,bestPoint3;
+		//int correctlyMatchedPoints = 0;
+		for(size_t i=0; i<model1Vertices.size();i+=3){
+			//int bestPoint1,bestPoint2,bestPoint3;
 			int matchIndex = 0;
 			float minDistance = INFINITY;
-			for(int j=i; j<model2Vertices.size();j+=3){
+			for(size_t j=0; j<model2Vertices.size();j+=3){
 				float distance = 0.0;
 				for(int l=0; l<3; l++){
 					distance += threeDimensionalDistanceWithOrigin(model2Vertices[j+l],model1Vertices[i+l]);
@@ -469,8 +470,8 @@ void segmentModels(Object* model1, vec3 model1Low, vec3 model1High, Object* mode
 	
 }
 void makeModelTopSameSize(std::vector< Angel::vec4 >& model1Vertices,std::vector< Angel::vec3 >& model1Normals,std::vector< Angel::vec4 >& model1Colors,std::vector< Angel::vec2 >& model1Textures, std::vector< Angel::vec4 >& model2Vertices,std::vector< Angel::vec3 >& model2Normals,std::vector< Angel::vec4 >& model2Colors,std::vector< Angel::vec2 >& model2Textures){
-	printf("Bottle Points Model1: %d\n", model1Vertices.size());
-	printf("Bottle Points Model2: %d\n", model2Vertices.size());
+	printf("Bottle Points Model1: %lu\n", model1Vertices.size());
+	printf("Bottle Points Model2: %lu\n", model2Vertices.size());
 	
 	if((model1Vertices.size()>model2Vertices.size())&&(model2Vertices.size() > 0)){
 		while(model2Vertices.size() < (model1Vertices.size())){
@@ -493,8 +494,8 @@ void makeModelTopSameSize(std::vector< Angel::vec4 >& model1Vertices,std::vector
 	}else{
 		printf("Models already the same size\n");
 	}
-	printf("Bottle Points Model1: %d\n", model1Vertices.size());
-	printf("Bottle Points Model2: %d\n", model2Vertices.size());
+	printf("Bottle Points Model1: %lu\n", model1Vertices.size());
+	printf("Bottle Points Model2: %lu\n", model2Vertices.size());
 }
 
 void applyToObjects(Object* model1, Object* model2, std::vector< Angel::vec4 > model1Vertices[],std::vector< Angel::vec3 > model1Normals[],std::vector< Angel::vec4 > model1Colors[],std::vector< Angel::vec2 > model1Textures[],std::vector< Angel::vec4 > model2Vertices[],std::vector< Angel::vec3 > model2Normals[],std::vector< Angel::vec4 > model2Colors[],std::vector< Angel::vec2 > model2Textures[]){
@@ -502,22 +503,22 @@ void applyToObjects(Object* model1, Object* model2, std::vector< Angel::vec4 > m
 	model1->_vertices = model1Vertices[0];
 	model1->_normals = model1Normals[0];
 	model1->_colors = model1Colors[0];
-	/*for(int i=0; i<model1Vertices[1].size(); i++){
+	/*for(size_t i=0; i<model1Vertices[1].size(); i++){
 		model1->_vertices.push_back(model1Vertices[1][i]);
 		model1->_normals.push_back(model1Normals[1][i]);
 		model1->_colors.push_back(model1Colors[1][i]);
 	}
-	for(int i=0; i<model1Vertices[2].size(); i++){
+	for(size_t i=0; i<model1Vertices[2].size(); i++){
 		model1->_vertices.push_back(model1Vertices[2][i]);
 		model1->_normals.push_back(model1Normals[2][i]);
 		model1->_colors.push_back(model1Colors[2][i]);
 	}/*
-	for(int i=0; i<model1Vertices[3].size(); i++){
+	for(size_t i=0; i<model1Vertices[3].size(); i++){
 		model1->_vertices.push_back(model1Vertices[3][i]);
 		model1->_normals.push_back(model1Normals[3][i]);
 		model1->_colors.push_back(model1Colors[3][i]);
 	}
-	for(int i=0; i<model1Vertices[4].size(); i++){
+	for(size_t i=0; i<model1Vertices[4].size(); i++){
 		model1->_vertices.push_back(model1Vertices[4][i]);
 		model1->_normals.push_back(model1Normals[4][i]);
 		model1->_colors.push_back(model1Colors[4][i]);
@@ -525,22 +526,23 @@ void applyToObjects(Object* model1, Object* model2, std::vector< Angel::vec4 > m
 	model2->_vertices = model2Vertices[0];
 	model2->_normals = model2Normals[0];
 	model2->_colors = model2Colors[0];
-	/*for(int i=0; i<model2Vertices[1].size(); i++){
+	/*
+	for(size_t i=0; i<model2Vertices[1].size(); i++){
 		model2->_vertices.push_back(model2Vertices[1][i]);
 		model2->_normals.push_back(model2Normals[1][i]);
 		model2->_colors.push_back(model2Colors[1][i]);
 	}
-	for(int i=0; i<model2Vertices[2].size(); i++){
+	for(size_t i=0; i<model2Vertices[2].size(); i++){
 		model2->_vertices.push_back(model2Vertices[2][i]);
 		model2->_normals.push_back(model2Normals[2][i]);
 		model2->_colors.push_back(model2Colors[2][i]);
 	}/*
-	for(int i=0; i<model2Vertices[3].size(); i++){
+	for(size_t i=0; i<model2Vertices[3].size(); i++){
 		model2->_vertices.push_back(model2Vertices[3][i]);
 		model2->_normals.push_back(model2Normals[3][i]);
 		model2->_colors.push_back(model2Colors[3][i]);
 	}
-	for(int i=0; i<model2Vertices[4].size(); i++){
+	for(size_t i=0; i<model2Vertices[4].size(); i++){
 		model2->_vertices.push_back(model2Vertices[4][i]);
 		model2->_normals.push_back(model2Normals[4][i]);
 		model2->_colors.push_back(model2Colors[4][i]);

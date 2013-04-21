@@ -21,43 +21,35 @@
 
 #ifndef WITHOUT_QT
 /* Qt */
-#include "OpenGL.h"
 #include <QObject>
-#endif
+//if this is included, then qopengl is linked against the qt open gl guts... which breaks everything.
+//    need to have the window's class import monolith.hpp and call non-QTGui-referencing set functions from the QTGUI handlers
+//#include <QtGui>  
 
-/* System Headers */
-#include <cmath>
-#include <cstdio>
-#include <sstream>
-#include <cstdlib>
-#include <time.h>
 
-class MONOLITH
-#ifndef WITHOUT_QT
-    : public QObject
-{
+#ifdef __APPLE__
+class MONOLITH: public QObject {
+#else
+#include <QThread>
+class MONOLITH: public QThread {
+#endif // __APPLE__
     Q_OBJECT
 #else
-{
-#endif
-
+class MONOLITH {
+#endif // WITHOUT_QT
 public:
     
     
     // Constructor and destructor for MONOTLITH
-    MONOLITH(
-#ifndef WITHOUT_QT
-        QObject *parent = 0
-#endif
-        );
+    MONOLITH( int argc, char* argv[] );
     
     ~MONOLITH();
 
-    /**
-     * Initialization: load and compile shaders, initialize camera(s), load models.
-     */
-
-    void init(void);
+//    /**
+//     * Initialization: load and compile shaders, initialize camera(s), load models.
+//     */
+//
+//    void init(void);
     
     /**
      * Cleans up our scene graph.
@@ -68,17 +60,24 @@ public:
     /**
      * Apply animations and whatever else your heart desires.
      */
-    static void idle(void);
+    static void monolith_idle(void);
     
     /**
      * This will initialize and run MONOLITH
      */
-    void run(int &argc, char* argv[]);
+    void run();
+
+    /*
+     * to win it
+     */
+    void init();
     
     
 #ifndef WITHOUT_QT
 public slots:
-    
+
+    void ParticleAdd();
+
 signals:
 #endif
     
@@ -91,7 +90,22 @@ private:
      * @param obj The object to animate.
      */
     static void simpleRotateAnim( TransCache &obj );
+    
+    GLuint shader[3];
+    
+    Scene *rootScene;
+    Screen *primScreen;
+    Object *bottle;
+    
+    Object *floor;
+    
+    Object *candle;
+    
+    ParticleSystem *ps;
+ 
+    char **_argv;
+    int _argc;
+    
 };
-
 
 #endif

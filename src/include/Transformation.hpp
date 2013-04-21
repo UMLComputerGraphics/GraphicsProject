@@ -13,6 +13,7 @@
 #include "mat.hpp"
 #include "vec.hpp"
 #include "platform.h" //OpenGL types.
+
 class Transformation {
   
 public:
@@ -38,8 +39,14 @@ public:
 
   virtual Angel::mat4 inverse( void ) const = 0;
   virtual Transformation::Subtype type( void ) const = 0;
-  bool inheritable( void ) const;
 
+  // Generic combination of two (similar) transformations. No optimizations.
+  void combine( Transformation *rhs );
+  // Mandatory overload which optimizes specific transformation combinations.
+  virtual void coalesce( Transformation *rhs ) = 0;
+  void reset( void );
+
+  bool inheritable( void ) const;
   void markNew( void );
   void markOld( void );
   bool isNew( void );
@@ -47,7 +54,7 @@ public:
 protected:
   bool _inheritable;
   bool _new;
-  Angel::mat4 mat;
+  Angel::mat4 _mat;
   
 };
 
@@ -66,6 +73,7 @@ public:
   const RotMat &adjust( const Angel::mat4 &Adjustment, bool postmult = true );
   virtual Angel::mat4 inverse( void ) const;
   virtual Transformation::Subtype type( void ) const;
+  void coalesce( Transformation *rhs );
 
 };
 
@@ -87,6 +95,7 @@ public:
   virtual Angel::mat4 inverse( void ) const;
   virtual Transformation::Subtype type( void ) const;
 
+  void coalesce( Transformation *rhs );
 };
 
 class ScaleMat : public Transformation {
@@ -101,6 +110,7 @@ public:
   virtual Angel::mat4 inverse( void ) const;
   virtual Transformation::Subtype type( void ) const;
   
+  void coalesce( Transformation *rhs );
 };
 
 #endif

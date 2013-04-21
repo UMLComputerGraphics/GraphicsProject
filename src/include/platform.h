@@ -10,12 +10,11 @@
 #include "OpenGL.h"
 
 #ifdef __APPLE__
-#define glGenVertexArrays( X, Y ) glGenVertexArraysAPPLE( X, Y )
-#define glBindVertexArray( X ) glBindVertexArrayAPPLE( X )
-#define GLEW_INIT() ;
-#define glutLeaveMainLoop() exit( EXIT_SUCCESS )
+#  define glGenVertexArrays( X, Y ) glGenVertexArraysAPPLE( X, Y )
+#  define glBindVertexArray( X ) glBindVertexArrayAPPLE( X )
+#  define GLEW_INIT() ;
+#  define glutLeaveMainLoop() exit( EXIT_SUCCESS )
 #else
-// Code for peasants as follows:
 #define GLEW_INIT()						\
   glewExperimental = GL_FALSE;					\
   GLenum rc = glewInit();					\

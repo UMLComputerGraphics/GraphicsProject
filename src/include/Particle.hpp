@@ -1,10 +1,11 @@
 /**
- * @file Particle.hpp
- * @author FIXME
- * @authors FIXME
- * @date 2013-03-15
- * @brief FIXME: Needs documentation from NVV/CC.
- */
+ @file Particle.hpp
+ @author Nick Ver Voort, nicholas_vervoort@student.uml.edu
+ @since 23 Feb 2013
+ @authors Nick Ver Voort, Chris Compton, Nicholas St.Pierre
+ nicholas_vervoort@student.uml.edu, christopher_compton@student.uml.edu, nstpierr@cs.uml.edu
+ @brief The Particle class
+ **/
 
 #ifndef __PARTICLE_H
 #define __PARTICLE_H
@@ -20,14 +21,6 @@ using Angel::vec4;
 using Angel::mat4;
 using std::string;
 
-/**
- @author Nick Ver Voort, nicholas_vervoort@student.uml.edu
- @since 23 Feb 2013
- @authors Nick Ver Voort, Chris Compton
- nicholas_vervoort@student.uml.edu, christopher_compton@student.uml.edu
- @brief The Particle class, many of which will be handled simultaneously by a
- ParticleSystem.
- **/
 
 class Particle {
   
@@ -37,32 +30,36 @@ public:
   Particle( vec4 position, float scale, float lifetime );
   ~Particle( void );
 
-  void changeVel( vec3 newVel );
+  void changeVel( vec3 newVel ); // ???
 
+  // setters
+  void  setAlpha( float newAlpha );
+  void  setColor( vec4 newColor );
+  void  setLifetime( float newLifetime );
+  void  setMaxLifetime( float newMaxLife );
+  void  setPos( vec4 newPos );
+  void  setScale( vec3 newScale );
+  void  setVel( vec3 newVel );
+
+  // getters
+  vec4  getPosition( void );
+  float getMaxLifetime(void);
   float getLifetime( void );
-
-  void setAlpha( float newAlpha );
-  void setColor( vec4 newColor );
-  void setLifetime( float newLifetime );
-  void setPos( vec4 newPos );
-  void setScale( vec3 newScale );
+  float setAlpha( void ) ;
+  vec4 getColor( void );
   //void setSpin( float newSpin );
-  void setVel( vec3 newVel );
-  void setTexFile( string newFilename );
-  vec4 getPosition( void );
 
   void updateSelf( void );
 
 private:
-  vec4 _pos;
-  vec3 _scale;
-  vec3 _vel;
-  vec4 _color;
-  float _lifetime;
+  vec4   _pos;
+  vec3   _scale;
+  vec3   _vel;
+  vec4   _color;
+  float  _lifetime;
+  float  _maxLifetime;
   //  float spin;
-  
-  string _texFilename;
-  
+
 };
 
 #endif

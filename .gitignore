@@ -5,11 +5,8 @@ src/.settings/
 src/.settings/language.settings.xml
 .cproject
 .project
-
 GraphicsProject/test.hpp
-
+src/qMakefile
 *.user
 
-*.user
-
-*.user
+src/Binaries/partTest2

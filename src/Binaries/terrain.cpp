@@ -15,11 +15,6 @@
 #include <time.h>
 // Multi-platform support and OpenGL headers
 #include "Engine.hpp"
-// Utilities
-#include "model.hpp"
-#include "InitShader.hpp"
-#include "glut_callbacks.h"
-#include "ObjLoader.hpp"
 
 // Wii Connectivity 
 #ifdef WII
@@ -75,6 +70,7 @@ void init() {
   myScreen->_camList.shader( gShader );
   
   // Cameras must be added after setting a shader.
+  myScreen->_camList.toggleDivision(); // This activates the vertical division mechanism.
   myScreen->_camList.addCamera( "Camera1" );
   myScreen->_camList.next();
   
@@ -172,7 +168,6 @@ void init() {
   agua->buffer();
   agua->drawMode( GL_TRIANGLES );
   
-  glEnable( GL_DEPTH_TEST );
   glClearColor( 0.3, 0.5, 0.9, 1.0 );
   
   //Attach a model to the Camera.

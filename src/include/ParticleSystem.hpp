@@ -18,6 +18,7 @@
 #include "Engine.hpp"
 #include "vec.hpp"
 
+
 using Angel::vec2;
 using Angel::vec3;
 using Angel::vec4;
@@ -44,42 +45,46 @@ public:
 
   //particle creation methods
 
-  void addParticle(void);
-  void addOneParticleAtOrigin( void );
-  void addSomeParticles( int );
-  void fillSystemWithParticles( void );
+  void  addParticle(void);
+  void  addOneParticleAtOrigin( void );
+  void  addSomeParticles( int );
+  void  fillSystemWithParticles( void );
 
   Particle *newRandomParticle(void);
 
   // Getters and Setters
-  vec4  getColor( void );
   float getLifespan( void );
   float getMaxLife( void );
   float getMinLife( void );
   int   getNumParticles( void );
 
-  void setColor( vec4 newColor );
-  void setSlaughterHeight( float );
-  void setLifespan( float minLifespan, float maxLifespan );
-  void setNumParticles( int newNumParticles );
-  void setEmitterRadius(float);
+  void  setSlaughterHeight( float );
+  void  setLifespan( float minLifespan, float maxLifespan );
+  void  setNumParticles( int newNumParticles );
+  void  setEmitterRadius(float);
+
+  bool  getParticleSpace(void) const;
+  void  setParticleSpace(bool);
 
   /* The Do-All function.  Will do everything needed in order
    to have the particles behave according to our specification
    on each call to Draw(). That's the idea, anyway. */
-  void update();
+  void  update();
 
   virtual void buffer( void );
   virtual void draw( void );
 
-  void setVectorField(vec3 (*vectorFieldFunc)(vec4) );
+  void  setVectorField(vec3 (*vectorFieldFunc)(vec4) );
 
-//protected:
   
+  static float rangeRandom( float min, float max );
+
 private:  
 
-  float rangeRandom( float min, float max );
+  float generateLifespan();
   vec4  getRandomCircularSpawnPoint(void);
+  vec4 getRandomHemisphericalSpawnPoint(void);
+  void respawnParticle(Particle &p);
 
   vector<ParticleP> particles;
   unsigned numParticles;   // Number of particles that each instance of ParticleSystem will manage
@@ -92,14 +97,12 @@ private:
   
   bool   updateRequired;
 
+  bool   _useGlobalParticleSpace;
 
-  //  void setVectorField(vec3 (*vectorFieldFunc)(vec4) )
-  //{
+  unsigned _fillSpeedLimit;
 
   vec3 (*_vecFieldFunc)(vec4 posIn);
 
-  // Pass-through variable... maybe not be needed and function can pass through
-  vec4   color;
 };
 
 #endif

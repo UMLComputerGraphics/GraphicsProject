@@ -1,4 +1,13 @@
+###############################################
+#                                             #
+#  Makefile for the Graphics II 2013 project  #
+#                                             #
+###############################################
+
 SHELL = /usr/bin/env bash
+UNAME := $(shell uname)
+
+UNAME := $(shell uname)
 
 #BUILD EVERYTHING FROM A FOLDER OTHER THAN COMMON OR CLASSES AS AN EXECUTABLE!
 SOURCESRAW=$(filter-out Incomplete/%.cpp Common/%.cpp Classes/%.cpp,$(wildcard */*.cpp))
@@ -7,15 +16,20 @@ CLASSESRAW=$(wildcard Classes/*.cpp)
 
 #things not needed or that break build
 DIAF=Classes/KinectInator.cpp \
-     fMod/playsound_example.cpp fMod/3d_example.cpp Binaries/morphkeysound.cpp \
-     Binaries/qtPartTest.cpp Qt/main.cpp Qt/mainwindow.cpp
-
-DIAF=Classes/KinectInator.cpp Binaries/morphkeysound.cpp fMod/3d_example.cpp fMod/playsound_example.cpp Binaries/qtFinalProject.cpp Binaries/qtPartTest.cpp Qt/mainwindow.cpp Qt/main.cpp
+     Qt/main.cpp Qt/mainwindow.cpp Qt/qtLite.cpp \
+     fMod/playsound_example.cpp fMod/3d_example.cpp
+#     fMod/playsound_example.cpp fMod/3d_example.cpp Binaries/morphkeysound.cpp \
+#     Qt/main.cpp Qt/mainwindow.cpp Qt/qtLite.cpp
 
 ifndef WII
-DIAF += \
-	Common/WiiUtil.cpp
+    DIAF += Common/WiiUtil.cpp
 endif
+
+#todo Remove this when some hero fixes the GL_TEXTURE_BUFFER undefined error for Apple users
+ifeq ($(UNAME), Darwin)
+    DIAF += Binaries/raytrace1.cpp Binaries/raytraceIntegrated.cpp
+endif
+
 
 SOURCES=$(filter-out $(DIAF),$(SOURCESRAW))
 COMMON=$(filter-out $(DIAF),$(COMMONRAW))
@@ -26,10 +40,11 @@ TARGETS = $(basename $(strip $(SOURCES)))
 OBJS = $(subst .cpp,.o,$(COMMON)) \
        $(subst .cpp,.o,$(CLASSES)) \
 
-CXXOPTS = -fmessage-length=0 -ansi -Wall -pedantic -DWITHOUT_QT
 DIRT = $(wildcard */*.o */*.so */*.d *.i *~ */*~ *.log)
+CXXOPTS = -fmessage-length=0 -ansi -Wall -pedantic -DWITHOUT_QT
 
 CXXINCS = "-I$(CURDIR)/include"
+CXXINCS+= -IfMod/include
 CXXDEFS = -DWITHOUT_QT
 LDLIBS = -lMagick++ -lboost_thread-mt
 
@@ -43,46 +58,34 @@ ifdef WII
     LDLIBS += -lwiic -lwiicpp
 endif
 
-#FMOD stuff:
-#FMODLIBDIR = fMod/lib
-
 # Platform-dependent configuration.
-UNAME := $(shell uname)
+
+# LINUX
 ifeq ($(UNAME), Linux)
+    prepare = preparelinux
     CXXINCS += -I/usr/include/ImageMagick/
     CXXDEFS += -DFREEGLUT_STATIC -DGLEW_STATIC
-    LDLIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm -lboost_thread-mt
-    #FMODNAME = libfmodex.so
-    #FMODLIB = $(FMODLIBDIR)/$(FMODLIBNAME)
-	#If linux, we don't need any extra build steps
-    #FMODLINK = true
+    LDLIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm -lfmodex
+    # in this context, true means 'do nothing' (type 'true' in your shell to see what I mean)
+    FMODLINK = true
 endif
 
+# APPLE OSX
 ifeq ($(UNAME), Darwin)
-    CXXINCS += -I/opt/local/include/ImageMagick
-   # LDLIBS += -framework Carbon -framework OpenGL -framework GLUT -L/opt/local/lib
-   # if you can't find imgMagick, then try the line above. be sure to comment the line below
-    LDLIBS += -framework Carbon -framework OpenGL -framework GLUT -L/opt/local/lib -lMagick++ -lboost_thread-mt
-    FMODLIBNAME = libfmodex.dylib
-   # If apple, we do need a funky post-compile build step
-    FMODLIB = $(FMODLIBDIR)/$(FMODLIBNAME)
-    FMODLINK = install_name_tool -change ./$(FMODLIBNAME) ../$(FMODLIB)
+    prepare = preparemac
+    CXXINCS += -I/opt/local/include -I/opt/local/include/ImageMagick 
+   # If apple, we need a funky post-compile build step
+    LDLIBS += -framework Carbon -framework OpenGL -framework GLUT -L/opt/local/lib fMod/lib/libfmodex.dylib
+   #FMODLINK = install_name_tool -change ./libfmodex.dylib ../fMod/lib/libfmodex.dylib
+   FMODLINK = install_name_tool -change ./libfmodex.dylib `pwd`/fMod/lib/libfmodex.dylib
 endif
+
 
 ifdef DEBUG
-	CXXOPTS += -DDEBUG -O0 -ggdb
+	CXXOPTS += -DDEBUG -O0 -g
 else
 	CXXOPTS += -O3
 endif
-
-
-#USE_FMOD = 1
-#ifdef USE_FMOD
-#    LDLIBS += $(FMODLIB)
-#else
-#in this context, true means "do nothing successfully"
-#    FMODLINK = true
-#endif
 
 
 CXXFLAGS = $(CXXOPTS) $(CXXDEFS) $(CXXINCS)
@@ -92,13 +95,24 @@ LDFLAGS = $(LDOPTS) $(LDDIRS) $(LDLIBS)
 
 .PHONY: Makefile
 
-default all: clean-qt $(TARGETS)
+
+default all: $(prepare) clean-qt $(TARGETS)
+
+
+.PHONY: preparelinux
+preparelinux:
+	Util/fMod/install.sh
+
+.PHONY: preparemac
+preparemac:
+# todo Move mac setup here?
+	true
 
 $(TARGETS): $(OBJS)
 
 %: %.cpp
 	$(CXX) $(CXXFLAGS) $^ $(LDFLAGS) -o $@
-#	$(FMODLINK) $@
+	$(FMODLINK) $@
 
 #-----------------------------------------------------------------------------
 
@@ -113,9 +127,7 @@ docs:
 	pushd ../Doxygen && doxygen 2>warnings.log && popd;
 
 _clean:	
-	@$(RM) $(DIRT)	
-	@$(RM) -R debug
-	@$(RM) qMakefile
+	@$(RM) $(DIRT)
 
 _rmtargets:
 	@$(RM) $(TARGETS)
@@ -132,14 +144,13 @@ clobber: _clean _rmtargets clean-qt
 .PHONY: qt
 qt: qMakefile
 	make -f qMakefile
-	ln -f debug/GraphicsProject Binaries/MONOLITH 
 
 .PHONY: clean-qt
 clean-qt: qMakefile
 	make -f qMakefile distclean
 	rm -rf debug/ release/
 	rm -f qMakefile
-	rm -f Binaries/MONOLITH
 
 qMakefile:
 	qmake -o qMakefile
+

@@ -42,6 +42,7 @@ Engine *Engine::instance( void ) {
 Engine::Engine( void ) {
   _idleFunc = NULL;
   opt("fixed_yaw", true);
+  opt("trap_pointer", true);
 }
 
 /**
@@ -197,6 +198,9 @@ void Engine::init( int *argc, char *argv[], const char *title ) {
              glGetString( GL_SHADING_LANGUAGE_VERSION ) );
   }
 
+  glEnable( GL_DEPTH_TEST );
+  glClearColor( 0.0, 0.0, 0.0, 1.0 );
+
 }
 
 
@@ -214,6 +218,9 @@ void Engine::idle( void ) {
 
   // Compute the time since last idle().
   tick.tock();
+
+  // Matriculate Scene Graph Changes (Maybe!)
+  Engine::instance()->rootScene()->propagate();
 
   // Move all camera(s).
   camList->idleMotion();

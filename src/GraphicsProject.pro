@@ -9,18 +9,18 @@ QT       += core gui opengl
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 
-TARGET = GraphicsProject
+TARGET = FinalProject
 TEMPLATE = app
 
-release: DESTDIR = release/
-debug:   DESTDIR = debug/
+release: DESTDIR = Binaries/
+debug:   DESTDIR = Binaries/
 
-OBJECTS_DIR =  $$DESTDIR/obj/
-MOC_DIR =  $$DESTDIR/moc/
-RCC_DIR =  $$DESTDIR/rcc/
-UI_DIR =  $$DESTDIR/ui/
+OBJECTS_DIR =  Qt/obj/
+MOC_DIR =  Qt/moc/
+RCC_DIR =  Qt/rcc/
+UI_DIR =  Qt/ui/
 
-SOURCES += Qt/main.cpp\
+SOURCES += \
         # Classes
         Classes/Camera.cpp \
         Classes/Cameras.cpp \
@@ -40,60 +40,65 @@ SOURCES += Qt/main.cpp\
         Classes/TransCache.cpp \
         Classes/Transformation.cpp \
         Classes/vec.cpp \
+        Classes/MONOLITH.cpp \
         # Common
         Common/glut_callbacks.cpp \
         Common/InitShader.cpp \
         Common/model.cpp \
         Common/modelFunctions.cpp \
         Common/ObjLoader.cpp \
- 	#Common/WiiUtil.cpp\
+        #Common/WiiUtil.cpp\
         Common/Util.cpp \
-   	#Qt
-	Qt/mainwindow.cpp\
-        #Binaries
-	Binaries/MONOLITH.cpp\
-	#Binaries/partTest.cpp
+        #Qt
+        Qt/mainwindow.cpp \
+        Binaries/FinalProject.cpp
 
+HEADERS  += include/Camera.hpp \
+            include/Cameras.hpp \
+            include/Engine.hpp \
+            include/globals.h \
+            include/glut_callbacks.h \
+            include/InitShader.hpp \
+            #include/KinectInator.hpp\
+            include/mat.hpp \
+            include/meshMapping.hpp \
+            include/modelFunctions.hpp \
+            include/model.hpp \
+            include/Object.hpp \
+            include/ObjLoader.hpp \
+            include/OpenGL.h \ 
+            include/Particle.hpp \
+            include/ParticleSystem.hpp \
+            include/platform.h \ 
+            include/Scene.hpp \ 
+            include/Screen.hpp \ 
+            include/SpelchkCamera.hpp \
+            include/Texture.hpp \ 
+            include/TextureMan.hpp \ 
+            include/Timer.hpp \ 
+            include/TransCache.hpp \ 
+            include/Transformation.hpp \ 
+            include/Util.hpp \ 
+            include/vec.hpp \ 
+            include/WiiUtil.h \
+            # QT Stuff >(^_^)>
+            include/mainwindow.h \
+            include/MONOLITH.hpp
 
+# Common Settings
+INCLUDEPATH += . ./include/
+LIBS += -lMagick++
 
-HEADERS  += \
-        # include
-        include/Camera.hpp \
-        include/Cameras.hpp \
-        include/Engine.hpp \
-        include/globals.h \
-        include/glut_callbacks.h \
-        include/InitShader.hpp \
-        # include/KinectInator.hpp \
-        include/mat.hpp \
-        include/meshMapping.hpp \
-        include/model.hpp \
-        include/modelFunctions.hpp \
-        include/ObjLoader.hpp \
-        include/OpenGL.h \
-        include/platform.h \
-        include/Scene.hpp \
-        include/Screen.hpp \
-        include/SpelChkCamera.hpp \
-        include/Texture.hpp \
-        include/TextureMan.hpp \
-        include/Timer.hpp \
-        include/TransCache.hpp \
-        include/Transformation.hpp \
-        include/Util.hpp \
-        include/vec.hpp \
-  	include/mainwindow.h\
-	include/MONOLITH.hpp
-
-
+# Linux Settings
 unix:!macx {
-INCLUDEPATH +=. include /usr/include/ImageMagick/
-LIBS += -lGL -lGLU -lGLEW -lglut -lm -L/usr/lib/ImageMagick -lMagick++
+LIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm -lMagick++ -lfmodex
+INCLUDEPATH +=. /usr/include/ImageMagick/ include/
 }
 
+# Mac OSX Settings
 macx {
 LIBS += -framework Carbon -framework OpenGL -framework GLUT
-INCLUDEPATH +=. include /opt/local/include/ImageMagick/
+INCLUDEPATH += . include /opt/local/include/ImageMagick/
 LIBS += -L/opt/local/lib -lMagick++
 }
 

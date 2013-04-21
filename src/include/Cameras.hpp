@@ -140,12 +140,20 @@ public:
    */
   Camera *obj2Cam( std::list< Object* >::iterator &it );
 
+  void toggleDivision( void );
+
 private:
   
   /**
    * _size is a simple vec2 (x,y) that contains the size of the screen.
    */
   Angel::vec2 _size;
+
+  /**
+   * _horizontalDivision controls whether or not we apply a primarily
+   * horizontal (true) or vertical (false) division strategy.
+   */
+  bool _horizDivision;
   
 };
 

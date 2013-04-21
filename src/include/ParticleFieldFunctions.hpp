@@ -11,7 +11,8 @@ namespace ParticleFieldFunctions
 
   vec3 tornado(vec4);
   vec3 flame(vec4);
-
+  vec3 fixed(vec4);
+  vec3 up(vec4);
 
 }
 

@@ -2,6 +2,12 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSlider>
+#include <QLabel>
+#include <QHBoxLayout>
+#include <stdio.h>
+#include <QVBoxLayout>
+#include <QCheckBox>
 
 namespace Ui {
 class MainWindow;
@@ -13,6 +19,7 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
+     QSlider *slider;
     ~MainWindow();
 
 public slots:
@@ -25,6 +32,8 @@ public slots:
     void checkChanged(bool b);
     void checkChanged2(bool b);
     void checkChanged3(bool b);
+
+signals:
 
 private:
     Ui::MainWindow *ui;

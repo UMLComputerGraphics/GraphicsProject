@@ -179,7 +179,7 @@ void Object::draw( void ) {
     // send the Camera's info to the new shader.
     activeCamera->view();
   }
-  
+
   send( Object::IS_TEXTURED );
   send( Object::OBJECT_CTM );
   send( Object::MORPH_PCT );
@@ -375,6 +375,12 @@ void Object::link( UniformEnum which, const std::string &name ) {
  * @param which The uniform to send.
  */
 void Object::send( Object::UniformEnum which ) {
+
+  if (shader() == 0) {
+    fprintf( stderr, "Warning: Object::send() for [%s][%u] called with no shader.\n", _name.c_str(), which );
+    return;
+  }
+
   switch ( which ) {
   
   case Object::IS_TEXTURED:
@@ -465,6 +471,9 @@ void Object::animation( void (*anim_func)( TransCache &arg ) ) {
  */
 void Object::propagateOLD( void ) {
   
+  // This function is deprecated: If we detect the "new"
+  // Scene Graph is in use, do NOTHING.
+  if (_trans.size() > 0) return;
   //fprintf( stderr, "\n" );
   //fprintf( stderr, "propagateOLD called on %s\n", _name.c_str() );
   

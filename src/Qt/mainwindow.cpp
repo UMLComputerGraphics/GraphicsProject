@@ -65,7 +65,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QLabel *lab12 = new QLabel("0");
 
 
-    QSlider *slider = new QSlider(Qt::Horizontal);
+    slider = new QSlider(Qt::Horizontal);
     slider->setRange(0, 10);
     QSlider *slider2 = new QSlider(Qt::Horizontal);
     slider2->setRange(0, 100);
@@ -77,7 +77,8 @@ MainWindow::MainWindow(QWidget *parent) :
     slider5->setRange(0, 50);
     QSlider *slider6 = new QSlider(Qt::Horizontal);
     slider6->setRange(0, 100);
-    QObject::connect(slider, SIGNAL(valueChanged(int)), this, SLOT(printTest(int)));
+
+    //QObject::connect(slider, SIGNAL(valueChanged(int)), this, SLOT(printTest(int)));
     QObject::connect(slider2, SIGNAL(valueChanged(int)), this, SLOT(printTest2(int)));
     QObject::connect(slider3, SIGNAL(valueChanged(int)), this, SLOT(printTest3(int)));
     QObject::connect(slider4, SIGNAL(valueChanged(int)), this, SLOT(printTest4(int)));

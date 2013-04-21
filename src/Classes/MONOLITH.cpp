@@ -10,30 +10,65 @@
 #include "MONOLITH.hpp"
 
 
-/* Default and only constructor */
-MONOLITH::MONOLITH(
-#ifndef WITHOUT_QT
-    QObject *parent
-#endif
-    )
+MONOLITH::~MONOLITH(void)
 {
     
 }
 
-MONOLITH::~MONOLITH(void)
+/* Default and only constructor */
+MONOLITH::MONOLITH(int argc, char** argv)
 {
+    _argc = argc;
+    _argv = argv;
 }
 
 /**
- * Initialization: load and compile shaders, initialize camera(s), load models.
+ * Cleans up our scene graph.
  */
-void MONOLITH::init(void)
+void MONOLITH::cleanup(void)
 {
-    GLuint shader[3];
+    Engine::instance()->rootScene()->delObject();
+}
+
+/**
+ * Apply animations and whatever else your heart desires.
+ */
+void MONOLITH::monolith_idle(void)
+{
+    static Scene *rootScene = Engine::instance()->rootScene();
+    
+    // Animation variables.
+    double timer = glutGet( GLUT_ELAPSED_TIME ) / 500.0;
+    float percent = (sin( timer ) + 1) / 2;
+    
+    Object &candle = *((*rootScene)["Candle"]);
+    candle.animation( simpleRotateAnim );
+    
+    // Update the morph percentage.
+    (*rootScene)["bottle"]->morphPercentage( percent );
+}
+
+#ifndef WITHOUT_QT
+void MONOLITH::ParticleAdd()
+{
+    ps->addParticle();
+    fprintf(
+        stderr,
+        "signals works, particle added" );
+}
+#endif //WITHOUT_QT
+/**
+ * This will initialize and run MONOLITH
+ */
+void MONOLITH::run()
+{
+    Engine::instance()->init( &_argc, _argv,
+                             "WE ARE THE BORG. RESISTANCE IS FUTILE!" );
+    Engine::instance()->registerIdle( monolith_idle );
     
     // Get handles to the Scene and the Screen.
-    Scene *rootScene = Engine::instance()->rootScene();
-    Screen *primScreen = Engine::instance()->mainScreen();
+    rootScene = Engine::instance()->rootScene();
+    primScreen = Engine::instance()->mainScreen();
     
     shader[0] = Angel::InitShader( "shaders/vMONOLITH.glsl",
                                   "shaders/fMONOLITH.glsl" );
@@ -51,7 +86,7 @@ void MONOLITH::init(void)
     primScreen->_camList.next();
     
     // Create the Bottle Object handle...
-    Object *bottle = rootScene->addObject( "bottle" );
+    bottle = rootScene->addObject( "bottle" );
     // Load model from file.
     ObjLoader::loadModelFromFile( bottle, "../models/bottle_wine_high.obj" );
     ObjLoader::loadMaterialFromFile(bottle, "../models/bottle_wine_high.mtl");
@@ -102,18 +137,18 @@ void MONOLITH::init(void)
         matchInitialPoints( bottle, bottleMorphTarget );
         makeModelsSameSize( bottle, bottleMorphTarget );
         bottle->bufferMorphOnly();
-        bottle->propagateOLD();
+        bottle->propagate();
     }
-    // Load table
-    Object *table = rootScene->addObject("table", shader[1]);
-    ObjLoader::loadModelFromFile(table, "../models/table.obj");
-    ObjLoader::loadMaterialFromFile(table, "../models/table.mtl");
-    table->_trans._scale.set( 0.30 );
-    table->buffer();
-    table->propagateOLD();
+    
+    // Let the bodies hit the floor
+    floor = rootScene->addObject( "floor", shader[1] );
+    quad( floor, vec4( -10, 0, 10, 1.0 ), vec4( -10, 0, -10, 1.0 ),
+         vec4( 10, 0, -10, 1.0 ), vec4( 10, 0, 10, 1.0 ),
+         vec4( 0.4, 0.4, 0.4, 0.9 ) );
+    floor->buffer();
     
     // Load up that goddamned candle
-    Object *candle = rootScene->addObject( "Candle", shader[1] );
+    candle = rootScene->addObject( "Candle", shader[1] );
     ObjLoader::loadModelFromFile( candle, "../models/candle.obj" );
     ObjLoader::loadMaterialFromFile( candle, "../models/candle.mtl");
     vec4 min = candle->getMin();
@@ -121,63 +156,27 @@ void MONOLITH::init(void)
     fprintf( stderr, "Min: (%f,%f,%f)\nMax: (%f,%f,%f)\n", min.x, min.y, min.z,
             max.x, max.y, max.z );
     candle->_trans._offset.set( 2.5, -min.y, 2.5 );
-    //candle->propagateOLD();
+    //candle->propagate();
     candle->buffer();
 
     
-    ParticleSystem *ps = new ParticleSystem( 10000, "ps1", shader[2] );
+    ps = new ParticleSystem( 10000, "ps1", shader[2] );
     ps->setLifespan(5,7.5);
     ps->setEmitterRadius( 0.001 ) ;
     candle->insertObject( ps );
     ps->_trans._offset.set(0,min.y+(max.y-min.y),0);
     ps->fillSystemWithParticles();
-    //ps->propagateOLD();
+    //ps->propagate();
     ps->buffer();
     
-    candle->propagateOLD();
+    candle->propagate();
     
     // Generic OpenGL setup: Enable the depth _buffer and set a nice background color.
     glEnable( GL_DEPTH_TEST );
     glClearColor( 0.0, 0.0, 0.0, 1.0 );
-    
-}
 
-/**
- * Cleans up our scene graph.
- */
-void MONOLITH::cleanup(void)
-{
-    Engine::instance()->rootScene()->delObject();
-}
-
-/**
- * Apply animations and whatever else your heart desires.
- */
-void MONOLITH::idle(void)
-{
-    static Scene *rootScene = Engine::instance()->rootScene();
-    
-    // Animation variables.
-    double timer = glutGet( GLUT_ELAPSED_TIME ) / 500.0;
-    float percent = (sin( timer ) + 1) / 2;
-    
-    Object &candle = *((*rootScene)["Candle"]);
-    candle.animation( simpleRotateAnim );
-    
-    // Update the morph percentage.
-    (*rootScene)["bottle"]->morphPercentage( percent );
-}
-
-/**
- * This will initialize and run MONOLITH
- */
-void MONOLITH::run(int &argc, char* argv[])
-{
-    Engine::instance()->init( &argc, argv,
-                             "WE ARE THE BORG. RESISTANCE IS FUTILE!" );
-    Engine::instance()->registerIdle( idle );
-    init();
-    
+    printf("LOOPING!\n");
+    glutMainLoop();
 }
 /**
  * A simple animation callback.
@@ -191,30 +190,3 @@ void MONOLITH::simpleRotateAnim( TransCache &obj )
     //obj._offset.set( 1.5, 0, 0 );
     obj._orbit.rotateY( tick.scale() * -0.5 );
 }
-
-#ifdef WITHOUT_QT
-/**
- * This is a bottle morphing demo!
- * It illustrates simply how to do a simple linear interpolation morph.
- *
- * @param argc Not used.
- * @param argv Not used.
- * @return EXIT_SUCCESS.
- *
- */
-int main( int argc, char **argv ) {
-
-  fprintf(
-      stderr,
-      "Error: Your project is unfinished and you're going to fail and everyone is going to laugh at you and it's a really bad day sorry\n" );
-
-  MONOLITH *monolith = new MONOLITH();
-  monolith->run(argc, argv);
-
-  /* PULL THE TRIGGER */
-  glutMainLoop();
-  free(monolith);
-  return EXIT_SUCCESS;
-
-}
-#endif
