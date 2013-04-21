@@ -78,6 +78,7 @@ ifeq ($(UNAME), Darwin)
     LDLIBS += -framework Carbon -framework OpenGL -framework GLUT -L/opt/local/lib fMod/lib/libfmodex.dylib
    #FMODLINK = install_name_tool -change ./libfmodex.dylib ../fMod/lib/libfmodex.dylib
    FMODLINK = install_name_tool -change ./libfmodex.dylib `pwd`/fMod/lib/libfmodex.dylib
+   LDOPTS = -headerpad_max_install_names
 endif
 
 
@@ -89,7 +90,7 @@ endif
 
 
 CXXFLAGS = $(CXXOPTS) $(CXXDEFS) $(CXXINCS)
-LDFLAGS = $(LDOPTS) -headerpad_max_install_names $(LDDIRS) $(LDLIBS)
+LDFLAGS = $(LDOPTS) $(LDDIRS) $(LDLIBS)
 
 #-----------------------------------------------------------------------------
 
