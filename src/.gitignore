@@ -43,3 +43,5 @@ release
 qMakefile
 Qt/ui
 Qt/moc
+Binaries/vf2
+fMod/*example

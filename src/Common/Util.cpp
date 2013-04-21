@@ -13,6 +13,9 @@
 #include <sstream>
 #include <iostream>
 #include <vector>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 #include "Util.hpp"
 
 // http://stackoverflow.com/questions/236129/splitting-a-string-in-c
@@ -29,7 +32,22 @@ std::vector< std::string > split( const std::string &s, char delim ) {
   std::vector< std::string > elems;
   return split( s, delim, elems );
 }
-
+bool dirExists(const std::string& where, const std::string& dir) {
+  static struct stat s;
+  std::stringstream str;
+  str << where << dir;
+  printf("Checking for existence of %s\n",str.str().c_str());
+  int err = stat(str.str().c_str(), &s);
+  if(-1 == err) {
+    return false;
+  } else {
+    if(S_ISDIR(s.st_mode)) {
+        return true;
+    } else {
+        return false;
+    }
+  }
+}
 namespace Util {
   static std::string dondeestalosshaders;
   /**
@@ -47,10 +65,18 @@ namespace Util {
 
     //slapchop[0..length-2] == path without executable name
     if ( slapchop.size() > 1 ) {
-      std::stringstream cat;
-      for ( size_t i = 0; i < slapchop.size() - 1; i++ )
-        cat << slapchop[i] << "/";
-      dondeestalosshaders = cat.str();
+      for (size_t last = slapchop.size() - 1; last >= 0; last=last-1)
+      {       
+	printf("last = %d\n", last);
+        std::stringstream cat;
+        for ( size_t i = 0; i < last; i++ )
+          cat << slapchop[i] << "/";
+        if (dirExists(cat.str(), "shaders"))
+	{          
+          dondeestalosshaders = cat.str();
+          break;
+        }
+      }
     }
   }
 
