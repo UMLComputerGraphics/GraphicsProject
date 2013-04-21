@@ -47,26 +47,37 @@ void init() {
   Object *bottle = rootScene->addObject( "bottle" );
 
   // Use the object loader to actually fill out the vertices and-so-on of the bottle.
-  ObjLoader::loadModelFromFile( bottle, "../models/bottle_wine_high.obj" );
+  ObjLoader::loadModelFromFile( bottle, "../models/bottle-a.obj" );
 
   // Objects has-a pointer to an object which is their "morph target."
   // they are created and buffered as follows:
 
   bottle->genMorphTarget( gShader ) ; // this makes a new object and links it to the source object. it returns the addr of the new obj..
   Object *bottleMorphTarget = bottle->morphTarget() ; // we can get the addr of the morph object like this, also.
-  ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle_liquor_high.obj" ); // with this model, we can use all the preexisting Object class functionality
+  ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle-b.obj" ); // with this model, we can use all the preexisting Object class functionality
 
   printf("Number Vertices Model1: %lu\n",bottle->numberOfPoints());
   printf("Number Vertices Model2: %lu\n\n",bottleMorphTarget->numberOfPoints());
 
+  /*
+  Angel::vec3 OriginalLowBoundSrc = bottle->getMin();
+  Angel::vec3 OriginalMaxBoundSrc = bottle->getMax();
+  Angel::vec3 OriginalLowBoundDst = bottleMorphTarget->getMin();
+  Angel::vec3 OriginalMaxBoundDst = bottleMorphTarget->getMax();
+  */
+  std::vector< Angel::vec3> originalBounds;
+  //Scale source and destination height to unit 0-1
+  //scaleObjectsToUnitHeight(bottle, bottleMorphTarget);
+  
+  
   Angel::vec3 lowBoundSrc = bottle->getMin();
   Angel::vec3 maxBoundSrc = bottle->getMax();
   Angel::vec3 lowBoundDst = bottleMorphTarget->getMin();
   Angel::vec3 maxBoundDst = bottleMorphTarget->getMax();
   
-  std::cout << "Model1 Bounds: " << lowBoundSrc << " " << maxBoundSrc << std::endl;
-  std::cout << "Model2 Bounds: " << lowBoundDst << " " << maxBoundDst << std::endl;
-  //exit(1);
+  //std::cout << "Model1 Bounds: " << lowBoundSrc << " " << maxBoundSrc << std::endl;
+  //std::cout << "Model2 Bounds: " << lowBoundDst << " " << maxBoundDst << std::endl;
+  
 /*
   SquareMap* squareMap = createSquareMap(fminf(float(lowBoundSrc.x),
 					       float(lowBoundDst.x)),

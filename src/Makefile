@@ -19,7 +19,7 @@ DIAF=Classes/KinectInator.cpp \
      Qt/main.cpp Qt/mainwindow.cpp Qt/qtLite.cpp \
      fMod/playsound_example.cpp fMod/3d_example.cpp
 #     fMod/playsound_example.cpp fMod/3d_example.cpp Binaries/morphkeysound.cpp \
-#     Qt/main.cpp Qt/mainwindow.cpp Qt/qtLite.cpp
+#     Qt/main.cpp Qt/mainwindow.cpp Qt/qtLite.cpp Binaries/FinalProject.cpp
 
 ifndef WII
     DIAF += Common/WiiUtil.cpp
@@ -78,6 +78,7 @@ ifeq ($(UNAME), Darwin)
     LDLIBS += -framework Carbon -framework OpenGL -framework GLUT -L/opt/local/lib fMod/lib/libfmodex.dylib
    #FMODLINK = install_name_tool -change ./libfmodex.dylib ../fMod/lib/libfmodex.dylib
    FMODLINK = install_name_tool -change ./libfmodex.dylib `pwd`/fMod/lib/libfmodex.dylib
+   LDOPTS = -headerpad_max_install_names
 endif
 
 

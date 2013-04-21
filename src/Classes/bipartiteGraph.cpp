@@ -171,7 +171,8 @@
  			edges[i]->source->matchNode = edges[i]->destination;
  			edges[i]->destination->matchNode = edges[i]->source;
  			bestEdges.push_back(new Edge(edges[i]->distance,edges[i]->source,edges[i]->destination));
- 		}
+ 			//printf("Min Index: %d  Node Index: %d  Distance: %f\n", bestEdges[i]->source->minDistanceIndex, bestEdges[i]->destination->nodeIndex, bestEdges[i]->source->minDistance);
+		}
  	}
  	printf("Best Edges: %lu\n\n", bestEdges.size());
  	//printf("Edge Match 1: %d - %d\n", bestEdges[0]->source->modelIndex,bestEdges[0]->source->matchNode->modelIndex);
@@ -183,7 +184,7 @@
  	
  	int count = 0;
  	for(size_t i=0; i<bestEdges.size(); i++){ 
- 		if(bestEdges[i]->source->minDistanceIndex == bestEdges[i]->destination->nodeIndex){
+	 	if(bestEdges[i]->source->minDistanceIndex == bestEdges[i]->destination->nodeIndex){
  			for(int m=0; m<3; m++){
  				//Handle source points
 				vec4 tempPoints = srcVertices[3*i+m];
@@ -208,7 +209,7 @@
 				count++;
 			}
 		}else{
-			
+			printf("Min Index: %d  Node Index: %d\n", bestEdges[i]->source->minDistanceIndex, bestEdges[i]->destination->nodeIndex);
 		}
  	}
  	for(size_t i=bestEdges.size()-firstBirths.size(); i<bestEdges.size(); i++){
