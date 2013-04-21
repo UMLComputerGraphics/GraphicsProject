@@ -577,7 +577,7 @@ void Object::destroyMorphTarget( void ) {
  * Retrieve the number of _vertices this object has.
  * @return An integer representing the number of vertices the object has.
  */
-int Object::numberOfPoints( void ) {
+size_t Object::numberOfPoints( void ) {
   return _vertices.size();
 }
 

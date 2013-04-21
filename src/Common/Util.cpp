@@ -67,7 +67,7 @@ namespace Util {
     if ( slapchop.size() > 1 ) {
       for (size_t last = slapchop.size() - 1; last >= 0; last=last-1)
       {       
-	printf("last = %d\n", last);
+	printf("last = %lu\n", last);
         std::stringstream cat;
         for ( size_t i = 0; i < last; i++ )
           cat << slapchop[i] << "/";

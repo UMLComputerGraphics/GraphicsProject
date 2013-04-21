@@ -11,14 +11,14 @@
  
  void BipartiteGraph::constructGraph(){
  	printf("Constructing Graph...\n");
- 	for(int i=0; i<src->numberOfPoints(); i+=3){
+ 	for(size_t i=0; i<src->numberOfPoints(); i+=3){
  		Node * temp = new Node(i,i/3);
  		temp->a = src->_vertices[i];
  		temp->b = src->_vertices[i+1];
  		temp->c = src->_vertices[i+2];
  		srcNodes.push_back(temp);
  	}
- 	for(int i=0; i<dest->numberOfPoints(); i+=3){
+ 	for(size_t i=0; i<dest->numberOfPoints(); i+=3){
  		Node * temp = new Node(i,i/3);
  		temp->a = dest->_vertices[i];
  		temp->b = dest->_vertices[i+1];
@@ -26,8 +26,8 @@
  		destNodes.push_back(temp);
  	}
  	printf("Calculate Distances...\n");
- 	for(int i=0; i<srcNodes.size(); i++){
- 		for(int j=0; j<destNodes.size(); j++){
+ 	for(size_t i=0; i<srcNodes.size(); i++){
+ 		for(size_t j=0; j<destNodes.size(); j++){
  			vec4 point1,point2,point3;
  			findOptimalOrientation(destNodes[j]->a,destNodes[j]->b,destNodes[j]->c,srcNodes[i]->a,srcNodes[i]->b,srcNodes[i]->c, point1, point2, point3);
 			float distance = threeDimensionalDistance(point1,srcNodes[i]->a)+threeDimensionalDistance(point2,srcNodes[i]->b)+threeDimensionalDistance(point3,srcNodes[i]->c);
@@ -36,7 +36,7 @@
 				srcNodes[i]->minDistanceIndex = j;
 				//printf("Min Distance %d: %f\n", i, srcNodes[i]->minDistance);
 			}else if (distance == srcNodes[i]->minDistance){
-				printf("More than 1 match for node %d\n", i);
+				printf("More than 1 match for node %lu\n", i);
 			}
 			edges.push_back(new Edge(distance,srcNodes[i],destNodes[j]));
  		}
@@ -54,11 +54,11 @@
  void BipartiteGraph::createMatches(){
  	printf("Creating Matches...\n");
  	
- 	printf("Total Edges: %d\n",edges.size());
+ 	printf("Total Edges: %lu\n",edges.size());
  	std::vector< Edge* > bestEdges;
  	std::vector< Edge* > firstBirths;
  	
- 	for(int i=0; i<edges.size(); i++){
+ 	for(size_t i=0; i<edges.size(); i++){
  		if((!edges[i]->source->matched)&&(!edges[i]->destination->matched)){
  			edges[i]->source->matched = true;
  			edges[i]->destination->matched = true;
@@ -67,16 +67,16 @@
  			bestEdges.push_back(new Edge(edges[i]->distance,edges[i]->source,edges[i]->destination));
  		}
  	}
- 	printf("Best Edges: %d\n\n", bestEdges.size());
+ 	printf("Best Edges: %lu\n\n", bestEdges.size());
  	//printf("Edge Match 1: %d - %d\n", bestEdges[0]->source->modelIndex,bestEdges[0]->source->matchNode->modelIndex);
- 	for(int i=0; i<bestEdges.size(); i++){
+ 	for(size_t i=0; i<bestEdges.size(); i++){
  		if(bestEdges[i]->source->minDistanceIndex != bestEdges[i]->destination->nodeIndex){
  			firstBirths.push_back(new Edge(bestEdges[i]->distance,bestEdges[i]->source,bestEdges[i]->destination));
  		}
  	}
  	
  	int count = 0;
- 	for(int i=0; i<bestEdges.size(); i++){ 
+ 	for(size_t i=0; i<bestEdges.size(); i++){ 
  		if(bestEdges[i]->source->minDistanceIndex == bestEdges[i]->destination->nodeIndex){
  			for(int m=0; m<3; m++){
  				//Handle source points
@@ -105,7 +105,7 @@
 			
 		}
  	}
- 	for(int i=bestEdges.size()-firstBirths.size(); i<bestEdges.size(); i++){
+ 	for(size_t i=bestEdges.size()-firstBirths.size(); i<bestEdges.size(); i++){
  		for(int m=0; m<3; m++){
  			src->_vertices.pop_back();
  			src->_normals.pop_back();
@@ -121,14 +121,14 @@
  
  void BipartiteGraph::constructPartitionGraph(){
  	 	printf("Constructing Graph...\n");
- 	for(int i=0; i<srcVertices.size(); i+=3){
+ 	for(size_t i=0; i<srcVertices.size(); i+=3){
  		Node * temp = new Node(i,i/3);
  		temp->a = srcVertices[i];
  		temp->b = srcVertices[i+1];
  		temp->c = srcVertices[i+2];
  		srcNodes.push_back(temp);
  	}
- 	for(int i=0; i<destVertices.size(); i+=3){
+ 	for(size_t i=0; i<destVertices.size(); i+=3){
  		Node * temp = new Node(i,i/3);
  		temp->a = destVertices[i];
  		temp->b = destVertices[i+1];
@@ -136,8 +136,8 @@
  		destNodes.push_back(temp);
  	}
  	printf("Calculate Distances...\n");
- 	for(int i=0; i<srcNodes.size(); i++){
- 		for(int j=0; j<destNodes.size(); j++){
+ 	for(size_t i=0; i<srcNodes.size(); i++){
+ 		for(size_t j=0; j<destNodes.size(); j++){
  			vec4 point1,point2,point3;
  			findOptimalOrientation(destNodes[j]->a,destNodes[j]->b,destNodes[j]->c,srcNodes[i]->a,srcNodes[i]->b,srcNodes[i]->c, point1, point2, point3);
 			float distance = threeDimensionalDistance(point1,srcNodes[i]->a)+threeDimensionalDistance(point2,srcNodes[i]->b)+threeDimensionalDistance(point3,srcNodes[i]->c);
@@ -146,7 +146,7 @@
 				srcNodes[i]->minDistanceIndex = j;
 				//printf("Min Distance %d: %f\n", i, srcNodes[i]->minDistance);
 			}else if (distance == srcNodes[i]->minDistance){
-				printf("More than 1 match for node %d\n", i);
+				printf("More than 1 match for node %lu\n", i);
 			}
 			edges.push_back(new Edge(distance,srcNodes[i],destNodes[j]));
  		}
@@ -160,11 +160,11 @@
  void BipartiteGraph::createPartitionMatches(){
  	 printf("Creating Matches...\n");
  	
- 	printf("Total Edges: %d\n",edges.size());
+ 	printf("Total Edges: %lu\n",edges.size());
  	std::vector< Edge* > bestEdges;
  	std::vector< Edge* > firstBirths;
  	
- 	for(int i=0; i<edges.size(); i++){
+ 	for(size_t i=0; i<edges.size(); i++){
  		if((!edges[i]->source->matched)&&(!edges[i]->destination->matched)){
  			edges[i]->source->matched = true;
  			edges[i]->destination->matched = true;
@@ -173,16 +173,16 @@
  			bestEdges.push_back(new Edge(edges[i]->distance,edges[i]->source,edges[i]->destination));
  		}
  	}
- 	printf("Best Edges: %d\n\n", bestEdges.size());
+ 	printf("Best Edges: %lu\n\n", bestEdges.size());
  	//printf("Edge Match 1: %d - %d\n", bestEdges[0]->source->modelIndex,bestEdges[0]->source->matchNode->modelIndex);
- 	for(int i=0; i<bestEdges.size(); i++){
+ 	for(size_t i=0; i<bestEdges.size(); i++){
  		if(bestEdges[i]->source->minDistanceIndex != bestEdges[i]->destination->nodeIndex){
  			firstBirths.push_back(new Edge(bestEdges[i]->distance,bestEdges[i]->source,bestEdges[i]->destination));
  		}
  	}
  	
  	int count = 0;
- 	for(int i=0; i<bestEdges.size(); i++){ 
+ 	for(size_t i=0; i<bestEdges.size(); i++){ 
  		if(bestEdges[i]->source->minDistanceIndex == bestEdges[i]->destination->nodeIndex){
  			for(int m=0; m<3; m++){
  				//Handle source points
@@ -211,7 +211,7 @@
 			
 		}
  	}
- 	for(int i=bestEdges.size()-firstBirths.size(); i<bestEdges.size(); i++){
+ 	for(size_t i=bestEdges.size()-firstBirths.size(); i<bestEdges.size(); i++){
  		for(int m=0; m<3; m++){
  			srcVertices.pop_back();
  			srcNormals.pop_back();

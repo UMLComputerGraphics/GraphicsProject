@@ -23,7 +23,7 @@ int findTriangleWithMinimumDistance( Object* largerModel, Object* smallerModel,
                                      int index ) {
   int minIndex = -1;
   float minDistance = INFINITY;
-  for ( int i = 0; i < smallerModel->numberOfPoints(); i += 3 ) {
+  for ( size_t i = 0; i < smallerModel->numberOfPoints(); i += 3 ) {
     float distance = 0.0;
     for ( int j = 0; j < 3; j++ ) {
       distance += threeDimensionalDistance( smallerModel->_vertices[i + j],
@@ -175,7 +175,7 @@ int findTriangleWithMinimumDistanceFromCenter(Object* largerModel, Object* small
   int minIndex = -1;
   float minDistance = INFINITY;
 
-		for(int i=0; i<smallerModel->numberOfPoints();i+= 3){
+		for(size_t i=0; i<smallerModel->numberOfPoints();i+= 3){
 			float distance = 0.0;
 			for(int l=0; l<3; l++){
 				distance += threeDimensionalDistanceWithOrigin(largerModel->_vertices[index+l],smallerModel->_vertices[i+l]);
@@ -220,10 +220,10 @@ void makeModelsSameSize(Object* model1, Object* model2){
 
 void matchInitialPoints(Object* model1, Object* model2){
 	if(model1->numberOfPoints()>model2->numberOfPoints()){
-		for(int i=0; i<model2->numberOfPoints();i+=3){
+		for(size_t i=0; i<model2->numberOfPoints();i+=3){
 			int matchIndex = 0;
 			float minDistance = INFINITY;
-			for(int j=0; j<model1->numberOfPoints();j+=3){
+			for(size_t j=0; j<model1->numberOfPoints();j+=3){
 				float distance = 0.0;
 				for(int l=0; l<3; l++){
 					distance += threeDimensionalDistance(model1->_vertices[j+l],model2->_vertices[i+l]);
@@ -253,11 +253,11 @@ void matchInitialPoints(Object* model1, Object* model2){
 		}
 	}else{
 		//int correctlyMatchedPoints = 0;
-		for(int i=0; i<model1->numberOfPoints();i+=3){
+		for(size_t i=0; i<model1->numberOfPoints();i+=3){
 			//int bestPoint1,bestPoint2,bestPoint3;
 			int matchIndex = 0;
 			float minDistance = INFINITY;
-			for(int j=0; j<model2->numberOfPoints();j+=3){
+			for(size_t j=0; j<model2->numberOfPoints();j+=3){
 				float distance = 0.0;
 				for(int l=0; l<3; l++){
 					distance += threeDimensionalDistance(model2->_vertices[j+l],model1->_vertices[i+l]);
@@ -385,7 +385,7 @@ void segmentModels(Object* model1, vec3 model1Low, vec3 model1High, Object* mode
 	
 	//We'll start with a 1/5 , 3/5, 1/5 partition and see how that goes
 	//Model1
-	for(int i=0; i<model1->numberOfPoints(); i+=3){
+	for(size_t i=0; i<model1->numberOfPoints(); i+=3){
 		if((model1->_vertices[i].y >(model1Low.y + (5*model1Distance.y)/6))&&(model1->_vertices[i+1].y >(model1Low.y + (5*model1Distance.y)/6))&&(model1->_vertices[i+2].y >(model1Low.y + (5*model1Distance.y)/6))){
 		//If Bottle Top
 			for(int j=0; j<3; j++){
@@ -422,7 +422,7 @@ void segmentModels(Object* model1, vec3 model1Low, vec3 model1High, Object* mode
 		}
 	}
 	//Model2
-	for(int i=0; i<model2->numberOfPoints(); i+=3){
+	for(size_t i=0; i<model2->numberOfPoints(); i+=3){
 		if((model2->_vertices[i].y >(model2Low.y + (5*model2Distance.y)/6))&&(model2->_vertices[i+1].y >(model2Low.y + (5*model2Distance.y)/6))&&(model2->_vertices[i+2].y >(model2Low.y + (5*model2Distance.y)/6))){
 		//If Bottle Top
 			for(int j=0; j<3; j++){
@@ -512,7 +512,7 @@ void applyToObjects(Object* model1, Object* model2, std::vector< Angel::vec4 > m
 		model1->_vertices.push_back(model1Vertices[2][i]);
 		model1->_normals.push_back(model1Normals[2][i]);
 		model1->_colors.push_back(model1Colors[2][i]);
-	}/*
+	}
 	for(size_t i=0; i<model1Vertices[3].size(); i++){
 		model1->_vertices.push_back(model1Vertices[3][i]);
 		model1->_normals.push_back(model1Normals[3][i]);
@@ -522,11 +522,13 @@ void applyToObjects(Object* model1, Object* model2, std::vector< Angel::vec4 > m
 		model1->_vertices.push_back(model1Vertices[4][i]);
 		model1->_normals.push_back(model1Normals[4][i]);
 		model1->_colors.push_back(model1Colors[4][i]);
-	}*/
+	}
+*/
 	model2->_vertices = model2Vertices[0];
 	model2->_normals = model2Normals[0];
 	model2->_colors = model2Colors[0];
-	/*
+
+/*
 	for(size_t i=0; i<model2Vertices[1].size(); i++){
 		model2->_vertices.push_back(model2Vertices[1][i]);
 		model2->_normals.push_back(model2Normals[1][i]);
@@ -536,7 +538,7 @@ void applyToObjects(Object* model1, Object* model2, std::vector< Angel::vec4 > m
 		model2->_vertices.push_back(model2Vertices[2][i]);
 		model2->_normals.push_back(model2Normals[2][i]);
 		model2->_colors.push_back(model2Colors[2][i]);
-	}/*
+	}
 	for(size_t i=0; i<model2Vertices[3].size(); i++){
 		model2->_vertices.push_back(model2Vertices[3][i]);
 		model2->_normals.push_back(model2Normals[3][i]);
@@ -546,13 +548,14 @@ void applyToObjects(Object* model1, Object* model2, std::vector< Angel::vec4 > m
 		model2->_vertices.push_back(model2Vertices[4][i]);
 		model2->_normals.push_back(model2Normals[4][i]);
 		model2->_colors.push_back(model2Colors[4][i]);
-	}*/
+	}
+*/
 }
 
 void splitProblemTriangles(Object* model1, Object* model2){
 	float minTriangleSizeModel1 = INFINITY;
 	float maxTriangleSizeModel1 = 0.0;
-	for(int i=0; i<model1->numberOfPoints(); i+=3){
+	for(size_t i=0; i<model1->numberOfPoints(); i+=3){
 		float size = getTriangleSize(model1->_vertices[i],model1->_vertices[i+1],model1->_vertices[i+2]);
 		if(size > maxTriangleSizeModel1){
 			maxTriangleSizeModel1 = size;
@@ -564,7 +567,7 @@ void splitProblemTriangles(Object* model1, Object* model2){
 	
 	float minTriangleSizeModel2 = INFINITY;
 	float maxTriangleSizeModel2 = 0.0;
-	for(int i=0; i<model2->numberOfPoints(); i+=3){
+	for(size_t i=0; i<model2->numberOfPoints(); i+=3){
 		float size = getTriangleSize(model2->_vertices[i],model2->_vertices[i+1],model2->_vertices[i+2]);
 		if(size > maxTriangleSizeModel2){
 			maxTriangleSizeModel2 = size;

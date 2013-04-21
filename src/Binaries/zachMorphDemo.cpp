@@ -56,8 +56,8 @@ void init() {
   Object *bottleMorphTarget = bottle->morphTarget() ; // we can get the addr of the morph object like this, also.
   ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle_liquor_high.obj" ); // with this model, we can use all the preexisting Object class functionality
 
-  printf("Number Vertices Model1: %d\n",bottle->numberOfPoints());
-  printf("Number Vertices Model2: %d\n\n",bottleMorphTarget->numberOfPoints());
+  printf("Number Vertices Model1: %lu\n",bottle->numberOfPoints());
+  printf("Number Vertices Model2: %lu\n\n",bottleMorphTarget->numberOfPoints());
 
   Angel::vec3 lowBoundSrc = bottle->getMin();
   Angel::vec3 maxBoundSrc = bottle->getMax();
@@ -88,8 +88,8 @@ void init() {
 	//splitProblemTriangles(bottle, bottleMorphTarget);
 	segmentModels(bottle, lowBoundSrc, maxBoundSrc, bottleMorphTarget, lowBoundDst, maxBoundDst);
   //matchInitialPoints(bottle, bottleMorphTarget);
-  printf("Number Vertices Model1: %d\n",bottle->numberOfPoints());
-  printf("Number Vertices Model2: %d\n\n",bottleMorphTarget->numberOfPoints());
+  printf("Number Vertices Model1: %lu\n",bottle->numberOfPoints());
+  printf("Number Vertices Model2: %lu\n\n",bottleMorphTarget->numberOfPoints());
   //makeModelsSameSize(bottle, bottleMorphTarget);
 
   //populateSrcSquare(squareMap,bottle->_vertices);
@@ -119,10 +119,6 @@ void init() {
   glEnable( GL_DEPTH_TEST );
   glClearColor( 0.3, 0.5, 0.9, 1.0 );
 
-}
-
-void cleanup( void ) {
-  //Engine::instance()->rootScene()->DestroyObject();
 }
 
 //--------------------------------------------------------------------
@@ -168,19 +164,10 @@ void zach_idle( void ) {
 }
 
 int main( int argc, char **argv ) {
-
   
   Engine::instance()->init( &argc, argv, "Zach's Morphing Demo" );
   Engine::instance()->registerIdle( zach_idle );
   init();
-
-  if (DEBUG) {
-    fprintf( stderr, "GL_VENDOR: %s\n", glGetString( GL_VENDOR ));
-    fprintf( stderr, "GL_RENDERER: %s\n", glGetString( GL_RENDERER ));
-    fprintf( stderr, "GL_VERSION: %s\n", glGetString( GL_VERSION ));
-    fprintf( stderr, "GL_SHADING_LANGUAGE_VERSION: %s\n", 
-	     glGetString( GL_SHADING_LANGUAGE_VERSION ));
-  }
 
   /* PULL THE TRIGGER */
   glutMainLoop();

@@ -240,7 +240,7 @@ public:
    * Retrieve the number of _vertices this object has.
    * @return An integer representing the number of vertices the object has.
    */
-  int numberOfPoints();
+  size_t numberOfPoints();
 
   /**
   * Adds material data to the object
