@@ -60,6 +60,24 @@ vec4 findCenter(vec4 point1, vec4 point2, vec4 point3){
 	return vec4(x,y,z,w);
 }
 
+void findOptimalOrientation(vec4 a, vec4 b, vec4 c, vec4 d, vec4 e, vec4 f, vec4& point1, vec4& point2, vec4& point3){
+	//abc
+	float distance1 = threeDimensionalDistance(a,d)+threeDimensionalDistance(b,e)+threeDimensionalDistance(c,f);
+	//bca
+	float distance4 = threeDimensionalDistance(b,d)+threeDimensionalDistance(c,e)+threeDimensionalDistance(a,f);
+	//cab
+	float distance5 = threeDimensionalDistance(c,d)+threeDimensionalDistance(a,e)+threeDimensionalDistance(b,f);
+	float distances[] = {distance1,distance4,distance5};
+	float minimum = *std::min_element(distances,distances+3);	
+	if(minimum==distance1){
+		point1=a;point2=b;point3=c;return;
+	}else if(minimum==distance4){
+		point1=b;point2=c;point3=a;return;
+	}else{
+		point1=c;point2=a;point3=b;return;
+	}
+}
+
 void findOptimalOrientation(vec4 a, vec4 b, vec4 c, std::vector< Angel::vec4 > model, int index, vec4& point1, vec4& point2, vec4& point3){
 	//abc
 	float distance1 = threeDimensionalDistance(a,model[index])+threeDimensionalDistance(b,model[index+1])+threeDimensionalDistance(c,model[index+2]);
@@ -279,7 +297,7 @@ void matchPoints(std::vector< Angel::vec4 >& model1Vertices,std::vector< Angel::
 		for(int i=0; i<model2Vertices.size();i+=3){
 			int matchIndex = 0;
 			float minDistance = INFINITY;
-			for(int j=0; j<model1Vertices.size();j+=3){
+			for(int j=i; j<model1Vertices.size();j+=3){
 				float distance = 0.0;
 				for(int l=0; l<3; l++){
 					distance += threeDimensionalDistanceWithOrigin(model1Vertices[j+l],model2Vertices[i+l]);
@@ -314,7 +332,7 @@ void matchPoints(std::vector< Angel::vec4 >& model1Vertices,std::vector< Angel::
 			int bestPoint1,bestPoint2,bestPoint3;
 			int matchIndex = 0;
 			float minDistance = INFINITY;
-			for(int j=0; j<model2Vertices.size();j+=3){
+			for(int j=i; j<model2Vertices.size();j+=3){
 				float distance = 0.0;
 				for(int l=0; l<3; l++){
 					distance += threeDimensionalDistanceWithOrigin(model2Vertices[j+l],model1Vertices[i+l]);
@@ -445,6 +463,7 @@ void segmentModels(Object* model1, vec3 model1Low, vec3 model1High, Object* mode
 	for(int i=0; i<5; i++){
 		makeModelTopSameSize(model1Vertices[i],model1Normals[i],model1Colors[i],model1Textures[i],model2Vertices[i],model2Normals[i],model2Colors[i],model2Textures[i]);
 		matchPoints(model1Vertices[i],model1Normals[i],model1Colors[i],model1Textures[i],model2Vertices[i],model2Normals[i],model2Colors[i],model2Textures[i]);
+		//BipartiteGraph * bipartiteGraph = new BipartiteGraph(model1Vertices[i],model1Normals[i],model1Colors[i],model1Textures[i],model2Vertices[i],model2Normals[i],model2Colors[i],model2Textures[i]);
 	}
 	applyToObjects(model1, model2, model1Vertices,model1Normals,model1Colors,model1Textures,model2Vertices,model2Normals,model2Colors,model2Textures);
 	
@@ -483,7 +502,7 @@ void applyToObjects(Object* model1, Object* model2, std::vector< Angel::vec4 > m
 	model1->_vertices = model1Vertices[0];
 	model1->_normals = model1Normals[0];
 	model1->_colors = model1Colors[0];
-	for(int i=0; i<model1Vertices[1].size(); i++){
+	/*for(int i=0; i<model1Vertices[1].size(); i++){
 		model1->_vertices.push_back(model1Vertices[1][i]);
 		model1->_normals.push_back(model1Normals[1][i]);
 		model1->_colors.push_back(model1Colors[1][i]);
@@ -492,7 +511,7 @@ void applyToObjects(Object* model1, Object* model2, std::vector< Angel::vec4 > m
 		model1->_vertices.push_back(model1Vertices[2][i]);
 		model1->_normals.push_back(model1Normals[2][i]);
 		model1->_colors.push_back(model1Colors[2][i]);
-	}
+	}/*
 	for(int i=0; i<model1Vertices[3].size(); i++){
 		model1->_vertices.push_back(model1Vertices[3][i]);
 		model1->_normals.push_back(model1Normals[3][i]);
@@ -502,11 +521,11 @@ void applyToObjects(Object* model1, Object* model2, std::vector< Angel::vec4 > m
 		model1->_vertices.push_back(model1Vertices[4][i]);
 		model1->_normals.push_back(model1Normals[4][i]);
 		model1->_colors.push_back(model1Colors[4][i]);
-	}
+	}*/
 	model2->_vertices = model2Vertices[0];
 	model2->_normals = model2Normals[0];
 	model2->_colors = model2Colors[0];
-	for(int i=0; i<model2Vertices[1].size(); i++){
+	/*for(int i=0; i<model2Vertices[1].size(); i++){
 		model2->_vertices.push_back(model2Vertices[1][i]);
 		model2->_normals.push_back(model2Normals[1][i]);
 		model2->_colors.push_back(model2Colors[1][i]);
@@ -515,7 +534,7 @@ void applyToObjects(Object* model1, Object* model2, std::vector< Angel::vec4 > m
 		model2->_vertices.push_back(model2Vertices[2][i]);
 		model2->_normals.push_back(model2Normals[2][i]);
 		model2->_colors.push_back(model2Colors[2][i]);
-	}
+	}/*
 	for(int i=0; i<model2Vertices[3].size(); i++){
 		model2->_vertices.push_back(model2Vertices[3][i]);
 		model2->_normals.push_back(model2Normals[3][i]);
@@ -525,7 +544,7 @@ void applyToObjects(Object* model1, Object* model2, std::vector< Angel::vec4 > m
 		model2->_vertices.push_back(model2Vertices[4][i]);
 		model2->_normals.push_back(model2Normals[4][i]);
 		model2->_colors.push_back(model2Colors[4][i]);
-	}
+	}*/
 }
 
 void splitProblemTriangles(Object* model1, Object* model2){

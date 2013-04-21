@@ -20,6 +20,7 @@
 #include "model.hpp"
 #include "modelFunctions.hpp"
 #include "meshMapping.hpp"
+#include "bipartiteGraph.hpp"
 #include "InitShader.hpp"
 #include "glut_callbacks.h"
 #include "ObjLoader.hpp"
@@ -46,14 +47,14 @@ void init() {
   Object *bottle = rootScene->addObject( "bottle" );
 
   // Use the object loader to actually fill out the vertices and-so-on of the bottle.
-  ObjLoader::loadModelFromFile( bottle, "../models/bottle-a.obj" );
+  ObjLoader::loadModelFromFile( bottle, "../models/bottle_wine_high.obj" );
 
   // Objects has-a pointer to an object which is their "morph target."
   // they are created and buffered as follows:
 
   bottle->genMorphTarget( gShader ) ; // this makes a new object and links it to the source object. it returns the addr of the new obj..
   Object *bottleMorphTarget = bottle->morphTarget() ; // we can get the addr of the morph object like this, also.
-  ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle-b.obj" ); // with this model, we can use all the preexisting Object class functionality
+  ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle_liquor_high.obj" ); // with this model, we can use all the preexisting Object class functionality
 
   printf("Number Vertices Model1: %d\n",bottle->numberOfPoints());
   printf("Number Vertices Model2: %d\n\n",bottleMorphTarget->numberOfPoints());
@@ -62,6 +63,10 @@ void init() {
   Angel::vec3 maxBoundSrc = bottle->getMax();
   Angel::vec3 lowBoundDst = bottleMorphTarget->getMin();
   Angel::vec3 maxBoundDst = bottleMorphTarget->getMax();
+  
+  std::cout << "Model1 Bounds: " << lowBoundSrc << " " << maxBoundSrc << std::endl;
+  std::cout << "Model2 Bounds: " << lowBoundDst << " " << maxBoundDst << std::endl;
+  //exit(1);
 /*
   SquareMap* squareMap = createSquareMap(fminf(float(lowBoundSrc.x),
 					       float(lowBoundDst.x)),
@@ -77,13 +82,15 @@ void init() {
 						   float(maxBoundDst.z)));
 	*/
 	
+	//create Bipartite Graph
+	//BipartiteGraph * bipartiteGraph = new BipartiteGraph(bottle, bottleMorphTarget);
 	//segment parts of bottle to determine problem areas
 	//splitProblemTriangles(bottle, bottleMorphTarget);
 	segmentModels(bottle, lowBoundSrc, maxBoundSrc, bottleMorphTarget, lowBoundDst, maxBoundDst);
   //matchInitialPoints(bottle, bottleMorphTarget);
   printf("Number Vertices Model1: %d\n",bottle->numberOfPoints());
   printf("Number Vertices Model2: %d\n\n",bottleMorphTarget->numberOfPoints());
-  makeModelsSameSize(bottle, bottleMorphTarget);
+  //makeModelsSameSize(bottle, bottleMorphTarget);
 
   //populateSrcSquare(squareMap,bottle->_vertices);
   //populateDestSquare(squareMap,bottleMorphTarget->_vertices);
