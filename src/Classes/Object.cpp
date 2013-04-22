@@ -84,7 +84,7 @@ Object::Object( const std::string &name, GLuint gShader ) {
   _numTextures = 0;
 
   // Linear Interpolation Demo: Morph Percentage
-  _morphPercentage = 1.0;
+  _morphPercentage = 0.0;
 
   // Pointer to an Object to Morph to.
   _morphTarget = NULL;
@@ -206,11 +206,6 @@ inline void disableIfEnabled( GLint index ) {
     glDisableVertexAttribArray( index );
 }
 
-inline void setIfValid( GLint index, GLfloat s ) {
-  if (index != -1)
-    glVertexAttrib4f( index, s, s, s, s );
-}
-
 /**
  * buffer all of our data: Vertices, TexUVs, Normals,
  * Indices, Colors and Morph Buffers.
@@ -245,6 +240,7 @@ void Object::buffer( GLenum usage ) {
 
     // Disable Colors.
     disableIfEnabled( _attribIndex[ COLORS ] );
+    fprintf( stderr, "Disabled colors for %s\n", _name.c_str() );
   }
   
   if (_morphTarget == NULL) {
@@ -252,11 +248,12 @@ void Object::buffer( GLenum usage ) {
     disableIfEnabled( _attribIndex[ NORMALS_MORPH ] );
     disableIfEnabled( _attribIndex[ COLORS_MORPH ] );
 
-    // Disable the Morph Buffers, and fill them with a sentinel value;
-    // I.e, nothing with a w = -1 should be considered valid.
-    setIfValid( _attribIndex[ VERTICES_MORPH ], -1 );
-    setIfValid( _attribIndex[ NORMALS_MORPH ], -1 );
-    setIfValid( _attribIndex[ COLORS_MORPH ], -1 );
+    // Note: We disable the Morph buffers if they are not
+    // being used, however, the 'glVertexAttrib*' method
+    // of specifying a "default" value in this case is
+    // apparently not well supported in glsl 1.2 and/or intel OpenGL.
+    // In this case, the value of these attributes
+    // on the shader is 'undefined.'
 
   } else {
     bufferMorphOnly( usage );
@@ -406,7 +403,7 @@ void Object::send( Object::UniformEnum which ) {
     
   case Object::OBJECT_CTM:
     glUniformMatrix4fv( _handles[Object::OBJECT_CTM], 1, GL_TRUE,
-                        this->_trans.otm() );
+                        _trans.otm() );
     break;
     
   case Object::MORPH_PCT:

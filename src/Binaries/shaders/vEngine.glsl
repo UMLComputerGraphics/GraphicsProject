@@ -31,38 +31,32 @@ void main() {
 
   vec4 position_tmp;
 
-  // If vPositionMorph has valid data, calculate the morph.
-  if (vPositionMorph.w != -1.0) {
-    position_tmp = vPosition * (1.0 - morphPercentage) + vPositionMorph * morphPercentage;
-  } else {
-    position_tmp = vPosition;
-  }
+  // If morphing is enabled, morphPercentage will be non-zero.
+  // It is therefore easier to just always compute the following.
+  position_tmp = vPosition * (1.0 - morphPercentage) + vPositionMorph * morphPercentage;
 
   // World coordinates of this vertex.
   fPosition = OTM * position_tmp;
   // Screen coordinates of this vertex.
   gl_Position = P * CTM * fPosition;
 
-/*
-  vPosition (Object coordinates) --> OTM (World coordinates) --> CTM (Camera coordinates) --> P (Screen coordinates.)
-*/
+  // As a reminder:
+  // vPosition (Object Coordinates) -->
+  // OTM (World/Scene Coordinates) -->
+  // CTM (Camera-Centric Coordinates) -->
+  // P (Screen Coordinates)
 
-  /*
-    If we're using textures, send a dummy color.
-    If we're using colors, send a dummy texture.
-    If we're using colors and morphing is enabled, calculate that color.
-  */
-
+  // If we're using textures, send a dummy color.
   if (fIsTextured) {
     outtexture = vTex;
     color = vec4( 0, 0, 0, 0 );
-  } else {
-    outtexture = vec2( 0, 0 );
-    if (vColorMorph.w != -1.0) {
-      color = vColor * (1.0 - morphPercentage) + vColorMorph * morphPercentage;
-    } else {
-      color = vColor;
-    }
   }
 
-}
+  // If we're using colors, send a dummy texture.
+  else {
+    outtexture = vec2( 0, 0 );
+    // Again, it's easier to just always compute this.
+    color = vColor * (1.0 - morphPercentage) + vColorMorph * morphPercentage;
+  }
+
+} // End main().
