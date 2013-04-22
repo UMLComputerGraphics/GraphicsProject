@@ -121,6 +121,9 @@ void RotMat::coalesce( Transformation *rhs ) {
   rhs->reset();
 }
 
+Transformation *RotMat::newCopy( void ) const {
+  return new RotMat( *this );
+}
 
 /* TRANSLATION */
 
@@ -189,6 +192,10 @@ void TransMat::coalesce( Transformation *rhs ) {
   rhs->reset();
 }
 
+Transformation *TransMat::newCopy( void ) const {
+  return new TransMat( *this );
+}
+
 /* SCALE */
 
 const ScaleMat &ScaleMat::set( const float x, const float y, const float z ) {
@@ -242,4 +249,8 @@ void ScaleMat::coalesce( Transformation *rhs ) {
   _mat[2][2] *= rhs->matrix()[2][2];
 
   rhs->reset();
+}
+
+Transformation *ScaleMat::newCopy( void ) const {
+  return new ScaleMat( *this );
 }

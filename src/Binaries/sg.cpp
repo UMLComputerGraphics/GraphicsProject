@@ -8,11 +8,13 @@ int _argc;
 char **_argv;
 
 void simpleRotate( TransCache &obj ) {
-  RotMat *newrot = new RotMat;
-  newrot->rotateY( tick.scale() * 1.5 );
-  newrot->rotateX( tick.scale() * 1.4 );
-  newrot->rotateZ( tick.scale() * 1.3 );
+
+  RotMat newrot;
+  newrot.rotateY( tick.scale() * 1.5 );
+  newrot.rotateX( tick.scale() * 1.4 );
+  newrot.rotateZ( tick.scale() * 1.3 );
   obj.push( newrot );
+
 }
 
 void qtLiteIdle( void ) {
