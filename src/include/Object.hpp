@@ -107,12 +107,12 @@ public:
    * buffer all of our data: Vertices, TexUVs, Normals,
    * Indices, Colors and Morph Buffers.
    */
-  virtual void buffer( void );
+  virtual void buffer( GLenum usage = GL_STATIC_DRAW );
 
   /**
    * buffer only the Morph-related buffers.
    */
-  void bufferMorphOnly( void );
+  void bufferMorphOnly( GLenum usage = GL_STATIC_DRAW );
 
   /**
    * Select a new OpenGL draw mode for this Object.

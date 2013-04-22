@@ -259,29 +259,13 @@ ParticleSystem::setNumParticles( int newNumParticles ) {
 	numParticles = newNumParticles;
 }
 
-void
-ParticleSystem::buffer( void )
-{
-	glBindVertexArray(_vao);
-
-	glBindBuffer(GL_ARRAY_BUFFER, _buffer[VERTICES]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(Angel::vec4) * _vertices.size(), &(_vertices[0]), GL_DYNAMIC_DRAW);
-
-	glBindBuffer(GL_ARRAY_BUFFER, _buffer[COLORS]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(Angel::vec4) * _colors.size(), &(_colors[0]), GL_DYNAMIC_DRAW);
-
-	// Copy/Pasted this from Object::Buffer()
-	// Who knows if we will be texturing the spots?
-	if ( _texUVs.size() == 0 && _isTextured == false ) {
-		_texUVs.push_back( Angel::vec2( -1, -1 ) );
-	} else if ( _texUVs.size() > 1 ) {
-		/* Yes, this workaround prevents us from having
-	 textured objects with only one point.
-	 Oops. */
-		_isTextured = true;
-	}
-
-	glBindVertexArray(0);
+void  ParticleSystem::buffer( GLenum usage ) {
+  
+  // Note: The default for ParticleSystem is GL_DYNAMIC_DRAW,
+  // While the default for Object is GL_STATIC_DRAW.
+  // This method exists to override that default.
+  Object::buffer( usage );
+  
 }
 
 void

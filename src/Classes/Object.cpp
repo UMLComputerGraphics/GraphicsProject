@@ -215,17 +215,17 @@ inline void setIfValid( GLint index, GLfloat s ) {
  * buffer all of our data: Vertices, TexUVs, Normals,
  * Indices, Colors and Morph Buffers.
  */
-void Object::buffer( void ) {
+void Object::buffer( GLenum usage ) {
   
   glBindVertexArray( _vao );
   
   glBindBuffer( GL_ARRAY_BUFFER, _buffer[VERTICES] );
   glBufferData( GL_ARRAY_BUFFER, sizeof(Angel::vec4) * _vertices.size(),
-                &(_vertices[0]), GL_STATIC_DRAW );
+                &(_vertices[0]), usage );
   
   glBindBuffer( GL_ARRAY_BUFFER, _buffer[NORMALS] );
   glBufferData( GL_ARRAY_BUFFER, sizeof(Angel::vec3) * _normals.size(),
-                &(_normals[0]), GL_STATIC_DRAW );
+                &(_normals[0]), usage );
   
   if (_texUVs.size() == 0) {
     // Disable Textures ...
@@ -235,13 +235,13 @@ void Object::buffer( void ) {
     // Enable Colors.
     glBindBuffer( GL_ARRAY_BUFFER, _buffer[COLORS] );
     glBufferData( GL_ARRAY_BUFFER, sizeof(Angel::vec4) * _colors.size(),
-		  &(_colors[0]), GL_STATIC_DRAW );
+		  &(_colors[0]), usage );
   } else {
     // Enable Textures ...
     _isTextured = true;
     glBindBuffer( GL_ARRAY_BUFFER, _buffer[TEXCOORDS] );
     glBufferData( GL_ARRAY_BUFFER, sizeof(Angel::vec2) * _texUVs.size(),
-		  (_texUVs.size() ? &(_texUVs[0]) : NULL), GL_STATIC_DRAW );
+		  (_texUVs.size() ? &(_texUVs[0]) : NULL), usage );
 
     // Disable Colors.
     disableIfEnabled( _attribIndex[ COLORS ] );
@@ -259,12 +259,12 @@ void Object::buffer( void ) {
     setIfValid( _attribIndex[ COLORS_MORPH ], -1 );
 
   } else {
-    bufferMorphOnly();
+    bufferMorphOnly( usage );
   }
 
   glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, _buffer[INDICES] );
   glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * _indices.size(),
-                &(_indices[0]), GL_STATIC_DRAW );
+                &(_indices[0]), usage );
   
   glBindVertexArray( 0 );
   
@@ -273,24 +273,24 @@ void Object::buffer( void ) {
 /**
  * buffer only the Morph-related buffers.
  */
-void Object::bufferMorphOnly( void ) {
+void Object::bufferMorphOnly( GLenum usage ) {
   
   glBindVertexArray( _vao );
   
   glBindBuffer( GL_ARRAY_BUFFER, _buffer[VERTICES_MORPH] );
   glBufferData( GL_ARRAY_BUFFER,
                 sizeof(Angel::vec4) * morphTarget()->_vertices.size(),
-                &(morphTarget()->_vertices[0]), GL_STATIC_DRAW );
+                &(morphTarget()->_vertices[0]), usage );
   
   glBindBuffer( GL_ARRAY_BUFFER, _buffer[NORMALS_MORPH] );
   glBufferData( GL_ARRAY_BUFFER,
                 sizeof(Angel::vec3) * morphTarget()->_normals.size(),
-                &(morphTarget()->_normals[0]), GL_STATIC_DRAW );
+                &(morphTarget()->_normals[0]), usage );
   
   glBindBuffer( GL_ARRAY_BUFFER, _buffer[COLORS_MORPH] );
   glBufferData( GL_ARRAY_BUFFER,
                 sizeof(Angel::vec4) * morphTarget()->_colors.size(),
-                &(morphTarget()->_colors[0]), GL_STATIC_DRAW );
+                &(morphTarget()->_colors[0]), usage );
   
   // #MORPH
   // TODO: MORPH TEXTURES AND INDICIES

@@ -71,7 +71,7 @@ public:
    on each call to Draw(). That's the idea, anyway. */
   void  update();
 
-  virtual void buffer( void );
+  virtual void buffer( GLenum usage = GL_DYNAMIC_DRAW );
   virtual void draw( void );
 
   void  setVectorField(vec3 (*vectorFieldFunc)(vec4) );
