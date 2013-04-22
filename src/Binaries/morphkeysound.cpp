@@ -264,7 +264,7 @@ void init() {
   // they are created and buffered as follows:
 
   // this makes a new object and links it to the source object. it returns the addr of the new obj..
-  bottle->genMorphTarget( gShader ) ; 
+  bottle->genMorphTarget( ) ; 
 
   // we can get the addr of the morph object like this, also.
   Object *bottleMorphTarget = bottle->morphTarget() ;
