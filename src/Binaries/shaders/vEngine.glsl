@@ -29,13 +29,17 @@ uniform float morphPercentage;
 
 void main() {
 
+  vec4 position_tmp;
+
   // If vPositionMorph has valid data, calculate the morph.
-  if (vPositionMorph != -1) {
-    vPosition = vPosition * (1.0 - morphPercentage) + vPositionMorph * morphPercentage;
+  if (vPositionMorph.w != -1.0) {
+    position_tmp = vPosition * (1.0 - morphPercentage) + vPositionMorph * morphPercentage;
+  } else {
+    position_tmp = vPosition;
   }
 
   // World coordinates of this vertex.
-  fPosition = OTM * vPosition;
+  fPosition = OTM * position_tmp;
   // Screen coordinates of this vertex.
   gl_Position = P * CTM * fPosition;
 
@@ -54,7 +58,7 @@ void main() {
     color = vec4( 0, 0, 0, 0 );
   } else {
     outtexture = vec2( 0, 0 );
-    if (vColorMorph != -1) {
+    if (vColorMorph.w != -1.0) {
       color = vColor * (1.0 - morphPercentage) + vColorMorph * morphPercentage;
     } else {
       color = vColor;
