@@ -27,10 +27,9 @@ int main(int argc, char *argv[]) {
   _argv = argv;
   Engine::instance()->init( &argc, argv, "wow!" );
 
-  // Initialization ...
-  GLuint gShader = Angel::InitShader( "../Binaries/shaders/vEngine.glsl", "../Binaries/shaders/fEngine.glsl" );
-  Engine::instance()->cams()->addCamera( "Camera1" );
-  Object *cube = Engine::instance()->rootScene()->addObject( "cube", gShader );
+  // New Initialization includes default Camera and Shader.
+  // Scene and Camlist default to using this shader.
+  Object *cube = Engine::instance()->rootScene()->addObject( "cube" );
   colorCube( cube, 1.0 );
   cube->buffer();
 

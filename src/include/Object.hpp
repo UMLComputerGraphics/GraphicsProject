@@ -217,7 +217,7 @@ public:
    *
    * @return A pointer to the newly created target.
    */
-  Object* genMorphTarget( GLuint shader );
+  Object* genMorphTarget( GLuint shader = 0 );
 
   /**
    * Retrieve the morph Percentage of this object.

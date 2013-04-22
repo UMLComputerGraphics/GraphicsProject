@@ -238,18 +238,21 @@ void Object::buffer( void ) {
       glDisableVertexAttribArray( _attribIndex[ COLORS ] );
   }
   
-  /* Without the following workaround code,
-   Mac OSX will segfault attempting to access
-   the texcoordinate buffers on nontextured objects. */
-  //  if ( _texUVs.size() == 0 && _isTextured == false ) {
-  //  _texUVs.push_back( Angel::vec2( -1, -1 ) );
-  //} else if ( _texUVs.size() > 1 ) {
-    /* Yes, this workaround prevents us from having
-     textured objects with only one point.
-     Oops. */
-  //  _isTextured = true;
-  // }
-  
+  if (_morphTarget == NULL) {
+    glDisableVertexAttribArray( _attribIndex[ VERTICES_MORPH ] );
+    glDisableVertexAttribArray( _attribIndex[ NORMALS_MORPH ] );
+    glDisableVertexAttribArray( _attribIndex[ COLORS_MORPH ] );
+
+    // Disable the Morph Buffers, and fill them with a sentinel value;
+    // I.e, nothing with a w = -1 should be considered valid.
+    glVertexAttrib4f( _attribIndex[ VERTICES_MORPH ], -1, -1, -1, -1 );
+    glVertexAttrib4f( _attribIndex[ NORMALS_MORPH ], -1, -1, -1, -1 );
+    glVertexAttrib4f( _attribIndex[ COLORS_MORPH ], -1, -1, -1, -1 );
+
+  } else {
+    bufferMorphOnly();
+  }
+
   glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, _buffer[INDICES] );
   glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * _indices.size(),
                 &(_indices[0]), GL_STATIC_DRAW );
@@ -538,6 +541,10 @@ Object* Object::morphTarget( void ) const {
  */
 Object* Object::genMorphTarget( GLuint shader ) {
   
+  // If the user declines to specify a shader,
+  // Use whichever one we're using.
+  if (shader == 0) shader = this->shader();
+
   Object *obj = new Object( this->_name + "_morph", shader );
   _morphTarget = obj;
   return obj;

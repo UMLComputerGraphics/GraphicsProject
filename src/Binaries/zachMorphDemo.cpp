@@ -17,44 +17,23 @@
 #include <time.h>
 /* Multi-platform support and OpenGL headers. */
 /* Utilities and Common */
-#include "model.hpp"
 #include "modelFunctions.hpp"
 #include "meshMapping.hpp"
 #include "bipartiteGraph.hpp"
-#include "InitShader.hpp"
-#include "glut_callbacks.h"
-#include "ObjLoader.hpp"
 
 // Initialization: load and compile shaders, initialize camera(s), load models.
 void init() {
   
   // Get handles to the Scene and the Screen.
   Scene *rootScene = Engine::instance()->rootScene();
-  Screen *primScreen = Engine::instance()->mainScreen();
 
-  // Load shaders and use the resulting shader program. 
-  GLuint gShader = Angel::InitShader("shaders/vmorph.glsl","shaders/fmorph.glsl");
-
-  // Let the other objects know which shader to use by default.
-  rootScene->shader( gShader );
-  primScreen->_camList.shader( gShader );
-
-  // We start with no cameras, by default. Add one and set it "active" by using Next().
-  primScreen->_camList.addCamera( "Camera1" );
-  primScreen->_camList.next();
-
-  // Create an object and add it to the scene with the name "bottle".
   Object *bottle = rootScene->addObject( "bottle" );
 
-  // Use the object loader to actually fill out the vertices and-so-on of the bottle.
   ObjLoader::loadModelFromFile( bottle, "../models/bottle-a.obj" );
 
-  // Objects has-a pointer to an object which is their "morph target."
-  // they are created and buffered as follows:
-
-  bottle->genMorphTarget( gShader ) ; // this makes a new object and links it to the source object. it returns the addr of the new obj..
-  Object *bottleMorphTarget = bottle->morphTarget() ; // we can get the addr of the morph object like this, also.
-  ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle-b.obj" ); // with this model, we can use all the preexisting Object class functionality
+  bottle->genMorphTarget() ;
+  Object *bottleMorphTarget = bottle->morphTarget();
+  ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle-b.obj" );
 
   printf("Number Vertices Model1: %lu\n",bottle->numberOfPoints());
   printf("Number Vertices Model2: %lu\n\n",bottleMorphTarget->numberOfPoints());
@@ -122,12 +101,10 @@ void init() {
 
   bottle->_trans._scale.set( 0.01 );
   bottleMorphTarget->_trans._scale.set( 0.01 );
-  bottle->buffer();
-  bottle->bufferMorphOnly(); // YES THIS IS THE REAL OBJECT, NOT THE TARGET. IT SENDS THE MORPH VERTICES TO THE SHADER, NOT TO THE DRAW LIST TO BE DRAWN!
 
+  bottle->buffer();
 
   // Generic OpenGL setup: Enable the depth buffer and set a nice background color.
-  glEnable( GL_DEPTH_TEST );
   glClearColor( 0.3, 0.5, 0.9, 1.0 );
 
 }

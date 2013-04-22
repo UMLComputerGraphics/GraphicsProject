@@ -23,18 +23,8 @@ const char *modelname;
  */
 void init() {
   
-  GLuint shader[2];
-  Cameras *camList = Engine::instance()->cams();
   Scene *rootScene = Engine::instance()->rootScene();
   
-  shader[0] = Angel::InitShader( "shaders/vterrain.glsl", "shaders/ftex.glsl" );
-  
-  camList->addCamera( "Camera1" );
-  camList->next();
-  
-  // Setting a default and adding objects without:
-  rootScene->shader( shader[0] );
-
   Object *model = rootScene->addObject( "Arbitrary Model" );
   ObjLoader::loadModelFromFile( model, modelname );
 
@@ -54,15 +44,6 @@ void init() {
 	vec4( 0.4, 0.4, 0.4, 0.9 ) );
   floor->buffer();
 
-  glEnable( GL_DEPTH_TEST );
-  glClearColor( 0, 0, 0, 1.0 );
-}
-
-/**
- * Cleans up our scene graph.
- */
-void cleanup( void ) {
-  //Engine::instance()->rootScene()->DestroyObject();
 }
 
 //--------------------------------------------------------------------

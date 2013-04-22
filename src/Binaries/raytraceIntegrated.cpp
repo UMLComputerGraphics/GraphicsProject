@@ -13,15 +13,11 @@
 #include <boost/thread.hpp>
 
 #include "Engine.hpp"
-#include "InitShader.hpp"
-#include "Util.hpp"
-#include "ObjLoader.hpp"
 
 /** Global shader object **/
 GLuint program;
 
 GLint vRayPosition = -1;
-GLint uDisplay;
 
 /** Rotation matrix uniform shader variable location **/
 GLuint uRotationMatrix = -1;
@@ -178,16 +174,6 @@ void display( void ) {
       0                   // offset of first element
       );
   
-  if(stereo) {
-    glUniform1i( uDisplay, -1 );
-    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-    glUniform1i( uDisplay, 1 );
-    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-  } else {
-    glUniform1i( uDisplay, 0 );
-    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-  }
-
   glutSwapBuffers();
   glDisableVertexAttribArray( vRayPosition );
 
@@ -431,16 +417,16 @@ void init( void ) {
   glBindVertexArray( vao );
 
   // Load shaders and use the resulting shader program
-  GLuint program = Angel::InitShader( "shaders/vShaderOrgAndDir.glsl",
-                                      "shaders/fShaderSpheres2.glsl" );
+  GLuint program = Angel::InitShader( "shaders/vRaytracer.glsl",
+                                      "shaders/fRaytracer.glsl" );
   glUseProgram( program );
 
+  // Vertex Shader
   vRayPosition = glGetAttribLocation( program, "vRayPosition" );
-  uDisplay = glGetUniformLocation( program, "uDisplay" );
-
   uRotationMatrix = glGetUniformLocation( program, "uRotationMatrix" );
   uCameraPosition = glGetUniformLocation( program, "uCameraPosition" );
 
+  // Fragment Shader
   uNumOfSpheres = glGetUniformLocation( program, "uNumOfSpheres" );
   uSphereCenterPoints = glGetUniformLocation( program, "uSphereCenterPoints" );
   uSphereRadius = glGetUniformLocation( program, "uSphereRadius" );
@@ -464,9 +450,6 @@ void init( void ) {
   tick.setTimeUniform(glGetUniformLocation( program, "ftime" ));
 
   glShadeModel( GL_FLAT );
-  glEnable( GL_DEPTH_TEST );
-  glClearColor( 0.1, 0.1, 0.1, 1.0 );
-
   genereateScene();
 }
 

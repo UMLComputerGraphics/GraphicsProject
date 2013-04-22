@@ -32,11 +32,6 @@ void init()
   Screen *primScreen = Engine::instance()->mainScreen();
   Scene  *rootScene  = Engine::instance()->rootScene();
 
-  /*
-  bottleShader         = Angel::InitShader("shaders/vmorph.glsl",
-					   "shaders/fmorph.glsl");
-  */
-
   particleSystemShader = Angel::InitShader("shaders/vParticle2.glsl",
 					   "shaders/fParticle2.glsl",
 					   "shaders/gParticle.glsl", //"shaders/gParticle.glsl",
@@ -46,18 +41,6 @@ void init()
 
   rootScene->shader(particleSystemShader);
   primScreen->_camList.shader(particleSystemShader);
-
-  primScreen->_camList.addCamera( "Camera1" );
-  primScreen->_camList.next();
-
-  /*
-  {
-    Object *bottle = rootScene->addObject( "bottle" );
-    ObjLoader::loadModelFromFile( bottle, "../models/bottle-a.obj" );
-    bottle->_trans._scale.set( 0.01 );
-    bottle->buffer();
-  }
-  */
 
   {
     ParticleSystem *particleSystem = new ParticleSystem( numberOfParticles, 

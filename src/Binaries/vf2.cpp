@@ -12,10 +12,6 @@
 /* Engine Classes */
 #include "Engine.hpp"
 /* Utilities and Common */
-#include "model.hpp"
-#include "InitShader.hpp"
-#include "glut_callbacks.h"
-#include "ObjLoader.hpp"
 #include "ParticleFieldFunctions.hpp"
 #include "ParticleSystem.hpp"
 
@@ -39,7 +35,7 @@ void init() {
   GLuint  particleSystemShader;
   Screen *primScreen = Engine::instance()->mainScreen();
 
-
+  ashader = Angel::InitShader( "shaders/vEngine.glsl", "shaders/fEngine.glsl" );
   particleSystemShader = Angel::InitShader("shaders/vParticle2.glsl",
                                            "shaders/fParticle2.glsl",
                                            "shaders/gParticle.glsl",
@@ -49,13 +45,7 @@ void init() {
 
   rootScene->shader(particleSystemShader);
   primScreen->_camList.shader(particleSystemShader);
-
-
   
-  ashader = Angel::InitShader( "shaders/vsimple.glsl", "shaders/fragment.glsl" );
-  
-  camList->addCamera( "Camera1" );
-  camList->next();
   camList->active()->changePerspective( Camera::IDENTITY );
 
 
@@ -124,10 +114,7 @@ void init() {
 
   }
 
-
   glLineWidth(1.0);
-
-  glEnable( GL_DEPTH_TEST );
   glClearColor( 0, 0, 0, 1.0 );
 
 }

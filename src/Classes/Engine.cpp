@@ -40,9 +40,12 @@ Engine *Engine::instance( void ) {
  * Default constructor. Cannot be called, this is a singleton class.
  */
 Engine::Engine( void ) {
+
   _idleFunc = NULL;
+
   opt("fixed_yaw", true);
   opt("trap_pointer", true);
+
 }
 
 /**
@@ -200,6 +203,20 @@ void Engine::init( int *argc, char *argv[], const char *title ) {
 
   glEnable( GL_DEPTH_TEST );
   glClearColor( 0.0, 0.0, 0.0, 1.0 );
+
+  Engine *eng = Engine::instance();
+
+  // Conjure up a default shader program to use until told otherwise.
+  GLuint defaultProgram = Angel::InitShader( "./shaders/vEngine.glsl", 
+					     "./shaders/fEngine.glsl" );
+
+  // Set the Camera List to use this shader,
+  // And add, by default, a camera.
+  eng->cams()->shader( defaultProgram );
+  eng->cams()->addCamera( "defaultCamera" );
+  eng->cams()->next();
+
+  eng->rootScene()->shader( defaultProgram );
 
 }
 

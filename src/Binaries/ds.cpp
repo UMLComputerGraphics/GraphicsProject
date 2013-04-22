@@ -10,11 +10,6 @@
 
 /* Engine Classes */
 #include "Engine.hpp"
-/* Utilities and Common */
-#include "model.hpp"
-#include "InitShader.hpp"
-#include "glut_callbacks.h"
-#include "ObjLoader.hpp"
 
 /**
  * Initialization: load and compile shaders, initialize camera(s), load models.
@@ -25,12 +20,10 @@ void init() {
   Cameras *camList = Engine::instance()->cams();
   Scene *rootScene = Engine::instance()->rootScene();
   
-  shader[0] = Angel::InitShader( "shaders/vred.glsl", "shaders/fragment.glsl" );
-  shader[1] = Angel::InitShader( "shaders/vblu.glsl", "shaders/fragment.glsl" );
-  shader[2] = Angel::InitShader( "shaders/vtex.glsl", "shaders/ftex.glsl" );
+  shader[0] = Angel::InitShader( "shaders/vred.glsl", "shaders/fEngine.glsl" );
+  shader[1] = Angel::InitShader( "shaders/vblu.glsl", "shaders/fEngine.glsl" );
+  shader[2] = Angel::InitShader( "shaders/vEngine.glsl", "shaders/fEngine.glsl" );
   
-  camList->addCamera( "Camera1" );
-  camList->next();
   camList->active()->changePerspective( Camera::IDENTITY );
   
   // Adding objects without a default shader:
@@ -76,16 +69,6 @@ void init() {
   D->buffer();
   D->texture( "../Textures/GoodTextures_0013291.jpg" );
 
-  glEnable( GL_DEPTH_TEST );
-  glClearColor( 0, 0, 0, 1.0 );
-
-}
-
-/**
- * Cleans up our scene graph.
- */
-void cleanup( void ) {
-  //Engine::instance()->rootScene()->DestroyObject();
 }
 
 //--------------------------------------------------------------------

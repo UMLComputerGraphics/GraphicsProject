@@ -1,7 +1,13 @@
-// attributes
+// Standard Attributes
 attribute vec4 vPosition;
 attribute vec4 vColor;
+attribute vec3 vNormal;
 attribute vec2 vTex;
+
+// Morphing Attributes
+attribute vec4 vPositionMorph;
+attribute vec4 vColorMorph;
+attribute vec3 vNormalMorph;
 
 // sent to the fshader
 varying vec4 color;
@@ -18,7 +24,15 @@ uniform mat4 OTM; // Object Transformations: Objects are adjusted to world coord
 // IsTextured boolean.
 uniform bool fIsTextured;
 
+// Morphing Information
+uniform float morphPercentage;
+
 void main() {
+
+  // If vPositionMorph has valid data, calculate the morph.
+  if (vPositionMorph != -1) {
+    vPosition = vPosition * (1.0 - morphPercentage) + vPositionMorph * morphPercentage;
+  }
 
   // World coordinates of this vertex.
   fPosition = OTM * vPosition;
@@ -29,12 +43,22 @@ void main() {
   vPosition (Object coordinates) --> OTM (World coordinates) --> CTM (Camera coordinates) --> P (Screen coordinates.)
 */
 
+  /*
+    If we're using textures, send a dummy color.
+    If we're using colors, send a dummy texture.
+    If we're using colors and morphing is enabled, calculate that color.
+  */
+
   if (fIsTextured) {
     outtexture = vTex;
     color = vec4( 0, 0, 0, 0 );
   } else {
     outtexture = vec2( 0, 0 );
-    color = vColor;
+    if (vColorMorph != -1) {
+      color = vColor * (1.0 - morphPercentage) + vColorMorph * morphPercentage;
+    } else {
+      color = vColor;
+    }
   }
 
 }

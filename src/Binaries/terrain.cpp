@@ -60,19 +60,15 @@ void init() {
   Screen *myScreen = Engine::instance()->mainScreen();
   
   // Load the shaders.
-  GLuint gShader = Angel::InitShader( "shaders/vterrain.glsl",
+  GLuint gShader = Angel::InitShader( "shaders/vEngine.glsl",
                                       "shaders/fTerrainTex.glsl" );
-  // Initialize engine setting: Enable "fixed yaw"... disable free-Y _rotation.
-  Engine::instance()->opt( "fixed_yaw", true );
   
   // Give the shader handle to the Scene Graph and the Camera List.
   theScene->shader( gShader );
   myScreen->_camList.shader( gShader );
   
-  // Cameras must be added after setting a shader.
-  myScreen->_camList.toggleDivision(); // This activates the vertical division mechanism.
-  myScreen->_camList.addCamera( "Camera1" );
-  myScreen->_camList.next();
+  // Activate "Vertical Division"
+  myScreen->_camList.toggleDivision();
   
   /*
    NOTE:
@@ -86,7 +82,6 @@ void init() {
 
   // Let's create some objects.
   Object *terrain = theScene->addObject( "terrain" );
-  glUseProgram( gShader );
 
   terrain->texture( "../Textures/GoodTextures_0013423.jpg" ); // Dirt/Mud
   terrain->texture( "../Textures/GoodTextures_0013779.jpg" ); // Sand
