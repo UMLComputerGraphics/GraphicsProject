@@ -200,6 +200,17 @@ void Object::draw( void ) {
   
 }
 
+
+inline void disableIfEnabled( GLint index ) {
+  if (index != -1) 
+    glDisableVertexAttribArray( index );
+}
+
+inline void setIfValid( GLint index, GLfloat s ) {
+  if (index != -1)
+    glVertexAttrib4f( index, s, s, s, s );
+}
+
 /**
  * buffer all of our data: Vertices, TexUVs, Normals,
  * Indices, Colors and Morph Buffers.
@@ -219,8 +230,7 @@ void Object::buffer( void ) {
   if (_texUVs.size() == 0) {
     // Disable Textures ...
     _isTextured = false;
-    if ( _attribIndex[TEXCOORDS] != -1 )
-      glDisableVertexAttribArray( _attribIndex[ TEXCOORDS ] );
+    disableIfEnabled( _attribIndex[ TEXCOORDS ] );
 
     // Enable Colors.
     glBindBuffer( GL_ARRAY_BUFFER, _buffer[COLORS] );
@@ -234,20 +244,19 @@ void Object::buffer( void ) {
 		  (_texUVs.size() ? &(_texUVs[0]) : NULL), GL_STATIC_DRAW );
 
     // Disable Colors.
-    if (_attribIndex[COLORS] != -1)
-      glDisableVertexAttribArray( _attribIndex[ COLORS ] );
+    disableIfEnabled( _attribIndex[ COLORS ] );
   }
   
   if (_morphTarget == NULL) {
-    glDisableVertexAttribArray( _attribIndex[ VERTICES_MORPH ] );
-    glDisableVertexAttribArray( _attribIndex[ NORMALS_MORPH ] );
-    glDisableVertexAttribArray( _attribIndex[ COLORS_MORPH ] );
+    disableIfEnabled( _attribIndex[ VERTICES_MORPH ] );
+    disableIfEnabled( _attribIndex[ NORMALS_MORPH ] );
+    disableIfEnabled( _attribIndex[ COLORS_MORPH ] );
 
     // Disable the Morph Buffers, and fill them with a sentinel value;
     // I.e, nothing with a w = -1 should be considered valid.
-    glVertexAttrib4f( _attribIndex[ VERTICES_MORPH ], -1, -1, -1, -1 );
-    glVertexAttrib4f( _attribIndex[ NORMALS_MORPH ], -1, -1, -1, -1 );
-    glVertexAttrib4f( _attribIndex[ COLORS_MORPH ], -1, -1, -1, -1 );
+    setIfValid( _attribIndex[ VERTICES_MORPH ], -1 );
+    setIfValid( _attribIndex[ NORMALS_MORPH ], -1 );
+    setIfValid( _attribIndex[ COLORS_MORPH ], -1 );
 
   } else {
     bufferMorphOnly();
@@ -378,6 +387,11 @@ void Object::link( UniformEnum which, const std::string &name ) {
  * @param which The uniform to send.
  */
 void Object::send( Object::UniformEnum which ) {
+
+  if (glGetError()) {
+    fprintf( stderr, "ERROR: glGetError() returning true prior to exec of send() ...\n" );
+    exit( 255 );
+  }
 
   if (shader() == 0) {
     fprintf( stderr, "Warning: Object::send() for [%s][%u] called with no shader.\n", _name.c_str(), which );
