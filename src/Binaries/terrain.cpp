@@ -336,7 +336,7 @@ void simpleRotateAnim( TransCache &obj ) {
 void animationTest( TransCache &obj ) {
   double timeScale = tick.scale();
   double theta = timeScale * 0.1;
-  if ( 0 ) fprintf( stderr, "Timescale: %f\n", timeScale );
+  gprint( PRINT_VERBOSE, "Timescale: %f\n", timeScale );
   
   //Object increasingly grows. 
   /* Note that, Scaling Adjustment, unlike Rotation and Translation,
@@ -390,7 +390,7 @@ void terrain_idle( void ) {
   Spy.animation( simpleRotateY );
   
   if ( Engine::instance()->opt( "terrain_regen" ) ) {
-    fprintf( stderr, "terrain_regen on, turning on switchingTerrain bool\n" );
+    gprint( PRINT_INFO, "terrain_regen on, turning on switchingTerrain bool\n" );
     switchingTerrain = true;
     Engine::instance()->opt( "terrain_regen", false );
   }

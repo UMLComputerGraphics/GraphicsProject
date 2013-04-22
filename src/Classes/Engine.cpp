@@ -42,6 +42,8 @@ Engine *Engine::instance( void ) {
 Engine::Engine( void ) {
 
   _idleFunc = NULL;
+  // Reminder: 0 is never a valid program.
+  _currentShader = 0;
 
   opt("fixed_yaw", true);
   opt("trap_pointer", true);

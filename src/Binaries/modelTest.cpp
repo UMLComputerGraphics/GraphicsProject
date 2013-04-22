@@ -30,7 +30,7 @@ void init() {
 
   vec4 min = model->getMin();
   vec4 max = model->getMax();
-  fprintf( stderr, "Min: (%f,%f,%f)\nMax: (%f,%f,%f)\n", 
+  gprint( PRINT_DEBUG, "Min: (%f,%f,%f)\nMax: (%f,%f,%f)\n", 
 	   min.x, min.y, min.z,
 	   max.x, max.y, max.z );
   model->_trans._offset.set( 0, -min.y, 0 );

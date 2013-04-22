@@ -234,13 +234,11 @@ void play3dSound( vec4 pos, vec4 vel, FMOD::Channel **a_channel, FMOD::Sound *a_
 /**
    very necessary user-defined error catch function for fMod
 */
-void ERRCHECK(FMOD_RESULT result)
-{
-  if (result != FMOD_OK)
-    {
-      fprintf(stderr,"FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
-      // exit(-1);
-    }
+void ERRCHECK(FMOD_RESULT result) {
+  if (result != FMOD_OK) {
+    gprint( PRINT_ERROR, "FMOD error! (%d) %s\n",
+	    result, FMOD_ErrorString(result) );
+  }
 }
 
 /* end fMod globals blob */
@@ -502,11 +500,8 @@ void updateListener( void ) {
   vel.y *= framesToSeconds ;
   vel.z *= framesToSeconds ;
 
-  if ( DEBUG ) {
-
-    fprintf(stderr, "we appear to be operating at %f frames per second \n", framesToSeconds );
-
-  }
+  gprint( PRINT_VERBOSE, "we appear to be operating at "
+	  "%f frames per second \n", framesToSeconds );
 
   /*
     vel.x = (listenerpos.x - lastpos.x) * (1000 / INTERFACE_UPDATETIME);

@@ -1,14 +1,16 @@
 /**
  * @file Util.cpp
  * @author Eric McCann
+ * @authors Eric McCann, John Huston
  * @date 2013-03-29
- * @brief String utilities.
- * @details Formerly named "eric_rules.cpp", but he had to know that wouldn't last too long.
+ * @brief Misc utility functions.
+ * @details Daffodils!
  */
 
 #include <cstdio>
 #include <cstring>
 #include <cstdlib>
+#include <cstdarg>
 #include <string>
 #include <sstream>
 #include <iostream>
@@ -28,10 +30,12 @@ std::vector< std::string > &split( const std::string &s, char delim,
   }
   return elems;
 }
+
 std::vector< std::string > split( const std::string &s, char delim ) {
   std::vector< std::string > elems;
   return split( s, delim, elems );
 }
+
 bool dirExists(const std::string& where, const std::string& dir) {
   static struct stat s;
   std::stringstream str;
@@ -48,6 +52,7 @@ bool dirExists(const std::string& where, const std::string& dir) {
     }
   }
 }
+
 namespace Util {
   static std::string dondeestalosshaders;
   /**
@@ -95,22 +100,32 @@ namespace Util {
     return wholepath.str();
   }
 
-/**
- * Return a randomized float value between [0,1].
- * @return A random float, just for you!
- * @see also: jitter
- */
-float randFloat( void ) {
-  return rand() / (float) RAND_MAX;
+  /**
+   * Return a randomized float value between [0,1].
+   * @return A random float, just for you!
+   * @see also: jitter
+   */
+  float randFloat( void ) {
+    return rand() / (float) RAND_MAX;
+  }
+  
+  /**
+   * Returns a random float between [-H,H].
+   * @param H The range for the random float.
+   * @return a random float between [-H,H].
+   */
+  double jitter( double H ) {
+    return (-H) + rand() * (H - (-H)) / RAND_MAX;
+  }
+
 }
 
-/**
- * Returns a random float between [-H,H].
- * @param H The range for the random float.
- * @return a random float between [-H,H].
- */
-double jitter( double H ) {
-  return (-H) + rand() * (H - (-H)) / RAND_MAX;
-}
-
+// Stack Overflow
+void gprint( DebugPrintLevels level, const char *format, ...) {
+  
+  va_list args;
+  va_start( args, format );
+  vfprintf( stderr, format, args );
+  va_end( args );
+  
 }

@@ -35,8 +35,8 @@ void init() {
   Object *bottleMorphTarget = bottle->morphTarget();
   ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle-b.obj" );
 
-  printf("Number Vertices Model1: %lu\n",bottle->numberOfPoints());
-  printf("Number Vertices Model2: %lu\n\n",bottleMorphTarget->numberOfPoints());
+  gprint( PRINT_DEBUG, "Number Vertices Model1: %lu\n",bottle->numberOfPoints());
+  gprint( PRINT_DEBUG, "Number Vertices Model2: %lu\n\n",bottleMorphTarget->numberOfPoints());
 
   /*
   Angel::vec3 OriginalLowBoundSrc = bottle->getMin();
@@ -78,26 +78,26 @@ void init() {
 	//splitProblemTriangles(bottle, bottleMorphTarget);
 	segmentModels(bottle, lowBoundSrc, maxBoundSrc, bottleMorphTarget, lowBoundDst, maxBoundDst);
   //matchInitialPoints(bottle, bottleMorphTarget);
-  printf("Number Vertices Model1: %lu\n",bottle->numberOfPoints());
-  printf("Number Vertices Model2: %lu\n\n",bottleMorphTarget->numberOfPoints());
+  gprint( PRINT_DEBUG, "Number Vertices Model1: %lu\n",bottle->numberOfPoints());
+  gprint( PRINT_DEBUG, "Number Vertices Model2: %lu\n\n",bottleMorphTarget->numberOfPoints());
   //makeModelsSameSize(bottle, bottleMorphTarget);
 
   //populateSrcSquare(squareMap,bottle->_vertices);
   //populateDestSquare(squareMap,bottleMorphTarget->_vertices);
   //expandSquareMap(squareMap);
 /*
-  printf("Front Vertices Src:  %d\n",int(squareMap->front->srcTriangles.size()));
-  printf("Back  Vertices Src:  %d\n",int(squareMap->back->srcTriangles.size()));
-  printf("Left  Vertices Src:  %d\n",int(squareMap->left->srcTriangles.size()));
-  printf("Right Vertices Src:  %d\n\n",int(squareMap->right->srcTriangles.size()));
+  gprint( PRINT_DEBUG, "Front Vertices Src:  %d\n",int(squareMap->front->srcTriangles.size()));
+  gprint( PRINT_DEBUG, "Back  Vertices Src:  %d\n",int(squareMap->back->srcTriangles.size()));
+  gprint( PRINT_DEBUG, "Left  Vertices Src:  %d\n",int(squareMap->left->srcTriangles.size()));
+  gprint( PRINT_DEBUG, "Right Vertices Src:  %d\n\n",int(squareMap->right->srcTriangles.size()));
 
-  printf("Front Vertices Dest: %d\n",int(squareMap->front->destTriangles.size()));
-  printf("Back  Vertices Dest: %d\n",int(squareMap->back->destTriangles.size()));
-  printf("Left  Vertices Dest: %d\n",int(squareMap->left->destTriangles.size()));
-  printf("Right Vertices Dest: %d\n",int(squareMap->right->destTriangles.size()));
+  gprint( PRINT_DEBUG, "Front Vertices Dest: %d\n",int(squareMap->front->destTriangles.size()));
+  gprint( PRINT_DEBUG, "Back  Vertices Dest: %d\n",int(squareMap->back->destTriangles.size()));
+  gprint( PRINT_DEBUG, "Left  Vertices Dest: %d\n",int(squareMap->left->destTriangles.size()));
+  gprint( PRINT_DEBUG, "Right Vertices Dest: %d\n",int(squareMap->right->destTriangles.size()));
 */
-  //printf("Number Vertices Model1: %d\n",bottle->numberOfPoints());
-  //printf("Number Vertices Model2: %d\n",bottleMorphTarget->numberOfPoints());
+  //gprint( PRINT_DEBUG, "Number Vertices Model1: %d\n",bottle->numberOfPoints());
+  //gprint( PRINT_DEBUG, "Number Vertices Model2: %d\n",bottleMorphTarget->numberOfPoints());
 
   bottle->_trans._scale.set( 0.01 );
   bottleMorphTarget->_trans._scale.set( 0.01 );

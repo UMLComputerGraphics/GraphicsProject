@@ -181,7 +181,7 @@ void display( void ) {
   if(frameCount == 10) {
     float elapsedTime = glutGet( GLUT_ELAPSED_TIME );
     float fps = 10.0 / ((elapsedTime - previousTime) / 1000.0);
-    printf("fps: %f\n", fps);
+    gprint( PRINT_VERBOSE, "fps: %f\n", fps);
     previousTime = elapsedTime;
     frameCount = 0;
   }
@@ -323,7 +323,7 @@ void pushDataToBuffer() {
     bufferData.push_back(centerPoint.y);
     bufferData.push_back(centerPoint.z);
 
-    //printf("%f, %f, %f\n", centerPoint.x, centerPoint.y, centerPoint.z);
+    //gprint( PRINT_DEBUG, "%f, %f, %f\n", centerPoint.x, centerPoint.y, centerPoint.z);
 
     i -= j;
 
@@ -345,12 +345,12 @@ void pushDataToBuffer() {
     bufferData.push_back(distance * distance);
     bufferData.push_back(0.0);
 
-    //printf("distance %f\n", distance);
+    //gprint( PRINT_DEBUG, "distance %f\n", distance);
     numOfBoundingSpheres++;
   }
 
-  printf("numTriangles %d\n", numTriangles);
-  printf("numOfBoundingSpheres %d\n", numOfBoundingSpheres);
+  gprint( PRINT_DEBUG, "numTriangles %d\n", numTriangles);
+  gprint( PRINT_DEBUG, "numOfBoundingSpheres %d\n", numOfBoundingSpheres);
 
   GLuint bufObj;
   glActiveTexture(GL_TEXTURE0);

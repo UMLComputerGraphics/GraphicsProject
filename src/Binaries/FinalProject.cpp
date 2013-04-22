@@ -9,9 +9,9 @@
 
 int main( int argc, char **argv ) {
 
-  fprintf(
-      stderr,
-      "Error: Your project is unfinished and you're going to fail and everyone is going to laugh at you and it's a really bad day sorry\n" );
+  gprint( PRINT_INFO, "Error: Your project is unfinished and you're "
+	  "going to fail and everyone is going to laugh at you and "
+	  "it's a really bad day sorry\n" );
 
    MONOLITH monolith(argc, argv);
    

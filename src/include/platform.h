@@ -18,7 +18,7 @@
 #define GLEW_INIT()						\
   glewExperimental = GL_FALSE;					\
   GLenum rc = glewInit();					\
-  if (rc) fprintf( stderr, "%s\n", glewGetErrorString(rc) );
+  if (rc) gprint( PRINT_ERROR, "%s\n", glewGetErrorString(rc) );
 #endif
 
 #endif
