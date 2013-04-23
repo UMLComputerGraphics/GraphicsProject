@@ -23,7 +23,7 @@ int findTriangleWithMinimumDistance( Object* largerModel, Object* smallerModel,
                                      int index ) {
   int minIndex = -1;
   float minDistance = INFINITY;
-  for ( int i = 0; i < smallerModel->numberOfPoints(); i += 3 ) {
+  for ( size_t i = 0; i < smallerModel->numberOfPoints(); i += 3 ) {
     float distance = 0.0;
     for ( int j = 0; j < 3; j++ ) {
       distance += threeDimensionalDistance( smallerModel->_vertices[i + j],
@@ -175,7 +175,7 @@ int findTriangleWithMinimumDistanceFromCenter(Object* largerModel, Object* small
   int minIndex = -1;
   float minDistance = INFINITY;
 
-		for(int i=0; i<smallerModel->numberOfPoints();i+= 3){
+		for(size_t i=0; i<smallerModel->numberOfPoints();i+= 3){
 			float distance = 0.0;
 			for(int l=0; l<3; l++){
 				distance += threeDimensionalDistanceWithOrigin(largerModel->_vertices[index+l],smallerModel->_vertices[i+l]);
@@ -220,10 +220,10 @@ void makeModelsSameSize(Object* model1, Object* model2){
 
 void matchInitialPoints(Object* model1, Object* model2){
 	if(model1->numberOfPoints()>model2->numberOfPoints()){
-		for(int i=0; i<model2->numberOfPoints();i+=3){
+		for(size_t i=0; i<model2->numberOfPoints();i+=3){
 			int matchIndex = 0;
 			float minDistance = INFINITY;
-			for(int j=0; j<model1->numberOfPoints();j+=3){
+			for(size_t j=0; j<model1->numberOfPoints();j+=3){
 				//float distance = 0.0;
 				//for(int l=0; l<3; l++){
 				//	distance += threeDimensionalDistance(model1->_vertices[j+l],model2->_vertices[i+l]);
@@ -252,11 +252,12 @@ void matchInitialPoints(Object* model1, Object* model2){
 		}
 	}else{
 		//int correctlyMatchedPoints = 0;
-		for(int i=0; i<model1->numberOfPoints();i+=3){
+		for(size_t i=0; i<model1->numberOfPoints();i+=3){
 			//int bestPoint1,bestPoint2,bestPoint3;
 			int matchIndex = 0;
 			float minDistance = INFINITY;
-			for(int j=0; j<model2->numberOfPoints();j+=3){
+
+			for(size_t j=0; j<model2->numberOfPoints();j+=3){
 				//float distance = 0.0;
 				//for(int l=0; l<3; l++){
 				//	distance += threeDimensionalDistance(model2->_vertices[j+l],model1->_vertices[i+l]);
@@ -470,7 +471,7 @@ void makeModelTopSameSize(std::vector< Angel::vec4 >& model1Vertices,std::vector
 }
 
 void applyToObjects(Object* model1, Object* model2, std::vector< Angel::vec4 > model1Vertices[],std::vector< Angel::vec3 > model1Normals[],std::vector< Angel::vec4 > model1Colors[],std::vector< Angel::vec2 > model1Textures[],std::vector< Angel::vec4 > model2Vertices[],std::vector< Angel::vec3 > model2Normals[],std::vector< Angel::vec4 > model2Colors[],std::vector< Angel::vec2 > model2Textures[],int partitionSize){
-	
+
 	model1->_vertices = model1Vertices[0];
 	model1->_normals = model1Normals[0];
 	model1->_colors = model1Colors[0];
@@ -496,7 +497,7 @@ void applyToObjects(Object* model1, Object* model2, std::vector< Angel::vec4 > m
 void splitProblemTriangles(Object* model1, Object* model2){
 	float minTriangleSizeModel1 = INFINITY;
 	float maxTriangleSizeModel1 = 0.0;
-	for(int i=0; i<model1->numberOfPoints(); i+=3){
+	for(size_t i=0; i<model1->numberOfPoints(); i+=3){
 		float size = getTriangleSize(model1->_vertices[i],model1->_vertices[i+1],model1->_vertices[i+2]);
 		if(size > maxTriangleSizeModel1){
 			maxTriangleSizeModel1 = size;
@@ -508,7 +509,7 @@ void splitProblemTriangles(Object* model1, Object* model2){
 	
 	float minTriangleSizeModel2 = INFINITY;
 	float maxTriangleSizeModel2 = 0.0;
-	for(int i=0; i<model2->numberOfPoints(); i+=3){
+	for(size_t i=0; i<model2->numberOfPoints(); i+=3){
 		float size = getTriangleSize(model2->_vertices[i],model2->_vertices[i+1],model2->_vertices[i+2]);
 		if(size > maxTriangleSizeModel2){
 			maxTriangleSizeModel2 = size;

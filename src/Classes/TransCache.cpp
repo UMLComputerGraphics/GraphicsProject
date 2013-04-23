@@ -106,6 +106,12 @@ void TransCache::push( Transformation *newTrans ) {
 
 }
 
+void TransCache::push( const Transformation &newTrans ) {
+
+  this->push( newTrans.newCopy() );
+
+}
+
 /**
  * Remove a transformation from the end.
  */

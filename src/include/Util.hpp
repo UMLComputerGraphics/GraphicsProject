@@ -33,4 +33,15 @@ namespace Util {
 
 }
 
+typedef enum DEBUG_PRINT_LEVELS {
+  PRINT_NONE,
+  PRINT_ERROR,
+  PRINT_WARNING,
+  PRINT_INFO,
+  PRINT_DEBUG,
+  PRINT_VERBOSE
+} DebugPrintLevels;
+
+void gprint( DebugPrintLevels level, const char *format, ...);
+  
 #endif /* ERIC_RULES_HPP_ */

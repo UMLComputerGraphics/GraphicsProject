@@ -10,12 +10,8 @@
  @see terrain.cpp for a fully-featured example.
  **/
 
+// The Engine!
 #include "Engine.hpp"
-/* Utilities and Common */
-#include "model.hpp"
-#include "InitShader.hpp"
-#include "glut_callbacks.h"
-#include "ObjLoader.hpp"
 
 /**
  * Initialization: load and compile shaders, initialize camera(s), load models.
@@ -24,19 +20,6 @@ void init() {
   
   // Get handles to the Scene and the Screen.
   Scene *rootScene = Engine::instance()->rootScene();
-  Screen *primScreen = Engine::instance()->mainScreen();
-  
-  // Load shaders and use the resulting shader program. 
-  GLuint gShader = Angel::InitShader( "shaders/vmorph.glsl",
-                                      "shaders/fmorph.glsl" );
-  
-  // Let the other objects know which shader to use by default.
-  rootScene->shader( gShader );
-  primScreen->_camList.shader( gShader );
-  
-  // We start with no cameras, by default. Add one and set it "active" by using next().
-  primScreen->_camList.addCamera( "Camera1" );
-  primScreen->_camList.next();
   
   // Create an object and add it to the scene with the name "bottle".
   Object *bottle = rootScene->addObject( "bottle" );
@@ -47,16 +30,11 @@ void init() {
   // Scale the bottle down!
   bottle->_trans._scale.set( 0.01 );
   
-  // _buffer the object onto the GPU. This does not happen by default,
-  // To allow you to make many changes and _buffer only once,
-  // or to _buffer changes selectively.
-  bottle->buffer();
-  
   // Object class has-a pointer to an object which is the morph target.
   // they are created and buffered as follows:
   
   // this makes a new object and links it to the source object. it returns the addr of the new obj..
-  bottle->genMorphTarget( gShader );
+  bottle->genMorphTarget();
   
   // we can get the addr of the morph object like this, also.
   Object *bottleMorphTarget = bottle->morphTarget();
@@ -65,14 +43,14 @@ void init() {
   ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle-b.obj" );
   bottleMorphTarget->_trans._scale.set( 0.01 );
   
-  // YES THIS IS THE REAL OBJECT, NOT THE TARGET. 
-  // IT SENDS THE MORPH VERTICES TO THE SHADER, NOT TO THE DRAW LIST TO BE DRAWN!
-  bottle->bufferMorphOnly();
+  // _buffer the object onto the GPU. This does not happen by default,
+  // To allow you to make many changes and _buffer only once,
+  // or to _buffer changes selectively.
+  // Buffer the bottle AND the morph. Do this AFTER loading both.
+  bottle->buffer();
   
   // Generic OpenGL setup: Enable the depth _buffer and set a nice background color.
-  glEnable( GL_DEPTH_TEST );
   glClearColor( 0.3, 0.5, 0.9, 1.0 );
-  
 }
 
 /**

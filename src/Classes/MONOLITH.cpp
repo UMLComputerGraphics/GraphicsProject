@@ -70,20 +70,13 @@ void MONOLITH::run()
     rootScene = Engine::instance()->rootScene();
     primScreen = Engine::instance()->mainScreen();
     
-    shader[0] = Angel::InitShader( "shaders/vMONOLITH.glsl",
+    shader[0] = Angel::InitShader( "shaders/vEngine.glsl",
                                   "shaders/fMONOLITH.glsl" );
-    shader[1] = Angel::InitShader( "shaders/vterrain.glsl", "shaders/ftex.glsl" );
+    shader[1] = rootScene->shader(); // Default shader we've already compiled.
     shader[2] = Angel::InitShader( "shaders/vParticle.glsl",
                                   "shaders/fFlameParticle.glsl" );
     
     tick.setTimeUniform( glGetUniformLocation( shader[1], "ftime" ) );
-    
-    // Let the other objects know which shader to use by default.
-    rootScene->shader( shader[0] );
-    
-    // We start with no cameras, by default. Add one and set it "active" by using next().
-    primScreen->_camList.addCamera( "Camera1" );
-    primScreen->_camList.next();
     
     // Create the Bottle Object handle...
     bottle = rootScene->addObject( "bottle" );
@@ -98,20 +91,11 @@ void MONOLITH::run()
             bottle->_colors[i].w = 0.4;
         }
         
-        // _buffer the object onto the GPU. This does not happen by default,
-        // To allow you to make many changes and _buffer only once,
-        // or to _buffer changes selectively.
-        bottle->buffer();
-        
         // Object class has-a pointer to an object which is the morph target.
         // they are created and buffered as follows:
         
         // this makes a new object and links it to the source object. it returns the addr of the new obj..
-        bottle->genMorphTarget( shader[0] );
-        
-        // tell the shaders to handle the bottle differently than a candle or something.
-        GLuint morphing = glGetUniformLocation( bottle->shader(), "isMorphing" );
-        glUniform1f( morphing, true );
+        bottle->genMorphTarget();
         
         // this obscure allusion to "the thong song" brought to you by Eric McCann
         GLuint sisqo = glGetUniformLocation( bottle->shader(),
@@ -136,7 +120,7 @@ void MONOLITH::run()
         // IT SENDS THE MORPH VERTICES TO THE SHADER, NOT TO THE DRAW LIST TO BE DRAWN!
         matchInitialPoints( bottle, bottleMorphTarget );
         makeModelsSameSize( bottle, bottleMorphTarget );
-        bottle->bufferMorphOnly();
+	bottle->buffer();
         bottle->propagate();
     }
     
@@ -158,7 +142,6 @@ void MONOLITH::run()
     candle->_trans._offset.set( 2.5, -min.y, 2.5 );
     //candle->propagate();
     candle->buffer();
-
     
     ps = new ParticleSystem( 10000, "ps1", shader[2] );
     ps->setLifespan(5,7.5);
