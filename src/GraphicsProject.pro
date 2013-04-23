@@ -22,6 +22,7 @@ UI_DIR =  Qt/ui/
 
 SOURCES += \
         # Classes
+	Classes/bipartiteGraph.cpp\
         Classes/Camera.cpp \
         Classes/Cameras.cpp \
         Classes/Engine.cpp \
@@ -30,7 +31,9 @@ SOURCES += \
         Classes/meshMapping.cpp \
         Classes/Object.cpp \
         Classes/Particle.cpp \
+	Classes/ParticleFieldFunctions.cpp \
         Classes/ParticleSystem.cpp \
+	Classes/scaleModel.cpp \
         Classes/Scene.cpp \
         Classes/Screen.cpp \
         Classes/SpelchkCamera.cpp \
@@ -68,8 +71,11 @@ HEADERS  += include/Camera.hpp \
             include/ObjLoader.hpp \
             include/OpenGL.h \ 
             include/Particle.hpp \
+	    include/ParticleFieldFunctions.hpp\
             include/ParticleSystem.hpp \
+	    include/partTest.hpp\
             include/platform.h \ 
+            include/scaleModel.hpp \
             include/Scene.hpp \ 
             include/Screen.hpp \ 
             include/SpelchkCamera.hpp \
@@ -81,6 +87,7 @@ HEADERS  += include/Camera.hpp \
             include/Util.hpp \ 
             include/vec.hpp \ 
             include/WiiUtil.h \
+	    include/bipartiteGraph.hpp \
             # QT Stuff >(^_^)>
             include/mainwindow.h \
             include/MONOLITH.hpp
