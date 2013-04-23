@@ -45,7 +45,7 @@ MainWindow::MainWindow(QWidget *parent) :
     mainLayoutBox->addWidget(box3);
 
     lab = new QLabel();
-    lab->setText("TESTING");
+    lab->setText("100");
     lab2 = new QLabel();
     lab2->setText("TESTING2");
     lab3 = new QLabel();
@@ -66,7 +66,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     slider = new QSlider(Qt::Horizontal);
-    slider->setRange(0, 10);
+    slider->setRange(0, 100);
     QSlider *slider2 = new QSlider(Qt::Horizontal);
     slider2->setRange(0, 100);
     QSlider *slider3 = new QSlider(Qt::Horizontal);

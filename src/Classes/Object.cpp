@@ -84,7 +84,7 @@ Object::Object( const std::string &name, GLuint gShader ) {
   _numTextures = 0;
 
   // Linear Interpolation Demo: Morph Percentage
-  _morphPercentage = 1.0;
+  _morphPercentage = 0.0;
 
   // Pointer to an Object to Morph to.
   _morphTarget = NULL;
@@ -155,37 +155,34 @@ Object::~Object( void ) {
 }
 
 /**
- * draw method: Render this object to the screen _buffer.
+ * Draw Preparation: Make preparations to draw,
+ * but do not actually draw yet.
  */
-void Object::draw( void ) {
-  
-  glBindVertexArray( _vao );
-  
+void Object::drawPrep( void ) {
+
   // Check to see if the correct shader program is engaged.
-  GLint currShader;
-  glGetIntegerv( GL_CURRENT_PROGRAM, &currShader );
-  if ( (GLuint) currShader != shader() ) {
-    
-    Camera *activeCamera = Engine::instance()->cams()->active();
-    
-    //if (DEBUG) std::cerr << "Switching shading context.\n";
-    
-    // Set OpenGL to use this object's shader.
-    glUseProgram( shader() );
-    
-    // Set the Active Camera's shader to the Object's shader.
-    activeCamera->shader( shader() );
-    
-    // send the Camera's info to the new shader.
-    activeCamera->view();
+  GLuint currShader = Engine::instance()->currentShader();
+  if (currShader != shader()) {
+    gprint( PRINT_VERBOSE, "Object %s requesting switchShader from %d to %d\n",
+            _name.c_str(), currShader, shader() );
+    Engine::instance()->switchShader( shader() );
   }
+
+  glBindVertexArray( _vao );
 
   send( Object::IS_TEXTURED );
   send( Object::OBJECT_CTM );
   send( Object::MORPH_PCT );
   send( Object::TEX_SAMPLER );
   
-  //  this->morphPercentage() == -1.0 ? ; : send( Object::MORPH_PCT );
+}
+
+/**
+ * draw method: Render this object to the screen _buffer.
+ */
+void Object::draw( void ) {
+
+  drawPrep();
   
   /* Are we using a draw order? */
   if ( _indices.size() > 1 ) glDrawElements( _drawMode, _indices.size(),
@@ -200,59 +197,68 @@ void Object::draw( void ) {
   
 }
 
+
+inline void disableIfEnabled( GLint index ) {
+  if (index != -1) 
+    glDisableVertexAttribArray( index );
+}
+
 /**
  * buffer all of our data: Vertices, TexUVs, Normals,
  * Indices, Colors and Morph Buffers.
  */
-void Object::buffer( void ) {
+void Object::buffer( GLenum usage ) {
   
   glBindVertexArray( _vao );
   
   glBindBuffer( GL_ARRAY_BUFFER, _buffer[VERTICES] );
   glBufferData( GL_ARRAY_BUFFER, sizeof(Angel::vec4) * _vertices.size(),
-                &(_vertices[0]), GL_STATIC_DRAW );
+                &(_vertices[0]), usage );
   
   glBindBuffer( GL_ARRAY_BUFFER, _buffer[NORMALS] );
   glBufferData( GL_ARRAY_BUFFER, sizeof(Angel::vec3) * _normals.size(),
-                &(_normals[0]), GL_STATIC_DRAW );
+                &(_normals[0]), usage );
   
   if (_texUVs.size() == 0) {
     // Disable Textures ...
     _isTextured = false;
-    if ( _attribIndex[TEXCOORDS] != -1 )
-      glDisableVertexAttribArray( _attribIndex[ TEXCOORDS ] );
+    disableIfEnabled( _attribIndex[ TEXCOORDS ] );
 
     // Enable Colors.
     glBindBuffer( GL_ARRAY_BUFFER, _buffer[COLORS] );
     glBufferData( GL_ARRAY_BUFFER, sizeof(Angel::vec4) * _colors.size(),
-		  &(_colors[0]), GL_STATIC_DRAW );
+		  &(_colors[0]), usage );
   } else {
     // Enable Textures ...
     _isTextured = true;
     glBindBuffer( GL_ARRAY_BUFFER, _buffer[TEXCOORDS] );
     glBufferData( GL_ARRAY_BUFFER, sizeof(Angel::vec2) * _texUVs.size(),
-		  (_texUVs.size() ? &(_texUVs[0]) : NULL), GL_STATIC_DRAW );
+		  (_texUVs.size() ? &(_texUVs[0]) : NULL), usage );
 
     // Disable Colors.
-    if (_attribIndex[COLORS] != -1)
-      glDisableVertexAttribArray( _attribIndex[ COLORS ] );
+    disableIfEnabled( _attribIndex[ COLORS ] );
+    fprintf( stderr, "Disabled colors for %s\n", _name.c_str() );
   }
   
-  /* Without the following workaround code,
-   Mac OSX will segfault attempting to access
-   the texcoordinate buffers on nontextured objects. */
-  //  if ( _texUVs.size() == 0 && _isTextured == false ) {
-  //  _texUVs.push_back( Angel::vec2( -1, -1 ) );
-  //} else if ( _texUVs.size() > 1 ) {
-    /* Yes, this workaround prevents us from having
-     textured objects with only one point.
-     Oops. */
-  //  _isTextured = true;
-  // }
-  
+  if (_morphTarget == NULL) {
+    disableIfEnabled( _attribIndex[ VERTICES_MORPH ] );
+    disableIfEnabled( _attribIndex[ NORMALS_MORPH ] );
+    disableIfEnabled( _attribIndex[ COLORS_MORPH ] );
+
+    // Note: We disable the Morph buffers if they are not
+    // being used, however, the 'glVertexAttrib*' method
+    // of specifying a "default" value in this case is
+    // apparently not well supported in glsl 1.2 and/or intel OpenGL.
+    // In this case, the value of these attributes
+    // on the shader is 'undefined.'
+
+  } else {
+    bufferMorphOnly( usage );
+  }
+
   glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, _buffer[INDICES] );
   glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * _indices.size(),
-                &(_indices[0]), GL_STATIC_DRAW );
+                &(_indices[0]), usage );
   
   glBindVertexArray( 0 );
   
@@ -261,24 +267,24 @@ void Object::buffer( void ) {
 /**
  * buffer only the Morph-related buffers.
  */
-void Object::bufferMorphOnly( void ) {
+void Object::bufferMorphOnly( GLenum usage ) {
   
   glBindVertexArray( _vao );
   
   glBindBuffer( GL_ARRAY_BUFFER, _buffer[VERTICES_MORPH] );
   glBufferData( GL_ARRAY_BUFFER,
                 sizeof(Angel::vec4) * morphTarget()->_vertices.size(),
-                &(morphTarget()->_vertices[0]), GL_STATIC_DRAW );
+                &(morphTarget()->_vertices[0]), usage );
   
   glBindBuffer( GL_ARRAY_BUFFER, _buffer[NORMALS_MORPH] );
   glBufferData( GL_ARRAY_BUFFER,
                 sizeof(Angel::vec3) * morphTarget()->_normals.size(),
-                &(morphTarget()->_normals[0]), GL_STATIC_DRAW );
+                &(morphTarget()->_normals[0]), usage );
   
   glBindBuffer( GL_ARRAY_BUFFER, _buffer[COLORS_MORPH] );
   glBufferData( GL_ARRAY_BUFFER,
                 sizeof(Angel::vec4) * morphTarget()->_colors.size(),
-                &(morphTarget()->_colors[0]), GL_STATIC_DRAW );
+                &(morphTarget()->_colors[0]), usage );
   
   // #MORPH
   // TODO: MORPH TEXTURES AND INDICIES
@@ -336,6 +342,12 @@ const std::string &Object::name( void ) const {
  */
 void Object::link( UniformEnum which, const std::string &name ) {
   
+  // TODO: FIXME: GROSS: HACK: This might not work,
+  // Depending on when it is called ...
+  GLint aShader = Engine::instance()->currentShader();
+  // The previous behavior was:
+  // aShader = shader();
+
   if ( which >= _handles.size() ) {
     fprintf(
         stderr,
@@ -352,13 +364,13 @@ void Object::link( UniformEnum which, const std::string &name ) {
              name.c_str(), this->_name.c_str() );
   
 
-  if (shader() == 0) {
+  if (aShader == 0) {
     if (DEBUG) fprintf( stderr, "Skipping link: [%s][%s]: No shader set.\n",
                         _name.c_str(), name.c_str() );
     return;
   }
 
-  _handles[which] = glGetUniformLocation( shader(), name.c_str() );
+  _handles[which] = glGetUniformLocation( aShader, name.c_str() );
   if (glGetError()) {
     fprintf( stderr, "ERROR: [%s] failed to call glGetUniformLocation( %u, %s );\n",
     _name.c_str(), shader(), name.c_str() );
@@ -376,6 +388,11 @@ void Object::link( UniformEnum which, const std::string &name ) {
  */
 void Object::send( Object::UniformEnum which ) {
 
+  if (glGetError()) {
+    fprintf( stderr, "ERROR: glGetError() returning true prior to exec of send() ...\n" );
+    exit( 255 );
+  }
+
   if (shader() == 0) {
     fprintf( stderr, "Warning: Object::send() for [%s][%u] called with no shader.\n", _name.c_str(), which );
     return;
@@ -389,7 +406,7 @@ void Object::send( Object::UniformEnum which ) {
     
   case Object::OBJECT_CTM:
     glUniformMatrix4fv( _handles[Object::OBJECT_CTM], 1, GL_TRUE,
-                        this->_trans.otm() );
+                        _trans.otm() );
     break;
     
   case Object::MORPH_PCT:
@@ -444,14 +461,21 @@ void Object::shader( GLuint newShader ) {
   Scene::shader( newShader );
   
   // We have to use the program to query the glUniform locations.
-  glUseProgram( newShader );
+  Engine::instance()->switchShader( newShader );
   
+  relinkUniforms();
+
+}
+
+/**
+ * TODO: FIXME: GROSS BAD UGH
+ */
+void Object::relinkUniforms( void ) {
   // Re-link our Uniforms to this shader.
   UniformMap::iterator it;
   for ( it = _uniformMap.begin(); it != _uniformMap.end(); ++it ) {
     link( it->first, it->second );
   }
-  
 }
 
 /**
@@ -538,6 +562,10 @@ Object* Object::morphTarget( void ) const {
  */
 Object* Object::genMorphTarget( GLuint shader ) {
   
+  // If the user declines to specify a shader,
+  // Use whichever one we're using.
+  if (shader == 0) shader = this->shader();
+
   Object *obj = new Object( this->_name + "_morph", shader );
   _morphTarget = obj;
   return obj;
@@ -577,7 +605,7 @@ void Object::destroyMorphTarget( void ) {
  * Retrieve the number of _vertices this object has.
  * @return An integer representing the number of vertices the object has.
  */
-int Object::numberOfPoints( void ) {
+size_t Object::numberOfPoints( void ) {
   return _vertices.size();
 }
 

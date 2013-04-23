@@ -9,6 +9,7 @@
 #include <cmath>
 #include <vector>
 #include <stdexcept>
+#include "Engine.hpp"
 #include "Camera.hpp"
 #include "Cameras.hpp"
 #include "globals.h"
@@ -18,6 +19,7 @@
  */
 Cameras::Cameras( void ) {
   _size = Angel::vec2( 0, 0 );
+  _horizDivision = true;
 }
 
 /**
@@ -184,27 +186,70 @@ void Cameras::calculateViewports( void ) {
           ((int) (numCameras - (numRows * numMaxCols))
            / (int) (numMinCols - numMaxCols)) :
           0;
-  
+
+  /*
+    At this point, numMaxCols represents the highest number of columns we'll see in any row,
+    and numMinCols represents the lowest number of columns we'll see in any row.
+
+    drawMinRows tells us how many rows will have numMinCols number of columns.
+
+    e.g, for three cameras,
+    numRows will be 2.
+
+    numMinCols will be 1,
+    numMaxCols will be 2,
+
+    drawMinRows will be 1.
+
+    This means that 1 row will be drawn with one column,
+    and the remaining row will be drawn with two columns.
+
+    For a vertical split strategy,
+    we say:
+    One column will be drawn with one row,
+    One column will be drawn with two rows.
+  */
+
   std::list< Object * >::iterator it = _list.begin();
+  size_t allocHeight, allocWidth;
+  allocHeight = allocWidth = 0;
   
   /* This is confusing as hell. Good luck! */
-  for ( size_t allocHeight = 0, row = 0; (row < numRows) || (it != _list.end());
+  for ( size_t row = 0; (row < numRows) && (it != _list.end());
       ++row ) {
     size_t myWidth;
     size_t myHeight;
-    size_t allocWidth = 0;
     size_t colsThisRow = (row < drawMinRows) ? numMinCols : numMaxCols;
+    if (_horizDivision) allocWidth = 0;
+    else allocHeight = 0;
+
+
     if ( 0 )
       fprintf( stderr, "Row: %lu; Columns this row: %lu\n", row, colsThisRow );
     
     for ( size_t col = 0; col < colsThisRow; ++col, ++it ) {
-      // Is this the last column? Use the remaining width.
-      if ( col + 1 == colsThisRow ) myWidth = (Width) - allocWidth;
-      else myWidth = (Width) / colsThisRow;
-      // Is this the last row? Use the remaining height.
-      if ( row + 1 == numRows ) myHeight = (Height) - allocHeight;
-      else myHeight = (Height) / numRows;
-      
+      if (_horizDivision) {
+	// Is this the last column? Use the remaining width.
+	if ( col + 1 == colsThisRow ) myWidth = (Width) - allocWidth;
+	else myWidth = (Width) / colsThisRow;
+	// Is this the last row? Use the remaining height.
+	if ( row + 1 == numRows ) myHeight = (Height) - allocHeight;
+	else myHeight = (Height) / numRows;
+      } 
+      else {
+	// The variable names become confusing, here;
+	// Just know that we're dividing vertically instead of horizontally,
+	// So rows and columns become reversed.
+	if ( col + 1 == colsThisRow ) { myHeight = Height - allocHeight; }
+	else { myHeight = Height / colsThisRow; }
+	if ( row + 1 == numRows ) { myWidth = (Width - allocWidth); }
+	else { myWidth = Width / numRows; }
+
+	//fprintf( stderr, "myHeight: %d; myWidth: %d; numRows: %d; row: %d; "
+	//	 "col: %d; colsThisRow: %d; Height: %d; Width: %d\n",
+	//	 myHeight, myWidth, numRows, row, col, colsThisRow, Height, Width );
+      }
+
       // Tell this camera his new viewport.
       // height looks a little goofy because we are allocating height
       // from the top of the coordinate system and working down,
@@ -212,15 +257,18 @@ void Cameras::calculateViewports( void ) {
       obj2Cam( it )->viewport( allocWidth,
                                ((Height) - (allocHeight + myHeight)), myWidth,
                                myHeight );
+
       if ( 0 )
         fprintf( stderr, "Camera: (%lu x %lu) @ (%lu,%lu)\n", myWidth, myHeight,
                  allocWidth, ((Height) - (allocHeight + myHeight)) );
       
       // Increment our allocated width counter.
-      allocWidth += myWidth;
+      if (_horizDivision) allocWidth += myWidth;
+      else allocHeight += myHeight;
     }
     // Increment our allocated height counter.
-    allocHeight += ((Height) / numRows);
+    if (_horizDivision) allocHeight += ((Height) / numRows);
+    else allocWidth += ((Width) / numRows);
   }
 }
 
@@ -236,7 +284,10 @@ void Cameras::calculateViewports( void ) {
 void Cameras::view( void (*draw_func)( void ) ) {
   std::list< Object* >::iterator it;
   for ( it = _list.begin(); it != _list.end(); ++it ) {
-    obj2Cam( it )->view();
+    // Tell the Engine we're using a different camera, now.
+    Engine::instance()->switchCamera(obj2Cam(it));
+    // Draw this Screen, Viewport, Window, (whichever)
+    // Using the supplied callback.
     (*draw_func)();
   }
 }
@@ -252,4 +303,14 @@ void Cameras::view( void (*draw_func)( void ) ) {
  */
 Camera *Cameras::obj2Cam( std::list< Object* >::iterator &it ) {
   return dynamic_cast< Camera* >( *it );
+}
+
+/**
+ * toggleDivision changes whatever the
+ * screen division approach is to the other --
+ * either Vertical first or Horizontal first.
+ * The default constructor style is Horizontal.
+ */
+void Cameras::toggleDivision( void ) {
+  _horizDivision = !_horizDivision;
 }

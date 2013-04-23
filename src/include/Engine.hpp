@@ -46,10 +46,10 @@ typedef std::map< std::string, bool > SettingsMap;
  * clog up global namespace.
  */
 class Engine {
-    
+  
 public:
-    
-    /**
+  
+  /**
      * instance returns, or creates and then returns,
      * a pointer to the Engine object.
      * All hail the singleton!
@@ -121,7 +121,13 @@ public:
     
     void registerIdle( void (idleFunc)( void ) );
     void callIdle( void );
+
+  GLuint currentShader( void ) const;
+  void switchShader( GLint program );
     
+  Camera *currentCamera( void ) const;
+  void switchCamera( Camera *camera );
+
     /**
      * Default, non-virtual destructor.
      */
@@ -130,20 +136,45 @@ public:
 
 private:
     
-    /**
-     * static, stateful variable that is our singleton pointer.
-     */
-    static Engine *_engineSingleton;
-    
-    static void idle( void );
-    static void displayScreen( void );
-    static void displayViewport( void );
-    
-    // Engine's main components
-    /**
-     * The root Scene graph for the Engine.
-     */
-    Scene _scene;
+  /**
+   * The Engine's main idle function.
+   * Remains a static function so its type matches
+   * the signature expected by glut.
+   */
+  static void idle( void );
+
+  /**
+   * The Engine's main display function.
+   * Remains a static function so its type matches
+   * the signature expected by glut.
+   */
+  static void displayScreen( void );
+  
+  /**
+   * The Engine's viewport display function.
+   * Remains a static function so its type matches
+   * the signature expected by glut.
+   */
+  static void displayViewport( void );
+
+  /**
+   * This private data member is a callback
+   * for a user-supplied idle function.
+   * It is called every time GLUT otherwise calls
+   * the Engine's idle callback.
+   */
+  void ( *_idleFunc )();
+
+  /**
+   * static, stateful variable that is our singleton pointer.
+   */
+  static Engine *_engineSingleton;
+  
+  // Engine's main components
+  /**
+   * The root Scene graph for the Engine.
+   */
+  Scene _scene;
     
     /**
      * The core "Screen" object for the Engine.
@@ -164,8 +195,23 @@ private:
      */
     TextureManagement _texMan;
     
-    void ( *_idleFunc )();
-    
+    /**
+     * Because Cameras possess physical state (If they want,)
+     * The shader attached to a Camera should not be regarded
+     * as the "Current Program" but rather its "Desired Program."
+     * To fill that void, then, I present to you:
+     * An Engine-wide "Current Program" attribute.
+     * God Bless.
+     */
+    GLint _currentShader;
+
+    /**
+     * Which camera is rendering right now?
+     * This variable saves a pointer to whichever
+     * Camera is actively rendering at the moment.
+     */
+    Camera *_renderingCamera;
+
     // Singleton Enforcement
     /**
      * Default constructor. Cannot be called, this is a singleton class.

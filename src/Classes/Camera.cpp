@@ -14,6 +14,7 @@
 #include "Camera.hpp"
 #include "globals.h" //Math constants and macros (SQRT2, POW5)
 #include "Timer.hpp" //Global timer to sync with framerate.
+#include "Util.hpp"
 using namespace Angel;
 
 void Camera::commonInit( void ) {

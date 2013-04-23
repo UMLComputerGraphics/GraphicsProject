@@ -15,11 +15,6 @@
 #include <time.h>
 // Multi-platform support and OpenGL headers
 #include "Engine.hpp"
-// Utilities
-#include "model.hpp"
-#include "InitShader.hpp"
-#include "glut_callbacks.h"
-#include "ObjLoader.hpp"
 
 // Wii Connectivity 
 #ifdef WII
@@ -65,18 +60,15 @@ void init() {
   Screen *myScreen = Engine::instance()->mainScreen();
   
   // Load the shaders.
-  GLuint gShader = Angel::InitShader( "shaders/vterrain.glsl",
+  GLuint gShader = Angel::InitShader( "shaders/vEngine.glsl",
                                       "shaders/fTerrainTex.glsl" );
-  // Initialize engine setting: Enable "fixed yaw"... disable free-Y _rotation.
-  Engine::instance()->opt( "fixed_yaw", true );
   
   // Give the shader handle to the Scene Graph and the Camera List.
   theScene->shader( gShader );
   myScreen->_camList.shader( gShader );
   
-  // Cameras must be added after setting a shader.
-  myScreen->_camList.addCamera( "Camera1" );
-  myScreen->_camList.next();
+  // Activate "Vertical Division"
+  myScreen->_camList.toggleDivision();
   
   /*
    NOTE:
@@ -90,8 +82,7 @@ void init() {
 
   // Let's create some objects.
   Object *terrain = theScene->addObject( "terrain" );
-  glUseProgram( gShader );
-
+  
   terrain->texture( "../Textures/GoodTextures_0013423.jpg" ); // Dirt/Mud
   terrain->texture( "../Textures/GoodTextures_0013779.jpg" ); // Sand
   terrain->texture( "../Textures/GrassGreenTexture0002.jpg" ); // Grass
@@ -172,7 +163,6 @@ void init() {
   agua->buffer();
   agua->drawMode( GL_TRIANGLES );
   
-  glEnable( GL_DEPTH_TEST );
   glClearColor( 0.3, 0.5, 0.9, 1.0 );
   
   //Attach a model to the Camera.
@@ -185,17 +175,17 @@ void init() {
   cam->_trans._scale.set( 0.05 );
   cam->_trans._preRotation.rotateY( 180 );
   cam->propagateOLD();
-
-  /*
-  Object *rcam = cam->addObject( "right-cam" );
-  ObjLoader::loadModelFromFile( rcam, "../models/rainbow_dashT.obj" );
-  rcam->buffer();
-  rcam->drawMode( GL_TRIANGLES );
-  rcam->_trans._offset.set( 10, 0, 0 );
-  cam->propagateOLD();
-  rcam->propagateOLD();
-  */
   
+  /*
+   Object *rcam = cam->addObject( "right-cam" );
+   ObjLoader::loadModelFromFile( rcam, "../models/rainbow_dashT.obj" );
+   rcam->buffer();
+   rcam->drawMode( GL_TRIANGLES );
+   rcam->_trans._offset.set( 10, 0, 0 );
+   cam->propagateOLD();
+   rcam->propagateOLD();
+   */
+
   // Add the propagateOLD method to the Scene Graph directly, instead of this:
   // Note: Terrain doesn't/shouldn't have children ...
   terrain->propagateOLD();
@@ -249,7 +239,7 @@ void TerrainGenerationAnimation( TransCache &obj ) {
   
   case SHRINKING:
     obj._scale.set( 1.0,
-                    ((1.0 + cos( CurrentScale * DEGREES_TO_RADIANS )) / 2.0),
+                    ((1.0 + cos( CurrentScale * DEGREES_TO_RADIANS)) / 2.0),
                     1.0 );
     
     CurrentScale += 1.0 * tick.scale();
@@ -267,7 +257,7 @@ void TerrainGenerationAnimation( TransCache &obj ) {
     
   case GROWING:
     obj._scale.set( 1.0,
-                    ((1.0 + cos( CurrentScale * DEGREES_TO_RADIANS )) / 2.0),
+                    ((1.0 + cos( CurrentScale * DEGREES_TO_RADIANS)) / 2.0),
                     1.0 );
     
     CurrentScale += 1.0 * tick.scale();
@@ -346,7 +336,7 @@ void simpleRotateAnim( TransCache &obj ) {
 void animationTest( TransCache &obj ) {
   double timeScale = tick.scale();
   double theta = timeScale * 0.1;
-  if ( 0 ) fprintf( stderr, "Timescale: %f\n", timeScale );
+  gprint( PRINT_VERBOSE, "Timescale: %f\n", timeScale );
   
   //Object increasingly grows. 
   /* Note that, Scaling Adjustment, unlike Rotation and Translation,
@@ -386,7 +376,7 @@ float ticker = 0.0;
 void terrain_idle( void ) {
   
   Scene &theScene = (*Engine::instance()->rootScene());
-
+  
   Object &Terrain = *(theScene["terrain"]);
   Object &Pyramid = *(theScene["pyramid"]);
   Pyramid.animation( animationTest );
@@ -400,7 +390,8 @@ void terrain_idle( void ) {
   Spy.animation( simpleRotateY );
   
   if ( Engine::instance()->opt( "terrain_regen" ) ) {
-    fprintf( stderr, "terrain_regen on, turning on switchingTerrain bool\n" );
+    gprint( PRINT_INFO,
+            "terrain_regen on, turning on switchingTerrain bool\n" );
     switchingTerrain = true;
     Engine::instance()->opt( "terrain_regen", false );
   }
@@ -431,7 +422,7 @@ void terrain_idle( void ) {
 
   }
 #endif
-
+  
 }
 
 //--------------------------------------------------------------------
@@ -480,8 +471,8 @@ int main( int argc, char **argv ) {
   glutSetMenu( menu );
   glutAddMenuEntry( "Randomize Terrain", 0 );
   glutAddMenuEntry( "Toggle Free Rotation", 1 );
-  glutAttachMenu( GLUT_RIGHT_BUTTON );  
-
+  glutAttachMenu( GLUT_RIGHT_BUTTON );
+  
   /* PULL THE TRIGGER */
   glutMainLoop();
   return EXIT_SUCCESS;

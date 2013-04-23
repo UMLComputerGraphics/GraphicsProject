@@ -37,19 +37,18 @@ public:
   Angel::mat4 operator*( const Angel::mat4 &rhs ) const;
   Angel::mat4 operator*( const Transformation &rhs ) const;
 
-  virtual Angel::mat4 inverse( void ) const = 0;
-  virtual Transformation::Subtype type( void ) const = 0;
-
-  // Generic combination of two (similar) transformations. No optimizations.
   void combine( Transformation *rhs );
-  // Mandatory overload which optimizes specific transformation combinations.
-  virtual void coalesce( Transformation *rhs ) = 0;
   void reset( void );
 
   bool inheritable( void ) const;
   void markNew( void );
   void markOld( void );
   bool isNew( void );
+
+  virtual Angel::mat4 inverse( void ) const = 0;
+  virtual Transformation::Subtype type( void ) const = 0;
+  virtual void coalesce( Transformation *rhs ) = 0;
+  virtual Transformation *newCopy( void ) const = 0;
 
 protected:
   bool _inheritable;
@@ -71,9 +70,11 @@ public:
   const RotMat &rotateY( const GLfloat theta, bool postmult = true );
   const RotMat &rotateZ( const GLfloat theta, bool postmult = true );
   const RotMat &adjust( const Angel::mat4 &Adjustment, bool postmult = true );
+
   virtual Angel::mat4 inverse( void ) const;
   virtual Transformation::Subtype type( void ) const;
-  void coalesce( Transformation *rhs );
+  virtual void coalesce( Transformation *rhs );
+  virtual Transformation *newCopy( void ) const;
 
 };
 
@@ -92,10 +93,12 @@ public:
 
   const TransMat &delta( const float x, const float y, const float z );
   const TransMat &delta( const Angel::vec3 &arg );
+
   virtual Angel::mat4 inverse( void ) const;
   virtual Transformation::Subtype type( void ) const;
+  virtual void coalesce( Transformation *rhs );
+  virtual Transformation *newCopy( void ) const;
 
-  void coalesce( Transformation *rhs );
 };
 
 class ScaleMat : public Transformation {
@@ -107,10 +110,11 @@ public:
 
   const ScaleMat &adjust( const float x, const float y, const float z );
   const ScaleMat &adjust( const float pct );
+
   virtual Angel::mat4 inverse( void ) const;
-  virtual Transformation::Subtype type( void ) const;
-  
-  void coalesce( Transformation *rhs );
+  virtual Transformation::Subtype type( void ) const;  
+  virtual void coalesce( Transformation *rhs );
+  virtual Transformation *newCopy( void ) const; 
 };
 
 #endif

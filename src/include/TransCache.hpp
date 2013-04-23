@@ -48,7 +48,7 @@ public:
 
   void ptm( const Angel::mat4 &ptm_in ); // Set new Parent Transform.
 
-  void push( Transformation *newTrans ); // Add New Transformation
+  void push( const Transformation &newTrans );
   void pop( void );                      // Remove Transformation
   void clear( void );                    // Clear all Transformations
   void rebuild( void );                  // Recalculate Cache
@@ -63,6 +63,8 @@ public:
   unsigned size( void ) const;
 
 private:
+
+  void push( Transformation *newTrans ); // Add New Transformation
   
   // Cached Result Matrices
   Angel::mat4 _ptm; /* Parent's Cumulative Transformation Matrix */

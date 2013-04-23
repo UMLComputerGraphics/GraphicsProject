@@ -23,46 +23,25 @@ const char *modelname;
  */
 void init() {
   
-  GLuint shader[2];
-  Cameras *camList = Engine::instance()->cams();
   Scene *rootScene = Engine::instance()->rootScene();
   
-  shader[0] = Angel::InitShader( "shaders/vterrain.glsl", "shaders/ftex.glsl" );
-  
-  camList->addCamera( "Camera1" );
-  camList->next();
-  
-  // Setting a default and adding objects without:
-  rootScene->shader( shader[0] );
-
   Object *model = rootScene->addObject( "Arbitrary Model" );
   ObjLoader::loadModelFromFile( model, modelname );
-
+  
   vec4 min = model->getMin();
   vec4 max = model->getMax();
-  fprintf( stderr, "Min: (%f,%f,%f)\nMax: (%f,%f,%f)\n", 
-	   min.x, min.y, min.z,
-	   max.x, max.y, max.z );
+  gprint( PRINT_DEBUG, "Min: (%f,%f,%f)\nMax: (%f,%f,%f)\n", min.x, min.y,
+          min.z, max.x, max.y, max.z );
   model->_trans._offset.set( 0, -min.y, 0 );
   model->propagateOLD();
   model->buffer();
-
+  
   Object *floor = rootScene->addObject( "floor" );
-  quad( floor, 
-	vec4( -10, 0, 10, 1.0 ), vec4( -10, 0, -10, 1.0),
-	 vec4( 10, 0, -10, 1.0 ),vec4( 10, 0, 10, 1.0 ),
-	vec4( 0.4, 0.4, 0.4, 0.9 ) );
+  quad( floor, vec4( -10, 0, 10, 1.0 ), vec4( -10, 0, -10, 1.0 ),
+        vec4( 10, 0, -10, 1.0 ), vec4( 10, 0, 10, 1.0 ),
+        vec4( 0.4, 0.4, 0.4, 0.9 ) );
   floor->buffer();
-
-  glEnable( GL_DEPTH_TEST );
-  glClearColor( 0, 0, 0, 1.0 );
-}
-
-/**
- * Cleans up our scene graph.
- */
-void cleanup( void ) {
-  //Engine::instance()->rootScene()->DestroyObject();
+  
 }
 
 //--------------------------------------------------------------------
@@ -78,12 +57,12 @@ void cleanup( void ) {
  */
 int main( int argc, char **argv ) {
   
-  if (argc > 1) modelname = argv[1];
+  if ( argc > 1 ) modelname = argv[1];
   else modelname = "../models/candle.obj";
-
+  
   Engine::init( &argc, argv, "Model Demonstration" );
   init();
-
+  
   /* PULL THE TRIGGER */
   glutMainLoop();
   return EXIT_SUCCESS;

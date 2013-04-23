@@ -23,7 +23,7 @@ int findTriangleWithMinimumDistance( Object* largerModel, Object* smallerModel,
                                      int index ) {
   int minIndex = -1;
   float minDistance = INFINITY;
-  for ( int i = 0; i < smallerModel->numberOfPoints(); i += 3 ) {
+  for ( size_t i = 0; i < smallerModel->numberOfPoints(); i += 3 ) {
     float distance = 0.0;
     for ( int j = 0; j < 3; j++ ) {
       distance += threeDimensionalDistance( smallerModel->_vertices[i + j],
@@ -59,6 +59,24 @@ vec4 findCenter(vec4 point1, vec4 point2, vec4 point3){
 	z = (point1.z + point2.z + point3.z)/3;
 	w = (point1.w + point2.w + point3.w)/3;
 	return vec4(x,y,z,w);
+}
+
+void findOptimalOrientation(vec4 a, vec4 b, vec4 c, vec4 d, vec4 e, vec4 f, vec4& point1, vec4& point2, vec4& point3){
+	//abc
+	float distance1 = threeDimensionalDistance(a,d)+threeDimensionalDistance(b,e)+threeDimensionalDistance(c,f);
+	//bca
+	float distance4 = threeDimensionalDistance(b,d)+threeDimensionalDistance(c,e)+threeDimensionalDistance(a,f);
+	//cab
+	float distance5 = threeDimensionalDistance(c,d)+threeDimensionalDistance(a,e)+threeDimensionalDistance(b,f);
+	float distances[] = {distance1,distance4,distance5};
+	float minimum = *std::min_element(distances,distances+3);	
+	if(minimum==distance1){
+		point1=a;point2=b;point3=c;return;
+	}else if(minimum==distance4){
+		point1=b;point2=c;point3=a;return;
+	}else{
+		point1=c;point2=a;point3=b;return;
+	}
 }
 
 void findOptimalOrientation(vec4 a, vec4 b, vec4 c, std::vector< Angel::vec4 > model, int index, vec4& point1, vec4& point2, vec4& point3){
@@ -157,7 +175,7 @@ int findTriangleWithMinimumDistanceFromCenter(Object* largerModel, Object* small
   int minIndex = -1;
   float minDistance = INFINITY;
 
-		for(int i=0; i<smallerModel->numberOfPoints();i+= 3){
+		for(size_t i=0; i<smallerModel->numberOfPoints();i+= 3){
 			float distance = 0.0;
 			for(int l=0; l<3; l++){
 				distance += threeDimensionalDistanceWithOrigin(largerModel->_vertices[index+l],smallerModel->_vertices[i+l]);
@@ -202,19 +220,18 @@ void makeModelsSameSize(Object* model1, Object* model2){
 
 void matchInitialPoints(Object* model1, Object* model2){
 	if(model1->numberOfPoints()>model2->numberOfPoints()){
-		for(int i=0; i<model2->numberOfPoints();i+=3){
+		for(size_t i=0; i<model2->numberOfPoints();i+=3){
 			int matchIndex = 0;
 			float minDistance = INFINITY;
-			for(int j=0; j<model1->numberOfPoints();j+=3){
-				float distance = 0.0;
-				for(int l=0; l<3; l++){
-					distance += threeDimensionalDistance(model1->_vertices[j+l],model2->_vertices[i+l]);
-				}
+			for(size_t j=0; j<model1->numberOfPoints();j+=3){
+				//float distance = 0.0;
+				//for(int l=0; l<3; l++){
+				//	distance += threeDimensionalDistance(model1->_vertices[j+l],model2->_vertices[i+l]);
+				//}
 				//float distance = threeDimensionalDistanceFromCenter(findCenter(model1->_vertices[j],model1->_vertices[j+1],model1->_vertices[j+2]),findCenter(model2->_vertices[i],model2->_vertices[i+1],model2->_vertices[i+2]));
-				//vec4 point1,point2,point3;
-				//findOptimalOrientation(model2->_vertices[i],model2->_vertices[i+1],model2->_vertices[i+2],model1, j, point1, point2, point3);
-				//float distance = threeDimensionalDistance(point1,model1->_vertices[j])+threeDimensionalDistance(point2,model1->_vertices[j+1])+threeDimensionalDistance(point3,model1->_vertices[j+2]);
-	
+				vec4 point1,point2,point3;
+				findOptimalOrientation(model2->_vertices[i],model2->_vertices[i+1],model2->_vertices[i+2],model1, j, point1, point2, point3);
+				float distance = threeDimensionalDistance(point1,model1->_vertices[j])+threeDimensionalDistance(point2,model1->_vertices[j+1])+threeDimensionalDistance(point3,model1->_vertices[j+2]);
 				
 				if(distance<minDistance){
 					matchIndex = j;
@@ -235,19 +252,20 @@ void matchInitialPoints(Object* model1, Object* model2){
 		}
 	}else{
 		//int correctlyMatchedPoints = 0;
-		for(int i=0; i<model1->numberOfPoints();i+=3){
+		for(size_t i=0; i<model1->numberOfPoints();i+=3){
 			//int bestPoint1,bestPoint2,bestPoint3;
 			int matchIndex = 0;
 			float minDistance = INFINITY;
-			for(int j=0; j<model2->numberOfPoints();j+=3){
-				float distance = 0.0;
-				for(int l=0; l<3; l++){
-					distance += threeDimensionalDistance(model2->_vertices[j+l],model1->_vertices[i+l]);
-				}
+
+			for(size_t j=0; j<model2->numberOfPoints();j+=3){
+				//float distance = 0.0;
+				//for(int l=0; l<3; l++){
+				//	distance += threeDimensionalDistance(model2->_vertices[j+l],model1->_vertices[i+l]);
+				//}
 				//float distance = threeDimensionalDistanceFromCenter(findCenter(model2->_vertices[j],model2->_vertices[j+1],model2->_vertices[j+2]),findCenter(model1->_vertices[i],model1->_vertices[i+1],model1->_vertices[i+2]));
-				//vec4 point1,point2,point3;
-				//findOptimalOrientation(model1->_vertices[i],model1->_vertices[i+1],model1->_vertices[i+2],model2, j, point1, point2, point3);
-				//float distance = threeDimensionalDistance(point1,model2->_vertices[j])+threeDimensionalDistance(point2,model2->_vertices[j+1])+threeDimensionalDistance(point3,model2->_vertices[j+2]);
+				vec4 point1,point2,point3;
+				findOptimalOrientation(model1->_vertices[i],model1->_vertices[i+1],model1->_vertices[i+2],model2, j, point1, point2, point3);
+				float distance = threeDimensionalDistance(point1,model2->_vertices[j])+threeDimensionalDistance(point2,model2->_vertices[j+1])+threeDimensionalDistance(point3,model2->_vertices[j+2]);
 	
 				if(distance<minDistance){
 					matchIndex = j;
@@ -354,100 +372,73 @@ void matchPoints(std::vector< Angel::vec4 >& model1Vertices,std::vector< Angel::
 }
 
 void segmentModels(Object* model1, vec3 model1Low, vec3 model1High, Object* model2, vec3 model2Low, vec3 model2High){
-	std::vector< Angel::vec4 > model1Vertices[5];
-	std::vector< Angel::vec3 > model1Normals[5];
-	std::vector< Angel::vec4 > model1Colors[5];
-	std::vector< Angel::vec2 > model1Textures[5];
-	std::vector< Angel::vec4 > model2Vertices[5];
-	std::vector< Angel::vec3 > model2Normals[5];
-	std::vector< Angel::vec4 > model2Colors[5];
-	std::vector< Angel::vec2 > model2Textures[5];
+	int partitionSize = 6;
+	std::vector< Angel::vec4 > model1Vertices[6];
+	std::vector< Angel::vec3 > model1Normals[6];
+	std::vector< Angel::vec4 > model1Colors[6];
+	std::vector< Angel::vec2 > model1Textures[6];
+	std::vector< Angel::vec4 > model2Vertices[6];
+	std::vector< Angel::vec3 > model2Normals[6];
+	std::vector< Angel::vec4 > model2Colors[6];
+	std::vector< Angel::vec2 > model2Textures[6];
 	Angel::vec3 model1Distance = Angel::vec3(model1High.x - model1Low.x, model1High.y - model1Low.y, model1High.z - model1Low.z);
 	Angel::vec3 model2Distance = Angel::vec3(model2High.x - model2Low.x, model2High.y - model2Low.y, model2High.z - model2Low.z);
-	
-	//We'll start with a 1/5 , 3/5, 1/5 partition and see how that goes
+
 	//Model1
-	for(int i=0; i<model1->numberOfPoints(); i+=3){
-		if((model1->_vertices[i].y >(model1Low.y + (5*model1Distance.y)/6))&&(model1->_vertices[i+1].y >(model1Low.y + (5*model1Distance.y)/6))&&(model1->_vertices[i+2].y >(model1Low.y + (5*model1Distance.y)/6))){
-		//If Bottle Top
-			for(int j=0; j<3; j++){
-				model1Vertices[0].push_back(model1->_vertices[i+j]);
-				model1Normals[0].push_back(model1->_normals[i+j]);
-				model1Colors[0].push_back(model1->_colors[i+j]);
-			}
-		}else if (model1->_vertices[i].y > (model1Low.y + (5*model1Distance.y)/6)){
-			for(int j=0; j<3; j++){
-				model1Vertices[3].push_back(model1->_vertices[i+j]);
-				model1Normals[3].push_back(model1->_normals[i+j]);
-				model1Colors[3].push_back(model1->_colors[i+j]);
-			}
-		}else if((model1->_vertices[i].y < (model1Low.y + (model1Distance.y)/6))&&(model1->_vertices[i+1].y < (model1Low.y + (model1Distance.y)/6))&&(model1->_vertices[i+2].y < (model1Low.y + (model1Distance.y)/6))){
-		//If Bottle Bottom
-			for(int j=0; j<3; j++){
-				model1Vertices[2].push_back(model1->_vertices[i+j]);
-				model1Normals[2].push_back(model1->_normals[i+j]);
-				model1Colors[2].push_back(model1->_colors[i+j]);
-			}
-		}else if(model1->_vertices[i].y < (model1Low.y + (model1Distance.y)/6)){
-			for(int j=0; j<3; j++){
-				model1Vertices[4].push_back(model1->_vertices[i+j]);
-				model1Normals[4].push_back(model1->_normals[i+j]);
-				model1Colors[4].push_back(model1->_colors[i+j]);
-			}
-		}else{
-		//If Bottle Middle
-			for(int j=0; j<3; j++){
-				model1Vertices[1].push_back(model1->_vertices[i+j]);
-				model1Normals[1].push_back(model1->_normals[i+j]);
-				model1Colors[1].push_back(model1->_colors[i+j]);
+	for(size_t i=0; i<model1->numberOfPoints(); i+=3){
+		for(size_t j=0; j<partitionSize; j++){
+			if(j == partitionSize-1){
+				if((model1->_vertices[i].y >= (model1Low.y)+(j*model1Distance.y)/partitionSize)&&(model1->_vertices[i].y <= (model1Low.y + ((j+1)*model1Distance.y)/partitionSize))){
+					for(size_t k=0; k<3; k++){
+						model1Vertices[j].push_back(model1->_vertices[i+k]);
+						model1Normals[j].push_back(model1->_normals[i+k]);
+						model1Colors[j].push_back(model1->_colors[i+k]);
+					}
+				}
+			}else{
+				if((model1->_vertices[i].y >= (model1Low.y)+(j*model1Distance.y)/partitionSize)&&(model1->_vertices[i].y < (model1Low.y + ((j+1)*model1Distance.y)/partitionSize))){
+					for(size_t k=0; k<3; k++){
+						model1Vertices[j].push_back(model1->_vertices[i+k]);
+						model1Normals[j].push_back(model1->_normals[i+k]);
+						model1Colors[j].push_back(model1->_colors[i+k]);
+					}
+				}
 			}
 		}
 	}
 	//Model2
-	for(int i=0; i<model2->numberOfPoints(); i+=3){
-		if((model2->_vertices[i].y >(model2Low.y + (5*model2Distance.y)/6))&&(model2->_vertices[i+1].y >(model2Low.y + (5*model2Distance.y)/6))&&(model2->_vertices[i+2].y >(model2Low.y + (5*model2Distance.y)/6))){
-		//If Bottle Top
-			for(int j=0; j<3; j++){
-				model2Vertices[0].push_back(model2->_vertices[i+j]);
-				model2Normals[0].push_back(model2->_normals[i+j]);
-				model2Colors[0].push_back(model2->_colors[i+j]);
-			}
-		}else if(model2->_vertices[i].y >(model2Low.y + (5*model2Distance.y)/6)){
-			for(int j=0; j<3; j++){
-				model2Vertices[3].push_back(model2->_vertices[i+j]);
-				model2Normals[3].push_back(model2->_normals[i+j]);
-				model2Colors[3].push_back(model2->_colors[i+j]);
-			}
-		}else if((model2->_vertices[i].y < (model2Low.y + (model2Distance.y)/6))&&(model2->_vertices[i+1].y < (model2Low.y + (model2Distance.y)/6))&&(model2->_vertices[i+2].y < (model2Low.y + (model2Distance.y)/6))){
-		//If Bottle Bottom
-			for(int j=0; j<3; j++){
-				model2Vertices[2].push_back(model2->_vertices[i+j]);
-				model2Normals[2].push_back(model2->_normals[i+j]);
-				model2Colors[2].push_back(model2->_colors[i+j]);
-			}
-		}else if(model2->_vertices[i].y < (model2Low.y + (model2Distance.y)/6)){
-			for(int j=0; j<3; j++){
-				model2Vertices[4].push_back(model2->_vertices[i+j]);
-				model2Normals[4].push_back(model2->_normals[i+j]);
-				model2Colors[4].push_back(model2->_colors[i+j]);
-			}
-		}else{
-		//If Bottle Middle
-			for(int j=0; j<3; j++){
-				model2Vertices[1].push_back(model2->_vertices[i+j]);
-				model2Normals[1].push_back(model2->_normals[i+j]);
-				model2Colors[1].push_back(model2->_colors[i+j]);
+	for(size_t i=0; i<model2->numberOfPoints(); i+=3){
+		for(size_t j=0; j<partitionSize; j++){
+			if(j == partitionSize-1){
+				if((model2->_vertices[i].y >= (model2Low.y)+(j*model2Distance.y)/partitionSize)&&(model2->_vertices[i].y <= (model2Low.y + ((j+1)*model2Distance.y)/partitionSize))){
+					for(size_t k=0; k<3; k++){
+						model2Vertices[j].push_back(model2->_vertices[i+k]);
+						model2Normals[j].push_back(model2->_normals[i+k]);
+						model2Colors[j].push_back(model2->_colors[i+k]);
+					}
+				}
+			}else{
+				if((model2->_vertices[i].y >= (model2Low.y)+(j*model2Distance.y)/partitionSize)&&(model2->_vertices[i].y < (model2Low.y + ((j+1)*model2Distance.y)/partitionSize))){
+					for(size_t k=0; k<3; k++){
+						model2Vertices[j].push_back(model2->_vertices[i+k]);
+						model2Normals[j].push_back(model2->_normals[i+k]);
+						model2Colors[j].push_back(model2->_colors[i+k]);
+					}
+				}
 			}
 		}
 	}
 	
 	//printf("Bottle Points Model1: %d\n", model1Vertices[2].size());
 	//printf("Bottle Points Model2: %d\n", model2Vertices[2].size());
-	for(int i=0; i<5; i++){
-		makeModelTopSameSize(model1Vertices[i],model1Normals[i],model1Colors[i],model1Textures[i],model2Vertices[i],model2Normals[i],model2Colors[i],model2Textures[i]);
-		matchPoints(model1Vertices[i],model1Normals[i],model1Colors[i],model1Textures[i],model2Vertices[i],model2Normals[i],model2Colors[i],model2Textures[i]);
+	for(int i=0; i<partitionSize; i++){
+		//makeModelTopSameSize(model1Vertices[i],model1Normals[i],model1Colors[i],model1Textures[i],model2Vertices[i],model2Normals[i],model2Colors[i],model2Textures[i]);
+		//matchPoints(model1Vertices[i],model1Normals[i],model1Colors[i],model1Textures[i],model2Vertices[i],model2Normals[i],model2Colors[i],model2Textures[i]);
+		ScaleModel * scaleModel = new ScaleModel(model1Vertices[i], model2Vertices[i],1,100,1);
+		BipartiteGraph * bipartiteGraph = new BipartiteGraph(model1Vertices[i],model1Normals[i],model1Colors[i],model1Textures[i],model2Vertices[i],model2Normals[i],model2Colors[i],model2Textures[i]);
+		//scaleModel->restorePartitionModel();
 	}
-	applyToObjects(model1, model2, model1Vertices,model1Normals,model1Colors,model1Textures,model2Vertices,model2Normals,model2Colors,model2Textures);
+	applyToObjects(model1, model2, model1Vertices,model1Normals,model1Colors,model1Textures,model2Vertices,model2Normals,model2Colors,model2Textures,partitionSize);
 	
 }
 void makeModelTopSameSize(std::vector< Angel::vec4 >& model1Vertices,std::vector< Angel::vec3 >& model1Normals,std::vector< Angel::vec4 >& model1Colors,std::vector< Angel::vec2 >& model1Textures, std::vector< Angel::vec4 >& model2Vertices,std::vector< Angel::vec3 >& model2Normals,std::vector< Angel::vec4 >& model2Colors,std::vector< Angel::vec2 >& model2Textures){
@@ -479,60 +470,34 @@ void makeModelTopSameSize(std::vector< Angel::vec4 >& model1Vertices,std::vector
 	printf("Bottle Points Model2: %lu\n", model2Vertices.size());
 }
 
-void applyToObjects(Object* model1, Object* model2, std::vector< Angel::vec4 > model1Vertices[],std::vector< Angel::vec3 > model1Normals[],std::vector< Angel::vec4 > model1Colors[],std::vector< Angel::vec2 > model1Textures[],std::vector< Angel::vec4 > model2Vertices[],std::vector< Angel::vec3 > model2Normals[],std::vector< Angel::vec4 > model2Colors[],std::vector< Angel::vec2 > model2Textures[]){
-	
+void applyToObjects(Object* model1, Object* model2, std::vector< Angel::vec4 > model1Vertices[],std::vector< Angel::vec3 > model1Normals[],std::vector< Angel::vec4 > model1Colors[],std::vector< Angel::vec2 > model1Textures[],std::vector< Angel::vec4 > model2Vertices[],std::vector< Angel::vec3 > model2Normals[],std::vector< Angel::vec4 > model2Colors[],std::vector< Angel::vec2 > model2Textures[],int partitionSize){
+
 	model1->_vertices = model1Vertices[0];
 	model1->_normals = model1Normals[0];
 	model1->_colors = model1Colors[0];
-	for(size_t i=0; i<model1Vertices[1].size(); i++){
-		model1->_vertices.push_back(model1Vertices[1][i]);
-		model1->_normals.push_back(model1Normals[1][i]);
-		model1->_colors.push_back(model1Colors[1][i]);
-	}
-	for(size_t i=0; i<model1Vertices[2].size(); i++){
-		model1->_vertices.push_back(model1Vertices[2][i]);
-		model1->_normals.push_back(model1Normals[2][i]);
-		model1->_colors.push_back(model1Colors[2][i]);
-	}
-	for(size_t i=0; i<model1Vertices[3].size(); i++){
-		model1->_vertices.push_back(model1Vertices[3][i]);
-		model1->_normals.push_back(model1Normals[3][i]);
-		model1->_colors.push_back(model1Colors[3][i]);
-	}
-	for(size_t i=0; i<model1Vertices[4].size(); i++){
-		model1->_vertices.push_back(model1Vertices[4][i]);
-		model1->_normals.push_back(model1Normals[4][i]);
-		model1->_colors.push_back(model1Colors[4][i]);
-	}
+	
 	model2->_vertices = model2Vertices[0];
 	model2->_normals = model2Normals[0];
 	model2->_colors = model2Colors[0];
-	for(size_t i=0; i<model2Vertices[1].size(); i++){
-		model2->_vertices.push_back(model2Vertices[1][i]);
-		model2->_normals.push_back(model2Normals[1][i]);
-		model2->_colors.push_back(model2Colors[1][i]);
-	}
-	for(size_t i=0; i<model2Vertices[2].size(); i++){
-		model2->_vertices.push_back(model2Vertices[2][i]);
-		model2->_normals.push_back(model2Normals[2][i]);
-		model2->_colors.push_back(model2Colors[2][i]);
-	}
-	for(size_t i=0; i<model2Vertices[3].size(); i++){
-		model2->_vertices.push_back(model2Vertices[3][i]);
-		model2->_normals.push_back(model2Normals[3][i]);
-		model2->_colors.push_back(model2Colors[3][i]);
-	}
-	for(size_t i=0; i<model2Vertices[4].size(); i++){
-		model2->_vertices.push_back(model2Vertices[4][i]);
-		model2->_normals.push_back(model2Normals[4][i]);
-		model2->_colors.push_back(model2Colors[4][i]);
+
+	for(size_t j=1; j<partitionSize; j++){
+		for(size_t i=0; i<model1Vertices[j].size(); i++){
+			model1->_vertices.push_back(model1Vertices[j][i]);
+			model1->_normals.push_back(model1Normals[j][i]);
+			model1->_colors.push_back(model1Colors[j][i]);
+		}
+		for(size_t i=0; i<model2Vertices[j].size(); i++){
+			model2->_vertices.push_back(model2Vertices[j][i]);
+			model2->_normals.push_back(model2Normals[j][i]);
+			model2->_colors.push_back(model2Colors[j][i]);
+		}	
 	}
 }
 
 void splitProblemTriangles(Object* model1, Object* model2){
 	float minTriangleSizeModel1 = INFINITY;
 	float maxTriangleSizeModel1 = 0.0;
-	for(int i=0; i<model1->numberOfPoints(); i+=3){
+	for(size_t i=0; i<model1->numberOfPoints(); i+=3){
 		float size = getTriangleSize(model1->_vertices[i],model1->_vertices[i+1],model1->_vertices[i+2]);
 		if(size > maxTriangleSizeModel1){
 			maxTriangleSizeModel1 = size;
@@ -544,7 +509,7 @@ void splitProblemTriangles(Object* model1, Object* model2){
 	
 	float minTriangleSizeModel2 = INFINITY;
 	float maxTriangleSizeModel2 = 0.0;
-	for(int i=0; i<model2->numberOfPoints(); i+=3){
+	for(size_t i=0; i<model2->numberOfPoints(); i+=3){
 		float size = getTriangleSize(model2->_vertices[i],model2->_vertices[i+1],model2->_vertices[i+2]);
 		if(size > maxTriangleSizeModel2){
 			maxTriangleSizeModel2 = size;

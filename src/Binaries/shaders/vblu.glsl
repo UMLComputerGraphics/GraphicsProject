@@ -18,9 +18,12 @@ uniform mat4 OTM;
 // IsTextured boolean.
 uniform bool fIsTextured;
 
+varying vec2 outtexture;
+
 void main() {
 
   gl_Position = P * CTM * OTM * vPosition;
   color = vec4( 0, 0, 1, 1 );
+  outtexture = vec2( 0, 0 );
 
 }

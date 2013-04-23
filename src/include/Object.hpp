@@ -99,6 +99,12 @@ public:
   virtual ~Object( void );
 
   /**
+   * Draw Preparation: Make preparations to draw,
+   * but do not actually draw yet.
+   */
+  void drawPrep( void );
+
+  /**
    * draw method: Render this object to the screen _buffer.
    */
   virtual void draw( void );
@@ -107,12 +113,12 @@ public:
    * buffer all of our data: Vertices, TexUVs, Normals,
    * Indices, Colors and Morph Buffers.
    */
-  virtual void buffer( void );
+  virtual void buffer( GLenum usage = GL_STATIC_DRAW );
 
   /**
    * buffer only the Morph-related buffers.
    */
-  void bufferMorphOnly( void );
+  void bufferMorphOnly( GLenum usage = GL_STATIC_DRAW );
 
   /**
    * Select a new OpenGL draw mode for this Object.
@@ -171,6 +177,8 @@ public:
    **/
   virtual void shader( GLuint newShader );
 
+  void relinkUniforms( void );
+
   // animation and Related ====================================================
   
   /**
@@ -217,7 +225,7 @@ public:
    *
    * @return A pointer to the newly created target.
    */
-  Object* genMorphTarget( GLuint shader );
+  Object* genMorphTarget( GLuint shader = 0 );
 
   /**
    * Retrieve the morph Percentage of this object.
@@ -240,7 +248,7 @@ public:
    * Retrieve the number of _vertices this object has.
    * @return An integer representing the number of vertices the object has.
    */
-  int numberOfPoints();
+  size_t numberOfPoints();
 
   /**
   * Adds material data to the object
