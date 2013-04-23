@@ -181,7 +181,6 @@ ParticleSystem::addOneParticleAtOrigin( void ) {
 
 }
 
-
 void
 ParticleSystem::setSlaughterHeight(float f){
 	this->_slaughterHeight = f ;
@@ -392,31 +391,35 @@ ParticleSystem::update() {
 	  static float b = 1.0 ;
 	  */
 	  float percentLifeRemaining = (*i)->getLifetime()/(*i)->getMaxLifetime();
-		// call the update function on each particle
-		(*i)->updateSelf();
-		(*i)->setColor(  vec4(1.0, 0.8, 0.0, percentLifeRemaining ));
-
-		if( ((*i)->getLifetime() <= 0.0) 
-		    /*|| ((*i)->getPosition().y >= maxHeight)*/ ) {
-		  respawnParticle(**i) ;
-		}
-
-		// apply the vector field function to the particle
-		if ( this->_vecFieldFunc != NULL ) {
-		  (*i)->setVel( (*_vecFieldFunc)((*i)->getPosition() ) ) ;
-		}
-
-		_vertices.push_back((*i)->getPosition());
-		_colors.push_back((*i)->getColor());
+	  // call the update function on each particle
+	  (*i)->updateSelf();
+	  (*i)->setColor( (*_colorFunc)(percentLifeRemaining, (*i)->getPosition() ) );
+	  
+	  if( ((*i)->getLifetime() <= 0.0) 
+	      /*|| ((*i)->getPosition().y >= maxHeight)*/ ) {
+	    respawnParticle(**i) ;
+	  }
+	  
+	  // apply the vector field function to the particle
+	  if ( this->_vecFieldFunc != NULL ) {
+	    (*i)->setVel( (*_vecFieldFunc)((*i)->getPosition() ) ) ;
+	  }
+	  
+	  _vertices.push_back((*i)->getPosition());
+	  _colors.push_back((*i)->getColor());
 	}
 }
-
-
 
 void 
 ParticleSystem::setVectorField(vec3 (*vectorFieldFunc)(vec4) )
 {
 	this->_vecFieldFunc = vectorFieldFunc ;
+}
+
+void 
+ParticleSystem::setColorFunc(vec4 (*ColorFunc)(float, vec4) )
+{
+	this->_colorFunc = ColorFunc ;
 }
 
 
@@ -457,7 +460,7 @@ ParticleSystem::generateLifespan(){
 		// 1 of every 10000 particles live longer than maxLifeMinor
 		if( (dieRoll == 1 && life > maxLifeMinor) || ( life < maxLifeMinor ) )
 		{
-			return life;
+		  return life;
 		}
 	}
 }

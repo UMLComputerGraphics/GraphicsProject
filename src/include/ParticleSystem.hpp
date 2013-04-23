@@ -75,7 +75,7 @@ public:
   virtual void draw( void );
 
   void  setVectorField(vec3 (*vectorFieldFunc)(vec4) );
-
+  void  setColorFunc(vec4 (*colorFunc)(float, vec4) );
   
   static float rangeRandom( float min, float max );
 
@@ -102,6 +102,7 @@ private:
   unsigned _fillSpeedLimit;
 
   vec3 (*_vecFieldFunc)(vec4 posIn);
+  vec4 (*_colorFunc)(float lifePct, vec4 posIn);
 
 };
 

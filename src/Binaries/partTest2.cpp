@@ -9,6 +9,7 @@
 #include "Engine.hpp"
 #include "ParticleSystem.hpp"
 #include "ParticleFieldFunctions.hpp"
+#include "ColorFunctions.hpp"
 /* Utilities and Common */
 #include "glut_callbacks.h"
 #include "ObjLoader.hpp"
@@ -79,6 +80,7 @@ void init()
 
     particleSystem->setLifespan(4.0, 8.0);
     particleSystem->setVectorField( ParticleFieldFunctions::flame ) ;
+    particleSystem->setColorFunc( ColorFunctions::flame ) ;
     particleSystem->setEmitterRadius( 0.02 ) ;
     particleSystem->drawMode( GL_TRIANGLES ) ; // NEED THIS IF WE USE A GEOMETRY SHADER!
     particleSystem->setParticleSpace(true);
