@@ -23,7 +23,10 @@ mkdir -p "$instdir/fMod";
 set -x
 install `dirname $0`/$file $instdir/fMod;
 ln -s "$instdir/fMod/$file" "$instdir/libfmodex.so"
+echo "$instdir" > /etc/ld.so.conf.d/fmod.conf
 ldconfig
 set +x
+
+
 
 echo "Done. Seeya!"
