@@ -23,6 +23,7 @@ struct Node {
 	int nodeIndex;
 	Node * matchNode;
 	bool matched;
+	bool hasBetterMatch;
 	float minDistance;
 	int minDistanceIndex;
 	Angel::vec4 a;
@@ -34,6 +35,7 @@ struct Node {
 		nodeIndex = -1;
 		matchNode = NULL;
 		matched = false;
+		hasBetterMatch = false;
 		minDistance = INFINITY;
 		minDistanceIndex = -1;
 	}
@@ -42,7 +44,7 @@ struct Node {
 		nodeIndex = nodeindex;
 		matchNode = NULL;
 		matched = false;
-		
+		hasBetterMatch = false;
 		minDistance = INFINITY;
 		minDistanceIndex = -1;
 	}
@@ -76,8 +78,13 @@ struct BipartiteGraph {
 	std::vector< Angel::vec2 > destTextures;
 
 	BipartiteGraph(Object* Src, Object* Dest){
-		src = Src;
-		dest = Dest;
+		if(Src->_vertices.size() > Dest->_vertices.size()){
+			src = Src;
+			dest = Dest;
+		}else{
+			src = Dest;
+			dest = Src;
+		}
 		constructGraph();
 	}
 	BipartiteGraph(std::vector< Angel::vec4 >& model1Vertices,std::vector< Angel::vec3 >& model1Normals,std::vector< Angel::vec4 >& model1Colors,std::vector< Angel::vec2 >& model1Textures, std::vector< Angel::vec4 >& model2Vertices,std::vector< Angel::vec3 >& model2Normals,std::vector< Angel::vec4 >& model2Colors,std::vector< Angel::vec2 >& model2Textures){		

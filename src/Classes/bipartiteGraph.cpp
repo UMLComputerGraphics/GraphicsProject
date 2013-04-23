@@ -59,13 +59,18 @@
  	std::vector< Edge* > firstBirths;
  	
  	for(int i=0; i<edges.size(); i++){
- 		if((!edges[i]->source->matched)&&(!edges[i]->destination->matched)){
+ 		if((!edges[i]->source->matched)&&(!edges[i]->destination->matched)&&(!edges[i]->destination->hasBetterMatch)){
  			edges[i]->source->matched = true;
+ 			edges[i]->source->hasBetterMatch = true;
  			edges[i]->destination->matched = true;
+ 			edges[i]->destination->hasBetterMatch = true;
  			edges[i]->source->matchNode = edges[i]->destination;
  			edges[i]->destination->matchNode = edges[i]->source;
  			bestEdges.push_back(new Edge(edges[i]->distance,edges[i]->source,edges[i]->destination));
- 		}
+ 			//printf("Min Index: %d  Node Index: %d  Distance: %f\n", bestEdges[i]->source->minDistanceIndex, bestEdges[i]->destination->nodeIndex, bestEdges[i]->source->minDistance);
+		}else if((edges[i]->source->matched)&&(!edges[i]->destination->matched)){
+			edges[i]->destination->hasBetterMatch = true;
+		}
  	}
  	printf("Best Edges: %d\n\n", bestEdges.size());
  	//printf("Edge Match 1: %d - %d\n", bestEdges[0]->source->modelIndex,bestEdges[0]->source->matchNode->modelIndex);
@@ -102,10 +107,19 @@
 				count++;
 			}
 		}else{
-			
+			bestEdges.erase(bestEdges.begin()+i);
+			for(int m=0; m<3; m++){
+				srcVertices.erase(srcVertices.begin()+3*i);
+				srcNormals.erase(srcNormals.begin()+3*i);
+ 				srcColors.erase(srcColors.begin()+3*i);
+ 				destVertices.erase(destVertices.begin()+3*i);
+ 				destNormals.erase(destNormals.begin()+3*i);
+ 				destColors.erase(destColors.begin()+3*i);
+			}
+			i--;
 		}
  	}
- 	for(int i=bestEdges.size()-firstBirths.size(); i<bestEdges.size(); i++){
+ 	/*for(int i=bestEdges.size()-firstBirths.size(); i<bestEdges.size(); i++){
  		for(int m=0; m<3; m++){
  			src->_vertices.pop_back();
  			src->_normals.pop_back();
@@ -116,7 +130,7 @@
  			count++;
  		}
  	}
- 	printf("Count: %d\n", count);
+ 	printf("Count: %d\n", count);*/
  }
  
  void BipartiteGraph::constructPartitionGraph(){
@@ -165,13 +179,17 @@
  	std::vector< Edge* > firstBirths;
  	
  	for(int i=0; i<edges.size(); i++){
- 		if((!edges[i]->source->matched)&&(!edges[i]->destination->matched)){
+ 		if((!edges[i]->source->matched)&&(!edges[i]->destination->matched)&&(!edges[i]->destination->hasBetterMatch)){
  			edges[i]->source->matched = true;
+ 			edges[i]->source->hasBetterMatch = true;
  			edges[i]->destination->matched = true;
+ 			edges[i]->destination->hasBetterMatch = true;
  			edges[i]->source->matchNode = edges[i]->destination;
  			edges[i]->destination->matchNode = edges[i]->source;
  			bestEdges.push_back(new Edge(edges[i]->distance,edges[i]->source,edges[i]->destination));
  			//printf("Min Index: %d  Node Index: %d  Distance: %f\n", bestEdges[i]->source->minDistanceIndex, bestEdges[i]->destination->nodeIndex, bestEdges[i]->source->minDistance);
+		}else if((edges[i]->source->matched)&&(!edges[i]->destination->matched)){
+			edges[i]->destination->hasBetterMatch = true;
 		}
  	}
  	printf("Best Edges: %d\n\n", bestEdges.size());
@@ -183,7 +201,7 @@
  	}
  	
  	int count = 0;
- 	for(int i=0; i<bestEdges.size(); i++){ 
+ 	for(size_t i=0; i<bestEdges.size(); i++){ 
 	 	if(bestEdges[i]->source->minDistanceIndex == bestEdges[i]->destination->nodeIndex){
  			for(int m=0; m<3; m++){
  				//Handle source points
@@ -210,9 +228,19 @@
 			}
 		}else{
 			printf("Min Index: %d  Node Index: %d\n", bestEdges[i]->source->minDistanceIndex, bestEdges[i]->destination->nodeIndex);
+			bestEdges.erase(bestEdges.begin()+i);
+			for(int m=0; m<3; m++){
+				srcVertices.erase(srcVertices.begin()+3*i);
+				srcNormals.erase(srcNormals.begin()+3*i);
+ 				srcColors.erase(srcColors.begin()+3*i);
+ 				destVertices.erase(destVertices.begin()+3*i);
+ 				destNormals.erase(destNormals.begin()+3*i);
+ 				destColors.erase(destColors.begin()+3*i);
+			}
+			i--;
 		}
  	}
- 	for(int i=bestEdges.size()-firstBirths.size(); i<bestEdges.size(); i++){
+ 	/*for(int i=bestEdges.size()-firstBirths.size(); i<bestEdges.size(); i++){
  		for(int m=0; m<3; m++){
  			srcVertices.pop_back();
  			srcNormals.pop_back();
@@ -223,5 +251,5 @@
  			count++;
  		}
  	}
- 	printf("Count: %d\n", count);
+ 	printf("Count: %d\n", count);*/
  }

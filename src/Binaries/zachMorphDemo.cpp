@@ -21,6 +21,7 @@
 #include "modelFunctions.hpp"
 #include "meshMapping.hpp"
 #include "bipartiteGraph.hpp"
+#include "scaleModel.hpp"
 #include "InitShader.hpp"
 #include "glut_callbacks.h"
 #include "ObjLoader.hpp"
@@ -58,23 +59,25 @@ void init() {
 
   printf("Number Vertices Model1: %d\n",bottle->numberOfPoints());
   printf("Number Vertices Model2: %d\n\n",bottleMorphTarget->numberOfPoints());
-
-  Angel::vec3 OriginalLowBoundSrc = bottle->getMin();
-  Angel::vec3 OriginalMaxBoundSrc = bottle->getMax();
-  Angel::vec3 OriginalLowBoundDst = bottleMorphTarget->getMin();
-  Angel::vec3 OriginalMaxBoundDst = bottleMorphTarget->getMax();
-  std::vector< Angel::vec3> originalBounds;
-  //Scale source and destination height to unit 0-1
-  //scaleObjectsToUnitHeight(bottle, bottleMorphTarget);
-  
   
   Angel::vec3 lowBoundSrc = bottle->getMin();
   Angel::vec3 maxBoundSrc = bottle->getMax();
   Angel::vec3 lowBoundDst = bottleMorphTarget->getMin();
   Angel::vec3 maxBoundDst = bottleMorphTarget->getMax();
   
-  //std::cout << "Model1 Bounds: " << lowBoundSrc << " " << maxBoundSrc << std::endl;
-  //std::cout << "Model2 Bounds: " << lowBoundDst << " " << maxBoundDst << std::endl;
+  std::cout << "Model1 Bounds: " << lowBoundSrc << " " << maxBoundSrc << std::endl;
+  std::cout << "Model2 Bounds: " << lowBoundDst << " " << maxBoundDst << std::endl;
+  
+  //Scale source and destination height to unit 0-1
+  //ScaleModel * scaleModel = new ScaleModel(bottle, bottleMorphTarget,1,2,1);
+  
+  lowBoundSrc = bottle->getMin();
+  maxBoundSrc = bottle->getMax();
+  lowBoundDst = bottleMorphTarget->getMin();
+  maxBoundDst = bottleMorphTarget->getMax();
+  
+  std::cout << "Model1 Bounds: " << lowBoundSrc << " " << maxBoundSrc << std::endl;
+  std::cout << "Model2 Bounds: " << lowBoundDst << " " << maxBoundDst << std::endl;
   
 /*
   SquareMap* squareMap = createSquareMap(fminf(float(lowBoundSrc.x),
@@ -92,10 +95,10 @@ void init() {
 	*/
 	
 	//create Bipartite Graph
-	//BipartiteGraph * bipartiteGraph = new BipartiteGraph(bottle, bottleMorphTarget);
+	BipartiteGraph * bipartiteGraph = new BipartiteGraph(bottle, bottleMorphTarget);
 	//segment parts of bottle to determine problem areas
 	//splitProblemTriangles(bottle, bottleMorphTarget);
-	segmentModels(bottle, lowBoundSrc, maxBoundSrc, bottleMorphTarget, lowBoundDst, maxBoundDst);
+	//segmentModels(bottle, lowBoundSrc, maxBoundSrc, bottleMorphTarget, lowBoundDst, maxBoundDst);
   //matchInitialPoints(bottle, bottleMorphTarget);
   printf("Number Vertices Model1: %d\n",bottle->numberOfPoints());
   printf("Number Vertices Model2: %d\n\n",bottleMorphTarget->numberOfPoints());
@@ -117,6 +120,18 @@ void init() {
 */
   //printf("Number Vertices Model1: %d\n",bottle->numberOfPoints());
   //printf("Number Vertices Model2: %d\n",bottleMorphTarget->numberOfPoints());
+
+  //Rescale models to original size
+  //scaleModel->restoreModels();
+  
+  lowBoundSrc = bottle->getMin();
+  maxBoundSrc = bottle->getMax();
+  lowBoundDst = bottleMorphTarget->getMin();
+  maxBoundDst = bottleMorphTarget->getMax();
+  
+  std::cout << "Model1 Bounds: " << lowBoundSrc << " " << maxBoundSrc << std::endl;
+  std::cout << "Model2 Bounds: " << lowBoundDst << " " << maxBoundDst << std::endl;
+  
 
   bottle->_trans._scale.set( 0.01 );
   bottleMorphTarget->_trans._scale.set( 0.01 );
