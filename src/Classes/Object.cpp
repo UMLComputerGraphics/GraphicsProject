@@ -155,37 +155,34 @@ Object::~Object( void ) {
 }
 
 /**
- * draw method: Render this object to the screen _buffer.
+ * Draw Preparation: Make preparations to draw,
+ * but do not actually draw yet.
  */
-void Object::draw( void ) {
-  
-  glBindVertexArray( _vao );
-  
+void Object::drawPrep( void ) {
+
   // Check to see if the correct shader program is engaged.
-  GLint currShader;
-  glGetIntegerv( GL_CURRENT_PROGRAM, &currShader );
-  if ( (GLuint) currShader != shader() ) {
-    
-    Camera *activeCamera = Engine::instance()->cams()->active();
-    
-    //if (DEBUG) std::cerr << "Switching shading context.\n";
-    
-    // Set OpenGL to use this object's shader.
-    glUseProgram( shader() );
-    
-    // Set the Active Camera's shader to the Object's shader.
-    activeCamera->shader( shader() );
-    
-    // send the Camera's info to the new shader.
-    activeCamera->view();
+  GLuint currShader = Engine::instance()->currentShader();
+  if (currShader != shader()) {
+    gprint( PRINT_VERBOSE, "Object %s requesting switchShader from %d to %d\n",
+            _name.c_str(), currShader, shader() );
+    Engine::instance()->switchShader( shader() );
   }
+
+  glBindVertexArray( _vao );
 
   send( Object::IS_TEXTURED );
   send( Object::OBJECT_CTM );
   send( Object::MORPH_PCT );
   send( Object::TEX_SAMPLER );
   
-  //  this->morphPercentage() == -1.0 ? ; : send( Object::MORPH_PCT );
+}
+
+/**
+ * draw method: Render this object to the screen _buffer.
+ */
+void Object::draw( void ) {
+
+  drawPrep();
   
   /* Are we using a draw order? */
   if ( _indices.size() > 1 ) glDrawElements( _drawMode, _indices.size(),
@@ -345,6 +342,12 @@ const std::string &Object::name( void ) const {
  */
 void Object::link( UniformEnum which, const std::string &name ) {
   
+  // TODO: FIXME: GROSS: HACK: This might not work,
+  // Depending on when it is called ...
+  GLint aShader = Engine::instance()->currentShader();
+  // The previous behavior was:
+  // aShader = shader();
+
   if ( which >= _handles.size() ) {
     fprintf(
         stderr,
@@ -361,13 +364,13 @@ void Object::link( UniformEnum which, const std::string &name ) {
              name.c_str(), this->_name.c_str() );
   
 
-  if (shader() == 0) {
+  if (aShader == 0) {
     if (DEBUG) fprintf( stderr, "Skipping link: [%s][%s]: No shader set.\n",
                         _name.c_str(), name.c_str() );
     return;
   }
 
-  _handles[which] = glGetUniformLocation( shader(), name.c_str() );
+  _handles[which] = glGetUniformLocation( aShader, name.c_str() );
   if (glGetError()) {
     fprintf( stderr, "ERROR: [%s] failed to call glGetUniformLocation( %u, %s );\n",
     _name.c_str(), shader(), name.c_str() );
@@ -458,14 +461,21 @@ void Object::shader( GLuint newShader ) {
   Scene::shader( newShader );
   
   // We have to use the program to query the glUniform locations.
-  glUseProgram( newShader );
+  Engine::instance()->switchShader( newShader );
   
+  relinkUniforms();
+
+}
+
+/**
+ * TODO: FIXME: GROSS BAD UGH
+ */
+void Object::relinkUniforms( void ) {
   // Re-link our Uniforms to this shader.
   UniformMap::iterator it;
   for ( it = _uniformMap.begin(); it != _uniformMap.end(); ++it ) {
     link( it->first, it->second );
   }
-  
 }
 
 /**

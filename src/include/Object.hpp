@@ -99,6 +99,12 @@ public:
   virtual ~Object( void );
 
   /**
+   * Draw Preparation: Make preparations to draw,
+   * but do not actually draw yet.
+   */
+  void drawPrep( void );
+
+  /**
    * draw method: Render this object to the screen _buffer.
    */
   virtual void draw( void );
@@ -170,6 +176,8 @@ public:
    @return None.
    **/
   virtual void shader( GLuint newShader );
+
+  void relinkUniforms( void );
 
   // animation and Related ====================================================
   

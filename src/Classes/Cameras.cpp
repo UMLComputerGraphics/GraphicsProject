@@ -9,6 +9,7 @@
 #include <cmath>
 #include <vector>
 #include <stdexcept>
+#include "Engine.hpp"
 #include "Camera.hpp"
 #include "Cameras.hpp"
 #include "globals.h"
@@ -283,7 +284,10 @@ void Cameras::calculateViewports( void ) {
 void Cameras::view( void (*draw_func)( void ) ) {
   std::list< Object* >::iterator it;
   for ( it = _list.begin(); it != _list.end(); ++it ) {
-    obj2Cam( it )->view();
+    // Tell the Engine we're using a different camera, now.
+    Engine::instance()->switchCamera(obj2Cam(it));
+    // Draw this Screen, Viewport, Window, (whichever)
+    // Using the supplied callback.
     (*draw_func)();
   }
 }
