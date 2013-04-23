@@ -28,6 +28,12 @@ int main( int argc, char **argv ) {
   QApplication a( argc, argv );
   MainWindow w;
   w.setWindowTitle( "First Graphics Demo" );
+  /*
+  For connecting more variables and sliders we only need to expose the slider variables
+  that already exist in maindwindow in the .h. Then do the linking functions here. The functions used
+  as slots should probably have an internal variable to keep track of what the previous value was so
+  that the proper modification can be made.
+  */
   QObject::connect(w.slider, SIGNAL(valueChanged(int)), &monolith, SLOT(ParticleAdd()));
   w.show();
   
