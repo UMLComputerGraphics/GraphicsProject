@@ -42,15 +42,15 @@ void init() {
   // with this model, we can use all the preexisting Object class functionality
   ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle-b.obj" );
   bottleMorphTarget->_trans._scale.set( 0.01 );
-
+  
   // _buffer the object onto the GPU. This does not happen by default,
   // To allow you to make many changes and _buffer only once,
   // or to _buffer changes selectively.
   // Buffer the bottle AND the morph. Do this AFTER loading both.
   bottle->buffer();
-
+  
   // Generic OpenGL setup: Enable the depth _buffer and set a nice background color.
-  glClearColor( 0.3, 0.5, 0.9, 1.0 );  
+  glClearColor( 0.3, 0.5, 0.9, 1.0 );
 }
 
 /**

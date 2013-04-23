@@ -22,7 +22,8 @@ void init() {
   
   shader[0] = Angel::InitShader( "shaders/vred.glsl", "shaders/fEngine.glsl" );
   shader[1] = Angel::InitShader( "shaders/vblu.glsl", "shaders/fEngine.glsl" );
-  shader[2] = Angel::InitShader( "shaders/vEngine.glsl", "shaders/fEngine.glsl" );
+  shader[2] = Angel::InitShader( "shaders/vEngine.glsl",
+                                 "shaders/fEngine.glsl" );
   
   camList->active()->changePerspective( Camera::IDENTITY );
   
@@ -35,7 +36,7 @@ void init() {
   
   // Third Object, over-ride default shader.
   Object *C = rootScene->addObject( "Object C (TEX)", shader[2] );
-
+  
   // Fourth Object.
   Object *D = rootScene->addObject( "Object D (TEX2)", shader[2] );
   
@@ -60,15 +61,16 @@ void init() {
   C->buffer();
   const char *filename = "../Textures/GrassGreenTexture0002.jpg";
   C->texture( filename );
-
+  
   // draw another triangle in the lower left, texture it differently.
-  triangle( D, vec4( -1, 0, 0, 1), vec4( 0, 0, 0, 1 ), vec4( 0, -1, 0, 1 ), 0 );
+  triangle( D, vec4( -1, 0, 0, 1 ), vec4( 0, 0, 0, 1 ), vec4( 0, -1, 0, 1 ),
+            0 );
   D->_texUVs.push_back( vec2( 0, 0 ) );
   D->_texUVs.push_back( vec2( 1, 1 ) );
   D->_texUVs.push_back( vec2( 0, 1 ) );
   D->buffer();
   D->texture( "../Textures/GoodTextures_0013291.jpg" );
-
+  
 }
 
 //--------------------------------------------------------------------

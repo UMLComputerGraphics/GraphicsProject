@@ -27,23 +27,21 @@ void init() {
   
   Object *model = rootScene->addObject( "Arbitrary Model" );
   ObjLoader::loadModelFromFile( model, modelname );
-
+  
   vec4 min = model->getMin();
   vec4 max = model->getMax();
-  gprint( PRINT_DEBUG, "Min: (%f,%f,%f)\nMax: (%f,%f,%f)\n", 
-	   min.x, min.y, min.z,
-	   max.x, max.y, max.z );
+  gprint( PRINT_DEBUG, "Min: (%f,%f,%f)\nMax: (%f,%f,%f)\n", min.x, min.y,
+          min.z, max.x, max.y, max.z );
   model->_trans._offset.set( 0, -min.y, 0 );
   model->propagateOLD();
   model->buffer();
-
+  
   Object *floor = rootScene->addObject( "floor" );
-  quad( floor, 
-	vec4( -10, 0, 10, 1.0 ), vec4( -10, 0, -10, 1.0),
-	 vec4( 10, 0, -10, 1.0 ),vec4( 10, 0, 10, 1.0 ),
-	vec4( 0.4, 0.4, 0.4, 0.9 ) );
+  quad( floor, vec4( -10, 0, 10, 1.0 ), vec4( -10, 0, -10, 1.0 ),
+        vec4( 10, 0, -10, 1.0 ), vec4( 10, 0, 10, 1.0 ),
+        vec4( 0.4, 0.4, 0.4, 0.9 ) );
   floor->buffer();
-
+  
 }
 
 //--------------------------------------------------------------------
@@ -59,12 +57,12 @@ void init() {
  */
 int main( int argc, char **argv ) {
   
-  if (argc > 1) modelname = argv[1];
+  if ( argc > 1 ) modelname = argv[1];
   else modelname = "../models/candle.obj";
-
+  
   Engine::init( &argc, argv, "Model Demonstration" );
   init();
-
+  
   /* PULL THE TRIGGER */
   glutMainLoop();
   return EXIT_SUCCESS;

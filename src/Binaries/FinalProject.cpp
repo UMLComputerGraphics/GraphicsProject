@@ -1,3 +1,11 @@
+/**
+ * @file FinalProject.cpp
+ * @authors Graphics II Class, Spring 2013
+ * @date 2013-04-23
+ * @brief TODO
+ * @details TODO
+ */
+
 #ifndef WITHOUT_QT
 #include "mainwindow.h"
 #include <QApplication>
@@ -6,32 +14,31 @@
 #include "MONOLITH.hpp"
 #include "OpenGL.h"
 
-
 int main( int argc, char **argv ) {
-
+  
   gprint( PRINT_INFO, "Error: Your project is unfinished and you're "
-	  "going to fail and everyone is going to laugh at you and "
-	  "it's a really bad day sorry\n" );
-
-   MONOLITH monolith(argc, argv);
-   
+          "going to fail and everyone is going to laugh at you and "
+          "it's a really bad day sorry\n" );
+  
+  MONOLITH monolith( argc, argv );
+  
 #ifdef WITHOUT_QT
-   monolith.run();
+  monolith.run();
 #else
-   QApplication a(argc, argv);
-   MainWindow w;
-   w.setWindowTitle("First Graphics Demo");
-   QObject::connect(w.slider, SIGNAL(valueChanged(int)), &monolith, SLOT(ParticleAdd()));
-   w.show();
-
+  QApplication a( argc, argv );
+  MainWindow w;
+  w.setWindowTitle( "First Graphics Demo" );
+  QObject::connect(w.slider, SIGNAL(valueChanged(int)), &monolith, SLOT(ParticleAdd()));
+  w.show();
+  
 #ifndef __APPLE__
-    monolith.start();
+  monolith.start();
 #endif
-   a.exec();
+  a.exec();
 #ifdef __APPLE__
-    monolith.run();
+  monolith.run();
 #endif
 #endif
-   return EXIT_SUCCESS;
-
+  return EXIT_SUCCESS;
+  
 }
