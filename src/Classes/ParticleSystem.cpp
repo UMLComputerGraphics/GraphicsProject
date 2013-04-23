@@ -37,6 +37,7 @@ ParticleSystem::ParticleSystem( int particleAmt, const std::string &name,
 		GLuint shader ) :
     						Object( name, shader ), numParticles( particleAmt ), minLife( 0.1 ),
     						maxLife( 1 ), _emitterRadius(0.0), pauseTheSystem(false), 
+    						_slaughterHeight( 0.0 ), updateRequired( false ),
 						_useGlobalParticleSpace(false), _fillSpeedLimit(10)
 {
 	this->drawMode(GL_POINTS)  ;
@@ -273,41 +274,22 @@ ParticleSystem::draw( void )
 {
 	static const TransCache newTrans = TransCache();
 
-	//std::cerr << "invoking ps draw" << std::endl;
-
 	// we should consider moving the update() call to the idle() loop
 	update();
 	buffer();
 
-	glBindVertexArray(_vao);
-	// if it isn't already loaded, switch in the appropriate shader.
-	// TODO make this bit of code a (private) function in Object?
-	//GLint currShader;
-	//glGetIntegerv(GL_CURRENT_PROGRAM, &currShader);
-	//if( (GLuint)currShader != shader()) {
-	Camera *activeCamera = Engine::instance()->cams()->active();
-	glUseProgram( shader() );
-	activeCamera->shader( shader() );
-	activeCamera->view();
-	//}
+  TransCache tempTrans = _trans ;
 
-	TransCache tempTrans = _trans ;
+  // TODO, OVERLOAD THIS BETTER
+  // if we are using a detached thingy
+  if ( getParticleSpace() ) {
+    tempTrans = _trans ;
+    _trans = newTrans;
+  }
 
-
-	// TODO, OVERLOAD THIS BETTER
-	// if we are using a detached thingy
-	if ( getParticleSpace() )
-	{
-	  tempTrans = _trans ;
-	  _trans = newTrans;
-
-        }
-
-	send( Object::IS_TEXTURED );
-	send( Object::OBJECT_CTM );
-	send( Object::MORPH_PCT );
-	send( Object::TEX_SAMPLER );
-
+	// Binds the VAO, handles shader switching,
+	// Sends uniforms that the core object knows about.
+	Object::drawPrep();
 	//send( Object::camPos );
 
 	glDrawArrays( _drawMode, 0, _vertices.size() );
@@ -440,10 +422,10 @@ ParticleSystem::generateLifespan(){
 		life = rangeRandom(this->minLife, this->maxLife);
 		// 1 of every 10000 particles live longer than maxLifeMinor
 		if( (dieRoll == 1 && life > maxLifeMinor) || ( life < maxLifeMinor ) )
-		{
-			return life;
-		}
+		  break;
 	}
+
+	return life;
 }
 
 

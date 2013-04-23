@@ -44,6 +44,7 @@ Engine::Engine( void ) {
   _idleFunc = NULL;
   // Reminder: 0 is never a valid program.
   _currentShader = 0;
+  _renderingCamera = NULL;
 
   opt("fixed_yaw", true);
   opt("trap_pointer", true);
@@ -67,6 +68,8 @@ Engine::Engine( const Engine &copy ) {
   throw std::logic_error( "Engine is a Singleton. You can't make more!" );
   // To quiet Eclipse warnings:
   _idleFunc = NULL;
+  _currentShader = 0;
+  _renderingCamera = NULL;
 }
 
 /**
@@ -211,6 +214,7 @@ void Engine::init( int *argc, char *argv[], const char *title ) {
   // Conjure up a default shader program to use until told otherwise.
   GLuint defaultProgram = Angel::InitShader( "./shaders/vEngine.glsl", 
 					     "./shaders/fEngine.glsl" );
+  eng->switchShader( defaultProgram );
 
   // Set the Camera List to use this shader,
   // And add, by default, a camera.
@@ -238,7 +242,7 @@ void Engine::idle( void ) {
   // Compute the time since last idle().
   tick.tock();
 
-  // Matriculate Scene Graph Changes (Maybe!)
+  // Propagate Scene Graph Changes (Maybe!)
   Engine::instance()->rootScene()->propagate();
 
   // Move all camera(s).
@@ -254,6 +258,43 @@ void Engine::callIdle( void ) {
   if (_idleFunc) (*_idleFunc)();
 }
 
+GLuint Engine::currentShader( void ) const {
+  return _currentShader;
+}
+
+void Engine::switchShader( GLint program ) {
+  GLint currShader;
+  glGetIntegerv( GL_CURRENT_PROGRAM, &currShader );
+  if (currShader != _currentShader) {
+    gprint( PRINT_ERROR, "ERROR: Shader in-use (%d) was not _currentShader (%d)!\n",
+            currShader, _currentShader );
+  }
+  if (program == _currentShader) return;
+
+  // Update our state.
+  _currentShader = program;
+  // Switch to the new Shader.
+  glUseProgram( program );
+  gprint( PRINT_ERROR, "Switched from [%d] to [%d]\n", currShader, program );
+  if (_renderingCamera) {
+    // Since we're on a new shader, have the camera re-send its CTM.
+    _renderingCamera->relinkUniforms();
+    _renderingCamera->view();
+  }
+}
+
+Camera *Engine::currentCamera( void ) const {
+  return _renderingCamera;
+}
+
+
+void Engine::switchCamera( Camera *camera ){
+  if (camera != _renderingCamera) {
+    _renderingCamera = camera;
+    // Instruct this camera to re-send his goodies.
+    _renderingCamera->view();
+  }
+}
 
 /**
  * What should we be doing to display()?
