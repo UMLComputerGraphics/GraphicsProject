@@ -71,10 +71,48 @@ typedef struct s_attractor{
 	vec3 position;
 	float range;
 
-
 } attractor;
 
 vec3 ParticleFieldFunctions::flame(vec4 pos)
+{
+
+	vec3 retVal ;
+
+	//float steepness = ParticleSystem::rangeRandom(2,100) ;
+
+	double scale = 0.01;
+	retVal.x = pos.x*scale;
+	retVal.z = pos.z*scale;
+	retVal.y = 5*(pos.x*pos.x + pos.z*pos.z);
+
+	//attractor code!!!
+	attractor atr_top ;
+
+	atr_top.power    = 0.075 ;
+	atr_top.position = vec3(0.0, 0.3, 0.0) ;
+	atr_top.range =	0.15;
+	// get the distance from the attractor
+	vec3 atrDist = atr_top.position - xyz(pos) ;
+
+	float distanceSquare = length(atrDist) * length(atrDist);
+
+	if ( distanceSquare >= 0.1 ){
+		atrDist /= distanceSquare ;
+	}
+	atrDist *= atr_top.power ;
+	
+	if( length(atr_top.position -xyz(pos)) < atr_top.range)
+	{
+		retVal.x = retVal.x + atrDist.x ;
+		retVal.y = retVal.y + atrDist.y ;
+		retVal.z = retVal.z + atrDist.z ;
+	}
+
+	return 0.002*normalize(retVal);
+
+}
+
+vec3 ParticleFieldFunctions::flameold(vec4 pos)
 {
 
 	vec3 retVal ;

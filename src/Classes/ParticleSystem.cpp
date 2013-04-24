@@ -38,7 +38,7 @@ ParticleSystem::ParticleSystem( int particleAmt, const std::string &name,
     						Object( name, shader ), numParticles( particleAmt ), minLife( 0.1 ),
     						maxLife( 1 ), _emitterRadius(0.0), pauseTheSystem(false), 
     						_slaughterHeight( 0.0 ), updateRequired( false ),
-						_useGlobalParticleSpace(false), _fillSpeedLimit(10)
+						_useGlobalParticleSpace(false), _fillSpeedLimit(5)
 {
 	this->drawMode(GL_POINTS)  ;
 	this->_vecFieldFunc = NULL ;
