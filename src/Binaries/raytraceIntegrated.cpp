@@ -102,16 +102,15 @@ float previousTime = 0.0;
 void display( void ) {
   Engine &engie = *Engine::instance();
   Camera *cammy = engie.cams()->active();
-
+  
   // Ensure, double-damnit,
   // That we are using the right camera to render,
   // and that we're using the right shader ...
   engie.switchCamera( cammy );
-  engie.switchShader( program ); // arigatou ^_^;;
-  cammy->debug();
-
+  engie.switchShader( program );
+  
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-
+  
   tick.sendTime();
   
   int numSpheres = 1;
@@ -152,7 +151,7 @@ void display( void ) {
       0,                  // no extra data between each position
       0                   // offset of first element
       );
-
+  
   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
   glutSwapBuffers();
   glDisableVertexAttribArray( vRayPosition );
@@ -430,7 +429,7 @@ void init( void ) {
   
   // Load shaders and use the resulting shader program
   program = Angel::InitShader( "shaders/vRaytracer.glsl",
-                                      "shaders/fRaytracer.glsl" );
+                               "shaders/fRaytracer.glsl" );
   Engine::instance()->switchShader( program );
   
   // Vertex Shader

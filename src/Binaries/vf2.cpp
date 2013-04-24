@@ -10,12 +10,8 @@
 
 /* Engine Classes */
 #include "Engine.hpp"
-/* Utilities and Common */
-#include "ParticleFieldFunctions.hpp"
-#include "ParticleSystem.hpp"
 
-typedef vec4 color4;
-
+typedef Angel::vec4 color4;
 int numberOfParticles = 999;
 
 /**
