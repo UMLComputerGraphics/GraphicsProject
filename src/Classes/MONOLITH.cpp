@@ -39,7 +39,7 @@ void MONOLITH::monolith_idle(void)
     
     // Animation variables.
     double timer = glutGet( GLUT_ELAPSED_TIME ) / 500.0;
-    float percent = (sin( timer ) + 1) / 2;
+    float percent = 1; /* (sin( timer ) + 1) / 2; */
     
     Object &candle = *((*rootScene)["Candle"]);
     candle.animation( simpleRotateAnim );
@@ -49,9 +49,14 @@ void MONOLITH::monolith_idle(void)
 }
 
 #ifndef WITHOUT_QT
+/**
+ * Implementation of all slots and sighnals.
+ * Qt-specific
+ */
 void MONOLITH::slotParticleAdd(int value)
 {
-    ps->setNumParticles(value);
+    ps->addSomeParticles(10);
+
 }
 #endif //WITHOUT_QT
 /**
@@ -140,7 +145,7 @@ void MONOLITH::run()
     //candle->propagate();
     candle->buffer();
     
-    ps = new ParticleSystem( 10000, "ps1", shader[2] );
+    ps = new ParticleSystem( 10, "ps1", shader[2] );
     ps->setLifespan(5,7.5);
     ps->setEmitterRadius( 0.001 ) ;
     candle->insertObject( ps );
@@ -155,8 +160,15 @@ void MONOLITH::run()
     glEnable( GL_DEPTH_TEST );
     glClearColor( 0.0, 0.0, 0.0, 1.0 );
 
+    #ifndef WITHOUT_QT
+   	 #ifndef __APPLE__
+		printf("LOOPING!\n");
+		glutMainLoop(); // on Linux the glutMaintLoop is called here when using Qt
+      #endif
+    #else
     printf("LOOPING!\n");
-    glutMainLoop();
+    glutMainLoop(); // if we are not using Qt, the glutMainLoop is called here for both platforms.
+    #endif
 }
 /**
  * A simple animation callback.
@@ -166,7 +178,7 @@ void MONOLITH::run()
  */
 void MONOLITH::simpleRotateAnim( TransCache &obj )
 {
-    obj._rotation.rotateY( tick.scale() * 1.5 );
-    //obj._offset.set( 1.5, 0, 0 );
-    obj._orbit.rotateY( tick.scale() * -0.5 );
+//    obj._rotation.rotateY( tick.scale() * 1.5 );
+//    //obj._offset.set( 1.5, 0, 0 );
+//    obj._orbit.rotateY( tick.scale() * -0.5 );
 }
