@@ -9,11 +9,11 @@ using Angel::vec4;
 namespace ParticleFieldFunctions
 {
 
-  vec3 tornado(vec4);
-  vec3 flame(vec4);
-  vec3 flameold(vec4);
-  vec3 fixed(vec4);
-  vec3 up(vec4);
+  Angel::vec3 tornado(Angel::vec4);
+  Angel::vec3 flame(Angel::vec4);
+  Angel::vec3 flameold(Angel::vec4);
+  Angel::vec3 fixed(Angel::vec4);
+  Angel::vec3 up(Angel::vec4);
 
 }
 

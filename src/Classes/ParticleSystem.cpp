@@ -22,6 +22,9 @@
 #include "Timer.hpp"
 #include "vec.hpp"
 
+#include "ParticleFieldFunctions.hpp"
+#include "ColorFunctions.hpp"
+
 using namespace Angel;
 
 #ifndef MIN_EMITTER_RADIUS
@@ -35,21 +38,23 @@ using namespace Angel;
 // Constructor(s)
 ParticleSystem::ParticleSystem( int particleAmt, const std::string &name,
 		GLuint shader ) :
-  Object( name, shader ), numParticles( particleAmt ), minLife( 0.1 ),
-  maxLife( 1 ), _emitterRadius(0.0), pauseTheSystem(false), 
-  _slaughterHeight( 0.0 ), updateRequired( false ),
+  Object( name, shader ), _numParticles( particleAmt ), _minLife( 0.1 ),
+  _maxLife( 1 ), _emitterRadius(0.0), _pauseTheSystem(false), 
+  _slaughterHeight( 0.0 ), _updateRequired( false ),
   _useGlobalParticleSpace(false), _fillSpeedLimit(5),
   _vecFieldFunc(NULL), _colorFunc(NULL)
 {
 	this->drawMode(GL_POINTS)  ;
 	this->_vecFieldFunc = NULL ;
+	setColorFunc( ColorFunctions::flame );
+	this->setVectorField( ParticleFieldFunctions::flame );
 }
 
 ParticleSystem::~ParticleSystem( void ) {
-	for ( size_t i = 0; i < particles.size(); i++ ) {
-		free( particles[i] );
+	for ( size_t i = 0; i < _particles.size(); i++ ) {
+		free( _particles[i] );
 	}
-	particles.clear();
+	_particles.clear();
 }
 
 
@@ -173,7 +178,7 @@ ParticleSystem::addOneParticleAtOrigin( void ) {
 	// some extra padding, push_back can throw if something catastrophic happpens
 	try
 	{
-		this->particles.push_back(p);
+		this->_particles.push_back(p);
 	}
 	catch (...)
 	{
@@ -204,7 +209,7 @@ ParticleSystem::addParticle()
 
 	try
 	{
-		this->particles.push_back(p);
+		this->_particles.push_back(p);
 	}
 	catch (...)
 	{
@@ -221,7 +226,7 @@ ParticleSystem::fillSystemWithParticles( void ) {
 
 	while( numParticles % 3 ) numParticles++;
 
-	int numToAdd = numParticles - particles.size();
+	int numToAdd = numParticles - _particles.size();
 
 
 	//std::cout << "Adding " << numToAdd << " particles" << std::endl;
@@ -236,28 +241,28 @@ ParticleSystem::fillSystemWithParticles( void ) {
 // Getters and Setters
 float
 ParticleSystem::getMaxLife( void ) {
-	return maxLife;
+	return _maxLife;
 }
 
 float
 ParticleSystem::getMinLife( void ) {
-	return minLife;
+	return _minLife;
 }
 
 int
 ParticleSystem::getNumParticles( void ) {
-	return numParticles;
+	return _numParticles;
 }
 
 void
 ParticleSystem::setLifespan( float minLifespan, float maxLifespan ) {
-	minLife = minLifespan;
-	maxLife = maxLifespan;
+	_minLife = minLifespan;
+	_maxLife = maxLifespan;
 }
 
 void
 ParticleSystem::setNumParticles( int newNumParticles ) {
-	numParticles = newNumParticles;
+	_numParticles = newNumParticles;
 }
 
 void  ParticleSystem::buffer( GLenum usage ) {
@@ -328,9 +333,9 @@ ParticleSystem::update() {
 
         static unsigned currFillFrame=0;
 
-	if ( this->pauseTheSystem ) return;
+	if ( this->_pauseTheSystem ) return;
 
-	if ( particles.size() < (unsigned int) this->numParticles ){
+	if ( _particles.size() < (unsigned int) this->_numParticles ){
 
 	  if ( currFillFrame == _fillSpeedLimit ) {
 	        addSomeParticles( NUM_PARTICLES_TO_ADD_ON_UPDATE );
@@ -347,7 +352,7 @@ ParticleSystem::update() {
 	vector<ParticleP>::iterator i;
 	//float maxHeight = this->_slaughterHeight ;
 
-	for( i = particles.begin() ; i != particles.end() ; ++i) {
+	for( i = _particles.begin() ; i != _particles.end() ; ++i) {
 
 	  /*
 	  static float r = 1.0 ;
@@ -413,21 +418,20 @@ float
 ParticleSystem::generateLifespan(){
 	// maxLifeMinor set to 75% of possible life range.
 
-	float maxLifeMinor = ((this->maxLife - this->minLife) * .3) + this->minLife;
+	float maxLifeMinor = ((this->_maxLife - this->_minLife) * .3) + this->_minLife;
 	int dieRoll = rand();
 	float life = 0.0;
 
 	// Keep rolling for random life until it is less than maxLifeMinor or
 	// greater than maxLifeMinor and successful die roll.
 	while (1){
-		life = rangeRandom(this->minLife, this->maxLife);
+		life = rangeRandom(this->_minLife, this->_maxLife);
 		// 1 of every 10000 particles live longer than maxLifeMinor
-		if( (dieRoll == 1 && life > maxLifeMinor) || ( life < maxLifeMinor ) )
-		{
-		  return life;
+		if( (dieRoll == 1 && life > maxLifeMinor) || ( life < maxLifeMinor ) ) {
+		  break;
 		}
-		
 	}
+	return life;
 }
 
 

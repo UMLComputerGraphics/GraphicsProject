@@ -86,23 +86,18 @@ private:
   vec4 getRandomHemisphericalSpawnPoint(void);
   void respawnParticle(Particle &p);
 
-  vector<ParticleP> particles;
-  unsigned numParticles;   // Number of particles that each instance of ParticleSystem will manage
-  float  minLife;
-  float  maxLife;
+  vector<ParticleP> _particles;
+  unsigned _numParticles;   // Number of particles that each instance of ParticleSystem will manage
+  float  _minLife;
+  float  _maxLife;
   float  _emitterRadius;
-  bool   pauseTheSystem;
-
+  bool   _pauseTheSystem;
   float  _slaughterHeight;
-  
-  bool   updateRequired;
-
+  bool   _updateRequired;
   bool   _useGlobalParticleSpace;
-
   unsigned _fillSpeedLimit;
-
-  vec3 (*_vecFieldFunc)(vec4 posIn);
-  vec4 (*_colorFunc)(float lifePct, vec4 posIn);
+  Angel::vec3 (*_vecFieldFunc)(Angel::vec4 posIn);
+  Angel::vec4 (*_colorFunc)(float lifePct, Angel::vec4 posIn);
 
 };
 

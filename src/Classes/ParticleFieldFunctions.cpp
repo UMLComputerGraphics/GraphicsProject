@@ -112,8 +112,7 @@ vec3 ParticleFieldFunctions::flame(vec4 pos)
 
 }
 
-vec3 ParticleFieldFunctions::flameold(vec4 pos)
-{
+vec3 ParticleFieldFunctions::flameold(vec4 pos) {
 
 	vec3 retVal ;
 
