@@ -49,12 +49,9 @@ void MONOLITH::monolith_idle(void)
 }
 
 #ifndef WITHOUT_QT
-void MONOLITH::ParticleAdd()
+void MONOLITH::slotParticleAdd(int value)
 {
-    ps->addParticle();
-    fprintf(
-        stderr,
-        "signals works, particle added" );
+    ps->setNumParticles(value);
 }
 #endif //WITHOUT_QT
 /**
