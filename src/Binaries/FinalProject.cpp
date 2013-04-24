@@ -35,7 +35,7 @@ int main( int argc, char **argv ) {
   that the proper modification can be made.
   */
   //QObject::connect(w.slider, SIGNAL(valueChanged(int)), &monolith, SLOT(ParticleAdd()));
-  QObject::connect(&w, SIGNAL(sigAddNumberOfParticles(int value)), &monolith, SLOT(slotParticleAdd(int value)));
+  QObject::connect(&w, SIGNAL(sigChangeNumberOfParticles(int)), &monolith, SLOT(slotParticleAdd(int)));
   w.show();
   
 #ifndef __APPLE__

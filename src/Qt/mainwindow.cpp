@@ -7,8 +7,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     connect(ui->numberOfParticlesSpinBox, SIGNAL(valueChanged(int)),
-            this, SIGNAL(sigChangeNumberOfParticles(int value)));
+            this, SIGNAL(sigChangeNumberOfParticles(int)));
 }
+
 
 MainWindow::~MainWindow()
 {
