@@ -14,15 +14,9 @@
 
 #include "Engine.hpp"
 
-/** Global shader object **/
-GLuint program;
+GLint program = 0;
 
 GLint vRayPosition = -1;
-
-/** Rotation matrix uniform shader variable location **/
-GLuint uRotationMatrix = -1;
-/** Handle to uniform that will contain the position of the Camera. **/
-GLint uCameraPosition = -1;
 
 GLint uSphereCenterPoints = -1;
 GLint uSphereRadius = -1;
@@ -106,8 +100,18 @@ float previousTime = 0.0;
  * Handle the re-display of the scene.
  */
 void display( void ) {
+  Engine &engie = *Engine::instance();
+  Camera *cammy = engie.cams()->active();
+
+  // Ensure, double-damnit,
+  // That we are using the right camera to render,
+  // and that we're using the right shader ...
+  engie.switchCamera( cammy );
+  engie.switchShader( program ); // arigatou ^_^;;
+  cammy->debug();
+
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-  
+
   tick.sendTime();
   
   int numSpheres = 1;
@@ -148,7 +152,8 @@ void display( void ) {
       0,                  // no extra data between each position
       0                   // offset of first element
       );
-  
+
+  glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
   glutSwapBuffers();
   glDisableVertexAttribArray( vRayPosition );
   
@@ -424,14 +429,12 @@ void init( void ) {
   glBindVertexArray( vao );
   
   // Load shaders and use the resulting shader program
-  GLuint program = Angel::InitShader( "shaders/vRaytracer.glsl",
+  program = Angel::InitShader( "shaders/vRaytracer.glsl",
                                       "shaders/fRaytracer.glsl" );
-  glUseProgram( program );
+  Engine::instance()->switchShader( program );
   
   // Vertex Shader
   vRayPosition = glGetAttribLocation( program, "vRayPosition" );
-  uRotationMatrix = glGetUniformLocation( program, "uRotationMatrix" );
-  uCameraPosition = glGetUniformLocation( program, "uCameraPosition" );
   
   // Fragment Shader
   uNumOfSpheres = glGetUniformLocation( program, "uNumOfSpheres" );

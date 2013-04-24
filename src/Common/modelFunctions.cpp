@@ -8,6 +8,7 @@
 
 #include "modelFunctions.hpp"
 #include "Object.hpp"
+#include "Util.hpp"
 #include <stdexcept>
 #include <algorithm>
 #include <cfloat>
@@ -214,7 +215,7 @@ void makeModelsSameSize(Object* model1, Object* model2){
 			}
 		}
 	}else{
-		printf("Models already the same size\n");
+	  gprint( PRINT_INFO, "Models are already the same size.\n" );
 	}
 }
 
@@ -273,7 +274,7 @@ void matchInitialPoints(Object* model1, Object* model2){
 				}
 			}
 			//if((minDistance <= 0.3)&&(i != matchIndex)){
-			//	printf("Index: %d  Match Index: %d  Distance: %f\n",i,matchIndex,minDistance);
+			//	gprint( PRINT_DEBUG, "Index: %d  Match Index: %d  Distance: %f\n",i,matchIndex,minDistance);
 			//}
 			//if((i == matchIndex)&&(minDistance <= 0.3)){
 			//	correctlyMatchedPoints+=3;
@@ -351,7 +352,7 @@ void matchPoints(std::vector< Angel::vec4 >& model1Vertices,std::vector< Angel::
 				}
 			}
 			//if((minDistance <= 0.3)&&(i != matchIndex)){
-			//	printf("Index: %d  Match Index: %d  Distance: %f\n",i,matchIndex,minDistance);
+			//	gprint( PRINT_DEBUG, "Index: %d  Match Index: %d  Distance: %f\n",i,matchIndex,minDistance);
 			//}
 			//if((i == matchIndex)&&(minDistance <= 0.3)){
 			//	correctlyMatchedPoints+=3;
@@ -372,7 +373,7 @@ void matchPoints(std::vector< Angel::vec4 >& model1Vertices,std::vector< Angel::
 }
 
 void segmentModels(Object* model1, vec3 model1Low, vec3 model1High, Object* model2, vec3 model2Low, vec3 model2High){
-	int partitionSize = 6;
+	size_t partitionSize = 6;
 	std::vector< Angel::vec4 > model1Vertices[6];
 	std::vector< Angel::vec3 > model1Normals[6];
 	std::vector< Angel::vec4 > model1Colors[6];
@@ -429,21 +430,22 @@ void segmentModels(Object* model1, vec3 model1Low, vec3 model1High, Object* mode
 		}
 	}
 	
-	//printf("Bottle Points Model1: %d\n", model1Vertices[2].size());
-	//printf("Bottle Points Model2: %d\n", model2Vertices[2].size());
-	for(int i=0; i<partitionSize; i++){
+	//gprint( PRINT_DEBUG, "Bottle Points Model1: %d\n", model1Vertices[2].size());
+	//gprint( PRINT_DEBUG, "Bottle Points Model2: %d\n", model2Vertices[2].size());
+	for(size_t i=0; i<partitionSize; i++){
 		//makeModelTopSameSize(model1Vertices[i],model1Normals[i],model1Colors[i],model1Textures[i],model2Vertices[i],model2Normals[i],model2Colors[i],model2Textures[i]);
 		//matchPoints(model1Vertices[i],model1Normals[i],model1Colors[i],model1Textures[i],model2Vertices[i],model2Normals[i],model2Colors[i],model2Textures[i]);
-		ScaleModel * scaleModel = new ScaleModel(model1Vertices[i], model2Vertices[i],1,100,1);
-		BipartiteGraph * bipartiteGraph = new BipartiteGraph(model1Vertices[i],model1Normals[i],model1Colors[i],model1Textures[i],model2Vertices[i],model2Normals[i],model2Colors[i],model2Textures[i]);
+		//ScaleModel * scaleModel = new ScaleModel(model1Vertices[i], model2Vertices[i],1,100,1);
+		//BipartiteGraph * bipartiteGraph = new BipartiteGraph(model1Vertices[i],model1Normals[i],model1Colors[i],model1Textures[i],model2Vertices[i],model2Normals[i],model2Colors[i],model2Textures[i]);
 		//scaleModel->restorePartitionModel();
 	}
 	applyToObjects(model1, model2, model1Vertices,model1Normals,model1Colors,model1Textures,model2Vertices,model2Normals,model2Colors,model2Textures,partitionSize);
 	
 }
 void makeModelTopSameSize(std::vector< Angel::vec4 >& model1Vertices,std::vector< Angel::vec3 >& model1Normals,std::vector< Angel::vec4 >& model1Colors,std::vector< Angel::vec2 >& model1Textures, std::vector< Angel::vec4 >& model2Vertices,std::vector< Angel::vec3 >& model2Normals,std::vector< Angel::vec4 >& model2Colors,std::vector< Angel::vec2 >& model2Textures){
-	printf("Bottle Points Model1: %lu\n", model1Vertices.size());
-	printf("Bottle Points Model2: %lu\n", model2Vertices.size());
+
+  gprint( PRINT_DEBUG, "Bottle Points Model1: %lu\n", model1Vertices.size());
+  gprint( PRINT_DEBUG, "Bottle Points Model2: %lu\n", model2Vertices.size());
 	
 	if((model1Vertices.size()>model2Vertices.size())&&(model2Vertices.size() > 0)){
 		while(model2Vertices.size() < (model1Vertices.size())){
@@ -464,13 +466,13 @@ void makeModelTopSameSize(std::vector< Angel::vec4 >& model1Vertices,std::vector
 			}
 		}
 	}else{
-		printf("Models already the same size\n");
+	  gprint( PRINT_DEBUG, "Models already the same size\n" );
 	}
-	printf("Bottle Points Model1: %lu\n", model1Vertices.size());
-	printf("Bottle Points Model2: %lu\n", model2Vertices.size());
+	gprint( PRINT_DEBUG, "Bottle Points Model1: %lu\n", model1Vertices.size());
+	gprint( PRINT_DEBUG, "Bottle Points Model2: %lu\n", model2Vertices.size());
 }
 
-void applyToObjects(Object* model1, Object* model2, std::vector< Angel::vec4 > model1Vertices[],std::vector< Angel::vec3 > model1Normals[],std::vector< Angel::vec4 > model1Colors[],std::vector< Angel::vec2 > model1Textures[],std::vector< Angel::vec4 > model2Vertices[],std::vector< Angel::vec3 > model2Normals[],std::vector< Angel::vec4 > model2Colors[],std::vector< Angel::vec2 > model2Textures[],int partitionSize){
+void applyToObjects(Object* model1, Object* model2, std::vector< Angel::vec4 > model1Vertices[],std::vector< Angel::vec3 > model1Normals[],std::vector< Angel::vec4 > model1Colors[],std::vector< Angel::vec2 > model1Textures[],std::vector< Angel::vec4 > model2Vertices[],std::vector< Angel::vec3 > model2Normals[],std::vector< Angel::vec4 > model2Colors[],std::vector< Angel::vec2 > model2Textures[],size_t partitionSize){
 
 	model1->_vertices = model1Vertices[0];
 	model1->_normals = model1Normals[0];

@@ -19,6 +19,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include "Util.hpp"
+#include "globals.h"
 
 // http://stackoverflow.com/questions/236129/splitting-a-string-in-c
 std::vector< std::string > &split( const std::string &s, char delim,
@@ -40,7 +41,7 @@ bool dirExists(const std::string& where, const std::string& dir) {
   static struct stat s;
   std::stringstream str;
   str << where << dir;
-  printf("Checking for existence of %s\n",str.str().c_str());
+  gprint( PRINT_DEBUG, "Checking for existence of %s\n",str.str().c_str());
   int err = stat(str.str().c_str(), &s);
   if(-1 == err) {
     return false;
@@ -72,7 +73,7 @@ namespace Util {
     if ( slapchop.size() > 1 ) {
       for (size_t last = slapchop.size() - 1; last >= 0; last=last-1)
       {       
-	printf("last = %lu\n", last);
+	gprint( PRINT_DEBUG, "last = %lu\n", last);
         std::stringstream cat;
         for ( size_t i = 0; i < last; i++ )
           cat << slapchop[i] << "/";
@@ -96,7 +97,7 @@ namespace Util {
     std::stringstream wholepath;
 
     wholepath << dondeestalosshaders << path;
-    printf("Looking for \"%s\"\tExecutable is in \"%s\"\tResolving to \"%s\"\n", path, dondeestalosshaders.c_str(), wholepath.str().c_str());
+    gprint( PRINT_DEBUG, "Looking for \"%s\"\tExecutable is in \"%s\"\tResolving to \"%s\"\n", path, dondeestalosshaders.c_str(), wholepath.str().c_str());
     return wholepath.str();
   }
 
@@ -123,6 +124,8 @@ namespace Util {
 // Stack Overflow
 void gprint( DebugPrintLevels level, const char *format, ...) {
   
+  if (level > (PRINT_LEVEL)) return;
+
   va_list args;
   va_start( args, format );
   vfprintf( stderr, format, args );

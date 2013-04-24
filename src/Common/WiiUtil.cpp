@@ -36,13 +36,14 @@
  *
  */
 
+#include <wiicpp.h>
+#include <iostream>
+#include <sys/time.h>
+
 #include "WiiUtil.h"
 #include "vec.hpp"
 #include "globals.h" /* Some math constants and macros. */
-#include <wiicpp.h>
-#include <iostream>
-
-#include <sys/time.h>
+#include "Util.hpp"
 
 using std::cerr;
 using Angel::vec3;
@@ -112,9 +113,9 @@ void HandleEvent( CWiimote &wm ) {
     pollResults.wrThetas.x = pitch;
     pollResults.wrThetas.y = yaw;
     pollResults.wrThetas.z = roll;
-    printf( "%s wiimote roll = %f\n", prefixString, roll );
-    printf( "%s wiimote pitch = %f\n", prefixString, pitch );
-    printf( "%s wiimote yaw = %f\n", prefixString, yaw );
+    gprint( PRINT_VERBOSE, "%s wiimote roll = %f\n", prefixString, roll );
+    gprint( PRINT_VERBOSE, "%s wiimote pitch = %f\n", prefixString, pitch );
+    gprint( PRINT_VERBOSE, "%s wiimote yaw = %f\n", prefixString, yaw );
   }
   
   // if the Motion Plus is turned on then print angles
@@ -125,9 +126,9 @@ void HandleEvent( CWiimote &wm ) {
     pollResults.wrRates.x = pitch_rate;
     pollResults.wrRates.y = yaw_rate;
     pollResults.wrRates.z = roll_rate;
-    printf( "%s motion plus roll rate = %f\n", prefixString, roll_rate );
-    printf( "%s motion plus pitch rate = %f\n", prefixString, pitch_rate );
-    printf( "%s motion plus yaw rate = %f\n", prefixString, yaw_rate );
+    gprint( PRINT_VERBOSE, "%s motion plus roll rate = %f\n", prefixString, roll_rate );
+    gprint( PRINT_VERBOSE, "%s motion plus pitch rate = %f\n", prefixString, pitch_rate );
+    gprint( PRINT_VERBOSE, "%s motion plus yaw rate = %f\n", prefixString, yaw_rate );
   }
   
   // if(IR tracking is on then print the coordinates
@@ -135,17 +136,17 @@ void HandleEvent( CWiimote &wm ) {
     std::vector< CIRDot >::iterator it;
     int x, y;
     int index;
-    printf( "%s Num IR Dots: %i\n", prefixString, wm.IR.GetNumDots() );
-    printf( "%s IR State: %u\n", prefixString, wm.IR.GetState() );
+    gprint( PRINT_VERBOSE, "%s Num IR Dots: %i\n", prefixString, wm.IR.GetNumDots() );
+    gprint( PRINT_VERBOSE, "%s IR State: %u\n", prefixString, wm.IR.GetState() );
     std::vector< CIRDot >& dots = wm.IR.GetDots();
     for ( index = 0, it = dots.begin(); it != dots.end(); ++index, ++it ) {
       if ( (*it).isVisible() ) {
         (*it).GetCoordinate( x, y );
-        printf( "%s IR source %i: (%i, %i)\n", prefixString, index, x, y );
+        gprint( PRINT_VERBOSE, "%s IR source %i: (%i, %i)\n", prefixString, index, x, y );
         
         wm.IR.GetCursorPosition( x, y );
-        printf( "%s IR cursor: (%i, %i)\n", prefixString, x, y );
-        printf( "%s IR z distance: %f\n", prefixString, wm.IR.GetDistance() );
+        gprint( PRINT_VERBOSE, "%s IR cursor: (%i, %i)\n", prefixString, x, y );
+        gprint( PRINT_VERBOSE, "%s IR z distance: %f\n", prefixString, wm.IR.GetDistance() );
       }
     }
   }
@@ -159,21 +160,21 @@ void HandleEvent( CWiimote &wm ) {
     sprintf( prefixString, "Nunchuk [%i]: ", wm.GetID() );
     
     if ( nc.Buttons.isPressed( CNunchukButtons::BUTTON_C ) ) {
-      printf( "%s C pressed\n", prefixString );
+      gprint( PRINT_VERBOSE, "%s C pressed\n", prefixString );
     }
     
     if ( nc.Buttons.isPressed( CNunchukButtons::BUTTON_Z ) ) {
-      printf( "%s Z pressed\n", prefixString );
+      gprint( PRINT_VERBOSE, "%s Z pressed\n", prefixString );
     }
     
     nc.Accelerometer.GetOrientation( pitch, roll, yaw );
-    printf( "%s roll = %f\n", prefixString, roll );
-    printf( "%s pitch = %f\n", prefixString, pitch );
-    printf( "%s yaw = %f\n", prefixString, yaw );
+    gprint( PRINT_VERBOSE, "%s roll = %f\n", prefixString, roll );
+    gprint( PRINT_VERBOSE, "%s pitch = %f\n", prefixString, pitch );
+    gprint( PRINT_VERBOSE, "%s yaw = %f\n", prefixString, yaw );
     
     nc.Joystick.GetPosition( angle, magnitude );
-    printf( "%s joystick angle = %f\n", prefixString, angle );
-    printf( "%s joystick magnitude = %f\n", prefixString, magnitude );
+    gprint( PRINT_VERBOSE, "%s joystick angle = %f\n", prefixString, angle );
+    gprint( PRINT_VERBOSE, "%s joystick magnitude = %f\n", prefixString, magnitude );
   }
   if ( exType == wm.ExpansionDevice.TYPE_BALANCE_BOARD ) wiiHandleBB( wm );
 }
@@ -251,15 +252,15 @@ void wiiHandleBB( CWiimote &wm ) {
   pollResults.bbMagnitudes.z = surge_pct;
   
   if ( 0 ) {
-    printf( "Balance Board Raw Weights: {" );
+    gprint( PRINT_VERBOSE, "Balance Board Raw Weights: {" );
     for ( size_t i = 0; i < 5; ++i )
-      printf( "%6f, ", raw_val[i] );
-    printf( "}\n" );
-    printf( "Balance Board Adj Weights: {" );
+      gprint( PRINT_VERBOSE, "%6f, ", raw_val[i] );
+    gprint( PRINT_VERBOSE, "}\n" );
+    gprint( PRINT_VERBOSE, "Balance Board Adj Weights: {" );
     for ( size_t i = 0; i < 5; ++i )
-      printf( "%6f, ", adj_val[i] );
-    printf( "}\n" );
-    printf( "SURGE: %6f; SWAY: %6f\n", surge_pct, sway_pct );
+      gprint( PRINT_VERBOSE, "%6f, ", adj_val[i] );
+    gprint( PRINT_VERBOSE, "}\n" );
+    gprint( PRINT_VERBOSE, "SURGE: %6f; SWAY: %6f\n", surge_pct, sway_pct );
   }
   
 }
@@ -366,7 +367,7 @@ void pollWii( CWii &wii, bool CalibrateGyro ) {
       i--;
       j = 1000000 + j;
     }
-    fprintf( stderr, "polltime: %lus%luu\n", i, j );
+    gprint( PRINT_VERBOSE, "polltime: %lus%luu\n", i, j );
   }
   
 }

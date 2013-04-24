@@ -388,15 +388,14 @@ double landGen( Object *obj, int N, float H ) {
   std::vector< unsigned int > &drawIndex = obj->_indices;
   std::vector< Angel::vec2 > &txy = obj->_texUVs;
   
-  if ( DEBUG ) printf( "\nEntering landGen()...\n" );
+  gprint( PRINT_DEBUG, "Beginning landGen() terrain generation.\n" );
   // the range (-h -> h) for the average offset
   // This determines the jaggedness of the peaks and valleys.
   // A smaller initial value will create smaller peaks and shallow valleys for
   // a look more similar to rolling hill tops.
   double CH = 0.5;
   double magnitude = (H * (2 - pow( 2, -(N) )));
-  if ( DEBUG )
-    fprintf( stderr, "landGen theoretical magnitude: %f\n", magnitude );
+  gprint( PRINT_DEBUG, "landGen theoretical magnitude: %f\n", magnitude );
   
   /* Initialize all _vertices in the vector to have their X,Z (and w) coordinates. */
   if ( vec.size() ) vec.clear();
@@ -433,7 +432,7 @@ double landGen( Object *obj, int N, float H ) {
   // Diamond-Square algorithm
   // sideLength is the distance of a single square side or
   // distance of diagonal in diamond.
-  if ( DEBUG ) printf( "\nEntering for( sideLength...) ...\n" );
+  gprint( PRINT_DEBUG, "Entering for( sideLength... ) ...\n" );
   for ( int sideLength = S - 1; sideLength >= 2;
       sideLength /= 2, H /= 2.0, CH /= 2.0 ) {
     int halfSide = sideLength / 2;
@@ -516,18 +515,9 @@ double landGen( Object *obj, int N, float H ) {
     }
   }
   
-  /*
-   for ( int i = 0; i < S*S; i++ ) {
-   col.push_back(vec4(randFloat(),randFloat(),randFloat(),1.0));
-   }
-   */
-
   Tick.tock();
-  if ( DEBUG )
-    fprintf(
-        stderr,
-        "Landgen took %lu usec, %f msec, %f sec to generate %d vertices.\n",
-        Tick.delta(), Tick.delta() / 1000.0, Tick.delta() / 1000000.0, S * S );
+  gprint( PRINT_INFO, "Landgen took %lu usec, %f msec, %f sec to generate %d vertices.\n",
+	 Tick.delta(), Tick.delta() / 1000.0, Tick.delta() / 1000000.0, S * S );
   
   return magnitude;
 }

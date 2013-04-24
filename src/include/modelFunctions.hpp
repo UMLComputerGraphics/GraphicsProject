@@ -43,6 +43,6 @@ void findOptimalOrientation(vec4 a, vec4 b, vec4 c, Object* model, int index, in
 void findOptimalOrientation(vec4 a, vec4 b, vec4 c, vec4 d, vec4 e, vec4 f, vec4& point1, vec4& point2, vec4& point3);
 int findTriangleWithMinimumDistanceFromCenter(Object* largerModel, Object* smallerModel, int index);
 int findTriangleWithMinimumDistanceFromCenter(std::vector< Angel::vec4 > largerPoints, std::vector< Angel::vec4 > smallerPoints, int index);
-void applyToObjects(Object* model1, Object* model2, std::vector< Angel::vec4 > model1Vertices[3],std::vector< Angel::vec3 > model1Normals[3],std::vector< Angel::vec4 > model1Colors[3],std::vector< Angel::vec2 > model1Textures[3],std::vector< Angel::vec4 > model2Vertices[3],std::vector< Angel::vec3 > model2Normals[3],std::vector< Angel::vec4 > model2Colors[3],std::vector< Angel::vec2 > model2Textures[3], int partitionSize);
+void applyToObjects(Object* model1, Object* model2, std::vector< Angel::vec4 > model1Vertices[3],std::vector< Angel::vec3 > model1Normals[3],std::vector< Angel::vec4 > model1Colors[3],std::vector< Angel::vec2 > model1Textures[3],std::vector< Angel::vec4 > model2Vertices[3],std::vector< Angel::vec3 > model2Normals[3],std::vector< Angel::vec4 > model2Colors[3],std::vector< Angel::vec2 > model2Textures[3], size_t partitionSize);
 
 #endif

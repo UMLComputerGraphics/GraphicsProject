@@ -19,9 +19,9 @@ using namespace Angel;
 
 void Camera::commonInit( void ) {
 
-  // Extend the Uniforms array.
-  if ( DEBUG )
-    fprintf( stderr, "Extending Uniforms Array to %d\n", Camera::END );
+  gprint( PRINT_INFO, " -- Extending Object (%s) -- \n", _name.c_str() );
+
+  gprint( PRINT_DEBUG, "Extending Uniforms Array to %d entries.\n", Camera::END );
   _handles.resize( Camera::END, -1 );
   
   /* Default Variable Links */
@@ -503,5 +503,14 @@ void Camera::resetPosition( void ) {
 
   stopAll();
   pos(0,0,0);
+
+}
+
+void Camera::debug( void ) {
+
+  std::cerr << "T{\n" << _ctm._offset.matrix() << "}\n";
+  std::cerr << "R{\n" << _ctm._orbit.matrix() << "}\n";
+  std::cerr << "P{\n" << _view << "}\n";
+  std::cerr << "CTM{\n" << _ctm.otm() << "}\n";
 
 }

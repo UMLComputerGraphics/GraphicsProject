@@ -13,6 +13,7 @@ attribute vec3 vNormalMorph;
 varying vec4 color;
 varying vec4 fPosition;
 varying vec2 outtexture;
+varying vec3 fNormal;
 
 // position/movement
 uniform mat4 P;   // Camera Perspective: Vertices are transformed to Screen coordinates.
@@ -58,5 +59,8 @@ void main() {
     // Again, it's easier to just always compute this.
     color = vColor * (1.0 - morphPercentage) + vColorMorph * morphPercentage;
   }
+
+  // Pass along the normal.
+  fNormal = vNormal;
 
 } // End main().

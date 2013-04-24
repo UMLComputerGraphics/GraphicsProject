@@ -33,7 +33,7 @@ GLuint Object::createAndBind( GLenum target, enum Object::BufferType typeIndex, 
   index = glGetAttribLocation( shader(), name );
   
   if ( index == -1 ) {
-    fprintf( stderr, "WARNING: Failed to enable VBO for %s\n", name );
+    gprint( PRINT_WARNING, "Warning: Failed to enable VBO for %s\n", name );
     return -1;
   }
   
@@ -58,9 +58,10 @@ Object::Object( const std::string &name, GLuint gShader ) {
    Each VBO contains some component data for how to render the vertex:
    Position, Color, Direction (Normal), texture and draw Order. */
 
+  gprint( PRINT_INFO, "\n-- Creating Object (%s) --\n", name.c_str() );
+
   // Create room for our GLUniform _handles
-  if ( DEBUG )
-    fprintf( stderr, "\nCreating %d handles for uniforms\n", Object::END );
+  gprint( PRINT_DEBUG, "Creating %d handles for uniforms\n", Object::END );
   _handles.resize( Object::END );
   
   // Associate this Object with the shader.
@@ -95,8 +96,8 @@ Object::Object( const std::string &name, GLuint gShader ) {
   glBindVertexArray( _vao );
   
   if (gShader == 0) {
-    fprintf( stderr, "WARNING: Object %s created without a valid shader.\n", _name.c_str() );
-    fprintf( stderr, "Disabling use of renderable geometry for this object.\n" );
+    gprint( PRINT_WARNING, "Warning: Object %s created without a valid shader.\n", _name.c_str() );
+    gprint( PRINT_WARNING, "Disabling use of renderable geometry for this object.\n" );
     glBindVertexArray( 0 );
     return;
   }
@@ -134,12 +135,11 @@ Object::Object( const std::string &name, GLuint gShader ) {
   // with any uniform, because we won't be accessing this data directly.
   // I.e, the numbers here are not important once we are in the vshader.
   glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, _buffer[INDICES] );
-  
-  if ( DEBUG )
-    fprintf( stderr, "buffhandles: %u %u %u %u %u %u %u %u\n",
-             _buffer[VERTICES], _buffer[NORMALS], _buffer[COLORS],
-             _buffer[TEXCOORDS], _buffer[INDICES], _buffer[VERTICES_MORPH],
-             _buffer[NORMALS_MORPH], _buffer[COLORS_MORPH] );
+
+  gprint( PRINT_DEBUG, "Array/Buffer Handles: %u %u %u %u %u %u %u %u\n",
+	  _buffer[VERTICES], _buffer[NORMALS], _buffer[COLORS],
+	  _buffer[TEXCOORDS], _buffer[INDICES], _buffer[VERTICES_MORPH],
+	  _buffer[NORMALS_MORPH], _buffer[COLORS_MORPH] );
   
   /* Unset the VAO context. */
   glBindVertexArray( 0 );
@@ -349,36 +349,32 @@ void Object::link( UniformEnum which, const std::string &name ) {
   // aShader = shader();
 
   if ( which >= _handles.size() ) {
-    fprintf(
-        stderr,
-        "WARNING: Ignoring request to link a uniform (#%u) beyond our handles array [%lu].\n",
-        which, _handles.size() );
+    gprint( PRINT_WARNING, "Warning: Ignoring request to link a uniform "
+	    "(#%u) beyond our handles array [%lu].\n",
+	    which, _handles.size() );
     return;
   }
   
   // Save the link between the Uniform and the Variable _name.
   _uniformMap[which] = name;
-  
-  if ( DEBUG )
-    fprintf( stderr, "Linking enum[%u] with %s for object %s\n", which,
-             name.c_str(), this->_name.c_str() );
-  
+
+  gprint( PRINT_VERBOSE, "Linking enum[%u] with %s for object %s\n",
+	  which, name.c_str(), this->_name.c_str() );
 
   if (aShader == 0) {
-    if (DEBUG) fprintf( stderr, "Skipping link: [%s][%s]: No shader set.\n",
-                        _name.c_str(), name.c_str() );
+    gprint( PRINT_VERBOSE, "Skipping link: [%s][%s]: No shader set.\n",
+	    _name.c_str(), name.c_str() );
     return;
   }
 
   _handles[which] = glGetUniformLocation( aShader, name.c_str() );
   if (glGetError()) {
-    fprintf( stderr, "ERROR: [%s] failed to call glGetUniformLocation( %u, %s );\n",
-    _name.c_str(), shader(), name.c_str() );
+    gprint( PRINT_ERROR, "ERROR: [%s] failed to call glGetUniformLocation( %u, %s );\n",
+	    _name.c_str(), shader(), name.c_str() );
   }
 
-  if ( DEBUG )
-    fprintf( stderr, "Linking handles[%d] to %s; got %d.\n", which,
-             name.c_str(), _handles[which] );
+  gprint( PRINT_VERBOSE, "Linking handles[%d] to %s; got %d.\n", which,
+	  name.c_str(), _handles[which] );
   
 }
 
