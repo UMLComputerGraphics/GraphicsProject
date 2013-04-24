@@ -76,7 +76,7 @@ public:
 #ifndef WITHOUT_QT
 public slots:
 
-    void ParticleAdd();
+    void slotParticleAdd(int value);
 
 signals:
 #endif

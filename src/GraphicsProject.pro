@@ -22,6 +22,7 @@ UI_DIR =  Qt/ui/
 
 SOURCES += \
         # Classes
+	   Classes/bipartiteGraph.cpp \
         Classes/Camera.cpp \
         Classes/Cameras.cpp \
         Classes/Engine.cpp \
@@ -30,7 +31,9 @@ SOURCES += \
         Classes/meshMapping.cpp \
         Classes/Object.cpp \
         Classes/Particle.cpp \
+	   Classes/ParticleFieldFunctions.cpp \
         Classes/ParticleSystem.cpp \
+        Classes/ScaleModel.cpp \
         Classes/Scene.cpp \
         Classes/Screen.cpp \
         Classes/SpelchkCamera.cpp \
@@ -53,7 +56,8 @@ SOURCES += \
         Qt/mainwindow.cpp \
         Binaries/FinalProject.cpp
 
-HEADERS  += include/Camera.hpp \
+HEADERS  += include/bipartiteGraph.hpp \
+		   include/Camera.hpp \
             include/Cameras.hpp \
             include/Engine.hpp \
             include/globals.h \
@@ -68,8 +72,11 @@ HEADERS  += include/Camera.hpp \
             include/ObjLoader.hpp \
             include/OpenGL.h \ 
             include/Particle.hpp \
+		   include/ParticleFieldFunctions.hpp \
             include/ParticleSystem.hpp \
+            include/partTest.hpp \
             include/platform.h \ 
+            include/scaleModel.hpp \
             include/Scene.hpp \ 
             include/Screen.hpp \ 
             include/SpelchkCamera.hpp \
