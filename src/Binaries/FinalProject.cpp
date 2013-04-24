@@ -41,13 +41,14 @@ int main( int argc, char **argv ) {
   //QObject::connect(w.slider, SIGNAL(valueChanged(int)), &monolith, SLOT(ParticleAdd()));
   QObject::connect(&w, SIGNAL(sigChangeNumberOfParticles(int)), &monolith, SLOT(slotParticleAdd(int)));
   w.show();
-  a.exec();
-#ifdef __APPLE__ // glutMainloop has to be called here for OS X. Do not edit (@franckamayou)
-  glutMainLoop();
-#endif
 
 #ifndef __APPLE__ // monolith.start has to be here for Linux. 
    monolith.start();
+#endif
+
+  a.exec();
+#ifdef __APPLE__ // glutMainloop has to be called here for OS X. Do not edit (@franckamayou)
+  glutMainLoop();
 #endif
 
 #endif // WITHOUT_QT
