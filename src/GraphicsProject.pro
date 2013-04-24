@@ -25,6 +25,7 @@ SOURCES += \
 	   Classes/bipartiteGraph.cpp \
         Classes/Camera.cpp \
         Classes/Cameras.cpp \
+	   Classes/ColorFunctions.cpp \
         Classes/Engine.cpp \
         # KinectInator.cpp \
         Classes/mat.cpp \
@@ -59,6 +60,7 @@ SOURCES += \
 HEADERS  += include/bipartiteGraph.hpp \
 		   include/Camera.hpp \
             include/Cameras.hpp \
+		   include/ColorFunctions.hpp \
             include/Engine.hpp \
             include/globals.h \
             include/glut_callbacks.h \
