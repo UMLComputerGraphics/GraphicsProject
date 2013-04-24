@@ -35,10 +35,11 @@ using namespace Angel;
 // Constructor(s)
 ParticleSystem::ParticleSystem( int particleAmt, const std::string &name,
 		GLuint shader ) :
-    						Object( name, shader ), numParticles( particleAmt ), minLife( 0.1 ),
-    						maxLife( 1 ), _emitterRadius(0.0), pauseTheSystem(false), 
-    						_slaughterHeight( 0.0 ), updateRequired( false ),
-						_useGlobalParticleSpace(false), _fillSpeedLimit(5)
+  Object( name, shader ), numParticles( particleAmt ), minLife( 0.1 ),
+  maxLife( 1 ), _emitterRadius(0.0), pauseTheSystem(false), 
+  _slaughterHeight( 0.0 ), updateRequired( false ),
+  _useGlobalParticleSpace(false), _fillSpeedLimit(5),
+  _vecFieldFunc(NULL), _colorFunc(NULL)
 {
 	this->drawMode(GL_POINTS)  ;
 	this->_vecFieldFunc = NULL ;
@@ -268,39 +269,36 @@ void  ParticleSystem::buffer( GLenum usage ) {
   
 }
 
-void
-ParticleSystem::draw( void )
-{
-	static const TransCache newTrans = TransCache();
+void ParticleSystem::draw( void ) {
+  static const TransCache newTrans = TransCache();
 
-	// we should consider moving the update() call to the idle() loop
-	update();
-	buffer();
-
+  // we should consider moving the update() call to the idle() loop
+  update();
+  buffer();
+  
   TransCache tempTrans = _trans ;
 
-  // TODO, OVERLOAD THIS BETTER
-  // if we are using a detached thingy
   if ( getParticleSpace() ) {
     tempTrans = _trans ;
     _trans = newTrans;
   }
 
-	// Binds the VAO, handles shader switching,
-	// Sends uniforms that the core object knows about.
-	Object::drawPrep();
-	//send( Object::camPos );
 
-	glDrawArrays( _drawMode, 0, _vertices.size() );
+  // This binds the vertex array and sets the active shader,
+  // And sends all of the Object's uniforms.
+  Object::drawPrep();
 
-	glBindVertexArray(0);
-	Scene::draw();
+  // We can handle this ourselves, because we're pretty.
+  glDrawArrays( _drawMode, 0, _vertices.size() );
 
-	// if we are using a detached thingy
-	if ( getParticleSpace() )
-	{	  
-	  _trans = tempTrans ;
-        }
+  // Unbind our vertex, then draw children if any.
+  glBindVertexArray(0);
+  Scene::draw();
+
+  // if we are using a detached thingy
+  if ( getParticleSpace() ) {  
+    _trans = tempTrans ;
+  }
 
 }
 
