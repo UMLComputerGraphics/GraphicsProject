@@ -404,6 +404,8 @@ public:
   **/
   void resetPosition( void );
 
+  void debug( void );
+
 private:
   
   /**

@@ -96,18 +96,12 @@ void engineKeyboard( unsigned char key, int x, int y ) {
     
   case ';': // Print Info
     // Active() will throw if there is no active object, or if the requested object doesn't exist
-    try 
-    {
-      fprintf( stderr, "Active Object: %s\n",
-	       theScene->active()->name().c_str() );
+    try {
+      gprint( PRINT_INFO, "Active Object: %s\n", theScene->active()->name().c_str() );
+    } catch( std::logic_error& e ) {
+      gprint( PRINT_WARNING, "There is currently no active object, or no objects in the scene. "
+	      " We tried to print the name, but got: %s\n", e.what() );
     }
-
-    catch( std::logic_error& e ) 
-    {
-      fprintf( stderr, "There is currently no Active Object, or no more Objects in the scene\n");
-    }
-
-
     break;
     
   case '~':
@@ -134,11 +128,10 @@ void engineKeyboard( unsigned char key, int x, int y ) {
     if (camList->numCameras() > 1)
       camList->popCamera();
     else
-      fprintf(stderr, "You cannot delete the only camera. Deal with it.\n");
+      gprint( PRINT_WARNING, "You can't delete the last camera." );
     break;
   case ';':
-    fprintf( stderr, "Camera Position: (%f,%f,%f)\n", cam.x(), cam.y(),
-             cam.z() );
+    gprint( PRINT_INFO, "Camera Position: (%f,%f,%f)\n", cam.x(), cam.y(), cam.z() );
     break;
     
   case 'w':
@@ -183,7 +176,7 @@ void engineKeyboard( unsigned char key, int x, int y ) {
     break;
 
   case 't':
-    fprintf( stderr, "turning on terrain_regen\n" );
+    gprint( PRINT_DEBUG, "Turning on Terrain Regeneration\n" );
     Engine::instance()->opt( "terrain_regen", true );
     break;
     
@@ -206,7 +199,7 @@ void engineSpecialKeyboard( int key, int x, int y ) {
   Scene *theScene = Engine::instance()->rootScene();
   Cameras *camList = Engine::instance()->cams();
   
-  GLuint mode;
+  GLuint mode = -1;
 
   switch ( key ) {
   //Cycle between active Objects ...
@@ -220,67 +213,27 @@ void engineSpecialKeyboard( int key, int x, int y ) {
     //Change the Draw drawMode ...
   case GLUT_KEY_F1:
     mode = GL_POINTS;
-    /* no break */
+    break;
   case GLUT_KEY_F2:
      mode = GL_LINE_STRIP;
-     /* no break */
+     break;
   case GLUT_KEY_F3:
     mode = GL_TRIANGLE_STRIP;
-    /* no break */
+    break;
   case GLUT_KEY_F4:
     mode = GL_TRIANGLES;
-    /* no break */
-  default:
+    break;
+  }
+
+  if (mode != -1) {
     Object *s;
     try {
       s = theScene->active();
       s->drawMode( mode );
+    } catch( std::exception &ex ) {
+      gprint( PRINT_ERROR, "Attempted to switch the draw mode on an object, "
+	      "but Active() threw an exception: %s\n", ex.what() );
     }
-    catch(std::exception &ex)
-    {
-      fprintf(stderr, "Active object could be retrieved from scene: %s\n", ex.what());
-      s = NULL;
-    }
-    /*
-    try
-    {
-	 theScene->active()->Mode( GL_POINTS );
-    }
-    catch( std::logic_error& e ) 
-     {
-       fprintf(stderr, "Error: Attempt to change active object draw mode failed\nReason: %s\n", e.what() ) ;
-     }
-    break;
-  case GLUT_KEY_F2:
-    try
-    {
-	 theScene->active()->Mode( GL_LINE_STRIP );
-    }
-    catch( std::logic_error& e ) 
-     {
-       fprintf(stderr, "Error: Attempt to change active object draw mode failed\nReason: %s\n", e.what() ) ;
-     }
-    break;
-  case GLUT_KEY_F3:
-    try
-    {
-	 theScene->active()->Mode( GL_TRIANGLE_STRIP );
-    }
-    catch( std::logic_error& e ) 
-     {
-       fprintf(stderr, "Error: Attempt to change active object draw mode failed\nReason: %s\n", e.what() ) ;
-     }
-    break;
-  case GLUT_KEY_F4:
-    try
-    {
-	 theScene->active()->Mode( GL_TRIANGLES );
-    }
-    catch( std::logic_error& e ) 
-     {
-       fprintf(stderr, "Error: Attempt to change active object draw mode failed\nReason: %s\n", e.what() ) ;
-       }*/
-    break;
   }
   
   // If there are no Cameras, don't muck around with this section.

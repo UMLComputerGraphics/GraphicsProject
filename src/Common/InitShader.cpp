@@ -273,8 +273,6 @@ namespace Angel {
       exit( EXIT_FAILURE );
     }
 
-    /* use program object */
-    //glUseProgram(program);
     return program;
   }
 
