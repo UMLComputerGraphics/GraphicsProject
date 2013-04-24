@@ -10,6 +10,11 @@
 
 /* Engine Classes */
 #include "Engine.hpp"
+/* Utilities and Common */
+#include "model.hpp"
+#include "InitShader.hpp"
+#include "glut_callbacks.h"
+#include "ObjLoader.hpp"
 
 const char *modelname;
 

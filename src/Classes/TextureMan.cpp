@@ -21,11 +21,12 @@ TextureManagement::~TextureManagement( void ) {
 }
 
 unsigned TextureManagement::maxTextures( void ) {
-  if ( TextureManagement::maxTexUnits > 0 ) return TextureManagement::maxTexUnits;
+  if (TextureManagement::maxTexUnits > 0)
+    return TextureManagement::maxTexUnits;
   else {
     int max;
     glGetIntegerv( GL_MAX_TEXTURE_IMAGE_UNITS, &max );
-    if ( max > 0 ) {
+    if (max > 0) {
       TextureManagement::maxTexUnits = max;
       return max;
     } else {
@@ -49,26 +50,26 @@ unsigned TextureManagement::assign( Texture *newTexture ) {
   GLenum assignedTexUnit;
   for ( size_t i = 0; i < maxTextures(); ++i ) {
     it = _texUnits.find( i );
-    if ( it == _texUnits.end() ) {
+    if (it == _texUnits.end()) {
       // This key not found. That means this slot is open!
-      assignedTexUnit = getTexUnit( i );
+      assignedTexUnit = getTexUnit(i);
       newTexture->bind( assignedTexUnit );
       _texUnits[i] = newTexture;
-      
+
       // FIXME: Mac OSX Hack
       rebind();
-      
+
       // Return which texture unit we bound this texture to.
       return i;
     }
   }
-  
+
   throw std::out_of_range( "No texture units available, oh no!" );
 }
 
 void TextureManagement::rebind( void ) {
   TexMap::iterator it;
-  for ( it = _texUnits.begin(); it != _texUnits.end(); ++it ) {
+  for (it = _texUnits.begin(); it != _texUnits.end(); ++it) {
     it->second->bind( getTexUnit( it->first ) );
   }
 }

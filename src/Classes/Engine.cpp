@@ -40,15 +40,15 @@ Engine *Engine::instance( void ) {
  * Default constructor. Cannot be called, this is a singleton class.
  */
 Engine::Engine( void ) {
-  
+
   _idleFunc = NULL;
   // Reminder: 0 is never a valid program.
   _currentShader = 0;
   _renderingCamera = NULL;
-  
-  opt( "fixed_yaw", true );
-  opt( "trap_pointer", true );
-  
+
+  opt("fixed_yaw", true);
+  opt("trap_pointer", true);
+
 }
 
 /**
@@ -117,7 +117,7 @@ Screen *Engine::mainScreen( void ) {
  * Retrieves a pointer to the Texture Management object.
  * @return A pointer to the Texture Management object.
  */
-TextureManagement *Engine::texMan( void ) {
+TextureManagement *Engine::texMan( void ){
   return &_texMan;
 }
 
@@ -166,7 +166,7 @@ bool Engine::flip( const std::string &Option ) {
  * Initialize GLEW, GLUT and our Engine.
  */
 void Engine::init( int *argc, char *argv[], const char *title ) {
-  
+
   // OS X suppresses events after mouse warp.  This resets the suppression
   // interval to 0 so that events will not be suppressed. This also found
   // at http://stackoverflow.com/questions/728049/
@@ -174,20 +174,19 @@ void Engine::init( int *argc, char *argv[], const char *title ) {
 #ifdef __APPLE__
   CGSetLocalEventsSuppressionInterval( 0.0 );
 #endif
-  Util::InitRelativePaths( *argc, argv );
+  Util::InitRelativePaths(*argc, argv);
   glutInit( argc, argv );
   glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH );
   glutInitWindowSize( 500, 500 );
   glutCreateWindow( title );
   
   char *gtfs = getenv( "GLUT_FULLSCREEN" );
-  if ( gtfs && (strncmp( gtfs, "TRUE", 4 ) == 0) ) glutFullScreen();
-  
+  if (gtfs && (strncmp(gtfs, "TRUE", 4) == 0)) glutFullScreen();
+
   glutSetCursor( GLUT_CURSOR_NONE );
-  
-  GLEW_INIT()
-  ;
-  
+
+  GLEW_INIT();
+
   /* Register our Callbacks */
   glutDisplayFunc( Engine::displayScreen );
   glutKeyboardFunc( engineKeyboard );
@@ -198,61 +197,63 @@ void Engine::init( int *argc, char *argv[], const char *title ) {
   glutPassiveMotionFunc( EngineMousePassive );
   glutIdleFunc( Engine::idle );
   glutReshapeFunc( engineResize );
-  
+
   gprint( PRINT_DEBUG, "GL_VENDOR: %s\n", glGetString( GL_VENDOR ) );
   gprint( PRINT_DEBUG, "GL_RENDERER: %s\n", glGetString( GL_RENDERER ) );
   gprint( PRINT_DEBUG, "GL_VERSION: %s\n", glGetString( GL_VERSION ) );
   gprint( PRINT_DEBUG, "GL_SHADING_LANGUAGE_VERSION: %s\n",
-          glGetString( GL_SHADING_LANGUAGE_VERSION ) );
-  
+	   glGetString( GL_SHADING_LANGUAGE_VERSION ) );
+
   glEnable( GL_DEPTH_TEST );
   glClearColor( 0.0, 0.0, 0.0, 1.0 );
-  
+
   Engine *eng = Engine::instance();
-  
+
   // Conjure up a default shader program to use until told otherwise.
-  GLuint defaultProgram = Angel::InitShader( "./shaders/vEngine.glsl",
-                                             "./shaders/fEngine.glsl" );
+  GLuint defaultProgram = Angel::InitShader( "./shaders/vEngine.glsl", 
+					     "./shaders/fEngine.glsl" );
   eng->switchShader( defaultProgram );
-  
+
   // Set the Camera List to use this shader,
   // And add, by default, a camera.
   eng->cams()->shader( defaultProgram );
   eng->cams()->addCamera( "defaultCamera" );
   eng->cams()->next();
-  
+
   eng->rootScene()->shader( defaultProgram );
-  
+
 }
+
 
 void Engine::registerIdle( void (idleFunc)( void ) ) {
   _idleFunc = idleFunc;
 }
 
+
 /**
  * What should the engine be doing every idle()?
  */
 void Engine::idle( void ) {
-  
+
   static Cameras *camList = Engine::instance()->cams();
-  
+
   // Compute the time since last idle().
   tick.tock();
-  
+
   // Propagate Scene Graph Changes (Maybe!)
   Engine::instance()->rootScene()->propagate();
-  
+
   // Move all camera(s).
   camList->idleMotion();
-  
+
   Engine::instance()->callIdle();
-  
+
   glutPostRedisplay();
-  
+
 }
 
 void Engine::callIdle( void ) {
-  if ( _idleFunc ) (*_idleFunc)();
+  if (_idleFunc) (*_idleFunc)();
 }
 
 GLuint Engine::currentShader( void ) const {
@@ -262,19 +263,18 @@ GLuint Engine::currentShader( void ) const {
 void Engine::switchShader( GLint program ) {
   GLint currShader;
   glGetIntegerv( GL_CURRENT_PROGRAM, &currShader );
-  if ( currShader != _currentShader ) {
-    gprint( PRINT_ERROR,
-            "ERROR: Shader in-use (%d) was not _currentShader (%d)!\n",
+  if (currShader != _currentShader) {
+    gprint( PRINT_ERROR, "ERROR: Shader in-use (%d) was not _currentShader (%d)!\n",
             currShader, _currentShader );
   }
-  if ( program == _currentShader ) return;
-  
+  if (program == _currentShader) return;
+
   // Update our state.
   _currentShader = program;
   // Switch to the new Shader.
   glUseProgram( program );
   gprint( PRINT_VERBOSE, "Switched from [%d] to [%d]\n", currShader, program );
-  if ( _renderingCamera ) {
+  if (_renderingCamera) {
     // Since we're on a new shader, have the camera re-send its CTM.
     _renderingCamera->relinkUniforms();
     _renderingCamera->view();
@@ -285,8 +285,9 @@ Camera *Engine::currentCamera( void ) const {
   return _renderingCamera;
 }
 
-void Engine::switchCamera( Camera *camera ) {
-  if ( camera != _renderingCamera ) {
+
+void Engine::switchCamera( Camera *camera ){
+  if (camera != _renderingCamera) {
     _renderingCamera = camera;
     // Instruct this camera to re-send his goodies.
     _renderingCamera->view();
@@ -298,29 +299,29 @@ void Engine::switchCamera( Camera *camera ) {
  * Display/render the entire screen.
  */
 void Engine::displayScreen( void ) {
-  
+
   static Cameras *camList = Engine::instance()->cams();
-  
+
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-  
+
   tick.sendTime();
-  
+
   // Tell camList to draw using our 'draw' rendering function.
   camList->view( Engine::displayViewport );
-  
+
   glutSwapBuffers();
-  
+
 }
 
 /**
  * Display/re-render a viewport.
  */
 void Engine::displayViewport( void ) {
-  
+
   static Scene *theScene = Engine::instance()->rootScene();
   static Cameras *camList = Engine::instance()->cams();
-  
+
   theScene->draw();
   camList->draw();
-  
+
 }

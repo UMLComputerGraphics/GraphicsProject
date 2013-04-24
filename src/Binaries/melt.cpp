@@ -7,6 +7,11 @@
  */
 
 #include "Engine.hpp"
+#include "ParticleSystem.hpp"
+/* Utilities and Common */
+#include "glut_callbacks.h"
+#include "InitShader.hpp"
+#include "model.hpp"
 /* System Headers */
 #include <cmath>
 #include <cstdio>
