@@ -10,6 +10,8 @@
 #define __GLOBALS_H
 
 #include <cmath>
+#include "Util.hpp"
+
 /** A constant factor of conversion for Degrees to Radians. **/
 #define DEGREES_TO_RADIANS (M_PI/180)
 /** A constant for the square root of 2. **/
@@ -27,9 +29,11 @@ const float DIVIDE_BY_ZERO_TOLERANCE = float( 1.0e-07 );
  */
 #ifndef DEBUG
 #define DEBUG false
+#define PRINT_LEVEL PRINT_INFO
 #else
 #undef DEBUG
 #define DEBUG true
+#define PRINT_LEVEL PRINT_DEBUG
 #endif
 
 #ifdef PREMULT

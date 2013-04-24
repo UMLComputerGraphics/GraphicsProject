@@ -89,7 +89,7 @@ void init() {
 	*/
 	
 	//create Bipartite Graph
-	BipartiteGraph * bipartiteGraph = new BipartiteGraph(bottle, bottleMorphTarget);
+        //BipartiteGraph * bipartiteGraph = new BipartiteGraph(bottle, bottleMorphTarget);
 	//segment parts of bottle to determine problem areas
 	//splitProblemTriangles(bottle, bottleMorphTarget);
 	//segmentModels(bottle, lowBoundSrc, maxBoundSrc, bottleMorphTarget, lowBoundDst, maxBoundDst);

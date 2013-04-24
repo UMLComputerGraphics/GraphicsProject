@@ -198,13 +198,11 @@ void Engine::init( int *argc, char *argv[], const char *title ) {
   glutIdleFunc( Engine::idle );
   glutReshapeFunc( engineResize );
 
-  if ( DEBUG ) {
-    fprintf( stderr, "GL_VENDOR: %s\n", glGetString( GL_VENDOR ) );
-    fprintf( stderr, "GL_RENDERER: %s\n", glGetString( GL_RENDERER ) );
-    fprintf( stderr, "GL_VERSION: %s\n", glGetString( GL_VERSION ) );
-    fprintf( stderr, "GL_SHADING_LANGUAGE_VERSION: %s\n",
-             glGetString( GL_SHADING_LANGUAGE_VERSION ) );
-  }
+  gprint( PRINT_DEBUG, "GL_VENDOR: %s\n", glGetString( GL_VENDOR ) );
+  gprint( PRINT_DEBUG, "GL_RENDERER: %s\n", glGetString( GL_RENDERER ) );
+  gprint( PRINT_DEBUG, "GL_VERSION: %s\n", glGetString( GL_VERSION ) );
+  gprint( PRINT_DEBUG, "GL_SHADING_LANGUAGE_VERSION: %s\n",
+	   glGetString( GL_SHADING_LANGUAGE_VERSION ) );
 
   glEnable( GL_DEPTH_TEST );
   glClearColor( 0.0, 0.0, 0.0, 1.0 );
@@ -275,7 +273,7 @@ void Engine::switchShader( GLint program ) {
   _currentShader = program;
   // Switch to the new Shader.
   glUseProgram( program );
-  gprint( PRINT_ERROR, "Switched from [%d] to [%d]\n", currShader, program );
+  gprint( PRINT_VERBOSE, "Switched from [%d] to [%d]\n", currShader, program );
   if (_renderingCamera) {
     // Since we're on a new shader, have the camera re-send its CTM.
     _renderingCamera->relinkUniforms();

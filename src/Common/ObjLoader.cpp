@@ -236,7 +236,7 @@ namespace ObjLoader {
         }
         
         // Add this object up-in-here.
-        fprintf( stderr, "CREATING OBJECT1: %s\n", objName.c_str() );
+	gprint( PRINT_DEBUG, "Creating Object: %s\n", objName.c_str() );
         Object *thisObj = scene.addObject( objName );
 	results.push_back( thisObj );
         thisObj->_vertices = vertices;
@@ -288,7 +288,7 @@ namespace ObjLoader {
     }
     
     // Add this object up-in-here.
-    fprintf( stderr, "CREATING OBJECT: %s\n", objName.c_str() );
+    gprint( PRINT_DEBUG, "Creating Object: %s\n", objName.c_str() );
     if ( objName.length() == 0 ) objName = defaultObjName;
     Object *thisObj = scene.addObject( objName );
     results.push_back( thisObj );
@@ -389,7 +389,7 @@ namespace ObjLoader {
       Angel::vec2 &txy = object->_texUVs[i];
 
       if ((txy.x < 0.0) || (txy.x > 1.0) || (txy.y < 0.0) || (txy.y > 1.0))
-	fprintf( stderr, "WARNING: Texture UV is out of bounds. (%f,%f)\n", txy.x, txy.y );
+	gprint( PRINT_WARNING, "WARNING: Texture UV is out of bounds. (%f,%f)\n", txy.x, txy.y );
 
       if (txy.x < 0.0) txy.x = 0.0;
       if (txy.x > 1.0) txy.x = 1.0;
