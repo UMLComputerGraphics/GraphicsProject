@@ -36,6 +36,11 @@ const float DIVIDE_BY_ZERO_TOLERANCE = float( 1.0e-07 );
 #define PRINT_LEVEL PRINT_DEBUG
 #endif
 
+
+#ifdef PRINTLEVEL
+#define PRINT_LEVEL (PRINTLEVEL)
+#endif
+
 #ifdef PREMULT
 /** @var POSTMULT defines if we are, or are not using a Post-Multiplication system. **/
 static const bool POSTMULT = false;

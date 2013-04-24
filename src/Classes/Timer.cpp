@@ -59,7 +59,7 @@ unsigned long Timer::tock( void ) {
 #else
   gettimeofday( &_t2, NULL );
   _delta = (_t2.tv_usec - _t1.tv_usec)
-           + (SEC_TO_USEC * (_t2.tv_sec - _t1.tv_sec));
+      + (SEC_TO_USEC * (_t2.tv_sec - _t1.tv_sec));
   _scale = (_delta / keyFrameRate());
 #endif
   _t1 = _t2;
@@ -118,9 +118,10 @@ void Timer::sendTime( void ) {
   if ( _uniform > 0 ) {
     int t = glutGet( GLUT_ELAPSED_TIME );
     glUniform1i( _uniform, t );
-    if (glGetError()) {
-      fprintf( stderr, "glUniform1i failed in sendTime: glUniform1i( %u, %u )\n",
-	       _uniform, t );
+    if ( glGetError() ) {
+      fprintf( stderr,
+               "glUniform1i failed in sendTime: glUniform1i( %u, %u )\n",
+               _uniform, t );
     }
   }
 }

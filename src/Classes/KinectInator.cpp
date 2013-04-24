@@ -207,7 +207,8 @@ namespace TiemSpelchk {
       
       const char *fn = NULL;
       if ( fileExists( SAMPLE_XML_PATH ) ) fn = SAMPLE_XML_PATH;
-      else if ( fileExists( SAMPLE_XML_PATH_LOCAL ) ) fn = SAMPLE_XML_PATH_LOCAL;
+      else if ( fileExists( SAMPLE_XML_PATH_LOCAL ) ) fn =
+          SAMPLE_XML_PATH_LOCAL;
       else {
         printf( "Could not find '%s' nor '%s'. Aborting.\n", SAMPLE_XML_PATH,
                 SAMPLE_XML_PATH_LOCAL );

@@ -17,18 +17,19 @@ using Angel::vec4;
 using Angel::vec3;
 using Angel::mat4;
 
-
 /**
  * Bind a VBO and associate it with a variable on the shader.
  * Fail if the variable is not located,
  * And cache the attribute location for later if we later need to disable it.
  **/
-GLuint Object::createAndBind( GLenum target, enum Object::BufferType typeIndex, const char *name,
-			      GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid* ptr ) {
-
+GLuint Object::createAndBind( GLenum target, enum Object::BufferType typeIndex,
+                              const char *name, GLint size, GLenum type,
+                              GLboolean normalized, GLsizei stride,
+                              const GLvoid* ptr ) {
+  
   GLuint &buffer = _buffer[typeIndex];
   GLint &index = _attribIndex[typeIndex];
-
+  
   glBindBuffer( target, buffer );
   index = glGetAttribLocation( shader(), name );
   
@@ -39,11 +40,10 @@ GLuint Object::createAndBind( GLenum target, enum Object::BufferType typeIndex, 
   
   glEnableVertexAttribArray( index );
   glVertexAttribPointer( index, size, type, normalized, stride, ptr );
-
+  
   return index;
-
+  
 }
-
 
 /**
  * Constructor. Requires at minimum a _name and a shader handle.
@@ -59,7 +59,7 @@ Object::Object( const std::string &name, GLuint gShader ) {
    Position, Color, Direction (Normal), texture and draw Order. */
 
   gprint( PRINT_INFO, "\n-- Creating Object (%s) --\n", name.c_str() );
-
+  
   // Create room for our GLUniform _handles
   gprint( PRINT_DEBUG, "Creating %d handles for uniforms\n", Object::END );
   _handles.resize( Object::END );
@@ -83,63 +83,72 @@ Object::Object( const std::string &name, GLuint gShader ) {
   _isTextured = false;
   _textureID = -1;
   _numTextures = 0;
-
+  
   // Linear Interpolation Demo: Morph Percentage
   _morphPercentage = 0.0;
-
+  
   // Pointer to an Object to Morph to.
   _morphTarget = NULL;
   
   /* Create our VAO, which is our handle to all 
-   the rest of the following information. */
-  glGenVertexArrays( 1, &_vao );
+   the rest of the following information. */glGenVertexArrays( 1, &_vao );
   glBindVertexArray( _vao );
   
-  if (gShader == 0) {
-    gprint( PRINT_WARNING, "Warning: Object %s created without a valid shader.\n", _name.c_str() );
-    gprint( PRINT_WARNING, "Disabling use of renderable geometry for this object.\n" );
+  if ( gShader == 0 ) {
+    gprint( PRINT_WARNING,
+            "Warning: Object %s created without a valid shader.\n",
+            _name.c_str() );
+    gprint( PRINT_WARNING,
+            "Disabling use of renderable geometry for this object.\n" );
     glBindVertexArray( 0 );
     return;
   }
-
+  
   /* Create (Eight) VBOs: One each for Positions, Colors, Normals, 
    Textures, draw Order; Three for Morphing (Position,Colors,Normals.) */
 
   glGenBuffers( NUM_BUFFERS, _buffer );
-
+  
   // Create the Vertex _buffer and link it with the shader.
-  createAndBind( GL_ARRAY_BUFFER, VERTICES, "vPosition", 4, GL_FLOAT, GL_FALSE, 0, 0 );
-
+  createAndBind( GL_ARRAY_BUFFER, VERTICES, "vPosition", 4, GL_FLOAT, GL_FALSE,
+                 0, 0 );
+  
   // Create the MORPH Vertex _buffer and link it with the shader.
-  createAndBind( GL_ARRAY_BUFFER, VERTICES_MORPH, "vPositionMorph", 4, GL_FLOAT, GL_FALSE, 0, 0 );
+  createAndBind( GL_ARRAY_BUFFER, VERTICES_MORPH, "vPositionMorph", 4, GL_FLOAT,
+                 GL_FALSE, 0, 0 );
   
   // Create the Normal _buffer and link it with the shader.
-  createAndBind( GL_ARRAY_BUFFER, NORMALS, "vNormal", 3, GL_FLOAT, GL_FALSE, 0, 0 );
+  createAndBind( GL_ARRAY_BUFFER, NORMALS, "vNormal", 3, GL_FLOAT, GL_FALSE, 0,
+                 0 );
   
   // Create the Normal MORPH _buffer and link it with the shader. 
-  createAndBind( GL_ARRAY_BUFFER, NORMALS_MORPH, "vNormalMorph", 3, GL_FLOAT, GL_FALSE, 0, 0 );
+  createAndBind( GL_ARRAY_BUFFER, NORMALS_MORPH, "vNormalMorph", 3, GL_FLOAT,
+                 GL_FALSE, 0, 0 );
   
   // Create the Color _buffer and link it with the shader.
-  createAndBind( GL_ARRAY_BUFFER, COLORS, "vColor", 4, GL_FLOAT, GL_FALSE, 0, 0 );
+  createAndBind( GL_ARRAY_BUFFER, COLORS, "vColor", 4, GL_FLOAT, GL_FALSE, 0,
+                 0 );
   glEnable( GL_BLEND );
   glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-
+  
   // Create the Color Morph _buffer and link it with the shader.
-  createAndBind( GL_ARRAY_BUFFER, COLORS_MORPH, "vColorMorph", 4, GL_FLOAT, GL_FALSE, 0, 0 );
+  createAndBind( GL_ARRAY_BUFFER, COLORS_MORPH, "vColorMorph", 4, GL_FLOAT,
+                 GL_FALSE, 0, 0 );
   glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
   
   // Create the texture Coordinate _buffer and link it with the shader.
-  createAndBind( GL_ARRAY_BUFFER, TEXCOORDS, "vTex", 2, GL_FLOAT, GL_FALSE, 0, 0 );
-
+  createAndBind( GL_ARRAY_BUFFER, TEXCOORDS, "vTex", 2, GL_FLOAT, GL_FALSE, 0,
+                 0 );
+  
   // Create the drawing order _buffer, but we don't need to link it
   // with any uniform, because we won't be accessing this data directly.
   // I.e, the numbers here are not important once we are in the vshader.
   glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, _buffer[INDICES] );
-
+  
   gprint( PRINT_DEBUG, "Array/Buffer Handles: %u %u %u %u %u %u %u %u\n",
-	  _buffer[VERTICES], _buffer[NORMALS], _buffer[COLORS],
-	  _buffer[TEXCOORDS], _buffer[INDICES], _buffer[VERTICES_MORPH],
-	  _buffer[NORMALS_MORPH], _buffer[COLORS_MORPH] );
+          _buffer[VERTICES], _buffer[NORMALS], _buffer[COLORS],
+          _buffer[TEXCOORDS], _buffer[INDICES], _buffer[VERTICES_MORPH],
+          _buffer[NORMALS_MORPH], _buffer[COLORS_MORPH] );
   
   /* Unset the VAO context. */
   glBindVertexArray( 0 );
@@ -159,21 +168,23 @@ Object::~Object( void ) {
  * but do not actually draw yet.
  */
 void Object::drawPrep( void ) {
-
+  
   // Check to see if the correct shader program is engaged.
   GLuint currShader = Engine::instance()->currentShader();
-  if (currShader != shader()) {
+  if ( currShader != shader() ) {
     gprint( PRINT_VERBOSE, "Object %s requesting switchShader from %d to %d\n",
             _name.c_str(), currShader, shader() );
     Engine::instance()->switchShader( shader() );
   }
-
+  
   glBindVertexArray( _vao );
-
+  
   send( Object::IS_TEXTURED );
   send( Object::OBJECT_CTM );
   send( Object::MORPH_PCT );
   send( Object::TEX_SAMPLER );
+  
+  glBindVertexArray( 0 );
   
 }
 
@@ -181,14 +192,14 @@ void Object::drawPrep( void ) {
  * draw method: Render this object to the screen _buffer.
  */
 void Object::draw( void ) {
-
+  
   drawPrep();
   
+  glBindVertexArray( _vao );
   /* Are we using a draw order? */
   if ( _indices.size() > 1 ) glDrawElements( _drawMode, _indices.size(),
                                              GL_UNSIGNED_INT, 0 );
   else glDrawArrays( _drawMode, 0, _vertices.size() );
-  
   glBindVertexArray( 0 );
   
   // draw all of our Children.
@@ -197,10 +208,9 @@ void Object::draw( void ) {
   
 }
 
-
 inline void disableIfEnabled( GLint index ) {
-  if (index != -1) 
-    glDisableVertexAttribArray( index );
+  if ( index != -1 )
+  glDisableVertexAttribArray( index );
 }
 
 /**
@@ -219,43 +229,43 @@ void Object::buffer( GLenum usage ) {
   glBufferData( GL_ARRAY_BUFFER, sizeof(Angel::vec3) * _normals.size(),
                 &(_normals[0]), usage );
   
-  if (_texUVs.size() == 0) {
+  if ( _texUVs.size() == 0 ) {
     // Disable Textures ...
     _isTextured = false;
-    disableIfEnabled( _attribIndex[ TEXCOORDS ] );
-
+    disableIfEnabled( _attribIndex[TEXCOORDS] );
+    
     // Enable Colors.
     glBindBuffer( GL_ARRAY_BUFFER, _buffer[COLORS] );
     glBufferData( GL_ARRAY_BUFFER, sizeof(Angel::vec4) * _colors.size(),
-		  &(_colors[0]), usage );
+                  &(_colors[0]), usage );
   } else {
     // Enable Textures ...
     _isTextured = true;
     glBindBuffer( GL_ARRAY_BUFFER, _buffer[TEXCOORDS] );
     glBufferData( GL_ARRAY_BUFFER, sizeof(Angel::vec2) * _texUVs.size(),
-		  (_texUVs.size() ? &(_texUVs[0]) : NULL), usage );
-
+                  (_texUVs.size() ? &(_texUVs[0]) : NULL), usage );
+    
     // Disable Colors.
-    disableIfEnabled( _attribIndex[ COLORS ] );
+    disableIfEnabled( _attribIndex[COLORS] );
     fprintf( stderr, "Disabled colors for %s\n", _name.c_str() );
   }
   
-  if (_morphTarget == NULL) {
-    disableIfEnabled( _attribIndex[ VERTICES_MORPH ] );
-    disableIfEnabled( _attribIndex[ NORMALS_MORPH ] );
-    disableIfEnabled( _attribIndex[ COLORS_MORPH ] );
-
+  if ( _morphTarget == NULL ) {
+    disableIfEnabled( _attribIndex[VERTICES_MORPH] );
+    disableIfEnabled( _attribIndex[NORMALS_MORPH] );
+    disableIfEnabled( _attribIndex[COLORS_MORPH] );
+    
     // Note: We disable the Morph buffers if they are not
     // being used, however, the 'glVertexAttrib*' method
     // of specifying a "default" value in this case is
     // apparently not well supported in glsl 1.2 and/or intel OpenGL.
     // In this case, the value of these attributes
     // on the shader is 'undefined.'
-
+    
   } else {
     bufferMorphOnly( usage );
   }
-
+  
   glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, _buffer[INDICES] );
   glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * _indices.size(),
                 &(_indices[0]), usage );
@@ -303,25 +313,24 @@ void Object::drawMode( GLenum new_mode ) {
   _drawMode = new_mode;
 }
 
-
 /**
  * Binds a texture to this Object.
  * @param filename The filename of the texture to load.
  */
 void Object::texture( const char* filename ) {
-
+  
   TextureManagement *tx = Engine::instance()->texMan();
   Texture *newTex = new Texture( GL_TEXTURE_2D );
   newTex->load( filename );
   newTex->buffer();
-
+  
   _textureID = tx->assign( newTex );
   _texIDs.push_back( _textureID );
   _textures.push_back( newTex );
   _numTextures = _texIDs.size();
-
+  
   send( Object::TEX_SAMPLER );
-
+  
 }
 
 /**
@@ -347,34 +356,35 @@ void Object::link( UniformEnum which, const std::string &name ) {
   GLint aShader = Engine::instance()->currentShader();
   // The previous behavior was:
   // aShader = shader();
-
+  
   if ( which >= _handles.size() ) {
     gprint( PRINT_WARNING, "Warning: Ignoring request to link a uniform "
-	    "(#%u) beyond our handles array [%lu].\n",
-	    which, _handles.size() );
+            "(#%u) beyond our handles array [%lu].\n",
+            which, _handles.size() );
     return;
   }
   
   // Save the link between the Uniform and the Variable _name.
   _uniformMap[which] = name;
-
-  gprint( PRINT_VERBOSE, "Linking enum[%u] with %s for object %s\n",
-	  which, name.c_str(), this->_name.c_str() );
-
-  if (aShader == 0) {
+  
+  gprint( PRINT_VERBOSE, "Linking enum[%u] with %s for object %s\n", which,
+          name.c_str(), this->_name.c_str() );
+  
+  if ( aShader == 0 ) {
     gprint( PRINT_VERBOSE, "Skipping link: [%s][%s]: No shader set.\n",
-	    _name.c_str(), name.c_str() );
+            _name.c_str(), name.c_str() );
     return;
   }
-
+  
   _handles[which] = glGetUniformLocation( aShader, name.c_str() );
-  if (glGetError()) {
-    gprint( PRINT_ERROR, "ERROR: [%s] failed to call glGetUniformLocation( %u, %s );\n",
-	    _name.c_str(), shader(), name.c_str() );
+  if ( glGetError() ) {
+    gprint( PRINT_ERROR,
+            "ERROR: [%s] failed to call glGetUniformLocation( %u, %s );\n",
+            _name.c_str(), shader(), name.c_str() );
   }
-
+  
   gprint( PRINT_VERBOSE, "Linking handles[%d] to %s; got %d.\n", which,
-	  name.c_str(), _handles[which] );
+          name.c_str(), _handles[which] );
   
 }
 
@@ -383,17 +393,21 @@ void Object::link( UniformEnum which, const std::string &name ) {
  * @param which The uniform to send.
  */
 void Object::send( Object::UniformEnum which ) {
-
-  if (glGetError()) {
-    fprintf( stderr, "ERROR: glGetError() returning true prior to exec of send() ...\n" );
-    //exit( 255 );
+  
+  if ( glGetError() ) {
+    fprintf(
+        stderr,
+        "ERROR: glGetError() returning true prior to exec of send() ...\n" );
+    exit( EXIT_FAILURE );
   }
-
-  if (shader() == 0) {
-    fprintf( stderr, "Warning: Object::send() for [%s][%u] called with no shader.\n", _name.c_str(), which );
+  
+  if ( shader() == 0 ) {
+    fprintf( stderr,
+             "Warning: Object::send() for [%s][%u] called with no shader.\n",
+             _name.c_str(), which );
     return;
   }
-
+  
   switch ( which ) {
   
   case Object::IS_TEXTURED:
@@ -407,25 +421,26 @@ void Object::send( Object::UniformEnum which ) {
     
   case Object::MORPH_PCT:
     glUniform1f( _handles[Object::MORPH_PCT], this->morphPercentage() );
+    gprint( PRINT_VERBOSE, "%s: send(MORPH_PCT): glUniform1f(%d,%d)\n",
+            _name.c_str(), _handles[Object::MORPH_PCT], morphPercentage() );
     break;
     
   case Object::TEX_SAMPLER:
-    if (_isTextured) {
-      //glUniform1i( _handles[Object::TEX_SAMPLER], _textureID );
-      glUniform1iv( _handles[Object::TEX_SAMPLER], _numTextures, &_texIDs[0]);
-      //fprintf( stderr, "Sending sampler uniform: %d textures\n", _numTextures );
+    if ( _isTextured && _numTextures > 0 ) {
+      glUniform1iv( _handles[Object::TEX_SAMPLER], _numTextures, &_texIDs[0] );
     }
     break;
     
   default:
     throw std::invalid_argument( "Unknown Uniform Handle Enumeration." );
   }
-
-  if (glGetError()) {
-    fprintf( stderr, "ERROR: Object::send() failed for [%s][%u]\n", _name.c_str(), which );
-    //exit(EXIT_FAILURE);
+  
+  if ( glGetError() ) {
+    fprintf( stderr, "ERROR: Object::send() failed for [%s][%u]\n",
+             _name.c_str(), which );
+    exit( EXIT_FAILURE );
   }
-
+  
 }
 
 /**
@@ -460,7 +475,7 @@ void Object::shader( GLuint newShader ) {
   Engine::instance()->switchShader( newShader );
   
   relinkUniforms();
-
+  
 }
 
 /**
@@ -493,7 +508,7 @@ void Object::propagateOLD( void ) {
   
   // This function is deprecated: If we detect the "new"
   // Scene Graph is in use, do NOTHING.
-  if (_trans.size() > 0) return;
+  if ( _trans.size() > 0 ) return;
   //fprintf( stderr, "\n" );
   //fprintf( stderr, "propagateOLD called on %s\n", _name.c_str() );
   
@@ -519,7 +534,7 @@ void Object::propagateOLD( void ) {
  * to all of our children, /if/ it is marked as needing to be updated.
  */
 void Object::sceneCascade( void ) {
-  if (_trans.cascade()) {
+  if ( _trans.cascade() ) {
     std::list< Object* >::iterator it;
     for ( it = _list.begin(); it != _list.end(); ++it ) {
       (*it)->_trans.ptm( _trans.itm() );
@@ -560,8 +575,8 @@ Object* Object::genMorphTarget( GLuint shader ) {
   
   // If the user declines to specify a shader,
   // Use whichever one we're using.
-  if (shader == 0) shader = this->shader();
-
+  if ( shader == 0 ) shader = this->shader();
+  
   Object *obj = new Object( this->_name + "_morph", shader );
   _morphTarget = obj;
   return obj;
@@ -573,7 +588,6 @@ Object* Object::genMorphTarget( GLuint shader ) {
  * @return The morph percentage, as a float.
  */
 float Object::morphPercentage( void ) const {
-  
   return _morphPercentage;
 }
 
@@ -606,17 +620,17 @@ size_t Object::numberOfPoints( void ) {
 }
 
 /**
-* Adds material data to the object
-* @param diffuse The diffuse color
-**/
-void Object::addMaterial(Angel::vec3 diffuse) {
- 
+ * Adds material data to the object
+ * @param diffuse The diffuse color
+ **/
+void Object::addMaterial( Angel::vec3 diffuse ) {
+  
   this->color = diffuse;
-
+  
   _colors.clear();
-
+  
   for ( size_t i = 0; i < _vertices.size(); ++i ) {
-    _colors.push_back(vec4(color, 1));
+    _colors.push_back( vec4( color, 1 ) );
   }
 }
 
@@ -632,9 +646,9 @@ Angel::vec3 Object::getMax( void ) {
     if ( _vertices[i].y > max.y ) max.y = _vertices[i].y;
     if ( _vertices[i].z > max.z ) max.z = _vertices[i].z;
   }
-
+  
   return max;
-
+  
 }
 
 /**
@@ -649,7 +663,7 @@ Angel::vec3 Object::getMin( void ) {
     if ( _vertices[i].y < min.y ) min.y = _vertices[i].y;
     if ( _vertices[i].z < min.z ) min.z = _vertices[i].z;
   }
-
+  
   return min;
-
+  
 }

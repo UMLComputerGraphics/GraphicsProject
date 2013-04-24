@@ -60,10 +60,11 @@ Angel::mat4 operator*( const Angel::mat4 &lhs, const Transformation &rhs ) {
 }
 
 void Transformation::combine( Transformation *rhs ) {
-  if (type() != rhs->type()) {
-    throw std::logic_error( "Cannot combine two Transformations of dissimilar types." );
+  if ( type() != rhs->type() ) {
+    throw std::logic_error(
+        "Cannot combine two Transformations of dissimilar types." );
   }
-
+  
   _mat *= rhs->matrix();
   rhs->reset();
 }
@@ -98,9 +99,9 @@ const RotMat &RotMat::adjust( const Angel::mat4 &adjustment, bool postmult ) {
 }
 
 Angel::mat4 RotMat::inverse( void ) const {
-
+  
   return transpose( _mat );
-
+  
 }
 
 Transformation::Subtype RotMat::type( void ) const {
@@ -108,10 +109,11 @@ Transformation::Subtype RotMat::type( void ) const {
 }
 
 void RotMat::coalesce( Transformation *rhs ) {
-  if (NULL == dynamic_cast<RotMat*>(rhs)) {
-    throw std::logic_error( "Cannot coalesce two Transformations of differing types.\n" );
+  if ( NULL == dynamic_cast< RotMat* >( rhs ) ) {
+    throw std::logic_error(
+        "Cannot coalesce two Transformations of differing types.\n" );
   }
-
+  
   // Two rotations can be combined via (lhs * rhs).
   // Not a lot of ways to escape that. We COULD optimize by
   // Considering only the upper-left 3x3,
@@ -168,12 +170,10 @@ const TransMat &TransMat::delta( const Angel::vec3 &arg ) {
 }
 
 Angel::mat4 TransMat::inverse( void ) const {
-
-  return Angel::mat4( 1, 0, 0, -_mat[0][3],
-                      0, 1, 0, -_mat[1][3],
-                      0, 0, 1, -_mat[2][3],
-                      0, 0, 0, 1);
-
+  
+  return Angel::mat4( 1, 0, 0, -_mat[0][3], 0, 1, 0, -_mat[1][3], 0, 0, 1,
+                      -_mat[2][3], 0, 0, 0, 1 );
+  
 }
 
 Transformation::Subtype TransMat::type( void ) const {
@@ -181,10 +181,11 @@ Transformation::Subtype TransMat::type( void ) const {
 }
 
 void TransMat::coalesce( Transformation *rhs ) {
-  if (NULL == dynamic_cast<TransMat*>(rhs)) {
-    throw std::logic_error( "Cannot coalesce two Transformations of differing types.\n" );
+  if ( NULL == dynamic_cast< TransMat* >( rhs ) ) {
+    throw std::logic_error(
+        "Cannot coalesce two Transformations of differing types.\n" );
   }
-
+  
   // We can combine two translations by adding up the fourth column.
   _mat[0][3] += rhs->matrix()[0][3];
   _mat[1][3] += rhs->matrix()[1][3];
@@ -224,30 +225,28 @@ const ScaleMat &ScaleMat::adjust( const float pct ) {
 }
 
 Angel::mat4 ScaleMat::inverse( void ) const {
-
-  return Angel::mat4( (1/_mat[0][0]), 0, 0, 0,
-                      0, (1/_mat[1][1]), 0, 0,
-                      0, 0, (1/_mat[2][2]), 0,
-                      0, 0, 0, 1);
-
+  
+  return Angel::mat4( (1 / _mat[0][0]), 0, 0, 0, 0, (1 / _mat[1][1]), 0, 0, 0,
+                      0, (1 / _mat[2][2]), 0, 0, 0, 0, 1 );
+  
 }
-
 
 Transformation::Subtype ScaleMat::type( void ) const {
   return Transformation::SCALE;
 }
 
 void ScaleMat::coalesce( Transformation *rhs ) {
-  if (NULL == dynamic_cast<ScaleMat*>(rhs)) {
-    throw std::logic_error( "Cannot coalesce two Transformations of differing types.\n" );
+  if ( NULL == dynamic_cast< ScaleMat* >( rhs ) ) {
+    throw std::logic_error(
+        "Cannot coalesce two Transformations of differing types.\n" );
   }
-
+  
   // Rotational Matrices contain only diagonal scaling elements.
   // We can combine by multiplying only three elements.
   _mat[0][0] *= rhs->matrix()[0][0];
   _mat[1][1] *= rhs->matrix()[1][1];
   _mat[2][2] *= rhs->matrix()[2][2];
-
+  
   rhs->reset();
 }
 

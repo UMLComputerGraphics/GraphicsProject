@@ -131,7 +131,6 @@ void Scene::insertObject( Object *obj ) {
   _map.insert( NameObjPair( obj->name(), obj ) );
 }
 
-
 /**
  * Select as the "active object" the next object in the list.
  * If there is no "Next" object, cycle back to the first.
@@ -205,8 +204,9 @@ Object *Scene::operator[]( std::string const &objname ) {
   ret = _map.find( objname );
   
   //if ( ret == _map.end() ) return NULL;
-  if (ret == _map.end())
-    throw std::out_of_range("Requested scene object \"" + objname + "\" not in scene");
+  if ( ret == _map.end() )
+    throw std::out_of_range(
+        "Requested scene object \"" + objname + "\" not in scene" );
   return ret->second;
   
 }
@@ -242,22 +242,22 @@ Scene::Scene( const Scene &copy ) {
  @param obj The pointer to the object to free.
  **/
 void Scene::deleteObject( Object *obj ) {
-
+  
   if ( obj == active() ) prev();
-
+  
   _list.remove( obj );
   _map.erase( obj->name() );
   delete obj;
-
+  
 }
 
 /**
  * Propagate all changes throughout the Scene graph.
  */
 void Scene::propagate( void ) {
-
+  
   std::list< Object* >::iterator it;
-
+  
   for ( it = _list.begin(); it != _list.end(); ++it ) {
     // Update this child's transformations.
     (*it)->_trans.clean();
@@ -266,5 +266,5 @@ void Scene::propagate( void ) {
     // Begin propagating from the child-down.
     (*it)->propagate();
   }
-
+  
 }

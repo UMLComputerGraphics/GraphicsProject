@@ -18,10 +18,11 @@
 using namespace Angel;
 
 void Camera::commonInit( void ) {
-
+  
   gprint( PRINT_INFO, " -- Extending Object (%s) -- \n", _name.c_str() );
-
-  gprint( PRINT_DEBUG, "Extending Uniforms Array to %d entries.\n", Camera::END );
+  
+  gprint( PRINT_DEBUG, "Extending Uniforms Array to %d entries.\n",
+          Camera::END );
   _handles.resize( Camera::END, -1 );
   
   /* Default Variable Links */
@@ -41,7 +42,7 @@ void Camera::commonInit( void ) {
   _aspectRatio = 1;
   _currentView = PERSPECTIVE;
   _fovy = 45.0;
-
+  
 }
 
 Camera::Camera( const std::string &name, GLuint gShader, float x, float y,
@@ -186,15 +187,15 @@ void Camera::adjustRotation( const mat4 &adjustment, const bool &fixed ) {
 #define ROTATE_OFFSET(V) (V * _ctm._orbit.matrix())
 
 void Camera::sway( const float &by ) {
-  dPos( ROTATE_OFFSET(vec4(by,0,0,0)) );
+  dPos( ROTATE_OFFSET(vec4(by,0,0,0)));
 }
 
 void Camera::surge( const float &by ) {
-  dPos( ROTATE_OFFSET(vec4(0,0,-by,0)) );
+  dPos( ROTATE_OFFSET(vec4(0,0,-by,0)));
 }
 
 void Camera::heave( const float &by ) {
-  dPos( ROTATE_OFFSET(vec4(0,by,0,0)) );
+  dPos( ROTATE_OFFSET(vec4(0,by,0,0)));
 }
 
 void Camera::pitch( const float &by, const bool &fixed ) {
@@ -247,7 +248,7 @@ void Camera::accel( const vec3 &raw_accel ) {
   float Scale = (_maxAccel / SQRT3) * (1 - POW5(_speed_cap)) * (tick.scale());
   vec3 accel = raw_accel * Scale;
   
-  if ( DEBUG_MOTION ) {
+  if ( DEBUG_MOTION) {
     fprintf( stderr, "Accel(); raw_accel = (%f,%f,%f)\n", raw_accel.x,
              raw_accel.y, raw_accel.z );
     fprintf(
@@ -266,7 +267,7 @@ void Camera::accel( const vec3 &raw_accel ) {
   //speed and speed_cap must now be recalculated.
   _speed_cap = (_speed = length( _velocity )) / _maxSpeed;
   
-  if ( DEBUG_MOTION )
+  if ( DEBUG_MOTION)
     fprintf( stderr, "Applied Acceleration to Velocity, Is now: (%f,%f,%f)\n",
              _velocity.x, _velocity.y, _velocity.z );
 }
@@ -280,21 +281,21 @@ void Camera::stop( const Camera::Direction &Dir ) {
 }
 
 void Camera::stopAll( void ) {
-
-	// This function is a compilation of the 6 directions of stop functions
-	// intended for use in resetPosition, but can apply elsewhere if needed
-
-	// Putting the brakes on acceleration
-	_velocity = vec3( 0, 0, 0 );
-
-	// Halting all movement input temporarily
-	if ( _motion[Camera::DIR_FORWARD] ) stop( Camera::DIR_FORWARD );
-	if ( _motion[Camera::DIR_BACKWARD] ) stop( Camera::DIR_BACKWARD );
-    if ( _motion[Camera::DIR_RIGHT] ) stop( Camera::DIR_RIGHT );
-	if ( _motion[Camera::DIR_LEFT] ) stop( Camera::DIR_LEFT );
-	if ( _motion[Camera::DIR_UP] ) stop( Camera::DIR_UP );
-	if ( _motion[Camera::DIR_DOWN] ) stop( Camera::DIR_DOWN );
-
+  
+  // This function is a compilation of the 6 directions of stop functions
+  // intended for use in resetPosition, but can apply elsewhere if needed
+  
+  // Putting the brakes on acceleration
+  _velocity = vec3( 0, 0, 0 );
+  
+  // Halting all movement input temporarily
+  if ( _motion[Camera::DIR_FORWARD] ) stop( Camera::DIR_FORWARD );
+  if ( _motion[Camera::DIR_BACKWARD] ) stop( Camera::DIR_BACKWARD );
+  if ( _motion[Camera::DIR_RIGHT] ) stop( Camera::DIR_RIGHT );
+  if ( _motion[Camera::DIR_LEFT] ) stop( Camera::DIR_LEFT );
+  if ( _motion[Camera::DIR_UP] ) stop( Camera::DIR_UP );
+  if ( _motion[Camera::DIR_DOWN] ) stop( Camera::DIR_DOWN );
+  
 }
 
 void Camera::idle( void ) {
@@ -318,7 +319,7 @@ void Camera::idle( void ) {
     float UnitScale = (1.0 / 20000.0);
     float Scale = tick.scale() * UnitScale;
     
-    if ( DEBUG_MOTION )
+    if ( DEBUG_MOTION)
       fprintf( stderr, "Applying Translation: + (%f,%f,%f)\n",
                _velocity.x * Scale, _velocity.y * Scale, _velocity.z * Scale );
     
@@ -328,7 +329,7 @@ void Camera::idle( void ) {
     
     // Friction Calculations
     if ( _speed < (_frictionMagnitude * tick.scale()) ) {
-      if ( DEBUG_MOTION )
+      if ( DEBUG_MOTION)
         fprintf( stderr, "Friction has stopped all movement.\n" );
       _velocity = vec3( 0, 0, 0 );
       _speed = 0;
@@ -341,7 +342,7 @@ void Camera::idle( void ) {
       frictionVec = frictionVec / (_speed / _frictionMagnitude);
       frictionVec *= tick.scale();
       
-      if ( DEBUG_MOTION )
+      if ( DEBUG_MOTION)
         fprintf( stderr, "Applying friction to Velocity: + (%f,%f,%f)\n",
                  frictionVec.x, frictionVec.y, frictionVec.z );
       _velocity += frictionVec;
@@ -364,7 +365,7 @@ float Camera::z( void ) const {
 }
 
 vec4 Camera::pos( void ) const {
-  return -1.0*vec4( x(), y(), z(), 1.0 );
+  return -1.0 * vec4( x(), y(), z(), 1.0 );
 }
 
 float Camera::fieldOfView( void ) const {
@@ -471,46 +472,48 @@ void Camera::resetRotation( void ) {
   
 }
 
-
 /**
-   dPos returns the camera's velocity.
-   @return The current velocity of the camera.
-**/
-vec3 Camera::dPos( void ) const { return _velocity; }
-
-
-/**
-   forward returns a vector pointing in the same direction as the camera
-   @return a vector pointing forwards, relative to the current camera rotation
+ dPos returns the camera's velocity.
+ @return The current velocity of the camera.
  **/
-vec4 Camera::forward ( void ) const { return vec4( 0.0, 0.0, 1.0, 1.0 ) * this->_ctm._rotation.matrix() ; }
-
+vec3 Camera::dPos( void ) const {
+  return _velocity;
+}
 
 /**
-   up returns a vector pointing in the same direction as the camera
-   @return a vector pointing up, relative to the current camera rotation
+ forward returns a vector pointing in the same direction as the camera
+ @return a vector pointing forwards, relative to the current camera rotation
  **/
-vec4 Camera::up ( void ) const { return vec4( 0.0, 1.0, 0.0, 1.0 ) * this->_ctm._rotation.matrix() ; }
+vec4 Camera::forward( void ) const {
+  return vec4( 0.0, 0.0, 1.0, 1.0 ) * this->_ctm._rotation.matrix();
+}
 
+/**
+ up returns a vector pointing in the same direction as the camera
+ @return a vector pointing up, relative to the current camera rotation
+ **/
+vec4 Camera::up( void ) const {
+  return vec4( 0.0, 1.0, 0.0, 1.0 ) * this->_ctm._rotation.matrix();
+}
 
 void Camera::resetPosition( void ) {
-
+  
   // This function is here to reset position back to (0,0,0)
   // Before doing so, it stops movement in order to prevent weirdness, then reenables it
-
+  
   // This part of the function would reset the rotation, but it is broken and does nothing.
   //resetRotation();
-
+  
   stopAll();
-  pos(0,0,0);
-
+  pos( 0, 0, 0 );
+  
 }
 
 void Camera::debug( void ) {
-
+  
   std::cerr << "T{\n" << _ctm._offset.matrix() << "}\n";
   std::cerr << "R{\n" << _ctm._orbit.matrix() << "}\n";
   std::cerr << "P{\n" << _view << "}\n";
   std::cerr << "CTM{\n" << _ctm.otm() << "}\n";
-
+  
 }

@@ -46,28 +46,28 @@ void SpelchkCamera::reset() {
   
   _oldTranslationVector = _initialTranslationVector;
   _translationVector = _oldTranslationVector;
-
+  
   _oldCameraPosition = _initialTranslationVector;
   _cameraPosition = _oldCameraPosition;
-
+  
   calculateTranslationVector();
   calculateCameraPosition();
 }
 
-void SpelchkCamera::copyCamera(SpelchkCamera *camera) {
+void SpelchkCamera::copyCamera( SpelchkCamera *camera ) {
   camera->_projectionType = _projectionType;
-
+  
   _xDepth = camera->_xDepth;
   _yDepth = camera->_yDepth;
   _zDepth = camera->_zDepth;
-
+  
   _xAngle = camera->_xAngle;
   _yAngle = camera->_yAngle;
   _zAngle = camera->_zAngle;
-
+  
   _oldTranslationVector = camera->_oldTranslationVector;
   _translationVector = camera->_translationVector;
-
+  
   _oldCameraPosition = camera->_oldCameraPosition;
   _cameraPosition = camera->_cameraPosition;
 }
@@ -96,7 +96,7 @@ vec4 SpelchkCamera::getTranslationVector() {
 }
 
 mat4 SpelchkCamera::getRotationMatrix() {
-  return RotateZ(-_zAngle) * RotateY(-_yAngle) * RotateX(-_xAngle);
+  return RotateZ( -_zAngle ) * RotateY( -_yAngle ) * RotateX( -_xAngle );
 }
 
 vec4 SpelchkCamera::getCameraPosition() {
@@ -104,13 +104,15 @@ vec4 SpelchkCamera::getCameraPosition() {
 }
 
 void SpelchkCamera::calculateCameraPosition() {
-  vec4 cameraDisplacement = getRotationMatrix() * vec4( _xDepth, _yDepth, _zDepth, 0.0 );
+  vec4 cameraDisplacement = getRotationMatrix()
+      * vec4( _xDepth, _yDepth, _zDepth, 0.0 );
   _cameraPosition = (_oldCameraPosition + cameraDisplacement);
 }
 
 void SpelchkCamera::calculateTranslationVector() {
   // calculate displacement based on current angles (note rotations done in reverse order and negative to move model in opposite direction)
-  vec4 calculateDisplacement = getRotationMatrix() * vec4( -_xDepth, -_yDepth, -_zDepth, 0.0 );
+  vec4 calculateDisplacement = getRotationMatrix()
+      * vec4( -_xDepth, -_yDepth, -_zDepth, 0.0 );
   _translationVector = (_oldTranslationVector + calculateDisplacement);
 }
 
@@ -126,8 +128,7 @@ void SpelchkCamera::moveCamera( float xDepth, float yDepth, float zDepth ) {
   calculateCameraPosition();
 }
 
-void SpelchkCamera::rotateCamera( float xAngle, float yAngle,
-                                  float zAngle ) {
+void SpelchkCamera::rotateCamera( float xAngle, float yAngle, float zAngle ) {
   _xAngle += xAngle;
   _yAngle += yAngle;
   _zAngle += zAngle;
@@ -169,7 +170,7 @@ void SpelchkCamera::headMovement( int usernum, double x, double y, double z ) {
   getModelViewMatrix();
   
   vec4 originCentric = _modelViewMatrix
-                       * vec4( x / 250.0, y / 250.0, z / 250.0, 1.0 );
+      * vec4( x / 250.0, y / 250.0, z / 250.0, 1.0 );
   if ( originCentric.z != 0 ) {
     float ysin = originCentric.x / originCentric.z;
     float xcos = originCentric.y / originCentric.z;
