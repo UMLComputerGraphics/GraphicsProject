@@ -51,10 +51,10 @@ void init() {
 							 "emitter", 
 							 particleSystemShader );
 
-    particleSystem->setLifespan(4.0, 8.0);
+    particleSystem->setLifespan(8.0, 16.0);
     particleSystem->setVectorField( ParticleFieldFunctions::flame ) ;
     particleSystem->setColorFunc( ColorFunctions::flame ) ;
-    particleSystem->setEmitterRadius( 0.02 ) ;
+    particleSystem->setEmitterRadius( 0.04 ) ;
     particleSystem->drawMode( GL_TRIANGLES ) ; // NEED THIS IF WE USE A GEOMETRY SHADER!
     particleSystem->setParticleSpace(true);
 
@@ -67,7 +67,7 @@ void init() {
     // PARTICLE SYSTEMS buffer() THEMSELVES
   }
   
-  glClearColor( 0.0, 0.0, 0.3, 1.0 );
+  glClearColor( 0.0, 0.0, 0.0, 1.0 );
   // if not using geo shader, we need this to render visible points
   // glPointSize( 1.1 );
 }
