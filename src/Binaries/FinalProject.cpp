@@ -34,7 +34,8 @@ int main( int argc, char **argv ) {
   as slots should probably have an internal variable to keep track of what the previous value was so
   that the proper modification can be made.
   */
-  QObject::connect(w.slider, SIGNAL(valueChanged(int)), &monolith, SLOT(ParticleAdd()));
+  //QObject::connect(w.slider, SIGNAL(valueChanged(int)), &monolith, SLOT(ParticleAdd()));
+  QObject::connect(&w, SIGNAL(sigAddNumberOfParticles(int value)), &monolith, SLOT(slotParticleAdd(int value)));
   w.show();
   
 #ifndef __APPLE__

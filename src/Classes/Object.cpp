@@ -390,7 +390,7 @@ void Object::send( Object::UniformEnum which ) {
 
   if (glGetError()) {
     fprintf( stderr, "ERROR: glGetError() returning true prior to exec of send() ...\n" );
-    exit( 255 );
+    //exit( 255 );
   }
 
   if (shader() == 0) {
@@ -427,7 +427,7 @@ void Object::send( Object::UniformEnum which ) {
 
   if (glGetError()) {
     fprintf( stderr, "ERROR: Object::send() failed for [%s][%u]\n", _name.c_str(), which );
-    exit(EXIT_FAILURE);
+    //exit(EXIT_FAILURE);
   }
 
 }
