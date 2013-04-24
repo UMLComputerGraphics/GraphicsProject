@@ -66,8 +66,7 @@ ifeq ($(UNAME), Linux)
     CXXINCS += -I/usr/include/ImageMagick/
     CXXDEFS += -DFREEGLUT_STATIC -DGLEW_STATIC
     LDLIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm -lfmodex
-    # in this context, true means 'do nothing' (type 'true' in your shell to see what I mean)
-    FMODLINK = true
+    FMODLINK = @true
 endif
 
 # APPLE OSX
@@ -107,7 +106,7 @@ preparelinux:
 .PHONY: preparemac
 preparemac:
 # todo Move mac setup here?
-	true
+	@true
 
 $(TARGETS): $(OBJS)
 
