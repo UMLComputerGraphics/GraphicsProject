@@ -9,6 +9,7 @@ using Angel::vec4;
 namespace ColorFunctions
 {
 
+  Angel::vec4 standard(float, Angel::vec4);
   Angel::vec4 flame(float, Angel::vec4);
 
 }
