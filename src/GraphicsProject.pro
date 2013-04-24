@@ -100,7 +100,7 @@ LIBS += -lMagick++
 
 # Linux Settings
 unix:!macx {
-LIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm -lMagick++ -lfmodex
+LIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm -lMagick++ 
 INCLUDEPATH +=. /usr/include/ImageMagick/ include/
 }
 
