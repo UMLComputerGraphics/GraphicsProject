@@ -22,9 +22,13 @@ int main( int argc, char **argv ) {
   
   MONOLITH monolith( argc, argv );
   
-#ifdef WITHOUT_QT
+#ifdef WITHOUT_QT // main driver for both platforms without Qt
   monolith.run();
-#else
+#else // end main drive for both platforms without Qt.
+
+#ifdef __APPLE__ // monolith.run has to be here for OS X. Do not edit! (@franckamayou)
+  monolith.run(); 
+#endif // __APPLE__
   QApplication a( argc, argv );
   MainWindow w;
   w.setWindowTitle( "First Graphics Demo" );
@@ -39,13 +43,16 @@ int main( int argc, char **argv ) {
   w.show();
 
 #ifndef __APPLE__
+  // monolith.start has to be here for Linux. 
   monolith.start();
 #endif
+
   a.exec();
-#ifdef __APPLE__
-  monolith.run();
+#ifdef __APPLE__ // glutMainloop has to be called here for OS X. Do not edit (@franckamayou)
+  glutMainLoop();
 #endif
-#endif
+
+#endif // WITHOUT_QT
   return EXIT_SUCCESS;
   
 }
