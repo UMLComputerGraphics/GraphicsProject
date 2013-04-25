@@ -36,9 +36,9 @@ void Camera::commonInit( void ) {
   
   _speed = 0;
   _speed_cap = 0;
-  _maxAccel = 10;
+  _maxAccel = 500;
   _maxSpeed = 2000;
-  _frictionMagnitude = 4;
+  _frictionMagnitude = 50;
   _aspectRatio = 1;
   _currentView = PERSPECTIVE;
   _fovy = 45.0;

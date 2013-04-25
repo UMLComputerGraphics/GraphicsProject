@@ -35,9 +35,15 @@ void MONOLITH::monolith_idle( void ) {
   // Animation variables.
   double timer = glutGet( GLUT_ELAPSED_TIME ) / 500.0;
   float percent = (sin( timer ) + 1) / 2;
+
+  //(*rootScene)["candle_top"]->morphPercentage(percent);
   
-  Object &candle = *((*rootScene)["Candle"]);
-  //candle.animation( simpleRotateAnim );
+  /*
+  Object &candle_base = *((*rootScene)["candle_base"]);
+  Object &candle_top = *((*rootScene)["candle_top"]);
+  candle_base.animation( candleMeltAnim );
+  candle_top.animation(candleTopMeltDown);
+  */
   
   // Update the morph percentage.
   // (*rootScene)["bottle"]->morphPercentage( percent );
@@ -59,6 +65,7 @@ void MONOLITH::run() {
   Engine::instance()->init( &_argc, _argv,
                             "WE ARE THE BORG. RESISTANCE IS FUTILE!" );
   Engine::instance()->registerIdle( monolith_idle );
+
   
   // Get handles to the Scene and the Screen.
   rootScene = Engine::instance()->rootScene();
@@ -70,6 +77,7 @@ void MONOLITH::run() {
   shader[2] = Angel::InitShader( "shaders/vParticle.glsl",
                                  "shaders/fFlameParticle.glsl" );
   
+
   tick.setTimeUniform( glGetUniformLocation( shader[1], "ftime" ) );
 
   // --- Wine Bottle --- //
@@ -94,34 +102,65 @@ void MONOLITH::run() {
   glUniform1f( sisqo, true );
   
   // Let the bodies hit the floor
-  floor = rootScene->addObject( "floor", shader[1] );
-  quad( floor, vec4( -10, 0, 10, 1.0 ), vec4( -10, 0, -10, 1.0 ),
-        vec4( 10, 0, -10, 1.0 ), vec4( 10, 0, 10, 1.0 ),
-        vec4( 0.4, 0.4, 0.4, 0.9 ) );
-  floor->buffer();
+  Object *table;
+  table = rootScene->addObject( "table", shader[1] );
+  ObjLoader::loadModelFromFile(table, "../models/table.obj");
+  ObjLoader::loadMaterialFromFile(table, "../models/table.mtl");
+  table->buffer();
   
   // Load up that goddamned candle
-  candle = rootScene->addObject( "Candle", shader[1] );
-  ObjLoader::loadModelFromFile( candle, "../models/candle.obj" );
-  ObjLoader::loadMaterialFromFile( candle, "../models/candle.mtl" );
-  min = candle->getMin();
-  vec4 max = candle->getMax();
+  Object *stick;
+  Object *candle_top;
+  Object *candle_top_melted;
+  Object *candle_base;
+
+  candle_top = rootScene->addObject( "candle_top", shader[1] );
+  candle_base = rootScene->addObject("candle_base", shader[1]);
+  stick = rootScene->addObject("stick", shader[1]);
+
+  ObjLoader::loadModelFromFile( candle_top, "../models/candle_top_unmelted.obj" );
+  ObjLoader::loadMaterialFromFile( candle_top, "../models/candle.mtl" );
+  ObjLoader::loadModelFromFile(candle_base, "../models/candle_bottom.obj");
+  ObjLoader::loadMaterialFromFile( candle_base, "../models/candle.mtl" );
+  ObjLoader::loadModelFromFile(stick, "../models/candlestick.obj");
+  ObjLoader::loadMaterialFromFile(stick, "../models/candlestick.mtl");
+
+/*
+  candle_top->genMorphTarget();
+  candle_top_melted = candle_top->morphTarget();
+  ObjLoader::loadModelFromFile(candle_top_melted, "../models/candle_top_melted.obj");
+  ObjLoader::loadMaterialFromFile(candle_top_melted, "../models/candle.mtl");
+  */
+
+  min = candle_base->getMin();
+  vec4 max = stick->getMax();
   fprintf( stderr, "Min: (%f,%f,%f)\nMax: (%f,%f,%f)\n", min.x, min.y, min.z,
            max.x, max.y, max.z );
-  candle->_trans._offset.set( 2.5, -min.y, 2.5 );
-  candle->propagateOLD();
-  candle->buffer();
+  candle_top->_trans._offset.set( 2.5, max.y - 4, 2.5 );
+  candle_base->_trans._offset.set( 2.5, max.y - 4, 2.5 );
+  stick->_trans._offset.set( 2.5, 0, 2.5);
+
+  candle_top->propagateOLD();
+  candle_base->propagateOLD();
+  stick->propagateOLD();
+
+  candle_top->buffer();
+  candle_base->buffer();
+  stick->buffer();
 
   
+  max = candle_top->getMax();
   ps = new ParticleSystem( 10, "ps1", shader[2] );
   ps->setLifespan( 5, 7.5 );
   ps->setEmitterRadius( 0.001 );
-  candle->insertObject( ps );
-  ps->_trans._offset.set( 0, min.y + (max.y - min.y), 0 );
+  candle_top->insertObject( ps );
+  ps->_trans._offset.set( 0, max.y, 0 );
   ps->fillSystemWithParticles();
   //ps->propagateOLD();
   ps->buffer();
-  candle->propagateOLD();
+  candle_top->propagateOLD();
+
+  Engine::instance()->cams()->active()->pos(2.0, 5.0, 9.0);
   
 #ifndef WITHOUT_QT
 #ifndef __APPLE__
@@ -145,4 +184,13 @@ void MONOLITH::run() {
 void MONOLITH::simpleRotateAnim( TransCache &obj ) {
   obj._rotation.rotateY( tick.scale() * 1.5 );
   obj._orbit.rotateY( tick.scale() * -0.5 );
+}
+
+void MONOLITH::candleMeltAnim(TransCache &obj) {
+  //obj._offset.set(0.0, 0.0, 0.0);
+  obj._scale.adjust(1.0, 0.999, 1.0);
+}
+
+void MONOLITH::candleTopMeltDown(TransCache &obj) {
+ // obj._offset.delta(0.0, -0.0025, 0.0);
 }
