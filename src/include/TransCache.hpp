@@ -62,10 +62,17 @@ public:
   void cascade( bool newState );
   unsigned size( void ) const;
 
+  void insert( unsigned index, const Transformation & newTrans );
+  void append( unsigned index, const Transformation & newTrans );
+  const Transformation &query( unsigned index, Transformation::Subtype type );
+
 private:
 
+  // Pointer operations: Dangerous!
+  TransformationsType::iterator queryImpl( unsigned index, Transformation::Subtype type );
   void push( Transformation *newTrans ); // Add New Transformation
   
+
   // Cached Result Matrices
   Angel::mat4 _ptm; /* Parent's Cumulative Transformation Matrix */
   Angel::mat4 _ctm; /* Current Transformation Matrix */

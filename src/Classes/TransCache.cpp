@@ -112,6 +112,41 @@ void TransCache::push( const Transformation &newTrans ) {
 
 }
 
+void TransCache::insert( unsigned index, const Transformation & newTrans ) {
+
+	dirty( true );
+
+	Transformation *copiedNew = newTrans.newCopy();
+	TransformationsType::iterator it = queryImpl( index, newTrans.type() );
+	// The ordering is [new][old], so we collapse the transformation into [new].
+	copiedNew->coalesce( *it );
+	// We unfortunately need to copy [new] back over [old]
+	**it = *copiedNew;
+	// Now delete the new node, we're done with it!
+	delete copiedNew;
+
+}
+
+void TransCache::append( unsigned index, const Transformation & newTrans ){
+
+	dirty(true);
+
+	Transformation *copiedNew = newTrans.newCopy();
+	TransformationsType::iterator it = queryImpl( index, newTrans.type() );
+	(*it)->coalesce( copiedNew );
+	// Copied-New is now Identity and can be deleted.
+	delete copiedNew;
+
+}
+
+TransCache::TransformationsType::iterator TransCache::queryImpl( unsigned index, Transformation::Subtype type ) {
+  return _transformations.begin();
+}
+
+const Transformation &TransCache::query( unsigned index, Transformation::Subtype type ){
+	return RotMat();
+}
+
 /**
  * Remove a transformation from the end.
  */

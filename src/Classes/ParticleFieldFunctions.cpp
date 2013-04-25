@@ -3,6 +3,7 @@
 #include "vec.hpp"
 #include "mat.hpp"
 
+#include "exprtk/exprtk.hpp"
 #include <cmath>
 
 using Angel::vec2;
@@ -152,6 +153,28 @@ vec3 ParticleFieldFunctions::flameold(vec4 pos) {
 	*/
 	return retVal;
 
+}
+
+Angel::vec3 ParticleFieldFunctions::userSupplied( Angel::vec4 pos ) {
+	static bool compiled = false;
+	static std::string expressions[3];
+	static exprtk::expression<double> expression[3];
+	static exprtk::parser<double> parser;
+
+	if (!compiled) {
+		expressions[0] = "0";
+		expressions[1] = "0";
+		expressions[2] = "0.1";
+
+		parser.compile(expressions[0], expression[0]);
+		parser.compile(expressions[1], expression[1]);
+		parser.compile(expressions[2], expression[2]);
+	}
+
+	return Angel::vec3(
+				expression[0].value(),
+				expression[1].value(),
+				expression[2].value() );
 }
 
 
