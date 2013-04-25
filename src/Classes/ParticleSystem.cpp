@@ -278,7 +278,12 @@ void ParticleSystem::draw( void ) {
 
   // we should consider moving the update() call to the idle() loop
   update();
+
+  // if we don't have any particles, bail 
+  if ( _vertices.size <= 0 ) return;
+
   buffer();
+
   
   TransCache tempTrans = _trans ;
 
@@ -330,19 +335,30 @@ ParticleSystem::setEmitterRadius( float r )
 void
 ParticleSystem::update() {
 
+        // used to stagger the creation of particles
         static unsigned currFillFrame=0;
 
+	// if we are paused, don't change a damn thing.
 	if ( this->_pauseTheSystem ) return;
 
+	// if we need more particles...
 	if ( _particles.size() < (unsigned int) this->_numParticles ){
 
 	  if ( currFillFrame == _fillSpeedLimit ) {
-	        addSomeParticles( NUM_PARTICLES_TO_ADD_ON_UPDATE );
+	        updateNumParticles( NUM_PARTICLES_TO_ADD_ON_UPDATE );
 		currFillFrame = 0;
 	  }
-
 	  currFillFrame++;
+	}
 
+	// if we need fewer particles...
+	else if ( _particles.size() > (unsigned int) this->_numParticles ){
+
+	  if ( currFillFrame == _fillSpeedLimit ) {
+	        updateNumParticles( -1 * NUM_PARTICLES_TO_ADD_ON_UPDATE );
+		currFillFrame = 0;
+	  }
+	  currFillFrame++;
 	}
 
 	_vertices.clear();
@@ -353,11 +369,7 @@ ParticleSystem::update() {
 
 	for( i = _particles.begin() ; i != _particles.end() ; ++i) {
 
-	  /*
-	  static float r = 1.0 ;
-	  static float g = 1.0 ;
-	  static float b = 1.0 ;
-	  */
+
 	  float percentLifeRemaining = (*i)->getLifetime()/(*i)->getMaxLifetime();
 	  // call the update function on each particle
 	  (*i)->updateSelf();
@@ -434,7 +446,26 @@ ParticleSystem::generateLifespan(){
 }
 
 
+void ParticleSystem::pauseTheSystem(void)
+{
+  _pauseTheSystem = true;
+}
 
+void ParticleSystem::unpauseTheSystem(void)
+{
+  _pauseTheSystem = false;
+}
+
+void ParticleSystem::togglePause(void)
+{
+  _pauseTheSystem =  !_pauseTheSystem ;
+}
+
+
+void ParticleSystem::setPause(bool b)
+{
+  _pauseTheSystem = b ;
+}
        /* //square gen method
 	float tempXV, tempYV, tempZV ;
 	tempXV = rangeRandom( -0.001f, 0.001f );

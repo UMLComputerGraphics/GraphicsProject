@@ -39,16 +39,12 @@ typedef enum {
 class ParticleSystem : public Object {
   
 public:
-  
+
+  // constructor/destructor  
   ParticleSystem( int particleAmt, const std::string &name, GLuint shader );
   ~ParticleSystem( void );
 
-  //particle creation methods
-
-  void  addParticle(void);
-  void  addOneParticleAtOrigin( void );
-  void  addSomeParticles( int );
-  void  fillSystemWithParticles( void );
+  void  fillSystemWithParticles(void);
 
   Particle *newRandomParticle(void);
 
@@ -79,12 +75,23 @@ public:
   
   static float rangeRandom( float min, float max );
 
+  // methods to pause/unpause the system
+  void pauseTheSystem(void);
+  void unpauseTheSystem(void);
+  void togglePause(void);
+  void setPause(bool);
+
+
 private:  
 
   float generateLifespan();
   vec4  getRandomCircularSpawnPoint(void);
   vec4 getRandomHemisphericalSpawnPoint(void);
   void respawnParticle(Particle &p);
+
+  void  addParticle(void);
+  void  addOneParticleAtOrigin( void );
+  void  addSomeParticles( int );
 
   vector<ParticleP> _particles;
   unsigned _numParticles;   // Number of particles that each instance of ParticleSystem will manage

@@ -19,6 +19,10 @@
 #include "glut_callbacks.h"
 #include "ObjLoader.hpp"
 
+/* particle system goodness */
+#include "ParticleFieldFunctions.hpp"
+#include "ColorFunctions.hpp"
+
 #ifndef WITHOUT_QT
 /* Qt */
 #include <QObject>
