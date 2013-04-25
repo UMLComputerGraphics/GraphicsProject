@@ -64,8 +64,8 @@ void MONOLITH::monolith_idle(void)
  */
 void MONOLITH::slotParticleAdd(int value)
 {
-    int delta = value - ps->getNumParticles();
-    ps->updateNumParticles(delta);
+//    int delta = value - ps->getNumParticles();
+    ps->setNumParticles(value);
     printf("Particle system now has %d particles.\n", ps->getNumParticles());
 }
 
@@ -169,7 +169,7 @@ void MONOLITH::run() {
 
   
   max = candle_top->getMax();
-  ps = new ParticleSystem( 40000, "ps1", shader[2] );
+  ps = new ParticleSystem( 0, "ps1", shader[2] );
   ps->setLifespan( 5.0, 8.0 );
   ps->setVectorField( ParticleFieldFunctions::flameold );
   ps->setColorFunc(   ColorFunctions::flame );
