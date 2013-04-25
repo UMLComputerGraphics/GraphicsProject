@@ -4,6 +4,15 @@
 #                                             #
 ###############################################
 
+#colors
+CL_RED="\033[31m"
+CL_GRN="\033[32m"
+CL_YLW="\033[33m"
+CL_BLU="\033[34m"
+CL_MAG="\033[35m"
+CL_CYN="\033[36m"
+CL_RST="\033[0m"
+
 SHELL = /usr/bin/env bash
 UNAME := $(shell uname)
 
@@ -112,14 +121,20 @@ preparemac:
 
 $(TARGETS): $(OBJS)
 
+#.o.cpp:
+#	@echo -e $(CL_GRN) OBJ: $@$(CL_RST)
+#	@$(CC) $(CFLAGS) -c $<
+
 %: %.cpp
+	@echo -e $(CL_GRN) BIN: $@$(CL_RST)
 	$(CXX) $(CXXFLAGS) $^ $(LDFLAGS) -o $@
 	$(FMODLINK) $@
 
 #-----------------------------------------------------------------------------
 
 %.i: %.cpp
-	$(CXX) -E $(CXXFLAGS) $< | uniq > $@
+	@echo $@
+	$(CXX) -E $(CXXFLAGS) $< | uniq | grep -v $@ > $@
 
 #-----------------------------------------------------------------------------
 
