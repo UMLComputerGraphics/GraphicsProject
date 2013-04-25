@@ -7,15 +7,6 @@
  */
 
 #include "Engine.hpp"
-#include "ParticleSystem.hpp"
-#include "ParticleFieldFunctions.hpp"
-#include "ColorFunctions.hpp"
-/* Utilities and Common */
-#include "glut_callbacks.h"
-#include "ObjLoader.hpp"
-#include "InitShader.hpp"
-#include "model.hpp"
-#include "mat.hpp"
 /* System Headers */
 #include <cmath>
 #include <cstdio>

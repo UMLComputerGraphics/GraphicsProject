@@ -23,9 +23,6 @@
 #include "bipartiteGraph.hpp"
 #include "scanMatching.hpp"
 #include "scaleModel.hpp"
-#include "InitShader.hpp"
-#include "glut_callbacks.h"
-#include "ObjLoader.hpp"
 
 // Initialization: load and compile shaders, initialize camera(s), load models.
 void init() {
