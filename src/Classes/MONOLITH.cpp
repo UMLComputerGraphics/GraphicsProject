@@ -64,7 +64,8 @@ void MONOLITH::monolith_idle(void)
  */
 void MONOLITH::slotParticleAdd(int value)
 {
-    ps->addSomeParticles(10);
+    int delta = value - ps->getNumParticles();
+    ps->updateNumParticles(delta);
 
 }
 #endif //WITHOUT_QT
