@@ -21,6 +21,8 @@
 #include "Texture.hpp"
 #include "TextureMan.hpp"
 #include "ParticleSystem.hpp"
+#include "ParticleFieldFunctions.hpp"
+#include "ColorFunctions.hpp"
 /* Utilities */
 #include "Util.hpp"
 #include "model.hpp"

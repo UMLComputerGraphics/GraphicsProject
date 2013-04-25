@@ -107,7 +107,7 @@ void display( void ) {
   // That we are using the right camera to render,
   // and that we're using the right shader ...
   engie.switchCamera( cammy );
-  engie.switchShader( program ); // arigatou ^_^;;
+  engie.switchShader( program );
   cammy->debug();
 
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );

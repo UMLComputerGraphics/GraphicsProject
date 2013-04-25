@@ -8,6 +8,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     connect(ui->numberOfParticlesSpinBox, SIGNAL(valueChanged(int)),
             this, SIGNAL(sigChangeNumberOfParticles(int)));
+    connect(ui->freezeParticlesCheckBox, SIGNAL(toggled(bool)),
+            this, SIGNAL(sigFreezeParticles(bool)));
 }
 
 

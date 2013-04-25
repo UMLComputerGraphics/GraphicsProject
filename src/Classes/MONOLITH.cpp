@@ -64,8 +64,14 @@ void MONOLITH::monolith_idle(void)
  */
 void MONOLITH::slotParticleAdd(int value)
 {
-    ps->addSomeParticles(10);
+//    int delta = value - ps->getNumParticles();
+    ps->setNumParticles(value);
+    printf("Particle system now has %d particles.\n", ps->getNumParticles());
+}
 
+void MONOLITH::slotFreezeParticles(bool isEnabled)
+{
+	ps->setPause(isEnabled);
 }
 #endif //WITHOUT_QT
 /**
@@ -163,14 +169,15 @@ void MONOLITH::run() {
 
   
   max = candle_top->getMax();
-  ps = new ParticleSystem( 10, "ps1", shader[2] );
-  ps->setLifespan( 5, 7.5 );
+  ps = new ParticleSystem( 0, "ps1", shader[2] );
+  ps->setLifespan( 5.0, 8.0 );
+  ps->setVectorField( ParticleFieldFunctions::flameold );
+  ps->setColorFunc(   ColorFunctions::flame );
   ps->setEmitterRadius( 0.001 );
   candle_top->insertObject( ps );
   ps->_trans._offset.set( 0, max.y, 0 );
   ps->fillSystemWithParticles();
   //ps->propagateOLD();
-  ps->buffer();
   candle_top->propagateOLD();
 
   Engine::instance()->cams()->active()->pos(2.0, 5.0, 9.0);

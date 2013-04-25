@@ -7,8 +7,6 @@
  */
 
 #include "Engine.hpp"
-#include "ParticleSystem.hpp"
-/* Utilities and Common */
 /* System Headers */
 #include <cmath>
 #include <cstdio>
