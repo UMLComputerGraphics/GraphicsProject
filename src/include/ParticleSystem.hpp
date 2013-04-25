@@ -45,9 +45,9 @@ public:
 
   //particle creation methods
 
-  void  addParticle(void);
   void  addOneParticleAtOrigin( void );
-  void  addSomeParticles( int );
+  void  updateNumParticles( int );
+  void  removeParticle(void);
   void  fillSystemWithParticles( void );
 
   Particle *newRandomParticle(void);
@@ -60,9 +60,7 @@ public:
 
   void  setSlaughterHeight( float );
   void  setLifespan( float minLifespan, float maxLifespan );
-  void  setNumParticles( int newNumParticles );
   void  setEmitterRadius(float);
-
   bool  getParticleSpace(void) const;
   void  setParticleSpace(bool);
 
@@ -85,6 +83,8 @@ private:
   vec4  getRandomCircularSpawnPoint(void);
   vec4 getRandomHemisphericalSpawnPoint(void);
   void respawnParticle(Particle &p);
+  void  setNumParticles( int newNumParticles );
+  void  addParticle(void);
 
   vector<ParticleP> _particles;
   unsigned _numParticles;   // Number of particles that each instance of ParticleSystem will manage

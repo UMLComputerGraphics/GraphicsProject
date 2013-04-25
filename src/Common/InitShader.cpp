@@ -140,7 +140,7 @@ namespace Angel {
       }
       
       delete[] s.source;
-      
+  /*
       if ( s.type == GL_GEOMETRY_SHADER ) {// Gshader init requires a few extra things
       
         //GLint n;
@@ -153,10 +153,16 @@ namespace Angel {
                                 GL_TRIANGLE_STRIP );
         
       }
-      
+    */
       glAttachShader( program, shader );
     }
     
+    glProgramParameteriEXT( program, GL_GEOMETRY_INPUT_TYPE_EXT,
+                                   GL_POINTS );
+
+    glProgramParameteriEXT( program, GL_GEOMETRY_OUTPUT_TYPE_EXT,
+                                   GL_TRIANGLE_STRIP );
+
     // Gshader gak
     if (nShaders == 3)
       glProgramParameteriEXT( program, GEOMETRY_VERTICES_OUT_EXT, 4 );

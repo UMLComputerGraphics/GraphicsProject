@@ -194,9 +194,15 @@ ParticleSystem::setSlaughterHeight(float f){
 }
 
 void
-ParticleSystem::addSomeParticles( int numToAdd ) {
-	for ( int i = 0 ; i < numToAdd ; i++ )
-		this->addParticle();
+ParticleSystem::updateNumParticles( int numParticles ) {
+	if( numParticles >= 0 ){
+		for ( int i = 0 ; i < numParticles ; i++ )
+			this->addParticle();
+	}
+	else if ( numParticles < 0 ) {
+		for ( int i = numParticles  ; i < 0 ; i++ )
+			this->removeParticle();
+	}
 }
 
 void
@@ -210,13 +216,31 @@ ParticleSystem::addParticle()
 	try
 	{
 		this->_particles.push_back(p);
+		this->setNumParticles( getNumParticles() + 1 );
 	}
 	catch (...)
 	{
 		std::cerr << "SEVERE: attempt to add a particle to particles vector failed"
 				<< std::endl;
 	}
+}
 
+void
+ParticleSystem::removeParticle()
+{
+	try
+	{
+		if( this->_particles.size() > 0 )
+		{
+			this->_particles.pop_back();
+			this->setNumParticles( getNumParticles() - 1 );
+		}
+	}
+	catch (...)
+	{
+		std::cerr << "SEVERE: attempt to remove a particle to particles vector failed"
+				<< std::endl;
+	}
 }
 
 void
@@ -338,7 +362,7 @@ ParticleSystem::update() {
 	if ( _particles.size() < (unsigned int) this->_numParticles ){
 
 	  if ( currFillFrame == _fillSpeedLimit ) {
-	        addSomeParticles( NUM_PARTICLES_TO_ADD_ON_UPDATE );
+	        updateNumParticles( NUM_PARTICLES_TO_ADD_ON_UPDATE );
 		currFillFrame = 0;
 	  }
 
