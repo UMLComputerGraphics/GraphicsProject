@@ -107,7 +107,7 @@
 				dest->_colors[bestEdges[i]->destination->modelIndex+m] = tempColors;
 				count++;
 			}
-		}else{
+		}/*else{
 			bestEdges.erase(bestEdges.begin()+i);
 			for(int m=0; m<3; m++){
 				srcVertices.erase(srcVertices.begin()+3*i);
@@ -118,10 +118,10 @@
  				destColors.erase(destColors.begin()+3*i);
 			}
 			i--;
-		}
+		}*/
  	}
 
- 	for(size_t i=bestEdges.size()-firstBirths.size(); i<bestEdges.size(); i++){
+ 	/*for(size_t i=bestEdges.size()-firstBirths.size(); i<bestEdges.size(); i++){
  		for(int m=0; m<3; m++){
  			src->_vertices.pop_back();
  			src->_normals.pop_back();
@@ -132,7 +132,7 @@
  			count++;
  		}
  	}
- 	printf("Count: %d\n", count);
+ 	printf("Count: %d\n", count);*/
  }
  
  void BipartiteGraph::constructPartitionGraph(){

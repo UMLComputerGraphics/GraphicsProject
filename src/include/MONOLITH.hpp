@@ -90,16 +90,14 @@ private:
      * @param obj The object to animate.
      */
     static void simpleRotateAnim( TransCache &obj );
+    static void candleMeltAnim( TransCache &obj );
+    static void candleTopMeltDown( TransCache &obj );
     
     GLuint shader[3];
     
     Scene *rootScene;
     Screen *primScreen;
     Object *bottle;
-    
-    Object *floor;
-    
-    Object *candle;
     
     ParticleSystem *ps;
  

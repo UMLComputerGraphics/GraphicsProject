@@ -8,8 +8,11 @@ using Angel::vec2;
 using Angel::vec3;
 using Angel::vec4;
 
-vec4
-ColorFunctions::flame( float lifePct, vec4 posIn ) {
+vec4 ColorFunctions::standard( float lifePct, vec4 posIn ) {
+  return vec4( 1.0, 1.0, 1.0, 1.0 );
+}
+
+vec4 ColorFunctions::flame( float lifePct, vec4 posIn ) {
   float r, g, b, w;
   
   if( lifePct >= 0.7 ) {
