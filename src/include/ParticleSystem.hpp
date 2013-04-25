@@ -28,29 +28,26 @@ using std::vector;
 
 typedef Particle* ParticleP;
 
-typedef enum {
+/*typedef enum {
 
   PARTICLE_CUBE,
   PARTICLE_SPHERE,
   PARTICLE_FLAME
 
-} PARTICLE_SYSTEM_SHAPE;
+  } PARTICLE_SYSTEM_SHAPE;*/
 
 class ParticleSystem : public Object {
   
 public:
-  
+
+  // constructor/destructor  
   ParticleSystem( int particleAmt, const std::string &name, GLuint shader );
   ~ParticleSystem( void );
 
-  //particle creation methods
+  void updateNumParticles( int );
 
-  void  addParticle(void);
-  void  addOneParticleAtOrigin( void );
-  void  addSomeParticles( int );
-  void  fillSystemWithParticles( void );
-
-  Particle *newRandomParticle(void);
+  // this will fill the system with newborn particles
+  void  fillSystemWithParticles(void);
 
   // Getters and Setters
   float getLifespan( void );
@@ -60,18 +57,12 @@ public:
 
   void  setSlaughterHeight( float );
   void  setLifespan( float minLifespan, float maxLifespan );
-  void  setNumParticles( int newNumParticles );
   void  setEmitterRadius(float);
 
+  // this controls whether or not the particles are connected to the emitter.
   bool  getParticleSpace(void) const;
   void  setParticleSpace(bool);
 
-  /* The Do-All function.  Will do everything needed in order
-   to have the particles behave according to our specification
-   on each call to Draw(). That's the idea, anyway. */
-  void  update();
-
-  virtual void buffer( GLenum usage = GL_DYNAMIC_DRAW );
   virtual void draw( void );
 
   void  setVectorField(vec3 (*vectorFieldFunc)(vec4) );
@@ -79,12 +70,34 @@ public:
   
   static float rangeRandom( float min, float max );
 
+  // methods to pause/unpause the system
+  void pauseTheSystem(void);
+  void unpauseTheSystem(void);
+  void togglePause(void);
+  void setPause(bool);
+
+
 private:  
+
+  /* The Do-All function.  Will do everything needed in order
+   to have the particles behave according to our specification
+   on each call to Draw(). That's the idea, anyway. */
+  void  update();
+  virtual void buffer( GLenum usage = GL_DYNAMIC_DRAW );
 
   float generateLifespan();
   vec4  getRandomCircularSpawnPoint(void);
   vec4 getRandomHemisphericalSpawnPoint(void);
   void respawnParticle(Particle &p);
+  void  setNumParticles( int newNumParticles );
+  void  addParticle(void);
+
+  Particle *newRandomParticle(void);
+
+  void  addOneParticleAtOrigin( void );
+  void  addSomeParticles( int );
+
+  void  removeParticle( void );
 
   vector<ParticleP> _particles;
   unsigned _numParticles;   // Number of particles that each instance of ParticleSystem will manage
