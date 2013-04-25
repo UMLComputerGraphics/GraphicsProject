@@ -68,6 +68,11 @@ void MONOLITH::slotParticleAdd(int value)
     ps->updateNumParticles(delta);
 
 }
+
+void MONOLITH::slotFreezeParticles(bool isEnabled)
+{
+	ps->setPause(isEnabled);
+}
 #endif //WITHOUT_QT
 /**
  * This will initialize and run MONOLITH

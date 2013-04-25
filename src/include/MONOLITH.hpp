@@ -77,6 +77,7 @@ public:
 public slots:
 
     void slotParticleAdd(int value);
+    void slotFreezeParticles(bool isEnabled);
 
 signals:
 #endif
