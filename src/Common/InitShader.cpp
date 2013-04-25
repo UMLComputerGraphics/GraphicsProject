@@ -244,25 +244,29 @@ namespace Angel {
       }
 
       delete[] s.source;
-
+      /*
       if ( s.type == GL_GEOMETRY_SHADER ) {// Gshader init requires a few extra things
 
         //GLint n;
         //glGetIntegerv( GL_MAX_GEOMETRY_OUTPUT_COMPONENTS, &n );
 
-        glProgramParameteriEXT( shader, GL_GEOMETRY_INPUT_TYPE_EXT,
-                                gs_inType );
-
-        glProgramParameteriEXT( shader, GL_GEOMETRY_OUTPUT_TYPE_EXT,
-                                gs_outType );
 
       }
-
+      */
       glAttachShader( program, shader );
     }
     
     // Gshader gak
-    glProgramParameteriEXT( program, GEOMETRY_VERTICES_OUT_EXT, gs_numVertOut );
+    if ( gShaderFile != NULL ){
+      glProgramParameteriEXT( program, GEOMETRY_VERTICES_OUT_EXT, gs_numVertOut );
+
+      glProgramParameteriEXT( program, GL_GEOMETRY_INPUT_TYPE_EXT,
+			      gs_inType );
+
+      glProgramParameteriEXT( program, GL_GEOMETRY_OUTPUT_TYPE_EXT,
+			      gs_outType );
+    }
+
 
     /* link  and error check */glLinkProgram( program );
     /* test */glLinkProgram( program );
