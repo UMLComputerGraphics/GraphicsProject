@@ -18,7 +18,7 @@
 /* Multi-platform support and OpenGL headers. */
 /* Utilities and Common */
 #include "modelFunctions.hpp"
-#include "cylinderMesh.hpp"
+//#include "cylinderMesh.hpp"
 #include "meshMapping.hpp"
 #include "bipartiteGraph.hpp"
 #include "scanMatching.hpp"

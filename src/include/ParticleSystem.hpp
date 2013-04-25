@@ -75,6 +75,7 @@ public:
   void unpauseTheSystem(void);
   void togglePause(void);
   void setPause(bool);
+  virtual void buffer( GLenum usage = GL_DYNAMIC_DRAW );
 
 
 private:  
@@ -83,7 +84,6 @@ private:
    to have the particles behave according to our specification
    on each call to Draw(). That's the idea, anyway. */
   void  update();
-  virtual void buffer( GLenum usage = GL_DYNAMIC_DRAW );
 
   float generateLifespan();
   vec4  getRandomCircularSpawnPoint(void);
