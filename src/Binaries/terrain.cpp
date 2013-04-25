@@ -193,20 +193,6 @@ void init() {
 }
 
 /**
- cleanup is a routine to call at exit time that will free up the
- resources the application is using.
- While not critical, it does aid in using debuggers to not have
- any memory leaks at exit time.
- 
- @return void.
- **/
-void cleanup( void ) {
-  
-  //Engine::instance()->rootScene()->DestroyObject();
-  
-}
-
-/**
  * This global switch controls our terrain generation.
  */
 bool switchingTerrain = false;

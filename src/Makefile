@@ -91,6 +91,9 @@ ifeq ($(UNAME), Darwin)
    QT_FINALIZE = @cp -f Binaries/FinalProject.app/Contents/MacOS/FinalProject Binaries/FinalProject
 endif
 
+ifdef PRINTLEVEL
+	CXXOPTS += -DPRINTLEVEL=$(PRINTLEVEL)
+endif
 
 ifdef DEBUG
 	CXXOPTS += -DDEBUG -O0 -g
