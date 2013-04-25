@@ -87,19 +87,26 @@ void MONOLITH::run() {
   rootScene = Engine::instance()->rootScene();
   primScreen = Engine::instance()->mainScreen();
   
-  shader[0] = Angel::InitShader( "shaders/vEngine.glsl",
-                                 "shaders/fMONOLITH.glsl" );
-  shader[1] = rootScene->shader(); // Default shader we've already compiled.
+  // No Morphing, plus Light Shading.
+  shader[0] = Angel::InitShader( "shaders/vEngineNoMorph.glsl",
+				 "shaders/fMONOLITH.glsl" );
+  // Morphing plus Shading.
+  shader[1] = Angel::InitShader( "shaders/vEngine.glsl",
+				 "shaders/fMONOLITH.glsl" );
+  // Particle Shader.
   shader[2] = Angel::InitShader( "shaders/vParticle.glsl",
                                  "shaders/fFlameParticle.glsl" );
   
+  GLint noMorphShader = shader[0];
+  GLint morphingShader = shader[1];
+  GLint particleShader = shader[2];
 
   tick.setTimeUniform( glGetUniformLocation( shader[1], "ftime" ) );
 
   // --- Wine Bottle --- //
   
   // Create the Bottle Object handle...
-  bottle = rootScene->addObject( "bottle" );
+  bottle = rootScene->addObject( "bottle", noMorphShader );
 
   // Load model from file.
   ObjLoader::loadModelFromFile( bottle, "../models/bottle_wine_high.obj" );
@@ -119,7 +126,7 @@ void MONOLITH::run() {
   
   // Let the bodies hit the floor
   Object *table;
-  table = rootScene->addObject( "table", shader[1] );
+  table = rootScene->addObject( "table", noMorphShader );
   ObjLoader::loadModelFromFile(table, "../models/table.obj");
   ObjLoader::loadMaterialFromFile(table, "../models/table.mtl");
   table->buffer();
@@ -130,9 +137,9 @@ void MONOLITH::run() {
   Object *candle_top_melted;
   Object *candle_base;
 
-  candle_top = rootScene->addObject( "candle_top", shader[1] );
-  candle_base = rootScene->addObject("candle_base", shader[1]);
-  stick = rootScene->addObject("stick", shader[1]);
+  candle_top = rootScene->addObject( "candle_top", noMorphShader );
+  candle_base = rootScene->addObject("candle_base", noMorphShader );
+  stick = rootScene->addObject("stick", noMorphShader );
 
   ObjLoader::loadModelFromFile( candle_top, "../models/candle_top_unmelted.obj" );
   ObjLoader::loadMaterialFromFile( candle_top, "../models/candle.mtl" );

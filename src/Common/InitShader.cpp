@@ -157,16 +157,18 @@ namespace Angel {
       glAttachShader( program, shader );
     }
     
-    glProgramParameteriEXT( program, GL_GEOMETRY_INPUT_TYPE_EXT,
-                                   GL_POINTS );
-
-    glProgramParameteriEXT( program, GL_GEOMETRY_OUTPUT_TYPE_EXT,
-                                   GL_TRIANGLE_STRIP );
-
     // Gshader gak
-    if (nShaders == 3)
-      glProgramParameteriEXT( program, GEOMETRY_VERTICES_OUT_EXT, 4 );
-    
+    if (nShaders == 3) {
+        glProgramParameteriEXT( program, GL_GEOMETRY_INPUT_TYPE_EXT,
+                                       GL_POINTS );
+
+        glProgramParameteriEXT( program, GL_GEOMETRY_OUTPUT_TYPE_EXT,
+                                       GL_TRIANGLE_STRIP );
+
+        glProgramParameteriEXT( program, GEOMETRY_VERTICES_OUT_EXT, 4 );
+
+    }
+
     /* link  and error check */glLinkProgram( program );
     
     GLint linked;
