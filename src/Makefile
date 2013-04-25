@@ -67,6 +67,7 @@ ifeq ($(UNAME), Linux)
     CXXDEFS += -DFREEGLUT_STATIC -DGLEW_STATIC
     LDLIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm -lfmodex
     FMODLINK = @true
+    QT_FINALIZE = @true
 endif
 
 # APPLE OSX
@@ -78,6 +79,7 @@ ifeq ($(UNAME), Darwin)
    #FMODLINK = install_name_tool -change ./libfmodex.dylib ../fMod/lib/libfmodex.dylib
    FMODLINK = install_name_tool -change ./libfmodex.dylib `pwd`/fMod/lib/libfmodex.dylib
    LDOPTS = -headerpad_max_install_names
+   QT_FINALIZE = @cp -f Binaries/FinalProject.app/Contents/MacOS/FinalProject Binaries/FinalProject
 endif
 
 
@@ -144,7 +146,7 @@ clobber: _clean _rmtargets clean-qt
 .PHONY: qt
 qt: qMakefile
 	make -f qMakefile
-	@cp -f Binaries/FinalProject.app/Contents/MacOS/FinalProject Binaries/FinalProject
+	$(QT_FINALIZE)
 
 .PHONY: clean-qt
 clean-qt: qMakefile
