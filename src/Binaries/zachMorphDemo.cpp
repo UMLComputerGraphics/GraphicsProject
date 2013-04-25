@@ -21,6 +21,9 @@
 #include "meshMapping.hpp"
 #include "bipartiteGraph.hpp"
 #include "scaleModel.hpp"
+#include "InitShader.hpp"
+#include "glut_callbacks.h"
+#include "ObjLoader.hpp"
 
 // Initialization: load and compile shaders, initialize camera(s), load models.
 void init() {
@@ -56,10 +59,8 @@ void init() {
   Angel::vec3 lowBoundDst = bottleMorphTarget->getMin();
   Angel::vec3 maxBoundDst = bottleMorphTarget->getMax();
   
-  std::cout << "Model1 Bounds: " << lowBoundSrc << " " << maxBoundSrc
-            << std::endl;
-  std::cout << "Model2 Bounds: " << lowBoundDst << " " << maxBoundDst
-            << std::endl;
+  std::cout << "Model1 Bounds: " << lowBoundSrc << " " << maxBoundSrc << std::endl;
+  std::cout << "Model2 Bounds: " << lowBoundDst << " " << maxBoundDst << std::endl;
   
   //Scale source and destination height to unit 0-1
   //ScaleModel * scaleModel = new ScaleModel(bottle, bottleMorphTarget,1,2,1);
@@ -69,31 +70,29 @@ void init() {
   lowBoundDst = bottleMorphTarget->getMin();
   maxBoundDst = bottleMorphTarget->getMax();
   
-  std::cout << "Model1 Bounds: " << lowBoundSrc << " " << maxBoundSrc
-            << std::endl;
-  std::cout << "Model2 Bounds: " << lowBoundDst << " " << maxBoundDst
-            << std::endl;
-  
-  /*
-   SquareMap* squareMap = createSquareMap(fminf(float(lowBoundSrc.x),
-   float(lowBoundDst.x)),
-   fmaxf(float(maxBoundSrc.x),
-   float(maxBoundDst.x)),
-   fminf(float(lowBoundSrc.y),
-   float(lowBoundDst.y)),
-   fmaxf(float(maxBoundSrc.y),
-   float(maxBoundDst.y)),
-   fminf(float(lowBoundSrc.z),
-   float(lowBoundDst.z)),
-   fmaxf(float(maxBoundSrc.z),
-   float(maxBoundDst.z)));
-   */
+  std::cout << "Model1 Bounds: " << lowBoundSrc << " " << maxBoundSrc << std::endl;
+  std::cout << "Model2 Bounds: " << lowBoundDst << " " << maxBoundDst << std::endl;
 
-  //create Bipartite Graph
-  //BipartiteGraph * bipartiteGraph = new BipartiteGraph(bottle, bottleMorphTarget);
-  //segment parts of bottle to determine problem areas
-  //splitProblemTriangles(bottle, bottleMorphTarget);
-  //segmentModels(bottle, lowBoundSrc, maxBoundSrc, bottleMorphTarget, lowBoundDst, maxBoundDst);
+/*
+  SquareMap* squareMap = createSquareMap(fminf(float(lowBoundSrc.x),
+					       float(lowBoundDst.x)),
+					 fmaxf(float(maxBoundSrc.x),
+					       float(maxBoundDst.x)),
+					 fminf(float(lowBoundSrc.y),
+					       float(lowBoundDst.y)),
+					 fmaxf(float(maxBoundSrc.y),
+					       float(maxBoundDst.y)),
+					 fminf(float(lowBoundSrc.z),
+						   float(lowBoundDst.z)),
+					 fmaxf(float(maxBoundSrc.z),
+						   float(maxBoundDst.z)));
+	*/
+	
+	//create Bipartite Graph
+        //BipartiteGraph * bipartiteGraph = new BipartiteGraph(bottle, bottleMorphTarget);
+	//segment parts of bottle to determine problem areas
+	//splitProblemTriangles(bottle, bottleMorphTarget);
+	//segmentModels(bottle, lowBoundSrc, maxBoundSrc, bottleMorphTarget, lowBoundDst, maxBoundDst);
   //matchInitialPoints(bottle, bottleMorphTarget);
   gprint( PRINT_DEBUG, "Number Vertices Model1: %lu\n",
           bottle->numberOfPoints() );
@@ -104,7 +103,7 @@ void init() {
   //populateSrcSquare(squareMap,bottle->_vertices);
   //populateDestSquare(squareMap,bottleMorphTarget->_vertices);
   //expandSquareMap(squareMap);
-  
+
   //Rescale models to original size
   //scaleModel->restoreModels();
   
@@ -113,11 +112,10 @@ void init() {
   lowBoundDst = bottleMorphTarget->getMin();
   maxBoundDst = bottleMorphTarget->getMax();
   
-  std::cout << "Model1 Bounds: " << lowBoundSrc << " " << maxBoundSrc
-            << std::endl;
-  std::cout << "Model2 Bounds: " << lowBoundDst << " " << maxBoundDst
-            << std::endl;
+  std::cout << "Model1 Bounds: " << lowBoundSrc << " " << maxBoundSrc << std::endl;
+  std::cout << "Model2 Bounds: " << lowBoundDst << " " << maxBoundDst << std::endl;
   
+
   /*
    gprint( PRINT_DEBUG, "Front Vertices Src:  %d\n",int(squareMap->front->srcTriangles.size()));
    gprint( PRINT_DEBUG, "Back  Vertices Src:  %d\n",int(squareMap->back->srcTriangles.size()));
@@ -131,6 +129,7 @@ void init() {
    */
   //gprint( PRINT_DEBUG, "Number Vertices Model1: %d\n",bottle->numberOfPoints());
   //gprint( PRINT_DEBUG, "Number Vertices Model2: %d\n",bottleMorphTarget->numberOfPoints());
+  
   bottle->_trans._scale.set( 0.01 );
   bottleMorphTarget->_trans._scale.set( 0.01 );
   

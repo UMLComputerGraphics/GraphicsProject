@@ -1,3 +1,4 @@
+
 /**
  * @file Particle.cpp
  * @author Nick Ver Voort, nicholas_vervoort@student.uml.edu
@@ -21,13 +22,13 @@ using Angel::mat4;
 
 // Constructor(s)
 Particle::Particle( vec4 position, float scale, float lifetime ) :
-    _pos( position ), _scale( scale ), _vel( vec3( 0.0, 0.0, 0.0 ) ) {
-  setMaxLifetime( lifetime ), setColor( vec4( 1.0, 0.0, 1.0, 1.0 ) );
+  _pos( position ), _scale( scale ), _vel(vec3(0.0, 0.0, 0.0)){
+  setMaxLifetime(lifetime), setColor(vec4(1.0,0.0,1.0,1.0));
 }
 
 Particle::Particle( vec4 position, float lifetime ) :
-    _pos( position ), _vel( vec3( 0.0, 0.0, 0.0 ) ) {
-  setMaxLifetime( lifetime ), setColor( vec4( 1.0, 0.0, 1.0, 1.0 ) );
+  _pos( position ), _vel(vec3(0.0, 0.0, 0.0)){
+  setMaxLifetime(lifetime), setColor(vec4(1.0,0.0,1.0,1.0));
 }
 
 // Destructor(s)
@@ -37,19 +38,20 @@ Particle::~Particle() {
 
 // Update position and other properties
 void Particle::updateSelf( void ) {
-  
+
   // use the timer so the particle movement will look the same for everyone
-  float scale = tick.scale();
-  
-  _pos.x += _vel.x * scale;
-  _pos.y += _vel.y * scale;
-  _pos.z += _vel.z * scale;
-  
+  float scale = tick.scale() ;
+
+  _pos.x += _vel.x * scale ;
+  _pos.y += _vel.y * scale ;
+  _pos.z += _vel.z * scale ;
+
   this->_lifetime -= 0.05 * scale;
   //increase alive time (not lifeSPAN)
   //if ( _lifetime <= 0.0 ) _pos.x = _pos.y = _pos.z = 0.0 ;
-  
+
 }
+
 
 void Particle::changeVel( vec3 newVel ) {
   _vel += newVel;
@@ -76,7 +78,7 @@ void Particle::setLifetime( float newLifetime ) {
 }
 
 void Particle::setMaxLifetime( float newMaxLife ) {
-  _maxLifetime = _lifetime = newMaxLife;
+	_maxLifetime = _lifetime = newMaxLife;
 }
 
 void Particle::setPos( vec4 newPos ) {
@@ -91,14 +93,19 @@ void Particle::setVel( vec3 newVel ) {
   _vel = newVel;
 }
 
-vec4 Particle::getPosition( void ) {
+vec4
+Particle::getPosition( void )
+{
   return _pos;
 }
 
-float Particle::getMaxLifetime() {
-  return _maxLifetime;
+float
+Particle::getMaxLifetime()
+{
+	return _maxLifetime;
 }
 
-vec4 Particle::getColor( void ) {
-  return _color;
+vec4
+Particle::getColor( void ) {
+  return _color ;
 }

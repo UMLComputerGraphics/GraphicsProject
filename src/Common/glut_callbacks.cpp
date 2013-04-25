@@ -199,7 +199,7 @@ void engineSpecialKeyboard( int key, int x, int y ) {
   Scene *theScene = Engine::instance()->rootScene();
   Cameras *camList = Engine::instance()->cams();
   
-  GLint mode = -1;
+  GLuint mode = -1;
 
   switch ( key ) {
   //Cycle between active Objects ...

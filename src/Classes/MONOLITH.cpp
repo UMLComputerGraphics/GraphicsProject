@@ -9,44 +9,52 @@
 
 #include "MONOLITH.hpp"
 
-MONOLITH::~MONOLITH( void ) {
-  
+
+MONOLITH::~MONOLITH(void)
+{
+    
 }
 
 /* Default and only constructor */
-MONOLITH::MONOLITH( int argc, char** argv ) {
-  _argc = argc;
-  _argv = argv;
+MONOLITH::MONOLITH(int argc, char** argv)
+{
+    _argc = argc;
+    _argv = argv;
 }
 
 /**
  * Cleans up our scene graph.
  */
-void MONOLITH::cleanup( void ) {
-  Engine::instance()->rootScene()->delObject();
+void MONOLITH::cleanup(void)
+{
+    Engine::instance()->rootScene()->delObject();
 }
 
 /**
  * Apply animations and whatever else your heart desires.
  */
-void MONOLITH::monolith_idle( void ) {
-  static Scene *rootScene = Engine::instance()->rootScene();
-  
-  // Animation variables.
-  double timer = glutGet( GLUT_ELAPSED_TIME ) / 500.0;
-  float percent = (sin( timer ) + 1) / 2;
+void MONOLITH::monolith_idle(void)
+{
+    static Scene *rootScene = Engine::instance()->rootScene();
+    
+    // Animation variables.
+    double timer = glutGet( GLUT_ELAPSED_TIME ) / 500.0;
+    float percent = 1; /* (sin( timer ) + 1) / 2; */
+    
+    Object &candle = *((*rootScene)["bottle"]);
+    candle.animation( simpleRotateAnim );
 
-  //(*rootScene)["candle_top"]->morphPercentage(percent);
-  
-  /*
-  Object &candle_base = *((*rootScene)["candle_base"]);
-  Object &candle_top = *((*rootScene)["candle_top"]);
-  candle_base.animation( candleMeltAnim );
-  candle_top.animation(candleTopMeltDown);
-  */
-  
-  // Update the morph percentage.
-  // (*rootScene)["bottle"]->morphPercentage( percent );
+    //(*rootScene)["candle_top"]->morphPercentage(percent);
+
+    /*
+	  Object &candle_base = *((*rootScene)["candle_base"]);
+	  Object &candle_top = *((*rootScene)["candle_top"]);
+	  candle_base.animation( candleMeltAnim );
+	  candle_top.animation(candleTopMeltDown);
+	*/
+    
+    // Update the morph percentage.
+    //(*rootScene)["bottle"]->morphPercentage( percent );
 }
 
 #ifndef WITHOUT_QT
@@ -54,8 +62,10 @@ void MONOLITH::monolith_idle( void ) {
  * Implementation of all slots and sighnals.
  * Qt-specific
  */
-void MONOLITH::slotParticleAdd(int value) {
-  ps->addSomeParticles(10);
+void MONOLITH::slotParticleAdd(int value)
+{
+    ps->addSomeParticles(10);
+
 }
 #endif //WITHOUT_QT
 /**
@@ -148,6 +158,9 @@ void MONOLITH::run() {
   candle_base->buffer();
   stick->buffer();
 
+  stick->insertObject(candle_top);
+  stick->insertObject(candle_base);
+
   
   max = candle_top->getMax();
   ps = new ParticleSystem( 10, "ps1", shader[2] );
@@ -171,19 +184,18 @@ void MONOLITH::run() {
   printf("LOOPING!\n");
   glutMainLoop(); // if we are not using Qt, the glutMainLoop is called here for both platforms.
 #endif
-
 }
-
 /**
  * A simple animation callback.
  * Rotates the object about its Y axis,
  * as it orbits the object around a point about the Y axis.
  * @param obj The object to animate.
  */
-
-void MONOLITH::simpleRotateAnim( TransCache &obj ) {
-  obj._rotation.rotateY( tick.scale() * 1.5 );
-  obj._orbit.rotateY( tick.scale() * -0.5 );
+void MONOLITH::simpleRotateAnim( TransCache &obj )
+{
+//    obj._rotation.rotateY( tick.scale() * 1.5 );
+//    //obj._offset.set( 1.5, 0, 0 );
+//    obj._orbit.rotateY( tick.scale() * -0.5 );
 }
 
 void MONOLITH::candleMeltAnim(TransCache &obj) {

@@ -56,36 +56,56 @@ GLint uLightSpecular = -1;
 
 //----------------------------------------------------------------------------
 
-GLfloat sphereCenterPoints[] = { 0.0, 0.0, 5.0, 1.0, -1.0, -2.0, -1.0, 1.0,
-                                 -2.0, 1.0, 1.0, -2.0 };
+GLfloat sphereCenterPoints[] = { 0.0, 0.0, 5.0,
+                                 1.0, -1.0, -2.0,
+                                 -1.0, 1.0, -2.0,
+                                 1.0, 1.0, -2.0 };
 
-GLfloat sphereRadius[] = { 0.5, 0.6, 0.7, 0.8 };
+GLfloat sphereRadius[] = { 0.5,
+                           0.6,
+                           0.7,
+                           0.8 };
 
-GLfloat sphereDiffuse[] = { 0.1, 0.1, 0.1, 0.3, 1.0, 0.3, 0.3, 0.3, 1.0, 1.0,
-                            0.3, 0.3 };
+GLfloat sphereDiffuse[] = { 0.1, 0.1, 0.1,
+                           0.3, 1.0, 0.3,
+                           0.3, 0.3, 1.0,
+                           1.0, 0.3, 0.3 };
 
-GLfloat sphereAmbient[] = { 0.1, 0.1, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                            0.0, 0.0 };
+GLfloat sphereAmbient[] = { 0.1, 0.1, 0.1,
+                            0.0, 0.0, 0.0,
+                            0.0, 0.0, 0.0,
+                            0.0, 0.0, 0.0 };
 
-GLfloat sphereSpecular[] = { 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                             0.0, 0.0 };
+GLfloat sphereSpecular[] = { 1.0, 1.0, 1.0,
+                             0.0, 0.0, 0.0,
+                             0.0, 0.0, 0.0,
+                             0.0, 0.0, 0.0 };
 
-GLfloat sphereShininess[] = { 1000.0, 1.0, 1.0, 1.0 };
+GLfloat sphereShininess[] = { 1000.0,
+                              1.0,
+                              1.0,
+                              1.0 };
 
-GLfloat sphereReflect[] = { 0.5, 1.0, 1.0, 1.0 };
+GLfloat sphereReflect[] = { 0.5,
+                            1.0,
+                            1.0,
+                            1.0 };
 
-GLfloat sphereRefract[] = { 1.0, 1.0, 1.0, 1.0 };
+GLfloat sphereRefract[] = { 1.0,
+                            1.0,
+                            1.0,
+                            1.0 };
 
 GLfloat lightPositions[] = { 1.0, 1.0, 10.0 };
 GLfloat lightDiffuse[] = { 1.0, 1.0, 1.0 };
 GLfloat lightSpecular[] = { 1.0, 1.0, 1.0 };
 
 int numTriangles = 0;
-std::vector< vec3 > trianglePoints;
+std::vector<vec3> trianglePoints;
 
 int numOfBoundingBoxes = 0;
 
-std::vector< GLfloat > bufferData;
+std::vector<GLfloat> bufferData;
 
 int numOfTriangleVectors = 10;
 
@@ -279,7 +299,7 @@ void display( void ) {
   
   glUniform1i( uNumOfTriangle, numTriangles );
   glUniform1i( uNumOfTriangleVectors, numOfTriangleVectors );
-  
+
   glUniform1i( uNumOfBoundingBoxes, numOfBoundingBoxes );
   
   glUniform3fv( uLightPositions, 1, lightPositions );
@@ -343,180 +363,153 @@ void display( void ) {
   }
 }
 
-void addVec3ToVector( std::vector< GLfloat > *_vector, vec3 _vec3 ) {
-  _vector->push_back( _vec3.x );
-  _vector->push_back( _vec3.y );
-  _vector->push_back( _vec3.z );
+void addVec3ToVector(std::vector<GLfloat> *_vector, vec3 _vec3) {
+  _vector->push_back(_vec3.x);
+  _vector->push_back(_vec3.y);
+  _vector->push_back(_vec3.z);
 }
 
-void setMinMax( vec3 *min, vec3 *max, vec3 v ) {
-  
-  if ( min->x > v.x ) {
+void setMinMax(vec3 *min, vec3 *max, vec3 v) {
+
+  if(min->x > v.x) {
     min->x = v.x;
-  } else if ( max->x < v.x ) {
+  } else if (max->x < v.x) {
     max->x = v.x;
   }
-  
-  if ( min->y > v.y ) {
+
+  if(min->y > v.y) {
     min->y = v.y;
-  } else if ( max->y < v.y ) {
+  } else if (max->y < v.y) {
     max->y = v.y;
   }
-  
-  if ( min->z > v.z ) {
+
+  if(min->z > v.z) {
     min->z = v.z;
-  } else if ( max->z < v.z ) {
+  } else if (max->z < v.z) {
     max->z = v.z;
   }
 }
 
-void addTriangle( const vec3& a, const vec3& b, const vec3& c,
-                  const vec3& diffuse, const vec3& ambient,
-                  const vec3& specular, float shininess, float reflect,
-                  float refract ) {
-  trianglePoints.push_back( a );
-  trianglePoints.push_back( b );
-  trianglePoints.push_back( c );
-  
-  addVec3ToVector( &bufferData, a );
-  addVec3ToVector( &bufferData, b );
-  addVec3ToVector( &bufferData, c );
-  
-  addVec3ToVector( &bufferData, diffuse );
-  addVec3ToVector( &bufferData, ambient );
-  addVec3ToVector( &bufferData, specular );
-  
-  bufferData.push_back( shininess );
-  bufferData.push_back( reflect );
-  bufferData.push_back( refract );
-  
-  vec3 normal = normalize( cross( b - a, c - b ) );
-  addVec3ToVector( &bufferData, normal );
-  
+void addTriangle(const vec3& a, const vec3& b, const vec3& c, const vec3& diffuse, const vec3& ambient, const vec3& specular, float shininess, float reflect, float refract) {
+  trianglePoints.push_back(a);
+  trianglePoints.push_back(b);
+  trianglePoints.push_back(c);
+
+  addVec3ToVector(&bufferData, a);
+  addVec3ToVector(&bufferData, b);
+  addVec3ToVector(&bufferData, c);
+
+  addVec3ToVector(&bufferData, diffuse);
+  addVec3ToVector(&bufferData, ambient);
+  addVec3ToVector(&bufferData, specular);
+
+  bufferData.push_back(shininess);
+  bufferData.push_back(reflect);
+  bufferData.push_back(refract);
+
+  vec3 normal = normalize(cross(b - a, c - b));
+  addVec3ToVector(&bufferData, normal);
+
   float centerX, centerY, centerZ, x, y, z;
-  
+
   centerX = (a.x + b.x + c.x) / 3;
   centerY = (a.y + b.y + c.y) / 3;
   centerZ = (a.z + b.z + c.z) / 3;
-  
+
   float distance = 0.0;
   float tempDistance = 0.0;
-  
+
   x = centerX - a.x;
   y = centerY - a.y;
   z = centerZ - a.z;
-  tempDistance = sqrtf( (x * x) + (y * y) + (z * z) );
-  if ( tempDistance > distance ) distance = tempDistance;
-  
+  tempDistance = sqrtf((x * x) + (y * y) + (z * z));
+  if(tempDistance > distance) distance = tempDistance;
+
   x = centerX - b.x;
   y = centerY - b.y;
   z = centerZ - b.z;
-  tempDistance = sqrtf( (x * x) + (y * y) + (z * z) );
-  if ( tempDistance > distance ) distance = tempDistance;
-  
+  tempDistance = sqrtf((x * x) + (y * y) + (z * z));
+  if(tempDistance > distance) distance = tempDistance;
+
   x = centerX - c.x;
   y = centerY - c.y;
   z = centerZ - c.z;
-  tempDistance = sqrtf( (x * x) + (y * y) + (z * z) );
-  if ( tempDistance > distance ) distance = tempDistance;
+  tempDistance = sqrtf((x * x) + (y * y) + (z * z));
+  if(tempDistance > distance) distance = tempDistance;
   distance += 0.0001;
-  
-  bufferData.push_back( centerX );
-  bufferData.push_back( centerY );
-  bufferData.push_back( centerZ );
-  bufferData.push_back( distance );
-  bufferData.push_back( distance * distance );
-  bufferData.push_back( 0.0 );
-  
+
+  bufferData.push_back(centerX);
+  bufferData.push_back(centerY);
+  bufferData.push_back(centerZ);
+  bufferData.push_back(distance);
+  bufferData.push_back(distance * distance);
+  bufferData.push_back(0.0);
+
   numTriangles++;
 }
 
-void addCube( vec3 position, vec3 diffuse, vec3 ambient, vec3 specular,
-              float shininess, float reflect, float refract ) {
-  vec3 vertices[8] = { vec3( -0.5, -0.5, 0.5 ), // 0 left bottom front
-                       vec3( -0.5, 0.5, 0.5 ), // 1 left top front
-                       vec3( 0.5, 0.5, 0.5 ), // 2 right top front
-                       vec3( 0.5, -0.5, 0.5 ), // 3 right bottom front
-                       vec3( -0.5, -0.5, -0.5 ), // 4 left bottom back
-                       vec3( -0.5, 0.5, -0.5 ), // 5 left top back
-                       vec3( 0.5, 0.5, -0.5 ), // 6 right top back
-                       vec3( 0.5, -0.5, -0.5 )  // 7 right bottom back
-      };
-  
+void addCube(vec3 position, vec3 diffuse, vec3 ambient, vec3 specular, float shininess, float reflect, float refract) {
+  vec3 vertices[8] = {
+    vec3(-0.5, -0.5,  0.5), // 0 left bottom front
+    vec3(-0.5,  0.5,  0.5), // 1 left top front
+    vec3( 0.5,  0.5,  0.5), // 2 right top front
+    vec3( 0.5, -0.5,  0.5), // 3 right bottom front
+    vec3(-0.5, -0.5, -0.5), // 4 left bottom back
+    vec3(-0.5,  0.5, -0.5), // 5 left top back
+    vec3( 0.5,  0.5, -0.5), // 6 right top back
+    vec3( 0.5, -0.5, -0.5)  // 7 right bottom back
+  };
+
   //front
-  addTriangle( vertices[1] + position, vertices[0] + position,
-               vertices[3] + position, diffuse, ambient, specular, shininess,
-               reflect, refract );
-  addTriangle( vertices[1] + position, vertices[3] + position,
-               vertices[2] + position, diffuse, ambient, specular, shininess,
-               reflect, refract );
-  
+  addTriangle(vertices[1] + position, vertices[0] + position, vertices[3] + position, diffuse, ambient, specular, shininess, reflect, refract);
+  addTriangle(vertices[1] + position, vertices[3] + position, vertices[2] + position, diffuse, ambient, specular, shininess, reflect, refract);
+
   //back
-  addTriangle( vertices[6] + position, vertices[7] + position,
-               vertices[4] + position, diffuse, ambient, specular, shininess,
-               reflect, refract );
-  addTriangle( vertices[6] + position, vertices[4] + position,
-               vertices[5] + position, diffuse, ambient, specular, shininess,
-               reflect, refract );
-  
+  addTriangle(vertices[6] + position, vertices[7] + position, vertices[4] + position, diffuse, ambient, specular, shininess, reflect, refract);
+  addTriangle(vertices[6] + position, vertices[4] + position, vertices[5] + position, diffuse, ambient, specular, shininess, reflect, refract);
+
   //right
-  addTriangle( vertices[2] + position, vertices[3] + position,
-               vertices[7] + position, diffuse, ambient, specular, shininess,
-               reflect, refract );
-  addTriangle( vertices[2] + position, vertices[7] + position,
-               vertices[6] + position, diffuse, ambient, specular, shininess,
-               reflect, refract );
-  
+  addTriangle(vertices[2] + position, vertices[3] + position, vertices[7] + position, diffuse, ambient, specular, shininess, reflect, refract);
+  addTriangle(vertices[2] + position, vertices[7] + position, vertices[6] + position, diffuse, ambient, specular, shininess, reflect, refract);
+
   //left
-  addTriangle( vertices[5] + position, vertices[4] + position,
-               vertices[0] + position, diffuse, ambient, specular, shininess,
-               reflect, refract );
-  addTriangle( vertices[5] + position, vertices[0] + position,
-               vertices[1] + position, diffuse, ambient, specular, shininess,
-               reflect, refract );
-  
+  addTriangle(vertices[5] + position, vertices[4] + position, vertices[0] + position, diffuse, ambient, specular, shininess, reflect, refract);
+  addTriangle(vertices[5] + position, vertices[0] + position, vertices[1] + position, diffuse, ambient, specular, shininess, reflect, refract);
+
   //top
-  addTriangle( vertices[5] + position, vertices[1] + position,
-               vertices[2] + position, diffuse, ambient, specular, shininess,
-               reflect, refract );
-  addTriangle( vertices[5] + position, vertices[2] + position,
-               vertices[6] + position, diffuse, ambient, specular, shininess,
-               reflect, refract );
-  
+  addTriangle(vertices[5] + position, vertices[1] + position, vertices[2] + position, diffuse, ambient, specular, shininess, reflect, refract);
+  addTriangle(vertices[5] + position, vertices[2] + position, vertices[6] + position, diffuse, ambient, specular, shininess, reflect, refract);
+
   //bottom
-  addTriangle( vertices[0] + position, vertices[4] + position,
-               vertices[7] + position, diffuse, ambient, specular, shininess,
-               reflect, refract );
-  addTriangle( vertices[0] + position, vertices[7] + position,
-               vertices[3] + position, diffuse, ambient, specular, shininess,
-               reflect, refract );
+  addTriangle(vertices[0] + position, vertices[4] + position, vertices[7] + position, diffuse, ambient, specular, shininess, reflect, refract);
+  addTriangle(vertices[0] + position, vertices[7] + position, vertices[3] + position, diffuse, ambient, specular, shininess, reflect, refract);
 }
 
 void pushDataToBuffer() {
   gprint( PRINT_DEBUG, "numTriangles %d\n", numTriangles );
   gprint( PRINT_DEBUG, "numOfBoundingBoxes %d\n", numOfBoundingBoxes );
-  
+
   GLuint bufObj;
-  glActiveTexture( GL_TEXTURE0 );
-  glGenBuffers( 1, &bufObj );
-  glBindBuffer( GL_TEXTURE_BUFFER, bufObj );
-  glBufferData( GL_TEXTURE_BUFFER, sizeof(GLfloat) * bufferData.size(),
-                bufferData.data(), GL_STATIC_DRAW );
-  glTexBuffer( GL_TEXTURE_BUFFER, GL_RGB32F, bufObj );
+  glActiveTexture(GL_TEXTURE0);
+  glGenBuffers(1, &bufObj);
+  glBindBuffer(GL_TEXTURE_BUFFER, bufObj);
+  glBufferData(GL_TEXTURE_BUFFER, sizeof(GLfloat) * bufferData.size(), bufferData.data(), GL_STATIC_DRAW);
+  glTexBuffer(GL_TEXTURE_BUFFER, GL_RGB32F, bufObj);
 }
 
 void genereateScene() {
-  
-  std::vector< GLfloat > boundingBoxes;
-  
-  vec3 ambient = vec3( 0.0, 0.0, 0.0 );
-  vec3 specular = vec3( 0.0, 0.0, 0.0 );
-  
-  Object *bottle = new Object( "", -1 );
+
+  std::vector<GLfloat> boundingBoxes;
+
+  vec3 ambient = vec3(0.0, 0.0, 0.0);
+  vec3 specular = vec3(0.0, 0.0, 0.0);
+
+
+  Object *bottle = new Object("", -1);
   ObjLoader::loadModelFromFile( bottle, "../models/bottle-b.obj" );
-  
+
   vec3 min, max;
-  
+
   vec4 *vertices = bottle->_vertices.data();
   min.x = vertices[0].x;
   max.x = vertices[0].x;
@@ -524,33 +517,33 @@ void genereateScene() {
   max.y = vertices[0].y;
   min.z = vertices[0].z;
   max.z = vertices[0].z;
-  
+
   int bounding = 100;
-  
+
   unsigned long int count = 0;
-  while ( count < bottle->_vertices.size() ) {
+  while(count < bottle->_vertices.size()) {
     vec4 vertex = vertices[count++];
-    vec3 a = vec3( vertex.x, vertex.y, vertex.z );
+    vec3 a = vec3(vertex.x, vertex.y, vertex.z);
     vertex = vertices[count++];
-    vec3 b = vec3( vertex.x, vertex.y, vertex.z );
+    vec3 b = vec3(vertex.x, vertex.y, vertex.z);
     vertex = vertices[count++];
-    vec3 c = vec3( vertex.x, vertex.y, vertex.z );
-    
-    setMinMax( &min, &max, a );
-    setMinMax( &min, &max, b );
-    setMinMax( &min, &max, c );
-    
-    addTriangle( a, b, c, vec3( 0.0, 1.0, 0.0 ), vec3( 0.0, 0.1, 0.0 ),
-                 specular, 1.0, 0.5, 0.0 );
-    
-    if ( numTriangles > 0 && numTriangles % bounding == 0 ) {
-      addVec3ToVector( &boundingBoxes, min );
-      addVec3ToVector( &boundingBoxes, max );
-      boundingBoxes.push_back( float( numTriangles - bounding ) );// starting index
-      boundingBoxes.push_back( (float) numTriangles ); // ending index
-      boundingBoxes.push_back( 0.0 ); // unused
+    vec3 c = vec3(vertex.x, vertex.y, vertex.z);
+
+    setMinMax(&min, &max, a);
+    setMinMax(&min, &max, b);
+    setMinMax(&min, &max, c);
+
+    addTriangle(a, b, c, vec3(0.0, 1.0, 0.0), vec3(0.0, 0.1, 0.0), specular, 1.0, 0.5, 0.0);
+
+
+    if(numTriangles > 0 && numTriangles % bounding == 0) {
+      addVec3ToVector(&boundingBoxes, min);
+      addVec3ToVector(&boundingBoxes, max);
+      boundingBoxes.push_back(float(numTriangles - bounding)); // starting index
+      boundingBoxes.push_back((float)numTriangles); // ending index
+      boundingBoxes.push_back(0.0); // unused
       numOfBoundingBoxes += 1;
-      
+
       min.x = vertices[count + 1].x;
       max.x = vertices[count + 1].x;
       min.y = vertices[count + 1].y;
@@ -558,62 +551,58 @@ void genereateScene() {
       min.z = vertices[count + 1].z;
       max.z = vertices[count + 1].z;
     }
-    
+
   }
-  
-  addVec3ToVector( &boundingBoxes, min );
-  addVec3ToVector( &boundingBoxes, max );
-  boundingBoxes.push_back( float( numTriangles - bounding ) ); // starting index
-  boundingBoxes.push_back( (float) numTriangles ); // ending index
-  boundingBoxes.push_back( 0.0 ); // unused
+
+  addVec3ToVector(&boundingBoxes, min);
+  addVec3ToVector(&boundingBoxes, max);
+  boundingBoxes.push_back(float(numTriangles - bounding)); // starting index
+  boundingBoxes.push_back((float)numTriangles); // ending index
+  boundingBoxes.push_back(0.0); // unused
   numOfBoundingBoxes += 1;
-  /*
-   addCube(vec3(3.0, 0.0, 0.0), vec3(0.0, 0.0, 0.0), vec3(0.0, 0.0, 0.0), vec3(0.0, 0.0, 0.0), 1000.0, 0.0, 1.0);
-   addVec3ToVector(&boundingBoxes, vec3(2.5, -0.5, -0.5));
-   addVec3ToVector(&boundingBoxes, vec3(3.5, 0.5, 0.5));
-   boundingBoxes.push_back((float)(numTriangles - 12)); // starting index
-   boundingBoxes.push_back((float)numTriangles); // ending index
-   boundingBoxes.push_back(0.0); // unused
-   numOfBoundingBoxes += 1;
-   */
-
-  addTriangle( vec3( -10.0, -10.0, -6.0 ), vec3( 10.0, -10.0, -6.0 ),
-               vec3( 10.0, 10.0, -6.0 ), vec3( 1.0, 1.0, 1.0 ), ambient,
-               vec3( 1.0, 1.0, 1.0 ), 100.0, 0.0, 0.0 );
-  addTriangle( vec3( -10.0, -10.0, -6.0 ), vec3( 10.0, 10.0, -6.0 ),
-               vec3( -10.0, 10.0, -6.0 ), vec3( 0.0, 0.0, 1.0 ), ambient,
-               vec3( 0.0, 0.0, 1.0 ), 100.0, 0.0, 0.0 );
-  addVec3ToVector( &boundingBoxes, vec3( -10.1, -10.1, -5.9 ) );
-  addVec3ToVector( &boundingBoxes, vec3( 10.1, 10.1, -6.1 ) );
-  boundingBoxes.push_back( (float) (numTriangles - 2) ); // starting index
-  boundingBoxes.push_back( (float) numTriangles ); // ending index
-  boundingBoxes.push_back( 0.0 ); // unused
+/*
+  addCube(vec3(3.0, 0.0, 0.0), vec3(0.0, 0.0, 0.0), vec3(0.0, 0.0, 0.0), vec3(0.0, 0.0, 0.0), 1000.0, 0.0, 1.0);
+  addVec3ToVector(&boundingBoxes, vec3(2.5, -0.5, -0.5));
+  addVec3ToVector(&boundingBoxes, vec3(3.5, 0.5, 0.5));
+  boundingBoxes.push_back((float)(numTriangles - 12)); // starting index
+  boundingBoxes.push_back((float)numTriangles); // ending index
+  boundingBoxes.push_back(0.0); // unused
   numOfBoundingBoxes += 1;
-  
-  /*
-   vec3 colors[] = {vec3(1.0, 1.0, 0.0), vec3(1.0, 0.0, 1.0), vec3(0.0, 1.0, 1.0)};
+*/
 
-   int colorIndex = 0;
-   float xPos, yPos, zPos;
-   for(xPos = -6; xPos < 6.1; xPos += 2) {
-   for(yPos = -6; yPos < 6.1; yPos += 2) {
-   for(zPos = -6; zPos < 6.1; zPos += 2) {
-   colorIndex++;
-   colorIndex %= 3;
-   addCube(vec3(xPos, yPos, zPos), colors[colorIndex]);
-   }
-   }
-   }
-   */
-  /*
-   addTriangle(vec3(-5.0, -5.0, -6.0), vec3(5.0, -5.0, -6.0), vec3(5.0, 5.0, -6.0), vec3(1.0, 0.0, 0.0));
-   addTriangle(vec3(-5.0, -5.0, -6.0), vec3(5.0, 5.0, -6.0), vec3(-5.0, 5.0, -6.0), vec3(0.0, 1.0, 0.0));
-   */
+  addTriangle(vec3(-10.0, -10.0, -6.0), vec3(10.0, -10.0, -6.0), vec3(10.0, 10.0, -6.0), vec3(1.0, 1.0, 1.0), ambient, vec3(1.0, 1.0, 1.0), 100.0, 0.0, 0.0);
+  addTriangle(vec3(-10.0, -10.0, -6.0), vec3(10.0, 10.0, -6.0), vec3(-10.0, 10.0, -6.0), vec3(0.0, 0.0, 1.0), ambient, vec3(0.0, 0.0, 1.0), 100.0, 0.0, 0.0);
+  addVec3ToVector(&boundingBoxes, vec3(-10.1, -10.1, -5.9));
+  addVec3ToVector(&boundingBoxes, vec3(10.1, 10.1, -6.1));
+  boundingBoxes.push_back((float)(numTriangles - 2)); // starting index
+  boundingBoxes.push_back((float)numTriangles); // ending index
+  boundingBoxes.push_back(0.0); // unused
+  numOfBoundingBoxes += 1;
 
-  for ( unsigned long int i = 0; i < boundingBoxes.size(); i++ ) {
-    bufferData.push_back( boundingBoxes.data()[i] );
+/*
+  vec3 colors[] = {vec3(1.0, 1.0, 0.0), vec3(1.0, 0.0, 1.0), vec3(0.0, 1.0, 1.0)};
+
+  int colorIndex = 0;
+  float xPos, yPos, zPos;
+  for(xPos = -6; xPos < 6.1; xPos += 2) {
+    for(yPos = -6; yPos < 6.1; yPos += 2) {
+      for(zPos = -6; zPos < 6.1; zPos += 2) {
+        colorIndex++;
+        colorIndex %= 3;
+        addCube(vec3(xPos, yPos, zPos), colors[colorIndex]);
+      }
+    }
   }
-  
+*/
+  /*
+  addTriangle(vec3(-5.0, -5.0, -6.0), vec3(5.0, -5.0, -6.0), vec3(5.0, 5.0, -6.0), vec3(1.0, 0.0, 0.0));
+  addTriangle(vec3(-5.0, -5.0, -6.0), vec3(5.0, 5.0, -6.0), vec3(-5.0, 5.0, -6.0), vec3(0.0, 1.0, 0.0));
+   */
+
+  for(unsigned long int i = 0; i < boundingBoxes.size(); i++) {
+    bufferData.push_back(boundingBoxes.data()[i]);
+  }
+
   pushDataToBuffer();
 }
 
@@ -634,10 +623,10 @@ void init( void ) {
   
   vRayPosition = glGetAttribLocation( program, "vRayPosition" );
   uDisplay = glGetUniformLocation( program, "uDisplay" );
-  
+
   uRotationMatrix = glGetUniformLocation( program, "uRotationMatrix" );
   uCameraPosition = glGetUniformLocation( program, "uCameraPosition" );
-  
+
   uNumOfSpheres = glGetUniformLocation( program, "uNumOfSpheres" );
   uSphereCenterPoints = glGetUniformLocation( program, "uSphereCenterPoints" );
   uSphereRadius = glGetUniformLocation( program, "uSphereRadius" );
@@ -647,11 +636,10 @@ void init( void ) {
   uSphereShininess = glGetUniformLocation( program, "uSphereShininess" );
   uSphereReflect = glGetUniformLocation( program, "uSphereReflect" );
   uSphereRefract = glGetUniformLocation( program, "uSphereRefract" );
-  
+
   uNumOfTriangle = glGetUniformLocation( program, "uNumOfTriangle" );
-  uNumOfTriangleVectors = glGetUniformLocation( program,
-                                                "uNumOfTriangleVectors" );
-  
+  uNumOfTriangleVectors = glGetUniformLocation( program, "uNumOfTriangleVectors" );
+
   uNumOfBoundingBoxes = glGetUniformLocation( program, "uNumOfBoundingBoxes" );
   
   uLightPositions = glGetUniformLocation( program, "uLightPositions" );
