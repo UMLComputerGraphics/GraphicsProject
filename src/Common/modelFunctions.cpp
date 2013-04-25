@@ -453,7 +453,7 @@ void segmentModels(Object* model1, vec3 model1Low, vec3 model1High, Object* mode
 	for(size_t i=0; i<partitionSize; i++){
 		//makeModelTopSameSize(model1Vertices[i],model1Normals[i],model1Colors[i],model1Textures[i],model2Vertices[i],model2Normals[i],model2Colors[i],model2Textures[i]);
 		//matchPoints(model1Vertices[i],model1Normals[i],model1Colors[i],model1Textures[i],model2Vertices[i],model2Normals[i],model2Colors[i],model2Textures[i]);
-		//ScaleModel * scaleModel = new ScaleModel(model1Vertices[i], model2Vertices[i],1,100,1);
+		//ScaleModel * scaleModel = new ScaleModel(model1Vertices[i], model2Vertices[i],1,3,1);
 		BipartiteGraph * bipartiteGraph = new BipartiteGraph(model1Vertices[i],model1Normals[i],model1Colors[i],model1Textures[i],model2Vertices[i],model2Normals[i],model2Colors[i],model2Textures[i]);
 		//scaleModel->restorePartitionModel();
 	}
@@ -533,7 +533,7 @@ void applyToObjects(Object* model1, Object* model2, std::vector< Angel::vec4 > m
 	model2->_vertices = model2Vertices[0];
 	model2->_normals = model2Normals[0];
 	model2->_colors = model2Colors[0];
-/*
+
 	for(size_t j=1; j<partitionSize; j++){
 		for(size_t i=0; i<model1Vertices[j].size(); i++){
 			model1->_vertices.push_back(model1Vertices[j][i]);
@@ -545,7 +545,7 @@ void applyToObjects(Object* model1, Object* model2, std::vector< Angel::vec4 > m
 			model2->_normals.push_back(model2Normals[j][i]);
 			model2->_colors.push_back(model2Colors[j][i]);
 		}	
-	}*/
+	}
 }
 
 void splitProblemTriangles(Object* model1, Object* model2){

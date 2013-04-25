@@ -44,7 +44,6 @@ public:
   ParticleSystem( int particleAmt, const std::string &name, GLuint shader );
   ~ParticleSystem( void );
 
-  void updateNumParticles( int );
 
   // this will fill the system with newborn particles
   void  fillSystemWithParticles(void);
@@ -54,6 +53,7 @@ public:
   float getMaxLife( void );
   float getMinLife( void );
   int   getNumParticles( void );
+  void  setNumParticles( int newNumParticles );
 
   void  setSlaughterHeight( float );
   void  setLifespan( float minLifespan, float maxLifespan );
@@ -84,12 +84,13 @@ private:
    to have the particles behave according to our specification
    on each call to Draw(). That's the idea, anyway. */
   void  update();
+  void updateNumParticles( int );
+
 
   float generateLifespan();
   vec4  getRandomCircularSpawnPoint(void);
-  vec4 getRandomHemisphericalSpawnPoint(void);
-  void respawnParticle(Particle &p);
-  void  setNumParticles( int newNumParticles );
+  vec4  getRandomHemisphericalSpawnPoint(void);
+  void  respawnParticle(Particle &p);
   void  addParticle(void);
 
   Particle *newRandomParticle(void);

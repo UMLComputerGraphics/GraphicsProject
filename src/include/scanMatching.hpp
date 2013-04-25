@@ -60,11 +60,15 @@ struct ScanMatch {
 	Object* Src;
 	Object* Dest;
 	int heightScale;
+	int widthScale;
+	int depthScale;
 
-	ScanMatch(Object* src, Object* dest, int height){
+	ScanMatch(Object* src, Object* dest, int height, int width, int depth){
 		Src = src;
 		Dest = dest;
 		heightScale = height;
+		widthScale = width;
+		depthScale = depth;
 		for(size_t i=0; i<Src->_vertices.size(); i+=3){
 			srcTriangles.push_back(new Triangle(
 				Src->_vertices[i],Src->_normals[i],Src->_colors[i],
@@ -81,6 +85,8 @@ struct ScanMatch {
 		}
 	}
 	void scanMatch();
+	void scanQuarters();
+	void scanQuarterFromTop(std::vector<Triangle*> source, std::vector<Triangle*> destination);
 	void sortTriangles(std::vector< Triangle* >& triangles);
 	void findOptimalOrientation(vec4 a, vec4 b, vec4 c, std::vector< Triangle* > model, int index, vec4& point1, vec4& point2, vec4& point3);
 	int findTriangleWithMinimumDistance(std::vector< Triangle* > larger, std::vector< Triangle* > smaller, int index);
@@ -88,6 +94,7 @@ struct ScanMatch {
 	void copyToBuffers();
 	void scanFromTop();
 	void makeSameSize(std::vector<Triangle*>& model1, std::vector<Triangle*>& model2);
+	void matchInitial(std::vector<Triangle*>& model1, std::vector<Triangle*>& model2);
 	void addToTriangles(std::vector< Triangle* >& parent, std::vector<Triangle*> addition);
 	float threeDimensionalDistance( vec4 points1, vec4 points2 );
 

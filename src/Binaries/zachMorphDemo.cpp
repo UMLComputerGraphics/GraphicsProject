@@ -61,7 +61,9 @@ void init() {
   
   //Scale source and destination height to unit 0-1
   int heightScale = 10;
-  ScaleModel * scaleModel = new ScaleModel(bottle, bottleMorphTarget,1,heightScale,1);
+  int widthScale = 1;
+  int depthScale = 1;
+  ScaleModel * scaleModel = new ScaleModel(bottle, bottleMorphTarget,widthScale,heightScale,depthScale);
   
   //std::vector< Angel::vec4 > newPoints = createCylinder(5.0,5.0);
   //bottle->_vertices = newPoints;
@@ -69,9 +71,10 @@ void init() {
 
   //matchInitialPoints(bottle, bottleMorphTarget);
   //makeModelsSameSize(bottle, bottleMorphTarget);
-  ScanMatch * scanMatch = new ScanMatch(bottle,bottleMorphTarget,heightScale);
+  ScanMatch * scanMatch = new ScanMatch(bottle,bottleMorphTarget,heightScale,widthScale,depthScale);
 
-  scanMatch->scanMatch();
+  scanMatch->scanQuarters();
+  //scanMatch->scanMatch();
   scanMatch->copyToBuffers();
   /*
   lowBoundSrc = bottle->getMin();
@@ -94,6 +97,7 @@ void init() {
           bottle->numberOfPoints() );
   gprint( PRINT_DEBUG, "Number Vertices Model2: %lu\n\n",
           bottleMorphTarget->numberOfPoints() );
+  //std::cout <<
   //makeModelsSameSize(bottle, bottleMorphTarget);
   
   //populateSrcSquare(squareMap,bottle->_vertices);
