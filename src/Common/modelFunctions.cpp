@@ -98,6 +98,24 @@ void findOptimalOrientation(vec4 a, vec4 b, vec4 c, std::vector< Angel::vec4 > m
 	}
 }
 
+void findOptimalOrientation(vec4 a, vec4 b, vec4 c, std::vector< Triangle* > model, int index, vec4& point1, vec4& point2, vec4& point3){
+	//abc
+	float distance1 = threeDimensionalDistance(a,model[index]->a->vertex)+threeDimensionalDistance(b,model[index]->b->vertex)+threeDimensionalDistance(c,model[index]->c->vertex);
+	//bca
+	float distance4 = threeDimensionalDistance(b,model[index]->a->vertex)+threeDimensionalDistance(c,model[index]->b->vertex)+threeDimensionalDistance(a,model[index]->c->vertex);
+	//cab
+	float distance5 = threeDimensionalDistance(c,model[index]->a->vertex)+threeDimensionalDistance(a,model[index]->b->vertex)+threeDimensionalDistance(b,model[index]->c->vertex);
+	float distances[] = {distance1,distance4,distance5};
+	float minimum = *std::min_element(distances,distances+3);
+	if(minimum==distance1){
+		point1=a;point2=b;point3=c;return;
+	}else if(minimum==distance4){
+		point1=b;point2=c;point3=a;return;
+	}else{
+		point1=c;point2=a;point3=b;return;
+	}
+}
+
 void findOptimalOrientation(vec4 a, vec4 b, vec4 c, Object* model, int index, vec4& point1, vec4& point2, vec4& point3){
 	//abc
 	float distance1 = threeDimensionalDistance(a,model->_vertices[index])+threeDimensionalDistance(b,model->_vertices[index+1])+threeDimensionalDistance(c,model->_vertices[index+2]);
@@ -436,12 +454,46 @@ void segmentModels(Object* model1, vec3 model1Low, vec3 model1High, Object* mode
 		//makeModelTopSameSize(model1Vertices[i],model1Normals[i],model1Colors[i],model1Textures[i],model2Vertices[i],model2Normals[i],model2Colors[i],model2Textures[i]);
 		//matchPoints(model1Vertices[i],model1Normals[i],model1Colors[i],model1Textures[i],model2Vertices[i],model2Normals[i],model2Colors[i],model2Textures[i]);
 		//ScaleModel * scaleModel = new ScaleModel(model1Vertices[i], model2Vertices[i],1,100,1);
-		//BipartiteGraph * bipartiteGraph = new BipartiteGraph(model1Vertices[i],model1Normals[i],model1Colors[i],model1Textures[i],model2Vertices[i],model2Normals[i],model2Colors[i],model2Textures[i]);
+		BipartiteGraph * bipartiteGraph = new BipartiteGraph(model1Vertices[i],model1Normals[i],model1Colors[i],model1Textures[i],model2Vertices[i],model2Normals[i],model2Colors[i],model2Textures[i]);
 		//scaleModel->restorePartitionModel();
 	}
 	applyToObjects(model1, model2, model1Vertices,model1Normals,model1Colors,model1Textures,model2Vertices,model2Normals,model2Colors,model2Textures,partitionSize);
 	
 }
+
+int findTriangleWithMinimumDistance(std::vector< Triangle* > larger, std::vector< Triangle* > smaller, int index){
+	int minIndex = -1;
+    float minDistance = INFINITY;
+	for(size_t i=0; i<smaller.size();i++){
+		vec4 point1,point2,point3;
+		findOptimalOrientation(smaller[i]->a->vertex,smaller[i]->b->vertex,smaller[i]->c->vertex,larger, index, point1, point2, point3);
+		float distance = threeDimensionalDistance(point1,larger[i]->a->vertex)+threeDimensionalDistance(point2,larger[i]->b->vertex)+threeDimensionalDistance(point3,larger[i]->c->vertex);
+		//float distance = threeDimensionalDistance(smaller[i]->a->vertex,larger[i]->a->vertex)+threeDimensionalDistance(smaller[index]->b->vertex,larger[i]->b->vertex)+threeDimensionalDistance(smaller[index]->c->vertex,larger[i]->c->vertex);
+		if(distance < minDistance){
+			minDistance = distance;
+			minIndex = i;
+		}
+	}
+	//std::cout << minIndex << std::endl;
+	return minIndex;
+}
+
+void makeSameSize(std::vector<Triangle*>& model1, std::vector<Triangle*>& model2){
+	if((model1.size()>model2.size())&&(model2.size() > 0)){
+			while(model2.size() < (model1.size())){
+				int index = findTriangleWithMinimumDistance(model1,model2,model2.size());
+				model2.push_back(model2[index]);
+			}
+		}else if((model1.size()<model2.size())&&(model1.size() > 0)){
+			while(model1.size() < model2.size()){
+				int index = findTriangleWithMinimumDistance(model2,model1,model1.size());
+				model1.push_back(model1[index]);
+			}
+		}else{
+		  gprint( PRINT_DEBUG, "Models already the same size\n" );
+		}
+}
+
 void makeModelTopSameSize(std::vector< Angel::vec4 >& model1Vertices,std::vector< Angel::vec3 >& model1Normals,std::vector< Angel::vec4 >& model1Colors,std::vector< Angel::vec2 >& model1Textures, std::vector< Angel::vec4 >& model2Vertices,std::vector< Angel::vec3 >& model2Normals,std::vector< Angel::vec4 >& model2Colors,std::vector< Angel::vec2 >& model2Textures){
 
   gprint( PRINT_DEBUG, "Bottle Points Model1: %lu\n", model1Vertices.size());
@@ -481,7 +533,7 @@ void applyToObjects(Object* model1, Object* model2, std::vector< Angel::vec4 > m
 	model2->_vertices = model2Vertices[0];
 	model2->_normals = model2Normals[0];
 	model2->_colors = model2Colors[0];
-
+/*
 	for(size_t j=1; j<partitionSize; j++){
 		for(size_t i=0; i<model1Vertices[j].size(); i++){
 			model1->_vertices.push_back(model1Vertices[j][i]);
@@ -493,7 +545,7 @@ void applyToObjects(Object* model1, Object* model2, std::vector< Angel::vec4 > m
 			model2->_normals.push_back(model2Normals[j][i]);
 			model2->_colors.push_back(model2Colors[j][i]);
 		}	
-	}
+	}*/
 }
 
 void splitProblemTriangles(Object* model1, Object* model2){

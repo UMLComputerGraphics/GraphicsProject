@@ -193,9 +193,15 @@ ParticleSystem::setSlaughterHeight(float f){
 }
 
 void
-ParticleSystem::addSomeParticles( int numToAdd ) {
-	for ( int i = 0 ; i < numToAdd ; i++ )
-		this->addParticle();
+ParticleSystem::updateNumParticles( int numParticles ) {
+	if( numParticles >= 0 ){
+		for ( int i = 0 ; i < numParticles ; i++ )
+			this->addParticle();
+	}
+	else if ( numParticles < 0 ) {
+		for ( int i = numParticles  ; i < 0 ; i++ )
+			this->removeParticle();
+	}
 }
 
 void
@@ -209,13 +215,31 @@ ParticleSystem::addParticle()
 	try
 	{
 		this->_particles.push_back(p);
+		this->setNumParticles( getNumParticles() + 1 );
 	}
 	catch (...)
 	{
 		std::cerr << "SEVERE: attempt to add a particle to particles vector failed"
 				<< std::endl;
 	}
+}
 
+void
+ParticleSystem::removeParticle()
+{
+	try
+	{
+		if( this->_particles.size() > 0 )
+		{
+			this->_particles.pop_back();
+			this->setNumParticles( getNumParticles() - 1 );
+		}
+	}
+	catch (...)
+	{
+		std::cerr << "SEVERE: attempt to remove a particle to particles vector failed"
+				<< std::endl;
+	}
 }
 
 void
@@ -280,7 +304,7 @@ void ParticleSystem::draw( void ) {
   update();
 
   // if we don't have any particles, bail 
-  if ( _vertices.size <= 0 ) return;
+  if ( _vertices.size() <= 0 ) return;
 
   buffer();
 

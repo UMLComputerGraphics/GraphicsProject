@@ -64,7 +64,8 @@ void MONOLITH::monolith_idle(void)
  */
 void MONOLITH::slotParticleAdd(int value)
 {
-    ps->addSomeParticles(10);
+    ps->updateNumParticles(10);
+    // ??? ps->updateNumParticles(value);
 
 }
 #endif //WITHOUT_QT
@@ -172,7 +173,6 @@ void MONOLITH::run() {
   ps->_trans._offset.set( 0, max.y, 0 );
   ps->fillSystemWithParticles();
   //ps->propagateOLD();
-  ps->buffer();
   candle_top->propagateOLD();
 
   Engine::instance()->cams()->active()->pos(2.0, 5.0, 9.0);
