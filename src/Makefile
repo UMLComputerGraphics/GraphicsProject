@@ -83,6 +83,7 @@ endif
 ifeq ($(UNAME), Darwin)
     prepare = preparemac
     CXXINCS += -I/opt/local/include -I/opt/local/include/ImageMagick 
+    CXXDEFS += -Wno-long-long
    # If apple, we need a funky post-compile build step
     LDLIBS += -framework Carbon -framework OpenGL -framework GLUT -L/opt/local/lib fMod/lib/libfmodex.dylib
    #FMODLINK = install_name_tool -change ./libfmodex.dylib ../fMod/lib/libfmodex.dylib
