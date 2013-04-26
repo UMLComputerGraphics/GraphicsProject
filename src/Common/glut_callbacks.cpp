@@ -320,7 +320,7 @@ void EngineMousePassive( int x, int y ) {
   const double dx = ((double) x - centerX) * MAGIC_MOUSE_SCALAR / ((double)myScreen->width());
   const double dy = ((double) centerY - y) * MAGIC_MOUSE_SCALAR / ((double)myScreen->height());
 
-  if ((dx == 0 && dy == 0) || warpPointer) return;
+  if ((dx == 0 && dy == 0) || !warpPointer) return;
   if ( myScreen->_camList.numCameras() > 0 ) {
     if (_leftDown || _rightDown)
     {
