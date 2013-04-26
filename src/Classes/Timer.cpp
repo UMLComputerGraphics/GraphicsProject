@@ -108,12 +108,7 @@ double Timer::scale( void ) const {
  * @param uniform The GLuint handle to the time float on the GPU.
  */
 void Timer::setTimeUniform( GLuint uniform ) {
-  _uniform = uniform;
-}
-
-void Timer::addTimedShader(GLuint shader)
-{
-  this->_shadersWithTime.push_back(shader);
+  this->_timedUniforms.push_back(uniform);
 }
 
 /**
@@ -122,12 +117,8 @@ void Timer::addTimedShader(GLuint shader)
 void Timer::sendTime( void ) {
   if ( _uniform > 0 ) {
     int t = glutGet( GLUT_ELAPSED_TIME );
-    for (uint i=0; i < _shadersWithTime.size(); i++)
-      if (_shadersWithTime[i] == Engine::instance()->rootScene()->shader())
-      {
-        glUniform1i( _uniform, t );
-        break;
-      }
+    for (uint i=0; i < _timedUniforms.size(); i++)
+      glUniform1i(_timedUniforms[i], t);
 
     //couldn't care less
     /*if (glGetError()) {

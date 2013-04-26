@@ -39,7 +39,7 @@ void MONOLITH::monolith_idle(void)
     
     // Animation variables.
     double timer = glutGet( GLUT_ELAPSED_TIME ) / 500.0;
-    float percent = 1; /* (sin( timer ) + 1) / 2; */
+    float percent = (sin( timer ) + 1.0) / 2.0;
     
     Object &candle = *((*rootScene)["bottle"]);
     candle.animation( simpleRotateAnim );

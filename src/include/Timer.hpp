@@ -87,12 +87,6 @@ public:
    */
   void sendTime( void );
 
-  /**
-   * adds a shader to the list of shaders for which, when they are the engine's current shader, we should send time.
-   * @param duh
-   */
-  void addTimedShader(GLuint shader);
-
 private:
 #ifdef _RT
   /**
@@ -134,7 +128,7 @@ private:
   /**
    * a list of shaders for which, when they are the engine's current shader, we should send time.
    */
-  std::vector<GLuint> _shadersWithTime;
+  std::vector<GLuint> _timedUniforms;
 };
 
 /**
