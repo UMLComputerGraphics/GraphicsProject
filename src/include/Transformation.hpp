@@ -41,6 +41,7 @@ public:
   void reset( void );
 
   bool inheritable( void ) const;
+  void inheritable( bool in );
   void markNew( void );
   void markOld( void );
   bool isNew( void );
@@ -83,6 +84,8 @@ public:
 class TransMat : public Transformation {
   
 public:
+
+  TransMat( float x = 0.0, float y = 0.0, float z = 0.0 );
   
   const TransMat &setX( const float x );
   const TransMat &setY( const float y );

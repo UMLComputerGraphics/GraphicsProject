@@ -32,6 +32,10 @@ bool Transformation::inheritable( void ) const {
   return _inheritable;
 }
 
+void Transformation::inheritable( bool in ) {
+  _inheritable = in;
+}
+
 void Transformation::markNew( void ) {
   _new = true;
 }
@@ -126,6 +130,10 @@ Transformation *RotMat::newCopy( void ) const {
 }
 
 /* TRANSLATION */
+
+TransMat::TransMat( float x, float y, float z ) {
+  set( x, y, z );
+}
 
 const TransMat &TransMat::setX( const float x ) {
   //fprintf( stderr, "setX( %f )\n", x );

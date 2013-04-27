@@ -268,3 +268,23 @@ void Scene::propagate( void ) {
   }
 
 }
+
+
+void Scene::printTree( unsigned level ) {
+
+  std::string whitespace;
+  for ( size_t i = 0; i < level; ++i )
+    whitespace += "  ";
+
+  std::list< Object* >::iterator it;
+  for ( it = _list.begin(); it != _list.end(); ++it ) {
+    fprintf( stderr, "%s%s ", whitespace.c_str(), (*it)->name().c_str() );
+    (*it)->_trans.debug();
+    fprintf( stderr, "\n" );
+
+    (*it)->_trans.debugMat();
+
+    (*it)->printTree( level + 1 );
+  }
+
+}

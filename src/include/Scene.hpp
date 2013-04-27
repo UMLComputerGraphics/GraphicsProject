@@ -154,6 +154,8 @@ public:
    */
   void propagate( void );
 
+  void printTree( unsigned level = 0 );
+
 protected:
   /**
    * For the purposes of rapid propagation of scene-graph changes,
