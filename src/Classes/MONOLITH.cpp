@@ -101,6 +101,7 @@ void MONOLITH::run() {
   GLint morphingShader = shader[1];
   GLint particleShader = shader[2];
 
+  tick.setTimeUniform( glGetUniformLocation( shader[0], "ftime" ) );
   tick.setTimeUniform( glGetUniformLocation( shader[1], "ftime" ) );
 
   // --- Wine Bottle --- //
