@@ -13,20 +13,19 @@
 #include <cstdlib>
 #include "Engine.hpp"
 
-void simpleRotate( TransCache &obj ) {
-  
-  RotMat newrot;
-  newrot.rotateY( tick.scale() * 1.5 );
-  newrot.rotateX( tick.scale() * 1.4 );
-  newrot.rotateZ( tick.scale() * 1.3 );
-  obj.push( newrot );
-  
+void candleMelt( TransCache &obj ) {
+
+  ScaleMat melt;
+  melt.inheritable( false );
+  melt.adjust( 1.0, pow(0.999, tick.scale()), 1.0 );
+  obj.push( melt );
+
 }
 
 void sgIdle( void ) {
-  //Scene &s = *(Engine::instance()->rootScene());
-  //Object &cube = *(s["cube"]);
-  //cube.animation( simpleRotate );
+  //Scene *s = Engine::instance()->rootScene();
+  //Object *candle = s->search( "candle" );
+  //candle->animation( candleMelt );
 }
 
 void act_one( void ) {
@@ -34,6 +33,15 @@ void act_one( void ) {
   vec4 min, max;
   TransMat initialPlacement;
   Scene *rootScene = Engine::instance()->rootScene();
+
+#ifdef __APPLE__
+  GLint macShader = Angel::InitShader( "shaders/vEngineNoMorph.glsl",
+				       "shaders/fEngine.glsl" );
+  // This call makes the default shader macShader for all newly created objects.
+  // You can always override it in addObject( "name", shader ) though.
+  // Note that PCs do not need anything beyond the Engine inherent default shader.
+  rootScene->shader( macShader );
+#endif
 
   initialPlacement.inheritable( false );
 

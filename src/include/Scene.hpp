@@ -136,6 +136,14 @@ public:
   Object *operator[]( const std::string &objname );
 
   /**
+   * Find an object in our tree at ANY level,
+   * in contrast to operator[] above.
+   * @param objname The name of the object to find.
+   * @return The requested object pointer.
+   */
+  Object *search( const std::string &objname );
+
+  /**
    * "Copies" a scene into a new scene: Objects and Active state
    * are left behind, though, so it's not much of a copy.
    * @param copy The scene to copy from.
