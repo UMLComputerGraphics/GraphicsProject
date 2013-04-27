@@ -4,7 +4,8 @@ attribute vec4 vColor;
 attribute vec2 vTex;
 
 // sent to the fshader
-varying vec4 color;
+varying vec4 fColor;
+varying vec2 fTex;
 
 // position/movement
 uniform mat4 P;
@@ -16,12 +17,12 @@ uniform mat4 OTM;
 // IsTextured boolean.
 uniform bool fIsTextured;
 
-varying vec2 outtexture;
+
 
 void main() {
 
   gl_Position = P * CTM * OTM * vPosition;
-  color = vec4( 1, 0, 0, 1 );
-  outtexture = vec2( 0, 0 );
+  fColor = vec4( 1, 0, 0, 1 );
+  fTex = vec2( 0, 0 );
 
 }

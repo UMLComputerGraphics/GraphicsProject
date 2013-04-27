@@ -17,6 +17,8 @@
 class TransCache {
   
 public:
+
+  /** Scene Graph 1.0: These properties and methods are deprecated. **/
   
   void ptmOLD( const Angel::mat4 &ptm_in, bool postmult = true );
 
@@ -34,8 +36,9 @@ public:
   /* Updates our ctm. Private Use. */
   void calcCTM( bool postmult = true );
 
+  /** End Scene Graph 1.0 **/
+
   // Scene Graph V2.0 //
-  // Everything below here will eventually replace everything above.
 
   typedef std::vector< Transformation* > TransformationsType;
 
@@ -45,34 +48,39 @@ public:
   const Angel::mat4 &ctm( void ) const;  // Retrieve current isolated object transformation
   const Angel::mat4 &otm( void ) const;  // Retrieve current cumulative object transformation
   const Angel::mat4 &itm( void ) const;  // Retrieve current inheritable object transformations
+  Angel::mat4 pitm( void ) const;  // Retrieve the ptm and itm combined.
 
   void ptm( const Angel::mat4 &ptm_in ); // Set new Parent Transform.
-
-  void push( const Transformation &newTrans );
-  void pop( void );                      // Remove Transformation
-  void clear( void );                    // Clear all Transformations
-  void rebuild( void );                  // Recalculate Cache
-  void clean( void );                    // Smartly Update Cache
-  void condense( void );                 // Find adjoining transformations
-                                         // Of the same type, and join them.
 
   bool dirty( void ) const;
   void dirty( bool newState );
   bool cascade( void ) const;
   void cascade( bool newState );
   unsigned size( void ) const;
+  void premult( void ) const;
 
+  void debug( void ) const;
+  void debugMat( void ) const;
+
+  // Interface:
+  void push( const Transformation &newTrans );
   void insert( unsigned index, const Transformation & newTrans );
   void append( unsigned index, const Transformation & newTrans );
   const Transformation &query( unsigned index, Transformation::Subtype type );
 
+  // Maintenance/management:
+  void pop( void );                      // Remove Transformation
+  void clear( void );                    // Clear all Transformations
+  void rebuild( void );                  // Recalculate Cache
+  void clean( void );                    // Smartly Update Cache
+  void condense( void );                 // Find adjoining transformations
+                                         // Of the same type, and join them
 private:
 
   // Pointer operations: Dangerous!
   TransformationsType::iterator queryImpl( unsigned index, Transformation::Subtype type );
   void push( Transformation *newTrans ); // Add New Transformation
   
-
   // Cached Result Matrices
   Angel::mat4 _ptm; /* Parent's Cumulative Transformation Matrix */
   Angel::mat4 _ctm; /* Current Transformation Matrix */

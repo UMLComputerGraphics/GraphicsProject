@@ -614,8 +614,9 @@ void Object::sceneCascade( void ) {
   if (_trans.cascade()) {
     std::list< Object* >::iterator it;
     for ( it = _list.begin(); it != _list.end(); ++it ) {
-      (*it)->_trans.ptm( _trans.itm() );
+      (*it)->_trans.ptm( _trans.pitm() );
     }
+    _trans.cascade( false );
   }
 }
 

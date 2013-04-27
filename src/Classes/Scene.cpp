@@ -211,6 +211,29 @@ Object *Scene::operator[]( std::string const &objname ) {
   
 }
 
+Object *Scene::search( std::string const &objname ) {
+  std::map< std::string, Object * >::iterator it;
+  Object *result = NULL;
+
+  it = _map.find( objname );
+
+  if (it == _map.end()) {
+    std::list< Object * >::iterator lit;
+    for ( lit = _list.begin(); lit != _list.end(); ++lit ) {
+      result = (*lit)->search( objname );
+      if (result != NULL) break;
+    }
+  } else {
+    result = it->second;
+  }
+
+  return result;
+
+}
+    
+
+
+
 /**
  * "Copies" a scene into a new scene: Objects and Active state
  * are left behind, though, so it's not much of a copy.
@@ -265,6 +288,26 @@ void Scene::propagate( void ) {
     (*it)->sceneCascade();
     // Begin propagating from the child-down.
     (*it)->propagate();
+  }
+
+}
+
+
+void Scene::printTree( unsigned level ) {
+
+  std::string whitespace;
+  for ( size_t i = 0; i < level; ++i )
+    whitespace += "  ";
+
+  std::list< Object* >::iterator it;
+  for ( it = _list.begin(); it != _list.end(); ++it ) {
+    fprintf( stderr, "%s%s ", whitespace.c_str(), (*it)->name().c_str() );
+    (*it)->_trans.debug();
+    fprintf( stderr, "\n" );
+
+    (*it)->_trans.debugMat();
+
+    (*it)->printTree( level + 1 );
   }
 
 }

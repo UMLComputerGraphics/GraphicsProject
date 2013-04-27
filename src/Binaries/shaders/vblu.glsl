@@ -1,4 +1,5 @@
 // A simple shader that draws blue vertices. Used for testing multi-shader code.
+// include "include/vertexBase.inc"
 
 // attributes
 attribute vec4 vPosition;
@@ -6,7 +7,8 @@ attribute vec4 vColor;
 attribute vec2 vTex;
 
 // sent to the fshader
-varying vec4 color;
+varying vec4 fColor;
+varying vec2 fTex;
 
 // position/movement
 uniform mat4 P;
@@ -18,12 +20,10 @@ uniform mat4 OTM;
 // IsTextured boolean.
 uniform bool fIsTextured;
 
-varying vec2 outtexture;
-
 void main() {
 
   gl_Position = P * CTM * OTM * vPosition;
-  color = vec4( 0, 0, 1, 1 );
-  outtexture = vec2( 0, 0 );
+  fColor = vec4( 0, 0, 1, 1 );
+  fTex = vec2( 0, 0 );
 
 }

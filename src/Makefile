@@ -110,9 +110,11 @@ LDFLAGS = $(LDOPTS) $(LDDIRS) $(LDLIBS)
 
 .PHONY: Makefile
 
-
-default all: $(prepare) clean-qt $(TARGETS)
-
+#explicitely force ordering of preliminary steps, rather than letting make try to build targets and prepare stuff simultaneously
+default all:
+	$(MAKE) $(prepare)
+	$(MAKE) clean-qt
+	$(MAKE) $(TARGETS)
 
 .PHONY: preparelinux
 preparelinux:
@@ -164,12 +166,12 @@ clobber: _clean _rmtargets clean-qt
 
 .PHONY: qt
 qt: qMakefile
-	make -f qMakefile
+	$(MAKE) -f qMakefile
 	$(QT_FINALIZE)
 
 .PHONY: clean-qt
 clean-qt: qMakefile
-	make -f qMakefile distclean
+	$(MAKE) -f qMakefile distclean
 	rm -rf debug/ release/
 	rm -f qMakefile
 

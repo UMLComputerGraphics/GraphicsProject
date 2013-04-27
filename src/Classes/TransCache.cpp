@@ -73,6 +73,12 @@ const Angel::mat4 &TransCache::otm( void ) const {
 const Angel::mat4 &TransCache::itm( void ) const {
   return _itm;
 }
+Angel::mat4 TransCache::pitm( void ) const {
+  if (_premult)
+    return ptm() * itm();
+  else
+    return itm() * ptm();
+}
 
 void TransCache::ptm( const Angel::mat4 &ptm_in ) {
 
@@ -398,3 +404,22 @@ void TransCache::cascade( bool newState ) {
 unsigned TransCache::size(void) const {
   return _transformations.size();
 }
+
+void TransCache::debug( void ) const {
+
+  std::cerr << "premult: " << _premult << "; new: " << _new <<
+    "; rebuild: " << _rebuild << "; cascade: " << _cascade << 
+    "; parent: " << _parent << "; size: " << size() << ";";
+
+}
+
+void TransCache::debugMat( void ) const { 
+
+  //pcoi
+  for ( size_t i = 0; i < 4; ++i ) {
+    std::cerr << ptm()[i] << " " << ctm()[i] << " " <<
+      otm()[i] << " " << itm()[i] << "\n";
+  }
+
+}
+	   

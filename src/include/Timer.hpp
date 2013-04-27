@@ -10,8 +10,10 @@
 #define __TIMER_HPP
 
 #include <time.h>
+#include <vector>
 #include "mat.hpp"
 #include "vec.hpp"
+#include "Engine.hpp"
 
 /**
  * Timer class: Acts as a stopwatch that can time the delta
@@ -122,6 +124,11 @@ private:
    * An OpenGL GLuint handle to a un
    */
   GLuint _uniform;
+
+  /**
+   * a list of shaders for which, when they are the engine's current shader, we should send time.
+   */
+  std::vector<GLuint> _timedUniforms;
 };
 
 /**

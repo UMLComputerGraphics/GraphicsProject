@@ -10,9 +10,9 @@ attribute vec2 vTex;
 //attribute vec3 vNormalMorph;
 
 // sent to the fshader
-varying vec4 color;
+varying vec4 fColor;
 varying vec4 fPosition;
-varying vec2 outtexture;
+varying vec2 fTex;
 varying vec3 fNormal;
 
 // position/movement
@@ -30,15 +30,12 @@ uniform float morphPercentage;
 
 void main() {
 
-  vec4 position_tmp;
-
   // If morphing is enabled, morphPercentage will be non-zero.
   // It is therefore easier to just always compute the following.
-  //position_tmp = vPosition * (1.0 - morphPercentage) + vPositionMorph * morphPercentage;
-  position_tmp = vPosition;
+  //fPosition = vPosition * (1.0 - morphPercentage) + vPositionMorph * morphPercentage;
 
   // World coordinates of this vertex.
-  fPosition = OTM * position_tmp;
+  fPosition = OTM * fPosition;
   // Screen coordinates of this vertex.
   gl_Position = P * CTM * fPosition;
 
@@ -50,16 +47,16 @@ void main() {
 
   // If we're using textures, send a dummy color.
   if (fIsTextured) {
-    outtexture = vTex;
-    color = vec4( 0, 0, 0, 0 );
+    fTex = vTex;
+    fColor = vec4( 0, 0, 0, 0 );
   }
 
   // If we're using colors, send a dummy texture.
   else {
-    outtexture = vec2( 0, 0 );
+    fTex = vec2( 0, 0 );
     // Again, it's easier to just always compute this.
     //color = vColor * (1.0 - morphPercentage) + vColorMorph * morphPercentage;
-    color = vColor;
+    fColor = vColor;
   }
 
   // Pass along the normal.

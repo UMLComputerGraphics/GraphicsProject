@@ -314,7 +314,7 @@ int HitBox(in Ray r, vec3 minBound, vec3 maxBound) {
 		tymin = (maxBound.y - r.org.y) / r.dir.y;
 		tymax = (minBound.y - r.org.y) / r.dir.y;
 	}
-	if ( (tmin > tymax) || (tymin > tmax) )
+	if ( (tmin > tymax) || (tymin > tmax) || (tmax < eps) || (tymax < eps) )
 		return 0;
 
 	if (tymin > tmin)
@@ -330,7 +330,7 @@ int HitBox(in Ray r, vec3 minBound, vec3 maxBound) {
 		tzmax = (minBound.z - r.org.z) / r.dir.z;
 	}
 	
-	if ( (tmin > tzmax) || (tzmin > tmax) )
+	if ( (tmin > tzmax) || (tzmin > tmax) || (tzmax < eps))
 		return 0;
 	
 	return 1;

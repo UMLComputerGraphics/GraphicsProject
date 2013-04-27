@@ -357,7 +357,7 @@ void display( void ) {
   if ( frameCount == 10 ) {
     float elapsedTime = glutGet( GLUT_ELAPSED_TIME );
     float fps = 10.0 / ((elapsedTime - previousTime) / 1000.0);
-    gprint( PRINT_VERBOSE, "fps: %f\n", fps );
+    printf("fps: %f\n", fps );
     previousTime = elapsedTime;
     frameCount = 0;
   }
@@ -518,7 +518,7 @@ void genereateScene() {
   min.z = vertices[0].z;
   max.z = vertices[0].z;
 
-  int bounding = 100;
+  int bounding = 10;
 
   unsigned long int count = 0;
   while(count < bottle->_vertices.size()) {

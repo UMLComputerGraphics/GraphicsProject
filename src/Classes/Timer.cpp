@@ -108,7 +108,7 @@ double Timer::scale( void ) const {
  * @param uniform The GLuint handle to the time float on the GPU.
  */
 void Timer::setTimeUniform( GLuint uniform ) {
-  _uniform = uniform;
+  this->_timedUniforms.push_back(uniform);
 }
 
 /**
@@ -117,10 +117,13 @@ void Timer::setTimeUniform( GLuint uniform ) {
 void Timer::sendTime( void ) {
   if ( _uniform > 0 ) {
     int t = glutGet( GLUT_ELAPSED_TIME );
-    glUniform1i( _uniform, t );
-    if (glGetError()) {
+    for (uint i=0; i < _timedUniforms.size(); i++)
+      glUniform1i(_timedUniforms[i], t);
+
+    //couldn't care less
+    /*if (glGetError()) {
       fprintf( stderr, "glUniform1i failed in sendTime: glUniform1i( %u, %u )\n",
 	       _uniform, t );
-    }
+    }*/
   }
 }
