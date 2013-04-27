@@ -130,6 +130,7 @@ void MONOLITH::run() {
   ObjLoader::loadModelFromFile(table, "../models/table.obj");
   ObjLoader::loadMaterialFromFile(table, "../models/table.mtl");
   table->buffer();
+  table->texture("../Textures/texture_wood.png");
   
   // Load up that goddamned candle
   Object *stick;

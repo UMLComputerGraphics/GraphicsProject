@@ -80,6 +80,20 @@ namespace ObjLoader {
     s >> uv.x;
     s >> uv.y;
     
+    //Correct "out of range" UV coordinates
+    while( uv.x > 1 ) {
+      uv.x -= 1;
+    }
+    while( uv.x < 0 ) {
+      uv.x += 1;
+    }
+    while( uv.y > 1 ) {
+      uv.y -= 1;
+    }
+    while( uv.y < 0 ) {
+      uv.y += 1;
+    }
+
     return uv;
   }
   
