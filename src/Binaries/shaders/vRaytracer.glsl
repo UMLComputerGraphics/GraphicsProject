@@ -8,6 +8,8 @@ uniform mat4 CTM;
 uniform mat4 PTM;
 
 /** CTM **/
+uniform vec4 uCameraPosition;
+/*********/
 in vec2 vRayPosition;
 
 out vec3 org, dir;
