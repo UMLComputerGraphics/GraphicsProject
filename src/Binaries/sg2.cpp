@@ -41,11 +41,11 @@ void act_one( void ) {
   Object *table = rootScene->addObject( "table" );
   ObjLoader::loadModelFromFile(table, "../models/table.obj");
   ObjLoader::loadMaterialFromFile(table, "../models/table.mtl");
+  table->texture( "../Textures/texture_wood.png" );
   max = table->getMax();
   initialPlacement.set( 0, -max.y, 0 );
   table->_trans.push( initialPlacement );
   table->buffer();
-  fprintf( stderr, "Moving table y:(%f)\n", -max.y );
 
   // Bottle
   Object *bottle = table->addObject( "bottle" );
@@ -56,7 +56,6 @@ void act_one( void ) {
   initialPlacement.set( 0, -min.y, 0 );
   bottle->_trans.push( initialPlacement );
   bottle->buffer();
-  fprintf( stderr, "Moving bottle y:(%f)\n", -min.y );
 
   // Candlestick
   Object *candlestick = table->addObject( "candlestick" );
