@@ -39,7 +39,7 @@ void MONOLITH::monolith_idle(void)
     
     // Animation variables.
     double timer = glutGet( GLUT_ELAPSED_TIME ) / 500.0;
-    float percent = 1; /* (sin( timer ) + 1) / 2; */
+    float percent = (sin( timer ) + 1.0) / 2.0;
     
     Object &candle = *((*rootScene)["bottle"]);
     candle.animation( simpleRotateAnim );
@@ -101,6 +101,7 @@ void MONOLITH::run() {
   GLint morphingShader = shader[1];
   GLint particleShader = shader[2];
 
+  tick.setTimeUniform( glGetUniformLocation( shader[0], "ftime" ) );
   tick.setTimeUniform( glGetUniformLocation( shader[1], "ftime" ) );
 
   // --- Wine Bottle --- //
@@ -130,6 +131,7 @@ void MONOLITH::run() {
   ObjLoader::loadModelFromFile(table, "../models/table.obj");
   ObjLoader::loadMaterialFromFile(table, "../models/table.mtl");
   table->buffer();
+  table->texture("../Textures/texture_wood.png");
   
   // Load up that goddamned candle
   Object *stick;

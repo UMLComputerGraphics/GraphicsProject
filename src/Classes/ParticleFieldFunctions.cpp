@@ -169,12 +169,16 @@ Angel::vec3 ParticleFieldFunctions::userSupplied( Angel::vec4 pos ) {
 		parser.compile(expressions[0], expression[0]);
 		parser.compile(expressions[1], expression[1]);
 		parser.compile(expressions[2], expression[2]);
+
+		compiled = true;
 	}
 
-	return Angel::vec3(
-				expression[0].value(),
-				expression[1].value(),
-				expression[2].value() );
+	Angel::vec3 res;
+	res.x = expression[0].value();
+	res.y = expression[1].value();
+	res.z = expression[2].value();
+
+	return res;
 }
 
 
