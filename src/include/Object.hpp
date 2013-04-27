@@ -359,6 +359,15 @@ private:
   GLuint createAndBind( GLenum target, enum Object::BufferType typeIndex, const char *name,
 			GLint size, GLenum type, GLboolean normalized, GLsizei stride,
 			const GLvoid *ptr );
+
+  //helper for checkForAttribCorruption()
+  bool checkForAttribCorruptionHelper(int typeIndex, const char *name);
+
+  /**
+   Check if any vertex attribute location changed since initilization
+   @return returns true if any problems are found, false otherwise
+  **/
+  bool checkForAttribCorruption(void);
   
 };
 

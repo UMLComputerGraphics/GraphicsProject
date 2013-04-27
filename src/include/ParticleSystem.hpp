@@ -78,6 +78,8 @@ public:
   virtual void buffer( GLenum usage = GL_DYNAMIC_DRAW );
 
 
+  TransCache _emitterTrans ; // this transcache represnts the position of the emitter
+
 private:  
 
   /* The Do-All function.  Will do everything needed in order
@@ -110,6 +112,8 @@ private:
   bool   _updateRequired;
   bool   _useGlobalParticleSpace;
   unsigned _fillSpeedLimit;
+
+
   Angel::vec3 (*_vecFieldFunc)(Angel::vec4 posIn);
   Angel::vec4 (*_colorFunc)(float lifePct, Angel::vec4 posIn);
 
