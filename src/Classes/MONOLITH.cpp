@@ -185,7 +185,12 @@ void MONOLITH::run() {
   ps->setEmitterRadius( 0.02 );
   candle_top->insertObject( ps );
   ps->_trans._offset.set( 0, max.y, 0 );
-  ps->fillSystemWithParticles();
+
+ /* If you fill the system, the flame will have a non-flamelike pulsing effect. 
+    Please don't!
+ */
+  //ps->fillSystemWithParticles(); 
+
   //ps->propagateOLD();
   candle_top->propagateOLD();
 
