@@ -1,16 +1,33 @@
+# The following are Memory Read Errors in ImageMagick 6.7.7.5.
+# They appear to have been fixed in 6.8.*.
+
+{
+   ImageMagick::ReadPNGImage_6.7.7.5-3_Cond_bug
+   Memcheck:Cond
+   ...
+   fun:ReadPNGImage
+   ...
+}
+{
+   ImageMagick::ReadPNGImage_6.7.7.5-3_Value8_bug
+   Memcheck:Value8
+   fun:_itoa_word
+   fun:vfprintf
+   ...
+   fun:ReadPNGImage
+   ...
+}
+
+######################################
+# These are Memory Leak Suppressions.
+######################################
+
 {
    ImageMagick::Image
    Memcheck:Leak
    ...
    fun:_ZN6Magick5ImageC1ERKSs
    ...
-}
-
-{
-   fun:fghCreateNewContext
-   Memcheck:Leak
-   ...
-   fun:fghCreateNewContext.isra.1
 }
 
 {
@@ -21,6 +38,22 @@
    ...
 }
 
+###################################
+# Things that leak for NVidia-kmod (Linux, Fedora 18)
+###################################
+
+{
+   XrmGetStringDatabase
+   Memcheck:Leak
+   ...
+   fun:XrmGetStringDatabase
+   ...
+}
+
+##################################
+# Leaks Observed via Intel/MESA (Ubuntu 13.04, Intel HD 4000)
+##################################
+
 {
    fgCreateWindow
    Memcheck:Leak
@@ -30,11 +63,10 @@
 }
 
 {
-   XrmGetStringDatabase
+   fun:fghCreateNewContext
    Memcheck:Leak
    ...
-   fun:XrmGetStringDatabase
-   ...
+   fun:fghCreateNewContext.isra.1
 }
 
 {

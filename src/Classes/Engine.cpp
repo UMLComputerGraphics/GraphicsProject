@@ -49,6 +49,7 @@ Engine::Engine( void ) :
   // Reminder: 0 is never a valid program.
   _currentShader = 0;
   _renderingCamera = NULL;
+  _raytraceChanged = false;
 
   opt("fixed_yaw", true);
   opt("trap_pointer", true);
@@ -255,8 +256,7 @@ void Engine::registerTraceFunc( raytracerCallback traceFunc ) {
 void Engine::idle( void ) {
 
   //YOU THOUGH' THA' WA' GO'N' TO BE WA'ER, BU' I' WA'N'... ROCK AND ROLLLLLLLL -Ozzy Osbourne
-  if (instance()->_raytraceChanged)
-  {
+  if (instance()->_raytraceChanged) {
     instance()->_traceFunc(instance()->_raytraceStatus);
     instance()->_raytraceChanged = false;
   }

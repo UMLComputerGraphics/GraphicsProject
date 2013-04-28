@@ -61,6 +61,16 @@ TransCache::TransCache( bool createInvertedSibling, bool isInverted ) {
 
 }
 
+TransCache::~TransCache( void ) {
+
+  TransformationsType::iterator it;
+  for ( it = _transformations.begin(); it != _transformations.end(); ++it ) {
+    delete (*it);
+  }
+
+}
+
+
 const Angel::mat4 &TransCache::ptm( void ) const {
   return _ptm;
 }

@@ -43,6 +43,7 @@ public:
   typedef std::vector< Transformation* > TransformationsType;
 
   TransCache( bool _invert = false, bool _inverted = false );
+  virtual ~TransCache( void );
 
   const Angel::mat4 &ptm( void ) const;  // Retrieve current parent transformation
   const Angel::mat4 &ctm( void ) const;  // Retrieve current isolated object transformation

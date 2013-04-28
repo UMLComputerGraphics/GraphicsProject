@@ -91,10 +91,9 @@ void act_one( void ) {
 
 int main( int argc, char *argv[] ) {
   
-  Engine::instance()->init( &argc, argv, "wow!" );
+  Engine::init( &argc, argv, "wow!" );
   act_one();  
   Engine::instance()->registerIdle( sgIdle );
+  Engine::run();
 
-  glutMainLoop();
-  return EXIT_SUCCESS;
 }
