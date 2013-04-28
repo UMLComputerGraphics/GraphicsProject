@@ -238,12 +238,12 @@ void MONOLITH::raytraceStatusChanged(bool newstatus)
 {
   if (newstatus)
   {
-    printf("SWITCHING TO NORMAL SHADER!\n");
+    printf("SWITCHING TO RAY TRACING SHADER!\n");
     rootScene->replaceShader(shader[0], shader[3]);
   }
   else
   {
-    printf("SWITCHING TO RAY TRACER SHADER!\n");
+    printf("SWITCHING TO NORMAL SHADER!\n");
     rootScene->replaceShader(shader[0], shader[0]);
   }
   printf("TODO: SWITCH VERTICES AND PUSH STUFF TO GPU APPROPRIATELY!\n");
