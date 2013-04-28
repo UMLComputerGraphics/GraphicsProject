@@ -16,6 +16,8 @@
 #include "Screen.hpp"
 #include "glut_callbacks.h"
 
+#include <boost/bind.hpp>
+
 /**
  * static, stateful variable that is our singleton pointer.
  */
@@ -39,7 +41,9 @@ Engine *Engine::instance( void ) {
 /**
  * Default constructor. Cannot be called, this is a singleton class.
  */
-Engine::Engine( void ) {
+Engine::Engine( void ) :
+  _traceFunc(boost::bind(&Engine::noop, this, _1))
+    {
 
   _idleFunc = NULL;
   // Reminder: 0 is never a valid program.
@@ -240,6 +244,10 @@ void Engine::registerIdle( void (idleFunc)( void ) ) {
   _idleFunc = idleFunc;
 }
 
+void Engine::registerTraceFunc( raytracerCallback traceFunc ) {
+  _traceFunc = traceFunc;
+}
+
 
 /**
  * What should the engine be doing every idle()?
@@ -311,6 +319,12 @@ void Engine::switchCamera( Camera *camera ){
  */
 void Engine::displayScreen( void ) {
 
+  if (instance()->_raytraceChanged && instance()->_traceFunc != NULL)
+  {
+    instance()->_traceFunc(instance()->_raytraceStatus);
+    instance()->_raytraceChanged = false;
+  }
+
   static Cameras *camList = Engine::instance()->cams();
 
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
@@ -335,4 +349,28 @@ void Engine::displayViewport( void ) {
   theScene->draw();
   camList->draw();
 
+}
+
+bool Engine::getRaytrace()
+{
+  return _raytraceStatus;
+}
+
+/**
+ * flips scene shaders
+ *
+ * @param enabled -- duh
+ */
+void Engine::setRaytrace(bool enabled)
+{
+  if (_raytraceStatus != enabled)
+    {
+      _raytraceStatus = enabled;
+      _raytraceChanged = true;
+    }
+}
+
+void Engine::noop(bool enabled)
+{
+  //duh
 }

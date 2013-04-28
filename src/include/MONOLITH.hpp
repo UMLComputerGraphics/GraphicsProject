@@ -23,6 +23,8 @@
 #include "ParticleFieldFunctions.hpp"
 #include "ColorFunctions.hpp"
 
+#include <boost/bind.hpp>
+
 #ifndef WITHOUT_QT
 /* Qt */
 #include <QObject>
@@ -76,6 +78,11 @@ public:
      */
     void init();
     
+    /**
+     * SHOW ENGINE WHERE OUT GOAT IS //ralphy may allusion
+     */
+    void raytraceStatusChanged(bool newstatus);
+
     
 #ifndef WITHOUT_QT
 public slots:
@@ -98,7 +105,7 @@ private:
     static void candleMeltAnim( TransCache &obj );
     static void candleTopMeltDown( TransCache &obj );
     
-    GLuint shader[3];
+    GLuint shader[4];
     
     Scene *rootScene;
     Screen *primScreen;

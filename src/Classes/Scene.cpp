@@ -6,9 +6,6 @@
  * @details Scene graph implementation.
  */
 
-#include <string>
-#include <map>
-#include <list>
 #include <stdexcept>
 
 #include "Scene.hpp"
@@ -88,12 +85,30 @@ Object *Scene::addObject( const std::string &objName, GLuint shader ) {
         "\tor informing the parent Scene of a default shader to use." );
   
   Object *obj = new Object( objName, ((shader) ? shader : _gShader) );
-  
+
   insertObject( obj );
   
   return obj;
   
 }
+
+/*
+ * Switches shaders used by objects initialized with a certain shader
+ *    (this doesn't move their key in the map!!!)
+ * @param originalGangster The shader with which the object was initialized
+ * @param newShader The shader to switch it to
+ */
+void Scene::replaceShader(GLuint originalGangster, GLuint newShader)
+{
+  if (_shader_map.find(originalGangster) != _shader_map.end())
+  {
+    for(size_t i=0;i<_shader_map[originalGangster].size();i++)
+    {
+      _shader_map[originalGangster][i]->shader(newShader);
+    }
+  }
+}
+
 
 /**
  * delObject will remove from the Scene graph the object with the given name.
@@ -128,6 +143,14 @@ void Scene::popObject( void ) {
  */
 void Scene::insertObject( Object *obj ) {
   _list.push_back( obj );
+
+  GLuint shader = obj->shader();
+  if (_shader_map.find((shader) ? shader : _gShader) == _shader_map.end())
+  {
+    _shader_map[shader] = std::vector<Object*>();
+  }
+  _shader_map[shader].push_back(obj);
+
   _map.insert( NameObjPair( obj->name(), obj ) );
 }
 

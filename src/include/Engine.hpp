@@ -33,6 +33,10 @@
 #include <string>
 #include <map>
 
+#include<boost/function.hpp>
+
+typedef boost::function<void(bool)> raytracerCallback;
+
 /**
  * An alias for the type used by the Settings Map.
  */
@@ -139,7 +143,26 @@ public:
      * Default, non-virtual destructor.
      */
     ~Engine( void );
-    
+
+    /**
+     * flips scene shaders
+     *
+     * @param enabled -- duh
+     */
+    void setRaytrace(bool enabled);
+
+    /**
+     * get current tracer status
+     *
+     */
+    bool getRaytrace();
+
+    /**
+     * Let binary define what it wants to do when tracing needs to be flipped
+     *
+     * @param traceFunc duh
+     */
+    void registerTraceFunc( raytracerCallback traceFunc );
 
 private:
     
@@ -241,6 +264,14 @@ private:
      */
     Engine &operator=( Engine &assign );
     
+    /**
+     * Function called early in display() function to let binary swap shaders
+     */
+    raytracerCallback _traceFunc;
+
+    void noop(bool enabled);
+
+    bool _raytraceChanged, _raytraceStatus;
 };
 
 #endif

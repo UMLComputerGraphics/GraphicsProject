@@ -81,6 +81,7 @@ void MONOLITH::run() {
   Engine::instance()->init( &_argc, _argv,
                             "WE ARE THE BORG. RESISTANCE IS FUTILE!" );
   Engine::instance()->registerIdle( monolith_idle );
+  Engine::instance()->registerTraceFunc( (raytracerCallback)(boost::bind(&MONOLITH::raytraceStatusChanged, this, _1)));
 
   
   // Get handles to the Scene and the Screen.
@@ -97,12 +98,17 @@ void MONOLITH::run() {
   shader[2] = Angel::InitShader( "shaders/vParticle.glsl",
                                  "shaders/fFlameParticle.glsl" );
   
+  // Raytracing shader
+  shader[3] = Angel::InitShader( "shaders/vRaytracer.glsl", "shaders/fRaytracer.glsl" );
+
   GLint noMorphShader = shader[0];
   GLint morphingShader = shader[1];
   GLint particleShader = shader[2];
 
+
   tick.setTimeUniform( glGetUniformLocation( shader[0], "ftime" ) );
   tick.setTimeUniform( glGetUniformLocation( shader[1], "ftime" ) );
+  tick.setTimeUniform( glGetUniformLocation( shader[3], "ftime" ) );
 
   // --- Wine Bottle --- //
   
@@ -226,4 +232,19 @@ void MONOLITH::candleMeltAnim(TransCache &obj) {
 
 void MONOLITH::candleTopMeltDown(TransCache &obj) {
  // obj._offset.delta(0.0, -0.0025, 0.0);
+}
+
+void MONOLITH::raytraceStatusChanged(bool newstatus)
+{
+  if (newstatus)
+  {
+    printf("SWITCHING TO NORMAL SHADER!\n");
+    rootScene->replaceShader(shader[0], shader[3]);
+  }
+  else
+  {
+    printf("SWITCHING TO RAY TRACER SHADER!\n");
+    rootScene->replaceShader(shader[0], shader[0]);
+  }
+  printf("TODO: SWITCH VERTICES AND PUSH STUFF TO GPU APPROPRIATELY!\n");
 }
