@@ -254,6 +254,13 @@ void Engine::registerTraceFunc( raytracerCallback traceFunc ) {
  */
 void Engine::idle( void ) {
 
+  //YOU THOUGH' THA' WA' GO'N' TO BE WA'ER, BU' I' WA'N'... ROCK AND ROLLLLLLLL -Ozzy Osbourne
+  if (instance()->_raytraceChanged)
+  {
+    instance()->_traceFunc(instance()->_raytraceStatus);
+    instance()->_raytraceChanged = false;
+  }
+
   static Cameras *camList = Engine::instance()->cams();
 
   // Compute the time since last idle().
@@ -319,12 +326,6 @@ void Engine::switchCamera( Camera *camera ){
  */
 void Engine::displayScreen( void ) {
 
-  if (instance()->_raytraceChanged && instance()->_traceFunc != NULL)
-  {
-    instance()->_traceFunc(instance()->_raytraceStatus);
-    instance()->_raytraceChanged = false;
-  }
-
   static Cameras *camList = Engine::instance()->cams();
 
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
@@ -372,5 +373,5 @@ void Engine::setRaytrace(bool enabled)
 
 void Engine::noop(bool enabled)
 {
-  //duh
+  printf("The front line is everywhere.\nThere be no [raytracer] here.\n"); //Zack de la Rocha
 }
