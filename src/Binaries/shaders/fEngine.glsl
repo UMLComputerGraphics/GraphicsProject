@@ -54,13 +54,14 @@ void main() {
     baseColor = fColor;
   }
   
-  // Transform vertex position into eye coordinates
-  vec3 pos = (fPosition).xyz;
-
   // Compute terms in the illumination equation    
-  gl_FragColor = LightAmbient * baseColor * aRomanticEvening();
+  // gl_FragColor = LightAmbient * baseColor * aRomanticEvening();
     
   if (letMeSeeThatPhong) {          
+
+    // Transform vertex position into eye coordinates
+    vec3 pos = (fPosition).xyz;
+
     vec4 ambient = LightAmbient * baseColor;
     gl_FragColor = ambient;
     
@@ -80,6 +81,7 @@ void main() {
     } 
     
     gl_FragColor = gl_FragColor + diffuse + specular;      
+  } else {
+    gl_FragColor = baseColor;
   }
-
 }
