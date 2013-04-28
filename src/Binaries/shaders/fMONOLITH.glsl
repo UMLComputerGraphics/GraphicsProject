@@ -1,7 +1,7 @@
-varying vec4 fColor;
+varying  vec4 color;
+
 varying vec4 fPosition;
 varying vec3 fNormal;
-varying vec2 fTex;
 
 // position/movement
 uniform mat4 P;
@@ -46,11 +46,11 @@ void main()
 
     // Compute terms in the illumination equation    
     
-    gl_FragColor = LightAmbient * fColor * aRomanticEvening();
+    gl_FragColor = LightAmbient * color * aRomanticEvening();
     
     if (letMeSeeThatPhong)
     {          
-      vec4 ambient = LightAmbient * fColor;
+      vec4 ambient = LightAmbient * color;
       gl_FragColor = ambient;
     
         vec3 lightPos = (CTM * OTM * LightPosition).xyz;
@@ -63,7 +63,7 @@ void main()
         vec4  diffuse = Kd * aRomanticEvening() * ambient;
     
         float Ks = pow( max(dot(fNormal, H), 0.0), 0.5);
-        vec4  specular = Ks * vec4(0.0,0.0,0.0,1.0) * fColor;
+        vec4  specular = Ks * vec4(0.0,0.0,0.0,1.0) * color;
         if( dot(L, fNormal) < 0.0) {
             specular = vec4(0.0, 0.0, 0.0, 1.0);
         } 
