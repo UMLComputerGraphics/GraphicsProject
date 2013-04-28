@@ -234,6 +234,9 @@ void MONOLITH::candleTopMeltDown(TransCache &obj) {
  // obj._offset.delta(0.0, -0.0025, 0.0);
 }
 
+/**
+ * SHOW ENGINE WHERE OUR GOAT IS //ralphy may allusion
+ */
 void MONOLITH::raytraceStatusChanged(bool newstatus)
 {
   if (newstatus)

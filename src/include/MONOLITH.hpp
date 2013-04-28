@@ -79,7 +79,7 @@ public:
     void init();
     
     /**
-     * SHOW ENGINE WHERE OUT GOAT IS //ralphy may allusion
+     * SHOW ENGINE WHERE OUR GOAT IS //ralphy may allusion
      */
     void raytraceStatusChanged(bool newstatus);
 
