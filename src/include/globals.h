@@ -59,6 +59,11 @@ static const bool PREMULT = false;
  * DEBUG_MOTION controls some additional debug messages
  * for acceleration/velocity.
  */
+#ifndef DEBUG_MOTION
 #define DEBUG_MOTION (false)
+#else
+#undef DEBUG_MOTION
+#define DEBUG_MOTION (true)
+#endif
 
 #endif

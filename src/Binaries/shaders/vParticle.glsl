@@ -2,21 +2,30 @@
 // Author: Chris Compton, christopher_compton@student.uml.edu
 // 	   Nick Ver Voort, nicholas_vervoort@student.uml.edu
 
+// Standard Attributes
 attribute vec4 vPosition;
 attribute vec4 vColor;
-
-uniform vec3 cameraPos;
-varying vec3 gCamPos;
-varying vec4 gColor;
+attribute vec3 vNormal;
+attribute vec2 vTex;
 
 // position/movement
-uniform mat4 P;
-uniform mat4 R;
-uniform mat4 T;
-uniform mat4 CTM; // CTM is either PRT or TRP, depending.
-uniform mat4 OTM;
+uniform mat4 P;   // Camera Perspective: Vertices are transformed to Screen coordinates.
+uniform mat4 R;   // Camera Rotations only.
+uniform mat4 T;   // Camera Translations only.
+uniform mat4 CTM; // Camera transformations: Vertices are transformed to Camera coordinates with world scaling.
+uniform mat4 OTM; // Object Transformations: Objects are adjusted to world coordinates.
+
+// IsTextured boolean.
+uniform bool fIsTextured;
+
+// Sent out to the gShader
+varying vec3 gCamPos;
+varying vec4 gColor ;
 
 varying float distance ;
+
+uniform vec3 cameraPos;
+
 void main()
 {
 

@@ -1,13 +1,13 @@
 varying vec4 fColor;
 varying vec4 fPosition;
-varying vec3 fNormal;
 varying vec2 fTex;
+varying vec3 fNormal;
 
 // position/movement
 uniform mat4 P;
 uniform mat4 R;
 uniform mat4 T;
-uniform mat4 CTM; // CTM is either PRT or TRP, depending.
+uniform mat4 CTM;
 uniform mat4 OTM;
 
 uniform float ftime; //for Eric's 1337 h@x

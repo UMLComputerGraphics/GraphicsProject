@@ -370,7 +370,10 @@ ParticleSystem::update() {
 	}
 
 	// if we need fewer particles...
-	else if ( _particles.size() > (unsigned int) this->_numParticles ){
+	else if ( ( _particles.size() > (unsigned int) this->_numParticles ) &&
+		  ( abs(this->_numParticles - (int)_particles.size() ) >= NUM_PARTICLES_TO_ADD_ON_UPDATE ) 
+		  //^^ condition to make sure the system doesn't bang back and forth between values
+		  ){
 
 		if ( currFillFrame == _fillSpeedLimit ) {
 			updateNumParticles( -1 * NUM_PARTICLES_TO_ADD_ON_UPDATE );

@@ -32,7 +32,7 @@ void main() {
 
   // If morphing is enabled, morphPercentage will be non-zero.
   // It is therefore easier to just always compute the following.
-  //fPosition = vPosition * (1.0 - morphPercentage) + vPositionMorph * morphPercentage;
+  //position_tmp = vPosition * (1.0 - morphPercentage) + vPositionMorph * morphPercentage;
 
   // World coordinates of this vertex.
   fPosition = OTM * vPosition;

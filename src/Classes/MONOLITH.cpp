@@ -81,6 +81,7 @@ void MONOLITH::run() {
   Engine::instance()->init( &_argc, _argv,
                             "WE ARE THE BORG. RESISTANCE IS FUTILE!" );
   Engine::instance()->registerIdle( monolith_idle );
+  Engine::instance()->registerTraceFunc( (raytracerCallback)(boost::bind(&MONOLITH::raytraceStatusChanged, this, _1)));
 
   
   // Get handles to the Scene and the Screen.
@@ -88,21 +89,22 @@ void MONOLITH::run() {
   primScreen = Engine::instance()->mainScreen();
   
   // No Morphing, plus Light Shading.
-  shader[0] = Angel::InitShader( "shaders/vEngineNoMorph.glsl",
-				 "shaders/fMONOLITH.glsl" );
-  // Morphing plus Shading.
-  shader[1] = Angel::InitShader( "shaders/vEngine.glsl",
-				 "shaders/fMONOLITH.glsl" );
+  shader[1] = Angel::InitShader( "shaders/vEngineNoMorph.glsl",
+				 "shaders/fEngine.glsl" );
   // Particle Shader.
   shader[2] = Angel::InitShader( "shaders/vParticle.glsl",
-                                 "shaders/fFlameParticle.glsl" );
-  
-  GLint noMorphShader = shader[0];
-  GLint morphingShader = shader[1];
-  GLint particleShader = shader[2];
+                                 "shaders/fFlameParticle.glsl" );  
+  // Raytracing shader
+  shader[3] = Angel::InitShader( "shaders/vRaytracer.glsl", "shaders/fRaytracer.glsl" );
 
-  tick.setTimeUniform( glGetUniformLocation( shader[0], "ftime" ) );
-  tick.setTimeUniform( glGetUniformLocation( shader[1], "ftime" ) );
+  GLint morphingShader = Engine::instance()->rootScene()->shader(); 
+  GLint noMorphShader = shader[1];
+  GLint particleShader = shader[2];
+  GLint raytraceShader = shader[3];
+
+  tick.setTimeUniform( glGetUniformLocation( morphingShader, "ftime" ) );
+  tick.setTimeUniform( glGetUniformLocation( noMorphShader, "ftime" ) );
+  tick.setTimeUniform( glGetUniformLocation( raytraceShader, "ftime" ) );
 
   // --- Wine Bottle --- //
   
@@ -178,14 +180,19 @@ void MONOLITH::run() {
 
   
   max = candle_top->getMax();
-  ps = new ParticleSystem( 100, "ps1", shader[2] );
+  ps = new ParticleSystem( 100, "ps1", particleShader );
   ps->setLifespan( 5.0, 8.0 );
-  ps->setVectorField( ParticleFieldFunctions::flameold );
+  ps->setVectorField( ParticleFieldFunctions::flame);
   ps->setColorFunc(   ColorFunctions::flame );
   ps->setEmitterRadius( 0.02 );
   candle_top->insertObject( ps );
   ps->_trans._offset.set( 0, max.y, 0 );
-  ps->fillSystemWithParticles();
+
+ /* If you fill the system, the flame will have a non-flamelike pulsing effect. 
+    Please don't!
+ */
+  //ps->fillSystemWithParticles(); 
+
   //ps->propagateOLD();
   candle_top->propagateOLD();
 
@@ -221,4 +228,22 @@ void MONOLITH::candleMeltAnim(TransCache &obj) {
 
 void MONOLITH::candleTopMeltDown(TransCache &obj) {
  // obj._offset.delta(0.0, -0.0025, 0.0);
+}
+
+/**
+ * SHOW ENGINE WHERE OUR GOAT IS //ralphy may allusion
+ */
+void MONOLITH::raytraceStatusChanged(bool newstatus)
+{
+  if (newstatus)
+  {
+    printf("SWITCHING TO RAY TRACING SHADER!\n");
+    rootScene->replaceShader(shader[0], shader[3]);
+  }
+  else
+  {
+    printf("SWITCHING TO NORMAL SHADER!\n");
+    rootScene->replaceShader(shader[0], shader[0]);
+  }
+  printf("TODO: SWITCH VERTICES AND PUSH STUFF TO GPU APPROPRIATELY!\n");
 }

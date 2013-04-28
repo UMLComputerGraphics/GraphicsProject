@@ -28,6 +28,16 @@
 
 bool warpPointer = true;
 
+bool trapCursor(bool state)
+{
+  warpPointer = state;
+  glutSetCursor( state ? GLUT_CURSOR_NONE : GLUT_CURSOR_LEFT_ARROW );
+  gprint(PRINT_INFO, "Pointer = %s\n", state ? "trapped" : "FREE!");
+  if (state)
+    glutWarpPointer(Engine::instance()->mainScreen()->midpointX(), Engine::instance()->mainScreen()->midpointY());
+  return state;
+}
+
 /**
  * keylift is registered as a GLUT callback for when a user
  * releases a depressed key.
@@ -85,12 +95,7 @@ void engineKeyboard( unsigned char key, int x, int y ) {
   
   switch ( key ) {
   
-  case 033: // Escape Key	  
-    /*
-     cleanup();
-     Disabled for now; not crucial.
-     Intend to fix later when I profile a bit more with valgrind.
-     */
+  case 033: // Escape Key
     glutLeaveMainLoop();
     break;
     
@@ -181,10 +186,12 @@ void engineKeyboard( unsigned char key, int x, int y ) {
     break;
     
   case 'p':
-    gprint(PRINT_INFO, "Pointer = %s\n", ((warpPointer = !warpPointer)) ? "trapped" : "FREE!");
-    if (warpPointer)
-      glutWarpPointer(Engine::instance()->mainScreen()->midpointX(), Engine::instance()->mainScreen()->midpointY());
+    trapCursor(!warpPointer);
 	break;
+
+  case 'f':
+    Engine::instance()->setRaytrace(!Engine::instance()->getRaytrace());
+    break;
   }
 }
 
@@ -271,8 +278,7 @@ void engineMouse( int button, int state, int x, int y ) {
   
   if (state && !warpPointer)
   {
-    glutWarpPointer(Engine::instance()->mainScreen()->midpointX(), Engine::instance()->mainScreen()->midpointY());
-    warpPointer = true;
+    trapCursor(true);
   }
 
   switch ( button ) {

@@ -20,10 +20,5 @@ uniform mat4 OTM; // Object Transformations: Objects are adjusted to world coord
 // IsTextured boolean.
 uniform bool fIsTextured;
 
-void main() {
-
-  gl_Position = P * CTM * OTM * vPosition;
-  fColor = vec4( 1, 0, 0, 1 );
-  fTex = vec2( 0, 0 );
-
-}
+// Morphing Information
+uniform float morphPercentage;

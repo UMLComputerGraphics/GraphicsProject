@@ -158,13 +158,25 @@ vec3 ParticleFieldFunctions::flameold(vec4 pos) {
 Angel::vec3 ParticleFieldFunctions::userSupplied( Angel::vec4 pos ) {
 	static bool compiled = false;
 	static std::string expressions[3];
-	static exprtk::expression<double> expression[3];
-	static exprtk::parser<double> parser;
+	static exprtk::expression<GLfloat> expression[3];
+	static exprtk::parser<GLfloat> parser;
+	static exprtk::symbol_table<GLfloat> symbol_table;
+	static vec4 *input = NULL;
 
 	if (!compiled) {
-		expressions[0] = "0";
-		expressions[1] = "0";
-		expressions[2] = "0.1";
+	  input = new vec4;
+		expressions[0] = "0x + 0y + 0z + 0";
+		expressions[1] = "0x + 0y + 0z + 0";
+		expressions[2] = "0x + 0y + 0z + 0.1";
+
+		symbol_table.add_variable("x",input->x);
+		symbol_table.add_variable("y",input->y);
+		symbol_table.add_variable("z",input->z);
+		symbol_table.add_constants();
+
+		expression[0].register_symbol_table(symbol_table);
+		expression[1].register_symbol_table(symbol_table);
+		expression[2].register_symbol_table(symbol_table);
 
 		parser.compile(expressions[0], expression[0]);
 		parser.compile(expressions[1], expression[1]);
@@ -172,12 +184,11 @@ Angel::vec3 ParticleFieldFunctions::userSupplied( Angel::vec4 pos ) {
 
 		compiled = true;
 	}
-
+	*input = pos;
 	Angel::vec3 res;
 	res.x = expression[0].value();
 	res.y = expression[1].value();
 	res.z = expression[2].value();
-
 	return res;
 }
 

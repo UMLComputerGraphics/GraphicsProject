@@ -160,10 +160,10 @@ namespace Angel {
     // Gshader gak
     if (nShaders == 3) {
         glProgramParameteriEXT( program, GL_GEOMETRY_INPUT_TYPE_EXT,
-                                       GL_POINTS );
+				GL_POINTS );
 
         glProgramParameteriEXT( program, GL_GEOMETRY_OUTPUT_TYPE_EXT,
-                                       GL_TRIANGLE_STRIP );
+				GL_TRIANGLE_STRIP );
 
         glProgramParameteriEXT( program, GEOMETRY_VERTICES_OUT_EXT, 4 );
 
@@ -264,9 +264,17 @@ namespace Angel {
 			      gs_inType );
 
       glProgramParameteriEXT( program, GL_GEOMETRY_OUTPUT_TYPE_EXT,
-			      gs_outType );
-    }
+                              gs_outType );
+      /*
+      glProgramParameter( program, GEOMETRY_VERTICES_OUT_EXT, gs_numVertOut );
 
+      glProgramParameter( program, GL_GEOMETRY_INPUT_TYPE_EXT,
+			      gs_inType );
+
+      glProgramParameter( program, GL_GEOMETRY_OUTPUT_TYPE_EXT,
+			      gs_outType );
+      */
+    }
 
     /* link  and error check */glLinkProgram( program );
     /* test */glLinkProgram( program );
@@ -285,7 +293,18 @@ namespace Angel {
       exit( EXIT_FAILURE );
     }
 
+    //ask opengl if the program is ok.
+
+    /*
+    glValidateProgram(program);
+
+    if( glGetProgramiv( program, GL_VALIDATE_STATUS, <NEEDS A THIRD WEIRD ARGUMENT> ) == GL_FALSE ) // true = ok, false = !ok
+      {
+	fprintf(stderr, "WARNING: the current program is not guaranteed to run\n" );
+      }
+    */
     return program;
+    
   }
 
 }  // Close namespace Angel block
