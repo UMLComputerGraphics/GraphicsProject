@@ -43,7 +43,8 @@ void init() {
 							 particleSystemShader );
 
     particleSystem->setLifespan(8.0, 16.0);
-    particleSystem->setVectorField( ParticleFieldFunctions::flame ) ;
+    //particleSystem->setVectorField( ParticleFieldFunctions::userSupplied ) ;
+    particleSystem->setVectorField( ParticleFieldFunctions::flame );
     particleSystem->setColorFunc( ColorFunctions::flame ) ;
     particleSystem->setEmitterRadius( 0.04 ) ;
     particleSystem->drawMode( GL_TRIANGLES ) ; // NEED THIS IF WE USE A GEOMETRY SHADER!

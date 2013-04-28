@@ -41,6 +41,7 @@ void init() {
                                     particleSystemShader );
   funInTheSin->setLifespan( 0.5, 11.0 );
   funInTheSin->setEmitterRadius( 0.1 );
+  funInTheSin->setVectorField( ParticleFieldFunctions::userSupplied );
   rootScene->insertObject( funInTheSin );
   funInTheSin->propagateOLD();
   funInTheSin->fillSystemWithParticles();

@@ -145,6 +145,96 @@ Object::Object( const std::string &name, GLuint gShader ) {
   glBindVertexArray( 0 );
 }
 
+/*
+void Object::rebind(){
+
+  index = glGetAttribLocation( shader(), name );
+
+
+  // Create the Vertex _buffer and link it with the shader.
+  createAndBind( GL_ARRAY_BUFFER, VERTICES, "vPosition", 4, GL_FLOAT, GL_FALSE, 0, 0 );
+
+  // Create the MORPH Vertex _buffer and link it with the shader.
+  createAndBind( GL_ARRAY_BUFFER, VERTICES_MORPH, "vPositionMorph", 4, GL_FLOAT, GL_FALSE, 0, 0 );
+  
+  // Create the Normal _buffer and link it with the shader.
+  createAndBind( GL_ARRAY_BUFFER, NORMALS, "vNormal", 3, GL_FLOAT, GL_FALSE, 0, 0 );
+  
+  // Create the Normal MORPH _buffer and link it with the shader. 
+  createAndBind( GL_ARRAY_BUFFER, NORMALS_MORPH, "vNormalMorph", 3, GL_FLOAT, GL_FALSE, 0, 0 );
+  
+  // Create the Color _buffer and link it with the shader.
+  createAndBind( GL_ARRAY_BUFFER, COLORS, "vColor", 4, GL_FLOAT, GL_FALSE, 0, 0 );
+  glEnable( GL_BLEND );
+  glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+
+  // Create the Color Morph _buffer and link it with the shader.
+  createAndBind( GL_ARRAY_BUFFER, COLORS_MORPH, "vColorMorph", 4, GL_FLOAT, GL_FALSE, 0, 0 );
+  glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+  
+  // Create the texture Coordinate _buffer and link it with the shader.
+  createAndBind( GL_ARRAY_BUFFER, TEXCOORDS, "vTex", 2, GL_FLOAT, GL_FALSE, 0, 0 );
+
+  // Create the drawing order _buffer, but we don't need to link it
+  // with any uniform, because we won't be accessing this data directly.
+  // I.e, the numbers here are not important once we are in the vshader.
+  glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, _buffer[INDICES] );
+
+  gprint( PRINT_DEBUG, "Array/Buffer Handles: %u %u %u %u %u %u %u %u\n",
+	  _buffer[VERTICES], _buffer[NORMALS], _buffer[COLORS],
+	  _buffer[TEXCOORDS], _buffer[INDICES], _buffer[VERTICES_MORPH],
+	  _buffer[NORMALS_MORPH], _buffer[COLORS_MORPH] );
+
+  // Unset the VAO context.
+  glBindVertexArray( 0 );
+
+}
+*/
+
+/**
+   helper function for checkForAttribCorruption()
+   @param typeindex index into the _attribIndex member array
+   @param name name of the attribute to change
+   @return returns true if a problem is found, false otherwise
+ **/
+bool
+Object::checkForAttribCorruptionHelper(int typeIndex, const char *name)
+{
+  if ( _attribIndex[typeIndex] != glGetAttribLocation( shader(), name ) )
+    {
+      fprintf( stderr, "OH NOOO: %s was changed since initialization\n", name);
+      return true;
+    }
+
+  else return false;
+
+}
+
+/**
+   Check if any vertex attribute location changed since initilization
+   @return returns true if any problems are found, false otherwise
+ **/
+bool
+Object::checkForAttribCorruption(void)
+{
+
+  bool status = false ;
+
+  glBindVertexArray( _vao );
+
+  if ( checkForAttribCorruptionHelper( VERTICES, "vPosition" )) status = true;
+  if ( checkForAttribCorruptionHelper( NORMALS,  "vNormal"   )) status = true;
+  if ( checkForAttribCorruptionHelper( COLORS,   "vColor"    )) status = true;
+
+  // Unset the VAO context.
+  glBindVertexArray( 0 );
+
+  if ( status ) gprint( PRINT_WARNING, "Warning: attribute location corruption occurred: PANIC");
+
+  return status ;
+
+}
+
 /**
  * Default destructor.
  */
@@ -171,6 +261,8 @@ void Object::drawPrep( void ) {
             _name.c_str(), currShader, shader() );
     Engine::instance()->switchShader( shader() );
   }
+
+  this->checkForAttribCorruption();
 
   glBindVertexArray( _vao );
 
