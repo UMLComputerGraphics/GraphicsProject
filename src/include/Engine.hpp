@@ -120,6 +120,11 @@ public:
      * Let's get started!
      */
     static void init( int *argc, char *argv[], const char *title );
+
+  /**
+   * Whoooosh! Enter the mainloop and start the party.
+   */
+  static void run( void );
     
     void registerIdle( void (idleFunc)( void ) );
     void callIdle( void );

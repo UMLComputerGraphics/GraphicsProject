@@ -85,12 +85,7 @@ void engineKeyboard( unsigned char key, int x, int y ) {
   
   switch ( key ) {
   
-  case 033: // Escape Key	  
-    /*
-     cleanup();
-     Disabled for now; not crucial.
-     Intend to fix later when I profile a bit more with valgrind.
-     */
+  case 033: // Escape Key
     glutLeaveMainLoop();
     break;
     

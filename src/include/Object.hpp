@@ -146,7 +146,7 @@ public:
    * link a specified Uniform against the shader's variable _name.
    *
    * @param which The Uniform to link.
-   * @param name The variable _name on the shader.
+   * @param name The variable name on the shader.
    */
   virtual void link( UniformEnum which, const std::string &name );
 

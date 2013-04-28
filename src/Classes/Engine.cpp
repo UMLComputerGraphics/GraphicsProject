@@ -222,8 +222,19 @@ void Engine::init( int *argc, char *argv[], const char *title ) {
 
   eng->rootScene()->shader( defaultProgram );
 
+  // Set it up so that once the glut_mainloop exits,
+  // It returns control to the application so we can cleanup ourselves.
+  glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION );
+
 }
 
+void Engine::run( void ) {
+
+  glutMainLoop();
+
+  delete Engine::instance();
+
+}
 
 void Engine::registerIdle( void (idleFunc)( void ) ) {
   _idleFunc = idleFunc;

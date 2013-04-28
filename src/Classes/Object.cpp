@@ -151,6 +151,10 @@ Object::Object( const std::string &name, GLuint gShader ) {
 Object::~Object( void ) {
   
   destroyMorphTarget();
+  std::vector< Texture * >::iterator it;
+
+  for ( it = _textures.begin(); it != _textures.end(); ++it )
+    delete (*it);
   
 }
 
