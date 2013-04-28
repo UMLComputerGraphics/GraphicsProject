@@ -35,7 +35,7 @@ void main() {
   //fPosition = vPosition * (1.0 - morphPercentage) + vPositionMorph * morphPercentage;
 
   // World coordinates of this vertex.
-  fPosition = OTM * fPosition;
+  fPosition = OTM * vPosition;
   // Screen coordinates of this vertex.
   gl_Position = P * CTM * fPosition;
 
