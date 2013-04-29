@@ -12,11 +12,11 @@
 #include <vector>
 #include <boost/thread.hpp>
 
+#include "RaytraceBuffer.hpp"
 #include "SpelchkCamera.hpp"
 #include "InitShader.hpp"
 #include "Timer.hpp"
 #include "Util.hpp"
-
 #include "ObjLoader.hpp"
 
 /** Global shader object **/
@@ -101,7 +101,6 @@ GLfloat lightDiffuse[] = { 1.0, 1.0, 1.0 };
 GLfloat lightSpecular[] = { 1.0, 1.0, 1.0 };
 
 int numTriangles = 0;
-std::vector<vec3> trianglePoints;
 
 int numOfBoundingBoxes = 0;
 
@@ -391,21 +390,8 @@ void setMinMax(vec3 *min, vec3 *max, vec3 v) {
 }
 
 void addTriangle(const vec3& a, const vec3& b, const vec3& c, const vec3& diffuse, const vec3& ambient, const vec3& specular, float shininess, float reflect, float refract) {
-  trianglePoints.push_back(a);
-  trianglePoints.push_back(b);
-  trianglePoints.push_back(c);
 
-  addVec3ToVector(&bufferData, a);
-  addVec3ToVector(&bufferData, b);
-  addVec3ToVector(&bufferData, c);
-
-  addVec3ToVector(&bufferData, diffuse);
-  addVec3ToVector(&bufferData, ambient);
-  addVec3ToVector(&bufferData, specular);
-
-  bufferData.push_back(shininess);
-  bufferData.push_back(reflect);
-  bufferData.push_back(refract);
+  triangle_t newTriangle;
 
   vec3 normal = normalize(cross(b - a, c - b));
   addVec3ToVector(&bufferData, normal);
@@ -438,12 +424,30 @@ void addTriangle(const vec3& a, const vec3& b, const vec3& c, const vec3& diffus
   if(tempDistance > distance) distance = tempDistance;
   distance += 0.0001;
 
-  bufferData.push_back(centerX);
-  bufferData.push_back(centerY);
-  bufferData.push_back(centerZ);
-  bufferData.push_back(distance);
-  bufferData.push_back(distance * distance);
-  bufferData.push_back(0.0);
+  newTriangle.a = a;
+  newTriangle.b = b;
+  newTriangle.c = c;
+  newTriangle.diffuse = diffuse;
+  newTriangle.ambient = ambient;
+  newTriangle.specular = specular;
+
+  newTriangle.shininess = shininess;
+  newTriangle.reflect = reflect;
+  newTriangle.refract = refract;
+
+  newTriangle.centerx = centerX;
+  newTriangle.centery = centerY;
+  newTriangle.centerx = centerZ;
+  newTriangle.distance = distance;
+  newTriangle.distanceSquared = (distance * distance);
+  newTriangle.sentinel = 0.0;
+
+  GLfloat *ptr = NULL;
+  for ( ptr = (GLfloat *)&newTriangle; 
+	(void *)ptr < (void *)(&newTriangle + 1); 
+	ptr++ ) {
+    bufferData.push_back( *ptr );
+  }
 
   numTriangles++;
 }
