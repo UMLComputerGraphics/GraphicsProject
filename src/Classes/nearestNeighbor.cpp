@@ -429,6 +429,10 @@ void SquareHorizontalMeshMap::copyToFinal(){
 			destMatch++;
 		}
 	}
+	std::cout << "Matched Source Triangles     : " << srcMatch << std::endl;
+	std::cout << "Matched Destination Triangles: " << destMatch << std::endl;
+	std::cout << "Unmatched Source Triangles     : " << srcCount << std::endl;
+	std::cout << "Unmatched Destination Triangles: " << destCount << std::endl;
 
 	//Handle Unmapped Src Triangles
 	for(float i=0; i<srcTriangles.size();i++){
@@ -613,6 +617,29 @@ void SquareVerticalMeshMap::copyToFinal(){
 		}
 	}
 
+	int srcCount = 0;
+	int srcMatch = 0;
+	int destCount = 0;
+	int destMatch = 0;
+	for(float i=0; i<srcTriangles.size();i++){
+		if(srcTriangles[i]->covered == false){
+			srcCount++;
+		}else{
+			srcMatch++;
+		}
+	}
+	int dstCount = 0;
+	for(float i=0; i<destTriangles.size();i++){
+		if(destTriangles[i]->covered == false){
+			destCount++;
+		}else{
+			destMatch++;
+		}
+	}
+	std::cout << "Matched Source Triangles     : " << srcMatch << std::endl;
+	std::cout << "Matched Destination Triangles: " << destMatch << std::endl;
+	std::cout << "Unmatched Source Triangles     : " << srcCount << std::endl;
+	std::cout << "Unmatched Destination Triangles: " << destCount << std::endl;
 
 	//Handle Unmapped Src Triangles
 	for(float i=0; i<srcTriangles.size();i++){

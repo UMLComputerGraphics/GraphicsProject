@@ -22,7 +22,7 @@
 #include "bipartiteGraph.hpp"
 #include "scanMatching.hpp"
 #include "scaleModel.hpp"
-#include "sHull.hpp"
+//broken #include "sHull.hpp"
 
 // Initialization: load and compile shaders, initialize camera(s), load models.
 void init() {
