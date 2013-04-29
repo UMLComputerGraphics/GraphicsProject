@@ -48,6 +48,8 @@ Engine::Engine( void ) :
   _idleFunc = NULL;
   // Reminder: 0 is never a valid program.
   _currentShader = 0;
+  _glslVersion = 0.0;
+
   _renderingCamera = NULL;
   _raytraceChanged = false;
 
@@ -203,16 +205,20 @@ void Engine::init( int *argc, char *argv[], const char *title ) {
   glutIdleFunc( Engine::idle );
   glutReshapeFunc( engineResize );
 
+  float glsl_vers;
+  sscanf( (char *)glGetString( GL_SHADING_LANGUAGE_VERSION ), "%f", &glsl_vers );
+
   gprint( PRINT_DEBUG, "GL_VENDOR: %s\n", glGetString( GL_VENDOR ) );
   gprint( PRINT_DEBUG, "GL_RENDERER: %s\n", glGetString( GL_RENDERER ) );
   gprint( PRINT_DEBUG, "GL_VERSION: %s\n", glGetString( GL_VERSION ) );
-  gprint( PRINT_DEBUG, "GL_SHADING_LANGUAGE_VERSION: %s\n",
-	   glGetString( GL_SHADING_LANGUAGE_VERSION ) );
+  gprint( PRINT_DEBUG, "GL_SHADING_LANGUAGE_VERSION: %f\n", glsl_vers );
 
   glEnable( GL_DEPTH_TEST );
   glClearColor( 0.0, 0.0, 0.0, 1.0 );
 
   Engine *eng = Engine::instance();
+
+  eng->glslVersion( glsl_vers );
 
   // Conjure up a default shader program to use until told otherwise.
   GLuint defaultProgram = Angel::InitShader( "./shaders/vEngine.glsl", 
@@ -229,7 +235,9 @@ void Engine::init( int *argc, char *argv[], const char *title ) {
 
   // Set it up so that once the glut_mainloop exits,
   // It returns control to the application so we can cleanup ourselves.
-  //glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION );
+#ifndef __APPLE__
+  glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION );
+#endif
 
 }
 
@@ -374,4 +382,12 @@ void Engine::setRaytrace(bool enabled)
 void Engine::noop(bool enabled)
 {
   printf("The front line is everywhere.\nThere be no [raytracer] here.\n"); //Zack de la Rocha
+}
+
+float Engine::glslVersion( void ) {
+  return _glslVersion;
+}
+
+void Engine::glslVersion( float in ) {
+  _glslVersion = in;
 }
