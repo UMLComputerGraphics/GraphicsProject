@@ -92,8 +92,8 @@ void MONOLITH::run() {
   shader[1] = Angel::InitShader( "shaders/vEngineNoMorph.glsl",
 				 "shaders/fEngine.glsl" );
   // Particle Shader.
-  shader[2] = Angel::InitShader( "shaders/vParticle.glsl",
-                                 "shaders/fFlameParticle.glsl" );
+  shader[2] = Angel::InitShader( "shaders/vParticle2.glsl",
+                                 "shaders/fParticle2.glsl" );
 
   // Raytracing shader
   if (eng->glslVersion() >= 1.50)
