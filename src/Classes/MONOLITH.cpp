@@ -78,12 +78,12 @@ void MONOLITH::slotFreezeParticles(bool isEnabled)
  * This will initialize and run MONOLITH
  */
 void MONOLITH::run() {
-  Engine::instance()->init( &_argc, _argv,
-                            "WE ARE THE BORG. RESISTANCE IS FUTILE!" );
-  Engine::instance()->registerIdle( monolith_idle );
-  Engine::instance()->registerTraceFunc( (raytracerCallback)(boost::bind(&MONOLITH::raytraceStatusChanged, this, _1)));
+  Engine *eng = Engine::instance();
 
-  
+  eng->init( &_argc, _argv, "WE ARE THE BORG. RESISTANCE IS FUTILE!" );
+  eng->registerIdle( monolith_idle );
+  eng->registerTraceFunc( (raytracerCallback)(boost::bind(&MONOLITH::raytraceStatusChanged, this, _1)));
+
   // Get handles to the Scene and the Screen.
   rootScene = Engine::instance()->rootScene();
   primScreen = Engine::instance()->mainScreen();
@@ -93,9 +93,14 @@ void MONOLITH::run() {
 				 "shaders/fEngine.glsl" );
   // Particle Shader.
   shader[2] = Angel::InitShader( "shaders/vParticle.glsl",
-                                 "shaders/fFlameParticle.glsl" );  
+                                 "shaders/fFlameParticle.glsl" );
+
   // Raytracing shader
-  shader[3] = Angel::InitShader( "shaders/vRaytracer.glsl", "shaders/fRaytracer.glsl" );
+  if (eng->glslVersion() >= 1.50)
+    shader[3] = Angel::InitShader( "shaders/vRaytracer.glsl", 
+				   "shaders/fRaytracer.glsl" );
+  else
+    shader[3] = 0;
 
   GLint morphingShader = Engine::instance()->rootScene()->shader(); 
   GLint noMorphShader = shader[1];
@@ -104,7 +109,8 @@ void MONOLITH::run() {
 
   tick.setTimeUniform( glGetUniformLocation( morphingShader, "ftime" ) );
   tick.setTimeUniform( glGetUniformLocation( noMorphShader, "ftime" ) );
-  tick.setTimeUniform( glGetUniformLocation( raytraceShader, "ftime" ) );
+  if (raytraceShader)
+    tick.setTimeUniform( glGetUniformLocation( raytraceShader, "ftime" ) );
 
   // --- Wine Bottle --- //
   
@@ -130,8 +136,8 @@ void MONOLITH::run() {
   // Let the bodies hit the table
   Object *table;
   table = rootScene->addObject( "table", noMorphShader );
-  ObjLoader::loadModelFromFile(table, "../models/table.obj");
-  ObjLoader::loadMaterialFromFile(table, "../models/table.mtl");
+  ObjLoader::loadModelFromFile(table, "../models/table_tx.obj");
+  ObjLoader::loadMaterialFromFile(table, "../models/table_tx.mtl");
   table->texture("../Textures/texture_wood.png");
   table->buffer();
 

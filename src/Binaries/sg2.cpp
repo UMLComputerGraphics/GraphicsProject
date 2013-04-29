@@ -47,8 +47,8 @@ void act_one( void ) {
 
   // Table
   Object *table = rootScene->addObject( "table" );
-  ObjLoader::loadModelFromFile(table, "../models/table.obj");
-  ObjLoader::loadMaterialFromFile(table, "../models/table.mtl");
+  ObjLoader::loadModelFromFile(table, "../models/table_tx.obj");
+  ObjLoader::loadMaterialFromFile(table, "../models/table_tx.mtl");
   table->texture( "../Textures/texture_wood.png" );
   max = table->getMax();
   initialPlacement.set( 0, -max.y, 0 );
