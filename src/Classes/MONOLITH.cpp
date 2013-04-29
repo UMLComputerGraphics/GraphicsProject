@@ -54,7 +54,7 @@ void MONOLITH::monolith_idle(void)
 	*/
     
     // Update the morph percentage.
-    //(*rootScene)["bottle"]->morphPercentage( percent );
+    (*rootScene)["bottle"]->morphPercentage( percent );
 }
 
 #ifndef WITHOUT_QT
@@ -115,13 +115,13 @@ void MONOLITH::run() {
   // --- Wine Bottle --- //
   
   // Create the Bottle Object handle...
-  bottle = rootScene->addObject( "bottle", noMorphShader );
+  bottle = rootScene->addObject( "bottle", morphingShader );
 
   // Load model from file.
   ObjLoader::loadModelFromFile( bottle, "../models/bottle_wine_high.obj" );
   ObjLoader::loadMaterialFromFile( bottle, "../models/bottle_wine_high.mtl" );
 
-  /*
+
   bottle->genMorphTarget();
   Object *bottleMorphTarget = bottle->morphTarget();
   ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle_liquor_high.obj" );
@@ -136,7 +136,7 @@ void MONOLITH::run() {
   rectangularMapping(bottle,bottleMorphTarget);
   //Rescale models to original size
   scaleModel->restoreModels();
-  */
+
 
   // Scale the bottle down!
   //bottle->_trans._scale.set( 0.30 );
