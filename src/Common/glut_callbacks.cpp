@@ -28,6 +28,16 @@
 
 bool warpPointer = true;
 
+bool trapCursor(bool state)
+{
+  warpPointer = state;
+  glutSetCursor( state ? GLUT_CURSOR_NONE : GLUT_CURSOR_LEFT_ARROW );
+  gprint(PRINT_INFO, "Pointer = %s\n", state ? "trapped" : "FREE!");
+  if (state)
+    glutWarpPointer(Engine::instance()->mainScreen()->midpointX(), Engine::instance()->mainScreen()->midpointY());
+  return state;
+}
+
 /**
  * keylift is registered as a GLUT callback for when a user
  * releases a depressed key.
@@ -85,12 +95,7 @@ void engineKeyboard( unsigned char key, int x, int y ) {
   
   switch ( key ) {
   
-  case 033: // Escape Key	  
-    /*
-     cleanup();
-     Disabled for now; not crucial.
-     Intend to fix later when I profile a bit more with valgrind.
-     */
+  case 033: // Escape Key
     glutLeaveMainLoop();
     break;
     
@@ -181,8 +186,12 @@ void engineKeyboard( unsigned char key, int x, int y ) {
     break;
     
   case 'p':
-  	Engine::instance()->flip("trap_pointer");	
+    trapCursor(!warpPointer);
 	break;
+
+  case 'f':
+    Engine::instance()->setRaytrace(!Engine::instance()->getRaytrace());
+    break;
   }
 }
 
@@ -267,6 +276,11 @@ void engineMouse( int button, int state, int x, int y ) {
   static Cameras *camList = Engine::instance()->cams();
   if ( camList->numCameras() < 1 ) return;
   
+  if (state && !warpPointer)
+  {
+    trapCursor(true);
+  }
+
   switch ( button ) {
   case GLUT_LEFT_BUTTON:
     _leftDown = state == GLUT_DOWN;
@@ -304,7 +318,7 @@ void engineMouseMotion( int x, int y ) {
  * @param y the y coordinate of the mouse pointer.
  */
 void EngineMousePassive( int x, int y ) {
-  static Screen *myScreen = Engine::instance()->mainScreen();
+  Screen *myScreen = Engine::instance()->mainScreen();
 
   int centerX = myScreen->midpointX();
   int centerY = myScreen->midpointY();
@@ -312,7 +326,7 @@ void EngineMousePassive( int x, int y ) {
   const double dx = ((double) x - centerX) * MAGIC_MOUSE_SCALAR / ((double)myScreen->width());
   const double dy = ((double) centerY - y) * MAGIC_MOUSE_SCALAR / ((double)myScreen->height());
 
-  if (dx == 0 && dy == 0) return;
+  if ((dx == 0 && dy == 0) || !warpPointer) return;
   if ( myScreen->_camList.numCameras() > 0 ) {
     if (_leftDown || _rightDown)
     {
@@ -326,9 +340,7 @@ void EngineMousePassive( int x, int y ) {
     }
   }
   
-  if (Engine::instance()->opt("trap_pointer")) {
-	  glutWarpPointer( centerX, centerY );
-  } 
+  glutWarpPointer( centerX, centerY );
 }
 
 /**
@@ -353,7 +365,7 @@ void engineResize( int width, int height ) {
   // Update the size, which propagates changes to cameras and viewports.
   scr->size( width, height );
 
-  if (Engine::instance()->opt("trap_pointer")) {
+  if (warpPointer) {
 	// move the pointer so that there isn't a big jump next time we move it.
     glutWarpPointer( scr->midpointX(), scr->midpointY() );
   }

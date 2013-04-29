@@ -1,13 +1,13 @@
-varying  vec4 color;
-
+varying vec4 fColor;
 varying vec4 fPosition;
+varying vec2 fTex;
 varying vec3 fNormal;
 
 // position/movement
 uniform mat4 P;
 uniform mat4 R;
 uniform mat4 T;
-uniform mat4 CTM; // CTM is either PRT or TRP, depending.
+uniform mat4 CTM;
 uniform mat4 OTM;
 
 uniform float ftime; //for Eric's 1337 h@x
@@ -46,11 +46,11 @@ void main()
 
     // Compute terms in the illumination equation    
     
-    gl_FragColor = LightAmbient * color * aRomanticEvening();
+    gl_FragColor = LightAmbient * fColor * aRomanticEvening();
     
     if (letMeSeeThatPhong)
     {          
-      vec4 ambient = LightAmbient * color;
+      vec4 ambient = LightAmbient * fColor;
       gl_FragColor = ambient;
     
         vec3 lightPos = (CTM * OTM * LightPosition).xyz;
@@ -63,7 +63,7 @@ void main()
         vec4  diffuse = Kd * aRomanticEvening() * ambient;
     
         float Ks = pow( max(dot(fNormal, H), 0.0), 0.5);
-        vec4  specular = Ks * vec4(0.0,0.0,0.0,1.0) * color;
+        vec4  specular = Ks * vec4(0.0,0.0,0.0,1.0) * fColor;
         if( dot(L, fNormal) < 0.0) {
             specular = vec4(0.0, 0.0, 0.0, 1.0);
         } 

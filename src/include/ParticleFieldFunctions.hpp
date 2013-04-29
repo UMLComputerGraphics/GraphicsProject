@@ -14,6 +14,7 @@ namespace ParticleFieldFunctions
   Angel::vec3 flameold(Angel::vec4);
   Angel::vec3 fixed(Angel::vec4);
   Angel::vec3 up(Angel::vec4);
+  Angel::vec3 userSupplied( Angel::vec4 );
 
 }
 

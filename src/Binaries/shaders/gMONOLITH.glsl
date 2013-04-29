@@ -18,7 +18,7 @@ void doPassThrough() {
 
      color = color ;
      fPosition = fPosition ;
-     outtexture = outtexture;
+     fTex = fTex;
      cameraVector = cameraVector;
      fragmentNormal = fragmentNormal;
 

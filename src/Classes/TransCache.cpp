@@ -61,6 +61,16 @@ TransCache::TransCache( bool createInvertedSibling, bool isInverted ) {
 
 }
 
+TransCache::~TransCache( void ) {
+
+  TransformationsType::iterator it;
+  for ( it = _transformations.begin(); it != _transformations.end(); ++it ) {
+    delete (*it);
+  }
+
+}
+
+
 const Angel::mat4 &TransCache::ptm( void ) const {
   return _ptm;
 }
@@ -72,6 +82,12 @@ const Angel::mat4 &TransCache::otm( void ) const {
 }
 const Angel::mat4 &TransCache::itm( void ) const {
   return _itm;
+}
+Angel::mat4 TransCache::pitm( void ) const {
+  if (_premult)
+    return ptm() * itm();
+  else
+    return itm() * ptm();
 }
 
 void TransCache::ptm( const Angel::mat4 &ptm_in ) {
@@ -110,6 +126,41 @@ void TransCache::push( const Transformation &newTrans ) {
 
   this->push( newTrans.newCopy() );
 
+}
+
+void TransCache::insert( unsigned index, const Transformation & newTrans ) {
+
+	dirty( true );
+
+	Transformation *copiedNew = newTrans.newCopy();
+	TransformationsType::iterator it = queryImpl( index, newTrans.type() );
+	// The ordering is [new][old], so we collapse the transformation into [new].
+	copiedNew->coalesce( *it );
+	// We unfortunately need to copy [new] back over [old]
+	**it = *copiedNew;
+	// Now delete the new node, we're done with it!
+	delete copiedNew;
+
+}
+
+void TransCache::append( unsigned index, const Transformation & newTrans ){
+
+	dirty(true);
+
+	Transformation *copiedNew = newTrans.newCopy();
+	TransformationsType::iterator it = queryImpl( index, newTrans.type() );
+	(*it)->coalesce( copiedNew );
+	// Copied-New is now Identity and can be deleted.
+	delete copiedNew;
+
+}
+
+TransCache::TransformationsType::iterator TransCache::queryImpl( unsigned index, Transformation::Subtype type ) {
+  return _transformations.begin();
+}
+
+const Transformation &TransCache::query( unsigned index, Transformation::Subtype type ){
+	return RotMat();
 }
 
 /**
@@ -363,3 +414,22 @@ void TransCache::cascade( bool newState ) {
 unsigned TransCache::size(void) const {
   return _transformations.size();
 }
+
+void TransCache::debug( void ) const {
+
+  std::cerr << "premult: " << _premult << "; new: " << _new <<
+    "; rebuild: " << _rebuild << "; cascade: " << _cascade << 
+    "; parent: " << _parent << "; size: " << size() << ";";
+
+}
+
+void TransCache::debugMat( void ) const { 
+
+  //pcoi
+  for ( size_t i = 0; i < 4; ++i ) {
+    std::cerr << ptm()[i] << " " << ctm()[i] << " " <<
+      otm()[i] << " " << itm()[i] << "\n";
+  }
+
+}
+	   

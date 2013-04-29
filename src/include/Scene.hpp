@@ -11,6 +11,7 @@
 #include <string>
 #include <map>
 #include <list>
+#include <vector>
 #include "platform.h" // for GLuint
 /**
  * Forward reference so we can return pointers to Objects,
@@ -76,6 +77,14 @@ public:
    */
   Object *addObject( const std::string &objName, GLuint shader = 0 );
 
+  /*
+   * Switches shaders used by objects initialized with a certain shader
+   *    (this doesn't move their key in the map!!!)
+   * @param originalGangster The shader with which the object was initialized
+   * @param newShader The shader to switch it to
+   */
+  void replaceShader(GLuint originalGangster, GLuint newShader);
+
   /**
    * delObject will remove from the Scene graph the object with the given name.
    *
@@ -136,6 +145,14 @@ public:
   Object *operator[]( const std::string &objname );
 
   /**
+   * Find an object in our tree at ANY level,
+   * in contrast to operator[] above.
+   * @param objname The name of the object to find.
+   * @return The requested object pointer.
+   */
+  Object *search( const std::string &objname );
+
+  /**
    * "Copies" a scene into a new scene: Objects and Active state
    * are left behind, though, so it's not much of a copy.
    * @param copy The scene to copy from.
@@ -154,6 +171,8 @@ public:
    */
   void propagate( void );
 
+  void printTree( unsigned level = 0 );
+
 protected:
   /**
    * For the purposes of rapid propagation of scene-graph changes,
@@ -167,6 +186,11 @@ protected:
    * It's a little superfluous, but here it is!
    */
   std::map< std::string, Object* > _map;
+
+  /**
+   * For looking up objects based on their shader, to enable flip-flopping
+   */
+  std::map< GLuint, std::vector<Object*> > _shader_map;
 
   /**
    * We keep an iterator on-hand that references what the

@@ -6,9 +6,6 @@
  * @details Scene graph implementation.
  */
 
-#include <string>
-#include <map>
-#include <list>
 #include <stdexcept>
 
 #include "Scene.hpp"
@@ -88,12 +85,30 @@ Object *Scene::addObject( const std::string &objName, GLuint shader ) {
         "\tor informing the parent Scene of a default shader to use." );
   
   Object *obj = new Object( objName, ((shader) ? shader : _gShader) );
-  
+
   insertObject( obj );
   
   return obj;
   
 }
+
+/*
+ * Switches shaders used by objects initialized with a certain shader
+ *    (this doesn't move their key in the map!!!)
+ * @param originalGangster The shader with which the object was initialized
+ * @param newShader The shader to switch it to
+ */
+void Scene::replaceShader(GLuint originalGangster, GLuint newShader)
+{
+  if (_shader_map.find(originalGangster) != _shader_map.end())
+  {
+    for(size_t i=0;i<_shader_map[originalGangster].size();i++)
+    {
+      _shader_map[originalGangster][i]->shader(newShader);
+    }
+  }
+}
+
 
 /**
  * delObject will remove from the Scene graph the object with the given name.
@@ -128,6 +143,14 @@ void Scene::popObject( void ) {
  */
 void Scene::insertObject( Object *obj ) {
   _list.push_back( obj );
+
+  GLuint shader = obj->shader();
+  if (_shader_map.find((shader) ? shader : _gShader) == _shader_map.end())
+  {
+    _shader_map[shader] = std::vector<Object*>();
+  }
+  _shader_map[shader].push_back(obj);
+
   _map.insert( NameObjPair( obj->name(), obj ) );
 }
 
@@ -211,6 +234,29 @@ Object *Scene::operator[]( std::string const &objname ) {
   
 }
 
+Object *Scene::search( std::string const &objname ) {
+  std::map< std::string, Object * >::iterator it;
+  Object *result = NULL;
+
+  it = _map.find( objname );
+
+  if (it == _map.end()) {
+    std::list< Object * >::iterator lit;
+    for ( lit = _list.begin(); lit != _list.end(); ++lit ) {
+      result = (*lit)->search( objname );
+      if (result != NULL) break;
+    }
+  } else {
+    result = it->second;
+  }
+
+  return result;
+
+}
+    
+
+
+
 /**
  * "Copies" a scene into a new scene: Objects and Active state
  * are left behind, though, so it's not much of a copy.
@@ -265,6 +311,26 @@ void Scene::propagate( void ) {
     (*it)->sceneCascade();
     // Begin propagating from the child-down.
     (*it)->propagate();
+  }
+
+}
+
+
+void Scene::printTree( unsigned level ) {
+
+  std::string whitespace;
+  for ( size_t i = 0; i < level; ++i )
+    whitespace += "  ";
+
+  std::list< Object* >::iterator it;
+  for ( it = _list.begin(); it != _list.end(); ++it ) {
+    fprintf( stderr, "%s%s ", whitespace.c_str(), (*it)->name().c_str() );
+    (*it)->_trans.debug();
+    fprintf( stderr, "\n" );
+
+    (*it)->_trans.debugMat();
+
+    (*it)->printTree( level + 1 );
   }
 
 }

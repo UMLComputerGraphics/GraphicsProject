@@ -83,6 +83,15 @@ public:
     OBJECT_CTM, //!< OBJECT_CTM
     MORPH_PCT, //!< MORPH_PCT
     TEX_SAMPLER, //!< TEX_SAMPLER
+    TRACER_VERTICES,                  // sampler buffer of vec3s  (3 per triangle) (12 bytes each)
+    TRACER_NORMALS,                   // sampler buffer of vec3s  (1 per triangle) (12 bytes each)
+    TRACER_CENTERS,                   // sampler buffer of vec3s  (1 per triangle) (12 bytes each)
+    TRACER_RADII,                     // sampler buffer of floats (1 per triangle) (4 bytes each)
+    TRACER_COLORS,                    // sampler buffer of vec3s  (1 per triangle) (12 bytes each)
+    TRACER_MORPHING_POINT_COUNT,      // the first COUNT vertices/colors/normals/radii/centers are one position of morphing points...
+                                      // the next COUNT of them are the morphed positions...
+                                      // all vertices after the first 2*COUNT are non-morphing
+    TRACER_TRANSFORMATIONS,           // need to decide how to serialize and deserialize the scene graph
     END //!< END
   } Uniform;
 
@@ -146,7 +155,7 @@ public:
    * link a specified Uniform against the shader's variable _name.
    *
    * @param which The Uniform to link.
-   * @param name The variable _name on the shader.
+   * @param name The variable name on the shader.
    */
   virtual void link( UniformEnum which, const std::string &name );
 
@@ -359,6 +368,15 @@ private:
   GLuint createAndBind( GLenum target, enum Object::BufferType typeIndex, const char *name,
 			GLint size, GLenum type, GLboolean normalized, GLsizei stride,
 			const GLvoid *ptr );
+
+  //helper for checkForAttribCorruption()
+  bool checkForAttribCorruptionHelper(int typeIndex, const char *name);
+
+  /**
+   Check if any vertex attribute location changed since initilization
+   @return returns true if any problems are found, false otherwise
+  **/
+  bool checkForAttribCorruption(void);
   
 };
 

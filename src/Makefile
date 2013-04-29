@@ -83,6 +83,7 @@ endif
 ifeq ($(UNAME), Darwin)
     prepare = preparemac
     CXXINCS += -I/opt/local/include -I/opt/local/include/ImageMagick 
+    CXXDEFS += -Wno-long-long
    # If apple, we need a funky post-compile build step
     LDLIBS += -framework Carbon -framework OpenGL -framework GLUT -L/opt/local/lib fMod/lib/libfmodex.dylib
    #FMODLINK = install_name_tool -change ./libfmodex.dylib ../fMod/lib/libfmodex.dylib
@@ -101,6 +102,9 @@ else
 	CXXOPTS += -O3
 endif
 
+ifdef DEBUG_MOTION
+	CXXOPTS += -DDEBUG_MOTION
+endif
 
 CXXFLAGS = $(CXXOPTS) $(CXXDEFS) $(CXXINCS)
 LDFLAGS = $(LDOPTS) $(LDDIRS) $(LDLIBS)
@@ -109,9 +113,11 @@ LDFLAGS = $(LDOPTS) $(LDDIRS) $(LDLIBS)
 
 .PHONY: Makefile
 
-
-default all: $(prepare) clean-qt $(TARGETS)
-
+#explicitely force ordering of preliminary steps, rather than letting make try to build targets and prepare stuff simultaneously
+default all:
+	$(MAKE) $(prepare)
+	$(MAKE) clean-qt
+	$(MAKE) $(TARGETS)
 
 .PHONY: preparelinux
 preparelinux:
@@ -163,12 +169,12 @@ clobber: _clean _rmtargets clean-qt
 
 .PHONY: qt
 qt: qMakefile
-	make -f qMakefile
+	$(MAKE) -f qMakefile
 	$(QT_FINALIZE)
 
 .PHONY: clean-qt
 clean-qt: qMakefile
-	make -f qMakefile distclean
+	$(MAKE) -f qMakefile distclean
 	rm -rf debug/ release/
 	rm -f qMakefile
 

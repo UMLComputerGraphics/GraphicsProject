@@ -86,10 +86,10 @@ void init() {
  */
 int main( int argc, char **argv ) {
   
-  Engine::instance()->init( &argc, argv, "Multi-Shader Demo" );
+  Engine::init( &argc, argv, "Multi-Shader Demo" );
   init();
-  
-  glutMainLoop();
+  Engine::run();
+
   return EXIT_SUCCESS;
   
 }

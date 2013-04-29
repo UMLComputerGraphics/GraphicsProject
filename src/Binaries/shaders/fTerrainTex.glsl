@@ -2,12 +2,12 @@
 // FSHADER
 
 // received by the fshader
-varying vec4 color;
-varying vec3 cameraVector;
-varying vec3 fragmentNormal;
-
-varying vec2 outtexture;
+varying vec4 fColor;
+varying vec3 fNormal;
+varying vec2 fTex;
 varying vec4 fPosition;
+//varying vec3 cameraVector;
+
 
 uniform bool fIsTextured;
 
@@ -29,8 +29,8 @@ const float MAX_DIST_SQUARED = MAX_DIST * MAX_DIST;
 vec4 textureGradient( sampler2D a, sampler2D b, float upper, float lower )
 {
     float diff = upper - lower ;
-    return ((texture2D( a, outtexture) * (fPosition.y - lower)) +
-            (texture2D( b, outtexture) * (upper - fPosition.y))) / diff ;
+    return ((texture2D( a, fTex) * (fPosition.y - lower)) +
+            (texture2D( b, fTex) * (upper - fPosition.y))) / diff ;
 }
 
 void setTextureLimits( float mag ){
@@ -55,35 +55,35 @@ void main()
      setTextureLimits( terrainMag );    
 
     if ( fPosition.y > snowLower )
-        fragColor = texture2D( sampler[4], outtexture ); 
+        fragColor = texture2D( sampler[4], fTex ); 
     // Snow->Rock
     else if ((fPosition.y > rockUpper) && (fPosition.y < snowLower) )
 	fragColor = textureGradient( sampler[4], sampler[3], snowLower, rockUpper);
     // Rock
     else if ((fPosition.y > rockLower) && (fPosition.y <= rockUpper)) 
-        fragColor = texture2D( sampler[3], outtexture );
+        fragColor = texture2D( sampler[3], fTex );
     // Rock->Grass
     else if ((fPosition.y > grassUpper) && (fPosition.y < rockLower))
         fragColor = textureGradient( sampler[3], sampler[2], rockLower, grassUpper );
     // Grass
     else if (( fPosition.y > grassLower ) && (fPosition.y <= grassUpper ))
-        fragColor = texture2D( sampler[2], outtexture );  
+        fragColor = texture2D( sampler[2], fTex );  
     // Grass->Sand
     else if ((fPosition.y > sandUpper) && (fPosition.y < grassLower))
         fragColor = textureGradient( sampler[2], sampler[1], grassLower, sandUpper );
     // Sand
     else if ((fPosition.y > sandLower ) && (fPosition.y <= sandUpper ))
-        fragColor = texture2D( sampler[1], outtexture );  
+        fragColor = texture2D( sampler[1], fTex );  
     // Sand->Dirt
     else if ((fPosition.y > dirtUpper) && (fPosition.y < sandLower))
         fragColor = textureGradient( sampler[1], sampler[0], sandLower, dirtUpper );
     // Dirt
     else if ( fPosition.y <= dirtUpper )
-        fragColor = texture2D( sampler[0], outtexture );  
+        fragColor = texture2D( sampler[0], fTex );  
     }
 
     else {
-      fragColor = color ;
+      fragColor = fColor ;
     }
 
 gl_FragColor = fragColor;
