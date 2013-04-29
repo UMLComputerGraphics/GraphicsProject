@@ -8,4 +8,4 @@ cd boost
 sudo port install
 sudo port activate boost @1.49.0_0
 set +e
-set +x0
+set +x
