@@ -10,3 +10,4 @@ src/qMakefile
 *.user
 
 src/Binaries/partTest2
+src/boost2/
