@@ -29,6 +29,9 @@ struct Point1 {
 		normal = norm;
 		color = col;
 	}
+	Point1(){};
+	Point1 operator = (Point1);
+
 };
 
 bool comparePoints(Point1* a, Point1* b);
@@ -38,6 +41,7 @@ struct Triangle {
 	Point1* b;
 	Point1* c;
 	bool covered;
+	bool srcMatched,dstMatched;
 
 	Triangle(Angel::vec4 aVerts,Angel::vec3 aNorms,Angel::vec4 aCols,
 			Angel::vec4 bVerts,Angel::vec3 bNorms,Angel::vec4 bCols,
@@ -51,6 +55,8 @@ struct Triangle {
 		b = items[1];
 		c = items[2];
 		covered = false;
+		srcMatched = false;
+		dstMatched = false;
 	}
 };
 

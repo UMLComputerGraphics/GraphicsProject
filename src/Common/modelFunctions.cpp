@@ -14,6 +14,17 @@
 #include <cfloat>
 #include <vector>
 
+float twoDimensionalDistance( vec4 points1, vec4 points2){
+	return pow( (points1.x - points2.x), 2 ) + pow( (points1.y - points2.y), 2 );
+}
+
+float twoDimensionalDistance( vec4 points1, Angel::vec2 points2){
+	return pow( (points1.x - points2.x), 2 ) + pow( (points1.y - points2.y), 2 );
+}
+float twoDimensionalXZDistance( vec4 points1, Angel::vec2 points2){
+	return pow( (points1.x - points2.x), 2 ) + pow( (points1.y - points2.y), 2 );
+}
+
 float threeDimensionalDistance( vec4 points1, vec4 points2 ) {
   return
       pow( (points1.x - points2.x), 2 ) + pow( (points1.y - points2.y), 2 )

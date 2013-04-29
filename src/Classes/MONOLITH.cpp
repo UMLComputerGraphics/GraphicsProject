@@ -121,6 +121,23 @@ void MONOLITH::run() {
   ObjLoader::loadModelFromFile( bottle, "../models/bottle_wine_high.obj" );
   ObjLoader::loadMaterialFromFile( bottle, "../models/bottle_wine_high.mtl" );
 
+  /*
+  bottle->genMorphTarget();
+  Object *bottleMorphTarget = bottle->morphTarget();
+  ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle_liquor_high.obj" );
+  ObjLoader::loadMaterialFromFile( bottleMorphTarget, "../models/bottle_liquor_high.mtl" );
+
+  //Morphing Items
+  //Scale source and destination height to unit 0-1
+  int heightScale = 10;
+  int widthScale = 1;
+  int depthScale = 1;
+  ScaleModel * scaleModel = new ScaleModel(bottle, bottleMorphTarget,widthScale,heightScale,depthScale);
+  rectangularMapping(bottle,bottleMorphTarget);
+  //Rescale models to original size
+  scaleModel->restoreModels();
+  */
+
   // Scale the bottle down!
   //bottle->_trans._scale.set( 0.30 );
   vec4 min = bottle->getMin();
