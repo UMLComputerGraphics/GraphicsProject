@@ -22,7 +22,7 @@ void init() {
   
   shader[0] = Angel::InitShader( "shaders/vred.glsl", "shaders/fEngine.glsl" );
   shader[1] = Angel::InitShader( "shaders/vblu.glsl", "shaders/fEngine.glsl" );
-  shader[2] = Angel::InitShader( "shaders/vEngine.glsl",
+  shader[2] = Angel::InitShader( "shaders/vEngineNoMorph.glsl",
                                  "shaders/fEngine.glsl" );
   
   camList->active()->changePerspective( Camera::IDENTITY );

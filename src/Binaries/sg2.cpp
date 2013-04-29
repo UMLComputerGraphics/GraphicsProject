@@ -92,7 +92,8 @@ void act_one( void ) {
 int main( int argc, char *argv[] ) {
   
   Engine::init( &argc, argv, "wow!" );
-  act_one();  
+  act_one();
+  glClearColor( 0.1, 0.3, 0.5, 1.0 );
   Engine::instance()->registerIdle( sgIdle );
   Engine::run();
 

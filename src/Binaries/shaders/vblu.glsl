@@ -30,8 +30,10 @@ uniform float morphPercentage;
 
 void main() {
 
+  fPosition = OTM * vPosition;
   gl_Position = P * CTM * OTM * vPosition;
   fColor = vec4( 0, 0, 1, 1 );
   fTex = vec2( 0, 0 );
+  fNormal = vNormal;
 
 }
