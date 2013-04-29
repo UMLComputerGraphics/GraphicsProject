@@ -14,7 +14,6 @@
 #include "Engine.hpp"
 /* Utilities and Common */
 #include "model.hpp"
-#include "modelFunctions.hpp"
 #include "InitShader.hpp"
 #include "glut_callbacks.h"
 #include "ObjLoader.hpp"
@@ -22,6 +21,13 @@
 /* particle system goodness */
 #include "ParticleFieldFunctions.hpp"
 #include "ColorFunctions.hpp"
+
+/*Morphing Items */
+#include "modelFunctions.hpp"
+#include "nearestNeighbor.hpp"
+#include "bipartiteGraph.hpp"
+#include "scanMatching.hpp"
+#include "scaleModel.hpp"
 
 #include <boost/bind.hpp>
 

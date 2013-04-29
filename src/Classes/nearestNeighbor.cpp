@@ -18,7 +18,7 @@ void SquareHorizontalMeshMap::sortTriangles(std::vector< Triangle* >& triangles)
 	std::sort(triangles.begin(),triangles.end(),compareSquareTriangles);
 }
 
-void normalsExperiment(Object* model1, Object* model2){
+void rectangularMapping(Object* model1, Object* model2){
 	std::vector<Angel::vec4> vertsQ1SRC,colrsQ1SRC,vertsQ1DST,colrsQ1DST;
 	std::vector<Angel::vec3> normsQ1SRC,normsQ1DST;
 	std::vector<Angel::vec4> vertsQ2SRC,colrsQ2SRC,vertsQ2DST,colrsQ2DST;
@@ -32,28 +32,28 @@ void normalsExperiment(Object* model1, Object* model2){
 	std::vector<Angel::vec4> vertsBottomSRC,colrsBottomSRC,vertsBottomDST,colrsBottomDST;
 	std::vector<Angel::vec3> normsBottomSRC,normsBottomDST;
 	for(size_t i=0; i< model1->_vertices.size(); i+=3){
-		if((model1->_vertices[i].x > 0.5)&&(model1->_vertices[i].z>0.5)&&(model1->_vertices[i].y > 0.05)&&(model1->_vertices[i].y < 10.0)){
+		if((model1->_vertices[i].x > 0.5)&&(model1->_vertices[i].z>0.5)&&(model1->_vertices[i].y > 0.0)&&(model1->_vertices[i].y < 10.0)){
 			for(int m=0; m<3; m++){
 				//model1->_vertices[i+m].z = 1;
 				vertsQ1SRC.push_back(model1->_vertices[i+m]);
 				normsQ1SRC.push_back(model1->_normals[i+m]);
 				colrsQ1SRC.push_back(model1->_colors[i+m]);
 			}
-		}else if((model1->_vertices[i].x <= 0.5)&&(model1->_vertices[i].z>0.5)&&(model1->_vertices[i].y > 0.05)&&(model1->_vertices[i].y < 10.0)){
+		}else if((model1->_vertices[i].x <= 0.5)&&(model1->_vertices[i].z>0.5)&&(model1->_vertices[i].y > 0.0)&&(model1->_vertices[i].y < 10.0)){
 			for(int m=0; m<3; m++){
 				//model1->_vertices[i+m].z = 1;
 				vertsQ2SRC.push_back(model1->_vertices[i+m]);
 				normsQ2SRC.push_back(model1->_normals[i+m]);
 				colrsQ2SRC.push_back(model1->_colors[i+m]);
 			}
-		}else if((model1->_vertices[i].x > 0.5)&&(model1->_vertices[i].z<=0.5)&&(model1->_vertices[i].y > 0.05)&&(model1->_vertices[i].y < 10.0)){
+		}else if((model1->_vertices[i].x > 0.5)&&(model1->_vertices[i].z<=0.5)&&(model1->_vertices[i].y > 0.0)&&(model1->_vertices[i].y < 10.0)){
 			for(int m=0; m<3; m++){
 				//model1->_vertices[i+m].z = 1;
 				vertsQ3SRC.push_back(model1->_vertices[i+m]);
 				normsQ3SRC.push_back(model1->_normals[i+m]);
 				colrsQ3SRC.push_back(model1->_colors[i+m]);
 			}
-		}else if((model1->_vertices[i].x <= 0.5)&&(model1->_vertices[i].z<=0.5)&&(model1->_vertices[i].y > 0.05)&&(model1->_vertices[i].y < 10.0)){
+		}else if((model1->_vertices[i].x <= 0.5)&&(model1->_vertices[i].z<=0.5)&&(model1->_vertices[i].y > 0.0)&&(model1->_vertices[i].y < 10.0)){
 			for(int m=0; m<3; m++){
 				//model1->_vertices[i+m].z = 1;
 				vertsQ4SRC.push_back(model1->_vertices[i+m]);
@@ -67,7 +67,7 @@ void normalsExperiment(Object* model1, Object* model2){
 				normsTopSRC.push_back(model1->_normals[i+m]);
 				colrsTopSRC.push_back(model1->_colors[i+m]);
 			}
-		}else if(model1->_vertices[i].y <= 0.05){
+		}else if(model1->_vertices[i].y <= 0.0){
 			for(int m=0; m<3; m++){
 				//model1->_vertices[i+m].z = 1;
 				vertsBottomSRC.push_back(model1->_vertices[i+m]);
@@ -77,28 +77,28 @@ void normalsExperiment(Object* model1, Object* model2){
 		}
 	}
 	for(size_t i=0; i< model2->_vertices.size(); i+=3){
-		if((model2->_vertices[i].x > 0.5)&&(model2->_vertices[i].z >0.5)&&(model2->_vertices[i].y > 0.05)&&(model2->_vertices[i].y < 10.0)){
+		if((model2->_vertices[i].x > 0.5)&&(model2->_vertices[i].z >0.5)&&(model2->_vertices[i].y > 0.0)&&(model2->_vertices[i].y < 10.0)){
 			for(int m=0; m<3; m++){
 				//model2->_vertices[i+m].z = 1;
 				vertsQ1DST.push_back(model2->_vertices[i+m]);
 				normsQ1DST.push_back(model2->_normals[i+m]);
 				colrsQ1DST.push_back(model2->_colors[i+m]);
 			}
-		}else if((model2->_vertices[i].x <= 0.5)&&(model2->_vertices[i].z >0.5)&&(model2->_vertices[i].y > 0.05)&&(model2->_vertices[i].y < 10.0)){
+		}else if((model2->_vertices[i].x <= 0.5)&&(model2->_vertices[i].z >0.5)&&(model2->_vertices[i].y > 0.0)&&(model2->_vertices[i].y < 10.0)){
 			for(int m=0; m<3; m++){
 				//model2->_vertices[i+m].z = 1;
 				vertsQ2DST.push_back(model2->_vertices[i+m]);
 				normsQ2DST.push_back(model2->_normals[i+m]);
 				colrsQ2DST.push_back(model2->_colors[i+m]);
 			}
-		}else if((model2->_vertices[i].x > 0.5)&&(model2->_vertices[i].z <=0.5)&&(model2->_vertices[i].y > 0.05)&&(model2->_vertices[i].y < 10.0)){
+		}else if((model2->_vertices[i].x > 0.5)&&(model2->_vertices[i].z <=0.5)&&(model2->_vertices[i].y > 0.0)&&(model2->_vertices[i].y < 10.0)){
 			for(int m=0; m<3; m++){
 				//model2->_vertices[i+m].z = 1;
 				vertsQ3DST.push_back(model2->_vertices[i+m]);
 				normsQ3DST.push_back(model2->_normals[i+m]);
 				colrsQ3DST.push_back(model2->_colors[i+m]);
 			}
-		}else if((model2->_vertices[i].x <= 0.5)&&(model2->_vertices[i].z <=0.5)&&(model2->_vertices[i].y > 0.05)&&(model2->_vertices[i].y < 10.0)){
+		}else if((model2->_vertices[i].x <= 0.5)&&(model2->_vertices[i].z <=0.5)&&(model2->_vertices[i].y > 0.0)&&(model2->_vertices[i].y < 10.0)){
 			for(int m=0; m<3; m++){
 				//model2->_vertices[i+m].z = 1;
 				vertsQ4DST.push_back(model2->_vertices[i+m]);
@@ -112,7 +112,7 @@ void normalsExperiment(Object* model1, Object* model2){
 				normsTopDST.push_back(model2->_normals[i+m]);
 				colrsTopDST.push_back(model2->_colors[i+m]);
 			}
-		}else if(model2->_vertices[i].y <= 0.05){
+		}else if(model2->_vertices[i].y <= 0.0){
 			for(int m=0; m<3; m++){
 				//model2->_vertices[i+m].z = 1;
 				vertsBottomDST.push_back(model2->_vertices[i+m]);
@@ -177,8 +177,8 @@ void normalsExperiment(Object* model1, Object* model2){
 	lowBoundDst = getMin(vertsTopDST);
 	maxBoundDst = getMax(vertsTopDST);
 	//create mesh to match to both models
-	meshHeight = 50;
-	meshWidth = 50;
+	meshHeight = 25;
+	meshWidth = 25;
 	//need modified square mest for x/z plane, instead of x/y one currently
 	SquareHorizontalMeshMap *squareMapTop = new SquareHorizontalMeshMap(vertsTopSRC,normsTopSRC,colrsTopSRC,vertsTopDST,normsTopDST,colrsTopDST,lowBoundSrc,maxBoundSrc,lowBoundDst,maxBoundDst,meshWidth,meshHeight);
 
@@ -187,8 +187,8 @@ void normalsExperiment(Object* model1, Object* model2){
 	lowBoundDst = getMin(vertsBottomDST);
 	maxBoundDst = getMax(vertsBottomDST);
 	//create mesh to match to both models
-	meshHeight = 50;
-	meshWidth = 50;
+	meshHeight = 25;
+	meshWidth = 25;
 	//need modified square mest for x/z plane, instead of x/y one currently
 	SquareHorizontalMeshMap *squareMapBottom = new SquareHorizontalMeshMap(vertsBottomSRC,normsBottomSRC,colrsBottomSRC,vertsBottomDST,normsBottomDST,colrsBottomDST,lowBoundSrc,maxBoundSrc,lowBoundDst,maxBoundDst,meshWidth,meshHeight);
 

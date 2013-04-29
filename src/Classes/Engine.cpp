@@ -229,7 +229,7 @@ void Engine::init( int *argc, char *argv[], const char *title ) {
 
   // Set it up so that once the glut_mainloop exits,
   // It returns control to the application so we can cleanup ourselves.
-  glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION );
+  //glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION );
 
 }
 

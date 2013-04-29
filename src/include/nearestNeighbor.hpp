@@ -248,7 +248,7 @@ struct SquareVerticalMeshMap {
 };
 
 void nearestNeighbor(Object* model1, Object* model2);
-void normalsExperiment(Object* model1, Object* model2);
+void rectangularMapping(Object* model1, Object* model2);
 bool compareSquareTriangles(Triangle* a, Triangle* b);
 Angel::vec3 getMin(std::vector<Angel::vec4> points);
 Angel::vec3 getMax(std::vector< Angel::vec4> points);
