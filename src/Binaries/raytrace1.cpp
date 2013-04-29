@@ -17,6 +17,7 @@
 #include "InitShader.hpp"
 #include "Timer.hpp"
 #include "Util.hpp"
+
 #include "ObjLoader.hpp"
 
 /** Global shader object **/
@@ -389,13 +390,13 @@ void setMinMax(vec3 *min, vec3 *max, vec3 v) {
   }
 }
 
-void addTriangle(const vec3& a, const vec3& b, const vec3& c, const vec3& diffuse, const vec3& ambient, const vec3& specular, float shininess, float reflect, float refract) {
+void addTriangle( const vec3& a, const vec3& b, const vec3& c, 
+		  const vec3& diffuse, const vec3& ambient, const vec3& specular, 
+		  float shininess, float reflect, float refract) {
 
   triangle_t newTriangle;
 
   vec3 normal = normalize(cross(b - a, c - b));
-  addVec3ToVector(&bufferData, normal);
-
   float centerX, centerY, centerZ, x, y, z;
 
   centerX = (a.x + b.x + c.x) / 3;
@@ -435,9 +436,11 @@ void addTriangle(const vec3& a, const vec3& b, const vec3& c, const vec3& diffus
   newTriangle.reflect = reflect;
   newTriangle.refract = refract;
 
+  newTriangle.normal = normal;
+
   newTriangle.centerx = centerX;
   newTriangle.centery = centerY;
-  newTriangle.centerx = centerZ;
+  newTriangle.centerz = centerZ;
   newTriangle.distance = distance;
   newTriangle.distanceSquared = (distance * distance);
   newTriangle.sentinel = 0.0;
