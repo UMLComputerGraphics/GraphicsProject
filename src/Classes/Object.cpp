@@ -682,6 +682,18 @@ void Object::morphPercentage( const float newPercentage ) {
   _morphPercentage = newPercentage;
 }
 
+bool Object::morphEnabled(void) const {
+    return _morphEnabled;
+}
+
+/**
+ * Set the morph Enabled of this Object.
+ * @param newEnabled The new morphing Enabled.
+ */
+void Object::morphEnabled( const bool enabled ) {
+  _morphEnabled = enabled;
+}
+
 /**
  * Obliterate the morph target for this object.
  */

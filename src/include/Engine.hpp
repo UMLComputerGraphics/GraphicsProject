@@ -33,7 +33,7 @@
 #include <string>
 #include <map>
 
-#include<boost/function.hpp>
+#include <boost/function.hpp>
 
 typedef boost::function< void( bool ) > raytracerCallback;
 

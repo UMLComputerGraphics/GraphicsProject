@@ -35,7 +35,11 @@ signals:
 	/* Scene Graph */
 	
 	
-	/* Particles */
+    /* Morph stuff */
+    void sigMorphPercentage(int value);
+    void sigMorphPercentageOut(int value);
+
+    /* Particles */
 	void sigChangeNumberOfParticles(int value);
 	void sigFreezeParticles(bool isEnabled);
     void sigFlameEquation(QString equation);
