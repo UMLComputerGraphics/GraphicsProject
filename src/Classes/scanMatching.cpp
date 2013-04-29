@@ -26,6 +26,15 @@ bool comparePoints(Point1 * a, Point1 * b){
 	}
 }
 
+Point1 Point1::operator= (Point1 param) {
+  Point1 temp;
+  temp.vertex = param.vertex;
+  temp.normal = param.normal;
+  temp.color = param.color;
+  return (temp);
+}
+
+
 void ScanMatch::scanMatch(){
 	sortTriangles(srcTriangles);
 	sortTriangles(destTriangles);
@@ -83,7 +92,7 @@ void ScanMatch::scanQuarters(){
 }
 
 void ScanMatch::scanQuarterFromTop(std::vector<Triangle*> source, std::vector<Triangle*> destination){
-	float lastMatchEnd = float(heightScale);
+	float lastMatchEnd = float(heightScale)+.01;
 	std::vector< Triangle* > srcPartTriangles;
 	std::vector< Triangle* > destPartTriangles;
 	std::vector< Triangle* > srcFinalTriangles;
@@ -134,7 +143,7 @@ void ScanMatch::scanQuarterFromTop(std::vector<Triangle*> source, std::vector<Tr
 		}
 	}
 
-
+	matchInitial(srcPartTriangles,destPartTriangles);
 	makeSameSize(srcPartTriangles,destPartTriangles);
 	addToTriangles(srcFinalTriangles,srcPartTriangles);
 	addToTriangles(destFinalTriangles,destPartTriangles);
@@ -187,7 +196,7 @@ void ScanMatch::matchInitial(std::vector<Triangle*>& model1, std::vector<Triangl
 
 void ScanMatch::scanFromTop(){
 	//std::cout << "SrcY " << srcTriangles[0]->a->vertex.y << " DestY " << destTriangles[0]->a->vertex.y << std::endl;
-	float lastMatchEnd = float(heightScale);
+	float lastMatchEnd = float(heightScale)+.01;
 	std::vector< Triangle* > srcPartTriangles;
 	std::vector< Triangle* > destPartTriangles;
 	std::vector< Triangle* > srcFinalTriangles;
@@ -212,6 +221,7 @@ void ScanMatch::scanFromTop(){
 		if((abs(srcPartTriangles.size()-destPartTriangles.size()) > differenceTolerance)&&((srcPartTriangles.size() != 0)&&(destPartTriangles.size() != 0))){
 			//std::cout << "Difference Threshold Achieved " << i << ": " << srcPartTriangles.size() << " " << destPartTriangles.size() << std::endl;
 			//Make vertices in this range match (bipartite maybe with birthing)
+			matchInitial(srcPartTriangles,destPartTriangles);
 			makeSameSize(srcPartTriangles,destPartTriangles);
 			//std::cout << "Difference Threshold Achieved " << i << ": " << srcPartTriangles.size() << " " << destPartTriangles.size() << std::endl << std::endl;
 			addToTriangles(srcFinalTriangles,srcPartTriangles);
@@ -237,7 +247,7 @@ void ScanMatch::scanFromTop(){
 		}
 	}
 
-
+	matchInitial(srcPartTriangles,destPartTriangles);
 	makeSameSize(srcPartTriangles,destPartTriangles);
 	addToTriangles(srcFinalTriangles,srcPartTriangles);
 	addToTriangles(destFinalTriangles,destPartTriangles);
@@ -287,9 +297,10 @@ int ScanMatch::findTriangleWithMinimumDistance(std::vector< Triangle* > larger, 
 		if(distance < minDistance){
 			minDistance = distance;
 			minIndex = i;
+			//std::cout << minIndex << " " << minDistance << std::endl;
 		}
 	}
-	//std::cout << minIndex << std::endl;
+	//std::cout << minIndex << " " << minDistance << std::endl;
 	return minIndex;
 }
 
@@ -298,11 +309,62 @@ void ScanMatch::makeSameSize(std::vector<Triangle*>& model1, std::vector<Triangl
 			while(model2.size() < (model1.size())){
 				int index = findTriangleWithMinimumDistance(model1,model2,model2.size());
 				model2.push_back(model2[index]);
+				//find which edge is the match and birth from that edge
+				index = model2.size()-1;
+
+				float distanceEdge1 = threeDimensionalDistance(model1[index]->a->vertex,model2[index]->a->vertex)+threeDimensionalDistance(model1[index]->b->vertex,model2[index]->b->vertex)+threeDimensionalDistance(model1[index]->c->vertex,vec4(model2[index]->a->vertex.x/model2[index]->b->vertex.x,model2[index]->a->vertex.y/model2[index]->b->vertex.y,model2[index]->a->vertex.w/model2[index]->b->vertex.w));
+				float distanceEdge2 = threeDimensionalDistance(model1[index]->b->vertex,model2[index]->b->vertex)+threeDimensionalDistance(model1[index]->c->vertex,model2[index]->c->vertex)+threeDimensionalDistance(model1[index]->c->vertex,vec4(model2[index]->b->vertex.x/model2[index]->c->vertex.x,model2[index]->b->vertex.y/model2[index]->c->vertex.y,model2[index]->b->vertex.w/model2[index]->c->vertex.w));
+				float distanceEdge3 = threeDimensionalDistance(model1[index]->a->vertex,model2[index]->a->vertex)+threeDimensionalDistance(model1[index]->c->vertex,model2[index]->c->vertex)+threeDimensionalDistance(model1[index]->c->vertex,vec4(model2[index]->a->vertex.x/model2[index]->c->vertex.x,model2[index]->a->vertex.y/model2[index]->c->vertex.y,model2[index]->a->vertex.w/model2[index]->c->vertex.w));
+				if(distanceEdge1 < distanceEdge2){
+					if(distanceEdge1 < distanceEdge3){
+						//edge1 match
+						//Point1* temp = triangle->b;
+						model2[index]->c = new Point1(model2[index]->b->vertex,model2[index]->b->normal,model2[index]->b->color);//new Point1(Angel::vec4(model2[index]->a->vertex.x/model2[index]->b->vertex.x,model2[index]->a->vertex.y/model2[index]->b->vertex.y,model2[index]->a->vertex.w/model2[index]->b->vertex.w),Angel::vec3(model2[index]->a->normal.x/model2[index]->b->normal.x,model2[index]->a->normal.y/model2[index]->b->normal.y,model2[index]->a->normal.z/model2[index]->b->normal.z),Angel::vec4(model2[index]->a->color.x/model2[index]->b->color.x,model2[index]->a->color.y/model2[index]->b->color.y,model2[index]->a->color.w/model2[index]->b->color.w));
+						//model2[index]->c = temp;
+					}else{
+						//edge3 match
+						model2[index]->b = new Point1(model2[index]->a->vertex,model2[index]->a->normal,model2[index]->a->color);
+					}
+				}else{
+					if(distanceEdge3 < distanceEdge2){
+						//edge3 match
+						model2[index]->b = new Point1(model2[index]->a->vertex,model2[index]->a->normal,model2[index]->a->color);
+					}else{
+						//edge2 match
+						model2[index]->a = new Point1(model2[index]->c->vertex,model2[index]->c->normal,model2[index]->c->color);
+					}
+				}
 			}
 		}else if((model1.size()<model2.size())&&(model1.size() > 0)){
 			while(model1.size() < model2.size()){
 				int index = findTriangleWithMinimumDistance(model2,model1,model1.size());
 				model1.push_back(model1[index]);
+				//find which edge is the match and birth from that edge
+
+				index = model1.size()-1;
+
+				float distanceEdge1 = threeDimensionalDistance(model2[index]->a->vertex,model1[index]->a->vertex)+threeDimensionalDistance(model2[index]->b->vertex,model1[index]->b->vertex)+threeDimensionalDistance(model2[index]->c->vertex,vec4(model1[index]->a->vertex.x/model1[index]->b->vertex.x,model1[index]->a->vertex.y/model1[index]->b->vertex.y,model1[index]->a->vertex.w/model1[index]->b->vertex.w));
+				float distanceEdge2 = threeDimensionalDistance(model2[index]->b->vertex,model1[index]->b->vertex)+threeDimensionalDistance(model2[index]->c->vertex,model1[index]->c->vertex)+threeDimensionalDistance(model2[index]->c->vertex,vec4(model1[index]->b->vertex.x/model1[index]->c->vertex.x,model1[index]->b->vertex.y/model1[index]->c->vertex.y,model1[index]->b->vertex.w/model1[index]->c->vertex.w));
+				float distanceEdge3 = threeDimensionalDistance(model2[index]->a->vertex,model1[index]->a->vertex)+threeDimensionalDistance(model2[index]->c->vertex,model1[index]->c->vertex)+threeDimensionalDistance(model2[index]->c->vertex,vec4(model1[index]->a->vertex.x/model1[index]->c->vertex.x,model1[index]->a->vertex.y/model1[index]->c->vertex.y,model1[index]->a->vertex.w/model1[index]->c->vertex.w));
+				if(distanceEdge1 < distanceEdge2){
+					if(distanceEdge1 < distanceEdge3){
+						//edge1 match
+						//Point1* temp = triangle->b;
+						model1[index]->c = new Point1(model1[index]->b->vertex,model1[index]->b->normal,model1[index]->b->color);//new Point1(Angel::vec4(model2[index]->a->vertex.x/model2[index]->b->vertex.x,model2[index]->a->vertex.y/model2[index]->b->vertex.y,model2[index]->a->vertex.w/model2[index]->b->vertex.w),Angel::vec3(model2[index]->a->normal.x/model2[index]->b->normal.x,model2[index]->a->normal.y/model2[index]->b->normal.y,model2[index]->a->normal.z/model2[index]->b->normal.z),Angel::vec4(model2[index]->a->color.x/model2[index]->b->color.x,model2[index]->a->color.y/model2[index]->b->color.y,model2[index]->a->color.w/model2[index]->b->color.w));
+						//model2[index]->c = temp;
+					}else{
+						//edge3 match
+						model1[index]->b = new Point1(model1[index]->a->vertex,model1[index]->a->normal,model1[index]->a->color);
+					}
+				}else{
+					if(distanceEdge3 < distanceEdge2){
+						//edge3 match
+						model1[index]->b = new Point1(model1[index]->a->vertex,model1[index]->a->normal,model1[index]->a->color);
+					}else{
+						//edge2 match
+						model1[index]->a = new Point1(model1[index]->c->vertex,model1[index]->c->normal,model1[index]->c->color);
+					}
+				}
 			}
 		}else{
 		  gprint( PRINT_DEBUG, "Models already the same size\n" );
@@ -350,10 +412,6 @@ void ScanMatch::copyBackToObjects(Object* object,std::vector< Triangle* > triang
 bool compareTriangles(Triangle* a, Triangle* b){
 	//if(comparePoints(a->a,b->a)){
 	if(a->a->vertex.y > b->a->vertex.y){
-		return true;
-	}else if(a->b->vertex.y > b->b->vertex.y){
-		return true;
-	}else if(a->c->vertex.y > b->c->vertex.y){
 		return true;
 	}
 	else{

@@ -19,10 +19,11 @@
 /* Utilities and Common */
 #include "modelFunctions.hpp"
 //#include "cylinderMesh.hpp"
-#include "meshMapping.hpp"
+#include "nearestNeighbor.hpp"
 #include "bipartiteGraph.hpp"
 #include "scanMatching.hpp"
 #include "scaleModel.hpp"
+#include "sHull.hpp"
 
 // Initialization: load and compile shaders, initialize camera(s), load models.
 void init() {
@@ -32,11 +33,11 @@ void init() {
   
   Object *bottle = rootScene->addObject( "bottle" );
   
-  ObjLoader::loadModelFromFile( bottle, "../models/bottle_liquor_high.obj" );
+  ObjLoader::loadModelFromFile( bottle, "../models/bottle_wine_high.obj" );
   
   bottle->genMorphTarget();
   Object *bottleMorphTarget = bottle->morphTarget();
-  ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle_wine_high.obj" );
+  ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle_liquor_high.obj" );
   
   gprint( PRINT_DEBUG, "Number Vertices Model1: %lu\n",
           bottle->numberOfPoints() );
@@ -56,35 +57,33 @@ void init() {
   Angel::vec3 lowBoundDst = bottleMorphTarget->getMin();
   Angel::vec3 maxBoundDst = bottleMorphTarget->getMax();
   
-  std::cout << "Model1 Bounds: " << lowBoundSrc << " " << maxBoundSrc << std::endl;
-  std::cout << "Model2 Bounds: " << lowBoundDst << " " << maxBoundDst << std::endl;
+  //std::cout << "Model1 Bounds: " << lowBoundSrc << " " << maxBoundSrc << std::endl;
+  //std::cout << "Model2 Bounds: " << lowBoundDst << " " << maxBoundDst << std::endl;
   
   //Scale source and destination height to unit 0-1
   int heightScale = 10;
   int widthScale = 1;
   int depthScale = 1;
-  ScaleModel * scaleModel = new ScaleModel(bottle, bottleMorphTarget,widthScale,heightScale,depthScale);
   
+
   //std::vector< Angel::vec4 > newPoints = createCylinder(5.0,5.0);
   //bottle->_vertices = newPoints;
   //bottleMorphTarget->_vertices = newPoints;
 
-  //matchInitialPoints(bottle, bottleMorphTarget);
-  //makeModelsSameSize(bottle, bottleMorphTarget);
+  std::cout << "Bottle Src Triangles: " << bottle->numberOfPoints()/3 << std::endl;
+  std::cout << "Bottle Dest Triangles: " << bottleMorphTarget->numberOfPoints()/3 << std::endl;
+
+  //nearestNeighbor(bottle,bottleMorphTarget);
+
+  ScaleModel * scaleModel = new ScaleModel(bottle, bottleMorphTarget,widthScale,heightScale,depthScale);
+  normalsExperiment(bottle,bottleMorphTarget);
+  //makeHull(bottle->_vertices);
   ScanMatch * scanMatch = new ScanMatch(bottle,bottleMorphTarget,heightScale,widthScale,depthScale);
 
-  scanMatch->scanQuarters();
-  //scanMatch->scanMatch();
-  scanMatch->copyToBuffers();
-  /*
-  lowBoundSrc = bottle->getMin();
-  maxBoundSrc = bottle->getMax();
-  lowBoundDst = bottleMorphTarget->getMin();
-  maxBoundDst = bottleMorphTarget->getMax();
-  
-  std::cout << "Model1 Bounds: " << lowBoundSrc << " " << maxBoundSrc << std::endl;
-  std::cout << "Model2 Bounds: " << lowBoundDst << " " << maxBoundDst << std::endl;
-   */
+ //scanMatch->scanQuarters();
+ // scanMatch->scanMatch();
+ //scanMatch->copyToBuffers();
+
 	
 	//create Bipartite Graph
 
@@ -97,12 +96,9 @@ void init() {
           bottle->numberOfPoints() );
   gprint( PRINT_DEBUG, "Number Vertices Model2: %lu\n\n",
           bottleMorphTarget->numberOfPoints() );
-  //std::cout <<
+  std::cout << "Bottle Src Triangles: " << bottle->numberOfPoints()/3 << std::endl;
+  std::cout << "Bottle Dest Triangles: " << bottleMorphTarget->numberOfPoints()/3 << std::endl;
   //makeModelsSameSize(bottle, bottleMorphTarget);
-  
-  //populateSrcSquare(squareMap,bottle->_vertices);
-  //populateDestSquare(squareMap,bottleMorphTarget->_vertices);
-  //expandSquareMap(squareMap);
 
   //Rescale models to original size
   scaleModel->restoreModels();

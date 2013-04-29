@@ -33,6 +33,10 @@ int findTriangleWithMinimumDistance( Object* largerModel, Object* smallerModel,
 void divideTriangle(Object* model, int index);
 void makeModelTopSameSize(std::vector< Angel::vec4 >& model1Vertices,std::vector< Angel::vec3 >& model1Normals,std::vector< Angel::vec4 >& model1Colors,std::vector< Angel::vec2 >& model1Textures, std::vector< Angel::vec4 >& model2Vertices,std::vector< Angel::vec3 >& model2Normals,std::vector< Angel::vec4 >& model2Colors,std::vector< Angel::vec2 >& model2Textures);
 float threeDimensionalDistance( vec4 points1, vec4 points2 );
+float twoDimensionalDistance( vec4 points1, vec4 points2);
+float twoDimensionalDistance( vec4 points1, Angel::vec2 points2);
+float twoDimensionalXZDistance( vec4 points1, vec4 points2);
+float twoDimensionalXZDistance( vec4 points1, Angel::vec2 points2);
 float threeDimensionalDistanceWithOrigin( vec4 points1, vec4 points2);
 void matchInitialPoints(Object* model1, Object* model2);
 void matchPoints(std::vector< Angel::vec4 >& model1Vertices,std::vector< Angel::vec3 >& model1Normals,std::vector< Angel::vec4 >& model1Colors,std::vector< Angel::vec2 >& model1Textures, std::vector< Angel::vec4 >& model2Vertices,std::vector< Angel::vec3 >& model2Normals,std::vector< Angel::vec4 >& model2Colors,std::vector< Angel::vec2 >& model2Textures);
