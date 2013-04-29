@@ -205,8 +205,8 @@ void MONOLITH::run() {
 
   
   max = candle_top->getMax();
-  ps = new ParticleSystem( 100, "ps1", particleShader );
-  ps->setLifespan( 5.0, 8.0 );
+  ps = new ParticleSystem( 1000, "ps1", particleShader );
+  ps->setLifespan( 7.0, 12.0 );
   ps->setVectorField( ParticleFieldFunctions::flame);
   ps->setColorFunc(   ColorFunctions::flame );
   ps->setEmitterRadius( 0.02 );
