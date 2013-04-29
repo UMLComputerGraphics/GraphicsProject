@@ -166,6 +166,9 @@ public:
 
   float glslVersion( void );
 
+  void registerDisplayFunc(boost::function<void(void)> displayFunc);
+  void unregisterDisplayFunc();
+
 private:
   
   void glslVersion( float in );
@@ -190,6 +193,8 @@ private:
    * the signature expected by glut.
    */
   static void displayViewport( void );
+
+  static void display(void);
 
   /**
    * This private data member is a callback
@@ -277,6 +282,8 @@ private:
    * Function called early in display() function to let binary swap shaders
    */
   raytracerCallback _traceFunc;
+
+  boost::function<void(void)> _displayFunc;
 
   void noop( bool enabled );
 

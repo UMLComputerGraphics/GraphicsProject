@@ -260,15 +260,27 @@ void MONOLITH::candleTopMeltDown(TransCache &obj) {
  */
 void MONOLITH::raytraceStatusChanged(bool newstatus)
 {
+  if (Engine::instance()->glslVersion() < 1.50)
+  {
+    gprint(PRINT_ERROR, "Your hardware is tired, brah.\n");
+    return;
+  }
+  static RayTracer rt;
   if (newstatus)
   {
+    //TODO handle particles
+    //TODO handle scene graph
     printf("SWITCHING TO RAY TRACING SHADER!\n");
-    rootScene->replaceShader(shader[0], shader[3]);
+    Engine::instance()->registerDisplayFunc(rt.display);
+    rt.init(shader[3]);
+    std::vector<Object *> objs;
+    //ITERATE OVER ALL OBJS IN SCENE!
+    rt.genereateScene(objs);
   }
   else
   {
     printf("SWITCHING TO NORMAL SHADER!\n");
-    rootScene->replaceShader(shader[0], shader[0]);
+    Engine::instance()->unregisterDisplayFunc();
   }
   printf("TODO: SWITCH VERTICES AND PUSH STUFF TO GPU APPROPRIATELY!\n");
 }

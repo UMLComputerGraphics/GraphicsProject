@@ -195,7 +195,8 @@ void Engine::init( int *argc, char *argv[], const char *title ) {
   GLEW_INIT();
 
   /* Register our Callbacks */
-  glutDisplayFunc( Engine::displayScreen );
+  instance()->unregisterDisplayFunc();
+  glutDisplayFunc(Engine::display);
   glutKeyboardFunc( engineKeyboard );
   glutKeyboardUpFunc( engineKeylift );
   glutSpecialFunc( engineSpecialKeyboard );
@@ -257,6 +258,19 @@ void Engine::registerTraceFunc( raytracerCallback traceFunc ) {
   _traceFunc = traceFunc;
 }
 
+void Engine::registerDisplayFunc( boost::function<void(void)> displayFunc ) {
+  _displayFunc = displayFunc;
+}
+
+void Engine::unregisterDisplayFunc()
+{
+  _displayFunc = displayScreen;
+}
+
+void Engine::display()
+{
+  instance()->_displayFunc();
+}
 
 /**
  * What should the engine be doing every idle()?

@@ -31,6 +31,8 @@
 
 #include <boost/bind.hpp>
 
+#include "RayTracer.h"
+
 #ifndef WITHOUT_QT
 /* Qt */
 #include <QObject>
