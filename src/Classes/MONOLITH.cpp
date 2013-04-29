@@ -127,14 +127,16 @@ void MONOLITH::run() {
 				       "letMeSeeThatPhong" );
   glUniform1f( sisqo, true );
   
-  // Let the bodies hit the floor
+  // Let the bodies hit the table
   Object *table;
   table = rootScene->addObject( "table", noMorphShader );
   ObjLoader::loadModelFromFile(table, "../models/table.obj");
   ObjLoader::loadMaterialFromFile(table, "../models/table.mtl");
-  table->buffer();
   table->texture("../Textures/texture_wood.png");
-  
+  table->buffer();
+
+  fprintf(stderr, "table! (%f, %f, %f)\n", table->getMax().x, table->getMax().y, table->getMax().z);
+
   // Load up that goddamned candle
   Object *stick;
   Object *candle_top;
