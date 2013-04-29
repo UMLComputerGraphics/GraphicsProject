@@ -125,8 +125,7 @@ preparelinux:
 
 .PHONY: preparemac
 preparemac:
-# todo Move mac setup here?
-	@true
+	Util/fixboost.sh
 
 $(TARGETS): $(OBJS)
 
