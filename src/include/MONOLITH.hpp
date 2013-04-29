@@ -97,10 +97,13 @@ public slots:
 
     void slotParticleAdd(int value);
     void slotFreezeParticles(bool isEnabled);
+    void slotMorphPercentage(int value);
+    void slotEnableMorphing(bool isEnabled);
 
 signals:
+    void sigMorphPercentage(int value);
 #endif
-    
+
 private:
     
     /**
@@ -112,7 +115,6 @@ private:
     static void simpleRotateAnim( TransCache &obj );
     static void candleMeltAnim( TransCache &obj );
     static void candleTopMeltDown( TransCache &obj );
-    
     GLuint shader[4];
     
     Scene *rootScene;
@@ -120,7 +122,7 @@ private:
     Object *bottle;
     
     ParticleSystem *ps;
- 
+    bool _morphIsEnabled;
     char **_argv;
     int _argc;
     

@@ -248,6 +248,15 @@ public:
    */
   void morphPercentage( const float newPercentage );
 
+
+  bool morphEnabled() const;
+
+  /**
+   * Set the morph enabled of this Object.
+   * @param enabled The new morphing enabled
+   */
+  void morphEnabled( const bool enabled );
+
   /**
    * Obliterate the morph target for this object.
    */
@@ -331,6 +340,9 @@ protected:
    * 100.0 means 100% the new, targeted object.
    */
   float _morphPercentage;
+
+
+  bool _morphEnabled;
 
   /**
    * A pointer to the object we wish to morph into.

@@ -29,7 +29,7 @@ SOURCES += \
         Classes/Engine.cpp \
         # KinectInator.cpp \
         Classes/mat.cpp \
-        Classes/meshMapping.cpp \
+        # not needed anymore Classes/meshMapping.cpp \
         Classes/Object.cpp \
         Classes/Particle.cpp \
 	   Classes/ParticleFieldFunctions.cpp \
@@ -55,7 +55,10 @@ SOURCES += \
         Common/Util.cpp \
         #Qt
         Qt/mainwindow.cpp \
-        Binaries/FinalProject.cpp
+        Binaries/FinalProject.cpp \
+	Classes/nearestNeighbor.cpp \
+	Classes/RayTracer.cpp \
+	Classes/scanMatching.cpp \
 
 HEADERS  += include/bipartiteGraph.hpp \
 		   include/Camera.hpp \
@@ -67,18 +70,22 @@ HEADERS  += include/bipartiteGraph.hpp \
             include/InitShader.hpp \
             #include/KinectInator.hpp\
             include/mat.hpp \
-            include/meshMapping.hpp \
+            # not needed anymore include/meshMapping.hpp \
             include/modelFunctions.hpp \
             include/model.hpp \
             include/Object.hpp \
             include/ObjLoader.hpp \
             include/OpenGL.h \ 
             include/Particle.hpp \
+	    include/nearestNeighbor.hpp \
+	    include/RaytraceBuffer.hpp \
+	    include/RayTracer.h \
+	    include/scaleModel.hpp \
+	    include/scanMatching.hpp \
 		   include/ParticleFieldFunctions.hpp \
             include/ParticleSystem.hpp \
             include/partTest.hpp \
             include/platform.h \ 
-            include/scaleModel.hpp \
             include/Scene.hpp \ 
             include/Screen.hpp \ 
             include/SpelchkCamera.hpp \
@@ -106,9 +113,9 @@ INCLUDEPATH +=. /usr/include/ImageMagick/ include/
 
 # Mac OSX Settings
 macx {
-LIBS += -framework Carbon -framework OpenGL -framework GLUT
-INCLUDEPATH += . include /opt/local/include/ImageMagick/
-LIBS += -L/opt/local/lib -lMagick++
+LIBS += -framework Carbon -framework OpenGL -framework GLUT 
+INCLUDEPATH += . include /opt/local/include/ImageMagick/ /opt/local/include/
+LIBS += -L/opt/local/lib -lMagick++ -lboost_thread-mt
 }
 
 FORMS    += \
