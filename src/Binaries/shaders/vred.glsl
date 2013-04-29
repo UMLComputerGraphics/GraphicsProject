@@ -22,8 +22,10 @@ uniform bool fIsTextured;
 
 void main() {
 
+  fPosition = OTM * vPosition;
   gl_Position = P * CTM * OTM * vPosition;
   fColor = vec4( 1, 0, 0, 1 );
   fTex = vec2( 0, 0 );
+  fNormal = vNormal;
 
 }
