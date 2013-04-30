@@ -126,6 +126,7 @@ preparelinux:
 .PHONY: preparemac
 preparemac:
 	Util/fixboost.sh
+	Util/fMod/macfix.sh
 
 $(TARGETS): $(OBJS)
 
