@@ -405,6 +405,18 @@ public:
   void resetPosition( void );
 
   void debug( void );
+  
+  void setSpeed(float num);
+  
+  void setMaxAcceleration(float num);
+	 
+  void setFriction(float num);
+	 
+  float getSpeed();
+	 
+  float getMaxAcceleration();
+	 
+  float getFriction();
 
 private:
   
