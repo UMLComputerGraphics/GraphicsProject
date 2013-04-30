@@ -26,6 +26,7 @@ public:
 	void setDiffuse(vec3 diffuse);
 	void setShininess(float shininess);
 	void setTransparency(float transparency);
+	void setRefract(float ior);
 	
 	const vec3 getAmbient() const;
 	const vec3 getDiffuse() const;
@@ -33,6 +34,7 @@ public:
 
 	const float getShininess() const;
 	const float getTransparency() const;
+	const float getRefract() const;
 
 	/**
 	 * This function initializes the uniforms for the material in the shader. 
@@ -55,6 +57,7 @@ private:
 	
 	float shininess;
 	float transparency;
+	float ior;
 
 };
 

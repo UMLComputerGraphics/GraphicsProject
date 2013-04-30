@@ -245,6 +245,8 @@ Object::~Object( void ) {
 
   for ( it = _textures.begin(); it != _textures.end(); ++it )
     delete (*it);
+
+  delete material;
 }
 
 /**
@@ -720,13 +722,22 @@ size_t Object::numberOfPoints( void ) {
 void Object::addMaterial(Material *newMaterial) {
  
   material = newMaterial;
-  this->color = newMaterial->getDiffuse();
+  this->color = material->getDiffuse();
 
   _colors.clear();
 
   for ( size_t i = 0; i < _vertices.size(); ++i ) {
     _colors.push_back(vec4(color, 1));
   }
+}
+
+/**
+ * Retrieves the material object so we can get properties from it
+ * @return The material of this object
+ */
+Material *Object::getMaterial()
+{
+  return material;
 }
 
 /**

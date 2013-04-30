@@ -276,6 +276,12 @@ public:
   void addMaterial(Material *newMaterial);
 
   /**
+   * Retrieves the material object so we can get properties from it
+   * @return The material of this object
+   */
+  Material *getMaterial();
+
+  /**
    * Set the Texture ID / Texture Unit for this Object.
    * @param newTextureID The new Texture Unit ID/Index for this Object.
    * @return None.

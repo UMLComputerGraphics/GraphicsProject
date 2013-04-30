@@ -13,7 +13,8 @@ Material::Material() :
 	specular( vec3(1.0, 1.0, 1.0) ),
 	diffuse(vec3(0.8, 0.8, 0.8)),
 	shininess(0.0),
-	transparency(1.0) {
+	transparency(1.0),
+	ior(1.0) {
 
 	// Nothing
 }
@@ -28,7 +29,8 @@ Material::Material(vec3 ambient) :
 	specular(vec3(1.0, 1.0, 1.0)),
 	diffuse(vec3(0.8, 0.8, 0.8)),
 	shininess(0.0),
-	transparency(1.0) {
+	transparency(1.0),
+	ior(1.0) {
 	
 	// Nothing
 } 
@@ -47,7 +49,8 @@ Material::Material(vec3 ambient, vec3 diffuse, vec3 specular, float shininess) :
 	specular(specular),
 	diffuse(diffuse),
 	shininess(shininess),
-	transparency(1.0) {
+	transparency(1.0),
+	ior(1.0) {
 
 	// Nothing
 }
@@ -68,7 +71,8 @@ Material::Material(vec3 ambient, vec3 diffuse, vec3 specular,
 	specular(specular),
 	diffuse(diffuse),
 	shininess(shininess),
-	transparency(transparency) {
+	transparency(transparency),
+	ior(1.0) {
 
 	// Nothing
 }
@@ -93,6 +97,10 @@ void Material::setTransparency(float transparency) {
 	this->transparency = transparency;
 }
 
+void Material::setRefract(float ior) {
+	this->ior = ior;
+}
+
 const vec3 Material::getAmbient() const {
 	return this->ambient;	
 }
@@ -111,6 +119,10 @@ const float Material::getShininess() const {
 
 const float Material::getTransparency() const {
 	return this->transparency;	
+}
+
+const float Material::getRefract() const {
+	return this->ior;
 }
 
 void Material::initMaterial(GLuint shaderProgram) {

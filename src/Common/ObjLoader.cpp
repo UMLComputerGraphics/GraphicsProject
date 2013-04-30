@@ -175,13 +175,13 @@ namespace ObjLoader {
   }
 
   /**
-   * Parses a diffuse color from a line in the .mtl file
+   * Parses a color from a line in the .mtl file
    *
    * @param line The line containing the color data
    * @return A vec3 containing the color in rgb format
    */
 
-  vec3 parseDiffuseColor(const string &line)
+  vec3 parseColor(const string &line)
   {
     vec3 color;
     
@@ -193,7 +193,22 @@ namespace ObjLoader {
     return color;
   }
 
+  /**
+   * Parses the index of refraction from the .mtl file
+   *
+   * @param line The line containing the index of refraction
+   * @return The index of refraction
+   */
    
+  float parseRefract(const string &line)
+  {
+    float ior;
+
+    istringstream s(line.substr(3));
+    s >> ior;
+
+    return ior;
+  }
   
   /**
    * loadObj loads all available objects from a .obj file into the provided scene.
@@ -205,6 +220,14 @@ namespace ObjLoader {
    */
   std::vector<Object *> loadObj(Scene scene, const char* filename,
                    const char *defaultObjName ) {
+  /**
+   * Parses the index of refraction from the .mtl file
+   *
+   * @param line The line containing the index of refraction
+   * @return The index of refraction
+   */
+   
+  float parseRefract(const string &line);
 
     // file input stream
     std::ifstream in( filename, std::ios::in );
@@ -428,8 +451,6 @@ namespace ObjLoader {
 
     string line;
 
-    vec3 diffuseColor;
-
     Material *material = new Material();
     
     if ( !in ) {
@@ -440,11 +461,21 @@ namespace ObjLoader {
     while ( getline( in, line ) ) {
 	 // line starting with 'Kd ' is diffuse color
       if ( line.substr( 0, 3 ) == "Kd " ) {
-	   diffuseColor = parseDiffuseColor(line);
+	   material->setDiffuse(parseColor(line));
       }
+	 // ambient color
+	 else if (line.substr(0, 3) == "Ka ") {
+	   material->setAmbient(parseColor(line));
+	 }
+	 // specular color
+	 else if (line.substr(0, 3) == "Ks ") {
+	   material->setSpecular(parseColor(line));
+	 }
+	 // index of refraction
+	 else if (line.substr(0, 3) == "Ni ") {
+	   material->setRefract(parseRefract(line));
+	 }
     }
-
-    material->setDiffuse(diffuseColor);
 
     object->addMaterial(material);    
 
