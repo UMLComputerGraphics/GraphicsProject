@@ -17,6 +17,7 @@
 #include "Scene.hpp"
 #include "TransCache.hpp"
 #include "Texture.hpp"
+#include "Material.hpp"
 
 using Angel::vec4;
 
@@ -270,9 +271,9 @@ public:
 
   /**
   * Adds material data to the object
-  * @param diffuse The diffuse color
+  * @param newMaterial The material to set to the object
   **/
-  void addMaterial(Angel::vec3 diffuse);
+  void addMaterial(Material *newMaterial);
 
   /**
    * Set the Texture ID / Texture Unit for this Object.
@@ -373,6 +374,9 @@ protected:
 
   /** The diffuse color of the object **/
   Angel::vec3 color;
+
+  /** The material properties of this object **/
+  Material *material;
 
 private:
 

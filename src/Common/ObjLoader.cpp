@@ -429,6 +429,8 @@ namespace ObjLoader {
     string line;
 
     vec3 diffuseColor;
+
+    Material *material = new Material();
     
     if ( !in ) {
       throw std::runtime_error( "Could not open file." );
@@ -442,8 +444,10 @@ namespace ObjLoader {
       }
     }
 
-    object->addMaterial(diffuseColor);    
-	
+    material->setDiffuse(diffuseColor);
+
+    object->addMaterial(material);    
+
   }
 
 } // End Namespace

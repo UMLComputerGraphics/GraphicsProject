@@ -245,7 +245,6 @@ Object::~Object( void ) {
 
   for ( it = _textures.begin(); it != _textures.end(); ++it )
     delete (*it);
-  
 }
 
 /**
@@ -716,11 +715,12 @@ size_t Object::numberOfPoints( void ) {
 
 /**
 * Adds material data to the object
-* @param diffuse The diffuse color
+* @param newMaterial The material to set to the object
 **/
-void Object::addMaterial(Angel::vec3 diffuse) {
+void Object::addMaterial(Material *newMaterial) {
  
-  this->color = diffuse;
+  material = newMaterial;
+  this->color = newMaterial->getDiffuse();
 
   _colors.clear();
 
