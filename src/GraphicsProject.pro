@@ -29,6 +29,7 @@ SOURCES += \
         Classes/Engine.cpp \
         # KinectInator.cpp \
         Classes/mat.cpp \
+	   Classes/Material.cpp \
         # not needed anymore Classes/meshMapping.cpp \
         Classes/Object.cpp \
         Classes/Particle.cpp \
@@ -70,6 +71,7 @@ HEADERS  += include/bipartiteGraph.hpp \
             include/InitShader.hpp \
             #include/KinectInator.hpp\
             include/mat.hpp \
+		  include/Material.hpp \
             # not needed anymore include/meshMapping.hpp \
             include/modelFunctions.hpp \
             include/model.hpp \
@@ -108,14 +110,14 @@ LIBS += -lMagick++
 # Linux Settings
 unix:!macx {
 LIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm -lMagick++ -lboost_thread-mt -lfmodex
-INCLUDEPATH +=. /usr/include/ImageMagick/ include/ fMod/include
+INCLUDEPATH +=. /usr/include/ImageMagick/ include/ #fMod/include
 }
 
 # Mac OSX Settings
 macx {
 LIBS += -framework Carbon -framework OpenGL -framework GLUT 
 INCLUDEPATH += . include /opt/local/include/ImageMagick/ /opt/local/include/ fMod/include
-LIBS += -L/opt/local/lib -lMagick++ -lboost_thread-mt fMod/lib/libfmodex.dylib
+LIBS += -L/opt/local/lib -lMagick++ -lboost_thread-mt #fMod/lib/libfmodex.dylib
 }
 
 FORMS    += \
