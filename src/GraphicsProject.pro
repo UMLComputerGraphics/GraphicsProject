@@ -55,11 +55,10 @@ SOURCES += \
         Common/Util.cpp \
         #Qt
         Qt/mainwindow.cpp \
-        #Binaries/FinalProject.cpp \
+        Binaries/FinalProject.cpp \
 	Classes/nearestNeighbor.cpp \
 	Classes/RayTracer.cpp \
 	Classes/scanMatching.cpp \
-	Binaries/morphKeySound.cpp
 
 HEADERS  += include/bipartiteGraph.hpp \
 		   include/Camera.hpp \
