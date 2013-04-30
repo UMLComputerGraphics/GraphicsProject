@@ -24,6 +24,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->WhiskyBottleRadioButton, SIGNAL(clicked()),
             this, SIGNAL(sigMorphToWhiskyBottle()));
+    connect(ui->maxAccelerationSlider, SIGNAL(valueChanged(int)),
+            this, SIGNAL(sigSetMaxAcceleration(int)));
+    connect(ui->frictionHorizontalSlider, SIGNAL(valueChanged(int)),
+            this, SIGNAL(sigSetFrictionMagnitude(int)));
+	connect(ui->speedHorizontalSlider, SIGNAL(valueChanged(int)),
+            this, SIGNAL(sigCameraSpeed(int)));
+    
 
     /* Attempt to get the 'connect' work the other way */
     //connect(this, SIGNAL(sigMorphPercentageOut(int)),
