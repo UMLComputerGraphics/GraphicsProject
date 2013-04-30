@@ -14,6 +14,7 @@ uniform mat4 OTM;
 
 const float materialShininess=0.1;
 vec4 materialSpecular = vec4(0.1,0.1,0.1,0.5);
+vec4 materialDiffuse = vec4(0.8,0.8,0.8,0.8);
 
 uniform float ftime;
 
@@ -38,12 +39,12 @@ void main() {
     
   if (letMeSeeThatPhong) {
 
-    gl_FragColor = LightAmbient;
+    gl_FragColor = LightAmbient + baseColor;
     
     for(int i=0; i<uNumberOfLights; i++)
     {
       // Transform vertex position into eye coordinates
-      vec3 pos = (fPosition).xyz;
+      vec3 pos = (CTM * fPosition).xyz;
 
       vec4 ambient = LightAmbient * baseColor;
 
@@ -54,7 +55,7 @@ void main() {
       vec3 H = normalize(L + E);
 
       float Kd = max( dot(L, fNormal), 0.0 );
-      vec4 diffuse = Kd * uLightDiffuse[i] * baseColor;
+      vec4 diffuse = Kd * uLightDiffuse[i] * materialDiffuse;
 
       float Ks = pow( max(dot(fNormal, H), 0.0), materialShininess);
       vec4  specular = Ks * uLightSpecular[i] * materialSpecular;

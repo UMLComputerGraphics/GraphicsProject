@@ -322,7 +322,7 @@ void RayTracer::init( GLint shader ) {
 
     tick.setTimeUniform( glGetUniformLocation( program, "ftime" ) );
 
-    glShadeModel( GL_FLAT );
+//    glShadeModel( GL_FLAT );
     glEnable( GL_DEPTH_TEST );
     glClearColor( 0.1, 0.1, 0.1, 1.0 );
   }
