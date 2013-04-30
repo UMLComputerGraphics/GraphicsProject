@@ -207,14 +207,14 @@ void MONOLITH::run() {
   bottle->propagateOLD();
 
   // this obscure allusion to "the thong song" brought to you by Eric McCann
-  glUniform1f( glGetUniformLocation( bottle->shader(), "letMeSeeThatPhong" ), true );
+  glUniform1i( glGetUniformLocation( bottle->shader(), "letMeSeeThatPhong" ), 1 );
   
   // Let the bodies hit the table
   Object *table;
   table = rootScene->addObject( "table", noMorphShader );
   ObjLoader::loadModelFromFile(table, "../models/table_tx.obj");
   ObjLoader::loadMaterialFromFile(table, "../models/table_tx.mtl");
-  glUniform1f( glGetUniformLocation( table->shader(), "letMeSeeThatPhong" ), true );
+  glUniform1i( glGetUniformLocation( table->shader(), "letMeSeeThatPhong" ), 1 );
   table->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
   table->texture("../Textures/texture_wood.png");
   table->buffer();
@@ -242,9 +242,9 @@ void MONOLITH::run() {
   candle_base->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
   stick->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
 
-  glUniform1f(glGetUniformLocation(candle_top->shader(),"letMeSeeThatPhong"),true);
-  glUniform1f(glGetUniformLocation(candle_base->shader(),"letMeSeeThatPhong"),true);
-  glUniform1f(glGetUniformLocation(stick->shader(),"letMeSeeThatPhong"),true);
+  glUniform1i(glGetUniformLocation(candle_top->shader(),"letMeSeeThatPhong"),1);
+  glUniform1i(glGetUniformLocation(candle_base->shader(),"letMeSeeThatPhong"),1);
+  glUniform1i(glGetUniformLocation(stick->shader(),"letMeSeeThatPhong"),1;
 
 /*
   candle_top->genMorphTarget();
