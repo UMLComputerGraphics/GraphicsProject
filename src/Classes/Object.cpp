@@ -246,6 +246,11 @@ Object::~Object( void ) {
   for ( it = _textures.begin(); it != _textures.end(); ++it )
     delete (*it);
   
+  if (_morphTarget != NULL) {
+    delete _morphTarget;
+    _morphTarget = NULL;
+  }
+
 }
 
 /**

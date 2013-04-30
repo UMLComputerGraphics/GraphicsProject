@@ -52,6 +52,7 @@ Engine::Engine( void ) :
 
   _renderingCamera = NULL;
   _raytraceChanged = false;
+  _raytraceStatus = false;
 
   opt("fixed_yaw", true);
   opt("trap_pointer", true);

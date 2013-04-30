@@ -160,7 +160,18 @@ struct SquareVerticalMeshMap {
 	std::vector<Angel::vec4 > destVerts;
 	std::vector<Angel::vec3 > destNorms;
 	std::vector<Angel::vec4 > destColrs;
-	SquareVerticalMeshMap(std::vector<Angel::vec4 > SrcVerts,std::vector<Angel::vec3 > SrcNorms,std::vector<Angel::vec4 > SrcColrs,std::vector<Angel::vec4 > DestVerts,std::vector<Angel::vec3 > DestNorms,std::vector<Angel::vec4 > DestColrs,Angel::vec3 srcMin, Angel::vec3 srcMax, Angel::vec3 dstMin, Angel::vec3 dstMax, int xDivisions, int yDivisions){
+	SquareVerticalMeshMap( std::vector<Angel::vec4 > &SrcVerts,
+			       std::vector<Angel::vec3 > &SrcNorms,
+			       std::vector<Angel::vec4 > &SrcColrs,
+			       std::vector<Angel::vec4 > &DestVerts,
+			       std::vector<Angel::vec3 > &DestNorms,
+			       std::vector<Angel::vec4 > &DestColrs,
+			       Angel::vec3 &srcMin,
+			       Angel::vec3 &srcMax,
+			       Angel::vec3 &dstMin,
+			       Angel::vec3 &dstMax,
+			       int xDivisions,
+			       int yDivisions ){
 		xDivisions--;
 		yDivisions--;
 
