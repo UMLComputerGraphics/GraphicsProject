@@ -258,8 +258,8 @@ void MONOLITH::run() {
   vec4 max = stick->getMax();
   fprintf( stderr, "Min: (%f,%f,%f)\nMax: (%f,%f,%f)\n", min.x, min.y, min.z,
            max.x, max.y, max.z );
-  candle_top->_trans._offset.set( 2.5, max.y - 4, 2.5 );
-  candle_base->_trans._offset.set( 2.5, max.y - 4, 2.5 );
+  candle_top->_trans._offset.set( 2.5, max.y - 4.4, 2.5 );
+  candle_base->_trans._offset.set( 2.5, max.y - 4.4, 2.5 );
   stick->_trans._offset.set( 2.5, 0, 2.5);
 
   candle_top->propagateOLD();

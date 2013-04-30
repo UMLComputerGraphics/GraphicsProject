@@ -96,13 +96,22 @@ namespace ObjLoader {
   void loadModelFromFile( Object *object, const char *filename );
 
   /**
-   * Parses a diffuse color from a line in the .mtl file
+   * Parses a color from a line in the .mtl file
    *
    * @param line The line containing the color data
    * @return A vec3 containing the color in rgb format
    */
 
-  Angel::vec3 parseDiffuseColor(const string &line);
+  Angel::vec3 parseColor(const string &line);
+
+  /**
+   * Parses the index of refraction from the .mtl file
+   *
+   * @param line The line containing the index of refraction
+   * @return The index of refraction
+   */
+   
+  float parseRefract(const string &line);
 
   /**
    * Loads a material file into an object
