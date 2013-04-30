@@ -514,3 +514,28 @@ void Camera::debug( void ) {
   std::cerr << "CTM{\n" << _ctm.otm() << "}\n";
 
 }
+
+void Camera::setSpeed(float num)
+{
+	_speed = (GLfloat) num;
+}
+void Camera::setMaxAcceleration(float num)
+{
+	_maxAccel = (GLfloat) num;
+}
+void Camera::setFriction(float num)
+{
+	_frictionMagnitude = (GLfloat) num;
+}
+	float Camera::getSpeed()
+{
+	return (float) _speed;
+}
+float Camera::getMaxAcceleration()
+{
+	return (float) _maxAccel;
+}
+float Camera::getFriction()
+{
+	return (float) _frictionMagnitude;
+}
