@@ -78,11 +78,17 @@ Object::Object( const std::string &name, GLuint gShader ) {
   link( Object::OBJECT_CTM, "OTM" );
   link( Object::MORPH_PCT, "morphPercentage" );
   link( Object::TEX_SAMPLER, "sampler" );
+  link( Object::LIGHT_AMBIENT, "LightAmbient" );
+  link( Object::LIGHT_POSITIONS, "uLightPositions" );
+  link( Object::NUM_LIGHTS, "uNumberOfLights" );
+  link( Object::LIGHT_DIFFUSE, "uLightDiffuse" );
+  link( Object::LIGHT_SPECULAR, "uLightSpecular" );
   
   // Default to "Not Textured"
   _isTextured = false;
   _textureID = -1;
   _numTextures = 0;
+  _isLit = false;
 
   // Linear Interpolation Demo: Morph Percentage
   _morphPercentage = 0.0;
@@ -275,7 +281,11 @@ void Object::drawPrep( void ) {
   send( Object::OBJECT_CTM );
   send( Object::MORPH_PCT );
   send( Object::TEX_SAMPLER );
-  
+  send( Object::LIGHT_AMBIENT );
+  send( Object::NUM_LIGHTS );
+  send( Object::LIGHT_POSITIONS );
+  send( Object::LIGHT_DIFFUSE );
+  send( Object::LIGHT_SPECULAR );
 }
 
 /**
@@ -518,6 +528,31 @@ void Object::send( Object::UniformEnum which ) {
     }
     break;
     
+  case Object::LIGHT_AMBIENT:
+    if (_isLit && _lightAmbient) {
+      glUniform4fv( _handles[Object::LIGHT_AMBIENT], 1, _lightAmbient);
+    }
+    break;
+  case Object::LIGHT_DIFFUSE:
+    if (_isLit && _lightDiffuse && _numLights && *_numLights > 0) {
+      glUniform4fv( _handles[Object::LIGHT_DIFFUSE], *_numLights, _lightDiffuse);
+    }
+    break;
+  case Object::LIGHT_SPECULAR:
+    if (_isLit && _lightSpecular && _numLights && *_numLights > 0) {
+      glUniform4fv( _handles[Object::LIGHT_SPECULAR], *_numLights, _lightSpecular);
+    }
+    break;
+  case Object::NUM_LIGHTS:
+      if (_isLit && _numLights && *_numLights > 0) {
+        glUniform1i( _handles[Object::NUM_LIGHTS], *_numLights);
+      }
+      break;
+  case Object::LIGHT_POSITIONS:
+      if (_isLit && _lightPositions && _numLights && *_numLights > 0) {
+        glUniform4fv( _handles[Object::LIGHT_POSITIONS], *_numLights, _lightPositions);
+      }
+      break;
   default:
     throw std::invalid_argument( "Unknown Uniform Handle Enumeration." );
   }
@@ -687,6 +722,18 @@ void Object::morphPercentage( const float newPercentage ) {
   _morphPercentage = newPercentage;
 }
 
+bool Object::morphEnabled(void) const {
+    return _morphEnabled;
+}
+
+/**
+ * Set the morph Enabled of this Object.
+ * @param newEnabled The new morphing Enabled.
+ */
+void Object::morphEnabled( const bool enabled ) {
+  _morphEnabled = enabled;
+}
+
 /**
  * Obliterate the morph target for this object.
  */
@@ -753,5 +800,42 @@ Angel::vec3 Object::getMin( void ) {
   }
 
   return min;
+
+}
+
+void Object::bufferToRaytracer( RayTracer &rt ) {
+
+  const vec3 diffuse = vec3(0.0, 1.0, 0.0);
+  const vec3 ambient = vec3(0.0, 0.1, 0.0);
+  const vec3 specular = vec3(0.0, 0.0, 0.0);
+  const float shininess = 1.0;
+  const float reflect = 0.5;
+  const float refract = 0.0;
+  
+  std::vector< Angel::vec4 >::iterator it;
+
+  for ( it = _vertices.begin(); it != _vertices.end(); ++it ) {
+    vec3 a = vec3( it->x, it->y, it->z );
+    if ( ++it == _vertices.end() ) break;
+    vec3 b = vec3( it->x, it->y, it->z );
+    if ( ++it == _vertices.end() ) break;
+    vec3 c = vec3( it->x, it->y, it->z );
+
+    rt.addTriangle( a, b, c, diffuse, ambient, specular, shininess, reflect, refract );
+
+  }
+
+  Scene::bufferToRaytracer( rt );
+
+}
+
+void Object::setLights(GLfloat* ambient, GLint* numlights, GLfloat* positions, GLfloat* diffuse, GLfloat* specular)
+{
+  _isLit = true;
+  _lightAmbient = ambient;
+  _numLights = numlights;
+  _lightPositions = positions;
+  _lightDiffuse = diffuse;
+  _lightSpecular = specular;
 
 }

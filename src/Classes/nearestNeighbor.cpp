@@ -421,7 +421,7 @@ void SquareHorizontalMeshMap::copyToFinal(){
 			srcMatch++;
 		}
 	}
-	int dstCount = 0;
+	//int dstCount = 0;
 	for(float i=0; i<destTriangles.size();i++){
 		if(destTriangles[i]->covered == false){
 			destCount++;
@@ -628,7 +628,7 @@ void SquareVerticalMeshMap::copyToFinal(){
 			srcMatch++;
 		}
 	}
-	int dstCount = 0;
+	//int dstCount = 0;
 	for(float i=0; i<destTriangles.size();i++){
 		if(destTriangles[i]->covered == false){
 			destCount++;
@@ -745,7 +745,7 @@ void SquareVerticalMeshMap::copyBackToObjects(Object* Src,Object* Dest,std::vect
 			srcMatch++;
 		}
 	}
-	int dstCount = 0;
+	//int dstCount = 0;
 	for(float i=0; i<destTriangles.size();i++){
 		if(destTriangles[i]->covered == false){
 			destCount++;

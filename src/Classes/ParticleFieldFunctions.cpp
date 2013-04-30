@@ -3,7 +3,7 @@
 #include "vec.hpp"
 #include "mat.hpp"
 
-#include "exprtk/exprtk.hpp"
+//#include "exprtk/exprtk.hpp"
 #include <cmath>
 
 using Angel::vec2;
@@ -91,7 +91,7 @@ vec3 ParticleFieldFunctions::flame(vec4 pos)
 
 	atr_top.power    = 0.075 ;
 	atr_top.position = vec3(0.0, 0.3, 0.0) ;
-	atr_top.range =	0.15;
+	atr_top.range =	0.14;
 	// get the distance from the attractor
 	vec3 atrDist = atr_top.position - xyz(pos) ;
 
@@ -109,7 +109,16 @@ vec3 ParticleFieldFunctions::flame(vec4 pos)
 		retVal.z = retVal.z + atrDist.z ;
 	}
 
-	return 0.002*normalize(retVal);
+	// make it so that normalize doesn't try to normalize really small values
+	retVal = 1000 * retVal;
+
+	// make sure we don't get really small values anyway
+	if (retVal.x <= 0.001 && retVal.y <= 0.001 && retVal.z <= 0.001)
+	{
+		return retVal;
+	}
+	
+	return 0.002 * normalize(retVal);
 
 }
 
@@ -155,9 +164,11 @@ vec3 ParticleFieldFunctions::flameold(vec4 pos) {
 
 }
 
+
 Angel::vec3 ParticleFieldFunctions::userSupplied( Angel::vec4 pos ) {
-	static bool compiled = false;
 	static std::string expressions[3];
+	/*
+	static bool compiled = false;
 	static exprtk::expression<GLfloat> expression[3];
 	static exprtk::parser<GLfloat> parser;
 	static exprtk::symbol_table<GLfloat> symbol_table;
@@ -189,7 +200,8 @@ Angel::vec3 ParticleFieldFunctions::userSupplied( Angel::vec4 pos ) {
 	res.x = expression[0].value();
 	res.y = expression[1].value();
 	res.z = expression[2].value();
-	return res;
+	*/
+	return vec3(4, 2, 0);
 }
 
 

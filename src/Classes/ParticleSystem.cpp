@@ -432,8 +432,6 @@ ParticleSystem::setColorFunc(vec4 (*ColorFunc)(float, vec4) )
 float 
 ParticleSystem::rangeRandom( float min, float max ) {
 
-	srand(time(NULL));
-
 	float diff = max - min;
 
 	return fmod( (float) random(), diff ) + min;
@@ -503,3 +501,8 @@ void ParticleSystem::setPause(bool b)
 	row*sin(phi)*sin(theta),
 	row*cos(phi) ));
  */
+
+// Nada. Don't buffer particles to the raytracer,
+// That's crazy-talk!
+void ParticleSystem::bufferToRaytracer( RayTracer &rt ) { }
+

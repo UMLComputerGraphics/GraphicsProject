@@ -107,7 +107,10 @@ int numOfBoundingBoxes = 0;
 
 std::vector<GLfloat> bufferData;
 
-int numOfTriangleVectors = 10;
+// The number of vectors in the triangle buffer is:
+// The size of the triangle buffer type, divided by 
+// three (vec3s) times the size of a GLfloat.
+int numOfTriangleVectors = sizeof( triangle_t ) / (3 * sizeof(GLfloat));
 
 bool stereo = true;
 
@@ -324,6 +327,10 @@ void display( void ) {
       0                   // offset of first element
       );
   
+  std::cerr << "uRM: " << cameraLeft.getRotationMatrix() << "\n";
+  std::cerr << "cLeft: " << cameraLeft.getCameraPosition() << "\n";
+  std::cerr << "cRight: " << cameraRight.getCameraPosition() << "\n";
+
   if ( stereo ) {
     cameraLeft.copyCamera( &camera );
     cameraLeft.moveCamera( -0.1, 0.0, 0.0 );

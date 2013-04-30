@@ -465,7 +465,7 @@ void segmentModels(Object* model1, vec3 model1Low, vec3 model1High, Object* mode
 		//makeModelTopSameSize(model1Vertices[i],model1Normals[i],model1Colors[i],model1Textures[i],model2Vertices[i],model2Normals[i],model2Colors[i],model2Textures[i]);
 		//matchPoints(model1Vertices[i],model1Normals[i],model1Colors[i],model1Textures[i],model2Vertices[i],model2Normals[i],model2Colors[i],model2Textures[i]);
 		//ScaleModel * scaleModel = new ScaleModel(model1Vertices[i], model2Vertices[i],1,3,1);
-		BipartiteGraph * bipartiteGraph = new BipartiteGraph(model1Vertices[i],model1Normals[i],model1Colors[i],model1Textures[i],model2Vertices[i],model2Normals[i],model2Colors[i],model2Textures[i]);
+		//BipartiteGraph * bipartiteGraph = new BipartiteGraph(model1Vertices[i],model1Normals[i],model1Colors[i],model1Textures[i],model2Vertices[i],model2Normals[i],model2Colors[i],model2Textures[i]);
 		//scaleModel->restorePartitionModel();
 	}
 	applyToObjects(model1, model2, model1Vertices,model1Normals,model1Colors,model1Textures,model2Vertices,model2Normals,model2Colors,model2Textures,partitionSize);
