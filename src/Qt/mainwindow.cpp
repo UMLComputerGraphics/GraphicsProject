@@ -26,8 +26,8 @@ MainWindow::MainWindow(QWidget *parent) :
             this, SIGNAL(sigMorphToWhiskyBottle()));
 
     /* Attempt to get the 'connect' work the other way */
-    connect(this, SIGNAL(sigMorphPercentageOut(int)),
-            ui->morphPercentageSlider, SLOT(setValue(int)));
+    //connect(this, SIGNAL(sigMorphPercentageOut(int)),
+    //        ui->morphPercentageSlider, SLOT(setValue(int)));
 
 
 }
