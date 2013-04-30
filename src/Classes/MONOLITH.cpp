@@ -54,7 +54,10 @@ void MONOLITH::monolith_idle(void)
 	*/
     
     // Update the morph percentage.
-    (*rootScene)["bottle"]->morphPercentage( percent );
+    if((*rootScene)["bottle"]->morphEnabled())
+    {
+        (*rootScene)["bottle"]->morphPercentage(percent);
+    }
 }
 
 #ifndef WITHOUT_QT
@@ -73,6 +76,17 @@ void MONOLITH::slotFreezeParticles(bool isEnabled)
 {
 	ps->setPause(isEnabled);
 }
+
+void MONOLITH::slotMorphPercentage(int value)
+{
+    (*rootScene)["bottle"]->morphPercentage(value / 100.0);
+}
+
+void MONOLITH::slotEnableMorphing(bool isEnabled)
+{
+   (*rootScene)["bottle"]->morphEnabled(isEnabled);
+}
+
 #endif //WITHOUT_QT
 /**
  * This will initialize and run MONOLITH
@@ -205,8 +219,8 @@ void MONOLITH::run() {
 
   
   max = candle_top->getMax();
-  ps = new ParticleSystem( 100, "ps1", particleShader );
-  ps->setLifespan( 5.0, 8.0 );
+  ps = new ParticleSystem( 1000, "ps1", particleShader );
+  ps->setLifespan( 7.0, 12.0 );
   ps->setVectorField( ParticleFieldFunctions::flame);
   ps->setColorFunc(   ColorFunctions::flame );
   ps->setEmitterRadius( 0.02 );
@@ -284,3 +298,4 @@ void MONOLITH::raytraceStatusChanged(bool newstatus)
   }
   printf("TODO: SWITCH VERTICES AND PUSH STUFF TO GPU APPROPRIATELY!\n");
 }
+

@@ -432,8 +432,6 @@ ParticleSystem::setColorFunc(vec4 (*ColorFunc)(float, vec4) )
 float 
 ParticleSystem::rangeRandom( float min, float max ) {
 
-	srand(time(NULL));
-
 	float diff = max - min;
 
 	return fmod( (float) random(), diff ) + min;

@@ -41,6 +41,10 @@ int main( int argc, char **argv ) {
   //QObject::connect(w.slider, SIGNAL(valueChanged(int)), &monolith, SLOT(ParticleAdd()));
   QObject::connect(&w, SIGNAL(sigChangeNumberOfParticles(int)), &monolith, SLOT(slotParticleAdd(int)));
   QObject::connect(&w, SIGNAL(sigFreezeParticles(bool)), &monolith, SLOT(slotFreezeParticles(bool)));
+  QObject::connect(&w, SIGNAL(sigMorphPercentage(int)), &monolith, SLOT(slotMorphPercentage(int)));
+  QObject::connect(&monolith, SIGNAL(sigMorphPercentage(int)), &w, SLOT(sigMorphPercentageOut(int)));
+  QObject::connect(&w, SIGNAL(sigEnableMorphing(bool)), &monolith, SLOT(slotEnableMorphing(bool)));
+
   w.show();
 
 #ifndef __APPLE__ // monolith.start has to be here for Linux. 
