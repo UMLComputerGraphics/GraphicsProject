@@ -132,6 +132,19 @@ void MONOLITH::slotEnableParticleSystem(bool isEnabled)
     }
 }
 
+void MONOLITH::slotMaxAcceleration(int num)
+{
+	Engine::instance()->currentCamera()->setMaxAcceleration((float) num);
+}
+void MONOLITH::slotFriction(int num)
+{
+	Engine::instance()->currentCamera()->setFriction((float) num);
+}
+void MONOLITH::slotSpeed(int num)
+{
+	Engine::instance()->currentCamera()->setSpeed((float) num);
+}
+
 #endif //WITHOUT_QT
 
 /**
