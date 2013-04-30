@@ -192,6 +192,9 @@ void engineKeyboard( unsigned char key, int x, int y ) {
   case 'f':
     Engine::instance()->setRaytrace(!Engine::instance()->getRaytrace());
     break;
+  case 'l':
+    Engine::instance()->phongSong(!Engine::instance()->wearingAPhong());
+    break;
   }
 }
 
