@@ -19,7 +19,7 @@ varying vec3 fNormal;
 uniform bool letMeSeeThatPhong; //pha phong phong phong
 const int maxNumberOfLights = 5;
 uniform int uNumberOfLights;
-uniform vec3 LightAmbient, uLightPositions[maxNumberOfLights], uLightDiffuse[maxNumberOfLights], uLightSpecular[maxNumberOfLights];
+uniform vec4 LightAmbient, uLightPositions[maxNumberOfLights], uLightDiffuse[maxNumberOfLights], uLightSpecular[maxNumberOfLights];
 
 // position/movement
 uniform mat4 P;   // Camera Perspective: Vertices are transformed to Screen coordinates.
