@@ -169,6 +169,12 @@ public:
   void registerDisplayFunc(boost::function<void(void)> displayFunc);
   void unregisterDisplayFunc();
 
+  void registerDisplayExtension(boost::function<void(void)> displayFunc);
+
+  bool wearingAPhong();
+
+  void phongSong(bool enabled);
+
 private:
   
   void glslVersion( float in );
@@ -284,8 +290,13 @@ private:
   raytracerCallback _traceFunc;
 
   boost::function<void(void)> _displayFunc;
+  boost::function<void(void)> _displayExtension;
 
   void noop( bool enabled );
+
+  void banana();
+
+  bool _floss;
 
   bool _raytraceChanged, _raytraceStatus;
 };
