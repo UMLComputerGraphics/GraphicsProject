@@ -107,7 +107,10 @@ int numOfBoundingBoxes = 0;
 
 std::vector<GLfloat> bufferData;
 
-int numOfTriangleVectors = 10;
+// The number of vectors in the triangle buffer is:
+// The size of the triangle buffer type, divided by 
+// three (vec3s) times the size of a GLfloat.
+int numOfTriangleVectors = sizeof( triangle_t ) / (3 * sizeof(GLfloat));
 
 bool stereo = true;
 
