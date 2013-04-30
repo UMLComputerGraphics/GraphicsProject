@@ -76,7 +76,7 @@ public:
   void togglePause(void);
   void setPause(bool);
   virtual void buffer( GLenum usage = GL_DYNAMIC_DRAW );
-
+  virtual void bufferToRaytracer( RayTracer &rt );
 
   TransCache _emitterTrans ; // this transcache represnts the position of the emitter
 

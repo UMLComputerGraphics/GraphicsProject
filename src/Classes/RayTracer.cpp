@@ -6,6 +6,7 @@
  */
 
 #include "RayTracer.h"
+#include "Engine.hpp"
 
 RayTracer::RayTracer() :
   display(boost::bind(&RayTracer::_display,this))
@@ -206,11 +207,13 @@ void RayTracer::pushDataToBuffer() {
 #endif
 }
 
+/*
 void RayTracer::genereateScene(std::vector<Object*> objects) {
 
   std::vector<GLfloat> boundingBoxes;
 
-  vec3 ambient = vec3(0.0, 0.0, 0.0);
+  vec3 diffuse = vec3(0.0, 1.0, 0.0);
+  vec3 ambient = vec3(0.0, 0.1, 0.0);
   vec3 specular = vec3(0.0, 0.0, 0.0);
 
   for(std::vector<Object*>::iterator it = objects.begin(); it != objects.end(); it++)
@@ -241,8 +244,7 @@ void RayTracer::genereateScene(std::vector<Object*> objects) {
       setMinMax(&min, &max, b);
       setMinMax(&min, &max, c);
 
-      addTriangle(a, b, c, vec3(0.0, 1.0, 0.0), vec3(0.0, 0.1, 0.0), specular, 1.0, 0.5, 0.0);
-
+      //addTriangle(a, b, c, diffuse, ambient, specular, 1.0, 0.5, 0.0);
 
       if(numTriangles > 0 && numTriangles % bounding == 0) {
         addVec3ToVector(&boundingBoxes, min);
@@ -276,11 +278,12 @@ void RayTracer::genereateScene(std::vector<Object*> objects) {
 
   pushDataToBuffer();
 }
+*/
 
 /**
  * Initialization of objects and OpenGL state.
  */
-void RayTracer::init( GLuint shader ) {
+void RayTracer::init( GLint shader ) {
   if (shader != program)
   {
     program = shader;

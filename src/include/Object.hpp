@@ -83,15 +83,11 @@ public:
     OBJECT_CTM, //!< OBJECT_CTM
     MORPH_PCT, //!< MORPH_PCT
     TEX_SAMPLER, //!< TEX_SAMPLER
-    TRACER_VERTICES,                  // sampler buffer of vec3s  (3 per triangle) (12 bytes each)
-    TRACER_NORMALS,                   // sampler buffer of vec3s  (1 per triangle) (12 bytes each)
-    TRACER_CENTERS,                   // sampler buffer of vec3s  (1 per triangle) (12 bytes each)
-    TRACER_RADII,                     // sampler buffer of floats (1 per triangle) (4 bytes each)
-    TRACER_COLORS,                    // sampler buffer of vec3s  (1 per triangle) (12 bytes each)
-    TRACER_MORPHING_POINT_COUNT,      // the first COUNT vertices/colors/normals/radii/centers are one position of morphing points...
-                                      // the next COUNT of them are the morphed positions...
-                                      // all vertices after the first 2*COUNT are non-morphing
-    TRACER_TRANSFORMATIONS,           // need to decide how to serialize and deserialize the scene graph
+    LIGHT_AMBIENT,
+    NUM_LIGHTS,
+    LIGHT_POSITIONS,
+    LIGHT_SPECULAR,
+    LIGHT_DIFFUSE,
     END //!< END
   } Uniform;
 
@@ -315,6 +311,9 @@ public:
    */
   Angel::vec3 getMin( void );
 
+  virtual void bufferToRaytracer( RayTracer &rt );
+  void setLights(GLfloat* ambient, GLint* numlights, GLfloat* positions, GLfloat* diffuse, GLfloat* specular);
+
 protected:
 
   /** _name is used as an identifying handle for the object. **/
@@ -374,6 +373,18 @@ protected:
   /** The diffuse color of the object **/
   Angel::vec3 color;
 
+  GLfloat *_lightAmbient;
+  GLfloat *_lightPositions;
+  GLfloat *_lightDiffuse;
+  GLfloat *_lightSpecular;
+  GLint *_numLights;
+
+  GLint _uLightAmbient;
+  GLint _uLightPositions;
+  GLint _uLightDiffuse;
+  GLint _uLightSpecular;
+  GLint _uNumLights;
+
 private:
 
   // Create and activate a Vertex Attrib Array and bind to a VBO
@@ -390,6 +401,8 @@ private:
   **/
   bool checkForAttribCorruption(void);
   
+  bool _isLit;
+
 };
 
 #endif

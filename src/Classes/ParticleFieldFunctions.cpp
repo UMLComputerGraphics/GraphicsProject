@@ -164,10 +164,12 @@ vec3 ParticleFieldFunctions::flameold(vec4 pos) {
 
 }
 
+
 Angel::vec3 ParticleFieldFunctions::userSupplied( Angel::vec4 pos ) {
-	static bool compiled = false;
 	static std::string expressions[3];
-	/*static exprtk::expression<GLfloat> expression[3];
+	/*
+	static bool compiled = false;
+	static exprtk::expression<GLfloat> expression[3];
 	static exprtk::parser<GLfloat> parser;
 	static exprtk::symbol_table<GLfloat> symbol_table;
 	static vec4 *input = NULL;
@@ -199,7 +201,7 @@ Angel::vec3 ParticleFieldFunctions::userSupplied( Angel::vec4 pos ) {
 	res.y = expression[1].value();
 	res.z = expression[2].value();
 	*/
-	return vec3(2, 4, 2);
+	return vec3(4, 2, 0);
 }
 
 

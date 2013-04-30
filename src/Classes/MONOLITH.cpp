@@ -12,14 +12,27 @@
 
 MONOLITH::~MONOLITH(void)
 {
-    
+  cleanup();
 }
 
 /* Default and only constructor */
-MONOLITH::MONOLITH(int argc, char** argv)
+MONOLITH::MONOLITH(int argc, char** argv) :
+    zipo(boost::thread(boost::bind(&MONOLITH::aRomanticEvening, this)))
 {
     _argc = argc;
     _argv = argv;
+    lightAmbient = (GLfloat*)malloc(sizeof(GLfloat)*4);
+    lightAmbient[0]=lightAmbient[1]=lightAmbient[2]=lightAmbient[3]=0.1;
+    lightPositions = (GLfloat*)malloc(sizeof(GLfloat)*4);
+    lightPositions[0]=lightPositions[1]=1.0;
+    lightPositions[2]=10.0;
+    lightPositions[3]=1.0;
+    lightDiffuse = (GLfloat*)malloc(sizeof(GLfloat)*4);
+    lightSpecular = (GLfloat*)malloc(sizeof(GLfloat)*4);
+    lightDiffuse[0]=lightDiffuse[1]=lightDiffuse[2]=0.5;
+    lightDiffuse[3]=lightSpecular[3]=1.0;
+    lightSpecular[0]=lightSpecular[1]=lightSpecular[2]=0.5;
+    numLights = 1;
 }
 
 /**
@@ -27,7 +40,11 @@ MONOLITH::MONOLITH(int argc, char** argv)
  */
 void MONOLITH::cleanup(void)
 {
-    Engine::instance()->rootScene()->delObject();
+    extinguish = true;
+    zipo.join();
+    if(lightPositions)free(lightPositions);
+    if(lightDiffuse)free(lightDiffuse);
+    if(lightSpecular)free(lightSpecular);
 }
 
 /**
@@ -116,6 +133,7 @@ void MONOLITH::slotEnableParticleSystem(bool isEnabled)
 }
 
 #endif //WITHOUT_QT
+
 /**
  * This will initialize and run MONOLITH
  */
@@ -162,12 +180,13 @@ void MONOLITH::run() {
   // Load model from file.
   ObjLoader::loadModelFromFile( bottle, "../models/bottle_wine_high.obj" );
   ObjLoader::loadMaterialFromFile( bottle, "../models/bottle_wine_high.mtl" );
-
+  bottle->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
 
   bottle->genMorphTarget();
   Object *bottleMorphTarget = bottle->morphTarget();
   ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle_liquor_high.obj" );
   ObjLoader::loadMaterialFromFile( bottleMorphTarget, "../models/bottle_liquor_high.mtl" );
+  bottleMorphTarget->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
 
   //Morphing Items
   //Scale source and destination height to unit 0-1
@@ -188,15 +207,15 @@ void MONOLITH::run() {
   bottle->propagateOLD();
 
   // this obscure allusion to "the thong song" brought to you by Eric McCann
-  GLuint sisqo = glGetUniformLocation( bottle->shader(),
-				       "letMeSeeThatPhong" );
-  glUniform1f( sisqo, true );
+  glUniform1f( glGetUniformLocation( bottle->shader(), "letMeSeeThatPhong" ), true );
   
   // Let the bodies hit the table
   Object *table;
   table = rootScene->addObject( "table", noMorphShader );
   ObjLoader::loadModelFromFile(table, "../models/table_tx.obj");
   ObjLoader::loadMaterialFromFile(table, "../models/table_tx.mtl");
+  glUniform1f( glGetUniformLocation( table->shader(), "letMeSeeThatPhong" ), true );
+  table->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
   table->texture("../Textures/texture_wood.png");
   table->buffer();
 
@@ -205,7 +224,7 @@ void MONOLITH::run() {
   // Load up that goddamned candle
   Object *stick;
   Object *candle_top;
-  Object *candle_top_melted;
+  //Object *candle_top_melted;
   Object *candle_base;
 
   candle_top = rootScene->addObject( "candle_top", noMorphShader );
@@ -218,6 +237,14 @@ void MONOLITH::run() {
   ObjLoader::loadMaterialFromFile( candle_base, "../models/candle.mtl" );
   ObjLoader::loadModelFromFile(stick, "../models/candlestick.obj");
   ObjLoader::loadMaterialFromFile(stick, "../models/candlestick.mtl");
+
+  candle_top->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
+  candle_base->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
+  stick->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
+
+  glUniform1f(glGetUniformLocation(candle_top->shader(),"letMeSeeThatPhong"),true);
+  glUniform1f(glGetUniformLocation(candle_base->shader(),"letMeSeeThatPhong"),true);
+  glUniform1f(glGetUniformLocation(stick->shader(),"letMeSeeThatPhong"),true);
 
 /*
   candle_top->genMorphTarget();
@@ -317,7 +344,9 @@ void MONOLITH::raytraceStatusChanged(bool newstatus)
     rt.init(shader[3]);
     std::vector<Object *> objs;
     //ITERATE OVER ALL OBJS IN SCENE!
-    rt.genereateScene(objs);
+
+    Engine::instance()->rootScene()->bufferToRaytracer( rt );
+    //    rt.genereateScene(objs);
   }
   else
   {
@@ -327,3 +356,19 @@ void MONOLITH::raytraceStatusChanged(bool newstatus)
   printf("TODO: SWITCH VERTICES AND PUSH STUFF TO GPU APPROPRIATELY!\n");
 }
 
+//flicker at constant rate, regardless of update loop
+void MONOLITH::aRomanticEvening() {
+  while ( !extinguish ) {
+    // random number between 0 and 1
+    float lightness = (float) rand() / (float) RAND_MAX;
+    // between 0 and .3
+    lightness = lightness * 3.0 / 10.0;
+
+    lightness += .7;
+    lightDiffuse[0] = lightness;
+    lightDiffuse[1] = lightness;
+    lightDiffuse[2] = lightness;
+
+    sleep( 0.01 );
+  }
+}

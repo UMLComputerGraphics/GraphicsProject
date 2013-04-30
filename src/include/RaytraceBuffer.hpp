@@ -1,4 +1,8 @@
-#include "Engine.hpp"
+#ifndef RAYTRACE_BUFFER_H
+#define RAYTRACE_BUFFER_H
+
+#include "vec.hpp"
+using Angel::vec3;
 
 typedef struct triangle_slice {
 
@@ -32,3 +36,5 @@ typedef struct triangle_slice {
   vec3 color;
 
 } triangle_t;
+
+#endif

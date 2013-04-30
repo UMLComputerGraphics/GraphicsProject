@@ -119,17 +119,32 @@ private:
     static void simpleRotateAnim( TransCache &obj );
     static void candleMeltAnim( TransCache &obj );
     static void candleTopMeltDown( TransCache &obj );
+    void aRomanticEvening();
+
+    void display();
+
     GLuint shader[4];
     
     Scene *rootScene;
     Screen *primScreen;
     Object *bottle;
     
+    bool extinguish;
+
     ParticleSystem *ps;
     bool _morphIsEnabled;
+
+    GLfloat *lightPositions;
+    GLfloat *lightAmbient;
+    GLfloat *lightDiffuse;
+    GLfloat *lightSpecular;
+    GLint numLights;
+ 
     char **_argv;
     int _argc;
     
+    boost::thread zipo;
+
 };
 
 #endif

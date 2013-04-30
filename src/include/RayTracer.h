@@ -4,6 +4,8 @@
  *  Created on: Apr 29, 2013
  *      Author: eric
  */
+#ifndef RAYTRACER_H_
+#define RAYTRACER_H_
 
 #include <string>
 #include <cmath>
@@ -11,25 +13,21 @@
 #include <cstdio>
 #include <cstring>
 #include <vector>
-#include "Engine.hpp"
-#include "Cameras.hpp"
-#include "Scene.hpp"
-#include "Screen.hpp"
-#include "glut_callbacks.h"
+//#include "Engine.hpp"
+//#include "Cameras.hpp"
+//#include "Scene.hpp"
+//#include "Screen.hpp"
+//#include "glut_callbacks.h"
 #include <boost/thread.hpp>
 #include <boost/bind.hpp>
-
 #include "RaytraceBuffer.hpp"
-
-#ifndef RAYTRACER_H_
-#define RAYTRACER_H_
 
 class RayTracer
 {
   public:
     RayTracer();
     boost::function<void(void)> display;
-    void init(GLuint shader);
+    void init(GLint shader);
     void generateScene(void);
     void addVec3ToVector(std::vector<GLfloat> *_vector, vec3 _vec3);
     void setMinMax(vec3 *min, vec3 *max, vec3 v);
@@ -37,7 +35,7 @@ class RayTracer
           const vec3& diffuse, const vec3& ambient, const vec3& specular,
           float shininess, float reflect, float refract);
     void pushDataToBuffer();
-    void genereateScene(std::vector<Object*> objects);
+    //void genereateScene(std::vector<Object*> objects);
     virtual
     ~RayTracer();
   private:
@@ -76,7 +74,6 @@ class RayTracer
     GLfloat *lightSpecular;
 
     int numTriangles;
-    std::vector< vec3 > trianglePoints;
 
     int numOfBoundingSpheres;
     std::vector< GLfloat > bufferData;

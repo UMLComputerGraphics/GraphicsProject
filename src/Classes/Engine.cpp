@@ -42,7 +42,8 @@ Engine *Engine::instance( void ) {
  * Default constructor. Cannot be called, this is a singleton class.
  */
 Engine::Engine( void ) :
-  _traceFunc(boost::bind(&Engine::noop, this, _1))
+  _traceFunc(boost::bind(&Engine::noop, this, _1)),
+  _displayExtension(boost::bind(&Engine::banana, this))
     {
 
   _idleFunc = NULL;
@@ -369,6 +370,8 @@ void Engine::displayViewport( void ) {
   static Scene *theScene = Engine::instance()->rootScene();
   static Cameras *camList = Engine::instance()->cams();
 
+  instance()->_displayExtension();
+
   theScene->draw();
   camList->draw();
 
@@ -398,10 +401,35 @@ void Engine::noop(bool enabled)
   printf("The front line is everywhere.\nThere be no [raytracer] here.\n"); //Zack de la Rocha
 }
 
+void Engine::banana()
+{
+  //orange you glad this function's named banana?
+}
+
+void Engine::phongSong(bool enabled)
+{
+  static GLuint uni = glGetUniformLocation(currentShader(),"letMeSeeThatPhong");
+  if (uni)
+  {
+    _floss = enabled;
+    glUniform1d(uni, enabled);
+  }
+}
+
 float Engine::glslVersion( void ) {
   return _glslVersion;
 }
 
 void Engine::glslVersion( float in ) {
   _glslVersion = in;
+}
+
+void Engine::registerDisplayExtension(boost::function<void(void)> displayFunc)
+{
+  _displayExtension = displayFunc;
+}
+
+bool Engine::wearingAPhong()
+{
+  return _floss;
 }
