@@ -103,6 +103,9 @@ public slots:
     void slotEnableParticleSystem(bool isEnabled);
     void slotMorphToWineBottle(void);
     void slotMorphToWhiskyBottle(void);
+    void slotMaxAcceleration(int num);
+    void slotFriction(int num);
+	   void slotSpeed(int num);
 
 signals:
     void sigMorphPercentage(int value);
