@@ -170,7 +170,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>250</y>
+        <y>220</y>
         <width>231</width>
         <height>24</height>
        </rect>
@@ -196,42 +196,9 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>150</y>
-        <width>196</width>
-        <height>26</height>
-       </rect>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_5">
-       <item>
-        <widget class="QLabel" name="aspectRatioLabel">
-         <property name="text">
-          <string>Aspect Ratio</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QComboBox" name="aspectRationComboBox">
-         <item>
-          <property name="text">
-           <string>16:9</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>4:3</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="layoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>180</y>
+        <y>190</y>
         <width>181</width>
-        <height>81</height>
+        <height>21</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -251,9 +218,9 @@
       <property name="geometry">
        <rect>
         <x>200</x>
-        <y>180</y>
+        <y>190</y>
         <width>221</width>
-        <height>81</height>
+        <height>21</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_7">
@@ -273,9 +240,9 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>210</y>
+        <y>250</y>
         <width>221</width>
-        <height>81</height>
+        <height>21</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_8">
@@ -294,8 +261,8 @@
      <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>210</x>
-        <y>150</y>
+        <x>10</x>
+        <y>160</y>
         <width>213</width>
         <height>26</height>
        </rect>
@@ -319,7 +286,6 @@
        </item>
       </layout>
      </widget>
-     <zorder>layoutWidget</zorder>
      <zorder>layoutWidget</zorder>
      <zorder>layoutWidget</zorder>
      <zorder>layoutWidget</zorder>
@@ -369,13 +335,13 @@
        <item>
         <widget class="QSpinBox" name="numberOfParticlesSpinBox">
          <property name="maximum">
-          <number>100000</number>
+          <number>1000000000</number>
          </property>
          <property name="singleStep">
           <number>1</number>
          </property>
          <property name="value">
-          <number>100</number>
+          <number>1000</number>
          </property>
         </widget>
        </item>
@@ -408,7 +374,7 @@
      <attribute name="title">
       <string>Morphing</string>
      </attribute>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>30</x>
@@ -432,6 +398,32 @@
          </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>70</y>
+        <width>111</width>
+        <height>58</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <widget class="QRadioButton" name="WineBottleRadioButton">
+         <property name="text">
+          <string>Wine Bottle</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="WhiskyBottleRadioButton">
+         <property name="text">
+          <string>Whisky Bottle</string>
          </property>
         </widget>
        </item>

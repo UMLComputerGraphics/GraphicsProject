@@ -14,8 +14,21 @@ MainWindow::MainWindow(QWidget *parent) :
             this, SIGNAL(sigEnableMorphing(bool)));
     connect(ui->morphPercentageSlider, SIGNAL(valueChanged(int)),
             this, SIGNAL(sigMorphPercentage(int)));
+    connect(ui->rayTracerEnabler, SIGNAL(toggled(bool)),
+            this, SIGNAL(sigEnableRaytracing(bool)));
+    connect(ui->particleSystemEnabler, SIGNAL(toggled(bool)),
+            this, SIGNAL(sigEnableParticleSystem(bool)));
+
+    connect(ui->WineBottleRadioButton, SIGNAL(clicked()),
+            this, SIGNAL(sigMorphToWineBottle()));
+
+    connect(ui->WhiskyBottleRadioButton, SIGNAL(clicked()),
+            this, SIGNAL(sigMorphToWhiskyBottle()));
+
+    /* Attempt to get the 'connect' work the other way */
     connect(this, SIGNAL(sigMorphPercentageOut(int)),
             ui->morphPercentageSlider, SLOT(setValue(int)));
+
 
 }
 

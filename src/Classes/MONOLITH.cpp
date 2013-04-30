@@ -69,7 +69,7 @@ void MONOLITH::slotParticleAdd(int value)
 {
 //    int delta = value - ps->getNumParticles();
     ps->setNumParticles(value);
-    printf("Particle system now has %d particles.\n", ps->getNumParticles());
+    //printf("Particle system now has %d particles.\n", ps->getNumParticles());
 }
 
 void MONOLITH::slotFreezeParticles(bool isEnabled)
@@ -85,6 +85,34 @@ void MONOLITH::slotMorphPercentage(int value)
 void MONOLITH::slotEnableMorphing(bool isEnabled)
 {
    (*rootScene)["bottle"]->morphEnabled(isEnabled);
+}
+
+void MONOLITH::slotMorphToWineBottle(void)
+{
+   (*rootScene)["bottle"]->morphPercentage(0.0);
+}
+
+void MONOLITH::slotMorphToWhiskyBottle(void)
+{
+    (*rootScene)["bottle"]->morphPercentage(1.0);
+}
+
+
+void MONOLITH::slotEnableRaytracing(bool enabled)
+{
+   Engine::instance()->setRaytrace(enabled);
+}
+
+void MONOLITH::slotEnableParticleSystem(bool isEnabled)
+{
+    if (isEnabled)
+    {
+        ps->setNumParticles(1000);
+    }
+    else
+    {
+        ps->setNumParticles(0);
+    }
 }
 
 #endif //WITHOUT_QT
@@ -219,7 +247,7 @@ void MONOLITH::run() {
 
   
   max = candle_top->getMax();
-  ps = new ParticleSystem( 1000, "ps1", particleShader );
+  ps = new ParticleSystem( 0, "ps1", particleShader );
   ps->setLifespan( 7.0, 12.0 );
   ps->setVectorField( ParticleFieldFunctions::flame);
   ps->setColorFunc(   ColorFunctions::flame );

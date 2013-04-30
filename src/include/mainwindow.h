@@ -38,6 +38,8 @@ signals:
     /* Morph stuff */
     void sigMorphPercentage(int value);
     void sigMorphPercentageOut(int value);
+    void sigMorphToWineBottle(void);
+    void sigMorphToWhiskyBottle(void);
 
     /* Particles */
 	void sigChangeNumberOfParticles(int value);

@@ -99,6 +99,10 @@ public slots:
     void slotFreezeParticles(bool isEnabled);
     void slotMorphPercentage(int value);
     void slotEnableMorphing(bool isEnabled);
+    void slotEnableRaytracing(bool enabled);
+    void slotEnableParticleSystem(bool isEnabled);
+    void slotMorphToWineBottle(void);
+    void slotMorphToWhiskyBottle(void);
 
 signals:
     void sigMorphPercentage(int value);
