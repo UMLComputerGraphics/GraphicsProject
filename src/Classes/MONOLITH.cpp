@@ -244,7 +244,7 @@ void MONOLITH::run() {
 
   glUniform1i(glGetUniformLocation(candle_top->shader(),"letMeSeeThatPhong"),1);
   glUniform1i(glGetUniformLocation(candle_base->shader(),"letMeSeeThatPhong"),1);
-  glUniform1i(glGetUniformLocation(stick->shader(),"letMeSeeThatPhong"),1;
+  glUniform1i(glGetUniformLocation(stick->shader(),"letMeSeeThatPhong"),1);
 
 /*
   candle_top->genMorphTarget();
