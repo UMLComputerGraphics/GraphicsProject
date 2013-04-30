@@ -108,14 +108,14 @@ LIBS += -lMagick++
 # Linux Settings
 unix:!macx {
 LIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm -lMagick++ -lboost_thread-mt -lfmodex
-INCLUDEPATH +=. /usr/include/ImageMagick/ include/ fMod/include
+INCLUDEPATH +=. /usr/include/ImageMagick/ include/ #fMod/include
 }
 
 # Mac OSX Settings
 macx {
 LIBS += -framework Carbon -framework OpenGL -framework GLUT 
 INCLUDEPATH += . include /opt/local/include/ImageMagick/ /opt/local/include/ fMod/include
-LIBS += -L/opt/local/lib -lMagick++ -lboost_thread-mt fMod/lib/libfmodex.dylib
+LIBS += -L/opt/local/lib -lMagick++ -lboost_thread-mt #fMod/lib/libfmodex.dylib
 }
 
 FORMS    += \
