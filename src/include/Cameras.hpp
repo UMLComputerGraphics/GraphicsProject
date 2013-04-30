@@ -141,13 +141,6 @@ public:
   Camera *obj2Cam( std::list< Object* >::iterator &it );
 
   void toggleDivision( void );
-  
-  void setSpeed(float num);
-  void setMaxAcceleration(float num);
-	 void setFriction(float num);
-	 float getSpeed();
-	 float getMaxAcceleration();
-	 float getFriction();
 
 private:
   
