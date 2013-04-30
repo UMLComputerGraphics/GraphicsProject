@@ -412,7 +412,7 @@ void Engine::phongSong(bool enabled)
   if (uni)
   {
     _floss = enabled;
-    glUniform1d(uni, enabled);
+    glUniform1i(uni, (enabled ? 1 : 0));
   }
 }
 
