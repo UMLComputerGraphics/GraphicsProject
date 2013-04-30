@@ -762,3 +762,29 @@ Angel::vec3 Object::getMin( void ) {
   return min;
 
 }
+
+void Object::bufferToRaytracer( RayTracer &rt ) {
+
+  const vec3 diffuse = vec3(0.0, 1.0, 0.0);
+  const vec3 ambient = vec3(0.0, 0.1, 0.0);
+  const vec3 specular = vec3(0.0, 0.0, 0.0);
+  const float shininess = 1.0;
+  const float reflect = 0.5;
+  const float refract = 0.0;
+  
+  std::vector< Angel::vec4 >::iterator it;
+
+  for ( it = _vertices.begin(); it != _vertices.end(); ++it ) {
+    vec3 a = vec3( it->x, it->y, it->z );
+    if ( ++it == _vertices.end() ) break;
+    vec3 b = vec3( it->x, it->y, it->z );
+    if ( ++it == _vertices.end() ) break;
+    vec3 c = vec3( it->x, it->y, it->z );
+
+    rt.addTriangle( a, b, c, diffuse, ambient, specular, shininess, reflect, refract );
+
+  }
+
+  Scene::bufferToRaytracer( rt );
+
+}

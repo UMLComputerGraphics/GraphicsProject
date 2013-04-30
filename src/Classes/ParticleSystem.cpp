@@ -501,3 +501,8 @@ void ParticleSystem::setPause(bool b)
 	row*sin(phi)*sin(theta),
 	row*cos(phi) ));
  */
+
+// Nada. Don't buffer particles to the raytracer,
+// That's crazy-talk!
+void ParticleSystem::bufferToRaytracer( RayTracer &rt ) { }
+

@@ -177,7 +177,7 @@ void MONOLITH::run() {
   // Load up that goddamned candle
   Object *stick;
   Object *candle_top;
-  Object *candle_top_melted;
+  //Object *candle_top_melted;
   Object *candle_base;
 
   candle_top = rootScene->addObject( "candle_top", noMorphShader );
@@ -289,7 +289,9 @@ void MONOLITH::raytraceStatusChanged(bool newstatus)
     rt.init(shader[3]);
     std::vector<Object *> objs;
     //ITERATE OVER ALL OBJS IN SCENE!
-    rt.genereateScene(objs);
+
+    Engine::instance()->rootScene()->bufferToRaytracer( rt );
+    //    rt.genereateScene(objs);
   }
   else
   {

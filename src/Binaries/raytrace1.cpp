@@ -327,6 +327,10 @@ void display( void ) {
       0                   // offset of first element
       );
   
+  std::cerr << "uRM: " << cameraLeft.getRotationMatrix() << "\n";
+  std::cerr << "cLeft: " << cameraLeft.getCameraPosition() << "\n";
+  std::cerr << "cRight: " << cameraRight.getCameraPosition() << "\n";
+
   if ( stereo ) {
     cameraLeft.copyCamera( &camera );
     cameraLeft.moveCamera( -0.1, 0.0, 0.0 );

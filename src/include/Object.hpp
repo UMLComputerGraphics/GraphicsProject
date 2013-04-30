@@ -315,6 +315,8 @@ public:
    */
   Angel::vec3 getMin( void );
 
+  virtual void bufferToRaytracer( RayTracer &rt );
+
 protected:
 
   /** _name is used as an identifying handle for the object. **/

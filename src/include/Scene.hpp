@@ -13,6 +13,8 @@
 #include <list>
 #include <vector>
 #include "platform.h" // for GLuint
+#include "RayTracer.h"
+
 /**
  * Forward reference so we can return pointers to Objects,
  * Instead of pointers to scenes.
@@ -172,6 +174,8 @@ public:
   void propagate( void );
 
   void printTree( unsigned level = 0 );
+
+  virtual void bufferToRaytracer( RayTracer &rt );
 
 protected:
   /**

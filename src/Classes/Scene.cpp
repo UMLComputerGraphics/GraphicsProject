@@ -334,3 +334,14 @@ void Scene::printTree( unsigned level ) {
   }
 
 }
+
+
+
+void Scene::bufferToRaytracer( RayTracer &rt ) {
+
+  std::list< Object* >::iterator it;
+  for ( it = _list.begin(); it != _list.end(); ++it ) {
+    (*it)->bufferToRaytracer( rt );
+  }
+
+}
