@@ -408,6 +408,10 @@ ParticleSystem::update() {
 
 		_vertices.push_back((*i)->getPosition());
 		_colors.push_back((*i)->getColor());
+
+
+
+
 	}
 }
 

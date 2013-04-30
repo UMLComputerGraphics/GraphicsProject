@@ -24,7 +24,8 @@ MONOLITH::MONOLITH(int argc, char** argv) :
     lightAmbient = (GLfloat*)malloc(sizeof(GLfloat)*4);
     lightAmbient[0]=lightAmbient[1]=lightAmbient[2]=lightAmbient[3]=0.1;
     lightPositions = (GLfloat*)malloc(sizeof(GLfloat)*4);
-    lightPositions[0]=lightPositions[1]=1.0;
+    lightPositions[0]=1.0;
+    lightPositions[1]=1.0;
     lightPositions[2]=10.0;
     lightPositions[3]=1.0;
     lightDiffuse = (GLfloat*)malloc(sizeof(GLfloat)*4);
@@ -274,7 +275,17 @@ void MONOLITH::run() {
 
   
   max = candle_top->getMax();
-  ps = new ParticleSystem( 0, "ps1", particleShader );
+ 
+  /*
+    inspectorconstructor: if we have no way to adjust the number of particles, 
+    make sure we have some
+  */
+
+#ifdef WITHOUT_QT
+  ps = new ParticleSystem( 2500, "ps1", particleShader );
+#else
+  ps = new ParticleSystem(    0, "ps1", particleShader );
+#endif
   ps->setLifespan( 7.0, 12.0 );
   ps->setVectorField( ParticleFieldFunctions::flame);
   ps->setColorFunc(   ColorFunctions::flame );

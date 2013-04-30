@@ -32,7 +32,7 @@ void init() {
   particleSystemShader = Angel::InitShader( "shaders/vParticle2.glsl",
                                             "shaders/fParticle2.glsl",
                                             "shaders/gParticle.glsl",//"shaders/gParticle.glsl",
-      GL_POINTS, GL_TRIANGLE_STRIP, 12 );
+      GL_TRIANGLES, GL_TRIANGLE_STRIP, 12 );
   
   rootScene->shader( particleSystemShader );
   primScreen->_camList.shader( particleSystemShader );
