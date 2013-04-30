@@ -29,6 +29,7 @@ SOURCES += \
         Classes/Engine.cpp \
         # KinectInator.cpp \
         Classes/mat.cpp \
+	   Classes/Material.cpp \
         # not needed anymore Classes/meshMapping.cpp \
         Classes/Object.cpp \
         Classes/Particle.cpp \
@@ -70,6 +71,7 @@ HEADERS  += include/bipartiteGraph.hpp \
             include/InitShader.hpp \
             #include/KinectInator.hpp\
             include/mat.hpp \
+		  include/Material.hpp \
             # not needed anymore include/meshMapping.hpp \
             include/modelFunctions.hpp \
             include/model.hpp \
