@@ -19,12 +19,12 @@ vec4 ColorFunctions::flame( float lifePct, vec4 posIn ) {
     r = 0.4;
     g = 0.6;
     b = 0.8;
-    w = 1 - lifePct;
+    w = (1 - lifePct)/2;
   } else {
     r = lifePct + 0.25;
     g = lifePct/2;
     b = 0.0;
-    w = 1.0;
+    w = lifePct;
   }
   
   //return 2*normalize(vec4(r, g, b, w ));

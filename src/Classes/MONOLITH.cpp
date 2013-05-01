@@ -286,12 +286,13 @@ void MONOLITH::run() {
 #else
   ps = new ParticleSystem(    0, "ps1", particleShader );
 #endif
-  ps->setLifespan( 7.0, 12.0 );
+  ps->setLifespan( 10.0, 15.0 );
   ps->setVectorField( ParticleFieldFunctions::flame);
   ps->setColorFunc(   ColorFunctions::flame );
-  ps->setEmitterRadius( 0.02 );
+  ps->setEmitterRadius( 0.04 );
   candle_top->insertObject( ps );
-  ps->_trans._offset.set( 0, max.y, 0 );
+  ps->_trans._offset.set( 0, max.y - 0.02 , 0 );
+  ps->_trans._scale.set( 2 );
 
  /* If you fill the system, the flame will have a non-flamelike pulsing effect. 
     Please don't!
@@ -300,6 +301,9 @@ void MONOLITH::run() {
 
   //ps->propagateOLD();
   candle_top->propagateOLD();
+  
+  //Make the particles look bigger and awesomer
+  glPointSize( 1.8 );
 
   Engine::instance()->cams()->active()->pos(2.0, 5.0, 9.0);
   

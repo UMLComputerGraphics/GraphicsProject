@@ -89,9 +89,9 @@ vec3 ParticleFieldFunctions::flame(vec4 pos)
 	//attractor code!!!
 	attractor atr_top ;
 
-	atr_top.power    = 0.075 ;
-	atr_top.position = vec3(0.0, 0.3, 0.0) ;
-	atr_top.range =	0.14;
+	atr_top.power    = 0.1 ;
+	atr_top.position = vec3(0.0, 0.45, 0.0) ;
+	atr_top.range =	0.24;
 	// get the distance from the attractor
 	vec3 atrDist = atr_top.position - xyz(pos) ;
 
