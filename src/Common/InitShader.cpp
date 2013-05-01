@@ -158,7 +158,7 @@ namespace Angel {
     }
     
     // Gshader gak
-#ifdef APPLE
+#ifdef __APPLE__
     if (nShaders == 3) {
         glProgramParameteriEXT( program, GL_GEOMETRY_INPUT_TYPE_EXT,
 				GL_POINTS );
@@ -269,7 +269,7 @@ namespace Angel {
     }
     
     // Gshader gak
-#ifdef APPLE
+#ifdef __APPLE__
     if ( gShaderFile != NULL ){
       glProgramParameteriEXT( program, GEOMETRY_VERTICES_OUT_EXT, gs_numVertOut );
 
