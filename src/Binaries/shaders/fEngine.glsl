@@ -62,9 +62,9 @@ void main() {
         specular = vec4(0.0, 0.0, 0.0, 1.0);
       }
 
-      gl_FragColor = diffuse + specular + gl_FragColor;
+      gl_FragColor += vec4( (ambient + diffuse + specular).xyz, 1.0 );
     }
-    gl_FragColor = (1.0 / gl_FragColor.a) * gl_FragColor;
+    //gl_FragColor = (1.0 / gl_FragColor.a) * gl_FragColor;
   } else {
     gl_FragColor = baseColor;
   }

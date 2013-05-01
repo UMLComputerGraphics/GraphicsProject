@@ -127,12 +127,13 @@ Object::Object( const std::string &name, GLuint gShader ) {
   
   // Create the Color _buffer and link it with the shader.
   createAndBind( GL_ARRAY_BUFFER, COLORS, "vColor", 4, GL_FLOAT, GL_FALSE, 0, 0 );
+  //Only need to call these once, consider removing from constructor?
   glEnable( GL_BLEND );
   glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 
   // Create the Color Morph _buffer and link it with the shader.
   createAndBind( GL_ARRAY_BUFFER, COLORS_MORPH, "vColorMorph", 4, GL_FLOAT, GL_FALSE, 0, 0 );
-  glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+  //glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
   
   // Create the texture Coordinate _buffer and link it with the shader.
   createAndBind( GL_ARRAY_BUFFER, TEXCOORDS, "vTex", 2, GL_FLOAT, GL_FALSE, 0, 0 );

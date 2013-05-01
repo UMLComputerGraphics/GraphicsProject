@@ -47,6 +47,7 @@ ParticleSystem::ParticleSystem( int particleAmt, const std::string &name,
 	this->_vecFieldFunc = NULL;
 	setColorFunc( ColorFunctions::standard );
 	this->setVectorField( ParticleFieldFunctions::up );
+	
 }
 
 ParticleSystem::~ParticleSystem( void ) {

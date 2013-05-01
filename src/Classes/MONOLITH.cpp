@@ -306,6 +306,10 @@ void MONOLITH::run() {
   glPointSize( 1.8 );
 
   Engine::instance()->cams()->active()->pos(2.0, 5.0, 9.0);
+
+
+  // need this for smoothness
+  glShadeModel(GL_SMOOTH);
   
 #ifndef WITHOUT_QT
 #ifndef __APPLE__
