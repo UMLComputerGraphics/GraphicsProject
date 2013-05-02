@@ -32,9 +32,9 @@ public:
 	const vec3 getDiffuse() const;
 	const vec3 getSpecular() const;
 
-	const float getShininess() const;
-	const float getTransparency() const;
-	const float getRefract() const;
+	float getShininess() const;
+	float getTransparency() const;
+	float getRefract() const;
 
 	/**
 	 * This function initializes the uniforms for the material in the shader. 

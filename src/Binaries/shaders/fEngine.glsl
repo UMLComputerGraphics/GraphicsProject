@@ -30,6 +30,8 @@ void main() {
 
   vec4 baseColor;
 
+  vec3 N = normalize(fNormal);
+
   if (fIsTextured) {
     baseColor = texture2D( sampler[0], fTex );
   } else {
@@ -49,18 +51,20 @@ void main() {
 
       vec3 lightPos = (uLightPositions[i]).xyz;
           
-      vec3 L = normalize(lightPos - pos);
+      vec3 L = normalize(lightPos);
       vec3 E = normalize(-pos);
       vec3 H = normalize(L + E);
 
-      float Kd = max( dot(L, fNormal), 0.0 );
+      float Kd = max( dot(L, N), 0.0 );
       vec4 diffuse = Kd * uLightDiffuse[i] * baseColor;
 
-      float Ks = pow( max(dot(fNormal, H), 0.0), materialShininess);
+      float Ks = pow( max(dot(N, H), 0.0), materialShininess);
       vec4  specular = Ks * uLightSpecular[i] * materialSpecular;
       if( dot(L, fNormal) < 0.0) {
         specular = vec4(0.0, 0.0, 0.0, 1.0);
       }
+
+	 //gl_FragColor = diffuse;
 
       gl_FragColor += vec4( (ambient + diffuse + specular).xyz, 1.0 );
     }
