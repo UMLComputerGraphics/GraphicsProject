@@ -167,6 +167,11 @@ rmtargets: _rmtargets
 clobber: _clean _rmtargets clean-qt
 	@echo "Removed objects and executables."
 
+.PHONY: fresh
+fresh:
+	$(MAKE) clobber
+	$(MAKE) all
+
 .PHONY: qt
 qt: qMakefile
 	$(MAKE) -f qMakefile
