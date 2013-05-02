@@ -60,6 +60,7 @@ SOURCES += \
 	Classes/nearestNeighbor.cpp \
 	Classes/RayTracer.cpp \
 	Classes/scanMatching.cpp \
+    Qt/dialog.cpp
 
 HEADERS  += include/bipartiteGraph.hpp \
 		   include/Camera.hpp \
@@ -101,7 +102,8 @@ HEADERS  += include/bipartiteGraph.hpp \
             include/WiiUtil.h \
             # QT Stuff >(^_^)>
             include/mainwindow.h \
-            include/MONOLITH.hpp
+            include/MONOLITH.hpp \
+    Qt/dialog.h
 
 # Common Settings
 INCLUDEPATH += . ./include/
@@ -121,4 +123,5 @@ LIBS += -L/opt/local/lib -lMagick++ -lboost_thread-mt #fMod/lib/libfmodex.dylib
 }
 
 FORMS    += \
-    Qt/mainwindow.ui
+    Qt/mainwindow.ui \
+    Qt/dialog.ui
