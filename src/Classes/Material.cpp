@@ -113,15 +113,15 @@ const vec3 Material::getSpecular() const {
 	return this->specular;	
 }
 
-const float Material::getShininess() const {
+float Material::getShininess() const {
 	return this->shininess;	
 }
 
-const float Material::getTransparency() const {
+float Material::getTransparency() const {
 	return this->transparency;	
 }
 
-const float Material::getRefract() const {
+float Material::getRefract() const {
 	return this->ior;
 }
 
