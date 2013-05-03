@@ -46,7 +46,7 @@ ParticleSystem::ParticleSystem( int particleAmt, const std::string &name,
 	this->drawMode( GL_POINTS );
 	this->_vecFieldFunc = NULL;
 	setColorFunc( ColorFunctions::standard );
-	this->setVectorField( ParticleFieldFunctions::up );
+	this->setVectorField( ParticleFieldFunctions::upDefault );
 	
 }
 

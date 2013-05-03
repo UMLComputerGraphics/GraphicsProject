@@ -206,7 +206,7 @@ void MONOLITH::run() {
 
   bottle->genMorphTarget();
   Object *bottleMorphTarget = bottle->morphTarget();
-  ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle_liquor_high.obj" );
+  ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle_liquor_high3.obj" );
   ObjLoader::loadMaterialFromFile( bottleMorphTarget, "../models/bottle_liquor_high.mtl" );
   bottleMorphTarget->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
 
@@ -308,7 +308,7 @@ void MONOLITH::run() {
   ps = new ParticleSystem(    0, "ps1", particleShader );
 #endif
   ps->setLifespan( 10.0, 15.0 );
-  ps->setVectorField( ParticleFieldFunctions::flame);
+  ps->setVectorField( ParticleFieldFunctions::flameDefault);
   ps->setColorFunc(   ColorFunctions::flame );
   ps->setEmitterRadius( 0.04 );
   candle_top->insertObject( ps );
