@@ -133,6 +133,27 @@ void MONOLITH::slotEnableParticleSystem(bool isEnabled)
     }
 }
 
+void MONOLITH::slotParticleFieldFunction(int index)
+{
+    switch (index)
+    {
+    case 0:
+        ps->setVectorField( ParticleFieldFunctions::flame);
+        break;
+    case 1:
+        ps->setVectorField(ParticleFieldFunctions::tornado);
+        printf("changed to tornado\n");
+        break;
+    case 2:
+
+    default:
+        ps->setVectorField( ParticleFieldFunctions::flame);
+        break;
+    }
+
+
+}
+
 #endif //WITHOUT_QT
 
 /**

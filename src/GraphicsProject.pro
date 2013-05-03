@@ -103,7 +103,7 @@ HEADERS  += include/bipartiteGraph.hpp \
             # QT Stuff >(^_^)>
             include/mainwindow.h \
             include/MONOLITH.hpp \
-    Qt/dialog.h
+            include/dialog.h
 
 # Common Settings
 INCLUDEPATH += . ./include/

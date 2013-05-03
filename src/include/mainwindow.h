@@ -44,8 +44,11 @@ signals:
     /* Particles */
 	void sigChangeNumberOfParticles(int value);
 	void sigFreezeParticles(bool isEnabled);
-    void sigFlameEquation(QString equation);
-	
+    void sigParticleFieldFunction(int index);
+
+private slots:
+    void on_addObjectButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

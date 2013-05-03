@@ -1,5 +1,6 @@
 #include "dialog.h"
 #include "ui_dialog.h"
+#include <QFileDialog>
 
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
@@ -11,4 +12,11 @@ Dialog::Dialog(QWidget *parent) :
 Dialog::~Dialog()
 {
     delete ui;
+}
+
+void Dialog::on_objLocationButton_clicked()
+{
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
+                                                    "",
+                                                   tr("Files (*.obj*)"));
 }

@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "dialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -25,6 +26,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->WhiskyBottleRadioButton, SIGNAL(clicked()),
             this, SIGNAL(sigMorphToWhiskyBottle()));
 
+    connect(ui->particleFieldFunctionComboBox, SIGNAL(currentIndexChanged(int)),
+            this, SIGNAL(sigParticleFieldFunction(int)));
+
     /* Attempt to get the 'connect' work the other way */
     //connect(this, SIGNAL(sigMorphPercentageOut(int)),
     //        ui->morphPercentageSlider, SLOT(setValue(int)));
@@ -35,4 +39,11 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::on_addObjectButton_clicked()
+{
+    Dialog addObjectDialog;
+    addObjectDialog.setModal(true);
+    addObjectDialog.exec();
 }
