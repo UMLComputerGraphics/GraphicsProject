@@ -24,9 +24,9 @@ MONOLITH::MONOLITH(int argc, char** argv) :
     lightAmbient = (GLfloat*)malloc(sizeof(GLfloat)*4);
     lightAmbient[0]=lightAmbient[1]=lightAmbient[2]=lightAmbient[3]=0.1;
     lightPositions = (GLfloat*)malloc(sizeof(GLfloat)*4);
-    lightPositions[0]=1.0;
-    lightPositions[1]=1.0;
-    lightPositions[2]=10.0;
+    lightPositions[0]=1.3;
+    lightPositions[1]=4.13;
+    lightPositions[2]=1.3;
     lightPositions[3]=1.0;
     lightDiffuse = (GLfloat*)malloc(sizeof(GLfloat)*4);
     lightSpecular = (GLfloat*)malloc(sizeof(GLfloat)*4);
