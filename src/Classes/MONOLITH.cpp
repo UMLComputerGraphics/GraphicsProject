@@ -243,7 +243,7 @@ void MONOLITH::run() {
 
   fprintf(stderr, "table! (%f, %f, %f)\n", table->getMax().x, table->getMax().y, table->getMax().z);
 
-  // Load up that goddamned candle
+  // Load up that candle
   Object *stick;
   Object *candle_top;
   //Object *candle_top_melted;
@@ -303,14 +303,14 @@ void MONOLITH::run() {
   */
 
 #ifdef WITHOUT_QT
-  ps = new ParticleSystem( 2500, "ps1", particleShader );
+  ps = new ParticleSystem( 3000, "ps1", particleShader );
 #else
   ps = new ParticleSystem(    0, "ps1", particleShader );
 #endif
-  ps->setLifespan( 10.0, 15.0 );
+  ps->setLifespan( 9.0, 12.0 );
   ps->setVectorField( ParticleFieldFunctions::flameDefault);
   ps->setColorFunc(   ColorFunctions::flame );
-  ps->setEmitterRadius( 0.04 );
+  ps->setEmitterRadius( 0.05 );
   candle_top->insertObject( ps );
   ps->_trans._offset.set( 0, max.y - 0.02 , 0 );
   ps->_trans._scale.set( 2 );

@@ -47,7 +47,7 @@ vec3 ParticleFieldFunctions::fixed(vec4 pos)
 
 vec3 ParticleFieldFunctions::fixedDefault( vec4 pos )
 {
-	return fixed( pos );
+  return fixed( pos );
 }
 
 vec3 ParticleFieldFunctions::up(vec4 pos)
