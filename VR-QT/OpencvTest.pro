@@ -20,6 +20,8 @@ HEADERS  += dialog.h
 FORMS    += dialog.ui
 
 unix:!macx {
+INCLUDEPATH += . $(shell pkg-config opencv --cflags | sed 's/-I//g')
+LIBS += $(shell pkg-config opencv --libs)
 }
 
 unix:macx {

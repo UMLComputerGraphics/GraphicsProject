@@ -185,7 +185,7 @@ void MONOLITH::run() {
 
   bottle->genMorphTarget();
   Object *bottleMorphTarget = bottle->morphTarget();
-  ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle_liquor_high.obj" );
+  ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle_liquor_high3.obj" );
   ObjLoader::loadMaterialFromFile( bottleMorphTarget, "../models/bottle_liquor_high.mtl" );
   bottleMorphTarget->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
 
