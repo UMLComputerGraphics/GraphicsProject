@@ -274,6 +274,11 @@ ParticleSystem::getNumParticles( void ) {
 	return _numParticles;
 }
 
+int
+ParticleSystem::getNumParticlesActual( void ) {
+  return _vertices.size();
+}
+
 void
 ParticleSystem::setLifespan( float minLifespan, float maxLifespan ) {
 	_minLife = minLifespan;
