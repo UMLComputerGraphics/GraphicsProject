@@ -287,7 +287,7 @@ void MONOLITH::run() {
   ps = new ParticleSystem(    0, "ps1", particleShader );
 #endif
   ps->setLifespan( 10.0, 15.0 );
-  ps->setVectorField( ParticleFieldFunctions::flame);
+  ps->setVectorField( ParticleFieldFunctions::flameDefault);
   ps->setColorFunc(   ColorFunctions::flame );
   ps->setEmitterRadius( 0.04 );
   candle_top->insertObject( ps );

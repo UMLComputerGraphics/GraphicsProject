@@ -10,6 +10,13 @@ using Angel::vec2;
 using Angel::vec3;
 using Angel::vec4;
 
+typedef struct s_attractor{
+
+	float power;
+	vec3 position;
+	float range;
+
+} attractor;
 
 double getTheta(vec4 pos)
 {
@@ -38,11 +45,20 @@ vec3 ParticleFieldFunctions::fixed(vec4 pos)
   return vec3(0.0,0.0,0.0);
 }
 
+vec3 ParticleFieldFunctions::fixedDefault( vec4 pos )
+{
+	return fixed( pos );
+}
+
 vec3 ParticleFieldFunctions::up(vec4 pos)
 {
   return vec3(0.0,0.01,0.0);
 }
 
+vec3 ParticleFieldFunctions::upDefault( vec4 pos )
+{
+	return up( pos );
+}
 
 //FIXME DOCS PARAMETERS
 vec3 ParticleFieldFunctions::tornado(vec4 pos)
@@ -64,24 +80,20 @@ vec3 ParticleFieldFunctions::tornado(vec4 pos)
 
 }
 
+vec3 ParticleFieldFunctions::tornadoDefault( vec4 pos )
+{
+	return tornado( pos );
+}
 
-
-typedef struct s_attractor{
-
-	float power;
-	vec3 position;
-	float range;
-
-} attractor;
-
-vec3 ParticleFieldFunctions::flame(vec4 pos)
+vec3 ParticleFieldFunctions::flame(vec4 pos, vec3 atrPos = vec3(0.0, 0.45, 0.0),
+		double scl = 0.01, float pwr = 0.1, float rng = 0.24 )
 {
 
 	vec3 retVal ;
 
 	//float steepness = ParticleSystem::rangeRandom(2,100) ;
 
-	double scale = 0.01;
+	double scale = scl;
 	retVal.x = pos.x*scale;
 	retVal.z = pos.z*scale;
 	retVal.y = 5*(pos.x*pos.x + pos.z*pos.z);
@@ -89,9 +101,9 @@ vec3 ParticleFieldFunctions::flame(vec4 pos)
 	//attractor code!!!
 	attractor atr_top ;
 
-	atr_top.power    = 0.1 ;
-	atr_top.position = vec3(0.0, 0.45, 0.0) ;
-	atr_top.range =	0.24;
+	atr_top.power    = pwr ;
+	atr_top.position = atrPos ;
+	atr_top.range =	rng;
 	// get the distance from the attractor
 	vec3 atrDist = atr_top.position - xyz(pos) ;
 
@@ -120,6 +132,11 @@ vec3 ParticleFieldFunctions::flame(vec4 pos)
 	
 	return 0.002 * normalize(retVal);
 
+}
+
+vec3 ParticleFieldFunctions::flameDefault( vec4 pos )
+{
+	return flame( pos );
 }
 
 vec3 ParticleFieldFunctions::flameold(vec4 pos) {
@@ -164,6 +181,10 @@ vec3 ParticleFieldFunctions::flameold(vec4 pos) {
 
 }
 
+vec3 ParticleFieldFunctions::flameoldDefault( vec4 pos )
+{
+	return flameold( pos );
+}
 
 Angel::vec3 ParticleFieldFunctions::userSupplied( Angel::vec4 pos ) {
 	static std::string expressions[3];
