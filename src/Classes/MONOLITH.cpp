@@ -138,7 +138,7 @@ void MONOLITH::slotParticleFieldFunction(int index)
     switch (index)
     {
     case 0:
-        ps->setVectorField( ParticleFieldFunctions::flame);
+        ps->setVectorField( ParticleFieldFunctions::flameDefault);
         break;
     case 1:
         ps->setVectorField(ParticleFieldFunctions::tornado);
@@ -147,7 +147,7 @@ void MONOLITH::slotParticleFieldFunction(int index)
     case 2:
 
     default:
-        ps->setVectorField( ParticleFieldFunctions::flame);
+        ps->setVectorField( ParticleFieldFunctions::flameDefault);
         break;
     }
 
