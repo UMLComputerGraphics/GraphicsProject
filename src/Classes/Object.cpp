@@ -846,3 +846,8 @@ void Object::setLights(GLfloat* ambient, GLint* numlights, GLfloat* positions, G
   _lightSpecular = specular;
 
 }
+
+void Object::setLights()
+{
+  //TODO: make this set light variables based on global lights configurations
+}

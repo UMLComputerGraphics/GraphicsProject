@@ -320,6 +320,7 @@ public:
 
   virtual void bufferToRaytracer( RayTracer &rt );
   void setLights(GLfloat* ambient, GLint* numlights, GLfloat* positions, GLfloat* diffuse, GLfloat* specular);
+  void setLights();
 
 protected:
 
