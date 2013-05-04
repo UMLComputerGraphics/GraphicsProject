@@ -61,10 +61,12 @@ LDLIBS = -lMagick++ -lboost_thread-mt
 ifdef POSTMULT
 	CXXDEFS += -DPOSTMULT
 endif
-
 ifdef WII
     CXXDEFS += -DWII -I/usr/local/include/wiic
     LDLIBS += -lwiic -lwiicpp
+endif
+ifdef EXPRTK
+    CXXDEFS += -DEXPRTK
 endif
 
 # Platform-dependent configuration.

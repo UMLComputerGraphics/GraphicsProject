@@ -82,6 +82,14 @@ void RayTracer::_display( void ) {
       );
 
 
+  //this stuff is important. WOOPS!
+  glUniform1i( uDisplay, 0 );
+
+  glUniformMatrix4fv( uRotationMatrix, 1, GL_TRUE,
+                      Engine::instance()->cams()->active()->_trans._rotation.matrix() );
+  glUniform4fv( uCameraPosition, 1, Engine::instance()->cams()->active()->_trans._displacement.matrix() );
+  glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
 
   glutSwapBuffers();
   glDisableVertexAttribArray( vRayPosition );

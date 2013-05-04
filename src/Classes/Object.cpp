@@ -95,6 +95,7 @@ Object::Object( const std::string &name, GLuint gShader ) {
 
   // Pointer to an Object to Morph to.
   _morphTarget = NULL;
+  _material = NULL;
   
   /* Create our VAO, which is our handle to all 
    the rest of the following information. */
@@ -253,7 +254,7 @@ Object::~Object( void ) {
   for ( it = _textures.begin(); it != _textures.end(); ++it )
     delete (*it);
 
-  delete material;
+  if ( _material != NULL ) delete _material;
 }
 
 /**
@@ -757,8 +758,8 @@ size_t Object::numberOfPoints( void ) {
 **/
 void Object::addMaterial(Material *newMaterial) {
  
-  material = newMaterial;
-  this->color = material->getDiffuse();
+  _material = newMaterial;
+  this->color = _material->getDiffuse();
 
   _colors.clear();
 
@@ -773,7 +774,7 @@ void Object::addMaterial(Material *newMaterial) {
  */
 Material *Object::getMaterial()
 {
-  return material;
+  return _material;
 }
 
 /**

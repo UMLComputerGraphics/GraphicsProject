@@ -52,6 +52,7 @@ void MONOLITH::cleanup(void)
     if(lightSpecular)free(lightSpecular);
 }
 
+bool heisenbergUncertaintyPrinciple;
 /**
  * Apply animations and whatever else your heart desires.
  */
@@ -62,10 +63,6 @@ void MONOLITH::monolith_idle(void)
     // Animation variables.
     double timer = glutGet( GLUT_ELAPSED_TIME ) / 500.0;
     float percent = (sin( timer ) + 1.0) / 2.0;
-#ifndef WITHOUT_QT
-    int pct = (int)floor(percent * 100.0);
-    if (_percentageCallback) _percentageCallback(pct);
-#endif
     
     Object &candle = *((*rootScene)["bottle"]);
     candle.animation( simpleRotateAnim );
@@ -83,6 +80,16 @@ void MONOLITH::monolith_idle(void)
     if((*rootScene)["bottle"]->morphEnabled())
     {
         (*rootScene)["bottle"]->morphPercentage(percent);
+
+#ifndef WITHOUT_QT
+        int pct = (int)floor(percent * 100.0);
+        if (_percentageCallback)
+        {
+          heisenbergUncertaintyPrinciple = true;
+          _percentageCallback(pct);
+          heisenbergUncertaintyPrinciple = false;
+        }
+#endif
     }
 }
 
@@ -102,9 +109,9 @@ void MONOLITH::slotFreezeParticles(bool isEnabled)
 {
 	ps->setPause(isEnabled);
 }
-
 void MONOLITH::slotMorphPercentage(int value)
 {
+  if (!heisenbergUncertaintyPrinciple)
     (*rootScene)["bottle"]->morphPercentage(value / 100.0);
 }
 void MONOLITH::setMorphPercentageCallback(boost::function<void(int)> cb)
@@ -113,6 +120,7 @@ void MONOLITH::setMorphPercentageCallback(boost::function<void(int)> cb)
 }
 void MONOLITH::slotEnableMorphing(bool isEnabled)
 {
+  gprint(PRINT_WARNING, "MORPHING := %s\n", isEnabled?"ENABLED":"DISABLED");
    (*rootScene)["bottle"]->morphEnabled(isEnabled);
 }
 
@@ -399,6 +407,7 @@ void MONOLITH::raytraceStatusChanged(bool newstatus)
     //ITERATE OVER ALL OBJS IN SCENE!
 
     Engine::instance()->rootScene()->bufferToRaytracer( rt );
+    rt.pushDataToBuffer();
     //    rt.genereateScene(objs);
   }
   else

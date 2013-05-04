@@ -394,7 +394,7 @@ protected:
   GLint _uNumLights;
 
   /** The material properties of this object **/
-  Material *material;
+  Material *_material;
 
 private:
 
