@@ -100,12 +100,17 @@ Object *Scene::addObject( const std::string &objName, GLuint shader ) {
  */
 void Scene::replaceShader(GLuint originalGangster, GLuint newShader)
 {
+  if (newShader == 0 && originalGangster > 0) newShader = originalGangster;
   if (_shader_map.find(originalGangster) != _shader_map.end())
   {
     for(size_t i=0;i<_shader_map[originalGangster].size();i++)
     {
       _shader_map[originalGangster][i]->shader(newShader);
     }
+  }
+  std::list< Object* >::iterator it;
+  for ( it = _list.begin(); it != _list.end(); ++it ) {
+    (*it)->replaceShader(originalGangster, newShader);
   }
 }
 
@@ -350,6 +355,7 @@ void Scene::printTree( unsigned level ) {
 
 void Scene::bufferToRaytracer( RayTracer &rt ) {
 
+  gprint(PRINT_INFO, "SCENE: BUFFERING TO RAYTRACER!\n");
   std::list< Object* >::iterator it;
   for ( it = _list.begin(); it != _list.end(); ++it ) {
     (*it)->bufferToRaytracer( rt );

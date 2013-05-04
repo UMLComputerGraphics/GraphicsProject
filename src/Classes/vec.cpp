@@ -335,7 +335,9 @@ namespace Angel {
   }
   
   vec3 normalize( const vec3& v ) {
+    if (length(v)!=0)
     return v / length( v );
+    return v;
   }
   
   vec3 cross( const vec3& a, const vec3& b ) {

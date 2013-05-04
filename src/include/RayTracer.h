@@ -13,7 +13,7 @@
 #include <cstdio>
 #include <cstring>
 #include <vector>
-//#include "Engine.hpp"
+#include "Util.hpp"
 //#include "Cameras.hpp"
 //#include "Scene.hpp"
 //#include "Screen.hpp"
@@ -26,7 +26,7 @@ class RayTracer
 {
   public:
     RayTracer();
-    boost::function<void(void)> display;
+    void _display(void);
     void init(GLint shader);
     void generateScene(void);
     void addVec3ToVector(std::vector<GLfloat> *_vector, vec3 _vec3);
@@ -39,7 +39,6 @@ class RayTracer
     virtual
     ~RayTracer();
   private:
-    void _display(void);
 
     int frameCount;
     float previousTime;
