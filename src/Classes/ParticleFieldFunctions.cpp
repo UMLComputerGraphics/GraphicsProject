@@ -2,8 +2,9 @@
 #include "ParticleSystem.hpp"
 #include "vec.hpp"
 #include "mat.hpp"
-
-//#include "exprtk/exprtk.hpp"
+#ifdef EXPRTK
+#include "exprtk/exprtk.hpp"
+#endif
 #include <cmath>
 
 using Angel::vec2;
@@ -186,45 +187,51 @@ vec3 ParticleFieldFunctions::flameoldDefault( vec4 pos )
 	return flameold( pos );
 }
 
+#ifdef EXPRTK
+class UserVectorField {
+public:
+  UserVectorField( const std::string &fx = "0x + 0y + 0z + 0",
+		   const std::string &fy = "0x + 0y + 0z + 0.01",
+		   const std::string &fz = "0x + 0y + 0z + 0" ) {
+    _table.add_variable("x",_input.x);
+    _table.add_variable("y",_input.y);
+    _table.add_variable("z",_input.z);
+    _table.add_constants();
+    
+    _ef[0].register_symbol_table( _table );
+    _ef[1].register_symbol_table( _table );
+    _ef[2].register_symbol_table( _table );
+
+    f( fx, 0 );
+    f( fy, 1 );
+    f( fz, 2 );
+  }
+  
+  Angel::vec3 f( Angel::vec4 input ) {
+    _input = input;
+    return vec3( _ef[0].value(), _ef[1].value(), _ef[2].value() );
+  }
+
+  /** use f( "string", index ) to change the f_x, f_y and f_z functions. **/
+  void f( const std::string &f, size_t i ) {
+    _f[i] = f;
+    _parser.compile( _f[i], _ef[i] );
+  }
+
+private:
+  std::string _f[3];
+  exprtk::expression<GLfloat> _ef[3];
+  exprtk::parser<GLfloat> _parser;
+  exprtk::symbol_table<GLfloat> _table;
+  Angel::vec4 _input;
+};
+
 Angel::vec3 ParticleFieldFunctions::userSupplied( Angel::vec4 pos ) {
-	static std::string expressions[3];
-	/*
-	static bool compiled = false;
-	static exprtk::expression<GLfloat> expression[3];
-	static exprtk::parser<GLfloat> parser;
-	static exprtk::symbol_table<GLfloat> symbol_table;
-	static vec4 *input = NULL;
-
-	if (!compiled) {
-	  input = new vec4;
-		expressions[0] = "0x + 0y + 0z + 0";
-		expressions[1] = "0x + 0y + 0z + 0";
-		expressions[2] = "0x + 0y + 0z + 0.1";
-
-		symbol_table.add_variable("x",input->x);
-		symbol_table.add_variable("y",input->y);
-		symbol_table.add_variable("z",input->z);
-		symbol_table.add_constants();
-
-		expression[0].register_symbol_table(symbol_table);
-		expression[1].register_symbol_table(symbol_table);
-		expression[2].register_symbol_table(symbol_table);
-
-		parser.compile(expressions[0], expression[0]);
-		parser.compile(expressions[1], expression[1]);
-		parser.compile(expressions[2], expression[2]);
-
-		compiled = true;
-	}
-	*input = pos;
-	Angel::vec3 res;
-	res.x = expression[0].value();
-	res.y = expression[1].value();
-	res.z = expression[2].value();
-	*/
-	return vec3(4, 2, 0);
+  static UserVectorField *uvf = NULL;
+  if (uvf == NULL) { uvf = new UserVectorField(); }
+  return uvf->f( pos );
 }
-
+#endif
 
 /* // jet 1?
 vec3 ParticleFieldFunctions::idk(vec4 pos)
