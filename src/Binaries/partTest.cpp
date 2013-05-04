@@ -39,9 +39,10 @@ void init() {
   
   funInTheSin = new ParticleSystem( numberOfParticles, "FunInTheSine",
                                     particleSystemShader );
-  funInTheSin->setLifespan( 0.5, 11.0 );
+  funInTheSin->setLifespan( 5.0, 10.0 );
   funInTheSin->setEmitterRadius( 0.1 );
-  funInTheSin->setVectorField( ParticleFieldFunctions::userSupplied );
+  //funInTheSin->setVectorField( ParticleFieldFunctions::userSupplied );
+  //funInTheSin->setVectorField( ParticleFieldFunctions::userSupplied );
   rootScene->insertObject( funInTheSin );
   funInTheSin->propagateOLD();
   funInTheSin->fillSystemWithParticles();
@@ -56,9 +57,9 @@ void init() {
 }
 
 void part_idle() {
-  funInTheSin->setEmitterRadius( sin( theta ) );
+  //funInTheSin->setEmitterRadius( sin( theta ) );
   theta += 0.01;
-  glUniform1f( thetaLoc, theta );
+  //glUniform1f( thetaLoc, theta );
 }
 
 //--------------------------------------------------------------------

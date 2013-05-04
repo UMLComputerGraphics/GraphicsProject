@@ -93,7 +93,6 @@ void init() {
     particleSystem->setVectorField( ParticleFieldFunctions::flameDefault );
     particleSystem->setEmitterRadius( 0.02 );
     particleSystem->drawMode( GL_TRIANGLES );
-    particleSystem->setParticleSpace( true );
     particleSystem->propagateOLD();
     
     rootScene->insertObject( particleSystem );

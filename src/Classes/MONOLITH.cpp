@@ -296,12 +296,8 @@ void MONOLITH::run() {
 
   
   max = candle_top->getMax();
- 
-  /*
-    inspectorconstructor: if we have no way to adjust the number of particles, 
-    make sure we have some
-  */
 
+  // ensure we have some particles without QT
 #ifdef WITHOUT_QT
   ps = new ParticleSystem( 3000, "ps1", particleShader );
 #else
@@ -314,6 +310,8 @@ void MONOLITH::run() {
   candle_top->insertObject( ps );
   ps->_trans._offset.set( 0, max.y - 0.02 , 0 );
   ps->_trans._scale.set( 2 );
+  ps->setEmitterShape(PS_HEMI_D);
+
 
  /* If you fill the system, the flame will have a non-flamelike pulsing effect. 
     Please don't!
