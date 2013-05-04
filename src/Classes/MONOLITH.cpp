@@ -194,7 +194,7 @@ void MONOLITH::run() {
 
   // Raytracing shader
   if (eng->glslVersion() >= 1.50)
-    shader[3] = Angel::InitShader( "shaders/vRaytracer.glsl",
+    shader[3] = Angel::InitShader( "shaders/vRaytracer.glsl", 
 				   "shaders/fRaytracer.glsl" );
   else
     shader[3] = 0;
@@ -395,26 +395,19 @@ void MONOLITH::raytraceStatusChanged(bool newstatus)
     //TODO handle particles
     //TODO handle scene graph
     printf("SWITCHING TO RAY TRACING SHADER!\n");
+    Engine::instance()->registerDisplayFunc(rt.display);
     rt.init(shader[3]);
-    Engine::instance()->registerDisplayFunc(boost::bind(&RayTracer::_display, &rt));
-    /*Engine::instance()->cams()->shader(shader[3]);
-    Engine::instance()->rootScene()->shader(shader[3]);*/
-    Engine::instance()->rootScene()->replaceShader(shader[1],shader[3]);
-    Engine::instance()->switchShader(shader[3]);
+    std::vector<Object *> objs;
     //ITERATE OVER ALL OBJS IN SCENE!
 
     Engine::instance()->rootScene()->bufferToRaytracer( rt );
     rt.pushDataToBuffer();
-    glutPostRedisplay();
     //    rt.genereateScene(objs);
   }
   else
   {
     printf("SWITCHING TO NORMAL SHADER!\n");
     Engine::instance()->unregisterDisplayFunc();
-    Engine::instance()->rootScene()->replaceShader(shader[1],shader[1]);
-    Engine::instance()->switchShader(shader[1]);
-    glutPostRedisplay();
   }
   printf("TODO: SWITCH VERTICES AND PUSH STUFF TO GPU APPROPRIATELY!\n");
 }

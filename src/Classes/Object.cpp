@@ -225,10 +225,9 @@ Object::checkForAttribCorruptionHelper(int typeIndex, const char *name)
 bool
 Object::checkForAttribCorruption(void)
 {
-  // return !checkForRaytracing(); //lol
-  return false;
 
-  /*bool status = false ;
+  bool status = false ;
+
   glBindVertexArray( _vao );
 
   if ( checkForAttribCorruptionHelper( VERTICES, "vPosition" )) status = true;
@@ -240,7 +239,7 @@ Object::checkForAttribCorruption(void)
 
   if ( status ) gprint( PRINT_WARNING, "Warning: attribute location corruption occurred: PANIC");
 
-  return status ;*/
+  return status ;
 
 }
 
@@ -263,8 +262,6 @@ Object::~Object( void ) {
  * but do not actually draw yet.
  */
 void Object::drawPrep( void ) {
-
-  printf("PREP!\n");
 
   // Check to see if the correct shader program is engaged.
   GLuint currShader = Engine::instance()->currentShader();
@@ -836,9 +833,8 @@ void Object::bufferToRaytracer( RayTracer &rt ) {
 
   }
 
-  gprint(PRINT_INFO, "Object: BUFFERING TO RAYTRACER!\n");
+  Scene::bufferToRaytracer( rt );
 
-  Scene::bufferToRaytracer(rt);
 }
 
 void Object::setLights(GLfloat* ambient, GLint* numlights, GLfloat* positions, GLfloat* diffuse, GLfloat* specular)
