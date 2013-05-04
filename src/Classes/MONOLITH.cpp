@@ -9,7 +9,6 @@
 
 #include "MONOLITH.hpp"
 
-
 MONOLITH::~MONOLITH(void)
 {
   cleanup();
@@ -169,6 +168,24 @@ void MONOLITH::slotParticleFieldFunction(int index)
 
 }
 
+/**
+ * @brief defaultNumberOfParticles (setter)
+ * @param value
+ */
+void MONOLITH::defaultNumberOfParticles(int value)
+{
+    _defaultNumberOfParticles = value;
+}
+
+/**
+ * @brief defaultNumberOfParticles (getter)
+ * @return
+ */
+int MONOLITH::defaultNumberOfParticles()
+{
+    return _defaultNumberOfParticles;
+}
+
 #endif //WITHOUT_QT
 
 /**
@@ -317,11 +334,7 @@ void MONOLITH::run() {
     make sure we have some
   */
 
-#ifdef WITHOUT_QT
-  ps = new ParticleSystem( 3000, "ps1", particleShader );
-#else
-  ps = new ParticleSystem(    0, "ps1", particleShader );
-#endif
+  ps = new ParticleSystem( _defaultNumberOfParticles, "ps1", particleShader );
   ps->setLifespan( 9.0, 12.0 );
   ps->setVectorField( ParticleFieldFunctions::flameDefault);
   ps->setColorFunc(   ColorFunctions::flame );

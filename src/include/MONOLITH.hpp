@@ -91,6 +91,25 @@ public:
      */
     void raytraceStatusChanged(bool newstatus);
 
+    /*
+     * I have to do it this way, because the only way monolith (glut) and the mainwindow (Qt)
+     * communicate is through final project. so they can only communicate value through
+     * functions.
+     *
+     * @franckamayou
+     */
+    /**
+     * @brief defaultNumberOfParticles setter
+     * @param value
+     */
+    void defaultNumberOfParticles(int value);
+
+    /**
+     * @brief defaultNumberOfParticles getter
+     * @return the default Number of particles
+     */
+    int defaultNumberOfParticles();
+
     
 #ifndef WITHOUT_QT
     void setMorphPercentageCallback(boost::function<void(int)> cb);
@@ -146,6 +165,8 @@ private:
     char **_argv;
     int _argc;
     
+    int _defaultNumberOfParticles = 3000;
+
     boost::thread zipo;
 
     boost::function<void(int)> _percentageCallback;
