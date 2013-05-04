@@ -95,6 +95,7 @@ Object::Object( const std::string &name, GLuint gShader ) {
 
   // Pointer to an Object to Morph to.
   _morphTarget = NULL;
+  _material = NULL;
   
   /* Create our VAO, which is our handle to all 
    the rest of the following information. */
@@ -127,12 +128,13 @@ Object::Object( const std::string &name, GLuint gShader ) {
   
   // Create the Color _buffer and link it with the shader.
   createAndBind( GL_ARRAY_BUFFER, COLORS, "vColor", 4, GL_FLOAT, GL_FALSE, 0, 0 );
+  //Only need to call these once, consider removing from constructor?
   glEnable( GL_BLEND );
   glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 
   // Create the Color Morph _buffer and link it with the shader.
   createAndBind( GL_ARRAY_BUFFER, COLORS_MORPH, "vColorMorph", 4, GL_FLOAT, GL_FALSE, 0, 0 );
-  glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+  //glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
   
   // Create the texture Coordinate _buffer and link it with the shader.
   createAndBind( GL_ARRAY_BUFFER, TEXCOORDS, "vTex", 2, GL_FLOAT, GL_FALSE, 0, 0 );
@@ -256,6 +258,8 @@ Object::~Object( void ) {
     delete _morphTarget;
     _morphTarget = NULL;
   }
+
+  if ( _material != NULL ) delete _material;
 
 }
 
@@ -756,17 +760,27 @@ size_t Object::numberOfPoints( void ) {
 
 /**
 * Adds material data to the object
-* @param diffuse The diffuse color
+* @param newMaterial The material to set to the object
 **/
-void Object::addMaterial(Angel::vec3 diffuse) {
+void Object::addMaterial(Material *newMaterial) {
  
-  this->color = diffuse;
+  _material = newMaterial;
+  this->color = _material->getDiffuse();
 
   _colors.clear();
 
   for ( size_t i = 0; i < _vertices.size(); ++i ) {
     _colors.push_back(vec4(color, 1));
   }
+}
+
+/**
+ * Retrieves the material object so we can get properties from it
+ * @return The material of this object
+ */
+Material *Object::getMaterial()
+{
+  return _material;
 }
 
 /**
@@ -838,4 +852,9 @@ void Object::setLights(GLfloat* ambient, GLint* numlights, GLfloat* positions, G
   _lightDiffuse = diffuse;
   _lightSpecular = specular;
 
+}
+
+void Object::setLights()
+{
+  //TODO: make this set light variables based on global lights configurations
 }

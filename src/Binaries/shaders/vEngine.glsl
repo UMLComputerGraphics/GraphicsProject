@@ -39,6 +39,7 @@ void main() {
   // If morphing is enabled, morphPercentage will be non-zero.
   // It is therefore easier to just always compute the following.
   fPosition = vPosition * (1.0 - morphPercentage) + vPositionMorph * morphPercentage;
+  fNormal = vNormal * (1.0 - morphPercentage) + vNormalMorph * morphPercentage;
 
   // World coordinates of this vertex.
   fPosition = OTM * fPosition;
@@ -65,6 +66,6 @@ void main() {
   }
 
   // Pass along the normal.
-  fNormal = vNormal;
+  //fNormal = vNormal;
 
 } // End main().

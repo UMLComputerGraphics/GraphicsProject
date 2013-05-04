@@ -218,6 +218,17 @@ void Scene::draw( void ) {
 }
 
 /**
+ * Calls the setLights method on all children.
+ * @return void.
+ */
+void Scene::setLights( void ) {
+  std::list< Object* >::iterator it;
+  for ( it = _list.begin(); it != _list.end(); ++it ) {
+    (*it)->setLights();
+  }
+}
+
+/**
  * Fetch an Object pointer from the scene graph with the matching name.
  * @param objname The name of the object to fetch.
  * @return The requested Object pointer.

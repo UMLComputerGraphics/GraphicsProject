@@ -11,6 +11,7 @@
 #include <map>
 
 #include "Engine.hpp"
+#include "Light.hpp"
 #include "Cameras.hpp"
 #include "Scene.hpp"
 #include "Screen.hpp"
@@ -128,6 +129,22 @@ Screen *Engine::mainScreen( void ) {
  */
 TextureManagement *Engine::texMan( void ){
   return &_texMan;
+}
+
+/**
+ * Gets the global light configuration
+ * @return A pointer to a vector of light pointers represeting the global light configuration
+ **/
+vector<Light*>* Engine::getLights( void ) {
+  return _lights;
+}
+
+/**
+ * Pushes a new light onto the global light configuration vector
+ * @return void
+ **/
+void Engine::addLight( Light *newLight ) {
+  _lights->push_back( newLight );
 }
 
 /**
@@ -252,7 +269,7 @@ void Engine::run( void ) {
 
 }
 
-void Engine::registerIdle( void (idleFunc)( void ) ) {
+void Engine::registerIdle( boost::function<void(void)> idleFunc ) {
   _idleFunc = idleFunc;
 }
 
@@ -303,7 +320,7 @@ void Engine::idle( void ) {
 }
 
 void Engine::callIdle( void ) {
-  if (_idleFunc) (*_idleFunc)();
+  if (_idleFunc) _idleFunc();
 }
 
 GLuint Engine::currentShader( void ) const {

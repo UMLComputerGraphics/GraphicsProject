@@ -13,6 +13,8 @@
 
 #include "MONOLITH.hpp"
 #include "OpenGL.h"
+#include <boost/bind.hpp>
+#include <boost/function.hpp>
 
 int main( int argc, char **argv ) {
   
@@ -42,10 +44,14 @@ int main( int argc, char **argv ) {
   QObject::connect(&w, SIGNAL(sigChangeNumberOfParticles(int)), &monolith, SLOT(slotParticleAdd(int)));
   QObject::connect(&w, SIGNAL(sigFreezeParticles(bool)), &monolith, SLOT(slotFreezeParticles(bool)));
   QObject::connect(&w, SIGNAL(sigMorphPercentage(int)), &monolith, SLOT(slotMorphPercentage(int)));
-  //QObject::connect(&monolith, SIGNAL(sigMorphPercentage(int)), &w, SLOT(sigMorphPercentageOut(int)));
+  
+  //Watch and learn
+  monolith.setMorphPercentageCallback((boost::function<void(int)>)boost::bind(&MainWindow::setMorphPercentageOut, &w, _1));
+
   QObject::connect(&w, SIGNAL(sigEnableMorphing(bool)), &monolith, SLOT(slotEnableMorphing(bool)));
   QObject::connect(&w, SIGNAL(sigEnableRaytracing(bool)), &monolith, SLOT(slotEnableRaytracing(bool)));
   QObject::connect(&w, SIGNAL(sigEnableParticleSystem(bool)), &monolith, SLOT(slotEnableParticleSystem(bool)));
+  QObject::connect(&w, SIGNAL(sigParticleFieldFunction(int)), &monolith, SLOT(slotParticleFieldFunction(int)));
   w.show();
 
 #ifndef __APPLE__ // monolith.start has to be here for Linux. 

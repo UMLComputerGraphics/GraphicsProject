@@ -2,14 +2,22 @@
 #include "ParticleSystem.hpp"
 #include "vec.hpp"
 #include "mat.hpp"
-
-//#include "exprtk/exprtk.hpp"
+#ifdef EXPRTK
+#include "exprtk/exprtk.hpp"
+#endif
 #include <cmath>
 
 using Angel::vec2;
 using Angel::vec3;
 using Angel::vec4;
 
+typedef struct s_attractor{
+
+	float power;
+	vec3 position;
+	float range;
+
+} attractor;
 
 double getTheta(vec4 pos)
 {
@@ -38,11 +46,20 @@ vec3 ParticleFieldFunctions::fixed(vec4 pos)
   return vec3(0.0,0.0,0.0);
 }
 
+vec3 ParticleFieldFunctions::fixedDefault( vec4 pos )
+{
+  return fixed( pos );
+}
+
 vec3 ParticleFieldFunctions::up(vec4 pos)
 {
   return vec3(0.0,0.01,0.0);
 }
 
+vec3 ParticleFieldFunctions::upDefault( vec4 pos )
+{
+	return up( pos );
+}
 
 //FIXME DOCS PARAMETERS
 vec3 ParticleFieldFunctions::tornado(vec4 pos)
@@ -64,24 +81,20 @@ vec3 ParticleFieldFunctions::tornado(vec4 pos)
 
 }
 
+vec3 ParticleFieldFunctions::tornadoDefault( vec4 pos )
+{
+	return tornado( pos );
+}
 
-
-typedef struct s_attractor{
-
-	float power;
-	vec3 position;
-	float range;
-
-} attractor;
-
-vec3 ParticleFieldFunctions::flame(vec4 pos)
+vec3 ParticleFieldFunctions::flame(vec4 pos, vec3 atrPos = vec3(0.0, 0.45, 0.0),
+		double scl = 0.01, float pwr = 0.1, float rng = 0.24 )
 {
 
 	vec3 retVal ;
 
 	//float steepness = ParticleSystem::rangeRandom(2,100) ;
 
-	double scale = 0.01;
+	double scale = scl;
 	retVal.x = pos.x*scale;
 	retVal.z = pos.z*scale;
 	retVal.y = 5*(pos.x*pos.x + pos.z*pos.z);
@@ -89,9 +102,9 @@ vec3 ParticleFieldFunctions::flame(vec4 pos)
 	//attractor code!!!
 	attractor atr_top ;
 
-	atr_top.power    = 0.075 ;
-	atr_top.position = vec3(0.0, 0.3, 0.0) ;
-	atr_top.range =	0.14;
+	atr_top.power    = pwr ;
+	atr_top.position = atrPos ;
+	atr_top.range =	rng;
 	// get the distance from the attractor
 	vec3 atrDist = atr_top.position - xyz(pos) ;
 
@@ -120,6 +133,11 @@ vec3 ParticleFieldFunctions::flame(vec4 pos)
 	
 	return 0.002 * normalize(retVal);
 
+}
+
+vec3 ParticleFieldFunctions::flameDefault( vec4 pos )
+{
+	return flame( pos );
 }
 
 vec3 ParticleFieldFunctions::flameold(vec4 pos) {
@@ -164,46 +182,56 @@ vec3 ParticleFieldFunctions::flameold(vec4 pos) {
 
 }
 
-
-Angel::vec3 ParticleFieldFunctions::userSupplied( Angel::vec4 pos ) {
-	static std::string expressions[3];
-	/*
-	static bool compiled = false;
-	static exprtk::expression<GLfloat> expression[3];
-	static exprtk::parser<GLfloat> parser;
-	static exprtk::symbol_table<GLfloat> symbol_table;
-	static vec4 *input = NULL;
-
-	if (!compiled) {
-	  input = new vec4;
-		expressions[0] = "0x + 0y + 0z + 0";
-		expressions[1] = "0x + 0y + 0z + 0";
-		expressions[2] = "0x + 0y + 0z + 0.1";
-
-		symbol_table.add_variable("x",input->x);
-		symbol_table.add_variable("y",input->y);
-		symbol_table.add_variable("z",input->z);
-		symbol_table.add_constants();
-
-		expression[0].register_symbol_table(symbol_table);
-		expression[1].register_symbol_table(symbol_table);
-		expression[2].register_symbol_table(symbol_table);
-
-		parser.compile(expressions[0], expression[0]);
-		parser.compile(expressions[1], expression[1]);
-		parser.compile(expressions[2], expression[2]);
-
-		compiled = true;
-	}
-	*input = pos;
-	Angel::vec3 res;
-	res.x = expression[0].value();
-	res.y = expression[1].value();
-	res.z = expression[2].value();
-	*/
-	return vec3(4, 2, 0);
+vec3 ParticleFieldFunctions::flameoldDefault( vec4 pos )
+{
+	return flameold( pos );
 }
 
+#ifdef EXPRTK
+class UserVectorField {
+public:
+  UserVectorField( const std::string &fx = "0x + 0y + 0z + 0",
+		   const std::string &fy = "0x + 0y + 0z + 0.01",
+		   const std::string &fz = "0x + 0y + 0z + 0" ) {
+    _table.add_variable("x",_input.x);
+    _table.add_variable("y",_input.y);
+    _table.add_variable("z",_input.z);
+    _table.add_constants();
+    
+    _ef[0].register_symbol_table( _table );
+    _ef[1].register_symbol_table( _table );
+    _ef[2].register_symbol_table( _table );
+
+    f( fx, 0 );
+    f( fy, 1 );
+    f( fz, 2 );
+  }
+  
+  Angel::vec3 f( Angel::vec4 input ) {
+    _input = input;
+    return vec3( _ef[0].value(), _ef[1].value(), _ef[2].value() );
+  }
+
+  /** use f( "string", index ) to change the f_x, f_y and f_z functions. **/
+  void f( const std::string &f, size_t i ) {
+    _f[i] = f;
+    _parser.compile( _f[i], _ef[i] );
+  }
+
+private:
+  std::string _f[3];
+  exprtk::expression<GLfloat> _ef[3];
+  exprtk::parser<GLfloat> _parser;
+  exprtk::symbol_table<GLfloat> _table;
+  Angel::vec4 _input;
+};
+
+Angel::vec3 ParticleFieldFunctions::userSupplied( Angel::vec4 pos ) {
+  static UserVectorField *uvf = NULL;
+  if (uvf == NULL) { uvf = new UserVectorField(); }
+  return uvf->f( pos );
+}
+#endif
 
 /* // jet 1?
 vec3 ParticleFieldFunctions::idk(vec4 pos)

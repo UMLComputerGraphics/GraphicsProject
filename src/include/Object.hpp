@@ -17,6 +17,7 @@
 #include "Scene.hpp"
 #include "TransCache.hpp"
 #include "Texture.hpp"
+#include "Material.hpp"
 
 using Angel::vec4;
 
@@ -266,9 +267,15 @@ public:
 
   /**
   * Adds material data to the object
-  * @param diffuse The diffuse color
+  * @param newMaterial The material to set to the object
   **/
-  void addMaterial(Angel::vec3 diffuse);
+  void addMaterial(Material *newMaterial);
+
+  /**
+   * Retrieves the material object so we can get properties from it
+   * @return The material of this object
+   */
+  Material *getMaterial();
 
   /**
    * Set the Texture ID / Texture Unit for this Object.
@@ -313,6 +320,7 @@ public:
 
   virtual void bufferToRaytracer( RayTracer &rt );
   void setLights(GLfloat* ambient, GLint* numlights, GLfloat* positions, GLfloat* diffuse, GLfloat* specular);
+  void setLights();
 
 protected:
 
@@ -384,6 +392,9 @@ protected:
   GLint _uLightDiffuse;
   GLint _uLightSpecular;
   GLint _uNumLights;
+
+  /** The material properties of this object **/
+  Material *_material;
 
 private:
 

@@ -18,13 +18,13 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>10</y>
+      <y>20</y>
       <width>481</width>
-      <height>651</height>
+      <height>591</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>4</number>
     </property>
     <widget class="QWidget" name="generalTab">
      <attribute name="title">
@@ -126,50 +126,6 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>350</y>
-        <width>259</width>
-        <height>80</height>
-       </rect>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
-       <item>
-        <widget class="QLabel" name="sceneGraphLabel">
-         <property name="text">
-          <string>Scene Graph:</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_2">
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_3">
-           <item>
-            <widget class="QLabel" name="activeObjectLabel">
-             <property name="text">
-              <string>Active Object:</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="currentActiveObjectLabel">
-             <property name="text">
-              <string>None</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <widget class="QComboBox" name="comboBox"/>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="layoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
         <y>220</y>
         <width>231</width>
         <height>24</height>
@@ -198,7 +154,7 @@
         <x>10</x>
         <y>190</y>
         <width>181</width>
-        <height>21</height>
+        <height>81</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -220,7 +176,7 @@
         <x>200</x>
         <y>190</y>
         <width>221</width>
-        <height>21</height>
+        <height>81</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_7">
@@ -242,7 +198,7 @@
         <x>10</x>
         <y>250</y>
         <width>221</width>
-        <height>21</height>
+        <height>81</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_8">
@@ -286,7 +242,6 @@
        </item>
       </layout>
      </widget>
-     <zorder>layoutWidget</zorder>
      <zorder>layoutWidget</zorder>
      <zorder>layoutWidget</zorder>
      <zorder>layoutWidget</zorder>
@@ -351,9 +306,9 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>90</y>
-        <width>411</width>
-        <height>81</height>
+        <y>110</y>
+        <width>301</width>
+        <height>26</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -365,7 +320,55 @@
         </widget>
        </item>
        <item>
-        <widget class="QPlainTextEdit" name="flameEaquationTextInput"/>
+        <widget class="QComboBox" name="particleFieldFunctionComboBox">
+         <item>
+          <property name="text">
+           <string>Flame</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Tornado</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Custom</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>160</y>
+        <width>315</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <item>
+        <widget class="QLabel" name="customEquationLabel">
+         <property name="text">
+          <string>Custom</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPlainTextEdit" name="customEquationTextInput">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="verticalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOff</enum>
+         </property>
+         <property name="horizontalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOff</enum>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -403,7 +406,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>30</x>
@@ -434,6 +437,61 @@
      <attribute name="title">
       <string>Raytrace</string>
      </attribute>
+    </widget>
+    <widget class="QWidget" name="sceneTab">
+     <attribute name="title">
+      <string>Scene</string>
+     </attribute>
+     <widget class="QWidget" name="layoutWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>259</width>
+        <height>80</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <widget class="QLabel" name="activeObjectLabel">
+             <property name="text">
+              <string>Active Object:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="currentActiveObjectLabel">
+             <property name="text">
+              <string>None</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QComboBox" name="comboBox"/>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QPushButton" name="addObjectButton">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>130</y>
+        <width>114</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Add Object...</string>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>

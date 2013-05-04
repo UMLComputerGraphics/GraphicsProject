@@ -25,7 +25,7 @@ CLASSESRAW=$(wildcard Classes/*.cpp)
 
 #things not needed or that break build
 DIAF=Classes/KinectInator.cpp \
-     Qt/main.cpp Qt/mainwindow.cpp Qt/qtLite.cpp \
+     Qt/main.cpp Qt/mainwindow.cpp Qt/qtLite.cpp Qt/dialog.cpp \
      fMod/playsound_example.cpp fMod/3d_example.cpp
 #     fMod/playsound_example.cpp fMod/3d_example.cpp Binaries/morphkeysound.cpp \
 #     Qt/main.cpp Qt/mainwindow.cpp Qt/qtLite.cpp Binaries/FinalProject.cpp
@@ -61,10 +61,12 @@ LDLIBS = -lMagick++ -lboost_thread-mt
 ifdef POSTMULT
 	CXXDEFS += -DPOSTMULT
 endif
-
 ifdef WII
     CXXDEFS += -DWII -I/usr/local/include/wiic
     LDLIBS += -lwiic -lwiicpp
+endif
+ifdef EXPRTK
+    CXXDEFS += -DEXPRTK
 endif
 
 # Platform-dependent configuration.
@@ -166,6 +168,11 @@ rmtargets: _rmtargets
 
 clobber: _clean _rmtargets clean-qt
 	@echo "Removed objects and executables."
+
+.PHONY: fresh
+fresh:
+	$(MAKE) clobber
+	$(MAKE) all
 
 .PHONY: qt
 qt: qMakefile

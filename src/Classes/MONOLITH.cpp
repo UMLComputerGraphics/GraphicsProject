@@ -24,8 +24,9 @@ MONOLITH::MONOLITH(int argc, char** argv) :
     lightAmbient = (GLfloat*)malloc(sizeof(GLfloat)*4);
     lightAmbient[0]=lightAmbient[1]=lightAmbient[2]=lightAmbient[3]=0.1;
     lightPositions = (GLfloat*)malloc(sizeof(GLfloat)*4);
-    lightPositions[0]=lightPositions[1]=1.0;
-    lightPositions[2]=10.0;
+    lightPositions[0]=1.3;
+    lightPositions[1]=4.13;
+    lightPositions[2]=1.3;
     lightPositions[3]=1.0;
     lightDiffuse = (GLfloat*)malloc(sizeof(GLfloat)*4);
     lightSpecular = (GLfloat*)malloc(sizeof(GLfloat)*4);
@@ -47,6 +48,7 @@ void MONOLITH::cleanup(void)
     if(lightSpecular)free(lightSpecular);
 }
 
+bool heisenbergUncertaintyPrinciple;
 /**
  * Apply animations and whatever else your heart desires.
  */
@@ -74,6 +76,16 @@ void MONOLITH::monolith_idle(void)
     if((*rootScene)["bottle"]->morphEnabled())
     {
         (*rootScene)["bottle"]->morphPercentage(percent);
+
+#ifndef WITHOUT_QT
+        int pct = (int)floor(percent * 100.0);
+        if (_percentageCallback)
+        {
+          heisenbergUncertaintyPrinciple = true;
+          _percentageCallback(pct);
+          heisenbergUncertaintyPrinciple = false;
+        }
+#endif
     }
 }
 
@@ -93,14 +105,18 @@ void MONOLITH::slotFreezeParticles(bool isEnabled)
 {
 	ps->setPause(isEnabled);
 }
-
 void MONOLITH::slotMorphPercentage(int value)
 {
+  if (!heisenbergUncertaintyPrinciple)
     (*rootScene)["bottle"]->morphPercentage(value / 100.0);
 }
-
+void MONOLITH::setMorphPercentageCallback(boost::function<void(int)> cb)
+{
+    _percentageCallback = cb;
+}
 void MONOLITH::slotEnableMorphing(bool isEnabled)
 {
+  gprint(PRINT_WARNING, "MORPHING := %s\n", isEnabled?"ENABLED":"DISABLED");
    (*rootScene)["bottle"]->morphEnabled(isEnabled);
 }
 
@@ -132,6 +148,27 @@ void MONOLITH::slotEnableParticleSystem(bool isEnabled)
     }
 }
 
+void MONOLITH::slotParticleFieldFunction(int index)
+{
+    switch (index)
+    {
+    case 0:
+        ps->setVectorField( ParticleFieldFunctions::flameDefault);
+        break;
+    case 1:
+        ps->setVectorField(ParticleFieldFunctions::tornado);
+        printf("changed to tornado\n");
+        break;
+    case 2:
+
+    default:
+        ps->setVectorField( ParticleFieldFunctions::flameDefault);
+        break;
+    }
+
+
+}
+
 #endif //WITHOUT_QT
 
 /**
@@ -141,7 +178,7 @@ void MONOLITH::run() {
   Engine *eng = Engine::instance();
 
   eng->init( &_argc, _argv, "WE ARE THE BORG. RESISTANCE IS FUTILE!" );
-  eng->registerIdle( monolith_idle );
+  eng->registerIdle( boost::bind(&MONOLITH::monolith_idle, this) );
   eng->registerTraceFunc( (raytracerCallback)(boost::bind(&MONOLITH::raytraceStatusChanged, this, _1)));
 
   // Get handles to the Scene and the Screen.
@@ -184,7 +221,7 @@ void MONOLITH::run() {
 
   bottle->genMorphTarget();
   Object *bottleMorphTarget = bottle->morphTarget();
-  ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle_liquor_high.obj" );
+  ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle_liquor_high3.obj" );
   ObjLoader::loadMaterialFromFile( bottleMorphTarget, "../models/bottle_liquor_high.mtl" );
   bottleMorphTarget->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
 
@@ -221,7 +258,7 @@ void MONOLITH::run() {
 
   fprintf(stderr, "table! (%f, %f, %f)\n", table->getMax().x, table->getMax().y, table->getMax().z);
 
-  // Load up that goddamned candle
+  // Load up that candle
   Object *stick;
   Object *candle_top;
   //Object *candle_top_melted;
@@ -257,8 +294,8 @@ void MONOLITH::run() {
   vec4 max = stick->getMax();
   fprintf( stderr, "Min: (%f,%f,%f)\nMax: (%f,%f,%f)\n", min.x, min.y, min.z,
            max.x, max.y, max.z );
-  candle_top->_trans._offset.set( 2.5, max.y - 4, 2.5 );
-  candle_base->_trans._offset.set( 2.5, max.y - 4, 2.5 );
+  candle_top->_trans._offset.set( 2.5, max.y - 4.4, 2.5 );
+  candle_base->_trans._offset.set( 2.5, max.y - 4.4, 2.5 );
   stick->_trans._offset.set( 2.5, 0, 2.5);
 
   candle_top->propagateOLD();
@@ -274,13 +311,24 @@ void MONOLITH::run() {
 
   
   max = candle_top->getMax();
-  ps = new ParticleSystem( 0, "ps1", particleShader );
-  ps->setLifespan( 7.0, 12.0 );
-  ps->setVectorField( ParticleFieldFunctions::flame);
+ 
+  /*
+    inspectorconstructor: if we have no way to adjust the number of particles, 
+    make sure we have some
+  */
+
+#ifdef WITHOUT_QT
+  ps = new ParticleSystem( 3000, "ps1", particleShader );
+#else
+  ps = new ParticleSystem(    0, "ps1", particleShader );
+#endif
+  ps->setLifespan( 9.0, 12.0 );
+  ps->setVectorField( ParticleFieldFunctions::flameDefault);
   ps->setColorFunc(   ColorFunctions::flame );
-  ps->setEmitterRadius( 0.02 );
+  ps->setEmitterRadius( 0.05 );
   candle_top->insertObject( ps );
-  ps->_trans._offset.set( 0, max.y, 0 );
+  ps->_trans._offset.set( 0, max.y - 0.02 , 0 );
+  ps->_trans._scale.set( 2 );
 
  /* If you fill the system, the flame will have a non-flamelike pulsing effect. 
     Please don't!
@@ -289,8 +337,15 @@ void MONOLITH::run() {
 
   //ps->propagateOLD();
   candle_top->propagateOLD();
+  
+  //Make the particles look bigger and awesomer
+  glPointSize( 1.8 );
 
   Engine::instance()->cams()->active()->pos(2.0, 5.0, 9.0);
+
+
+  // need this for smoothness
+  glShadeModel(GL_SMOOTH);
   
 #ifndef WITHOUT_QT
 #ifndef __APPLE__

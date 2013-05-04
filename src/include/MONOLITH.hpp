@@ -74,7 +74,7 @@ public:
     /**
      * Apply animations and whatever else your heart desires.
      */
-    static void monolith_idle(void);
+    void monolith_idle(void);
     
     /**
      * This will initialize and run MONOLITH
@@ -93,6 +93,8 @@ public:
 
     
 #ifndef WITHOUT_QT
+    void setMorphPercentageCallback(boost::function<void(int)> cb);
+
 public slots:
 
     void slotParticleAdd(int value);
@@ -103,6 +105,7 @@ public slots:
     void slotEnableParticleSystem(bool isEnabled);
     void slotMorphToWineBottle(void);
     void slotMorphToWhiskyBottle(void);
+    void slotParticleFieldFunction(int index);
 
 signals:
     void sigMorphPercentage(int value);
@@ -145,6 +148,7 @@ private:
     
     boost::thread zipo;
 
+    boost::function<void(int)> _percentageCallback;
 };
 
 #endif

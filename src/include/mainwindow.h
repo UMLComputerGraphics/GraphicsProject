@@ -14,6 +14,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    void setMorphPercentageOut(int pct);
 
 public slots:
 
@@ -44,8 +45,11 @@ signals:
     /* Particles */
 	void sigChangeNumberOfParticles(int value);
 	void sigFreezeParticles(bool isEnabled);
-    void sigFlameEquation(QString equation);
-	
+    void sigParticleFieldFunction(int index);
+
+private slots:
+    void on_addObjectButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

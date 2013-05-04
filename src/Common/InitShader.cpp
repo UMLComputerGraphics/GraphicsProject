@@ -158,6 +158,7 @@ namespace Angel {
     }
     
     // Gshader gak
+#ifdef __APPLE__
     if (nShaders == 3) {
         glProgramParameteriEXT( program, GL_GEOMETRY_INPUT_TYPE_EXT,
 				GL_POINTS );
@@ -168,7 +169,18 @@ namespace Angel {
         glProgramParameteriEXT( program, GEOMETRY_VERTICES_OUT_EXT, 4 );
 
     }
+#else
+    if (nShaders == 3) {
+        glProgramParameteri( program, GL_GEOMETRY_INPUT_TYPE_EXT,
+				GL_TRIANGLES );
 
+        glProgramParameteri( program, GL_GEOMETRY_OUTPUT_TYPE_EXT,
+				GL_TRIANGLE_STRIP );
+
+        glProgramParameteri( program, GEOMETRY_VERTICES_OUT_EXT, 12 );
+
+    }
+#endif
     /* link  and error check */glLinkProgram( program );
     
     GLint linked;
@@ -257,6 +269,7 @@ namespace Angel {
     }
     
     // Gshader gak
+#ifdef __APPLE__
     if ( gShaderFile != NULL ){
       glProgramParameteriEXT( program, GEOMETRY_VERTICES_OUT_EXT, gs_numVertOut );
 
@@ -265,16 +278,25 @@ namespace Angel {
 
       glProgramParameteriEXT( program, GL_GEOMETRY_OUTPUT_TYPE_EXT,
                               gs_outType );
-      /*
-      glProgramParameter( program, GEOMETRY_VERTICES_OUT_EXT, gs_numVertOut );
+    }
+#else
+    if ( gShaderFile != NULL ){
+      glProgramParameteri( program, GEOMETRY_VERTICES_OUT_EXT, gs_numVertOut );
 
-      glProgramParameter( program, GL_GEOMETRY_INPUT_TYPE_EXT,
+      glProgramParameteri( program, GL_GEOMETRY_INPUT_TYPE_EXT,
 			      gs_inType );
 
+      glProgramParameteri( program, GL_GEOMETRY_OUTPUT_TYPE_EXT,
+                              gs_outType );
+    }
+#endif
+      /*
+      glProgramParameter( program, GEOMETRY_VERTICES_OUT_EXT, gs_numVertOut );
+      glProgramParameter( program, GL_GEOMETRY_INPUT_TYPE_EXT,
+			      gs_inType );
       glProgramParameter( program, GL_GEOMETRY_OUTPUT_TYPE_EXT,
 			      gs_outType );
       */
-    }
 
     /* link  and error check */glLinkProgram( program );
     /* test */glLinkProgram( program );
