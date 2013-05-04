@@ -34,7 +34,8 @@ int main( int argc, char **argv ) {
 
   QApplication a( argc, argv );
   MainWindow w;
-  w.setWindowTitle( "First Graphics Demo" );
+  w.setWindowTitle( "GUI Interface - Graphics II" );
+  w.setGeometry(700, 0, w.width(), w.height());
 
   // This is where the connection is for the default number of particles.
   monolith.defaultNumberOfParticles(w.getDefaultNumOfParticles());
