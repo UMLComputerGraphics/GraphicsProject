@@ -139,6 +139,13 @@ public:
    **/
   void intensity( const float &in ); 
   
+  /**
+   * Functions to get at the underlying GLfloat arrays
+   **/
+  GLfloat* getGLAmbient( void );
+  GLfloat* getGLPosition( void );
+  GLfloat* getGLDiffuse( void );
+  GLfloat* getGLSpecular( void );
 
 private:
 

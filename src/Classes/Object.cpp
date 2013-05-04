@@ -850,5 +850,23 @@ void Object::setLights(GLfloat* ambient, GLint* numlights, GLfloat* positions, G
 
 void Object::setLights()
 {
-  //TODO: make this set light variables based on global lights configurations
+  _isLit = true;
+
+  vector<Light*> *theLights = Engine::instance()->getLights();
+  vector<Light*>::iterator it;
+
+  // Iterate over all lights in the global light config
+  // Currently this will only send down the info for the last light in the vector
+  // TODO: make it send info for all lights
+  for(it = theLights->begin(); it != theLights->end(); ++it) {
+    _lightAmbient = (*it)->getGLAmbient();
+    _lightPositions = (*it)->getGLPosition();
+    _lightDiffuse = (*it)->getGLDiffuse();
+    _lightSpecular = (*it)->getGLSpecular();
+  }
+  
+  _numLights = Engine::instance()->getNumLights();
+
+  Scene::setLights();
+
 }

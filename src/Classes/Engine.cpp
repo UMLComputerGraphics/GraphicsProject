@@ -55,6 +55,9 @@ Engine::Engine( void ) :
   _renderingCamera = NULL;
   _raytraceChanged = false;
 
+  _lights = new vector<Light*>;
+  _lightsSize = (GLint *) malloc( sizeof( GLint ) );
+
   opt("fixed_yaw", true);
   opt("trap_pointer", true);
 
@@ -144,7 +147,13 @@ vector<Light*>* Engine::getLights( void ) {
  **/
 void Engine::addLight( Light *newLight ) {
   _lights->push_back( newLight );
+  *_lightsSize = (GLint) ( _lights->size() );
 }
+
+GLint* Engine::getNumLights( void ) {
+  return _lightsSize;
+}
+
 
 /**
  * opt retrieves the current setting of an option in the Engine.
