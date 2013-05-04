@@ -18,7 +18,6 @@
 #include "TransCache.hpp"
 #include "Texture.hpp"
 #include "Material.hpp"
-#include "RayTracer.h"
 
 using Angel::vec4;
 
