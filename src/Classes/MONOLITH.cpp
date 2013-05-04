@@ -21,7 +21,11 @@ MONOLITH::MONOLITH(int argc, char** argv) :
 {
     _argc = argc;
     _argv = argv;
-    lightAmbient = (GLfloat*)malloc(sizeof(GLfloat)*4);
+
+    Light* l = new Light( "CandleLight", 1.3, 4.13, 1.3 );
+    Engine::instance()->addLight(l);
+
+    /*    lightAmbient = (GLfloat*)malloc(sizeof(GLfloat)*4);
     lightAmbient[0]=lightAmbient[1]=lightAmbient[2]=lightAmbient[3]=0.1;
     lightPositions = (GLfloat*)malloc(sizeof(GLfloat)*4);
     lightPositions[0]=1.3;
@@ -33,7 +37,7 @@ MONOLITH::MONOLITH(int argc, char** argv) :
     lightDiffuse[0]=lightDiffuse[1]=lightDiffuse[2]=0.5;
     lightDiffuse[3]=lightSpecular[3]=1.0;
     lightSpecular[0]=lightSpecular[1]=lightSpecular[2]=0.5;
-    numLights = 1;
+    numLights = 1; */
 }
 
 /**
@@ -209,13 +213,13 @@ void MONOLITH::run() {
   // Load model from file.
   ObjLoader::loadModelFromFile( bottle, "../models/bottle_wine_high.obj" );
   ObjLoader::loadMaterialFromFile( bottle, "../models/bottle_wine_high.mtl" );
-  bottle->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
+  //bottle->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
 
   bottle->genMorphTarget();
   Object *bottleMorphTarget = bottle->morphTarget();
   ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle_liquor_high3.obj" );
   ObjLoader::loadMaterialFromFile( bottleMorphTarget, "../models/bottle_liquor_high.mtl" );
-  bottleMorphTarget->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
+  //bottleMorphTarget->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
 
   //Morphing Items
   //Scale source and destination height to unit 0-1
@@ -244,7 +248,7 @@ void MONOLITH::run() {
   ObjLoader::loadModelFromFile(table, "../models/table_tx.obj");
   ObjLoader::loadMaterialFromFile(table, "../models/table_tx.mtl");
   glUniform1i( glGetUniformLocation( table->shader(), "letMeSeeThatPhong" ), 1 );
-  table->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
+  //table->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
   table->texture("../Textures/texture_wood.png");
   table->buffer();
 
@@ -267,9 +271,9 @@ void MONOLITH::run() {
   ObjLoader::loadModelFromFile(stick, "../models/candlestick.obj");
   ObjLoader::loadMaterialFromFile(stick, "../models/candlestick.mtl");
 
-  candle_top->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
-  candle_base->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
-  stick->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
+  //candle_top->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
+  //candle_base->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
+  //stick->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
 
   glUniform1i(glGetUniformLocation(candle_top->shader(),"letMeSeeThatPhong"),1);
   glUniform1i(glGetUniformLocation(candle_base->shader(),"letMeSeeThatPhong"),1);
@@ -334,7 +338,9 @@ void MONOLITH::run() {
   glPointSize( 1.8 );
 
   Engine::instance()->cams()->active()->pos(2.0, 5.0, 9.0);
-
+  
+  //Set lights for all objects in the scene
+  Engine::instance()->rootScene()->setLights();
 
   // need this for smoothness
   glShadeModel(GL_SMOOTH);
