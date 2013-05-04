@@ -21,6 +21,8 @@ using std::string;
 class Light {
   
 public:
+
+  void commonInit( void );
   
   /**
    Initialization Constructor; sets the x,y,z coordinates explicitly.
@@ -148,6 +150,11 @@ private:
 
   /** The brightness level of the light **/
   float _intensity;
+
+  GLfloat* _lightAmbient;
+  GLfloat* _lightPositions;
+  GLfloat* _lightDiffuse;
+  GLfloat* _lightSpecular;
 
 };
 
