@@ -85,7 +85,7 @@ public:
    * @param originalGangster The shader with which the object was initialized
    * @param newShader The shader to switch it to
    */
-  void replaceShader(GLuint originalGangster, GLuint newShader);
+  void replaceShader(GLuint originalGangster, GLuint newShader = 0);
 
   /**
    * delObject will remove from the Scene graph the object with the given name.

@@ -8,8 +8,7 @@
 #include "RayTracer.h"
 #include "Engine.hpp"
 
-RayTracer::RayTracer() :
-  display(boost::bind(&RayTracer::_display,this))
+RayTracer::RayTracer()
 {
    lightPositions = (GLfloat*)malloc(sizeof(GLfloat)*3);
    lightPositions[0]=lightPositions[1]=1.0;
@@ -33,26 +32,9 @@ RayTracer::~RayTracer()
  */
 void RayTracer::_display( void ) {
 #ifndef __APPLE__
-  Engine &engie = *Engine::instance();
-  Camera *cammy = engie.cams()->active();
-
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-  engie.switchCamera( cammy );
-  engie.switchShader( program );
-
   tick.sendTime();
-
-  int numSpheres = 0;
-  glUniform1i( uNumOfSpheres, numSpheres );
-  /*glUniform3fv( uSphereCenterPoints, numSpheres, sphereCenterPoints );
-  glUniform1fv( uSphereRadius, numSpheres, sphereRadius );
-  glUniform3fv( uSphereDiffuse, numSpheres, sphereDiffuse );
-  glUniform3fv( uSphereAmbient, numSpheres, sphereAmbient );
-  glUniform3fv( uSphereSpecular, numSpheres, sphereSpecular );
-  glUniform1fv( uSphereShininess, numSpheres, sphereShininess );
-  glUniform1fv( uSphereReflect, numSpheres, sphereReflect );
-  glUniform1fv( uSphereRefract, numSpheres, sphereRefract );*/
 
   glUniform1i( uNumOfTriangle, numTriangles );
   glUniform1i( uNumOfTriangleVectors, numOfTriangleVectors );
@@ -81,6 +63,14 @@ void RayTracer::_display( void ) {
       0                   // offset of first element
       );
 
+
+  //this stuff is important. WOOPS!
+  glUniform1i( uDisplay, 0 );
+
+  glUniformMatrix4fv( uRotationMatrix, 1, GL_TRUE,
+                      Engine::instance()->cams()->active()->_trans._rotation.matrix() );
+  glUniform4fv( uCameraPosition, 1, Engine::instance()->cams()->active()->_trans._displacement.matrix() );
+  glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
 
   glutSwapBuffers();
@@ -193,8 +183,8 @@ void RayTracer::addTriangle( const vec3& a, const vec3& b, const vec3& c,
 
 void RayTracer::pushDataToBuffer() {
 #ifndef __APPLE__
-  gprint( PRINT_DEBUG, "numTriangles %d\n", numTriangles );
-  gprint( PRINT_DEBUG, "numOfBoundingBoxes %d\n", numOfBoundingBoxes );
+  gprint( PRINT_INFO, "numTriangles %d\n", numTriangles );
+  gprint( PRINT_INFO, "numOfBoundingBoxes %d\n", numOfBoundingBoxes );
 
   GLuint bufObj;
   glActiveTexture(GL_TEXTURE0);
@@ -284,6 +274,7 @@ void RayTracer::genereateScene(std::vector<Object*> objects) {
  * Initialization of objects and OpenGL state.
  */
 void RayTracer::init( GLint shader ) {
+  Engine::instance()->switchShader(shader);
   if (shader != program)
   {
     program = shader;
@@ -292,8 +283,6 @@ void RayTracer::init( GLint shader ) {
     GLuint vao;
     glGenVertexArrays( 1, &vao );
     glBindVertexArray( vao );
-
-    glUseProgram( program );
 
     vRayPosition = glGetAttribLocation( program, "vRayPosition" );
     uDisplay = glGetUniformLocation( program, "uDisplay" );

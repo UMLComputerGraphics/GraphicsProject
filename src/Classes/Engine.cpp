@@ -302,18 +302,21 @@ void Engine::idle( void ) {
     instance()->_raytraceChanged = false;
   }
 
-  static Cameras *camList = Engine::instance()->cams();
-
   // Compute the time since last idle().
   tick.tock();
 
-  // Propagate Scene Graph Changes (Maybe!)
-  Engine::instance()->rootScene()->propagate();
-
-  // Move all camera(s).
-  camList->idleMotion();
-
   Engine::instance()->callIdle();
+
+  if (instance()->_raytraceStatus)
+  {
+    static Cameras *camList = Engine::instance()->cams();
+
+    // Propagate Scene Graph Changes (Maybe!)
+    Engine::instance()->rootScene()->propagate();
+
+    // Move all camera(s).
+    camList->idleMotion();
+  }
 
   glutPostRedisplay();
 

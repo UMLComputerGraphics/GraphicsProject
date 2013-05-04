@@ -9,17 +9,6 @@ const int maxNumberOfLights = 5;
 uniform int uNumberOfLights;
 uniform vec3 LightAmbient, uLightPositions[maxNumberOfLights], uLightDiffuse[maxNumberOfLights], uLightSpecular[maxNumberOfLights];
 
-const int maxNumSphere = 5;
-uniform int uNumOfSpheres;
-uniform vec3 uSphereCenterPoints[maxNumSphere];
-uniform float uSphereRadius[maxNumSphere];
-uniform vec3 uSphereDiffuse[maxNumSphere];
-uniform vec3 uSphereAmbient[maxNumSphere];
-uniform vec3 uSphereSpecular[maxNumSphere];
-uniform float uSphereShininess[maxNumSphere];
-uniform float uSphereReflect[maxNumSphere];
-uniform float uSphereRefract[maxNumSphere];
-
 uniform int uNumOfTriangle;
 uniform int uNumOfTriangleVectors;
 
@@ -203,44 +192,6 @@ void triangle_intersect(in Triangle triangle, in Ray ray, inout Intersection ise
 
 }
 
-void sphere_intersect(in int c, in Ray ray, inout Intersection isect, int back)
-{
-	vec3 rs = ray.org - uSphereCenterPoints[c];
-	float B = dot(rs, ray.dir);
-	float C = dot(rs, rs) - (uSphereRadius[c] * uSphereRadius[c]);
-	float D = B * B - C;
-
-	if (D > 0.0)
-	{
-		float sqrtD = sqrt(D);
-		float t;
-		
-		if(back == 1) t = -B + sqrtD;
-		else t = -B - sqrtD;
-		
-		if ( (t > 0.0) && (t < isect.t) )
-		{
-			isect.t = t;
-			isect.hit = 1;
-
-			// calculate normal.
-			vec3 p = vec3(ray.org.x + ray.dir.x * t,
-						  ray.org.y + ray.dir.y * t,
-						  ray.org.z + ray.dir.z * t);
-			vec3 n = p - uSphereCenterPoints[c];
-			n = normalize(n);
-			isect.n = n;
-			isect.p = p;
-			isect.diffuse = uSphereDiffuse[c];
-			isect.ambient = uSphereAmbient[c];
-			isect.specular = uSphereSpecular[c];
-			isect.shininess = uSphereShininess[c];
-			isect.reflect = uSphereReflect[c];
-			isect.refract = uSphereRefract[c];
-		}
-	}
-}
-
 void plane_intersect(in Plane pl, in Ray ray, inout Intersection isect)
 {
 	// d = -(p . n)
@@ -271,15 +222,6 @@ void plane_intersect(in Plane pl, in Ray ray, inout Intersection isect)
 		else
 			isect.diffuse = pl.diffuse * 0.5;
 	}
-}
-
-Sphere buildSphere(in vec3 centerPoint, in float radius, in vec3 diffuse) {
-	Sphere s;
-	s.c = (vec4(centerPoint, 1)).xyz;
-	s.r = radius;
-	s.diffuse = diffuse;
-
-	return s;
 }
 
 void buildTriangle(inout Triangle t, vec3 a, vec3 b, vec3 c, vec3 diffuse, vec3 ambient, vec3 specular, vec3 material, vec3 normal) {
@@ -338,10 +280,10 @@ int HitBox(in Ray r, vec3 minBound, vec3 maxBound) {
 
 void Intersect(in Ray r, inout Intersection i, int back)
 {
-	for (int c = 0; c < uNumOfSpheres; c++)
+	/*for (int c = 0; c < uNumOfSpheres; c++)
 	{
 		sphere_intersect(c, r, i, back);
-	}
+	}*/
 	
 	Triangle triangle;
 	int index = uNumOfTriangle * uNumOfTriangleVectors, endTriangleIndex = index;
