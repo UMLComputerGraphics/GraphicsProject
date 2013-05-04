@@ -163,7 +163,7 @@ void MONOLITH::run() {
   Engine *eng = Engine::instance();
 
   eng->init( &_argc, _argv, "WE ARE THE BORG. RESISTANCE IS FUTILE!" );
-  eng->registerIdle( monolith_idle );
+  eng->registerIdle( boost::bind(&MONOLITH::monolith_idle, this) );
   eng->registerTraceFunc( (raytracerCallback)(boost::bind(&MONOLITH::raytraceStatusChanged, this, _1)));
 
   // Get handles to the Scene and the Screen.

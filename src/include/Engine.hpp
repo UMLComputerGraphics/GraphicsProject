@@ -130,7 +130,7 @@ public:
    */
   static void run( void );
 
-  void registerIdle( void (idleFunc)( void ) );
+  void registerIdle( boost::function< void( void ) > idleFunc );
   void callIdle( void );
 
   GLuint currentShader( void ) const;
@@ -208,7 +208,7 @@ private:
    * It is called every time GLUT otherwise calls
    * the Engine's idle callback.
    */
-  void (*_idleFunc)();
+  boost::function< void( void ) > _idleFunc;
 
   /**
    * static, stateful variable that is our singleton pointer.

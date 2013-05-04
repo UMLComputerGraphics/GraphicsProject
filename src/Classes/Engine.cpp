@@ -251,7 +251,7 @@ void Engine::run( void ) {
 
 }
 
-void Engine::registerIdle( void (idleFunc)( void ) ) {
+void Engine::registerIdle( boost::function<void(void)> idleFunc ) {
   _idleFunc = idleFunc;
 }
 
@@ -302,7 +302,7 @@ void Engine::idle( void ) {
 }
 
 void Engine::callIdle( void ) {
-  if (_idleFunc) (*_idleFunc)();
+  if (_idleFunc) _idleFunc();
 }
 
 GLuint Engine::currentShader( void ) const {
