@@ -11,6 +11,7 @@ namespace ColorFunctions
 
   Angel::vec4 standard(float, Angel::vec4);
   Angel::vec4 flame(float, Angel::vec4);
+  Angel::vec4 flameSt(float, Angel::vec4);
 
 }
 
