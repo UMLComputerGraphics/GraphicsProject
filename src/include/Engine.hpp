@@ -16,6 +16,7 @@
 #include "Cameras.hpp"
 #include "Screen.hpp"
 #include "Object.hpp"
+#include "Light.hpp"
 #include "Timer.hpp"
 #include "Scene.hpp"
 #include "Texture.hpp"
@@ -32,6 +33,7 @@
 /* System */
 #include <string>
 #include <map>
+#include <vector>
 
 #include <boost/function.hpp>
 
@@ -89,10 +91,22 @@ public:
    */
   TextureManagement *texMan( void );
 
+  /**
+   * Gets the global light configuration
+   * @return A pointer to a vector of light pointers represeting the global light configuration
+   **/
+  vector<Light*>* getLights( void );
+
+  /**
+   * Pushes a new light onto the global light configuration vector
+   * @return void
+   **/
+  void addLight( Light *newLight );
+
   // Settings Getters/Setters.
   /**
    * opt retrieves the current setting of an option in the Engine.
-   * @param Option The name of the option to access.
+b   * @param Option The name of the option to access.
    * @return A bool: the current value of the setting.
    */
   bool opt( const std::string &Option );
@@ -130,7 +144,7 @@ public:
    */
   static void run( void );
 
-  void registerIdle( void (idleFunc)( void ) );
+  void registerIdle( boost::function< void( void ) > idleFunc );
   void callIdle( void );
 
   GLuint currentShader( void ) const;
@@ -208,7 +222,7 @@ private:
    * It is called every time GLUT otherwise calls
    * the Engine's idle callback.
    */
-  void (*_idleFunc)();
+  boost::function< void( void ) > _idleFunc;
 
   /**
    * static, stateful variable that is our singleton pointer.
@@ -261,6 +275,11 @@ private:
    * What version of GLSL do we have?
    */
   float _glslVersion;
+
+  /**
+     The global light configuration
+   **/
+  vector<Light*> *_lights;
 
   // Singleton Enforcement
   /**

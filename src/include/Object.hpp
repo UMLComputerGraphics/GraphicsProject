@@ -320,6 +320,7 @@ public:
 
   virtual void bufferToRaytracer( RayTracer &rt );
   void setLights(GLfloat* ambient, GLint* numlights, GLfloat* positions, GLfloat* diffuse, GLfloat* specular);
+  void setLights();
 
 protected:
 
@@ -393,7 +394,7 @@ protected:
   GLint _uNumLights;
 
   /** The material properties of this object **/
-  Material *material;
+  Material *_material;
 
 private:
 

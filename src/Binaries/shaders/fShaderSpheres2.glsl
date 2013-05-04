@@ -23,13 +23,14 @@ uniform float uSphereRefract[maxNumSphere];
 uniform int uNumOfTriangle;
 uniform int uNumOfTriangleVectors;
 
-const int maxBoundingBoxes = 5;
-uniform int uNumOfBoundingBoxes;
-uniform int uBoundingBoxIndexes[maxBoundingBoxes + 1];
-uniform vec3 uMinBoundingBox[maxBoundingBoxes];
-uniform vec3 uMaxBoundingBox[maxBoundingBoxes];
+uniform int uNumOfL2BoundingBoxes;
+uniform int uNumOfL1BoundingBoxes;
+
+uniform int uNumOfL2TrianglesBounded;
 
 uniform samplerBuffer bufferData;
+
+uniform vec3 uL1BoundingBoxes[3 * 10];
 
 uniform int ftime;
 
@@ -88,47 +89,6 @@ struct Intersection
 	float reflect;
 	float refract;
 };
-
-void asdftriangle_intersect(in Triangle triangle, in Ray ray, inout Intersection isect, int back)
-{
-    vec3 edge1 = triangle.b - triangle.a;
-    vec3 edge2 = triangle.c - triangle.a;
-    
-    vec3 pvec = cross(ray.dir, edge2);
-    float det = dot(edge1, pvec);
-    
-    if (det < eps) return;
-    float invDet = 1 / det;
-    
-    vec3 tvec = ray.org - triangle.a;
-    
-    float u = dot(tvec, pvec) * invDet;
-    if (u < 0 || u > 1) return;
-    
-    vec3 qvec = cross(tvec, edge1);
-    float v = dot(ray.dir, qvec) * invDet;
-    if (v < 0 || u + v > 1) return;
-    
-    float t = dot(edge2, qvec) * invDet;
-    
-    if((t > 0.0) && (t < isect.t)) {
-		// Point of intersection on the plane
-		vec3 p = vec3(ray.org.x + t * ray.dir.x,
-					  ray.org.y + t * ray.dir.y,
-					  ray.org.z + t * ray.dir.z);
-
-		isect.hit = 1;
-		isect.t   = t;
-		isect.n   = triangle.n;
-		isect.p   = p;
-		isect.diffuse = triangle.diffuse;
-		isect.ambient = triangle.ambient;
-		isect.specular = triangle.specular;
-		isect.shininess = triangle.shininess;
-		isect.reflect = triangle.reflect;
-		isect.refract = triangle.refract;
-	}
-}
 
 void triangle_intersect(in Triangle triangle, in Ray ray, inout Intersection isect, int back)
 {
@@ -199,8 +159,6 @@ void triangle_intersect(in Triangle triangle, in Ray ray, inout Intersection ise
 		}
 	    
   	} else return; // Ray parallel to triangle plane
-  	
-
 }
 
 void sphere_intersect(in int c, in Ray ray, inout Intersection isect, int back)
@@ -295,7 +253,7 @@ void buildTriangle(inout Triangle t, vec3 a, vec3 b, vec3 c, vec3 diffuse, vec3 
 	t.n = normal;
 }
 
-int HitBox(in Ray r, vec3 minBound, vec3 maxBound) {
+int HitBox(in Ray r, in Intersection i, vec3 minBound, vec3 maxBound) {
 
 	float tmin, tmax, tymin, tymax, tzmin, tzmax;
 	if (r.dir.x >= 0) {
@@ -332,6 +290,9 @@ int HitBox(in Ray r, vec3 minBound, vec3 maxBound) {
 	
 	if ( (tmin > tzmax) || (tzmin > tmax) || (tzmax < eps))
 		return 0;
+		
+	if (tzmin > i.t)
+		return 0;
 	
 	return 1;
 }
@@ -344,31 +305,24 @@ void Intersect(in Ray r, inout Intersection i, int back)
 	}
 	
 	Triangle triangle;
-	int index = uNumOfTriangle * uNumOfTriangleVectors, endTriangleIndex = index;
-
-
-	//normal modulation guts
-	vec3 v1=vec3(1,0,0), v2, v3, v4;
-	mat3 m1,m2,tmp;
-	float mcos,msin;
-	mat4 fromUnit;
-	
-	float rotx=piover4*cos(ftime/125.0)/8.0;
-	float rotz=piover4*sin(ftime/125.0)/8.0;
-	float crotx=cos(rotx),srotx=sin(rotx),crotz=cos(rotz),srotz=sin(rotz);
-	float rotmag,cosmagx,sinmagx,cosmagz,sinmagz;
 
 	vec3 centerPoint, rs, triangleNormal, temp;
 	float radius, radiusSquared, B, C, D, sqrtOfD, t, tPlus;
+	int pointIndex;
 
-	for(int hitBoxIndex = 0; hitBoxIndex < uNumOfBoundingBoxes; hitBoxIndex++)
+	int l2Index = 0;
+	vec3 startEndVec;
+	
+	int nextBox = 3 + (uNumOfL2TrianglesBounded * uNumOfTriangleVectors);
+
+	for(int l1 = 0; l1 < uNumOfL2BoundingBoxes; l1++)
 	{
-		if(HitBox(r, texelFetch(bufferData, index).xyz, texelFetch(bufferData, index+1).xyz) == 1) 
+		if(HitBox(r, i, texelFetch(bufferData, l2Index).xyz, texelFetch(bufferData, l2Index+1).xyz) == 1) 
 		{
-			vec4 temp = texelFetch(bufferData, index+2);
-			int pointIndex = int(temp.x) * uNumOfTriangleVectors;
-
-			for (int c = int(temp.x); c < int(temp.y); c++) 
+			startEndVec = texelFetch(bufferData, l2Index+2).xyz;
+			pointIndex = l2Index + 3;
+		
+			for (int l2 = 0; l2 < int(startEndVec.x); l2++) 
 			{
 				centerPoint = (texelFetch(bufferData, pointIndex+8)).xyz;
 				radius = texelFetch(bufferData, pointIndex+9).x;
@@ -385,47 +339,6 @@ void Intersect(in Ray r, inout Intersection i, int back)
 					if(tPlus > 0.0)
 					{
 						triangleNormal = texelFetch(bufferData, pointIndex+7).xyz;
-						
-						//////////////////////////////////////
-						//modulation of triangle normals
-						//////////////////////////////////////
-						  
-						//find transformation of (1,0,0) that results in the triangleNormal
-						/*v2=triangleNormal;
-						v3=normalize(cross(v1,v2));
-						v4=cross(v4,v1);
-						m1=mat3(v1,v4,v3);
-						mcos=dot(v2,v1);
-						msin=dot(v2,v4);
-						m2=mat3(mcos, msin, 0,
-						        -msin, mcos, 0,
-						        0, 0, 1);
-						tmp=inverse(m1)*m2*m1;
-						fromUnit=mat4(vec4(tmp[0], 0.0), vec4(tmp[1], 0.0), vec4(tmp[2], 0.0), vec4(0.0, 0.0, 0.0, 1.0));              
-						  
-						mat4(vec4(1.0,0.0,0.0,0.0),vec4(0.0,cos(rotx),sin(rotx),0.0),vec4(0.0,-sin(rotx),cos(rotx),0.0),vec4(0.0,0.0,0.0,1.0)) *
-						                  mat4(vec4(cos(rotz),sin(rotz),0.0,0.0),vec4(-sin(rotz),cos(rotz),0.0,0.0),vec4(0.0,0.0,1.0,0.0),vec4(0.0,0.0,0.0,1.0)) * 
-						                  fromUnit * vec4(1.0,0.0,0.0,1.0)
-						*/
-						  
-						/*cosmagx=cos(atan(triangleNormal[1]/triangleNormal[0]));
-						sinmagx=sin(atan(triangleNormal[1]/triangleNormal[0]));
-						cosmagz=cos(atan(triangleNormal[1]/triangleNormal[2]));
-						sinmagz=sin(atan(triangleNormal[1]/triangleNormal[2]));*/
-						//vec3 ownage = (ModelView * vec4(org,1.0)).xyz;;
-						//cosmagx=sinmagx=cosmagz=sinmagz=sqrt((ownage[0]-centerPoint[0])*(ownage[0]-centerPoint[0])+(ownage[1]-centerPoint[1])*(ownage[1]-centerPoint[1]));
-						cosmagx=sinmagx=cosmagz=sinmagz=1.0;
-						  
-						//do some noodling
-						triangleNormal = normalize(mat3(vec3(1.0,0.0,0.0),vec3(0.0,cosmagx*crotx,sinmagx*srotx),vec3(0.0,-sinmagx*srotx,cosmagx*crotx)) *
-						                 mat3(vec3(cosmagx*crotx,0.0,sinmagz*srotz),vec3(0.0,1.0,0.0),vec3(-sinmagx*srotx,0.0,cosmagz*crotz)) *
-						                 mat3(vec3(cosmagz*crotz,sinmagz*srotz,0.0),vec3(-sinmagz*srotz,cosmagz*crotz,0.0),vec3(0.0,0.0,1.0)) 
-						                  * triangleNormal);
-						                    
-						  
-						///////////////////////////////////////
-						//END of modulation of triangle normals
-						///////////////////////////////////////
 
 						buildTriangle(triangle, texelFetch(bufferData, pointIndex).xyz, texelFetch(bufferData, pointIndex+1).xyz, texelFetch(bufferData, pointIndex+2).xyz, 
 															texelFetch(bufferData, pointIndex+3).xyz, texelFetch(bufferData, pointIndex+4).xyz, texelFetch(bufferData, pointIndex+5).xyz,
@@ -433,14 +346,14 @@ void Intersect(in Ray r, inout Intersection i, int back)
 															triangleNormal
 															);
 						triangle_intersect(triangle, r, i, back);
-						
 					}
 				}
 				
 				pointIndex += uNumOfTriangleVectors;
 			}
 		}
-		index += 3;
+		
+		l2Index += nextBox;
 	}
 }
 
@@ -450,43 +363,50 @@ vec3 computeLightShadow(in Intersection isect)
 	int ntheta = 16;
 	int nphi   = 16;
 	float eps  = 0.0001;
+	
+	vec3 color = isect.ambient;
 
 	// Slightly move ray org towards ray dir to avoid numerical probrem.
 	vec3 p = vec3(isect.p.x + eps * isect.n.x,
 				  isect.p.y + eps * isect.n.y,
 				  isect.p.z + eps * isect.n.z);
 
-	vec3 lightPoint = uLightPositions[0];
+	vec3 lightPoint;
 	Ray ray;
-	ray.org = p;
-	ray.dir = normalize(lightPoint - p);
-	
 	Intersection lisect;
-	lisect.hit = 0;
-	lisect.t = 1.0e+30;
-	lisect.n = lisect.p = lisect.diffuse = vec3(0, 0, 0);
-	Intersect(ray, lisect, 0);
-	if (lisect.hit != 0)
-		return vec3(0.0, 0.0, 0.0);
-	else
+	
+	for(int index = 0; index < uNumberOfLights; index++)
 	{
-		//Phong shading
-		vec3 L = normalize(lightPoint - p);
-	    vec3 E = normalize(-p);
-	    vec3 H = normalize(L + E);
-	    vec3 R = normalize(-reflect(L, isect.n));
-	    
-	    float Kd = max( dot(L, isect.n), 0.0 );
-	    vec3 diffuse = Kd * uLightDiffuse[0] * isect.diffuse;
+		lightPoint = uLightPositions[index];
+		ray.org = p;
+		ray.dir = normalize(lightPoint - p);
 		
-	    float Ks = pow( max(dot(isect.n, R), 0.0), isect.shininess);
-	    vec3  specular = Ks * uLightSpecular[0] * isect.specular;
-	    if( dot(L, isect.n) < 0.0) {
-	        specular = vec3(0.0, 0.0, 0.0);
-	    }
-	    
-		return diffuse + specular;
+		lisect.hit = 0;
+		lisect.t = 1.0e+30;
+		lisect.n = lisect.p = lisect.diffuse = vec3(0, 0, 0);
+		Intersect(ray, lisect, 0);
+		if (lisect.hit == 0)
+		{
+			//Phong shading
+			vec3 L = normalize(lightPoint - p);
+		    vec3 E = normalize(-p);
+		    vec3 H = normalize(L + E);
+		    vec3 R = normalize(-reflect(L, isect.n));
+		    
+		    float Kd = max( dot(L, isect.n), 0.0 );
+		    vec3 diffuse = Kd * uLightDiffuse[0] * isect.diffuse;
+			
+		    float Ks = pow( max(dot(isect.n, R), 0.0), isect.shininess);
+		    vec3  specular = Ks * uLightSpecular[index] * isect.specular;
+		    if( dot(L, isect.n) < 0.0) {
+		        specular = vec3(0.0, 0.0, 0.0);
+		    }
+		    
+			color += diffuse + specular;
+		}
 	}
+	
+	return color;
 }
 
 void asdfmain()
@@ -496,18 +416,13 @@ void asdfmain()
 	r.dir = normalize(dir);
 	
 	vec4 color = vec4(0, 0, 0, 1);
+	Intersection i;
+	i.hit = 0;
+	i.t = 1.0e+30;
+	i.n = i.p = i.diffuse = vec3(0, 0, 0);
 	
-	int index = uNumOfTriangle * uNumOfTriangleVectors, endTriangleIndex = index;
-	
-	for(int hitBoxIndex = 0; hitBoxIndex < uNumOfBoundingBoxes; hitBoxIndex++)
-	{
-		if(HitBox(r, texelFetch(bufferData, index).xyz, texelFetch(bufferData, index+1).xyz) == 1) 
-		{
-			color.rgb = vec3(1, 1, 1);
-		}
-		
-		index += 3;
-	}
+	Triangle triangle;
+	int back = 0;
 	
 	gl_FragColor = color;
 }
@@ -561,7 +476,7 @@ void main()
 		Intersect(r, isect, 0);
 		if (isect.hit != 0)
 		{
-			reflectColor += isect.ambient + bcolor * computeLightShadow(isect);
+			reflectColor += bcolor * (computeLightShadow(isect)) ;
 			bcolor *= isect.reflect * isect.diffuse;
 		}
 		else
@@ -589,6 +504,7 @@ void main()
 		
 		if(isect.refract > eps) 
 		{
+
 			float n = rIndex / isect.refract;
 			vec3 N = isect.n;
 			rIndex = isect.refract;
@@ -604,11 +520,6 @@ void main()
 							 isect.p.y + eps * isect.n.y,
 							 isect.p.z + eps * isect.n.z);
 			}
-
-
-			r2.org = vec3(isect.p.x + eps * isect.n.x,
-						 isect.p.y + eps * isect.n.y,
-						 isect.p.z + eps * isect.n.z);
 
 			if(back == 0)
 			{
@@ -638,6 +549,6 @@ void main()
 	}
 	
 	color.rgb = reflectColor + refractColor;
-
+	
 	gl_FragColor = color;
 }

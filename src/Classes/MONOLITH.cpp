@@ -24,9 +24,9 @@ MONOLITH::MONOLITH(int argc, char** argv) :
     lightAmbient = (GLfloat*)malloc(sizeof(GLfloat)*4);
     lightAmbient[0]=lightAmbient[1]=lightAmbient[2]=lightAmbient[3]=0.1;
     lightPositions = (GLfloat*)malloc(sizeof(GLfloat)*4);
-    lightPositions[0]=1.0;
-    lightPositions[1]=1.0;
-    lightPositions[2]=10.0;
+    lightPositions[0]=1.3;
+    lightPositions[1]=4.13;
+    lightPositions[2]=1.3;
     lightPositions[3]=1.0;
     lightDiffuse = (GLfloat*)malloc(sizeof(GLfloat)*4);
     lightSpecular = (GLfloat*)malloc(sizeof(GLfloat)*4);
@@ -48,6 +48,7 @@ void MONOLITH::cleanup(void)
     if(lightSpecular)free(lightSpecular);
 }
 
+bool heisenbergUncertaintyPrinciple;
 /**
  * Apply animations and whatever else your heart desires.
  */
@@ -75,6 +76,16 @@ void MONOLITH::monolith_idle(void)
     if((*rootScene)["bottle"]->morphEnabled())
     {
         (*rootScene)["bottle"]->morphPercentage(percent);
+
+#ifndef WITHOUT_QT
+        int pct = (int)floor(percent * 100.0);
+        if (_percentageCallback)
+        {
+          heisenbergUncertaintyPrinciple = true;
+          _percentageCallback(pct);
+          heisenbergUncertaintyPrinciple = false;
+        }
+#endif
     }
 }
 
@@ -94,14 +105,18 @@ void MONOLITH::slotFreezeParticles(bool isEnabled)
 {
 	ps->setPause(isEnabled);
 }
-
 void MONOLITH::slotMorphPercentage(int value)
 {
+  if (!heisenbergUncertaintyPrinciple)
     (*rootScene)["bottle"]->morphPercentage(value / 100.0);
 }
-
+void MONOLITH::setMorphPercentageCallback(boost::function<void(int)> cb)
+{
+    _percentageCallback = cb;
+}
 void MONOLITH::slotEnableMorphing(bool isEnabled)
 {
+  gprint(PRINT_WARNING, "MORPHING := %s\n", isEnabled?"ENABLED":"DISABLED");
    (*rootScene)["bottle"]->morphEnabled(isEnabled);
 }
 
@@ -163,7 +178,7 @@ void MONOLITH::run() {
   Engine *eng = Engine::instance();
 
   eng->init( &_argc, _argv, "WE ARE THE BORG. RESISTANCE IS FUTILE!" );
-  eng->registerIdle( monolith_idle );
+  eng->registerIdle( boost::bind(&MONOLITH::monolith_idle, this) );
   eng->registerTraceFunc( (raytracerCallback)(boost::bind(&MONOLITH::raytraceStatusChanged, this, _1)));
 
   // Get handles to the Scene and the Screen.
@@ -243,7 +258,7 @@ void MONOLITH::run() {
 
   fprintf(stderr, "table! (%f, %f, %f)\n", table->getMax().x, table->getMax().y, table->getMax().z);
 
-  // Load up that goddamned candle
+  // Load up that candle
   Object *stick;
   Object *candle_top;
   //Object *candle_top_melted;
@@ -303,14 +318,14 @@ void MONOLITH::run() {
   */
 
 #ifdef WITHOUT_QT
-  ps = new ParticleSystem( 2500, "ps1", particleShader );
+  ps = new ParticleSystem( 3000, "ps1", particleShader );
 #else
   ps = new ParticleSystem(    0, "ps1", particleShader );
 #endif
-  ps->setLifespan( 10.0, 15.0 );
+  ps->setLifespan( 9.0, 12.0 );
   ps->setVectorField( ParticleFieldFunctions::flameDefault);
   ps->setColorFunc(   ColorFunctions::flame );
-  ps->setEmitterRadius( 0.04 );
+  ps->setEmitterRadius( 0.05 );
   candle_top->insertObject( ps );
   ps->_trans._offset.set( 0, max.y - 0.02 , 0 );
   ps->_trans._scale.set( 2 );
@@ -386,6 +401,7 @@ void MONOLITH::raytraceStatusChanged(bool newstatus)
     //ITERATE OVER ALL OBJS IN SCENE!
 
     Engine::instance()->rootScene()->bufferToRaytracer( rt );
+    rt.pushDataToBuffer();
     //    rt.genereateScene(objs);
   }
   else

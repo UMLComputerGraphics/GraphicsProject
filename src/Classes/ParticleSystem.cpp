@@ -46,7 +46,6 @@ ParticleSystem::ParticleSystem( int particleAmt, const std::string &name,
 	this->drawMode( GL_POINTS );
 	this->_vecFieldFunc = NULL;
 	setColorFunc( ColorFunctions::standard );
-	this->setVectorField( ParticleFieldFunctions::upDefault );
 	
 }
 
@@ -274,6 +273,11 @@ ParticleSystem::getNumParticles( void ) {
 	return _numParticles;
 }
 
+int
+ParticleSystem::getNumParticlesActual( void ) {
+  return _vertices.size();
+}
+
 void
 ParticleSystem::setLifespan( float minLifespan, float maxLifespan ) {
 	_minLife = minLifespan;
@@ -393,16 +397,22 @@ ParticleSystem::update() {
 
 
 		float percentLifeRemaining = (*i)->getLifetime()/(*i)->getMaxLifetime();
-		// call the update function on each particle
-		(*i)->updateSelf();
-		(*i)->setColor( (*_colorFunc)(percentLifeRemaining, (*i)->getPosition() ) );
 
+		//check to see if the particle is dead BEFORE we change it's members
 		if( ((*i)->getLifetime() <= 0.0)
 		/*|| ((*i)->getPosition().y >= maxHeight)*/ ) {
 			respawnParticle(**i) ;
 		}
 
-		// apply the vector field function to the particle
+		// call the update function on each particle
+		(*i)->updateSelf();
+
+		// apply the color function, if we have one
+		if ( this->_colorFunc != NULL ) {
+		  (*i)->setColor( (*_colorFunc)(percentLifeRemaining, (*i)->getPosition() ) );
+		}
+
+		// apply the vector field function, if we have one
 		if ( this->_vecFieldFunc != NULL ) {
 			(*i)->setVel( (*_vecFieldFunc)((*i)->getPosition() ) ) ;
 		}

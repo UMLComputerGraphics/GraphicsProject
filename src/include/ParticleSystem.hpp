@@ -53,6 +53,7 @@ public:
   float getMaxLife( void );
   float getMinLife( void );
   int   getNumParticles( void );
+  int   getNumParticlesActual( void );
   void  setNumParticles( int newNumParticles );
 
   void  setSlaughterHeight( float );
