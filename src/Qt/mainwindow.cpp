@@ -36,6 +36,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
 }
 
+void MainWindow::setMorphPercentageOut(int pct)
+{
+    ui->morphPercentageSlider->setValue(pct);
+}
+
 MainWindow::~MainWindow()
 {
     delete ui;

@@ -58,6 +58,10 @@ void MONOLITH::monolith_idle(void)
     // Animation variables.
     double timer = glutGet( GLUT_ELAPSED_TIME ) / 500.0;
     float percent = (sin( timer ) + 1.0) / 2.0;
+#ifndef WITHOUT_QT
+    int pct = (int)floor(percent * 100.0);
+    if (_percentageCallback) _percentageCallback(pct);
+#endif
     
     Object &candle = *((*rootScene)["bottle"]);
     candle.animation( simpleRotateAnim );
@@ -99,7 +103,10 @@ void MONOLITH::slotMorphPercentage(int value)
 {
     (*rootScene)["bottle"]->morphPercentage(value / 100.0);
 }
-
+void MONOLITH::setMorphPercentageCallback(boost::function<void(int)> cb)
+{
+    _percentageCallback = cb;
+}
 void MONOLITH::slotEnableMorphing(bool isEnabled)
 {
    (*rootScene)["bottle"]->morphEnabled(isEnabled);
