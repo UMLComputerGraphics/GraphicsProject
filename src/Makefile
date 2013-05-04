@@ -65,8 +65,8 @@ ifdef WII
     CXXDEFS += -DWII -I/usr/local/include/wiic
     LDLIBS += -lwiic -lwiicpp
 endif
-ifdef __USE_EXPRTK
-    CXXDEFS += -D__USE_EXPRTK
+ifdef EXPRTK
+    CXXDEFS += -DEXPRTK
 endif
 
 # Platform-dependent configuration.

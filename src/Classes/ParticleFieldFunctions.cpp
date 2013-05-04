@@ -2,7 +2,7 @@
 #include "ParticleSystem.hpp"
 #include "vec.hpp"
 #include "mat.hpp"
-#ifdef __USE_EXPRTK
+#ifdef EXPRTK
 #include "exprtk/exprtk.hpp"
 #endif
 #include <cmath>
@@ -187,7 +187,7 @@ vec3 ParticleFieldFunctions::flameoldDefault( vec4 pos )
 	return flameold( pos );
 }
 
-#ifdef __USE_EXPRTK
+#ifdef EXPRTK
 class UserVectorField {
 public:
   UserVectorField( const std::string &fx = "0x + 0y + 0z + 0",
@@ -228,11 +228,7 @@ private:
 
 Angel::vec3 ParticleFieldFunctions::userSupplied( Angel::vec4 pos ) {
   static UserVectorField *uvf = NULL;
-
-  if (uvf == NULL) {
-    uvf = new UserVectorField();
-  }
-
+  if (uvf == NULL) { uvf = new UserVectorField(); }
   return uvf->f( pos );
 }
 #endif

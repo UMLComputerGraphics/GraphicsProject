@@ -41,7 +41,7 @@ void init() {
                                     particleSystemShader );
   funInTheSin->setLifespan( 0.5, 11.0 );
   funInTheSin->setEmitterRadius( 0.1 );
-  #ifdef __USE_EXPRTK
+  #ifdef EXPRTK
   funInTheSin->setVectorField( ParticleFieldFunctions::userSupplied );
   #endif
   rootScene->insertObject( funInTheSin );
