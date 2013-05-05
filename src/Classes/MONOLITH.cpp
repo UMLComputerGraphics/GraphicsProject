@@ -22,7 +22,7 @@ MONOLITH::MONOLITH(int argc, char** argv) :
     _argc = argc;
     _argv = argv;
 
-    Light* l = new Light( "CandleLight", 2.5, 6.07, 2.5 );
+    Light* l = new Light( "CandleLight", 2.5, 6.8, 2.5 );
     l->color(vec3(1.0, 0.5, 0.2));
     Engine::instance()->addLight(l);
 
@@ -88,6 +88,7 @@ void MONOLITH::monolith_idle(void)
         int pct = (int)floor(percent * 100.0);
         if (_percentageCallback)
         {
+		// ????
           heisenbergUncertaintyPrinciple = true;
           _percentageCallback(pct);
           heisenbergUncertaintyPrinciple = false;
@@ -266,8 +267,8 @@ void MONOLITH::run() {
   rectangularMapping->copyToObjects(bottle,bottleMorphTarget);
   rectangularMapping->revertToOriginal(bottle,bottleMorphTarget);
 
-	//Rescale models to original size
-	scaleModel->restoreModels();
+  //Rescale models to original size
+  scaleModel->restoreModels();
 
 
   // Scale the bottle down!
@@ -295,9 +296,9 @@ void MONOLITH::run() {
   // Load up that candle
   Object *stick;
   Object *candle_top;
-  //Object *candle_top_melted;
   Object *candle_base;
 
+  //candle_top = rootScene->addObject( "candle_top", morphingShader );
   candle_top = rootScene->addObject( "candle_top", noMorphShader );
   candle_base = rootScene->addObject("candle_base", noMorphShader );
   stick = rootScene->addObject("stick", noMorphShader );
@@ -309,6 +310,13 @@ void MONOLITH::run() {
   ObjLoader::loadModelFromFile(stick, "../models/candlestick.obj");
   ObjLoader::loadMaterialFromFile(stick, "../models/candlestick.mtl");
 
+  /*
+  candle_top->genMorphTarget();
+  Object *candle_top_melted = candle_top->morphTarget();
+  ObjLoader::loadModelFromFile(candle_top_melted, "../models/candle_top_melted.obj");
+  ObjLoader::loadMaterialFromFile(candle_top_melted, "../models/candle.mtl");
+  */
+
   //candle_top->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
   //candle_base->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
   //stick->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
@@ -316,13 +324,7 @@ void MONOLITH::run() {
   glUniform1i(glGetUniformLocation(candle_top->shader(),"letMeSeeThatPhong"),1);
   glUniform1i(glGetUniformLocation(candle_base->shader(),"letMeSeeThatPhong"),1);
   glUniform1i(glGetUniformLocation(stick->shader(),"letMeSeeThatPhong"),1);
-
-/*
-  candle_top->genMorphTarget();
-  candle_top_melted = candle_top->morphTarget();
-  ObjLoader::loadModelFromFile(candle_top_melted, "../models/candle_top_melted.obj");
-  ObjLoader::loadMaterialFromFile(candle_top_melted, "../models/candle.mtl");
-  */
+  //glUniform1i(glGetUniformLocation(candle_top_melted->shader(),"letMeSeeThatPhong"),1);
 
   min = candle_base->getMin();
   vec4 max = stick->getMax();
@@ -332,6 +334,14 @@ void MONOLITH::run() {
   candle_base->_trans._offset.set( 2.5, max.y - 4.4, 2.5 );
   stick->_trans._offset.set( 2.5, 0, 2.5);
 
+  /*
+  ScaleModel * scaleModelCandle = new ScaleModel(candle_top, candle_top_melted,widthScale,heightScale,depthScale);
+  RectangularMapping * rectangularMappingCandle = new RectangularMapping(candle_top, candle_top_melted);
+  rectangularMappingCandle->copyToObjects(candle_top, candle_top_melted);
+  rectangularMappingCandle->revertToOriginal(candle_top, candle_top_melted);
+  scaleModelCandle->restoreModels();
+  */
+
   candle_top->propagateOLD();
   candle_base->propagateOLD();
   stick->propagateOLD();
@@ -339,11 +349,11 @@ void MONOLITH::run() {
   candle_top->buffer();
   candle_base->buffer();
   stick->buffer();
+  //candle_top_melted->buffer();
 
   stick->insertObject(candle_top);
   stick->insertObject(candle_base);
 
-  
   max = candle_top->getMax();
 
   #ifndef WITHOUT_QT
@@ -358,7 +368,7 @@ void MONOLITH::run() {
   ps->setEmitterRadius( 0.05 );
   candle_top->insertObject( ps );
   ps->_trans._offset.set( 0, max.y - 0.02 , 0 );
-  ps->_trans._scale.set( 2 );
+  ps->_trans._scale.set( 1.5 );
   ps->setEmitterShape(PS_HEMI_D);
 
  /* If you fill the system, the flame will have a non-flamelike pulsing effect. 
