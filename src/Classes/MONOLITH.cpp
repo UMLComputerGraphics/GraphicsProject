@@ -22,13 +22,9 @@ MONOLITH::MONOLITH(int argc, char** argv) :
     _argc = argc;
     _argv = argv;
 
-    Light* l = new Light( "CandleLight", 1.3, 4.13, 1.3 );
-    l->intensity(2);
-    Engine::instance()->addLight(l);
-    Light* l2 = new Light( "TestLight", 2.0, 2.0, 2.0 );
-    l2->color(vec3(0, 0.2, 0.8) );
-    l2->intensity(5);
-    Engine::instance()->addLight(l2);
+    Light* l = new Light( "CandleLight", 2.5, 6.07, 2.5 );
+    l->color(vec3(1.0, 0.5, 0.2));
+    Engine::instance()->addLight(l);    
 
     /*    lightAmbient = (GLfloat*)malloc(sizeof(GLfloat)*4);
     lightAmbient[0]=lightAmbient[1]=lightAmbient[2]=lightAmbient[3]=0.1;
@@ -71,10 +67,6 @@ void MONOLITH::monolith_idle(void)
     
     Object &candle = *((*rootScene)["bottle"]);
     candle.animation( simpleRotateAnim );
-
-    Light *bluLight = Engine::instance()->getLights()->at(1);
-    bluLight->dX(0.01);
-    Engine::instance()->setLights();
 
     //(*rootScene)["candle_top"]->morphPercentage(percent);
 
@@ -166,7 +158,7 @@ void MONOLITH::slotParticleFieldFunction(int index)
     switch (index)
     {
     case 0:
-        ps->setVectorField( ParticleFieldFunctions::flameDefault);
+        ps->setVectorField( ParticleFieldFunctions::flame);
         break;
     case 1:
         ps->setVectorField(ParticleFieldFunctions::tornado);
@@ -175,11 +167,26 @@ void MONOLITH::slotParticleFieldFunction(int index)
     case 2:
 
     default:
-        ps->setVectorField( ParticleFieldFunctions::flameDefault);
+        ps->setVectorField( ParticleFieldFunctions::flame);
         break;
     }
 
 
+}
+
+void MONOLITH::slotVxTextChanged(QString)
+{
+
+}
+
+void MONOLITH::slotVyTextChanged(QString)
+{
+
+}
+
+void MONOLITH::slotVzTextChanged(QString)
+{
+s
 }
 
 /**
@@ -350,14 +357,13 @@ void MONOLITH::run() {
   #endif
 
   ps->setLifespan( 9.0, 12.0 );
-  ps->setVectorField( ParticleFieldFunctions::flameDefault);
+  ps->setVectorField( ParticleFieldFunctions::flame);
   ps->setColorFunc(   ColorFunctions::flame );
   ps->setEmitterRadius( 0.05 );
   candle_top->insertObject( ps );
   ps->_trans._offset.set( 0, max.y - 0.02 , 0 );
   ps->_trans._scale.set( 2 );
   ps->setEmitterShape(PS_HEMI_D);
-
 
  /* If you fill the system, the flame will have a non-flamelike pulsing effect. 
     Please don't!
@@ -452,9 +458,9 @@ void MONOLITH::aRomanticEvening() {
     lightness = lightness * 3.0 / 10.0;
 
     lightness += .7;
-    lightDiffuse[0] = lightness;
-    lightDiffuse[1] = lightness;
-    lightDiffuse[2] = lightness;
+
+    Engine::instance()->getLights()->at(0)->intensity(lightness);
+    Engine::instance()->setLights();
 
     sleep( 0.01 );
   }

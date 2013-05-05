@@ -37,16 +37,19 @@ using namespace Angel;
 
 // Constructor(s)
 ParticleSystem::ParticleSystem( int particleAmt, const std::string &name,
-		GLuint shader ) :
-    				Object( name, shader ), _numParticles( particleAmt ), _minLife( 0.1 ),
-    				_maxLife( 1 ), _pauseTheSystem( false ), _slaughterHeight( 0.0 ),
-				_fillSpeedLimit( 5 ), _emitterRadius( 0.0 ),
-				_emitterShape(PS_NONE),
-				_systemShape(PS_NONE),
-				_vecFieldFunc( NULL ), 
-                                _colorFunc(ColorFunctions::standard) {
-	this->drawMode( GL_POINTS );	
+				GLuint shader ) :
+  Object( name, shader ), _numParticles( particleAmt ), _minLife( 0.1 ),
+  _maxLife( 1 ), _pauseTheSystem( false ), _slaughterHeight( 0.0 ),
+  _fillSpeedLimit( 5 ), _emitterRadius( 0.0 ),
+  _emitterShape(PS_NONE),
+  _systemShape(PS_NONE),
+  _funcParams( new FlameParameters() ),
+  _vecFieldFunc( NULL ), 
+  _colorFunc(ColorFunctions::standard) 
+{
+  this->drawMode( GL_POINTS );	 
 }
+
 
 ParticleSystem::~ParticleSystem( void ) {
 	for ( size_t i = 0; i < _particles.size(); i++ ) {
@@ -489,7 +492,7 @@ ParticleSystem::update() {
 
 		// apply the vector field function, if we have one
 		if ( this->_vecFieldFunc != NULL ) {
-			(*i)->setVel( (*_vecFieldFunc)((*i)->getPosition() ) ) ;
+			(*i)->setVel( (*_vecFieldFunc)((*i)->getPosition(), this->getFuncParams()) ) ;
 		}
 		else{        // sphere generating method
 		  float row   = rangeRandom( 0.001f, 0.004f ); // equivalent to magnitude
@@ -508,8 +511,7 @@ ParticleSystem::update() {
 
 }
 
-void 
-ParticleSystem::setVectorField(vec3 (*vectorFieldFunc)(vec4) )
+void ParticleSystem::setVectorField(vec3 (*vectorFieldFunc)(vec4, Parameters*) )
 {
 	this->_vecFieldFunc = vectorFieldFunc ;
 }
@@ -583,7 +585,15 @@ void ParticleSystem::setPause(bool b)
 	_pauseTheSystem = b ;
 }
 
+void ParticleSystem::setFuncParams(Parameters* theParameters)
+{
+	_funcParams = theParameters ;
+}
 
+Parameters* ParticleSystem::getFuncParams(void)
+{
+	return _funcParams;
+}
 // Nada. Don't buffer particles to the raytracer,
 // That's crazy-talk!
 void ParticleSystem::bufferToRaytracer( RayTracer &rt ) { /* WOW, NOTHING.*/ }

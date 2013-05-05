@@ -44,19 +44,10 @@ vec3 ParticleFieldFunctions::fixed(vec4 pos)
   return vec3(0.0,0.0,0.0);
 }
 
-vec3 ParticleFieldFunctions::fixedDefault( vec4 pos )
-{
-  return fixed( pos );
-}
 
 vec3 ParticleFieldFunctions::up(vec4 pos)
 {
   return vec3(0.0,0.01,0.0);
-}
-
-vec3 ParticleFieldFunctions::upDefault( vec4 pos )
-{
-	return up( pos );
 }
 
 //FIXME DOCS PARAMETERS
@@ -79,20 +70,14 @@ vec3 ParticleFieldFunctions::tornado(vec4 pos)
 
 }
 
-vec3 ParticleFieldFunctions::tornadoDefault( vec4 pos )
+vec3 ParticleFieldFunctions::flame(vec4 pos, Parameters* theParameters)
 {
-	return tornado( pos );
-}
-
-vec3 ParticleFieldFunctions::flame(vec4 pos, vec3 atrPos = vec3(0.0, 0.45, 0.0),
-		double scl = 0.01, float pwr = 0.1, float rng = 0.24 )
-{
-
+	FlameParameters* parameters = (FlameParameters* ) theParameters;
 	vec3 retVal ;
 
 	//float steepness = ParticleSystem::rangeRandom(2,100) ;
 
-	double scale = scl;
+	double scale = parameters->scl();
 	retVal.x = pos.x*scale;
 	retVal.z = pos.z*scale;
 	retVal.y = 5*(pos.x*pos.x + pos.z*pos.z);
@@ -100,9 +85,9 @@ vec3 ParticleFieldFunctions::flame(vec4 pos, vec3 atrPos = vec3(0.0, 0.45, 0.0),
 	//attractor code!!!
 	attractor atr_top ;
 
-	atr_top.power    = pwr ;
-	atr_top.position = atrPos ;
-	atr_top.range =	rng;
+	atr_top.power    = parameters->pwr() ;
+	atr_top.position = parameters->atrPos() ;
+	atr_top.range =	parameters->rng();
 	// get the distance from the attractor
 	vec3 atrDist = atr_top.position - xyz(pos) ;
 
@@ -131,11 +116,6 @@ vec3 ParticleFieldFunctions::flame(vec4 pos, vec3 atrPos = vec3(0.0, 0.45, 0.0),
 	
 	return 0.002 * normalize(retVal);
 
-}
-
-vec3 ParticleFieldFunctions::flameDefault( vec4 pos )
-{
-	return flame( pos );
 }
 
 vec3 ParticleFieldFunctions::flameold(vec4 pos) {
@@ -180,9 +160,33 @@ vec3 ParticleFieldFunctions::flameold(vec4 pos) {
 
 }
 
-vec3 ParticleFieldFunctions::flameoldDefault( vec4 pos )
+FlameParameters::FlameParameters( vec3 theAtrPos, 
+									double theScl, float thePwr,
+									 float theRng) : 
+									 _atrPos(theAtrPos),
+									_pwr(thePwr), _rng(theRng)
 {
-	return flameold( pos );
+	
+}	
+
+vec3 FlameParameters::atrPos(void)
+{
+	return _atrPos;
+}
+
+double FlameParameters::scl(void)
+{
+	return _scl;
+}
+
+float FlameParameters::pwr(void)
+{
+	return _pwr;
+}
+
+float FlameParameters::rng(void)
+{
+	return _rng;
 }
 
 
@@ -215,7 +219,6 @@ Angel::vec3 ParticleFieldFunctions::userSupplied( Angel::vec4 pos ) {
 Angel::vec3 ParticleFieldFunctions::userSupplied( Angel::vec4 &pos, UserVectorField &uvf ) {
   return uvf.eval( pos );
 }
-
 #endif
 
 /* // jet 1?

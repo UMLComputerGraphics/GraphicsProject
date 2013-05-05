@@ -48,6 +48,10 @@ signals:
 	void sigFreezeParticles(bool isEnabled);
     void sigParticleFieldFunction(int index);
 
+    void sigVxTextChanged(QString);
+    void sigVyTextChanged(QString);
+    void sigVzTextChanged(QString);
+
 private slots:
     void on_addObjectButton_clicked();
 

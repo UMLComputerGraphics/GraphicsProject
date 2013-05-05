@@ -29,6 +29,14 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->particleFieldFunctionComboBox, SIGNAL(currentIndexChanged(int)),
             this, SIGNAL(sigParticleFieldFunction(int)));
 
+    connect(ui->vxTextInput, SIGNAL(objectNameChanged(QString,QPrivateSignal)),
+            this, SIGNAL(sigVxTextChanged(QString)));
+
+    connect(ui->vyTextInput, SIGNAL(objectNameChanged(QString,QPrivateSignal)),
+            this, SIGNAL(sigVyTextChanged(QString)));
+
+    connect(ui->vzTextInput, SIGNAL(objectNameChanged(QString,QPrivateSignal)),
+            this, SIGNAL(sigVzTextChanged(QString)));
 
     /* Attempt to get the 'connect' work the other way */
     //connect(this, SIGNAL(sigMorphPercentageOut(int)),
