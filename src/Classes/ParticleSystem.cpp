@@ -28,25 +28,24 @@
 using namespace Angel;
 
 #ifndef MIN_EMITTER_RADIUS
-#define MIN_EMITTER_RADIUS 1.0/1024.0
+#define MIN_EMITTER_RADIUS 1.0/2048.0
 #endif
 
 #ifndef NUM_PARTICLES_TO_ADD_ON_UPDATE
-#define NUM_PARTICLES_TO_ADD_ON_UPDATE 3
+#define NUM_PARTICLES_TO_ADD_ON_UPDATE 12
 #endif
 
 // Constructor(s)
 ParticleSystem::ParticleSystem( int particleAmt, const std::string &name,
 		GLuint shader ) :
     				Object( name, shader ), _numParticles( particleAmt ), _minLife( 0.1 ),
-    				_maxLife( 1 ), _emitterRadius( 0.0 ), _pauseTheSystem( false ),
-    				_slaughterHeight( 0.0 ), _updateRequired( false ),
-    				_useGlobalParticleSpace( false ), _fillSpeedLimit( 5 ),
-    				_vecFieldFunc( NULL ), _colorFunc( NULL ) {
-	this->drawMode( GL_POINTS );
-	this->_vecFieldFunc = NULL;
-	setColorFunc( ColorFunctions::standard );
-	
+    				_maxLife( 1 ), _pauseTheSystem( false ), _slaughterHeight( 0.0 ),
+				_fillSpeedLimit( 5 ), _emitterRadius( 0.0 ),
+				_emitterShape(PS_NONE),
+				_systemShape(PS_NONE),
+				_vecFieldFunc( NULL ), 
+                                _colorFunc(ColorFunctions::standard) {
+	this->drawMode( GL_POINTS );	
 }
 
 ParticleSystem::~ParticleSystem( void ) {
@@ -65,42 +64,56 @@ ParticleSystem::getRandomCircularSpawnPoint(void)
 	float randomTheta ;
 	float jitteredRadius ;
 
-	//randomTheta = rangeRandom( 0.0, 360.0 ); // if degrees
-	randomTheta = rangeRandom( 0.0, 2.0*M_PI ); //if radians
+
+	randomTheta = rangeRandom( 0.0, 2.0*M_PI ); // radians
 	jitteredRadius = rangeRandom(this->_emitterRadius/100, this->_emitterRadius);
 
 	ret.x = cos(randomTheta)*(jitteredRadius);
 	ret.y = 0.0 ;
 	ret.z = sin(randomTheta)*(jitteredRadius);
-	ret.w = 1.0 ; // ??? I don't know if this matters
+	ret.w = 1.0 ;
 
 
 	return ret;
 
 }
 
+
+
 vec4
 ParticleSystem::getRandomHemisphericalSpawnPoint(void)
 {
+    return getRandomSphericalSpawnPointHelper(2);
+}
+
+vec4
+ParticleSystem::getRandomSphericalSpawnPoint(void)
+{
+    return getRandomSphericalSpawnPointHelper(1);
+}
+
+
+vec4
+ParticleSystem::getRandomSphericalSpawnPointHelper(float in)
+{
 
 	vec4 ret;
-	// Generate a random position on a circle of radius from particle system
+
+	// Generate a random position on a half-circle of radius from particle system
 	float randomTheta ;
 	float randomPhi ;
 	float jitteredRadius ;
 
 
-	//randomTheta = rangeRandom( 0.0, 360.0 ); // if degrees
 	randomTheta = rangeRandom( 0.0, 2.0 * M_PI ); //if radians
-	randomPhi   = rangeRandom( 0.0,       M_PI );
+	randomPhi   = rangeRandom( 0.0,  in * M_PI );
 
 	jitteredRadius = rangeRandom(this->_emitterRadius/100, this->_emitterRadius);
 
-	// dont reindent this
 	ret.x = sin(randomPhi) * cos(randomTheta) * (jitteredRadius);
 	ret.y = cos(randomPhi) *                    (jitteredRadius);
 	ret.z = sin(randomPhi) * sin(randomTheta) * (jitteredRadius);
-	ret.w = 1.0 ; // ??? I don't know if this matters
+	ret.w = 1.0 ;
 
 
 	return ret;
@@ -109,6 +122,8 @@ ParticleSystem::getRandomHemisphericalSpawnPoint(void)
 }
 
 /*
+
+TODO
 void  setAlpha( float newAlpha );
 void  setColor( vec4 newColor );
 void  setScale( vec3 newScale );
@@ -118,42 +133,114 @@ void
 ParticleSystem::respawnParticle(Particle &p)
 {
 
-	{ // new position
-		vec4  spawnPosition = vec4(0.0,0.0,0.0,1.0);
+    vec4  spawnPosition = vec4(0.0,0.0,0.0,1.0);
 
-		if ( getParticleSpace() ) {
-			spawnPosition = this->_trans.otm() * spawnPosition ;
-		}
+    if ( this->_emitterRadius >= MIN_EMITTER_RADIUS ) 
+      spawnPosition =  this->_emitterLoc.ctm() * this->getSpawnPos( this->getEmitterShape() );
 
-		if ( this->_emitterRadius >= MIN_EMITTER_RADIUS ) {
-			spawnPosition += this->getRandomHemisphericalSpawnPoint();
-		}
-		p.setPos(spawnPosition);
-	}
+    p.setPos(spawnPosition);
 
-	p.setLifetime( p.getMaxLifetime() ) ;
+    p.setLifetime( p.getMaxLifetime() ) ;
 
-	//    Particle *p = new Particle( spawnPosition, 1, generateLifespan() );
+}
 
+vec4 negateY(vec4 in)
+{
+  in.y = -in.y;
+  return in;
+}
+
+//typedef enum{ PS_NONE, PS_SPHERE, PS_HEMI_D, PS_HEMI_U, PS_CUBE }PS_SHAPE; getSystemShape();
+
+vec4
+ParticleSystem::getSpawnPos(PS_SHAPE s)
+{
+
+    switch(s)
+    {
+
+    case PS_NONE:
+      return vec4(0.0,0.0,0.0,1.0);
+
+    case PS_CIRCLE:
+      return getRandomCircularSpawnPoint();
+
+    case PS_SPHERE:
+      return getRandomSphericalSpawnPoint();
+
+    case PS_HEMI_D:
+      return getRandomHemisphericalSpawnPoint();
+
+    case PS_HEMI_U:
+      return negateY( getRandomHemisphericalSpawnPoint());
+
+    case PS_CUBE:
+      return getRandomCubeSpawnPoint();
+
+
+    default:
+      throw std::logic_error("da faq are you doing? stop passing garbage to the system");
+
+    }
+
+    return vec4(0.0,0.0,0.0,1.0); // does nothing except satisfy compiler
+
+}
+
+
+PS_SHAPE
+ParticleSystem::getEmitterShape() const 
+{
+        return this->_emitterShape ;
+}
+
+PS_SHAPE
+ParticleSystem::getSystemShape() const 
+{
+        return this->_systemShape ;
+}
+
+void
+ParticleSystem::setEmitterShape(PS_SHAPE in)
+{
+        this->_emitterShape = in ;
+}
+
+void
+ParticleSystem::setSystemShape(PS_SHAPE in)
+{
+        this->_systemShape = in;
+}
+
+//RADIUS IS DISTANCE FROM CENTER TO CORNER OF CUBE
+vec4
+ParticleSystem::getRandomCubeSpawnPoint()
+{
+        //square gen method
+        float tempXV, tempYV, tempZV, rad, nrad ;
+
+	nrad = -(rad = this->_emitterRadius);
+
+	tempXV = rangeRandom( nrad, rad );
+	tempYV = rangeRandom( nrad, rad );
+	tempZV = rangeRandom( nrad, rad );
+
+	return vec4( tempXV, tempYV, tempZV, 1.0 ) ;
 }
 
 Particle*
 ParticleSystem::newRandomParticle(void)
 {
-
 	vec4  spawnPosition = vec4(0.0,0.0,0.0,1.0);
 
-	if ( getParticleSpace() ) {
-		spawnPosition = this->_trans.otm() * spawnPosition ;
-	}
-
 	if ( this->_emitterRadius >= MIN_EMITTER_RADIUS ) {
-		//spawnPosition += this->getRandomCircularSpawnPoint();
-		spawnPosition += this->getRandomHemisphericalSpawnPoint();
+	    spawnPosition =  this->_emitterLoc.ctm() * this->getSpawnPos( this->getEmitterShape() );
 	}
 
 	// Generate a particle on the random position (if radius was big enough)
 	Particle *p = new Particle( spawnPosition, 1, generateLifespan() );
+
+	// TODO initial particle velocities based on which direction the emitter is pointing 
 
 	return p ;
 }
@@ -208,15 +295,15 @@ ParticleSystem::addParticle()
 
 	p = newRandomParticle() ;
 
+
 	try
 	{
 		this->_particles.push_back(p);
-//		this->setNumParticles( getNumParticles() + 1 );
 	}
 	catch (...)
 	{
 		std::cerr << "SEVERE: attempt to add a particle to particles vector failed"
-				<< std::endl;
+			  << std::endl;
 	}
 }
 
@@ -228,7 +315,6 @@ ParticleSystem::removeParticle()
 		if( this->_particles.size() > 0 )
 		{
 			this->_particles.pop_back();
-	//		this->setNumParticles( getNumParticles() - 1 );
 		}
 	}
 	catch (...)
@@ -259,23 +345,26 @@ ParticleSystem::fillSystemWithParticles( void ) {
 
 // Getters and Setters
 float
-ParticleSystem::getMaxLife( void ) {
+ParticleSystem::getMaxLife( void ) const
+{
 	return _maxLife;
 }
 
 float
-ParticleSystem::getMinLife( void ) {
+ParticleSystem::getMinLife( void ) const
+{
 	return _minLife;
 }
 
 int
-ParticleSystem::getNumParticles( void ) {
+ParticleSystem::getNumParticles( void ) const
+{
 	return _numParticles;
 }
 
 int
-ParticleSystem::getNumParticlesActual( void ) {
-  return _vertices.size();
+ParticleSystem::getNumParticlesActual( void ) const {
+        return _vertices.size();
 }
 
 void
@@ -299,53 +388,35 @@ void  ParticleSystem::buffer( GLenum usage ) {
 }
 
 void ParticleSystem::draw( void ) {
-	static const TransCache newTrans = TransCache();
 
-	// we should consider moving the update() call to the idle() loop
-	update();
+        //move/spawn/remove/color all particles
+	if ( ! this->_pauseTheSystem ) 
+	  this->update();
 
 	// if we don't have any particles, bail
 	if ( _vertices.size() <= 0 ) return;
 
-	buffer();
-
-
-	TransCache tempTrans = _trans ;
-
-	if ( getParticleSpace() ) {
-		tempTrans = _trans ;
-		_trans = newTrans;
-	}
-
+	// particleSytems must re-buffer every frame
+	if ( ! this->_pauseTheSystem ) 
+	  this->buffer();
 
 	// This binds the vertex array and sets the active shader,
 	// And sends all of the Object's uniforms.
 	Object::drawPrep();
 
+	// use additive blending (makes the flame better!)
+	// TODO make the blend mode an attribute of the particle system
+	glBlendFunc( GL_SRC_ALPHA, GL_ONE );
+
 	// We can handle this ourselves, because we're pretty.
 	glDrawArrays( _drawMode, 0, _vertices.size() );
 
+	glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 	// Unbind our vertex, then draw children if any.
 	glBindVertexArray(0);
 	Scene::draw();
 
-	// if we are using a detached thingy
-	if ( getParticleSpace() ) {
-		_trans = tempTrans ;
-	}
 
-}
-
-bool 
-ParticleSystem::getParticleSpace(void)  const
-{
-	return   _useGlobalParticleSpace;
-}
-
-void 
-ParticleSystem::setParticleSpace( bool flag )
-{
-	_useGlobalParticleSpace = flag ;
 }
 
 void
@@ -353,6 +424,7 @@ ParticleSystem::setEmitterRadius( float r )
 {
 	this->_emitterRadius = r ;
 }
+
 
 //Update the particles in our system >>> AND ALSO UPDATE OUR DRAW BUFFER
 void
@@ -362,7 +434,10 @@ ParticleSystem::update() {
 	static unsigned currFillFrame=0;
 
 	// if we are paused, don't change a damn thing.
-	if ( this->_pauseTheSystem ) return;
+	// TODO remove this and test
+	//if ( this->_pauseTheSystem ) return;
+
+	this->_emitterLoc.calcCTM();
 
 	// if we need more particles...
 	if ( _particles.size() < (unsigned int) this->_numParticles ){
@@ -393,8 +468,8 @@ ParticleSystem::update() {
 	vector<ParticleP>::iterator i;
 	//float maxHeight = this->_slaughterHeight ;
 
-	for( i = _particles.begin() ; i != _particles.end() ; ++i) {
-
+	for( i = _particles.begin() ; i != _particles.end() ; ++i) 
+	{
 
 		float percentLifeRemaining = (*i)->getLifetime()/(*i)->getMaxLifetime();
 
@@ -416,14 +491,21 @@ ParticleSystem::update() {
 		if ( this->_vecFieldFunc != NULL ) {
 			(*i)->setVel( (*_vecFieldFunc)((*i)->getPosition() ) ) ;
 		}
-
+		else{        // sphere generating method
+		  float row   = rangeRandom( 0.001f, 0.004f ); // equivalent to magnitude
+		  float phi   = rangeRandom( 0.0f, 2 * M_PI );
+		  float theta = rangeRandom( 0.0f, 2 * M_PI );
+		  (*i)->setVel( vec3( row*sin(phi)*cos(theta),
+				      row*sin(phi)*sin(theta),
+				      row*cos(phi) ));
+		}
+		
 		_vertices.push_back((*i)->getPosition());
 		_colors.push_back((*i)->getColor());
 
-
-
-
 	}
+
+
 }
 
 void 
@@ -500,24 +582,9 @@ void ParticleSystem::setPause(bool b)
 {
 	_pauseTheSystem = b ;
 }
-/* //square gen method
-	float tempXV, tempYV, tempZV ;
-	tempXV = rangeRandom( -0.001f, 0.001f );
-	tempYV = rangeRandom( -0.001f, 0.001f );
-	tempZV = rangeRandom( -0.001f, 0.001f );
-	(*i)->setVel( vec3( tempXV, tempYV, tempZV ) );
 
-	// sphere generating method
-	float row   = rangeRandom( -0.001f, 0.002f ); // equivalent to magnitude
-	float phi   = rangeRandom( 0.0f, 2 * M_PI );
-	float theta = rangeRandom( 0.0f, 2 * M_PI );
-
-	(*i)->setVel( vec3( row*sin(phi)*cos(theta),
-	row*sin(phi)*sin(theta),
-	row*cos(phi) ));
- */
 
 // Nada. Don't buffer particles to the raytracer,
 // That's crazy-talk!
-void ParticleSystem::bufferToRaytracer( RayTracer &rt ) { }
+void ParticleSystem::bufferToRaytracer( RayTracer &rt ) { /* WOW, NOTHING.*/ }
 

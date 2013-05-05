@@ -29,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->particleFieldFunctionComboBox, SIGNAL(currentIndexChanged(int)),
             this, SIGNAL(sigParticleFieldFunction(int)));
 
+
     /* Attempt to get the 'connect' work the other way */
     //connect(this, SIGNAL(sigMorphPercentageOut(int)),
     //        ui->morphPercentageSlider, SLOT(setValue(int)));
@@ -44,6 +45,11 @@ void MainWindow::setMorphPercentageOut(int pct)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+int MainWindow::getDefaultNumOfParticles()
+{
+    return ui->numberOfParticlesSpinBox->value();
 }
 
 void MainWindow::on_addObjectButton_clicked()

@@ -8,6 +8,10 @@
  * in a scene graph.
  */
 
+
+#ifndef __TRANSCACHE_HPP
+#define __TRANSCACHE_HPP
+
 #include "mat.hpp"
 #include "Transformation.hpp"
 #include <list>
@@ -20,7 +24,7 @@ public:
 
   /** Scene Graph 1.0: These properties and methods are deprecated. **/
   
-  void ptmOLD( const Angel::mat4 &ptm_in, bool postmult = true );
+  void ptmOLD( const Angel::mat4 &ptm_in, bool postmult = true ) __attribute__ ((deprecated));
 
   // Hacky: For Camera.
   TransMat _preOffset;
@@ -101,3 +105,5 @@ private:
   TransCache *_invertedCache; // Pointer to inverted cache if applicable.
 
 };
+
+#endif

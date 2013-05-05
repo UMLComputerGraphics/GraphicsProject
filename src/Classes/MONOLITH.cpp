@@ -9,7 +9,6 @@
 
 #include "MONOLITH.hpp"
 
-
 MONOLITH::~MONOLITH(void)
 {
   cleanup();
@@ -17,6 +16,7 @@ MONOLITH::~MONOLITH(void)
 
 /* Default and only constructor */
 MONOLITH::MONOLITH(int argc, char** argv) :
+    _defaultNumberOfParticles(3000),
     zipo(boost::thread(boost::bind(&MONOLITH::aRomanticEvening, this)))
 {
     _argc = argc;
@@ -24,6 +24,9 @@ MONOLITH::MONOLITH(int argc, char** argv) :
 
     Light* l = new Light( "CandleLight", 1.3, 4.13, 1.3 );
     Engine::instance()->addLight(l);
+    Light* l2 = new Light( "TestLight", 2.0, 2.0, 2.0 );
+    l2->color(vec3(0, 0.2, 0.8) );
+    Engine::instance()->addLight(l2);
 
     /*    lightAmbient = (GLfloat*)malloc(sizeof(GLfloat)*4);
     lightAmbient[0]=lightAmbient[1]=lightAmbient[2]=lightAmbient[3]=0.1;
@@ -66,6 +69,10 @@ void MONOLITH::monolith_idle(void)
     
     Object &candle = *((*rootScene)["bottle"]);
     candle.animation( simpleRotateAnim );
+
+    Light *bluLight = Engine::instance()->getLights()->at(1);
+    bluLight->dX(0.01);
+    Engine::instance()->setLights();
 
     //(*rootScene)["candle_top"]->morphPercentage(percent);
 
@@ -144,7 +151,7 @@ void MONOLITH::slotEnableParticleSystem(bool isEnabled)
 {
     if (isEnabled)
     {
-        ps->setNumParticles(1000);
+        ps->setNumParticles(_defaultNumberOfParticles);
     }
     else
     {
@@ -171,6 +178,24 @@ void MONOLITH::slotParticleFieldFunction(int index)
     }
 
 
+}
+
+/**
+ * @brief defaultNumberOfParticles (setter)
+ * @param value
+ */
+void MONOLITH::defaultNumberOfParticles(int value)
+{
+    _defaultNumberOfParticles = value;
+}
+
+/**
+ * @brief defaultNumberOfParticles (getter)
+ * @return
+ */
+int MONOLITH::defaultNumberOfParticles()
+{
+    return _defaultNumberOfParticles;
 }
 
 #endif //WITHOUT_QT
@@ -315,17 +340,13 @@ void MONOLITH::run() {
 
   
   max = candle_top->getMax();
- 
-  /*
-    inspectorconstructor: if we have no way to adjust the number of particles, 
-    make sure we have some
-  */
 
-#ifdef WITHOUT_QT
-  ps = new ParticleSystem( 3000, "ps1", particleShader );
-#else
-  ps = new ParticleSystem(    0, "ps1", particleShader );
-#endif
+  #ifndef WITHOUT_QT
+  ps = new ParticleSystem(0, "ps1", particleShader);
+  #else
+  ps = new ParticleSystem( _defaultNumberOfParticles, "ps1", particleShader );
+  #endif
+
   ps->setLifespan( 9.0, 12.0 );
   ps->setVectorField( ParticleFieldFunctions::flameDefault);
   ps->setColorFunc(   ColorFunctions::flame );
@@ -333,6 +354,8 @@ void MONOLITH::run() {
   candle_top->insertObject( ps );
   ps->_trans._offset.set( 0, max.y - 0.02 , 0 );
   ps->_trans._scale.set( 2 );
+  ps->setEmitterShape(PS_HEMI_D);
+
 
  /* If you fill the system, the flame will have a non-flamelike pulsing effect. 
     Please don't!
@@ -348,7 +371,7 @@ void MONOLITH::run() {
   Engine::instance()->cams()->active()->pos(2.0, 5.0, 9.0);
   
   //Set lights for all objects in the scene
-  Engine::instance()->rootScene()->setLights();
+  Engine::instance()->setLights();
 
   // need this for smoothness
   glShadeModel(GL_SMOOTH);

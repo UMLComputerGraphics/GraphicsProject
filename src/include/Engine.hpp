@@ -109,6 +109,13 @@ public:
    **/
   GLint* getNumLights( void );
 
+  GLfloat* getLightPositions( void );
+  GLfloat* getLightDiffuses( void );
+  GLfloat* getLightSpeculars( void );
+  GLfloat* getLightAmbient( void );
+
+  void setLights( void );
+
   // Settings Getters/Setters.
   /**
    * opt retrieves the current setting of an option in the Engine.
@@ -287,6 +294,10 @@ private:
    **/
   vector<Light*> *_lights;
   GLint *_lightsSize;
+  GLfloat *_lightPositions;
+  GLfloat *_lightSpeculars;
+  GLfloat *_lightDiffuses;
+  GLfloat *_lightAmbient;
 
   // Singleton Enforcement
   /**

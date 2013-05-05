@@ -54,7 +54,7 @@ CXXOPTS = -fmessage-length=0 -ansi -Wall -pedantic -DWITHOUT_QT
 
 CXXINCS = "-I$(CURDIR)/include"
 CXXINCS+= -IfMod/include
-CXXDEFS = -DWITHOUT_QT
+CXXDEFS = -DWITHOUT_QT -Wno-long-long
 LDLIBS = -lMagick++ -lboost_thread-mt
 
 # Configuration Options

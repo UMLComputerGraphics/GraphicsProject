@@ -2,9 +2,7 @@
 #include "ParticleSystem.hpp"
 #include "vec.hpp"
 #include "mat.hpp"
-#ifdef EXPRTK
-#include "exprtk/exprtk.hpp"
-#endif
+#include "UserVectorField.hpp"
 #include <cmath>
 
 using Angel::vec2;
@@ -187,66 +185,17 @@ vec3 ParticleFieldFunctions::flameoldDefault( vec4 pos )
 	return flameold( pos );
 }
 
+
 #ifdef EXPRTK
-class UserVectorField {
-public:
-  UserVectorField( const std::string &fx = "0x + 0y + 0z + 0",
-		   const std::string &fy = "0x + 0y + 0z + 0.01",
-		   const std::string &fz = "0x + 0y + 0z + 0" ) {
-    _table.add_variable("x",_input.x);
-    _table.add_variable("y",_input.y);
-    _table.add_variable("z",_input.z);
-    _table.add_constants();
-    
-    _ef[0].register_symbol_table( _table );
-    _ef[1].register_symbol_table( _table );
-    _ef[2].register_symbol_table( _table );
+/**
+   Revert:
+   The userSupplied callback should not accept strings as an input.
+   The userSupplied callback is an example and should do one thing and one thing only:   
+   It should return the value of its function.
 
-    set( fx, 0 );
-    set( fy, 1 );
-    set( fz, 2 );
-  }
-  
-  Angel::vec3 eval( Angel::vec4 input ) {
-    _input = input;
-    return vec3( _ef[0].value(), _ef[1].value(), _ef[2].value() );
-  }
-
-  /** use set( "string", index ) to change the f_x, f_y and f_z functions. **/
-  void set( const std::string &f, size_t i ) {
-    if (i > 2)
-      throw std::logic_error( "You can only modify the 0th, 1st, or 2nd functions.\n" );
-
-    bool res;
-    _f[i] = f;
-    res = _parser.compile( _f[i], _ef[i] );
-
-    if (!res) {
-      throw std::invalid_argument( _parser.error().c_str() );
-    }
-      /*
-      // This code doesn't work due to problems with error_t,
-      // But it was supplied by the author. No idea why it isn't working.
-      for (std::size_t i = 0; i < _parser.error_count(); ++i) {
-	error_t error = _parser.get_error(i);
-	printf("Err: %02d Pos: %02d Type: [%s] Msg: %s Expr: %s\n",
-	       static_cast<int>(i),
-	       static_cast<int>(error.token.position),
-	       exprtk::parser_error::to_str(error.mode).c_str(),
-	       error.diagnostic.c_str(),
-	       f.c_str());
-      }
-      */
-  }
-
-private:
-  std::string _f[3];
-  exprtk::expression<GLfloat> _ef[3];
-  exprtk::parser<GLfloat> _parser;
-  exprtk::symbol_table<GLfloat> _table;
-  Angel::vec4 _input;
-};
-
+   If you supply it strings and re-compile every time, it will be too slow to use.
+   Compile once, evaluate many times is the paradigm, here.
+**/
 Angel::vec3 ParticleFieldFunctions::userSupplied( Angel::vec4 pos ) {
   static UserVectorField *uvf = NULL;
   if (uvf == NULL) { 
@@ -254,6 +203,19 @@ Angel::vec3 ParticleFieldFunctions::userSupplied( Angel::vec4 pos ) {
   }
   return uvf->eval( pos );
 }
+
+/**
+   Try this, instead.
+   Make a UVF in advance, and then call this callback,
+   passing a reference to the UVF you'd like to use.
+
+   You can manage /that/ UVF object inside of QT if you'd like.
+   If you get the Parameters system working, the UVF can be a parameter.
+**/
+Angel::vec3 ParticleFieldFunctions::userSupplied( Angel::vec4 &pos, UserVectorField &uvf ) {
+  return uvf.eval( pos );
+}
+
 #endif
 
 /* // jet 1?

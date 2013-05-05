@@ -50,7 +50,11 @@ void main() {
       vec4 ambient = LightAmbient * baseColor;
 
       vec3 lightPos = (uLightPositions[i]).xyz;
-          
+      
+      float dist = length(vec3(lightPos - pos));
+
+      float att = 1.0 / dist;
+    
       vec3 L = normalize(lightPos);
       vec3 E = normalize(-pos);
       vec3 H = normalize(L + E);
@@ -66,7 +70,7 @@ void main() {
 
 	 //gl_FragColor = diffuse;
 
-      gl_FragColor += vec4( (ambient + diffuse + specular).xyz, 1.0 );
+      gl_FragColor += vec4( (ambient + diffuse + specular).xyz, 1.0 ) * att;
     }
     //gl_FragColor = (1.0 / gl_FragColor.a) * gl_FragColor;
   } else {

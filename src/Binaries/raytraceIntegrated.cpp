@@ -477,8 +477,6 @@ void init( void ) {
   Engine::instance()->cams()->active()->shader( program );
 
   vRayPosition = glGetAttribLocation( program, "vRayPosition" );
-  uRotationMatrix = glGetUniformLocation( program, "R" );
-  uCameraPosition = glGetUniformLocation( program, "T" );
 
   uNumOfSpheres = glGetUniformLocation( program, "uNumOfSpheres" );
   uSphereCenterPoints = glGetUniformLocation( program, "uSphereCenterPoints" );

@@ -31,9 +31,14 @@ int main( int argc, char **argv ) {
 #ifdef __APPLE__ // monolith.run has to be here for OS X. Do not edit! (@franckamayou)
   monolith.run(); 
 #endif // __APPLE__
+
   QApplication a( argc, argv );
   MainWindow w;
-  w.setWindowTitle( "First Graphics Demo" );
+  w.setWindowTitle( "GUI Interface - Graphics II" );
+  w.setGeometry(700, 0, w.width(), w.height());
+
+  // This is where the connection is for the default number of particles.
+  monolith.defaultNumberOfParticles(w.getDefaultNumOfParticles());
   /*
   For connecting more variables and sliders we only need to expose the slider variables
   that already exist in maindwindow in the .h. Then do the linking functions here. The functions used
