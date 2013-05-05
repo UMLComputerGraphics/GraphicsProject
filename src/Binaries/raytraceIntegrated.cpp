@@ -429,7 +429,7 @@ void genereateScene() {
     vertex = vertices[count++];
     vec3 c = vec3(vertex.x, vertex.y, vertex.z);
 
-    addTriangle(a, b, c, vec3(0.5, 0.5, 0.5), vec3(0.05, 0.05, 0.05), vec3(1.0, 1.0, 1.0), 100.0, 0.3, 0.0);
+    addTriangle(a, b, c, vec3(0.5, 0.5, 0.5), vec3(0.05, 0.05, 0.05), vec3(1.0, 1.0, 1.0), 100.0, 0.3, 1.0);
   }
 
 
