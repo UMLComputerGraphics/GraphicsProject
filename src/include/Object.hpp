@@ -89,6 +89,7 @@ public:
     LIGHT_POSITIONS,
     LIGHT_SPECULAR,
     LIGHT_DIFFUSE,
+    LIGHT_INTENSITY,
     END //!< END
   } Uniform;
 
@@ -391,6 +392,8 @@ protected:
   GLint _uLightDiffuse;
   GLint _uLightSpecular;
   GLint _uNumLights;
+  GLint _uLightIntensity;
+
 
   /** The material properties of this object **/
   Material *_material;

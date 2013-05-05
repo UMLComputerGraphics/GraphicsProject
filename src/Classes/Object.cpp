@@ -12,6 +12,7 @@
 
 #include "Engine.hpp"
 #include "Object.hpp"
+#include "Util.hpp"
 
 using Angel::vec4;
 using Angel::vec3;
@@ -83,6 +84,7 @@ Object::Object( const std::string &name, GLuint gShader ) {
   link( Object::NUM_LIGHTS, "uNumberOfLights" );
   link( Object::LIGHT_DIFFUSE, "uLightDiffuse" );
   link( Object::LIGHT_SPECULAR, "uLightSpecular" );
+  link( Object::LIGHT_INTENSITY, "uLightIntensity" );
   
   // Default to "Not Textured"
   _isTextured = false;
@@ -279,11 +281,14 @@ void Object::drawPrep( void ) {
   send( Object::OBJECT_CTM );
   send( Object::MORPH_PCT );
   send( Object::TEX_SAMPLER );
+
+  //light stuff
   send( Object::LIGHT_AMBIENT );
   send( Object::NUM_LIGHTS );
   send( Object::LIGHT_POSITIONS );
   send( Object::LIGHT_DIFFUSE );
   send( Object::LIGHT_SPECULAR );
+  send( Object::LIGHT_INTENSITY );
 }
 
 /**
@@ -503,11 +508,13 @@ void Object::send( Object::UniformEnum which ) {
     return;
   }
 
+  // light stuff
   GLint *numL = Engine::instance()->getNumLights();
   GLfloat *amb = Engine::instance()->getLightAmbient();
   GLfloat *diff = Engine::instance()->getLightDiffuses();
   GLfloat *spec = Engine::instance()->getLightSpeculars();
   GLfloat *pos = Engine::instance()->getLightPositions();
+  GLfloat *intens = Engine::instance()->getLightIntensities();
 
   switch ( which ) {
   
@@ -555,6 +562,11 @@ void Object::send( Object::UniformEnum which ) {
   case Object::LIGHT_POSITIONS:
     if (_isLit && pos && numL && *numL > 0) {
       glUniform4fv( _handles[Object::LIGHT_POSITIONS], *numL, pos);
+    }
+    break;
+  case Object::LIGHT_INTENSITY:
+    if (_isLit && intens && numL && *numL > 0) {
+      glUniform1fv( _handles[Object::LIGHT_INTENSITY], *numL, intens);
     }
     break;
   default:

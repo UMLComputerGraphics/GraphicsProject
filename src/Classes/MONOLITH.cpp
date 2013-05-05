@@ -23,9 +23,11 @@ MONOLITH::MONOLITH(int argc, char** argv) :
     _argv = argv;
 
     Light* l = new Light( "CandleLight", 1.3, 4.13, 1.3 );
+    l->intensity(2);
     Engine::instance()->addLight(l);
     Light* l2 = new Light( "TestLight", 2.0, 2.0, 2.0 );
     l2->color(vec3(0, 0.2, 0.8) );
+    l2->intensity(5);
     Engine::instance()->addLight(l2);
 
     /*    lightAmbient = (GLfloat*)malloc(sizeof(GLfloat)*4);

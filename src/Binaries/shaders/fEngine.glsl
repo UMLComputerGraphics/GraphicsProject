@@ -24,7 +24,12 @@ uniform bool fIsTextured;
 uniform bool letMeSeeThatPhong; //pha phong phong phong
 const int maxNumberOfLights = 5;
 uniform int uNumberOfLights;
-uniform vec4 LightAmbient, uLightPositions[maxNumberOfLights], uLightDiffuse[maxNumberOfLights], uLightSpecular[maxNumberOfLights];
+uniform vec4 LightAmbient,
+             uLightPositions[maxNumberOfLights],
+             uLightDiffuse[maxNumberOfLights],
+             uLightSpecular[maxNumberOfLights];
+
+uniform float uLightIntensity[maxNumberOfLights];
 
 void main() { 
 
@@ -70,7 +75,7 @@ void main() {
 
 	 //gl_FragColor = diffuse;
 
-      gl_FragColor += vec4( (ambient + diffuse + specular).xyz, 1.0 ) * att;
+      gl_FragColor += vec4( (ambient + diffuse + specular).xyz, 1.0 ) * att * uLightIntensity[i];
     }
     //gl_FragColor = (1.0 / gl_FragColor.a) * gl_FragColor;
   } else {
