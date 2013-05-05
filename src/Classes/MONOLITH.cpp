@@ -150,7 +150,7 @@ void MONOLITH::slotEnableParticleSystem(bool isEnabled)
 {
     if (isEnabled)
     {
-        ps->setNumParticles(1000);
+        ps->setNumParticles(_defaultNumberOfParticles);
     }
     else
     {
@@ -340,7 +340,11 @@ void MONOLITH::run() {
   
   max = candle_top->getMax();
 
+  #ifndef WITHOUT_QT
+  ps = new ParticleSystem(0, "ps1", particleShader);
+  #else
   ps = new ParticleSystem( _defaultNumberOfParticles, "ps1", particleShader );
+  #endif
 
   ps->setLifespan( 9.0, 12.0 );
   ps->setVectorField( ParticleFieldFunctions::flameDefault);

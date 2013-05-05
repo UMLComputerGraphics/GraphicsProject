@@ -24,8 +24,9 @@ namespace ParticleFieldFunctions
   Angel::vec3 up(Angel::vec4);
   Angel::vec3 upDefault( Angel::vec4 );
 
-  Angel::vec3 userSupplied( Angel::vec4 );
-  Angel::vec3 userSuppliedDefault( Angel::vec4 );
+  Angel::vec3 userSupplied( Angel::vec4, const std::string &f_x = "0x + 0y + 0z + 0",
+                                                    const std::string &f_y = "0x + 0y + 0z + 0.01",
+                                                    const std::string &f_z = "0x + 0y + 0z + 0");
 }
 
 #endif
