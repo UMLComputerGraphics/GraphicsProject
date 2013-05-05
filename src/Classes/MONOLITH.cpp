@@ -24,7 +24,9 @@ MONOLITH::MONOLITH(int argc, char** argv) :
 
     Light* l = new Light( "CandleLight", 2.5, 6.07, 2.5 );
     l->color(vec3(1.0, 0.5, 0.2));
-    Engine::instance()->addLight(l);    
+    Engine::instance()->addLight(l);
+
+    extinguish = false;
 
     /*    lightAmbient = (GLfloat*)malloc(sizeof(GLfloat)*4);
     lightAmbient[0]=lightAmbient[1]=lightAmbient[2]=lightAmbient[3]=0.1;
@@ -459,8 +461,10 @@ void MONOLITH::aRomanticEvening() {
 
     lightness += .7;
 
-    Engine::instance()->getLights()->at(0)->intensity(lightness);
-    Engine::instance()->setLights();
+    // @NVV: We can't assume here that lights exist yet,
+    // This is throwing an exception for 0 being out-of-range.
+    //Engine::instance()->getLights()->at(0)->intensity(lightness);
+    //Engine::instance()->setLights();
 
     sleep( 0.01 );
   }
