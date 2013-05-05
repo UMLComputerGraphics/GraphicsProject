@@ -416,7 +416,7 @@ void genereateScene() {
   //TODO: raytrace1 use class/Raytrace
 
   Object *bottle = new Object("", program);
-  ObjLoader::loadModelFromFile( bottle, "../models/bottle_wine_med.obj" );
+  ObjLoader::loadModelFromFile( bottle, "../models/bottle_liquor_med.obj" );
 
   vec4 *vertices = bottle->_vertices.data();
 
