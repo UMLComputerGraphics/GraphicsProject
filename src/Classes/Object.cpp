@@ -255,8 +255,14 @@ Object::~Object( void ) {
 
   for ( it = _textures.begin(); it != _textures.end(); ++it )
     delete (*it);
+  
+  if (_morphTarget != NULL) {
+    delete _morphTarget;
+    _morphTarget = NULL;
+  }
 
   if ( _material != NULL ) delete _material;
+
 }
 
 /**
@@ -831,15 +837,22 @@ Angel::vec3 Object::getMin( void ) {
 
 void Object::bufferToRaytracer( RayTracer &rt ) {
 
-  const vec3 diffuse = vec3(0.0, 1.0, 0.0);
-  const vec3 ambient = vec3(0.0, 0.1, 0.0);
-  const vec3 specular = vec3(0.0, 0.0, 0.0);
-  const float shininess = 1.0;
+  // If _material doesn't exist, try to use colors.
+  // If no colors exist, make a default material.
+  if (_material) {
+    const vec3 diffuse = _material->getDiffuse();
+    const vec3 ambient = _material->getAmbient();
+    const vec3 specular = _material->getSpecular();
+    const float shininess = _material->getShininess();
+    const float refract = _material->getRefract();
+  } else if (_colors.size() < _vertices.size()) {
+    _material = new Material();
+  }
   const float reflect = 0.5;
-  const float refract = 0.0;
   
   std::vector< Angel::vec4 >::iterator it;
 
+  size_t i = 0;
   for ( it = _vertices.begin(); it != _vertices.end(); ++it ) {
     vec3 a = vec3( it->x, it->y, it->z );
     if ( ++it == _vertices.end() ) break;
@@ -847,7 +860,12 @@ void Object::bufferToRaytracer( RayTracer &rt ) {
     if ( ++it == _vertices.end() ) break;
     vec3 c = vec3( it->x, it->y, it->z );
 
-    rt.addTriangle( a, b, c, diffuse, ambient, specular, shininess, reflect, refract );
+    if (_materials)
+      rt.addTriangle( a, b, c, diffuse, ambient, specular, shininess, reflect, refract );
+    else
+      rt.addTriangle( a, b, c, 
+		      _colors.at(i++), _colors.at(i++), _colors.at(i++), 
+		      reflect, 1.0 );
 
   }
 
