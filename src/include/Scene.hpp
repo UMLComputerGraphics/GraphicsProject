@@ -140,12 +140,6 @@ public:
   void draw( void );
 
   /**
-   * Calls the setLights method on all children.
-   * @return void.
-   **/
-  void setLights( void );
-
-  /**
    * Fetch an Object pointer from the scene graph with the matching name.
    * @param objname The name of the object to fetch.
    * @return The requested Object pointer.

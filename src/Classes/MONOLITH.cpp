@@ -23,6 +23,9 @@ MONOLITH::MONOLITH(int argc, char** argv) :
 
     Light* l = new Light( "CandleLight", 1.3, 4.13, 1.3 );
     Engine::instance()->addLight(l);
+    Light* l2 = new Light( "TestLight", 2.0, 2.0, 2.0 );
+    l2->color(vec3(0, 0.2, 0.8) );
+    Engine::instance()->addLight(l2);
 
     /*    lightAmbient = (GLfloat*)malloc(sizeof(GLfloat)*4);
     lightAmbient[0]=lightAmbient[1]=lightAmbient[2]=lightAmbient[3]=0.1;
@@ -65,6 +68,10 @@ void MONOLITH::monolith_idle(void)
     
     Object &candle = *((*rootScene)["bottle"]);
     candle.animation( simpleRotateAnim );
+
+    Light *bluLight = Engine::instance()->getLights()->at(1);
+    bluLight->dX(0.01);
+    Engine::instance()->setLights();
 
     //(*rootScene)["candle_top"]->morphPercentage(percent);
 
@@ -365,7 +372,7 @@ void MONOLITH::run() {
   Engine::instance()->cams()->active()->pos(2.0, 5.0, 9.0);
   
   //Set lights for all objects in the scene
-  Engine::instance()->rootScene()->setLights();
+  Engine::instance()->setLights();
 
   // need this for smoothness
   glShadeModel(GL_SMOOTH);
