@@ -12,7 +12,6 @@
 #include <vector>
 #include <boost/thread.hpp>
 
-#include "RaytraceBuffer.hpp"
 #include "SpelchkCamera.hpp"
 #include "InitShader.hpp"
 #include "Timer.hpp"
@@ -32,7 +31,7 @@ GLuint uRotationMatrix = -1;
 GLint uCameraPosition = -1;
 
 /** Logical camera object. **/
-SpelchkCamera camera( vec4( 0.0, 0.0, 3.0, 0.0 ) );
+SpelchkCamera camera( vec4( 0.0, 2.0, 10.0, 0.0 ) );
 SpelchkCamera cameraLeft( vec4( 0.0, 0.0, 10.0, 0.0 ) );
 SpelchkCamera cameraRight( vec4( 0.0, 0.0, 10.0, 0.0 ) );
 
@@ -49,8 +48,12 @@ GLint uNumOfSpheres = -1;
 GLint uNumOfTriangle = -1;
 GLint uNumOfTriangleVectors = -1;
 
-GLint uNumOfBoundingBoxes = -1;
+GLint uNumOfL2BoundingBoxes = -1;
+GLint uNumOfL1BoundingBoxes = -1;
 
+GLint uNumOfL2TrianglesBounded = -1;
+
+GLint uNumberOfLights = -1;
 GLint uLightPositions = -1;
 GLint uLightDiffuse = -1;
 GLint uLightSpecular = -1;
@@ -58,33 +61,33 @@ GLint uLightSpecular = -1;
 //----------------------------------------------------------------------------
 
 GLfloat sphereCenterPoints[] = { 0.0, 0.0, 5.0,
-                                 1.0, -1.0, -2.0,
-                                 -1.0, 1.0, -2.0,
+                                 5.0, 0.0, 0.0,
+                                 5.0, 0.0, 5.0,
                                  1.0, 1.0, -2.0 };
 
 GLfloat sphereRadius[] = { 0.5,
-                           0.6,
-                           0.7,
+                           0.5,
+                           0.5,
                            0.8 };
 
-GLfloat sphereDiffuse[] = { 0.1, 0.1, 0.1,
-                           0.3, 1.0, 0.3,
-                           0.3, 0.3, 1.0,
+GLfloat sphereDiffuse[] = { 0.05, 0.05, 0.05,
+                            0.05, 0.05, 0.05,
+                            0.05, 0.05, 0.05,
                            1.0, 0.3, 0.3 };
 
-GLfloat sphereAmbient[] = { 0.1, 0.1, 0.1,
-                            0.0, 0.0, 0.0,
-                            0.0, 0.0, 0.0,
+GLfloat sphereAmbient[] = { 0.05, 0.05, 0.05,
+                            0.05, 0.05, 0.05,
+                            0.05, 0.05, 0.05,
                             0.0, 0.0, 0.0 };
 
 GLfloat sphereSpecular[] = { 1.0, 1.0, 1.0,
-                             0.0, 0.0, 0.0,
-                             0.0, 0.0, 0.0,
+                             1.0, 1.0, 1.0,
+                             1.0, 1.0, 1.0,
                              0.0, 0.0, 0.0 };
 
 GLfloat sphereShininess[] = { 1000.0,
-                              1.0,
-                              1.0,
+                              1000.0,
+                              1000.0,
                               1.0 };
 
 GLfloat sphereReflect[] = { 0.5,
@@ -97,22 +100,31 @@ GLfloat sphereRefract[] = { 1.0,
                             1.0,
                             1.0 };
 
-GLfloat lightPositions[] = { 1.0, 1.0, 10.0 };
-GLfloat lightDiffuse[] = { 1.0, 1.0, 1.0 };
-GLfloat lightSpecular[] = { 1.0, 1.0, 1.0 };
+int numberOfLights = 2;
+
+GLfloat lightPositions[] = { -2.0, 4.0, 10.0,
+                             10.0, 4.0, -2.0};
+GLfloat lightDiffuse[] = { 0.8, 0.8, 0.8,
+                           0.8, 0.8, 0.8};
+GLfloat lightSpecular[] = { 1.0, 1.0, 1.0,
+                            1.0, 1.0, 1.0};
 
 int numTriangles = 0;
+std::vector<vec3> trianglePoints;
 
-int numOfBoundingBoxes = 0;
+int numOfL2BoundingBoxes = 0;
+int numOfL1BoundingBoxes = 0;
+
+int numOfL2TrianglesBounded = 20;
 
 std::vector<GLfloat> bufferData;
+std::vector<GLfloat> triangleData;
 
-// The number of vectors in the triangle buffer is:
-// The size of the triangle buffer type, divided by 
-// three (vec3s) times the size of a GLfloat.
-int numOfTriangleVectors = sizeof( triangle_t ) / (3 * sizeof(GLfloat));
+int numOfTriangleVectors = 10;
 
-bool stereo = true;
+bool stereo = false;
+
+float eps = 0.0001;
 
 //flicker at constant rate, regardless of update loop
 bool extinguish = false;
@@ -289,7 +301,7 @@ float previousTime = 0.0;
 void display( void ) {
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
   
-  int numSpheres = 1;
+  int numSpheres = 3;
   glUniform1i( uNumOfSpheres, numSpheres );
   glUniform3fv( uSphereCenterPoints, numSpheres, sphereCenterPoints );
   glUniform1fv( uSphereRadius, numSpheres, sphereRadius );
@@ -303,11 +315,15 @@ void display( void ) {
   glUniform1i( uNumOfTriangle, numTriangles );
   glUniform1i( uNumOfTriangleVectors, numOfTriangleVectors );
 
-  glUniform1i( uNumOfBoundingBoxes, numOfBoundingBoxes );
+  glUniform1i( uNumOfL2BoundingBoxes, numOfL2BoundingBoxes );
+  glUniform1i( uNumOfL1BoundingBoxes, numOfL1BoundingBoxes );
   
-  glUniform3fv( uLightPositions, 1, lightPositions );
-  glUniform3fv( uLightDiffuse, 1, lightDiffuse );
-  glUniform3fv( uLightSpecular, 1, lightSpecular );
+  glUniform1i( uNumOfL2TrianglesBounded, numOfL2TrianglesBounded );
+
+  glUniform1i( uNumberOfLights, numberOfLights );
+  glUniform3fv( uLightPositions, numberOfLights, lightPositions );
+  glUniform3fv( uLightDiffuse, numberOfLights, lightDiffuse );
+  glUniform3fv( uLightSpecular, numberOfLights, lightSpecular );
   
   GLfloat vertices[] = { 1.0, 1.0, -1.0, 1.0, 1.0, -1.0, -1.0, -1.0, };
   
@@ -327,10 +343,6 @@ void display( void ) {
       0                   // offset of first element
       );
   
-  std::cerr << "uRM: " << cameraLeft.getRotationMatrix() << "\n";
-  std::cerr << "cLeft: " << cameraLeft.getCameraPosition() << "\n";
-  std::cerr << "cRight: " << cameraRight.getCameraPosition() << "\n";
-
   if ( stereo ) {
     cameraLeft.copyCamera( &camera );
     cameraLeft.moveCamera( -0.1, 0.0, 0.0 );
@@ -397,13 +409,26 @@ void setMinMax(vec3 *min, vec3 *max, vec3 v) {
   }
 }
 
-void addTriangle( const vec3& a, const vec3& b, const vec3& c, 
-		  const vec3& diffuse, const vec3& ambient, const vec3& specular, 
-		  float shininess, float reflect, float refract) {
+void addTriangle(const vec3& a, const vec3& b, const vec3& c, const vec3& diffuse, const vec3& ambient, const vec3& specular, float shininess, float reflect, float refract) {
+  trianglePoints.push_back(a);
+  trianglePoints.push_back(b);
+  trianglePoints.push_back(c);
 
-  triangle_t newTriangle;
+  addVec3ToVector(&triangleData, a);
+  addVec3ToVector(&triangleData, b);
+  addVec3ToVector(&triangleData, c);
+
+  addVec3ToVector(&triangleData, diffuse);
+  addVec3ToVector(&triangleData, ambient);
+  addVec3ToVector(&triangleData, specular);
+
+  triangleData.push_back(shininess);
+  triangleData.push_back(reflect);
+  triangleData.push_back(refract);
 
   vec3 normal = normalize(cross(b - a, c - b));
+  addVec3ToVector(&triangleData, normal);
+
   float centerX, centerY, centerZ, x, y, z;
 
   centerX = (a.x + b.x + c.x) / 3;
@@ -432,32 +457,12 @@ void addTriangle( const vec3& a, const vec3& b, const vec3& c,
   if(tempDistance > distance) distance = tempDistance;
   distance += 0.0001;
 
-  newTriangle.a = a;
-  newTriangle.b = b;
-  newTriangle.c = c;
-  newTriangle.diffuse = diffuse;
-  newTriangle.ambient = ambient;
-  newTriangle.specular = specular;
-
-  newTriangle.shininess = shininess;
-  newTriangle.reflect = reflect;
-  newTriangle.refract = refract;
-
-  newTriangle.normal = normal;
-
-  newTriangle.centerx = centerX;
-  newTriangle.centery = centerY;
-  newTriangle.centerz = centerZ;
-  newTriangle.distance = distance;
-  newTriangle.distanceSquared = (distance * distance);
-  newTriangle.sentinel = 0.0;
-
-  GLfloat *ptr = NULL;
-  for ( ptr = (GLfloat *)&newTriangle; 
-	(void *)ptr < (void *)(&newTriangle + 1); 
-	ptr++ ) {
-    bufferData.push_back( *ptr );
-  }
+  triangleData.push_back(centerX);
+  triangleData.push_back(centerY);
+  triangleData.push_back(centerZ);
+  triangleData.push_back(distance);
+  triangleData.push_back(distance * distance);
+  triangleData.push_back(0.0);
 
   numTriangles++;
 }
@@ -499,9 +504,83 @@ void addCube(vec3 position, vec3 diffuse, vec3 ambient, vec3 specular, float shi
   addTriangle(vertices[0] + position, vertices[7] + position, vertices[3] + position, diffuse, ambient, specular, shininess, reflect, refract);
 }
 
+void pushTriangleDataToBuffer(int start, int end) {
+  unsigned long int index = start * 3 * numOfTriangleVectors;
+
+  GLfloat *data = triangleData.data();
+  for(int i = start; i < end && index < triangleData.size(); i++) {
+
+    for(int j = 0; j < 3 * numOfTriangleVectors; j++) {
+      bufferData.push_back(data[index++]);
+    }
+  }
+}
+
 void pushDataToBuffer() {
+
+  vec3 min, max;
+  vec3 *vertices = trianglePoints.data();
+  min.x = vertices[0].x;
+  max.x = vertices[0].x;
+  min.y = vertices[0].y;
+  max.y = vertices[0].y;
+  min.z = vertices[0].z;
+  max.z = vertices[0].z;
+
+  int start;
+
+  unsigned long int count = 0;
+  int triangleCount = 0;
+  while(count < trianglePoints.size()) {
+    vec4 vertex = vertices[count++];
+    vec3 a = vec3(vertex.x, vertex.y, vertex.z);
+    vertex = vertices[count++];
+    vec3 b = vec3(vertex.x, vertex.y, vertex.z);
+    vertex = vertices[count++];
+    vec3 c = vec3(vertex.x, vertex.y, vertex.z);
+
+    setMinMax(&min, &max, a);
+    setMinMax(&min, &max, b);
+    setMinMax(&min, &max, c);
+    triangleCount++;
+
+    if(count > 0 && triangleCount % numOfL2TrianglesBounded == 0) {
+
+      addVec3ToVector(&bufferData, min);
+      addVec3ToVector(&bufferData, max);
+
+      start = triangleCount - numOfL2TrianglesBounded;
+
+      bufferData.push_back((float)numOfL2TrianglesBounded);
+      bufferData.push_back(0.0);
+      bufferData.push_back(0.0);
+      numOfL2BoundingBoxes += 1;
+
+      pushTriangleDataToBuffer(start, triangleCount);
+
+      min.x = vertices[count + 1].x;
+      max.x = vertices[count + 1].x;
+      min.y = vertices[count + 1].y;
+      max.y = vertices[count + 1].y;
+      min.z = vertices[count + 1].z;
+      max.z = vertices[count + 1].z;
+    }
+  }
+
+  start = triangleCount - (triangleCount % numOfL2TrianglesBounded);
+
+  addVec3ToVector(&bufferData, min);
+  addVec3ToVector(&bufferData, max);
+  bufferData.push_back(float(triangleCount % numOfL2TrianglesBounded));
+  bufferData.push_back(0.0);
+  bufferData.push_back(0.0);
+
+  pushTriangleDataToBuffer(start, triangleCount);
+  numOfL2BoundingBoxes += 1;
+
   gprint( PRINT_DEBUG, "numTriangles %d\n", numTriangles );
-  gprint( PRINT_DEBUG, "numOfBoundingBoxes %d\n", numOfBoundingBoxes );
+  gprint( PRINT_DEBUG, "numOfL2BoundingBoxes %d\n", numOfL2BoundingBoxes );
+
 
   GLuint bufObj;
   glActiveTexture(GL_TEXTURE0);
@@ -513,26 +592,12 @@ void pushDataToBuffer() {
 
 void genereateScene() {
 
-  std::vector<GLfloat> boundingBoxes;
-
-  vec3 ambient = vec3(0.0, 0.0, 0.0);
-  vec3 specular = vec3(0.0, 0.0, 0.0);
-
+  //TODO: raytrace1 use class/Raytrace
 
   Object *bottle = new Object("", -1);
-  ObjLoader::loadModelFromFile( bottle, "../models/bottle-b.obj" );
-
-  vec3 min, max;
+  ObjLoader::loadModelFromFile( bottle, "../models/bottle_wine_med.obj" );
 
   vec4 *vertices = bottle->_vertices.data();
-  min.x = vertices[0].x;
-  max.x = vertices[0].x;
-  min.y = vertices[0].y;
-  max.y = vertices[0].y;
-  min.z = vertices[0].z;
-  max.z = vertices[0].z;
-
-  int bounding = 10;
 
   unsigned long int count = 0;
   while(count < bottle->_vertices.size()) {
@@ -543,79 +608,23 @@ void genereateScene() {
     vertex = vertices[count++];
     vec3 c = vec3(vertex.x, vertex.y, vertex.z);
 
-    setMinMax(&min, &max, a);
-    setMinMax(&min, &max, b);
-    setMinMax(&min, &max, c);
-
-    addTriangle(a, b, c, vec3(0.0, 1.0, 0.0), vec3(0.0, 0.1, 0.0), specular, 1.0, 0.5, 0.0);
-
-
-    if(numTriangles > 0 && numTriangles % bounding == 0) {
-      addVec3ToVector(&boundingBoxes, min);
-      addVec3ToVector(&boundingBoxes, max);
-      boundingBoxes.push_back(float(numTriangles - bounding)); // starting index
-      boundingBoxes.push_back((float)numTriangles); // ending index
-      boundingBoxes.push_back(0.0); // unused
-      numOfBoundingBoxes += 1;
-
-      min.x = vertices[count + 1].x;
-      max.x = vertices[count + 1].x;
-      min.y = vertices[count + 1].y;
-      max.y = vertices[count + 1].y;
-      min.z = vertices[count + 1].z;
-      max.z = vertices[count + 1].z;
-    }
-
+    addTriangle(a, b, c, vec3(0.5, 0.5, 0.5), vec3(0.05, 0.05, 0.05), vec3(1.0, 1.0, 1.0), 100.0, 0.3, 0.0);
   }
 
-  addVec3ToVector(&boundingBoxes, min);
-  addVec3ToVector(&boundingBoxes, max);
-  boundingBoxes.push_back(float(numTriangles - bounding)); // starting index
-  boundingBoxes.push_back((float)numTriangles); // ending index
-  boundingBoxes.push_back(0.0); // unused
-  numOfBoundingBoxes += 1;
-/*
-  addCube(vec3(3.0, 0.0, 0.0), vec3(0.0, 0.0, 0.0), vec3(0.0, 0.0, 0.0), vec3(0.0, 0.0, 0.0), 1000.0, 0.0, 1.0);
-  addVec3ToVector(&boundingBoxes, vec3(2.5, -0.5, -0.5));
-  addVec3ToVector(&boundingBoxes, vec3(3.5, 0.5, 0.5));
-  boundingBoxes.push_back((float)(numTriangles - 12)); // starting index
-  boundingBoxes.push_back((float)numTriangles); // ending index
-  boundingBoxes.push_back(0.0); // unused
-  numOfBoundingBoxes += 1;
-*/
 
-  addTriangle(vec3(-10.0, -10.0, -6.0), vec3(10.0, -10.0, -6.0), vec3(10.0, 10.0, -6.0), vec3(1.0, 1.0, 1.0), ambient, vec3(1.0, 1.0, 1.0), 100.0, 0.0, 0.0);
-  addTriangle(vec3(-10.0, -10.0, -6.0), vec3(10.0, 10.0, -6.0), vec3(-10.0, 10.0, -6.0), vec3(0.0, 0.0, 1.0), ambient, vec3(0.0, 0.0, 1.0), 100.0, 0.0, 0.0);
-  addVec3ToVector(&boundingBoxes, vec3(-10.1, -10.1, -5.9));
-  addVec3ToVector(&boundingBoxes, vec3(10.1, 10.1, -6.1));
-  boundingBoxes.push_back((float)(numTriangles - 2)); // starting index
-  boundingBoxes.push_back((float)numTriangles); // ending index
-  boundingBoxes.push_back(0.0); // unused
-  numOfBoundingBoxes += 1;
+  addCube(vec3(-2.0, 1.0, -3.0), vec3(0.8, 0.8, 0.8), vec3(0.05, 0.05, 0.05), vec3(0.0, 0.0, 0.0), 1000.0, 0.5, 0.0);
+  addCube(vec3(2.0, 1.0, -3.0), vec3(0.8, 0.8, 0.8), vec3(0.05, 0.05, 0.05), vec3(0.0, 0.0, 0.0), 1000.0, 0.5, 0.0);
 
-/*
-  vec3 colors[] = {vec3(1.0, 1.0, 0.0), vec3(1.0, 0.0, 1.0), vec3(0.0, 1.0, 1.0)};
 
-  int colorIndex = 0;
-  float xPos, yPos, zPos;
-  for(xPos = -6; xPos < 6.1; xPos += 2) {
-    for(yPos = -6; yPos < 6.1; yPos += 2) {
-      for(zPos = -6; zPos < 6.1; zPos += 2) {
-        colorIndex++;
-        colorIndex %= 3;
-        addCube(vec3(xPos, yPos, zPos), colors[colorIndex]);
-      }
-    }
-  }
-*/
-  /*
-  addTriangle(vec3(-5.0, -5.0, -6.0), vec3(5.0, -5.0, -6.0), vec3(5.0, 5.0, -6.0), vec3(1.0, 0.0, 0.0));
-  addTriangle(vec3(-5.0, -5.0, -6.0), vec3(5.0, 5.0, -6.0), vec3(-5.0, 5.0, -6.0), vec3(0.0, 1.0, 0.0));
-   */
+  addTriangle(vec3(-5.0, -3.0, -5.0), vec3(5.0, -3.0, -5.0), vec3(5.0, 7.0, -5.0), vec3(1.0, 1.0, 1.0), vec3(0.05, 0.05, 0.05), vec3(1.0, 1.0, 1.0), 100.0, 0.0, 0.0);
+  addTriangle(vec3(-5.0, -3.0, -5.0), vec3(5.0, 7.0, -5.0), vec3(-5.0, 7.0, -5.0), vec3(0.0, 0.0, 1.0), vec3(0.0, 0.0, 0.05), vec3(0.0, 0.0, 1.0), 100.0, 0.0, 0.0);
 
-  for(unsigned long int i = 0; i < boundingBoxes.size(); i++) {
-    bufferData.push_back(boundingBoxes.data()[i]);
-  }
+  addTriangle(vec3(-5.0, -3.0, -5.0), vec3(-5.0, -3.0, 5.0), vec3(5.0, -3.0, 5.0), vec3(0.0, 1.0, 0.0), vec3(0.0, 0.05, 0.0), vec3(0.0, 1.0, 0.0), 100.0, 0.0, 0.0);
+  addTriangle(vec3(-5.0, -3.0, -5.0), vec3(5.0, -3.0, 5.0), vec3(5.0, -3.0, -5.0), vec3(1.0, 0.0, 0.0), vec3(0.05, 0.0, 0.0), vec3(1.0, 0.0, 0.0), 100.0, 0.0, 0.0);
+
+
+  addTriangle(vec3(-5.0, -3.0, -5.0), vec3(-5.0, 7.0, 5.0), vec3(-5.0, -3.0, 5.0), vec3(1.0, 0.0, 1.0), vec3(0.05, 0.0, 0.05), vec3(1.0, 0.0, 1.0), 100.0, 0.0, 0.0);
+  addTriangle(vec3(-5.0, -3.0, -5.0), vec3(-5.0, 7.0, -5.0), vec3(-5.0, 7.0, 5.0), vec3(1.0, 1.0, 0.0), vec3(0.05, 0.05, 0.0), vec3(1.0, 1.0, 0.0), 100.0, 0.0, 0.0);
 
   pushDataToBuffer();
 }
@@ -654,8 +663,12 @@ void init( void ) {
   uNumOfTriangle = glGetUniformLocation( program, "uNumOfTriangle" );
   uNumOfTriangleVectors = glGetUniformLocation( program, "uNumOfTriangleVectors" );
 
-  uNumOfBoundingBoxes = glGetUniformLocation( program, "uNumOfBoundingBoxes" );
+  uNumOfL2BoundingBoxes = glGetUniformLocation( program, "uNumOfL2BoundingBoxes" );
+  uNumOfL1BoundingBoxes = glGetUniformLocation( program, "uNumOfL1BoundingBoxes" );
   
+  uNumOfL2TrianglesBounded = glGetUniformLocation( program, "uNumOfL2TrianglesBounded" );
+
+  uNumberOfLights = glGetUniformLocation( program, "uNumberOfLights" );
   uLightPositions = glGetUniformLocation( program, "uLightPositions" );
   uLightDiffuse = glGetUniformLocation( program, "uLightDiffuse" );
   uLightSpecular = glGetUniformLocation( program, "uLightSpecular" );
@@ -680,7 +693,7 @@ int main( int argc, char **argv ) {
   glutInit( &argc, argv );
   
   glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE ); // set rendering context
-  glutInitWindowSize( 900, 450 );
+  glutInitWindowSize( 400, 400 );
   glutCreateWindow( "Project" ); // title
       
   glewInit(); // set OpenGL state and initialize shaders

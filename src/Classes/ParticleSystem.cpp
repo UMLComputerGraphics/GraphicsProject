@@ -32,7 +32,7 @@ using namespace Angel;
 #endif
 
 #ifndef NUM_PARTICLES_TO_ADD_ON_UPDATE
-#define NUM_PARTICLES_TO_ADD_ON_UPDATE 3
+#define NUM_PARTICLES_TO_ADD_ON_UPDATE 12
 #endif
 
 // Constructor(s)
@@ -41,10 +41,10 @@ ParticleSystem::ParticleSystem( int particleAmt, const std::string &name,
     				Object( name, shader ), _numParticles( particleAmt ), _minLife( 0.1 ),
     				_maxLife( 1 ), _emitterRadius( 0.0 ), _pauseTheSystem( false ),
     				_slaughterHeight( 0.0 ), _fillSpeedLimit( 5 ),_vecFieldFunc( NULL ), 
-				_colorFunc(ColorFunctions::standard) {
-
-	this->drawMode( GL_POINTS );
-	
+				_colorFunc(ColorFunctions::standard), _emitterShape(PS_NONE),
+				_systemShape(PS_NONE)
+{
+	this->drawMode( GL_POINTS );	
 }
 
 ParticleSystem::~ParticleSystem( void ) {
@@ -70,7 +70,7 @@ ParticleSystem::getRandomCircularSpawnPoint(void)
 	ret.x = cos(randomTheta)*(jitteredRadius);
 	ret.y = 0.0 ;
 	ret.z = sin(randomTheta)*(jitteredRadius);
-	ret.w = 1.0 ; // ??? I don't know if this matters
+	ret.w = 1.0 ;
 
 
 	return ret;
@@ -139,7 +139,7 @@ ParticleSystem::respawnParticle(Particle &p)
 
     p.setPos(spawnPosition);
 
-    //p.setLifetime( p.getMaxLifetime() ) ;
+    p.setLifetime( p.getMaxLifetime() ) ;
 
 }
 
@@ -149,7 +149,7 @@ vec4 negateY(vec4 in)
   return in;
 }
 
-//typedef enum{ PS_NONE, PS_SPHERE, PS_HEMI_D, PS_HEMI_U, PS_CUBE }PS_SHAPE; GETSYStemSHAPE();
+//typedef enum{ PS_NONE, PS_SPHERE, PS_HEMI_D, PS_HEMI_U, PS_CUBE }PS_SHAPE; getSystemShape();
 
 vec4
 ParticleSystem::getSpawnPos(PS_SHAPE s)
@@ -489,16 +489,15 @@ ParticleSystem::update() {
 		if ( this->_vecFieldFunc != NULL ) {
 			(*i)->setVel( (*_vecFieldFunc)((*i)->getPosition() ) ) ;
 		}
-		else{        // sphere generating method                                                                                                             
-		  float row   = rangeRandom( -0.001f, 0.002f ); // equivalent to magnitude
+		else{        // sphere generating method
+		  float row   = rangeRandom( 0.001f, 0.004f ); // equivalent to magnitude
 		  float phi   = rangeRandom( 0.0f, 2 * M_PI );
 		  float theta = rangeRandom( 0.0f, 2 * M_PI );
-                                                                                                                                                
 		  (*i)->setVel( vec3( row*sin(phi)*cos(theta),
 				      row*sin(phi)*sin(theta),
 				      row*cos(phi) ));
 		}
-
+		
 		_vertices.push_back((*i)->getPosition());
 		_colors.push_back((*i)->getColor());
 

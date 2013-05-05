@@ -27,6 +27,7 @@ SOURCES += \
         Classes/Cameras.cpp \
 	   Classes/ColorFunctions.cpp \
         Classes/Engine.cpp \
+        Classes/Light.cpp \
         # KinectInator.cpp \
         Classes/mat.cpp \
 	   Classes/Material.cpp \
@@ -70,6 +71,7 @@ HEADERS  += include/bipartiteGraph.hpp \
             include/globals.h \
             include/glut_callbacks.h \
             include/InitShader.hpp \
+            include/Light.hpp \
             #include/KinectInator.hpp\
             include/mat.hpp \
 		  include/Material.hpp \

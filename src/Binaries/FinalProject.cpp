@@ -13,6 +13,8 @@
 
 #include "MONOLITH.hpp"
 #include "OpenGL.h"
+#include <boost/bind.hpp>
+#include <boost/function.hpp>
 
 int main( int argc, char **argv ) {
   
@@ -29,9 +31,14 @@ int main( int argc, char **argv ) {
 #ifdef __APPLE__ // monolith.run has to be here for OS X. Do not edit! (@franckamayou)
   monolith.run(); 
 #endif // __APPLE__
+
   QApplication a( argc, argv );
   MainWindow w;
-  w.setWindowTitle( "First Graphics Demo" );
+  w.setWindowTitle( "GUI Interface - Graphics II" );
+  w.setGeometry(700, 0, w.width(), w.height());
+
+  // This is where the connection is for the default number of particles.
+  monolith.defaultNumberOfParticles(w.getDefaultNumOfParticles());
   /*
   For connecting more variables and sliders we only need to expose the slider variables
   that already exist in maindwindow in the .h. Then do the linking functions here. The functions used
@@ -42,7 +49,10 @@ int main( int argc, char **argv ) {
   QObject::connect(&w, SIGNAL(sigChangeNumberOfParticles(int)), &monolith, SLOT(slotParticleAdd(int)));
   QObject::connect(&w, SIGNAL(sigFreezeParticles(bool)), &monolith, SLOT(slotFreezeParticles(bool)));
   QObject::connect(&w, SIGNAL(sigMorphPercentage(int)), &monolith, SLOT(slotMorphPercentage(int)));
-  //QObject::connect(&monolith, SIGNAL(sigMorphPercentage(int)), &w, SLOT(sigMorphPercentageOut(int)));
+  
+  //Watch and learn
+  monolith.setMorphPercentageCallback((boost::function<void(int)>)boost::bind(&MainWindow::setMorphPercentageOut, &w, _1));
+
   QObject::connect(&w, SIGNAL(sigEnableMorphing(bool)), &monolith, SLOT(slotEnableMorphing(bool)));
   QObject::connect(&w, SIGNAL(sigEnableRaytracing(bool)), &monolith, SLOT(slotEnableRaytracing(bool)));
   QObject::connect(&w, SIGNAL(sigEnableParticleSystem(bool)), &monolith, SLOT(slotEnableParticleSystem(bool)));

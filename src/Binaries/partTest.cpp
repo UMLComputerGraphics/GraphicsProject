@@ -39,13 +39,17 @@ void init() {
   
   funInTheSin = new ParticleSystem( numberOfParticles, "FunInTheSine",
                                     particleSystemShader );
-  funInTheSin->setLifespan( 5.0, 10.0 );
+  funInTheSin->setLifespan( 7.0, 11.0 );
   funInTheSin->setEmitterRadius( 0.1 );
-  //funInTheSin->setVectorField( ParticleFieldFunctions::userSupplied );
-  //funInTheSin->setVectorField( ParticleFieldFunctions::userSupplied );
+  /*
+  #ifdef EXPRTK
+  funInTheSin->setVectorField( ParticleFieldFunctions::userSupplied );
+  #endif
+  */
   rootScene->insertObject( funInTheSin );
   funInTheSin->propagateOLD();
-  funInTheSin->fillSystemWithParticles();
+  //funInTheSin->fillSystemWithParticles();
+  funInTheSin->setEmitterShape(PS_NONE);
   funInTheSin->buffer();
   
   tick.setTimeUniform( glGetUniformLocation( particleSystemShader, "ftime" ) );
@@ -58,7 +62,7 @@ void init() {
 
 void part_idle() {
   //funInTheSin->setEmitterRadius( sin( theta ) );
-  theta += 0.01;
+  //theta += 0.01;
   //glUniform1f( thetaLoc, theta );
 }
 
