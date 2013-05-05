@@ -418,6 +418,10 @@ public:
 	 
   float getFriction();
 
+  void setMaxSpeed(float num);
+
+  float getMaxSpeed();
+
 private:
   
   /**

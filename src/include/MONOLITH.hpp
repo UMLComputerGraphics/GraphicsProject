@@ -105,7 +105,8 @@ public slots:
     void slotMorphToWhiskyBottle(void);
     void slotMaxAcceleration(int num);
     void slotFriction(int num);
-	   void slotSpeed(int num);
+    void slotSpeed(int num);
+    void slotMaxSpeed(int num);
 
 signals:
     void sigMorphPercentage(int value);

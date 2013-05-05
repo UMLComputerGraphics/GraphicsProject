@@ -539,3 +539,13 @@ float Camera::getFriction()
 {
 	return (float) _frictionMagnitude;
 }
+
+void Camera::setMaxSpeed(float num)
+{
+    _maxSpeed = (GLfloat)num;
+}
+
+float Camera::getMaxSpeed()
+{
+    return _maxSpeed;
+}

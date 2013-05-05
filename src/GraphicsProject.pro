@@ -34,7 +34,7 @@ SOURCES += \
         Classes/Particle.cpp \
 	   Classes/ParticleFieldFunctions.cpp \
         Classes/ParticleSystem.cpp \
-        Classes/ScaleModel.cpp \
+        #Classes/scaleModel.cpp \
         Classes/Scene.cpp \
         Classes/Screen.cpp \
         Classes/SpelchkCamera.cpp \
@@ -59,6 +59,8 @@ SOURCES += \
 	Classes/nearestNeighbor.cpp \
 	Classes/RayTracer.cpp \
 	Classes/scanMatching.cpp \
+    Classes/scaleModel.cpp \
+    Classes/Material.cpp
 
 HEADERS  += include/bipartiteGraph.hpp \
 		   include/Camera.hpp \
@@ -107,7 +109,7 @@ LIBS += -lMagick++
 
 # Linux Settings
 unix:!macx {
-LIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm -lMagick++ -lboost_thread-mt -lfmodex
+LIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm -lMagick++ -lboost_thread-mt
 INCLUDEPATH +=. /usr/include/ImageMagick/ include/ fMod/include
 }
 

@@ -145,6 +145,11 @@ void MONOLITH::slotSpeed(int num)
 	Engine::instance()->currentCamera()->setSpeed((float) num);
 }
 
+void MONOLITH::slotMaxSpeed( int num )
+{
+    Engine::instance()->currentCamera()->setMaxSpeed((float) num) ;
+}
+
 #endif //WITHOUT_QT
 
 /**
