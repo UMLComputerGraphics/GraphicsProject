@@ -595,7 +595,7 @@ void genereateScene() {
   //TODO: raytrace1 use class/Raytrace
 
   Object *bottle = new Object("", -1);
-  ObjLoader::loadModelFromFile( bottle, "../models/bottle_wine_med.obj" );
+  ObjLoader::loadModelFromFile( bottle, "../models/bottle_liquor_med.obj" );
 
   vec4 *vertices = bottle->_vertices.data();
 
@@ -608,7 +608,7 @@ void genereateScene() {
     vertex = vertices[count++];
     vec3 c = vec3(vertex.x, vertex.y, vertex.z);
 
-    addTriangle(a, b, c, vec3(0.5, 0.5, 0.5), vec3(0.05, 0.05, 0.05), vec3(1.0, 1.0, 1.0), 100.0, 0.3, 0.0);
+    addTriangle(a, b, c, vec3(0.5, 0.5, 0.5), vec3(0.05, 0.05, 0.05), vec3(1.0, 1.0, 1.0), 100.0, 0.3, 1.0);
   }
 
 

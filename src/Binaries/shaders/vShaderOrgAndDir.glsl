@@ -15,8 +15,8 @@ void main()
     float x = vRayPosition.x;
     float y = vRayPosition.y;
 
-    org = uCameraPosition.xyz;
-    dir = normalize(uRotationMatrix * vec4(x, y, -1.0, 0.0)).xyz;
+    org = (uRotationMatrix * (uCameraPosition + vec4(x, y, 0.0, 0.0))).xyz;
+    dir = normalize(uRotationMatrix * vec4(0, 0, -1.0, 0.0)).xyz;
     
     float xPos = vRayPosition.x / 2;
     float yPos = vRayPosition.y;
