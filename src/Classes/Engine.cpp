@@ -57,6 +57,7 @@ Engine::Engine( void ) :
 
   _lights = new vector<Light*>;
   _lightsSize = (GLint *) malloc( sizeof( GLint ) );
+  
 
   opt("fixed_yaw", true);
   opt("trap_pointer", true);
@@ -154,6 +155,47 @@ GLint* Engine::getNumLights( void ) {
   return _lightsSize;
 }
 
+GLfloat* Engine::getLightPositions( void ) {
+  return _lightPositions;
+}
+GLfloat* Engine::getLightDiffuses( void ) {
+  return _lightDiffuses;
+}
+GLfloat* Engine::getLightSpeculars( void ) {
+  return _lightSpeculars;
+}
+GLfloat* Engine::getLightAmbient( void ) {
+  return _lightAmbient;
+}
+
+void Engine::setLights( void ) {
+   vector<Light*>::iterator it;
+
+   //20 of each, 4 floats * 5 maxlights
+   //TODO: make this actually a product 4 * maxlights, and have a maxlights variable
+   GLfloat *allPos = (GLfloat *) malloc(sizeof(GLfloat) * 20);
+   GLfloat *allDiff = (GLfloat *) malloc(sizeof(GLfloat) * 20);
+   GLfloat *allSpec = (GLfloat *) malloc(sizeof(GLfloat) * 20);
+
+   _lightPositions = allPos;
+   _lightDiffuses = allDiff;
+   _lightSpeculars = allSpec;
+   
+   for(it = _lights->begin(); it != _lights->end(); ++it) {
+    //Ambient is one ambience for whole scene, so only grab this from light 0
+    if( it == _lights->begin() ) _lightAmbient = (*it)->getGLAmbient();
+
+    for(int i = 0; i < 4; i++) {
+      allPos[i] = (*it)->getGLPosition()[i];
+      allDiff[i] = (*it)->getGLDiffuse()[i];
+      allSpec[i] = (*it)->getGLSpecular()[i];
+    } 
+    allPos += 4;
+    allDiff += 4;
+    allSpec += 4;
+  }
+
+}
 
 /**
  * opt retrieves the current setting of an option in the Engine.
