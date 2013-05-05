@@ -189,49 +189,128 @@ vec3 ParticleFieldFunctions::flameoldDefault( vec4 pos )
 
 #ifdef EXPRTK
 class UserVectorField {
+
 public:
-  UserVectorField( const std::string &fx = "0x + 0y + 0z + 0",
-		   const std::string &fy = "0x + 0y + 0z + 0.01",
-		   const std::string &fz = "0x + 0y + 0z + 0" ) {
-    _table.add_variable("x",_input.x);
-    _table.add_variable("y",_input.y);
-    _table.add_variable("z",_input.z);
-    _table.add_constants();
-    
-    _ef[0].register_symbol_table( _table );
-    _ef[1].register_symbol_table( _table );
-    _ef[2].register_symbol_table( _table );
+    UserVectorField( vec4 pos)
+    {
+        _table.add_variable("x", pos.x);
+        _table.add_variable("y", pos.y);
+        _table.add_variable("z", pos.z);
+        _table.add_constants();
+        _ef[0].register_symbol_table( _table );
+        _ef[1].register_symbol_table( _table );
+        _ef[2].register_symbol_table( _table );
+    }
 
-    f( fx, 0 );
-    f( fy, 1 );
-    f( fz, 2 );
-  }
-  
-  Angel::vec3 f( Angel::vec4 input ) {
-    _input = input;
-    return vec3( _ef[0].value(), _ef[1].value(), _ef[2].value() );
-  }
+    void setAllFunctions(const std::string f[3])
+    {
+        for ( size_t i = 0; i < 3; i++)
+        {
+            setF_i(i, f[i]);
+        }
+    }
 
-  /** use f( "string", index ) to change the f_x, f_y and f_z functions. **/
-  void f( const std::string &f, size_t i ) {
-    _f[i] = f;
-    _parser.compile( _f[i], _ef[i] );
-  }
+    void setF_i(  size_t i, const std::string &f_i = "0x + 0y + 0z + 0")
+    {
+        // TODO check for bad input and set default value.
+        _f[i] = f_i;
+    }
+
+    void evaluateF_i (size_t i)
+    {
+        // TODO check if _f[i] is empty...
+        _parser.compile( _f[i], _ef[i] );
+    }
+
+    void evaluateAllFunctions ()
+    {
+        for ( size_t i = 0; i < 3; i++)
+        {
+         evaluateF_i (i);
+        }
+    }
+
+    vec3 getResultingVec3()
+    {
+        return vec3( _ef[0].value(), _ef[1].value(), _ef[2].value());
+    }
+
+    vec3 doAll( const std::string &f_x = "0x + 0y + 0z + 0",
+                const std::string &f_y = "0x + 0y + 0z + 0.01",
+                const std::string &f_z = "0x + 0y + 0z + 0")
+   {
+        string temp[3] = {f_x, f_y, f_z};
+        setAllFunctions(temp);
+        evaluateAllFunctions();
+        return getResultingVec3();
+    }
 
 private:
-  std::string _f[3];
-  exprtk::expression<GLfloat> _ef[3];
-  exprtk::parser<GLfloat> _parser;
-  exprtk::symbol_table<GLfloat> _table;
-  Angel::vec4 _input;
+    std::string _f[3];
+    exprtk::symbol_table<GLfloat> _table;
+    exprtk::expression<GLfloat> _ef[3];
+    exprtk::parser<GLfloat> _parser;
+
 };
 
-Angel::vec3 ParticleFieldFunctions::userSupplied( Angel::vec4 pos ) {
-  static UserVectorField *uvf = NULL;
-  if (uvf == NULL) { uvf = new UserVectorField(); }
-  return uvf->f( pos );
+vec3 ParticleFieldFunctions::userSupplied( vec4 pos, const std::string &f_x,
+                                           const std::string &f_y,
+                                           const std::string &f_z )
+{
+    UserVectorField *uvf = NULL;
+    if (uvf == NULL)
+    {
+        uvf = new UserVectorField(pos);
+    }
+    return uvf->doAll(f_x, f_y, f_z);
 }
+
 #endif
+//#ifdef EXPRTK
+//class UserVectorField {
+//public:
+//  UserVectorField( const std::string &fx = "0x + 0y + 0z + 0",
+//		   const std::string &fy = "0x + 0y + 0z + 0.01",
+//		   const std::string &fz = "0x + 0y + 0z + 0" ) {
+//    _table.add_variable("x",_input.x);
+//    _table.add_variable("y",_input.y);
+//    _table.add_variable("z",_input.z);
+//    _table.add_constants();
+    
+//    _ef[0].register_symbol_table( _table );
+//    _ef[1].register_symbol_table( _table );
+//    _ef[2].register_symbol_table( _table );
+
+//    f( fx, 0 );
+//    f( fy, 1 );
+//    f( fz, 2 );
+//  }
+  
+//  Angel::vec3 f( Angel::vec4 input ) {
+//    _input = input;
+//    return vec3( _ef[0].value(), _ef[1].value(), _ef[2].value() );
+//  }
+
+//  /** use f( "string", index ) to change the f_x, f_y and f_z functions. **/
+//  void f( const std::string &f, size_t i ) {
+//    _f[i] = f;
+//    _parser.compile( _f[i], _ef[i] );
+//  }
+
+//private:
+//  std::string _f[3];
+//  exprtk::expression<GLfloat> _ef[3];
+//  exprtk::parser<GLfloat> _parser;
+//  exprtk::symbol_table<GLfloat> _table;
+//  Angel::vec4 _input;
+//};
+
+//Angel::vec3 ParticleFieldFunctions::userSupplied( Angel::vec4 pos ) {
+//  static UserVectorField *uvf = NULL;
+//  if (uvf == NULL) { uvf = new UserVectorField(); }
+//  return uvf->f( pos );
+//}
+//#endif
 
 /* // jet 1?
 vec3 ParticleFieldFunctions::idk(vec4 pos)
