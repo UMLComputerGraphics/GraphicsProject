@@ -11,20 +11,13 @@
 #include <cstring>
 #include <vector>
 #include <boost/thread.hpp>
-
 #include "Engine.hpp"
-#include "SpelchkCamera.hpp"
-
 
 #define GLCHECK(); if (glGetError()) { gprint( PRINT_ERROR, "glGetError() is true on line %d\n", __LINE__ ); exit(255); }
 
 /** Global shader object **/
 GLuint program = -1;
 GLint vRayPosition = -1;
-/** Rotation matrix uniform shader variable location **/
-GLuint uRotationMatrix = -1;
-/** Handle to uniform that will contain the position of the Camera. **/
-GLint uCameraPosition = -1;
 
 GLint uSphereCenterPoints = -1;
 GLint uSphereRadius = -1;
@@ -270,6 +263,7 @@ void addTriangle( const vec3& a, const vec3& b, const vec3& c,
   if(tempDistance > distance) distance = tempDistance;
   distance += 0.0001;
 
+  /** Load our data into the triangle slice **/
   newTriangle.a = a;
   newTriangle.b = b;
   newTriangle.c = c;
@@ -290,6 +284,7 @@ void addTriangle( const vec3& a, const vec3& b, const vec3& c,
   newTriangle.distanceSquared = (distance * distance);
   newTriangle.padding = 0.0;
 
+  /** Buffer the triangle slice. **/
   GLfloat *ptr = NULL;
   for ( ptr = (GLfloat *)&newTriangle;
 	(void *)ptr < (void *)(&newTriangle + 1);
@@ -475,12 +470,11 @@ void init( void ) {
   
   // Load shaders and use the resulting shader program
   program = Angel::InitShader( "shaders/vRaytracer.glsl",
-			       "shaders/fShaderSpheres2.glsl" );
+			       "shaders/fRaytracer.glsl" );
   Engine::instance()->switchShader( program );
   Engine::instance()->rootScene()->shader( program );
   Engine::instance()->cams()->shader( program );
   Engine::instance()->cams()->active()->shader( program );
-  glUseProgram( program );
 
   vRayPosition = glGetAttribLocation( program, "vRayPosition" );
   uRotationMatrix = glGetUniformLocation( program, "R" );
@@ -511,14 +505,11 @@ void init( void ) {
 
   tick.setTimeUniform( glGetUniformLocation( program, "ftime" ) );
 
-  //glShadeModel( GL_FLAT );
-  //glEnable( GL_DEPTH_TEST );
-  //glClearColor( 0.1, 0.1, 0.1, 1.0 );
   genereateScene();
 }
 
 /**
- * Simple raytracer demo by Hoanh Nguyen.
+ * Not-So-Simple raytracer demo by Hoanh Nguyen.
  * @param argc Not used.
  * @param argv Not used.
  * @return 0.
@@ -527,11 +518,10 @@ int main( int argc, char **argv ) {
 
   Engine::init( &argc, argv, "Raytracer" );
   init();
+  glutDisplayFunc( display ); // register callback w/Window System
 
   boost::thread zipo( aRomanticEvening );
   
-  glutDisplayFunc( display ); // register callback w/Window System
-
   GLCHECK();
   Engine::run();
   
