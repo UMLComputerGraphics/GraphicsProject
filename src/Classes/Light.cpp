@@ -20,17 +20,18 @@ void Light::commonInit( void ) {
   _lightAmbient[0] = _lightAmbient[1] = _lightAmbient[2] = 0.05;
   
   _lightPositions = (GLfloat *) malloc(sizeof(GLfloat) * 4);
-  _lightPositions[0] = 0.0;
-  _lightPositions[1] = 0.0;
-  _lightPositions[2] = 0.0;
+  _lightPositions[0] = _lightPositions[1] =  _lightPositions[2] = 0.0;
 
   _lightDiffuse = (GLfloat *) malloc(sizeof(GLfloat) * 4);
   this->color( vec3( 1.0, 1.0, 1.0 ) );
   
   _lightSpecular = (GLfloat *) malloc(sizeof(GLfloat) * 4);
   _lightSpecular[0] = _lightSpecular[1] = _lightSpecular[2] = 0.2;
- 
+
+  //w 
   _lightAmbient[3] = _lightPositions[3] = _lightDiffuse[3] = _lightSpecular[3] = 1.0;
+
+  _intensity = 1.0;
 
 }
 

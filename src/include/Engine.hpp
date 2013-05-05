@@ -113,6 +113,7 @@ public:
   GLfloat* getLightDiffuses( void );
   GLfloat* getLightSpeculars( void );
   GLfloat* getLightAmbient( void );
+  GLfloat* getLightIntensities( void );
 
   void setLights( void );
 
@@ -298,6 +299,7 @@ private:
   GLfloat *_lightSpeculars;
   GLfloat *_lightDiffuses;
   GLfloat *_lightAmbient;
+  GLfloat *_lightIntensities;
 
   // Singleton Enforcement
   /**

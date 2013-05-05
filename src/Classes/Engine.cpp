@@ -167,6 +167,9 @@ GLfloat* Engine::getLightSpeculars( void ) {
 GLfloat* Engine::getLightAmbient( void ) {
   return _lightAmbient;
 }
+GLfloat* Engine::getLightIntensities( void ) {
+  return _lightIntensities;
+}
 
 void Engine::setLights( void ) {
    vector<Light*>::iterator it;
@@ -176,10 +179,12 @@ void Engine::setLights( void ) {
    GLfloat *allPos = (GLfloat *) malloc(sizeof(GLfloat) * 20);
    GLfloat *allDiff = (GLfloat *) malloc(sizeof(GLfloat) * 20);
    GLfloat *allSpec = (GLfloat *) malloc(sizeof(GLfloat) * 20);
+   GLfloat *allIntens= (GLfloat *) malloc(sizeof(GLfloat) * 5);
 
-   _lightPositions = allPos;
-   _lightDiffuses = allDiff;
-   _lightSpeculars = allSpec;
+   _lightPositions   = allPos;
+   _lightDiffuses    = allDiff;
+   _lightSpeculars   = allSpec;
+   _lightIntensities = allIntens;
    
    for(it = _lights->begin(); it != _lights->end(); ++it) {
     //Ambient is one ambience for whole scene, so only grab this from light 0
@@ -189,10 +194,15 @@ void Engine::setLights( void ) {
       allPos[i] = (*it)->getGLPosition()[i];
       allDiff[i] = (*it)->getGLDiffuse()[i];
       allSpec[i] = (*it)->getGLSpecular()[i];
+
     } 
+
+    *allIntens = (GLfloat) (*it)->intensity();
+
     allPos += 4;
     allDiff += 4;
     allSpec += 4;
+    allIntens++;
   }
 
 }
