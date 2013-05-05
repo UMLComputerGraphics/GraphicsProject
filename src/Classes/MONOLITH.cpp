@@ -9,7 +9,6 @@
 
 #include "MONOLITH.hpp"
 
-
 MONOLITH::~MONOLITH(void)
 {
   cleanup();
@@ -17,11 +16,22 @@ MONOLITH::~MONOLITH(void)
 
 /* Default and only constructor */
 MONOLITH::MONOLITH(int argc, char** argv) :
+    _defaultNumberOfParticles(3000),
     zipo(boost::thread(boost::bind(&MONOLITH::aRomanticEvening, this)))
 {
     _argc = argc;
     _argv = argv;
-    lightAmbient = (GLfloat*)malloc(sizeof(GLfloat)*4);
+
+    Light* l = new Light( "CandleLight", 2.5, 6.8, 2.5 );
+    l->color(vec3(1.0, 0.5, 0.2));
+    Engine::instance()->addLight(l);
+    Light *l2 = new Light( "Scene Light", 0, 18, 0 );
+    l2->intensity(28);
+    Engine::instance()->addLight(l2);
+
+    extinguish = false;
+
+    /*    lightAmbient = (GLfloat*)malloc(sizeof(GLfloat)*4);
     lightAmbient[0]=lightAmbient[1]=lightAmbient[2]=lightAmbient[3]=0.1;
     lightPositions = (GLfloat*)malloc(sizeof(GLfloat)*4);
     lightPositions[0]=1.3;
@@ -33,7 +43,7 @@ MONOLITH::MONOLITH(int argc, char** argv) :
     lightDiffuse[0]=lightDiffuse[1]=lightDiffuse[2]=0.5;
     lightDiffuse[3]=lightSpecular[3]=1.0;
     lightSpecular[0]=lightSpecular[1]=lightSpecular[2]=0.5;
-    numLights = 1;
+    numLights = 1; */
 }
 
 /**
@@ -81,6 +91,7 @@ void MONOLITH::monolith_idle(void)
         int pct = (int)floor(percent * 100.0);
         if (_percentageCallback)
         {
+		// ????
           heisenbergUncertaintyPrinciple = true;
           _percentageCallback(pct);
           heisenbergUncertaintyPrinciple = false;
@@ -140,7 +151,7 @@ void MONOLITH::slotEnableParticleSystem(bool isEnabled)
 {
     if (isEnabled)
     {
-        ps->setNumParticles(1000);
+        ps->setNumParticles(_defaultNumberOfParticles);
     }
     else
     {
@@ -153,7 +164,7 @@ void MONOLITH::slotParticleFieldFunction(int index)
     switch (index)
     {
     case 0:
-        ps->setVectorField( ParticleFieldFunctions::flameDefault);
+        ps->setVectorField( ParticleFieldFunctions::flame);
         break;
     case 1:
         ps->setVectorField(ParticleFieldFunctions::tornado);
@@ -162,11 +173,35 @@ void MONOLITH::slotParticleFieldFunction(int index)
     case 2:
 
     default:
-        ps->setVectorField( ParticleFieldFunctions::flameDefault);
+        ps->setVectorField( ParticleFieldFunctions::flame);
         break;
     }
 
 
+}
+
+void MONOLITH::slotUpdateVectorField(std::string* params)
+{
+    Parameters* funcParams = new UserParameters(params);
+    ps->setFuncParams(funcParams);
+}
+
+/**
+ * @brief defaultNumberOfParticles (setter)
+ * @param value
+ */
+void MONOLITH::defaultNumberOfParticles(int value)
+{
+    _defaultNumberOfParticles = value;
+}
+
+/**
+ * @brief defaultNumberOfParticles (getter)
+ * @return
+ */
+int MONOLITH::defaultNumberOfParticles()
+{
+    return _defaultNumberOfParticles;
 }
 
 #endif //WITHOUT_QT
@@ -217,13 +252,13 @@ void MONOLITH::run() {
   // Load model from file.
   ObjLoader::loadModelFromFile( bottle, "../models/bottle_wine_high.obj" );
   ObjLoader::loadMaterialFromFile( bottle, "../models/bottle_wine_high.mtl" );
-  bottle->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
+  //bottle->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
 
   bottle->genMorphTarget();
   Object *bottleMorphTarget = bottle->morphTarget();
   ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle_liquor_high3.obj" );
   ObjLoader::loadMaterialFromFile( bottleMorphTarget, "../models/bottle_liquor_high.mtl" );
-  bottleMorphTarget->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
+  //bottleMorphTarget->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
 
   //Morphing Items
   //Scale source and destination height to unit 0-1
@@ -231,7 +266,10 @@ void MONOLITH::run() {
   int widthScale = 1;
   int depthScale = 1;
   ScaleModel * scaleModel = new ScaleModel(bottle, bottleMorphTarget,widthScale,heightScale,depthScale);
-  rectangularMapping(bottle,bottleMorphTarget);
+  RectangularMapping * rectangularMapping = new RectangularMapping(bottle,bottleMorphTarget);
+  rectangularMapping->copyToObjects(bottle,bottleMorphTarget);
+  rectangularMapping->revertToOriginal(bottle,bottleMorphTarget);
+
   //Rescale models to original size
   scaleModel->restoreModels();
 
@@ -252,7 +290,7 @@ void MONOLITH::run() {
   ObjLoader::loadModelFromFile(table, "../models/table_tx.obj");
   ObjLoader::loadMaterialFromFile(table, "../models/table_tx.mtl");
   glUniform1i( glGetUniformLocation( table->shader(), "letMeSeeThatPhong" ), 1 );
-  table->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
+  //table->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
   table->texture("../Textures/texture_wood.png");
   table->buffer();
 
@@ -261,9 +299,9 @@ void MONOLITH::run() {
   // Load up that candle
   Object *stick;
   Object *candle_top;
-  //Object *candle_top_melted;
   Object *candle_base;
 
+  //candle_top = rootScene->addObject( "candle_top", morphingShader );
   candle_top = rootScene->addObject( "candle_top", noMorphShader );
   candle_base = rootScene->addObject("candle_base", noMorphShader );
   stick = rootScene->addObject("stick", noMorphShader );
@@ -275,20 +313,21 @@ void MONOLITH::run() {
   ObjLoader::loadModelFromFile(stick, "../models/candlestick.obj");
   ObjLoader::loadMaterialFromFile(stick, "../models/candlestick.mtl");
 
-  candle_top->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
-  candle_base->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
-  stick->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
+  /*
+  candle_top->genMorphTarget();
+  Object *candle_top_melted = candle_top->morphTarget();
+  ObjLoader::loadModelFromFile(candle_top_melted, "../models/candle_top_melted.obj");
+  ObjLoader::loadMaterialFromFile(candle_top_melted, "../models/candle.mtl");
+  */
+
+  //candle_top->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
+  //candle_base->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
+  //stick->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
 
   glUniform1i(glGetUniformLocation(candle_top->shader(),"letMeSeeThatPhong"),1);
   glUniform1i(glGetUniformLocation(candle_base->shader(),"letMeSeeThatPhong"),1);
   glUniform1i(glGetUniformLocation(stick->shader(),"letMeSeeThatPhong"),1);
-
-/*
-  candle_top->genMorphTarget();
-  candle_top_melted = candle_top->morphTarget();
-  ObjLoader::loadModelFromFile(candle_top_melted, "../models/candle_top_melted.obj");
-  ObjLoader::loadMaterialFromFile(candle_top_melted, "../models/candle.mtl");
-  */
+  //glUniform1i(glGetUniformLocation(candle_top_melted->shader(),"letMeSeeThatPhong"),1);
 
   min = candle_base->getMin();
   vec4 max = stick->getMax();
@@ -298,6 +337,14 @@ void MONOLITH::run() {
   candle_base->_trans._offset.set( 2.5, max.y - 4.4, 2.5 );
   stick->_trans._offset.set( 2.5, 0, 2.5);
 
+  /*
+  ScaleModel * scaleModelCandle = new ScaleModel(candle_top, candle_top_melted,widthScale,heightScale,depthScale);
+  RectangularMapping * rectangularMappingCandle = new RectangularMapping(candle_top, candle_top_melted);
+  rectangularMappingCandle->copyToObjects(candle_top, candle_top_melted);
+  rectangularMappingCandle->revertToOriginal(candle_top, candle_top_melted);
+  scaleModelCandle->restoreModels();
+  */
+
   candle_top->propagateOLD();
   candle_base->propagateOLD();
   stick->propagateOLD();
@@ -305,30 +352,27 @@ void MONOLITH::run() {
   candle_top->buffer();
   candle_base->buffer();
   stick->buffer();
+  //candle_top_melted->buffer();
 
   stick->insertObject(candle_top);
   stick->insertObject(candle_base);
 
-  
   max = candle_top->getMax();
- 
-  /*
-    inspectorconstructor: if we have no way to adjust the number of particles, 
-    make sure we have some
-  */
 
-#ifdef WITHOUT_QT
-  ps = new ParticleSystem( 3000, "ps1", particleShader );
-#else
-  ps = new ParticleSystem(    0, "ps1", particleShader );
-#endif
+  #ifndef WITHOUT_QT
+  ps = new ParticleSystem(0, "ps1", particleShader);
+  #else
+  ps = new ParticleSystem( _defaultNumberOfParticles, "ps1", particleShader );
+  #endif
+
   ps->setLifespan( 9.0, 12.0 );
-  ps->setVectorField( ParticleFieldFunctions::flameDefault);
+  ps->setVectorField( ParticleFieldFunctions::flame);
   ps->setColorFunc(   ColorFunctions::flame );
   ps->setEmitterRadius( 0.05 );
   candle_top->insertObject( ps );
   ps->_trans._offset.set( 0, max.y - 0.02 , 0 );
-  ps->_trans._scale.set( 2 );
+  ps->_trans._scale.set( 1.5 );
+  ps->setEmitterShape(PS_HEMI_D);
 
  /* If you fill the system, the flame will have a non-flamelike pulsing effect. 
     Please don't!
@@ -342,7 +386,9 @@ void MONOLITH::run() {
   glPointSize( 1.8 );
 
   Engine::instance()->cams()->active()->pos(2.0, 5.0, 9.0);
-
+  
+  //Set lights for all objects in the scene
+  Engine::instance()->setLights();
 
   // need this for smoothness
   glShadeModel(GL_SMOOTH);
@@ -421,9 +467,11 @@ void MONOLITH::aRomanticEvening() {
     lightness = lightness * 3.0 / 10.0;
 
     lightness += .7;
-    lightDiffuse[0] = lightness;
-    lightDiffuse[1] = lightness;
-    lightDiffuse[2] = lightness;
+
+    // @NVV: We can't assume here that lights exist yet,
+    // This is throwing an exception for 0 being out-of-range.
+    //Engine::instance()->getLights()->at(0)->intensity(lightness);
+    //Engine::instance()->setLights();
 
     sleep( 0.01 );
   }

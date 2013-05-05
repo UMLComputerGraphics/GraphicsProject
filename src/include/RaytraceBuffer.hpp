@@ -31,9 +31,7 @@ typedef struct triangle_slice {
 
   float distance;
   float distanceSquared;
-  float sentinel;
-
-  vec3 color;
+  float padding;
 
 } triangle_t;
 

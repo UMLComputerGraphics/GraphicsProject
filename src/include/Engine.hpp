@@ -103,6 +103,20 @@ public:
    **/
   void addLight( Light *newLight );
 
+  /**
+   * Returns a pointer to the number of lighs in the global light configuration
+   * @return A pointer to the number of lights in the global light configuration
+   **/
+  GLint* getNumLights( void );
+
+  GLfloat* getLightPositions( void );
+  GLfloat* getLightDiffuses( void );
+  GLfloat* getLightSpeculars( void );
+  GLfloat* getLightAmbient( void );
+  GLfloat* getLightIntensities( void );
+
+  void setLights( void );
+
   // Settings Getters/Setters.
   /**
    * opt retrieves the current setting of an option in the Engine.
@@ -280,6 +294,12 @@ private:
      The global light configuration
    **/
   vector<Light*> *_lights;
+  GLint *_lightsSize;
+  GLfloat *_lightPositions;
+  GLfloat *_lightSpeculars;
+  GLfloat *_lightDiffuses;
+  GLfloat *_lightAmbient;
+  GLfloat *_lightIntensities;
 
   // Singleton Enforcement
   /**

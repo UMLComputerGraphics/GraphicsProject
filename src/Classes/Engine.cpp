@@ -56,6 +56,10 @@ Engine::Engine( void ) :
   _raytraceChanged = false;
   _raytraceStatus = false;
 
+  _lights = new vector<Light*>;
+  _lightsSize = (GLint *) malloc( sizeof( GLint ) );
+  
+
   opt("fixed_yaw", true);
   opt("trap_pointer", true);
 
@@ -145,6 +149,63 @@ vector<Light*>* Engine::getLights( void ) {
  **/
 void Engine::addLight( Light *newLight ) {
   _lights->push_back( newLight );
+  *_lightsSize = (GLint) ( _lights->size() );
+}
+
+GLint* Engine::getNumLights( void ) {
+  return _lightsSize;
+}
+
+GLfloat* Engine::getLightPositions( void ) {
+  return _lightPositions;
+}
+GLfloat* Engine::getLightDiffuses( void ) {
+  return _lightDiffuses;
+}
+GLfloat* Engine::getLightSpeculars( void ) {
+  return _lightSpeculars;
+}
+GLfloat* Engine::getLightAmbient( void ) {
+  return _lightAmbient;
+}
+GLfloat* Engine::getLightIntensities( void ) {
+  return _lightIntensities;
+}
+
+void Engine::setLights( void ) {
+   vector<Light*>::iterator it;
+
+   //20 of each, 4 floats * 5 maxlights
+   //TODO: make this actually a product 4 * maxlights, and have a maxlights variable
+   GLfloat *allPos = (GLfloat *) malloc(sizeof(GLfloat) * 20);
+   GLfloat *allDiff = (GLfloat *) malloc(sizeof(GLfloat) * 20);
+   GLfloat *allSpec = (GLfloat *) malloc(sizeof(GLfloat) * 20);
+   GLfloat *allIntens= (GLfloat *) malloc(sizeof(GLfloat) * 5);
+
+   _lightPositions   = allPos;
+   _lightDiffuses    = allDiff;
+   _lightSpeculars   = allSpec;
+   _lightIntensities = allIntens;
+   
+   for(it = _lights->begin(); it != _lights->end(); ++it) {
+    //Ambient is one ambience for whole scene, so only grab this from light 0
+    if( it == _lights->begin() ) _lightAmbient = (*it)->getGLAmbient();
+
+    for(int i = 0; i < 4; i++) {
+      allPos[i] = (*it)->getGLPosition()[i];
+      allDiff[i] = (*it)->getGLDiffuse()[i];
+      allSpec[i] = (*it)->getGLSpecular()[i];
+
+    } 
+
+    *allIntens = (GLfloat) (*it)->intensity();
+
+    allPos += 4;
+    allDiff += 4;
+    allSpec += 4;
+    allIntens++;
+  }
+
 }
 
 /**
@@ -336,16 +397,20 @@ void Engine::switchShader( GLint program ) {
   }
   if (program == _currentShader) return;
 
-  // Update our state.
-  _currentShader = program;
   // Switch to the new Shader.
   glUseProgram( program );
-  gprint( PRINT_VERBOSE, "Switched from [%d] to [%d]\n", currShader, program );
-  if (_renderingCamera) {
-    // Since we're on a new shader, have the camera re-send its CTM.
-    _renderingCamera->relinkUniforms();
-    _renderingCamera->view();
+  if (glGetError()) {
+    gprint( PRINT_ERROR, "Could not switch from [%d] to [%d]\n", currShader, program );
+  } else {
+    _currentShader = program;
+    gprint( PRINT_VERBOSE, "Switched from [%d] to [%d]\n", currShader, program );
+    if (_renderingCamera) {
+      // Since we're on a new shader, have the camera re-send its CTM.
+      _renderingCamera->relinkUniforms();
+      _renderingCamera->view();
+    }
   }
+
 }
 
 Camera *Engine::currentCamera( void ) const {

@@ -6,10 +6,11 @@
  * @details String and path loading helper functions.
  */
 
-#ifndef ERIC_RULES_HPP_
-#define ERIC_RULES_HPP_
+#ifndef __UTIL_HPP_
+#define __UTIL_HPP_
 
 #include <string>
+#include "OpenGL.h"
 
 namespace Util {
 
@@ -31,6 +32,8 @@ namespace Util {
    */
   double jitter( double H );
 
+
+
 }
 
 typedef enum DEBUG_PRINT_LEVELS {
@@ -43,5 +46,7 @@ typedef enum DEBUG_PRINT_LEVELS {
 } DebugPrintLevels;
 
 void gprint( DebugPrintLevels level, const char *format, ...);
+
+GLenum glSanityCheck();
   
-#endif /* ERIC_RULES_HPP_ */
+#endif /* __UTIL_HPP_ */

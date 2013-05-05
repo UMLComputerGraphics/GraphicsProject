@@ -60,7 +60,7 @@ void init() {
         vecBegin = vec4( x, y, z, 1.0 );
         vfield->_vertices.push_back( vecBegin );
         
-        vecEnd = vec4( ParticleFieldFunctions::flameDefault( vecBegin ), 1.0 );
+        vecEnd = vec4( ParticleFieldFunctions::flame( vecBegin, NULL ), 1.0 );
         //	vecEnd = normalize(vecEnd);
         
         vecEnd.x += vecBegin.x;
@@ -90,10 +90,9 @@ void init() {
                                                          particleSystemShader );
     
     particleSystem->setLifespan( 14.0, 18.0 );
-    particleSystem->setVectorField( ParticleFieldFunctions::flameDefault );
+    particleSystem->setVectorField( ParticleFieldFunctions::flame );
     particleSystem->setEmitterRadius( 0.02 );
     particleSystem->drawMode( GL_TRIANGLES );
-    particleSystem->setParticleSpace( true );
     particleSystem->propagateOLD();
     
     rootScene->insertObject( particleSystem );

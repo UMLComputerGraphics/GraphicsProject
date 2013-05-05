@@ -17,7 +17,8 @@
 #include "Camera.hpp"
 #include "Engine.hpp"
 #include "vec.hpp"
-
+#include "TransCache.hpp"
+#include "ParticleFieldFunctions.hpp"
 
 using Angel::vec2;
 using Angel::vec3;
@@ -26,47 +27,37 @@ using Angel::mat4;
 using std::string;
 using std::vector;
 
+
 typedef Particle* ParticleP;
 
-/*typedef enum {
-
-  PARTICLE_CUBE,
-  PARTICLE_SPHERE,
-  PARTICLE_FLAME
-
-  } PARTICLE_SYSTEM_SHAPE;*/
+typedef enum { PS_NONE, PS_CIRCLE, PS_SPHERE, PS_HEMI_D, PS_HEMI_U, PS_CUBE, PS_EXTERNAL } PS_SHAPE;
 
 class ParticleSystem : public Object {
   
-public:
+ public:
 
   // constructor/destructor  
   ParticleSystem( int particleAmt, const std::string &name, GLuint shader );
   ~ParticleSystem( void );
 
-
   // this will fill the system with newborn particles
   void  fillSystemWithParticles(void);
 
   // Getters and Setters
-  float getLifespan( void );
-  float getMaxLife( void );
-  float getMinLife( void );
-  int   getNumParticles( void );
-  int   getNumParticlesActual( void );
-  void  setNumParticles( int newNumParticles );
+  float getLifespan( void ) const ;
+  float getMaxLife( void ) const ;
+  float getMinLife( void ) const ;
+  int   getNumParticles( void ) const ;
+  int   getNumParticlesActual( void ) const ;
 
+  void  setNumParticles( int newNumParticles );
   void  setSlaughterHeight( float );
   void  setLifespan( float minLifespan, float maxLifespan );
   void  setEmitterRadius(float);
 
-  // this controls whether or not the particles are connected to the emitter.
-  bool  getParticleSpace(void) const;
-  void  setParticleSpace(bool);
-
   virtual void draw( void );
 
-  void  setVectorField(vec3 (*vectorFieldFunc)(vec4) );
+  void  setVectorField(vec3 (*vectorFieldFunc)(vec4, Parameters* ) );
   void  setColorFunc(vec4 (*colorFunc)(float, vec4) );
   
   static float rangeRandom( float min, float max );
@@ -76,47 +67,83 @@ public:
   void unpauseTheSystem(void);
   void togglePause(void);
   void setPause(bool);
+
+  //overrides for Engine functionality
   virtual void buffer( GLenum usage = GL_DYNAMIC_DRAW );
   virtual void bufferToRaytracer( RayTracer &rt );
 
-  TransCache _emitterTrans ; // this transcache represnts the position of the emitter
+  //TransCache _emitterTrans ; // this transcache represnts the position of the emitter
 
-private:  
+  PS_SHAPE getEmitterShape(void) const ; 
+  PS_SHAPE getSystemShape(void) const ; 
+
+  void setEmitterShape(PS_SHAPE); 
+  void setSystemShape(PS_SHAPE); 
+
+  void setFuncParams(Parameters*);
+
+  Parameters* getFuncParams();
+
+	
+
+ private:  
+
+
+  /* private methods*/
 
   /* The Do-All function.  Will do everything needed in order
    to have the particles behave according to our specification
    on each call to Draw(). That's the idea, anyway. */
   void  update();
-  void updateNumParticles( int );
-
+  void  updateNumParticles( int );
 
   float generateLifespan();
+
+  vec4  getSpawnPos(PS_SHAPE);
   vec4  getRandomCircularSpawnPoint(void);
+  vec4  getRandomCubeSpawnPoint(void);
+  vec4  getRandomSphericalSpawnPoint(void);
   vec4  getRandomHemisphericalSpawnPoint(void);
+
+  vec4  getRandomSphericalSpawnPointHelper(float);
+
+
   void  respawnParticle(Particle &p);
-  void  addParticle(void);
 
   Particle *newRandomParticle(void);
 
-  void  addOneParticleAtOrigin( void );
+  void  addParticle(void);
   void  addSomeParticles( int );
+  void  addOneParticleAtOrigin( void );
 
   void  removeParticle( void );
 
+
+  /* member variables */
+
+  /* particle control variables */
   vector<ParticleP> _particles;
-  unsigned _numParticles;   // Number of particles that each instance of ParticleSystem will manage
-  float  _minLife;
-  float  _maxLife;
-  float  _emitterRadius;
-  bool   _pauseTheSystem;
-  float  _slaughterHeight;
-  bool   _updateRequired;
-  bool   _useGlobalParticleSpace;
+  unsigned          _numParticles;   // Number of particles that each instance of ParticleSystem will manage
+  float             _minLife;
+  float             _maxLife;
+
+  /* system control variables */
+  bool     _pauseTheSystem;
+  float    _slaughterHeight;
+  bool     _useGlobalParticleSpace;
   unsigned _fillSpeedLimit;
 
+  /* emitter control */
+  float      _emitterRadius;
+  PS_SHAPE   _emitterShape ; 
+  PS_SHAPE   _systemShape  ;
+  TransCache _emitterLoc   ;
 
-  Angel::vec3 (*_vecFieldFunc)(Angel::vec4 posIn);
+  Parameters* _funcParams;
+
+  Angel::vec3 (*_vecFieldFunc)(Angel::vec4 posIn, Parameters* functionParams);
   Angel::vec4 (*_colorFunc)(float lifePct, Angel::vec4 posIn);
+
 
 };
 

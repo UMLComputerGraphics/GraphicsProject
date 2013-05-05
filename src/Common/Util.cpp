@@ -21,6 +21,8 @@
 #include "Util.hpp"
 #include "globals.h"
 
+#include "OpenGL.h"
+
 // http://stackoverflow.com/questions/236129/splitting-a-string-in-c
 std::vector< std::string > &split( const std::string &s, char delim,
                                    std::vector< std::string > &elems ) {
@@ -129,4 +131,65 @@ void gprint( DebugPrintLevels level, const char *format, ...) {
   vfprintf( stderr, format, args );
   va_end( args );
   
+}
+
+GLenum 
+glSanityCheck(void)
+{
+
+  GLenum err ;
+
+  err = glGetError() ;
+
+  if ( err )
+  {
+
+    fprintf( stderr, "ERROR: glGetError() returning true...\n" );
+
+    switch(err)
+    {
+
+    case GL_INVALID_ENUM:
+
+      fprintf( stderr, "\tGL_INVALID_ENUM\n" );
+      break;
+
+    case GL_INVALID_VALUE:
+
+      fprintf( stderr, "\tGL_INVALID_VALUE\n" );
+      break;
+
+
+    case GL_INVALID_OPERATION:
+
+      fprintf( stderr, "\tGL_INVALID_OPERATION\n" );
+      break;
+
+    case GL_INVALID_FRAMEBUFFER_OPERATION:
+
+      fprintf( stderr, "\tGL_INVALID_FRAMEBUFFER_OPERATION\n" );
+      break;
+
+    case GL_OUT_OF_MEMORY:
+
+      fprintf( stderr, "\tGL_OUT_OF_MEMORY\n" );
+      break;
+
+    case GL_STACK_UNDERFLOW:
+
+      fprintf( stderr, "\tGL_STACK_UNDERFLOW\n" );
+      break;
+
+    case GL_STACK_OVERFLOW:
+
+      fprintf( stderr, "\tGL_STACK_OVERFLOW\n" );
+      break;
+
+    }
+
+    //    exit( 255 );
+  }
+
+  return err;
+
 }

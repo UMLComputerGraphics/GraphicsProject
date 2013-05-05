@@ -13,6 +13,7 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
+    int getDefaultNumOfParticles();
     ~MainWindow();
     void setMorphPercentageOut(int pct);
 
@@ -47,8 +48,12 @@ signals:
 	void sigFreezeParticles(bool isEnabled);
     void sigParticleFieldFunction(int index);
 
+    void sigUpdateVectorField(std::string*);
+
 private slots:
     void on_addObjectButton_clicked();
+
+    void on_updateVectorFieldButton_clicked();
 
 private:
     Ui::MainWindow *ui;

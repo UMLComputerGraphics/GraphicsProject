@@ -16,42 +16,39 @@ using namespace Angel;
 
 void Light::commonInit( void ) {
 
-  this->color( vec3( 1.0, 1.0, 1.0 ) );
-
   _lightAmbient = (GLfloat *) malloc(sizeof(GLfloat) * 4);
-  _lightAmbient[0] = _lightAmbient[1] = _lightAmbient[2] = 0.1;
+  _lightAmbient[0] = _lightAmbient[1] = _lightAmbient[2] = 0.08;
   
   _lightPositions = (GLfloat *) malloc(sizeof(GLfloat) * 4);
-  _lightPositions[0] = this->x();
-  _lightPositions[1] = this->y();
-  _lightPositions[2] = this->z();
+  _lightPositions[0] = _lightPositions[1] =  _lightPositions[2] = 0.0;
 
   _lightDiffuse = (GLfloat *) malloc(sizeof(GLfloat) * 4);
-  _lightDiffuse[0] = this->color().x;
-  _lightDiffuse[1] = this->color().y;
-  _lightDiffuse[2] = this->color().z;
-
+  this->color( vec3( 1.0, 1.0, 1.0 ) );
+  
   _lightSpecular = (GLfloat *) malloc(sizeof(GLfloat) * 4);
   _lightSpecular[0] = _lightSpecular[1] = _lightSpecular[2] = 0.2;
- 
+
+  //w 
   _lightAmbient[3] = _lightPositions[3] = _lightDiffuse[3] = _lightSpecular[3] = 1.0;
+
+  _intensity = 1.0;
 
 }
 
 Light::Light( const std::string &name, float x, float y,
                 float z ) {
-  this->pos( x, y, z );
   commonInit();
+  this->pos( x, y, z );
 }
 
 Light::Light( const std::string &name, vec3 &in ) {
-  this->pos( in );
   commonInit();
+  this->pos( in );
 }
 
 Light::Light( const std::string &name, vec4 &in ) {
-  this->pos( in );
   commonInit();
+  this->pos( in );
 }
 
 Light::~Light( void ) {
@@ -142,4 +139,17 @@ float Light::intensity( void ) const {
 
 void Light::intensity( const float &in ) {
   _intensity = in;
+}
+
+GLfloat* Light::getGLAmbient( void ) {
+  return _lightAmbient;
+}
+GLfloat* Light::getGLPosition( void ) {
+  return _lightPositions;
+}
+GLfloat* Light::getGLDiffuse( void ) {
+  return _lightDiffuse;
+}
+GLfloat* Light::getGLSpecular( void ) {
+  return _lightSpecular;
 }

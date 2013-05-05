@@ -24,7 +24,12 @@ uniform bool fIsTextured;
 uniform bool letMeSeeThatPhong; //pha phong phong phong
 const int maxNumberOfLights = 5;
 uniform int uNumberOfLights;
-uniform vec4 LightAmbient, uLightPositions[maxNumberOfLights], uLightDiffuse[maxNumberOfLights], uLightSpecular[maxNumberOfLights];
+uniform vec4 LightAmbient,
+             uLightPositions[maxNumberOfLights],
+             uLightDiffuse[maxNumberOfLights],
+             uLightSpecular[maxNumberOfLights];
+
+uniform float uLightIntensity[maxNumberOfLights];
 
 void main() { 
 
@@ -42,7 +47,7 @@ void main() {
 
     gl_FragColor = LightAmbient;
     
-    for(int i=0; i<uNumberOfLights; i++)
+    for( int i = 0; i < uNumberOfLights; i++ )
     {
       // Transform vertex position into eye coordinates
       vec3 pos = (fPosition).xyz;
@@ -50,7 +55,11 @@ void main() {
       vec4 ambient = LightAmbient * baseColor;
 
       vec3 lightPos = (uLightPositions[i]).xyz;
-          
+      
+      float dist = length(vec3(lightPos - pos));
+
+      float att = 4.0 / (dist*dist);
+    
       vec3 L = normalize(lightPos);
       vec3 E = normalize(-pos);
       vec3 H = normalize(L + E);
@@ -66,7 +75,7 @@ void main() {
 
 	 //gl_FragColor = diffuse;
 
-      gl_FragColor += vec4( (ambient + diffuse + specular).xyz, 1.0 );
+      gl_FragColor += vec4( (ambient + diffuse + specular).xyz, 1.0 ) * att * uLightIntensity[i];
     }
     //gl_FragColor = (1.0 / gl_FragColor.a) * gl_FragColor;
   } else {

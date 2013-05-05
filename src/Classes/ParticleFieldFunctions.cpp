@@ -2,9 +2,7 @@
 #include "ParticleSystem.hpp"
 #include "vec.hpp"
 #include "mat.hpp"
-#ifdef EXPRTK
-#include "exprtk/exprtk.hpp"
-#endif
+#include "UserVectorField.hpp"
 #include <cmath>
 
 using Angel::vec2;
@@ -46,23 +44,14 @@ vec3 ParticleFieldFunctions::fixed(vec4 pos)
   return vec3(0.0,0.0,0.0);
 }
 
-vec3 ParticleFieldFunctions::fixedDefault( vec4 pos )
-{
-  return fixed( pos );
-}
 
 vec3 ParticleFieldFunctions::up(vec4 pos)
 {
   return vec3(0.0,0.01,0.0);
 }
 
-vec3 ParticleFieldFunctions::upDefault( vec4 pos )
-{
-	return up( pos );
-}
-
 //FIXME DOCS PARAMETERS
-vec3 ParticleFieldFunctions::tornado(vec4 pos)
+vec3 ParticleFieldFunctions::tornado(vec4 pos, Parameters*)
 {
 
 	vec4 retVal;
@@ -81,20 +70,14 @@ vec3 ParticleFieldFunctions::tornado(vec4 pos)
 
 }
 
-vec3 ParticleFieldFunctions::tornadoDefault( vec4 pos )
+vec3 ParticleFieldFunctions::flame(vec4 pos, Parameters* theParameters)
 {
-	return tornado( pos );
-}
-
-vec3 ParticleFieldFunctions::flame(vec4 pos, vec3 atrPos = vec3(0.0, 0.45, 0.0),
-		double scl = 0.01, float pwr = 0.1, float rng = 0.24 )
-{
-
+	FlameParameters* parameters = (FlameParameters* ) theParameters;
 	vec3 retVal ;
 
 	//float steepness = ParticleSystem::rangeRandom(2,100) ;
 
-	double scale = scl;
+	double scale = parameters->scl();
 	retVal.x = pos.x*scale;
 	retVal.z = pos.z*scale;
 	retVal.y = 5*(pos.x*pos.x + pos.z*pos.z);
@@ -102,9 +85,9 @@ vec3 ParticleFieldFunctions::flame(vec4 pos, vec3 atrPos = vec3(0.0, 0.45, 0.0),
 	//attractor code!!!
 	attractor atr_top ;
 
-	atr_top.power    = pwr ;
-	atr_top.position = atrPos ;
-	atr_top.range =	rng;
+	atr_top.power    = parameters->pwr() ;
+	atr_top.position = parameters->atrPos() ;
+	atr_top.range =	parameters->rng();
 	// get the distance from the attractor
 	vec3 atrDist = atr_top.position - xyz(pos) ;
 
@@ -133,11 +116,6 @@ vec3 ParticleFieldFunctions::flame(vec4 pos, vec3 atrPos = vec3(0.0, 0.45, 0.0),
 	
 	return 0.002 * normalize(retVal);
 
-}
-
-vec3 ParticleFieldFunctions::flameDefault( vec4 pos )
-{
-	return flame( pos );
 }
 
 vec3 ParticleFieldFunctions::flameold(vec4 pos) {
@@ -182,54 +160,76 @@ vec3 ParticleFieldFunctions::flameold(vec4 pos) {
 
 }
 
-vec3 ParticleFieldFunctions::flameoldDefault( vec4 pos )
+FlameParameters::FlameParameters( vec3 theAtrPos, 
+									double theScl, float thePwr,
+									 float theRng) : 
+									 _atrPos(theAtrPos),
+									_pwr(thePwr), _rng(theRng)
 {
-	return flameold( pos );
+	
+}	
+
+vec3 FlameParameters::atrPos(void)
+{
+	return _atrPos;
+}
+
+double FlameParameters::scl(void)
+{
+	return _scl;
+}
+
+float FlameParameters::pwr(void)
+{
+	return _pwr;
+}
+
+float FlameParameters::rng(void)
+{
+	return _rng;
+}
+
+/* only constructor */
+UserParameters::UserParameters (std::string* functions) : _functions(functions)
+{
+
+}
+
+/* no setter, the only chance to set the parameters is at construction.
+other wise you will get the defaults. */
+std::string* UserParameters::functions(void)
+{
+	return _functions;
 }
 
 #ifdef EXPRTK
-class UserVectorField {
-public:
-  UserVectorField( const std::string &fx = "0x + 0y + 0z + 0",
-		   const std::string &fy = "0x + 0y + 0z + 0.01",
-		   const std::string &fz = "0x + 0y + 0z + 0" ) {
-    _table.add_variable("x",_input.x);
-    _table.add_variable("y",_input.y);
-    _table.add_variable("z",_input.z);
-    _table.add_constants();
-    
-    _ef[0].register_symbol_table( _table );
-    _ef[1].register_symbol_table( _table );
-    _ef[2].register_symbol_table( _table );
+/**
+   Revert:
+   The userSupplied callback should not accept strings as an input.
+   The userSupplied callback is an example and should do one thing and one thing only:   
+   It should return the value of its function.
 
-    f( fx, 0 );
-    f( fy, 1 );
-    f( fz, 2 );
-  }
-  
-  Angel::vec3 f( Angel::vec4 input ) {
-    _input = input;
-    return vec3( _ef[0].value(), _ef[1].value(), _ef[2].value() );
-  }
-
-  /** use f( "string", index ) to change the f_x, f_y and f_z functions. **/
-  void f( const std::string &f, size_t i ) {
-    _f[i] = f;
-    _parser.compile( _f[i], _ef[i] );
-  }
-
-private:
-  std::string _f[3];
-  exprtk::expression<GLfloat> _ef[3];
-  exprtk::parser<GLfloat> _parser;
-  exprtk::symbol_table<GLfloat> _table;
-  Angel::vec4 _input;
-};
-
+   If you supply it strings and re-compile every time, it will be too slow to use.
+   Compile once, evaluate many times is the paradigm, here.
+**/
 Angel::vec3 ParticleFieldFunctions::userSupplied( Angel::vec4 pos ) {
   static UserVectorField *uvf = NULL;
-  if (uvf == NULL) { uvf = new UserVectorField(); }
-  return uvf->f( pos );
+  if (uvf == NULL) { 
+    uvf = new UserVectorField(); 
+  }
+  return uvf->eval( pos );
+}
+
+/**
+   Try this, instead.
+   Make a UVF in advance, and then call this callback,
+   passing a reference to the UVF you'd like to use.
+
+   You can manage /that/ UVF object inside of QT if you'd like.
+   If you get the Parameters system working, the UVF can be a parameter.
+**/
+Angel::vec3 ParticleFieldFunctions::userSupplied( Angel::vec4 &pos, UserVectorField &uvf ) {
+  return uvf.eval( pos );
 }
 #endif
 

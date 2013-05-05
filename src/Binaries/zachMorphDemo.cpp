@@ -37,7 +37,7 @@ void init() {
 
    bottle->genMorphTarget();
    Object *bottleMorphTarget = bottle->morphTarget();
-   ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle_liquor_high.obj" );
+   ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle_liquor_high3.obj" );
    ObjLoader::loadMaterialFromFile( bottleMorphTarget, "../models/bottle_liquor_high.mtl" );
   
   gprint( PRINT_DEBUG, "Number Vertices Model1: %lu\n",
@@ -51,7 +51,9 @@ void init() {
   int depthScale = 1;
   ScaleModel * scaleModel = new ScaleModel(bottle, bottleMorphTarget,widthScale,heightScale,depthScale);
 
-  rectangularMapping(bottle,bottleMorphTarget);
+  RectangularMapping * rectangularMapping = new RectangularMapping(bottle,bottleMorphTarget);
+  rectangularMapping->copyToObjects(bottle,bottleMorphTarget);
+  rectangularMapping->revertToOriginal(bottle,bottleMorphTarget);
 
   //Rescale models to original size
   scaleModel->restoreModels();

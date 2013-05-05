@@ -12,6 +12,7 @@
 
 #include "Engine.hpp"
 #include "Object.hpp"
+#include "Util.hpp"
 
 using Angel::vec4;
 using Angel::vec3;
@@ -83,12 +84,13 @@ Object::Object( const std::string &name, GLuint gShader ) {
   link( Object::NUM_LIGHTS, "uNumberOfLights" );
   link( Object::LIGHT_DIFFUSE, "uLightDiffuse" );
   link( Object::LIGHT_SPECULAR, "uLightSpecular" );
+  link( Object::LIGHT_INTENSITY, "uLightIntensity" );
   
   // Default to "Not Textured"
   _isTextured = false;
   _textureID = -1;
   _numTextures = 0;
-  _isLit = false;
+  _isLit = true;
 
   // Linear Interpolation Demo: Morph Percentage
   _morphPercentage = 0.0;
@@ -285,11 +287,14 @@ void Object::drawPrep( void ) {
   send( Object::OBJECT_CTM );
   send( Object::MORPH_PCT );
   send( Object::TEX_SAMPLER );
+
+  //light stuff
   send( Object::LIGHT_AMBIENT );
   send( Object::NUM_LIGHTS );
   send( Object::LIGHT_POSITIONS );
   send( Object::LIGHT_DIFFUSE );
   send( Object::LIGHT_SPECULAR );
+  send( Object::LIGHT_INTENSITY );
 }
 
 /**
@@ -509,6 +514,14 @@ void Object::send( Object::UniformEnum which ) {
     return;
   }
 
+  // light stuff
+  GLint *numL = Engine::instance()->getNumLights();
+  GLfloat *amb = Engine::instance()->getLightAmbient();
+  GLfloat *diff = Engine::instance()->getLightDiffuses();
+  GLfloat *spec = Engine::instance()->getLightSpeculars();
+  GLfloat *pos = Engine::instance()->getLightPositions();
+  GLfloat *intens = Engine::instance()->getLightIntensities();
+
   switch ( which ) {
   
   case Object::IS_TEXTURED:
@@ -533,30 +546,35 @@ void Object::send( Object::UniformEnum which ) {
     break;
     
   case Object::LIGHT_AMBIENT:
-    if (_isLit && _lightAmbient) {
-      glUniform4fv( _handles[Object::LIGHT_AMBIENT], 1, _lightAmbient);
+    if (_isLit && amb) {
+      glUniform4fv( _handles[Object::LIGHT_AMBIENT], 1, amb);
     }
     break;
   case Object::LIGHT_DIFFUSE:
-    if (_isLit && _lightDiffuse && _numLights && *_numLights > 0) {
-      glUniform4fv( _handles[Object::LIGHT_DIFFUSE], *_numLights, _lightDiffuse);
+    if (_isLit && diff && numL && *numL > 0) {
+      glUniform4fv( _handles[Object::LIGHT_DIFFUSE], *numL, diff);
     }
     break;
   case Object::LIGHT_SPECULAR:
-    if (_isLit && _lightSpecular && _numLights && *_numLights > 0) {
-      glUniform4fv( _handles[Object::LIGHT_SPECULAR], *_numLights, _lightSpecular);
+    if (_isLit && spec && numL && *numL > 0) {
+      glUniform4fv( _handles[Object::LIGHT_SPECULAR], *numL, spec);
     }
     break;
   case Object::NUM_LIGHTS:
-      if (_isLit && _numLights && *_numLights > 0) {
-        glUniform1i( _handles[Object::NUM_LIGHTS], *_numLights);
-      }
-      break;
+    if (_isLit && numL && *numL > 0) {
+      glUniform1i( _handles[Object::NUM_LIGHTS], *numL);
+    }
+    break;
   case Object::LIGHT_POSITIONS:
-      if (_isLit && _lightPositions && _numLights && *_numLights > 0) {
-        glUniform4fv( _handles[Object::LIGHT_POSITIONS], *_numLights, _lightPositions);
-      }
-      break;
+    if (_isLit && pos && numL && *numL > 0) {
+      glUniform4fv( _handles[Object::LIGHT_POSITIONS], *numL, pos);
+    }
+    break;
+  case Object::LIGHT_INTENSITY:
+    if (_isLit && intens && numL && *numL > 0) {
+      glUniform1fv( _handles[Object::LIGHT_INTENSITY], *numL, intens);
+    }
+    break;
   default:
     throw std::invalid_argument( "Unknown Uniform Handle Enumeration." );
   }
@@ -843,7 +861,7 @@ void Object::bufferToRaytracer( RayTracer &rt ) {
 
 }
 
-void Object::setLights(GLfloat* ambient, GLint* numlights, GLfloat* positions, GLfloat* diffuse, GLfloat* specular)
+/*void Object::setLights(GLfloat* ambient, GLint* numlights, GLfloat* positions, GLfloat* diffuse, GLfloat* specular)
 {
   _isLit = true;
   _lightAmbient = ambient;
@@ -853,8 +871,4 @@ void Object::setLights(GLfloat* ambient, GLint* numlights, GLfloat* positions, G
   _lightSpecular = specular;
 
 }
-
-void Object::setLights()
-{
-  //TODO: make this set light variables based on global lights configurations
-}
+*/

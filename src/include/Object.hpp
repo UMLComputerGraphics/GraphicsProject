@@ -89,6 +89,7 @@ public:
     LIGHT_POSITIONS,
     LIGHT_SPECULAR,
     LIGHT_DIFFUSE,
+    LIGHT_INTENSITY,
     END //!< END
   } Uniform;
 
@@ -319,8 +320,7 @@ public:
   Angel::vec3 getMin( void );
 
   virtual void bufferToRaytracer( RayTracer &rt );
-  void setLights(GLfloat* ambient, GLint* numlights, GLfloat* positions, GLfloat* diffuse, GLfloat* specular);
-  void setLights();
+  //void setLights(GLfloat* ambient, GLint* numlights, GLfloat* positions, GLfloat* diffuse, GLfloat* specular);
 
 protected:
 
@@ -381,17 +381,19 @@ protected:
   /** The diffuse color of the object **/
   Angel::vec3 color;
 
-  GLfloat *_lightAmbient;
+  /*GLfloat *_lightAmbient;
   GLfloat *_lightPositions;
   GLfloat *_lightDiffuse;
   GLfloat *_lightSpecular;
-  GLint *_numLights;
+  GLint *_numLights;*/
 
   GLint _uLightAmbient;
   GLint _uLightPositions;
   GLint _uLightDiffuse;
   GLint _uLightSpecular;
   GLint _uNumLights;
+  GLint _uLightIntensity;
+
 
   /** The material properties of this object **/
   Material *_material;

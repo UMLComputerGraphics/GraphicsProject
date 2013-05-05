@@ -46,9 +46,20 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+int MainWindow::getDefaultNumOfParticles()
+{
+    return ui->numberOfParticlesSpinBox->value();
+}
+
 void MainWindow::on_addObjectButton_clicked()
 {
     Dialog addObjectDialog;
     addObjectDialog.setModal(true);
     addObjectDialog.exec();
+}
+
+void MainWindow::on_updateVectorFieldButton_clicked()
+{
+    std::string temp[3] = {ui->vxTextInput->toPlainText().toStdString(), ui->vyTextInput->toPlainText().toStdString(), ui->vzTextInput->toPlainText().toStdString()};
+    sigUpdateVectorField(temp);
 }

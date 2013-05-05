@@ -30,10 +30,13 @@ class RayTracer
     void init(GLint shader);
     void generateScene(void);
     void addVec3ToVector(std::vector<GLfloat> *_vector, vec3 _vec3);
-    void setMinMax(vec3 *min, vec3 *max, vec3 v);
+    void setMinMax( vec3 &min, vec3 &max, triangle_t &t );
     void addTriangle( const vec3& a, const vec3& b, const vec3& c,
           const vec3& diffuse, const vec3& ambient, const vec3& specular,
           float shininess, float reflect, float refract);
+    void pushTriangleDataToBuffer( std::vector<GLfloat> &dataBuffer,
+                 std::vector<triangle_t> &triangleBuffer,
+                 size_t start, size_t count );
     void pushDataToBuffer();
     //void genereateScene(std::vector<Object*> objects);
     virtual
@@ -61,10 +64,12 @@ class RayTracer
     GLint uNumOfTriangle;
     GLint uNumOfTriangleVectors;
 
-    GLint uNumOfBoundingBoxes;
-    GLint uNumOfBoundingSpheres;
-    GLint uNumOfTrianglesBounded;
+    GLint uNumOfL2BoundingBoxes;
+    GLint uNumOfL1BoundingBoxes;
 
+    GLint uNumOfL2TrianglesBounded;
+
+    GLint uNumberOfLights;
     GLint uLightPositions;
     GLint uLightDiffuse;
     GLint uLightSpecular;
@@ -75,13 +80,15 @@ class RayTracer
 
     int numTriangles;
 
-    int numOfBoundingSpheres;
-    std::vector< GLfloat > bufferData;
+    int numOfL2BoundingBoxes;
+    int numOfL1BoundingBoxes;
+
+    int numOfL2TrianglesBounded;
+
+    std::vector<GLfloat> bufferData;
+    std::vector<triangle_t> triangle_tData;
 
     int numOfTriangleVectors;
-    int numOfTrianglesBounded;
-
-    int numOfBoundingBoxes;
 
     GLint uDisplay;
 

@@ -197,7 +197,11 @@ namespace Angel {
       exit( EXIT_FAILURE );
     }
     
-    return program;
+    if (glIsProgram) return program;
+    else {
+      fprintf( stderr, "Something went really wrong. %d is our program, but OpenGL says it's not a valid program.\n", program );
+      return 0;
+    }
   }
 
   // Close namespace Angel block

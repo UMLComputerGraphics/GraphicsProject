@@ -27,6 +27,7 @@ SOURCES += \
         Classes/Cameras.cpp \
 	   Classes/ColorFunctions.cpp \
         Classes/Engine.cpp \
+        Classes/Light.cpp \
         # KinectInator.cpp \
         Classes/mat.cpp \
 	   Classes/Material.cpp \
@@ -60,6 +61,7 @@ SOURCES += \
 	Classes/nearestNeighbor.cpp \
 	Classes/RayTracer.cpp \
 	Classes/scanMatching.cpp \
+        Classes/UserVectorField.cpp \
     Qt/dialog.cpp
 
 HEADERS  += include/bipartiteGraph.hpp \
@@ -70,6 +72,7 @@ HEADERS  += include/bipartiteGraph.hpp \
             include/globals.h \
             include/glut_callbacks.h \
             include/InitShader.hpp \
+            include/Light.hpp \
             #include/KinectInator.hpp\
             include/mat.hpp \
 		  include/Material.hpp \
@@ -97,6 +100,7 @@ HEADERS  += include/bipartiteGraph.hpp \
             include/Timer.hpp \ 
             include/TransCache.hpp \ 
             include/Transformation.hpp \ 
+            include/UserVectorField.hpp \
             include/Util.hpp \ 
             include/vec.hpp \ 
             include/WiiUtil.h \
@@ -122,6 +126,12 @@ INCLUDEPATH += . include /opt/local/include/ImageMagick/ /opt/local/include/ fMo
 LIBS += -L/opt/local/lib -lMagick++ -lboost_thread-mt #fMod/lib/libfmodex.dylib
 }
 
+WITH_EXPRTK {
+DEFINES += EXPRTK=true
+
+} else {
+
+}
 FORMS    += \
     Qt/mainwindow.ui \
     Qt/dialog.ui
