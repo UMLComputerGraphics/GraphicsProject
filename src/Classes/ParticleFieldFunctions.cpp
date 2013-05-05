@@ -53,7 +53,7 @@ vec3 ParticleFieldFunctions::up(vec4 pos)
 }
 
 //FIXME DOCS PARAMETERS
-vec3 ParticleFieldFunctions::tornado(vec4 pos)
+vec3 ParticleFieldFunctions::tornado(vec4 pos, Parameters*)
 {
 
 	vec4 retVal;

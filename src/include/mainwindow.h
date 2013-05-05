@@ -48,12 +48,12 @@ signals:
 	void sigFreezeParticles(bool isEnabled);
     void sigParticleFieldFunction(int index);
 
-    void sigVxTextChanged(QString);
-    void sigVyTextChanged(QString);
-    void sigVzTextChanged(QString);
+    void sigUpdateVectorField(std::string*);
 
 private slots:
     void on_addObjectButton_clicked();
+
+    void on_updateVectorFieldButton_clicked();
 
 private:
     Ui::MainWindow *ui;

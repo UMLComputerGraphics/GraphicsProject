@@ -174,19 +174,10 @@ void MONOLITH::slotParticleFieldFunction(int index)
 
 }
 
-void MONOLITH::slotVxTextChanged(QString)
+void MONOLITH::slotUpdateVectorField(std::string* params)
 {
-
-}
-
-void MONOLITH::slotVyTextChanged(QString)
-{
-
-}
-
-void MONOLITH::slotVzTextChanged(QString)
-{
-s
+    Parameters* funcParams = new UserParameters(params);
+    ps->setFuncParams(funcParams);
 }
 
 /**

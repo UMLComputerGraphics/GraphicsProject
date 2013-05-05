@@ -51,7 +51,7 @@ private:
 namespace ParticleFieldFunctions
 {
 
-  Angel::vec3 tornado(Angel::vec4 /*, Parameters parameters*/);
+  Angel::vec3 tornado(Angel::vec4, Parameters* parameters);
 
   Angel::vec3 flame(Angel::vec4, Parameters* theParameters);
 

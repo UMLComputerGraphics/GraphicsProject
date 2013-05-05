@@ -57,6 +57,7 @@ int main( int argc, char **argv ) {
   QObject::connect(&w, SIGNAL(sigEnableRaytracing(bool)), &monolith, SLOT(slotEnableRaytracing(bool)));
   QObject::connect(&w, SIGNAL(sigEnableParticleSystem(bool)), &monolith, SLOT(slotEnableParticleSystem(bool)));
   QObject::connect(&w, SIGNAL(sigParticleFieldFunction(int)), &monolith, SLOT(slotParticleFieldFunction(int)));
+  QObject::connect(&w, SIGNAL(sigUpdateVectorField(std::string*)), &monolith, SLOT(slotUpdateVectorField(std::string*)));
   w.show();
 
 #ifndef __APPLE__ // monolith.start has to be here for Linux. 
