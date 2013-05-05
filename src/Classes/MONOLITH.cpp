@@ -458,9 +458,9 @@ void MONOLITH::aRomanticEvening() {
     lightness = lightness * 3.0 / 10.0;
 
     lightness += .7;
-    lightDiffuse[0] = lightness;
-    lightDiffuse[1] = lightness;
-    lightDiffuse[2] = lightness;
+
+    Engine::instance()->getLights()->at(0)->intensity(lightness);
+    Engine::instance()->setLights();
 
     sleep( 0.01 );
   }
