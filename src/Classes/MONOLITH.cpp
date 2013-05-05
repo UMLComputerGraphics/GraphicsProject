@@ -165,7 +165,6 @@ void MONOLITH::slotParticleFieldFunction(int index)
         break;
     case 1:
         ps->setVectorField(ParticleFieldFunctions::tornado);
-        printf("changed to tornado\n");
         break;
     case 2:
 
