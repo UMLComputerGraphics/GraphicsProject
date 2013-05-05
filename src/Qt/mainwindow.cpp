@@ -63,3 +63,29 @@ void MainWindow::on_updateVectorFieldButton_clicked()
     std::string temp[3] = {ui->vxTextInput->toPlainText().toStdString(), ui->vyTextInput->toPlainText().toStdString(), ui->vzTextInput->toPlainText().toStdString()};
     sigUpdateVectorField(temp);
 }
+
+void MainWindow::on_particleFieldFunctionComboBox_currentIndexChanged(int index)
+{
+    if( index == 2 )
+    {
+        ui->vxTextInput->setEnabled(true);
+        ui->vyTextInput->setEnabled(true);
+        ui->vzTextInput->setEnabled(true);
+        ui->updateVectorFieldButton->setEnabled(true);
+        ui->customFunctionLabel->setEnabled(true);
+        ui->VxLabel->setEnabled(true);
+        ui->VyLabel->setEnabled(true);
+        ui->VzLabel->setEnabled(true);
+    }
+    else
+    {
+        ui->vxTextInput->setEnabled(false);
+        ui->vyTextInput->setEnabled(false);
+        ui->vzTextInput->setEnabled(false);
+        ui->updateVectorFieldButton->setEnabled(false);
+        ui->customFunctionLabel->setEnabled(false);
+        ui->VxLabel->setEnabled(false);
+        ui->VyLabel->setEnabled(false);
+        ui->VzLabel->setEnabled(false);
+    }
+}

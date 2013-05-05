@@ -55,6 +55,8 @@ private slots:
 
     void on_updateVectorFieldButton_clicked();
 
+    void on_particleFieldFunctionComboBox_currentIndexChanged(int index);
+
 private:
     Ui::MainWindow *ui;
 };
