@@ -831,12 +831,12 @@ Angel::vec3 Object::getMin( void ) {
 
 void Object::bufferToRaytracer( RayTracer &rt ) {
 
-  const vec3 diffuse = vec3(0.0, 1.0, 0.0);
-  const vec3 ambient = vec3(0.0, 0.1, 0.0);
-  const vec3 specular = vec3(0.0, 0.0, 0.0);
-  const float shininess = 1.0;
+  const vec3 diffuse = _material->getDiffuse();
+  const vec3 ambient = _material->getAmbient();
+  const vec3 specular = _material->getSpecular();
+  const float shininess = _material->getShininess();
   const float reflect = 0.5;
-  const float refract = 0.0;
+  const float refract = _material->getRefract();
   
   std::vector< Angel::vec4 >::iterator it;
 
