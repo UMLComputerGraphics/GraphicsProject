@@ -47,7 +47,7 @@ void main() {
 
     gl_FragColor = LightAmbient;
     
-    for(int i=0; i<uNumberOfLights; i++)
+    for( int i = 0; i < uNumberOfLights; i++ )
     {
       // Transform vertex position into eye coordinates
       vec3 pos = (fPosition).xyz;
@@ -58,7 +58,7 @@ void main() {
       
       float dist = length(vec3(lightPos - pos));
 
-      float att = 1.0 / dist;
+      float att = 4.0 / (dist*dist);
     
       vec3 L = normalize(lightPos);
       vec3 E = normalize(-pos);

@@ -22,13 +22,9 @@ MONOLITH::MONOLITH(int argc, char** argv) :
     _argc = argc;
     _argv = argv;
 
-    Light* l = new Light( "CandleLight", 1.3, 4.13, 1.3 );
-    l->intensity(2);
-    Engine::instance()->addLight(l);
-    Light* l2 = new Light( "TestLight", 2.0, 2.0, 2.0 );
-    l2->color(vec3(0, 0.2, 0.8) );
-    l2->intensity(5);
-    Engine::instance()->addLight(l2);
+    Light* l = new Light( "CandleLight", 2.5, 6.07, 2.5 );
+    l->color(vec3(1.0, 0.5, 0.2));
+    Engine::instance()->addLight(l);    
 
     /*    lightAmbient = (GLfloat*)malloc(sizeof(GLfloat)*4);
     lightAmbient[0]=lightAmbient[1]=lightAmbient[2]=lightAmbient[3]=0.1;
@@ -71,10 +67,6 @@ void MONOLITH::monolith_idle(void)
     
     Object &candle = *((*rootScene)["bottle"]);
     candle.animation( simpleRotateAnim );
-
-    Light *bluLight = Engine::instance()->getLights()->at(1);
-    bluLight->dX(0.01);
-    Engine::instance()->setLights();
 
     //(*rootScene)["candle_top"]->morphPercentage(percent);
 
@@ -357,7 +349,6 @@ void MONOLITH::run() {
   ps->_trans._offset.set( 0, max.y - 0.02 , 0 );
   ps->_trans._scale.set( 2 );
   ps->setEmitterShape(PS_HEMI_D);
-
 
  /* If you fill the system, the flame will have a non-flamelike pulsing effect. 
     Please don't!

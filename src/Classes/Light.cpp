@@ -17,7 +17,7 @@ using namespace Angel;
 void Light::commonInit( void ) {
 
   _lightAmbient = (GLfloat *) malloc(sizeof(GLfloat) * 4);
-  _lightAmbient[0] = _lightAmbient[1] = _lightAmbient[2] = 0.05;
+  _lightAmbient[0] = _lightAmbient[1] = _lightAmbient[2] = 0.1;
   
   _lightPositions = (GLfloat *) malloc(sizeof(GLfloat) * 4);
   _lightPositions[0] = _lightPositions[1] =  _lightPositions[2] = 0.0;
