@@ -42,10 +42,6 @@ void init() {
   funInTheSin->setLifespan( 7.0, 11.0 );
   funInTheSin->setEmitterRadius( 0.1 );
 
-  #ifdef EXPRTK
-  funInTheSin->setVectorField( ParticleFieldFunctions::userSupplied );
-  #endif
-
   rootScene->insertObject( funInTheSin );
   funInTheSin->propagateOLD();
   //funInTheSin->fillSystemWithParticles();
