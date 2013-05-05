@@ -202,20 +202,41 @@ public:
     _ef[1].register_symbol_table( _table );
     _ef[2].register_symbol_table( _table );
 
-    f( fx, 0 );
-    f( fy, 1 );
-    f( fz, 2 );
+    set( fx, 0 );
+    set( fy, 1 );
+    set( fz, 2 );
   }
   
-  Angel::vec3 f( Angel::vec4 input ) {
+  Angel::vec3 eval( Angel::vec4 input ) {
     _input = input;
     return vec3( _ef[0].value(), _ef[1].value(), _ef[2].value() );
   }
 
-  /** use f( "string", index ) to change the f_x, f_y and f_z functions. **/
-  void f( const std::string &f, size_t i ) {
+  /** use set( "string", index ) to change the f_x, f_y and f_z functions. **/
+  void set( const std::string &f, size_t i ) {
+    if (i > 2)
+      throw std::logic_error( "You can only modify the 0th, 1st, or 2nd functions.\n" );
+
+    bool res;
     _f[i] = f;
-    _parser.compile( _f[i], _ef[i] );
+    res = _parser.compile( _f[i], _ef[i] );
+
+    if (!res) {
+      throw std::invalid_argument( _parser.error().c_str() );
+    }
+      /*
+      // This code doesn't work due to problems with error_t,
+      // But it was supplied by the author. No idea why it isn't working.
+      for (std::size_t i = 0; i < _parser.error_count(); ++i) {
+	error_t error = _parser.get_error(i);
+	printf("Err: %02d Pos: %02d Type: [%s] Msg: %s Expr: %s\n",
+	       static_cast<int>(i),
+	       static_cast<int>(error.token.position),
+	       exprtk::parser_error::to_str(error.mode).c_str(),
+	       error.diagnostic.c_str(),
+	       f.c_str());
+      }
+      */
   }
 
 private:
@@ -228,8 +249,10 @@ private:
 
 Angel::vec3 ParticleFieldFunctions::userSupplied( Angel::vec4 pos ) {
   static UserVectorField *uvf = NULL;
-  if (uvf == NULL) { uvf = new UserVectorField(); }
-  return uvf->f( pos );
+  if (uvf == NULL) { 
+    uvf = new UserVectorField(); 
+  }
+  return uvf->eval( pos );
 }
 #endif
 

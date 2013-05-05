@@ -508,8 +508,8 @@ void Camera::resetPosition( void ) {
 
 void Camera::debug( void ) {
 
-  std::cerr << "T{\n" << _ctm._offset.matrix() << "}\n";
-  std::cerr << "R{\n" << _ctm._orbit.matrix() << "}\n";
+  std::cerr << "T{\n" << _ctm._offset.matrix() << "} " << _handles[TRANSLATION] << "\n";
+  std::cerr << "R{\n" << _ctm._orbit.matrix() << "} " << _handles[ROTATION] << "\n";
   std::cerr << "P{\n" << _view << "}\n";
   std::cerr << "CTM{\n" << _ctm.otm() << "}\n";
 

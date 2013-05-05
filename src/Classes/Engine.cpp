@@ -344,16 +344,20 @@ void Engine::switchShader( GLint program ) {
   }
   if (program == _currentShader) return;
 
-  // Update our state.
-  _currentShader = program;
   // Switch to the new Shader.
   glUseProgram( program );
-  gprint( PRINT_VERBOSE, "Switched from [%d] to [%d]\n", currShader, program );
-  if (_renderingCamera) {
-    // Since we're on a new shader, have the camera re-send its CTM.
-    _renderingCamera->relinkUniforms();
-    _renderingCamera->view();
+  if (glGetError()) {
+    gprint( PRINT_ERROR, "Could not switch from [%d] to [%d]\n", currShader, program );
+  } else {
+    _currentShader = program;
+    gprint( PRINT_VERBOSE, "Switched from [%d] to [%d]\n", currShader, program );
+    if (_renderingCamera) {
+      // Since we're on a new shader, have the camera re-send its CTM.
+      _renderingCamera->relinkUniforms();
+      _renderingCamera->view();
+    }
   }
+
 }
 
 Camera *Engine::currentCamera( void ) const {
