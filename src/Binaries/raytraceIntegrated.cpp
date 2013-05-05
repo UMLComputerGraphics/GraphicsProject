@@ -94,7 +94,6 @@ GLfloat lightSpecular[] = { 1.0, 1.0, 1.0,
                             1.0, 1.0, 1.0};
 
 int numTriangles = 0;
-std::vector<vec3> trianglePoints;
 
 int numOfL2BoundingBoxes = 0;
 int numOfL1BoundingBoxes = 0;
@@ -102,7 +101,7 @@ int numOfL1BoundingBoxes = 0;
 int numOfL2TrianglesBounded = 20;
 
 std::vector<GLfloat> bufferData;
-std::vector<GLfloat> triangleData;
+std::vector<triangle_t> triangle_tData;
 
 int numOfTriangleVectors = (sizeof(triangle_t) / ((sizeof(GLfloat) * 3)));
 
@@ -191,7 +190,7 @@ void display( void ) {
   if ( frameCount == 10 ) {
     float elapsedTime = glutGet( GLUT_ELAPSED_TIME );
     float fps = 10.0 / ((elapsedTime - previousTime) / 1000.0);
-    printf("fps: %f\n", fps );
+    gprint( PRINT_INFO, "fps: %f\n", fps );
     previousTime = elapsedTime;
     frameCount = 0;
   }
@@ -203,34 +202,34 @@ void addVec3ToVector(std::vector<GLfloat> *_vector, vec3 _vec3) {
   _vector->push_back(_vec3.z);
 }
 
-void setMinMax(vec3 *min, vec3 *max, vec3 v) {
 
-  if(min->x > v.x) {
-    min->x = v.x;
-  } else if (max->x < v.x) {
-    max->x = v.x;
-  }
+#define MINMACRO( XYZ, ABC ) if (min.XYZ > t.ABC.XYZ) min.XYZ = t.ABC.XYZ;
+#define MAXMACRO( XYZ, ABC ) if (max.XYZ < t.ABC.XYZ) max.XYZ = t.ABC.XYZ;
+#define MINTRIPLET( XYZ ) \
+  MINMACRO( XYZ, a )	  \
+  MINMACRO( XYZ, b )	  \
+  MINMACRO( XYZ, c )
 
-  if(min->y > v.y) {
-    min->y = v.y;
-  } else if (max->y < v.y) {
-    max->y = v.y;
-  }
+#define MAXTRIPLET( XYZ ) \
+  MAXMACRO( XYZ, a )	  \
+  MAXMACRO( XYZ, b )	  \
+  MAXMACRO( XYZ, c )
 
-  if(min->z > v.z) {
-    min->z = v.z;
-  } else if (max->z < v.z) {
-    max->z = v.z;
+void setMinMax( vec3 &min, vec3 &max, triangle_t &t ) {
+
+  MINTRIPLET( x );
+  MINTRIPLET( y );
+  MINTRIPLET( z );
+  
+  MAXTRIPLET( x );
+  MAXTRIPLET( y );
+  MAXTRIPLET( z );
+  
   }
-}
 
 void addTriangle( const vec3& a, const vec3& b, const vec3& c, 
 		  const vec3& diffuse, const vec3& ambient, const vec3& specular, 
 		  float shininess, float reflect, float refract) {
-
-  trianglePoints.push_back(a);
-  trianglePoints.push_back(b);
-  trianglePoints.push_back(c);
 
   triangle_t newTriangle;
 
@@ -284,15 +283,7 @@ void addTriangle( const vec3& a, const vec3& b, const vec3& c,
   newTriangle.distanceSquared = (distance * distance);
   newTriangle.padding = 0.0;
 
-  /** Buffer the triangle slice. **/
-  GLfloat *ptr = NULL;
-  for ( ptr = (GLfloat *)&newTriangle;
-	(void *)ptr < (void *)(&newTriangle + 1);
-	ptr++ ) {
-    triangleData.push_back( *ptr );
-  }
-
-  numTriangles++;
+  triangle_tData.push_back( newTriangle );
 
 }
 
@@ -333,79 +324,80 @@ void addCube(vec3 position, vec3 diffuse, vec3 ambient, vec3 specular, float shi
   addTriangle(vertices[0] + position, vertices[7] + position, vertices[3] + position, diffuse, ambient, specular, shininess, reflect, refract);
 }
 
-void pushTriangleDataToBuffer(int start, int end) {
-  unsigned long int index = start * 3 * numOfTriangleVectors;
+void pushTriangleDataToBuffer( std::vector<GLfloat> &dataBuffer,
+			       std::vector<triangle_t> &triangleBuffer,
+			       size_t start, size_t count ) {
 
-  GLfloat *data = triangleData.data();
-  for(int i = start; i < end && index < triangleData.size(); i++) {
+  gprint( PRINT_DEBUG, "Adding triangles from %lu to %lu, out of %lu total.\n",
+	  start, start + count, triangleBuffer.size() );
 
-    for(int j = 0; j < 3 * numOfTriangleVectors; j++) {
-      bufferData.push_back(data[index++]);
-    }
+  size_t numFloats    = dataBuffer.size();
+  size_t numTriangles = triangleBuffer.size();
+  
+  if (start > numTriangles) {
+    throw std::logic_error( "start index in pushTriangleDataToBuffer cannot exceed "
+			    "the total size of the triangleBuffer vector.\n" );
   }
+
+  /** Request a std::vector resize **/
+  size_t numLeft = (numTriangles - start);
+  if (count > numLeft) count = numLeft;
+  size_t floatsPerTriangle = numOfTriangleVectors * 3;
+  size_t newFloats = count * floatsPerTriangle;
+  if ((sizeof(triangle_t) * count) != (newFloats * sizeof(GLfloat))) {
+    throw std::logic_error( "Size of new triangles to add is different from the size "
+			    "we requested for new floats we requested for the buffer." );
+  }
+
+  dataBuffer.resize( numFloats + newFloats );  
+  void *src = &(dataBuffer.at(numFloats));
+  void *dst = &(triangleBuffer.at(start));
+  memcpy( src, dst, sizeof(triangle_t) * count );
+
 }
 
-void pushDataToBuffer() {
+void pushDataToBuffer( std::vector<GLfloat> &dataBuffer ) {
 
   vec3 min, max;
-  vec3 *vertices = trianglePoints.data();
-  min.x = vertices[0].x;
-  max.x = vertices[0].x;
-  min.y = vertices[0].y;
-  max.y = vertices[0].y;
-  min.z = vertices[0].z;
-  max.z = vertices[0].z;
+  min = vec3( INFINITY, INFINITY, INFINITY );
+  max = vec3( -INFINITY, -INFINITY, -INFINITY );
+  
+  std::vector<triangle_t>::iterator it;
+  size_t count = 1;
+  numTriangles = triangle_tData.size();
 
-  int start;
+  for (it = triangle_tData.begin(); it != triangle_tData.end(); ++it, ++count ) {
+    setMinMax( min, max, *it );
 
-  unsigned long int count = 0;
-  int triangleCount = 0;
-  while(count < trianglePoints.size()) {
-    vec4 vertex = vertices[count++];
-    vec3 a = vec3(vertex.x, vertex.y, vertex.z);
-    vertex = vertices[count++];
-    vec3 b = vec3(vertex.x, vertex.y, vertex.z);
-    vertex = vertices[count++];
-    vec3 c = vec3(vertex.x, vertex.y, vertex.z);
+    // If we've added some amount of triangles (20, currently)
+    // Or if this is the LAST triangle, add the bounding box and triangles.
+    if ((count % numOfL2TrianglesBounded == 0) ||
+	(count == triangle_tData.size())) {
 
-    setMinMax(&min, &max, a);
-    setMinMax(&min, &max, b);
-    setMinMax(&min, &max, c);
-    triangleCount++;
-
-    if(count > 0 && triangleCount % numOfL2TrianglesBounded == 0) {
-
+      // Push bounding box into the buffer.
       addVec3ToVector(&bufferData, min);
       addVec3ToVector(&bufferData, max);
 
-      start = triangleCount - numOfL2TrianglesBounded;
+      // ????
+      dataBuffer.push_back((GLfloat)numOfL2TrianglesBounded);
+      dataBuffer.push_back(0.0);
+      dataBuffer.push_back(0.0);
 
-      bufferData.push_back((float)numOfL2TrianglesBounded);
-      bufferData.push_back(0.0);
-      bufferData.push_back(0.0);
-      numOfL2BoundingBoxes += 1;
+      // Push the triangles this box bounds into the buffer.
+      // pTDTB( destination, source, start_index, num_to_push )
+      pushTriangleDataToBuffer( dataBuffer, triangle_tData, 
+				// Below: (0 * 20), (1 * 20), etc.
+				(numOfL2BoundingBoxes * numOfL2TrianglesBounded),
+				numOfL2TrianglesBounded );
+      
+      // Increment how many Bounding Boxes we've generated.
+      ++numOfL2BoundingBoxes;
 
-      pushTriangleDataToBuffer(start, triangleCount);
-
-      min.x = vertices[count + 1].x;
-      max.x = vertices[count + 1].x;
-      min.y = vertices[count + 1].y;
-      max.y = vertices[count + 1].y;
-      min.z = vertices[count + 1].z;
-      max.z = vertices[count + 1].z;
+      // Reset our Bounding Box.
+      min = vec3( INFINITY, INFINITY, INFINITY );
+      max = vec3( -INFINITY, -INFINITY, -INFINITY );
     }
   }
-
-  start = triangleCount - (triangleCount % numOfL2TrianglesBounded);
-
-  addVec3ToVector(&bufferData, min);
-  addVec3ToVector(&bufferData, max);
-  bufferData.push_back(float(triangleCount % numOfL2TrianglesBounded));
-  bufferData.push_back(0.0);
-  bufferData.push_back(0.0);
-
-  pushTriangleDataToBuffer(start, triangleCount);
-  numOfL2BoundingBoxes += 1;
 
   gprint( PRINT_DEBUG, "numTriangles %d\n", numTriangles );
   gprint( PRINT_DEBUG, "numOfL2BoundingBoxes %d\n", numOfL2BoundingBoxes );
@@ -455,7 +447,7 @@ void genereateScene() {
   addTriangle(vec3(-5.0, -3.0, -5.0), vec3(-5.0, 7.0, 5.0), vec3(-5.0, -3.0, 5.0), vec3(1.0, 0.0, 1.0), vec3(0.05, 0.0, 0.05), vec3(1.0, 0.0, 1.0), 100.0, 0.0, 0.0);
   addTriangle(vec3(-5.0, -3.0, -5.0), vec3(-5.0, 7.0, -5.0), vec3(-5.0, 7.0, 5.0), vec3(1.0, 1.0, 0.0), vec3(0.05, 0.05, 0.0), vec3(1.0, 1.0, 0.0), 100.0, 0.0, 0.0);
 
-  pushDataToBuffer();
+  pushDataToBuffer( bufferData );
 }
 
 /**
