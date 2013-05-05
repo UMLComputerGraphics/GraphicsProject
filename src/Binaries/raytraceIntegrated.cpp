@@ -352,7 +352,7 @@ void pushTriangleDataToBuffer( std::vector<GLfloat> &dataBuffer,
   dataBuffer.resize( numFloats + newFloats );  
   void *src = &(dataBuffer.at(numFloats));
   void *dst = &(triangleBuffer.at(start));
-  memcpy( dst, src, sizeof(triangle_t) * count );
+  memcpy( src, dst, sizeof(triangle_t) * count );
 
 }
 
