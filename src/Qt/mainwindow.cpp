@@ -66,26 +66,25 @@ void MainWindow::on_updateVectorFieldButton_clicked()
 
 void MainWindow::on_particleFieldFunctionComboBox_currentIndexChanged(int index)
 {
-    if( index == 2 )
-    {
-        ui->vxTextInput->setEnabled(true);
-        ui->vyTextInput->setEnabled(true);
-        ui->vzTextInput->setEnabled(true);
-        ui->updateVectorFieldButton->setEnabled(true);
-        ui->customFunctionLabel->setEnabled(true);
-        ui->VxLabel->setEnabled(true);
-        ui->VyLabel->setEnabled(true);
-        ui->VzLabel->setEnabled(true);
-    }
-    else
-    {
-        ui->vxTextInput->setEnabled(false);
-        ui->vyTextInput->setEnabled(false);
-        ui->vzTextInput->setEnabled(false);
-        ui->updateVectorFieldButton->setEnabled(false);
-        ui->customFunctionLabel->setEnabled(false);
-        ui->VxLabel->setEnabled(false);
-        ui->VyLabel->setEnabled(false);
-        ui->VzLabel->setEnabled(false);
+    // Clear the window
+    ui->userDefinedBox->setVisible(false);
+    ui->flameParamsGroup->setVisible(false);
+    ui->tornadoParamsGroup->setvisible(false);
+
+    // Show the appropriate widget box for each selection.
+    // Index 0 = Flame function
+    // Index 1 = Tornado function
+    // index 2 = User defined function
+    switch (index) {
+        case 0:
+            ui->flameParamsGroup->setVisible(true);
+            break;
+        case 1:
+            ui->tornadoParamsGroup->setVisible(true);
+            break;
+        case 2:
+            ui->userDefinedBox->setVisible(true);
+            break;
     }
 }
+
