@@ -410,6 +410,7 @@ void ParticleSystem::draw( void ) {
 	// We can handle this ourselves, because we're pretty.
 	glDrawArrays( _drawMode, 0, _vertices.size() );
 
+	glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 	// Unbind our vertex, then draw children if any.
 	glBindVertexArray(0);
 	Scene::draw();
