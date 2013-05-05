@@ -18,6 +18,7 @@
 #include "Engine.hpp"
 #include "vec.hpp"
 #include "TransCache.hpp"
+#include "ParticleFieldFunctions.hpp"
 
 using Angel::vec2;
 using Angel::vec3;
@@ -56,7 +57,7 @@ class ParticleSystem : public Object {
 
   virtual void draw( void );
 
-  void  setVectorField(vec3 (*vectorFieldFunc)(vec4) );
+  void  setVectorField(vec3 (*vectorFieldFunc)(vec4, Parameters* ) );
   void  setColorFunc(vec4 (*colorFunc)(float, vec4) );
   
   static float rangeRandom( float min, float max );
@@ -78,6 +79,12 @@ class ParticleSystem : public Object {
 
   void setEmitterShape(PS_SHAPE); 
   void setSystemShape(PS_SHAPE); 
+
+  void setFuncParams(Parameters*);
+
+  Parameters* getFuncParams();
+
+	
 
  private:  
 
@@ -132,7 +139,9 @@ class ParticleSystem : public Object {
   PS_SHAPE   _systemShape  ;
   TransCache _emitterLoc   ;
 
-  Angel::vec3 (*_vecFieldFunc)(Angel::vec4 posIn);
+  Parameters* _funcParams;
+
+  Angel::vec3 (*_vecFieldFunc)(Angel::vec4 posIn, Parameters* functionParams);
   Angel::vec4 (*_colorFunc)(float lifePct, Angel::vec4 posIn);
 
 

@@ -158,7 +158,7 @@ void MONOLITH::slotParticleFieldFunction(int index)
     switch (index)
     {
     case 0:
-        ps->setVectorField( ParticleFieldFunctions::flameDefault);
+        ps->setVectorField( ParticleFieldFunctions::flame);
         break;
     case 1:
         ps->setVectorField(ParticleFieldFunctions::tornado);
@@ -167,11 +167,26 @@ void MONOLITH::slotParticleFieldFunction(int index)
     case 2:
 
     default:
-        ps->setVectorField( ParticleFieldFunctions::flameDefault);
+        ps->setVectorField( ParticleFieldFunctions::flame);
         break;
     }
 
 
+}
+
+void MONOLITH::slotVxTextChanged(QString)
+{
+
+}
+
+void MONOLITH::slotVyTextChanged(QString)
+{
+
+}
+
+void MONOLITH::slotVzTextChanged(QString)
+{
+s
 }
 
 /**
@@ -342,7 +357,7 @@ void MONOLITH::run() {
   #endif
 
   ps->setLifespan( 9.0, 12.0 );
-  ps->setVectorField( ParticleFieldFunctions::flameDefault);
+  ps->setVectorField( ParticleFieldFunctions::flame);
   ps->setColorFunc(   ColorFunctions::flame );
   ps->setEmitterRadius( 0.05 );
   candle_top->insertObject( ps );

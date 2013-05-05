@@ -44,7 +44,7 @@ void init() {
 
     particleSystem->setLifespan(8.0, 16.0);
     //particleSystem->setVectorField( ParticleFieldFunctions::userSupplied ) ;
-    particleSystem->setVectorField( ParticleFieldFunctions::flameDefault );
+    particleSystem->setVectorField( ParticleFieldFunctions::flame );
     particleSystem->setColorFunc( ColorFunctions::flame ) ;
     particleSystem->setEmitterRadius( 0.04 ) ;
     particleSystem->setEmitterShape(PS_HEMI_D);
