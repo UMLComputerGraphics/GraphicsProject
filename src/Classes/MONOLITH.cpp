@@ -262,9 +262,12 @@ void MONOLITH::run() {
   int widthScale = 1;
   int depthScale = 1;
   ScaleModel * scaleModel = new ScaleModel(bottle, bottleMorphTarget,widthScale,heightScale,depthScale);
-  rectangularMapping(bottle,bottleMorphTarget);
-  //Rescale models to original size
-  scaleModel->restoreModels();
+  RectangularMapping * rectangularMapping = new RectangularMapping(bottle,bottleMorphTarget);
+  rectangularMapping->copyToObjects(bottle,bottleMorphTarget);
+  rectangularMapping->revertToOriginal(bottle,bottleMorphTarget);
+
+	//Rescale models to original size
+	scaleModel->restoreModels();
 
 
   // Scale the bottle down!

@@ -129,7 +129,7 @@ LIBS += -L/opt/local/lib -lMagick++ -lboost_thread-mt #fMod/lib/libfmodex.dylib
 WITH_EXPRTK {
 DEFINES += EXPRTK=true
 
-} else
+} else {
 
 }
 FORMS    += \
