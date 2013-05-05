@@ -204,6 +204,24 @@ int MONOLITH::defaultNumberOfParticles()
     return _defaultNumberOfParticles;
 }
 
+void MONOLITH::slotMaxAcceleration(int num)
+{
+	Engine::instance()->currentCamera()->setMaxAcceleration((float) num);
+}
+void MONOLITH::slotFriction(int num)
+{
+	Engine::instance()->currentCamera()->setFriction((float) num);
+}
+void MONOLITH::slotSpeed(int num)
+{
+	Engine::instance()->currentCamera()->setSpeed((float) num);
+}
+
+void MONOLITH::slotMaxSpeed( int num )
+{
+    Engine::instance()->currentCamera()->setMaxSpeed((float) num) ;
+}
+
 #endif //WITHOUT_QT
 
 /**

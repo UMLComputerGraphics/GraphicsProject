@@ -37,7 +37,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>130</y>
+        <y>140</y>
         <width>62</width>
         <height>16</height>
        </rect>
@@ -50,7 +50,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>110</y>
+        <y>120</y>
         <width>451</width>
         <height>16</height>
        </rect>
@@ -63,7 +63,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>320</y>
+        <y>380</y>
         <width>451</width>
         <height>16</height>
        </rect>
@@ -90,8 +90,8 @@
        <rect>
         <x>10</x>
         <y>20</y>
-        <width>149</width>
-        <height>85</height>
+        <width>165</width>
+        <height>103</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -129,12 +129,59 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>220</y>
-        <width>231</width>
-        <height>24</height>
+        <y>410</y>
+        <width>259</width>
+        <height>80</height>
        </rect>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QLabel" name="sceneGraphLabel">
+         <property name="text">
+          <string>Scene Graph:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <widget class="QLabel" name="activeObjectLabel">
+             <property name="text">
+              <string>Active Object:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="currentActiveObjectLabel">
+             <property name="text">
+              <string>None</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QComboBox" name="comboBox"/>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>241</y>
+        <width>451</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="Speed">
+       <property name="leftMargin">
+        <number>108</number>
+       </property>
        <item>
         <widget class="QLabel" name="speedLabel">
          <property name="text">
@@ -143,9 +190,26 @@
         </widget>
        </item>
        <item>
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>0</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QSlider" name="speedHorizontalSlider">
+         <property name="maximum">
+          <number>100</number>
+         </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>100</string>
          </property>
         </widget>
        </item>
@@ -155,12 +219,21 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>190</y>
-        <width>181</width>
-        <height>81</height>
+        <y>200</y>
+        <width>451</width>
+        <height>31</height>
        </rect>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_6">
+      <layout class="QHBoxLayout" name="MaxSpeed">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="sizeConstraint">
+        <enum>QLayout::SetNoConstraint</enum>
+       </property>
+       <property name="leftMargin">
+        <number>77</number>
+       </property>
        <item>
         <widget class="QLabel" name="maxSpeedLabel">
          <property name="text">
@@ -169,20 +242,50 @@
         </widget>
        </item>
        <item>
-        <widget class="QPlainTextEdit" name="maxSpeedTextInput"/>
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>  0  </string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSlider" name="maxSpeedSlider">
+         <property name="maximum">
+          <number>4000</number>
+         </property>
+         <property name="singleStep">
+          <number>100</number>
+         </property>
+         <property name="sliderPosition">
+          <number>2000</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>4000</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
      <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>200</x>
-        <y>190</y>
-        <width>221</width>
-        <height>81</height>
+        <x>10</x>
+        <y>280</y>
+        <width>451</width>
+        <height>41</height>
        </rect>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_7">
+      <layout class="QHBoxLayout" name="MaxAccel">
+       <property name="leftMargin">
+        <number>32</number>
+       </property>
        <item>
         <widget class="QLabel" name="maxAccelerationLabel">
          <property name="text">
@@ -191,7 +294,34 @@
         </widget>
        </item>
        <item>
-        <widget class="QPlainTextEdit" name="maxAccelerationTextInput"/>
+        <widget class="QLabel" name="label_7">
+         <property name="text">
+          <string>0</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSlider" name="maxAccelerationSlider">
+         <property name="maximum">
+          <number>1000</number>
+         </property>
+         <property name="singleStep">
+          <number>10</number>
+         </property>
+         <property name="sliderPosition">
+          <number>500</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>1000</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -199,12 +329,15 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>250</y>
-        <width>221</width>
-        <height>81</height>
+        <y>330</y>
+        <width>451</width>
+        <height>41</height>
        </rect>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_8">
+      <layout class="QHBoxLayout" name="Friction">
+       <property name="leftMargin">
+        <number>20</number>
+       </property>
        <item>
         <widget class="QLabel" name="frictionMagnitudeLabel">
          <property name="text">
@@ -213,7 +346,31 @@
         </widget>
        </item>
        <item>
-        <widget class="QTextEdit" name="frictionMagnitudeTextInput"/>
+        <widget class="QLabel" name="label_8">
+         <property name="text">
+          <string>0</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSlider" name="frictionHorizontalSlider">
+         <property name="maximum">
+          <number>100</number>
+         </property>
+         <property name="sliderPosition">
+          <number>50</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>100</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -223,7 +380,7 @@
         <x>10</x>
         <y>160</y>
         <width>213</width>
-        <height>26</height>
+        <height>29</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_9">
@@ -250,11 +407,12 @@
      <zorder>layoutWidget</zorder>
      <zorder>layoutWidget</zorder>
      <zorder>layoutWidget</zorder>
-     <zorder>layoutWidget</zorder>
      <zorder>cameraLabel</zorder>
      <zorder>line</zorder>
      <zorder>line_2</zorder>
      <zorder>fullScreenLabel</zorder>
+     <zorder>layoutWidget</zorder>
+     <zorder>layoutWidget</zorder>
     </widget>
     <widget class="QWidget" name="particleTab">
      <attribute name="title">
@@ -311,7 +469,7 @@
         <x>20</x>
         <y>110</y>
         <width>301</width>
-        <height>26</height>
+        <height>29</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -494,7 +652,7 @@
         <x>30</x>
         <y>30</y>
         <width>331</width>
-        <height>24</height>
+        <height>31</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_10">
@@ -522,7 +680,7 @@
        <rect>
         <x>30</x>
         <y>70</y>
-        <width>111</width>
+        <width>127</width>
         <height>58</height>
        </rect>
       </property>
@@ -612,7 +770,7 @@
      <x>0</x>
      <y>0</y>
      <width>529</width>
-     <height>22</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>
