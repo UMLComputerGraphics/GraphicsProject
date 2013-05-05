@@ -36,7 +36,7 @@ SOURCES += \
         Classes/Particle.cpp \
 	   Classes/ParticleFieldFunctions.cpp \
         Classes/ParticleSystem.cpp \
-        Classes/ScaleModel.cpp \
+        #Classes/scaleModel.cpp \
         Classes/Scene.cpp \
         Classes/Screen.cpp \
         Classes/SpelchkCamera.cpp \
@@ -62,12 +62,13 @@ SOURCES += \
 	Classes/RayTracer.cpp \
 	Classes/scanMatching.cpp \
         Classes/UserVectorField.cpp \
-    Qt/dialog.cpp
+        Qt/dialog.cpp \
+        Classes/scaleModel.cpp
 
 HEADERS  += include/bipartiteGraph.hpp \
-		   include/Camera.hpp \
+            include/Camera.hpp \
             include/Cameras.hpp \
-		   include/ColorFunctions.hpp \
+            include/ColorFunctions.hpp \
             include/Engine.hpp \
             include/globals.h \
             include/glut_callbacks.h \
@@ -75,7 +76,7 @@ HEADERS  += include/bipartiteGraph.hpp \
             include/Light.hpp \
             #include/KinectInator.hpp\
             include/mat.hpp \
-		  include/Material.hpp \
+            include/Material.hpp \
             # not needed anymore include/meshMapping.hpp \
             include/modelFunctions.hpp \
             include/model.hpp \
@@ -88,7 +89,7 @@ HEADERS  += include/bipartiteGraph.hpp \
 	    include/RayTracer.h \
 	    include/scaleModel.hpp \
 	    include/scanMatching.hpp \
-		   include/ParticleFieldFunctions.hpp \
+            include/ParticleFieldFunctions.hpp \
             include/ParticleSystem.hpp \
             include/partTest.hpp \
             include/platform.h \ 
@@ -115,7 +116,7 @@ LIBS += -lMagick++
 
 # Linux Settings
 unix:!macx {
-LIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm -lMagick++ -lboost_thread-mt -lfmodex
+LIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm -lMagick++ -lboost_thread-mt
 INCLUDEPATH +=. /usr/include/ImageMagick/ include/ #fMod/include
 }
 
