@@ -25,6 +25,9 @@ MONOLITH::MONOLITH(int argc, char** argv) :
     Light* l = new Light( "CandleLight", 2.5, 6.8, 2.5 );
     l->color(vec3(1.0, 0.5, 0.2));
     Engine::instance()->addLight(l);
+    Light *l2 = new Light( "Scene Light", 0, 18, 0 );
+    l2->intensity(28);
+    Engine::instance()->addLight(l2);
 
     extinguish = false;
 
