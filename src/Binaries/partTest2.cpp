@@ -47,6 +47,7 @@ void init() {
     particleSystem->setVectorField( ParticleFieldFunctions::flameDefault );
     particleSystem->setColorFunc( ColorFunctions::flame ) ;
     particleSystem->setEmitterRadius( 0.04 ) ;
+    particleSystem->setEmitterShape(PS_HEMI_D);
     particleSystem->drawMode( GL_TRIANGLES ) ; // NEED THIS IF WE USE A GEOMETRY SHADER!
     //particleSystem->setSlaughterHeight(0.2455);
     //particleSystem->_trans._displacement.set(0.0, 0.25, 0.0);
