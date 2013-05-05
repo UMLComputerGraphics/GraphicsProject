@@ -125,9 +125,7 @@ public slots:
     void slotMorphToWineBottle(void);
     void slotMorphToWhiskyBottle(void);
     void slotParticleFieldFunction(int index);
-    void slotVxTextChanged(QString);
-    void slotVyTextChanged(QString);
-    void slotVzTextChanged(QString);
+    void slotUpdateVectorField(std::string*);
 
 signals:
     void sigMorphPercentage(int value);

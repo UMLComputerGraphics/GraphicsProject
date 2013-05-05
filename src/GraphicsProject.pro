@@ -126,6 +126,12 @@ INCLUDEPATH += . include /opt/local/include/ImageMagick/ /opt/local/include/ fMo
 LIBS += -L/opt/local/lib -lMagick++ -lboost_thread-mt #fMod/lib/libfmodex.dylib
 }
 
+WITH_EXPRTK {
+DEFINES += EXPRTK=true
+
+} else
+
+}
 FORMS    += \
     Qt/mainwindow.ui \
     Qt/dialog.ui
