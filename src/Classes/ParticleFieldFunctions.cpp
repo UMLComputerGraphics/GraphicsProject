@@ -189,6 +189,18 @@ float FlameParameters::rng(void)
 	return _rng;
 }
 
+/* only constructor */
+UserParameters::UserParameters (std::string* functions) : _functions(functions)
+{
+
+}
+
+/* no setter, the only chance to set the parameters is at construction.
+other wise you will get the defaults. */
+std::string* UserParameters::functions(void)
+{
+	return _functions;
+}
 
 #ifdef EXPRTK
 /**
