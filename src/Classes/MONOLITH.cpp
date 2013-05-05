@@ -182,10 +182,8 @@ void MONOLITH::slotParticleFieldFunction(int index)
 
 void MONOLITH::slotUpdateVectorField(std::string* params)
 {
-#ifdef UserParameters
     Parameters* funcParams = new UserParameters(params);
     ps->setFuncParams(funcParams);
-#endif
 }
 
 /**
