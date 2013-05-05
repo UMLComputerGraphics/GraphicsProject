@@ -16,6 +16,7 @@ MONOLITH::~MONOLITH(void)
 
 /* Default and only constructor */
 MONOLITH::MONOLITH(int argc, char** argv) :
+    _defaultNumberOfParticles(3000),
     zipo(boost::thread(boost::bind(&MONOLITH::aRomanticEvening, this)))
 {
     _argc = argc;

@@ -165,7 +165,7 @@ private:
     char **_argv;
     int _argc;
     
-    int _defaultNumberOfParticles = 3000;
+    int _defaultNumberOfParticles ;
 
     boost::thread zipo;
 
