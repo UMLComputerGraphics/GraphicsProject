@@ -61,6 +61,7 @@ SOURCES += \
 	Classes/nearestNeighbor.cpp \
 	Classes/RayTracer.cpp \
 	Classes/scanMatching.cpp \
+        Classes/UserVectorField.cpp \
     Qt/dialog.cpp
 
 HEADERS  += include/bipartiteGraph.hpp \
@@ -99,6 +100,7 @@ HEADERS  += include/bipartiteGraph.hpp \
             include/Timer.hpp \ 
             include/TransCache.hpp \ 
             include/Transformation.hpp \ 
+            include/UserVectorField.hpp \
             include/Util.hpp \ 
             include/vec.hpp \ 
             include/WiiUtil.h \

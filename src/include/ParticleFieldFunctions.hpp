@@ -1,6 +1,7 @@
 #ifndef __PARTICLE_FIELD_FUNCTIONS
 #define __PARTICLE_FIELD_FUNCTIONS
 
+#include "UserVectorField.hpp"
 #include "vec.hpp"
 
 using Angel::vec3;
@@ -61,7 +62,9 @@ namespace ParticleFieldFunctions
 
   Angel::vec3 up(Angel::vec4 /*, Parameters value = NULL */);
 
-  Angel::vec3 userSupplied( Angel::vec4, Parameters* theParameters);
+  Angel::vec3 userSupplied( Angel::vec4 );
+  Angel::vec3 userSupplied( Angel::vec4 &pos, UserVectorField &uvf );
+
 }
 
 #endif

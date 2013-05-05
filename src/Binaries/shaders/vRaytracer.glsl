@@ -43,12 +43,8 @@ void main() {
     
     float xx = (2 * ((x + 0.5) * invWidth) - 1) * angle * aspectratio;
     float yy = (1 - 2 * ((y + 0.5) * invHeight)) * angle;
-
-    // Convert the Translational matrix T into a world-coordinate vec3.
-    // Multiply by vec4(0,0,0,1) to get (-x,-y,-z,1),
-    // Then multiply by -1 to get (x,y,z,-1).
-    // Then take (x,y,z).    
-    org = (T * vec4(0,0,0,1) * -1).xyz;
+    
+    org = (T * vec4(0,0,0,-1)).xyz;
     dir = normalize(R * vec4(xx, yy, -1.0, 0.0)).xyz;
     
     float xPos = vRayPosition.x;

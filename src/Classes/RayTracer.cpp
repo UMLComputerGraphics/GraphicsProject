@@ -187,7 +187,7 @@ void RayTracer::addTriangle( const vec3& a, const vec3& b, const vec3& c,
   newTriangle.centerz = centerZ;
   newTriangle.distance = distance;
   newTriangle.distanceSquared = (distance * distance);
-  newTriangle.sentinel = 0.0;
+  newTriangle.padding = 0.0;
 
   GLfloat *ptr = NULL;
   for ( ptr = (GLfloat *)&newTriangle;
@@ -301,7 +301,7 @@ void RayTracer::init( GLint shader ) {
     glGenVertexArrays( 1, &vao );
     glBindVertexArray( vao );
 
-    glUseProgram( program );
+    Engine::instance()->switchShader( program );
 
     vRayPosition = glGetAttribLocation( program, "vRayPosition" );
     uDisplay = glGetUniformLocation( program, "uDisplay" );

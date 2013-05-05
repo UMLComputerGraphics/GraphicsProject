@@ -37,15 +37,19 @@ using namespace Angel;
 
 // Constructor(s)
 ParticleSystem::ParticleSystem( int particleAmt, const std::string &name,
-		GLuint shader ) :
-    				Object( name, shader ), _numParticles( particleAmt ), _minLife( 0.1 ),
-    				_maxLife( 1 ), _emitterRadius( 0.0 ), _pauseTheSystem( false ),
-    				_slaughterHeight( 0.0 ), _fillSpeedLimit( 5 ),_vecFieldFunc( NULL ), 
-				_colorFunc(ColorFunctions::standard), _emitterShape(PS_NONE),
-				_systemShape(PS_NONE), _funcParams( new FlameParameters() )
+				GLuint shader ) :
+  Object( name, shader ), _numParticles( particleAmt ), _minLife( 0.1 ),
+  _maxLife( 1 ), _pauseTheSystem( false ), _slaughterHeight( 0.0 ),
+  _fillSpeedLimit( 5 ), _emitterRadius( 0.0 ),
+  _emitterShape(PS_NONE),
+  _systemShape(PS_NONE),
+  _funcParams( new FlameParameters() ),
+  _vecFieldFunc( NULL ), 
+  _colorFunc(ColorFunctions::standard) 
 {
-	this->drawMode( GL_POINTS );
+  this->drawMode( GL_POINTS );	 
 }
+
 
 ParticleSystem::~ParticleSystem( void ) {
 	for ( size_t i = 0; i < _particles.size(); i++ ) {

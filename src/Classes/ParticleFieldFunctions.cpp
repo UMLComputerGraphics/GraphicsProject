@@ -2,9 +2,7 @@
 #include "ParticleSystem.hpp"
 #include "vec.hpp"
 #include "mat.hpp"
-#ifdef EXPRTK
-#include "exprtk/exprtk.hpp"
-#endif
+#include "UserVectorField.hpp"
 #include <cmath>
 
 using Angel::vec2;
@@ -191,140 +189,37 @@ float FlameParameters::rng(void)
 	return _rng;
 }
 
+
 #ifdef EXPRTK
-class UserVectorField {
+/**
+   Revert:
+   The userSupplied callback should not accept strings as an input.
+   The userSupplied callback is an example and should do one thing and one thing only:   
+   It should return the value of its function.
 
-public:
-    UserVectorField(vec4 pos)
-    {
-        _table.add_variable("x", pos.x);
-        _table.add_variable("y", pos.y);
-        _table.add_variable("z", pos.z);
-        _table.add_constants();
-        _ef[0].register_symbol_table( _table );
-        _ef[1].register_symbol_table( _table );
-        _ef[2].register_symbol_table( _table );
-    }
-
-    void setAllFunctions(const std::string f[3])
-    {
-        for ( size_t i = 0; i < 3; i++)
-        {
-            setF_i(i, f[i]);
-        }
-    }
-
-    void setF_i(  size_t i, const std::string &f_i = "0x + 0y + 0z + 0")
-    {
-        // TODO check for bad input and set default value.
-        _f[i] = f_i;
-    }
-
-    void evaluateF_i (size_t i)
-    {
-        // TODO check if _f[i] is empty...
-        _parser.compile( _f[i], _ef[i] );
-    }
-
-    void evaluateAllFunctions ()
-    {
-        for ( size_t i = 0; i < 3; i++)
-        {
-         evaluateF_i (i);
-        }
-    }
-
-    vec3 getResultingVec3()
-    {
-        return vec3( _ef[0].value(), _ef[1].value(), _ef[2].value());
-    }
-
-    vec3 doAll( string* f )
-   {
-        setAllFunctions(f);
-        evaluateAllFunctions();
-        return getResultingVec3();
-    }
-
-private:
-    std::string _f[3];
-    exprtk::symbol_table<GLfloat> _table;
-    exprtk::expression<GLfloat> _ef[3];
-    exprtk::parser<GLfloat> _parser;
-
-};
-
-
-    /* only constructor */
-UserParameters::UserParameters (std::string* functions) : _functions(functions)
-{
-	
+   If you supply it strings and re-compile every time, it will be too slow to use.
+   Compile once, evaluate many times is the paradigm, here.
+**/
+Angel::vec3 ParticleFieldFunctions::userSupplied( Angel::vec4 pos ) {
+  static UserVectorField *uvf = NULL;
+  if (uvf == NULL) { 
+    uvf = new UserVectorField(); 
+  }
+  return uvf->eval( pos );
 }
 
-/* no setter, the only chance to set the parameters is at construction.
-        other wise you will get the defaults. */
-std::string* UserParameters::functions(void)
-{
-    return _functions; 
-}
+/**
+   Try this, instead.
+   Make a UVF in advance, and then call this callback,
+   passing a reference to the UVF you'd like to use.
 
-
-vec3 ParticleFieldFunctions::userSupplied( vec4 pos, Parameters* theParameters)
-{
-	UserParameters* parameters = (UserParameters *) theParameters;
-    UserVectorField *uvf = NULL;
-    if (uvf == NULL)
-    {
-        uvf = new UserVectorField(pos);
-    }
-    return uvf->doAll(parameters->functions());
+   You can manage /that/ UVF object inside of QT if you'd like.
+   If you get the Parameters system working, the UVF can be a parameter.
+**/
+Angel::vec3 ParticleFieldFunctions::userSupplied( Angel::vec4 &pos, UserVectorField &uvf ) {
+  return uvf.eval( pos );
 }
 #endif
-//#ifdef EXPRTK
-//class UserVectorField {
-//public:
-//  UserVectorField( const std::string &fx = "0x + 0y + 0z + 0",
-//		   const std::string &fy = "0x + 0y + 0z + 0.01",
-//		   const std::string &fz = "0x + 0y + 0z + 0" ) {
-//    _table.add_variable("x",_input.x);
-//    _table.add_variable("y",_input.y);
-//    _table.add_variable("z",_input.z);
-//    _table.add_constants();
-    
-//    _ef[0].register_symbol_table( _table );
-//    _ef[1].register_symbol_table( _table );
-//    _ef[2].register_symbol_table( _table );
-
-//    f( fx, 0 );
-//    f( fy, 1 );
-//    f( fz, 2 );
-//  }
-  
-//  Angel::vec3 f( Angel::vec4 input ) {
-//    _input = input;
-//    return vec3( _ef[0].value(), _ef[1].value(), _ef[2].value() );
-//  }
-
-//  /** use f( "string", index ) to change the f_x, f_y and f_z functions. **/
-//  void f( const std::string &f, size_t i ) {
-//    _f[i] = f;
-//    _parser.compile( _f[i], _ef[i] );
-//  }
-
-//private:
-//  std::string _f[3];
-//  exprtk::expression<GLfloat> _ef[3];
-//  exprtk::parser<GLfloat> _parser;
-//  exprtk::symbol_table<GLfloat> _table;
-//  Angel::vec4 _input;
-//};
-
-//Angel::vec3 ParticleFieldFunctions::userSupplied( Angel::vec4 pos ) {
-//  static UserVectorField *uvf = NULL;
-//  if (uvf == NULL) { uvf = new UserVectorField(); }
-//  return uvf->f( pos );
-//}
-//#endif
 
 /* // jet 1?
 vec3 ParticleFieldFunctions::idk(vec4 pos)
