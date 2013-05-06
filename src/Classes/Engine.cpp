@@ -266,9 +266,11 @@ void Engine::init( int *argc, char *argv[], const char *title ) {
   glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH );
   glutInitWindowSize( 500, 500 );
   glutCreateWindow( title );
-  
+
   char *gtfs = getenv( "GLUT_FULLSCREEN" );
-  if (gtfs && (strncmp(gtfs, "TRUE", 4) == 0)) glutFullScreen();
+  if (gtfs && (strncmp(gtfs, "TRUE", 4) == 0)) {
+      glutFullScreen();
+  }
 
   glutSetCursor( GLUT_CURSOR_NONE );
 
@@ -515,4 +517,19 @@ void Engine::registerDisplayExtension(boost::function<void(void)> displayFunc)
 bool Engine::wearingAPhong()
 {
   return _floss;
+}
+
+void Engine::setFullScreen()
+{
+    /*
+    if(isFullScreen){
+        isFullScreen = false;
+        glutReshapeWindow(500, 500);
+        glutPositionWindow(0, 0);
+    } else {
+        isFullScreen = true;
+        glutFullScreen();
+    }*/
+
+    glutFullScreenToggle();
 }
