@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     ui->userDefinedBox->setVisible(false);
+    ui->tornadoParamsGroup->setVisible( false );
 
     connect(ui->numberOfParticlesSpinBox, SIGNAL(valueChanged(int)),
             this, SIGNAL(sigChangeNumberOfParticles(int)));
@@ -93,7 +94,7 @@ void MainWindow::on_particleFieldFunctionComboBox_currentIndexChanged(int index)
     // Clear the window
     ui->userDefinedBox->setVisible(false);
     ui->flameParamsGroup->setVisible(false);
-//    ui->tornadoParamsGroup->setvisible(false);
+    ui->tornadoParamsGroup->setVisible(false);
 
     // Show the appropriate widget box for each selection.
     // Index 0 = Flame function
@@ -104,7 +105,7 @@ void MainWindow::on_particleFieldFunctionComboBox_currentIndexChanged(int index)
             ui->flameParamsGroup->setVisible(true);
             break;
         case 1:
-  //          ui->tornadoParamsGroup->setVisible(true);
+            ui->tornadoParamsGroup->setVisible(true);
             break;
         case 2:
             ui->userDefinedBox->setVisible(true);
@@ -128,4 +129,18 @@ void MainWindow::on_flameShowButton_clicked()
 void MainWindow::on_flameDefaultButton_clicked()
 {
     sigFlameVecParams();
+}
+
+void MainWindow::on_tornadoShowButton_clicked()
+{
+    float a = ui->paramATextInput->toPlainText().toDouble();
+    float b = ui->paramBTextInput->toPlainText().toDouble();
+    float c = ui->paramCTextInput->toPlainText().toDouble();
+
+    sigTornadoVecParams( a, b, c );
+}
+
+void MainWindow::on_tornadoDefaultButton_clicked()
+{
+    sigTornadoVecParams();
 }

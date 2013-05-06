@@ -137,6 +137,8 @@ public slots:
     void slotMaxSpeed(int num);
     void slotUpdateFlameVecFunc(double[3], double, float, float);
     void slotUpdateFlameVecFunc( void );
+    void slotUpdateTornadoVecFunc( float, float, float );
+    void slotUpdateTornadoVecFunc( void );
     void slotCurrentView(int num) ;
 
 signals:

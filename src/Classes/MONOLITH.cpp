@@ -166,6 +166,18 @@ void MONOLITH::slotUpdateFlameVecFunc()
     ps->setVectorField( ParticleFieldFunctions::flame );
 }
 
+void MONOLITH::slotUpdateTornadoVecFunc( float a, float b, float c )
+{
+    ps->setFuncParams( new TornadoParameters( a, b, c ));
+    ps->setVectorField( ParticleFieldFunctions::tornado );
+}
+
+void MONOLITH::slotUpdateTornadoVecFunc()
+{
+    ps->setFuncParams( new TornadoParameters() );
+    ps->setVectorField( ParticleFieldFunctions::tornado );
+}
+
 /*
  * Deprecated... for now
 void MONOLITH::slotParticleFieldFunction(int index)
