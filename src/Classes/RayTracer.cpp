@@ -9,7 +9,7 @@
 #include "Engine.hpp"
 
 RayTracer::RayTracer() : 
-  _extinguish( true ),
+  _extinguish( true ), // TRUE until we can initialize lights!
   _lightPositions( NULL ),
   _lightDiffuse( NULL ),
   _lightSpecular( NULL ),
@@ -47,7 +47,7 @@ RayTracer::RayTracer() :
   for ( size_t i = 0; i < 6; ++i ) { _lightDiffuse[i] = 0.8; }
   _lightSpecular = (GLfloat*)malloc(sizeof(GLfloat)*6);
   for ( size_t i = 0; i < 6; ++i ) { _lightSpecular[i] = 1.0; }
-  _extinguish = true;
+  _extinguish = false;
 
   gprint( PRINT_DEBUG, "RayTrace() Constructor Exiting\n" );
 }
@@ -67,13 +67,7 @@ void RayTracer::_display( void ) {
 #ifdef __APPLE__
   gprint( PRINT_INFO, "Raytracer::display() unsupported on Apple OSX at this time.\n" );
   return;
-#endif
-  
-  //Engine &engie = *Engine::instance();
-  //Camera *cammy = engie.cams()->active();
-  //engie.switchCamera( cammy );
-  //engie.switchShader( program );
-  //tick.sendTime();
+#else
 
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
   glUniform1i( _uNumOfSpheres, _numSpheres );
@@ -107,7 +101,7 @@ void RayTracer::_display( void ) {
       GL_FALSE,           // take our values as-is
       0,                  // no extra data between each position
       0                   // offset of first element
-      );
+  );
 
   Engine::instance()->cams()->active()->relinkUniforms();
   Engine::instance()->cams()->active()->view();
@@ -126,6 +120,7 @@ void RayTracer::_display( void ) {
     previousTime = elapsedTime;
     frameCount = 0;
   }
+#endif
 }
 
 void RayTracer::addVec3ToVector(std::vector<GLfloat> *_vector, vec3 _vec3) {
@@ -254,7 +249,7 @@ void RayTracer::pushDataToBuffer() {
 #ifdef __APPLE__
   gprint( PRINT_INFO, "Non-supported on Apple OSX with glsl 1.2 at this time." );
   return;
-#endif
+#else
 
   vec3 min, max;
   min = vec3( INFINITY, INFINITY, INFINITY );
@@ -306,6 +301,7 @@ void RayTracer::pushDataToBuffer() {
   glBindBuffer(GL_TEXTURE_BUFFER, bufObj);
   glBufferData(GL_TEXTURE_BUFFER, sizeof(GLfloat) * _bufferData.size(), _bufferData.data(), GL_STATIC_DRAW);
   glTexBuffer(GL_TEXTURE_BUFFER, GL_RGB32F, bufObj);
+#endif
 }
 
 /**
@@ -366,4 +362,16 @@ void RayTracer::legacySceneGen( void ) {
 
   pushDataToBuffer();
 
+}
+
+void RayTracer::lightFlicker( void ) {
+  while ( !_extinguish ) {
+    float lightness = (float)rand() / (float)RAND_MAX;
+    lightness = lightness * 3.0 / 10.0;
+
+    lightness += .7;
+    _lightDiffuse[0] = _lightDiffuse[1] = _lightDiffuse[2] = lightness;
+
+    boost::this_thread::yield();
+  }
 }

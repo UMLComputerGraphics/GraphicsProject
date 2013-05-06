@@ -41,8 +41,9 @@ class RayTracer {
   void pushDataToBuffer();
   void legacySceneGen( void );
   virtual ~RayTracer();
-
   void _display(void);
+  void lightFlicker(void);
+
  private:
   
   GLuint _program;

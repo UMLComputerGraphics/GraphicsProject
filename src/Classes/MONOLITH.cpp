@@ -19,9 +19,9 @@ MONOLITH::~MONOLITH(void)
 
 /* Default and only constructor */
 MONOLITH::MONOLITH(int argc, char** argv) :
-    extinguish( false ),
-    _defaultNumberOfParticles(3000)
-    /*    zipo(boost::thread(boost::bind(&MONOLITH::aRomanticEvening, this))) */
+  extinguish( true ),
+  _defaultNumberOfParticles(3000),
+  zipo(boost::thread(boost::bind(&MONOLITH::aRomanticEvening, this)))
 {
     //As this happens before run() initializes relative paths, we need to initialize relative paths here
     Util::InitRelativePaths(argc, argv);
@@ -45,6 +45,9 @@ MONOLITH::MONOLITH(int argc, char** argv) :
     l2->intensity(28);
     Engine::instance()->addLight(l2);
 
+    // Now that we have lights, let the romantic evening flicker do his thang.
+    extinguish = false;
+
 }
 
 /**
@@ -52,7 +55,7 @@ MONOLITH::MONOLITH(int argc, char** argv) :
  */
 void MONOLITH::cleanup(void) {
     extinguish = true;
-    //zipo.join();
+    zipo.join();
 }
 
 bool heisenbergUncertaintyPrinciple;
@@ -538,10 +541,8 @@ void MONOLITH::aRomanticEvening() {
 
     lightness += .7;
 
-    // @NVV: We can't assume here that lights exist yet,
-    // This is throwing an exception for 0 being out-of-range.
-    //Engine::instance()->getLights()->at(0)->intensity(lightness);
-    //Engine::instance()->setLights();
+    Engine::instance()->getLights()->at(0)->intensity(lightness);
+    Engine::instance()->setLights();
 
     sleep( 0.01 );
   }

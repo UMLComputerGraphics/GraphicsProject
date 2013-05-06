@@ -18,7 +18,9 @@
 #include "Engine.hpp"
 #include <sstream>
 #include "glut_callbacks.h"
-
+#ifdef WII
+#include "WiiUtil.h"
+#endif
 
 //This counteracts mouse rotation slugishness when screen dimensions are considered in calculating movement
 #define MAGIC_MOUSE_SCALAR (45.0)
@@ -90,7 +92,7 @@ void engineKeyboard( unsigned char key, int x, int y ) {
   
 #ifdef WII
   // Hacky, for the wii reset, below.
-  Camera *camptr = dynamic_cast< Camera* >( (*_camList)["AutoCamera2"] );
+  Camera *wiiCam = dynamic_cast< Camera* >((*camList)["AutoCamera2"] );
 #endif
   
   switch ( key ) {
@@ -111,8 +113,8 @@ void engineKeyboard( unsigned char key, int x, int y ) {
     
   case '~':
 #ifdef WII
-    CalibrateGyro( Wii );
-    if (camptr) camptr->resetRotation();
+    calibrateGyro( Wii );
+    if (wiiCam) wiiCam->resetRotation();
 #endif
     break;
     
