@@ -33,6 +33,9 @@
 
 #include "RayTracer.h"
 
+#include "soundHelper.hpp" // fmod headers and helpers
+
+
 #ifndef WITHOUT_QT
 /* Qt */
 #include <QObject>
@@ -137,6 +140,8 @@ public slots:
     void slotMaxSpeed(int num);
     void slotUpdateFlameVecFunc(double[3], double, float, float);
     void slotUpdateFlameVecFunc( void );
+    void slotUpdateTornadoVecFunc( float, float, float );
+    void slotUpdateTornadoVecFunc( void );
     void slotCurrentView(int num) ;
 
 signals:
@@ -180,6 +185,14 @@ private:
     boost::thread zipo;
 
     boost::function<void(int)> _percentageCallback;
+
+
+    /* if this is misplaced, don't hate, I don't understand what's what */
+
+    FMOD::System *fSystem;
+    FMOD::Sound  *foreverEndless, *fire;
+    FMOD::Channel *radio, *flame;
+
 };
 
 #endif

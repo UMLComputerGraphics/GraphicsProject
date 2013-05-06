@@ -49,12 +49,11 @@ signals:
 	void sigFreezeParticles(bool isEnabled);
     void sigUserDefVecParams( void );
     void sigFlameVecParams( void );
-
     void sigFlameVecParams(double[3], double, float, float);
+    void sigTornadoVecParams( void );
+    void sigTornadoVecParams( float, float, float );
 
     // void sigParticleFieldFunction(int index);
-    // void sigTornadoVecParams( void );
-
 
 private slots:
     void on_addObjectButton_clicked();
@@ -65,6 +64,10 @@ private slots:
 
     void on_flameShowButton_clicked();
     void on_flameDefaultButton_clicked();
+
+    void on_tornadoShowButton_clicked();
+
+    void on_tornadoDefaultButton_clicked();
 
 private:
     Ui::MainWindow *ui;

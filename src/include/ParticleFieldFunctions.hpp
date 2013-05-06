@@ -35,8 +35,16 @@ private:
 class TornadoParameters : public Parameters
 {
 public:
+	TornadoParameters( float a = 100.0, float b = 100.0, float c = 4.0 );
+
+	float a( void );
+	float b( void );
+	float c( void );
 
 private:
+	float _a;
+	float _b;
+	float _c;
 
 };
 

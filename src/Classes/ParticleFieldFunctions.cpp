@@ -51,20 +51,25 @@ vec3 ParticleFieldFunctions::up(vec4 pos)
 }
 
 //FIXME DOCS PARAMETERS
-vec3 ParticleFieldFunctions::tornado(vec4 pos, Parameters*)
+vec3 ParticleFieldFunctions::tornado(vec4 pos, Parameters* parameters)
 {
+	TornadoParameters *theParams = (TornadoParameters *) parameters;
+
+	float a = theParams->a() ;
+	float b = theParams->b() ;
+	float c = theParams->c() ;
 
 	vec4 retVal;
 
 	double theta = getTheta(pos);
 
-	retVal = vec4( -sin(theta)/100.0,
+	retVal = vec4( -sin(theta)/a /*100.0*/,
 			0.001,
-			cos(theta)/100.0,
+			cos(theta)/b /*100.0*/,
 			1.0 ) ;
 
 
-	retVal = retVal * Angel::RotateY(-M_PI/4.0);
+	retVal = retVal * Angel::RotateY(-M_PI/c /*4.0*/);
 
 	return xyz(retVal);
 
@@ -158,6 +163,26 @@ vec3 ParticleFieldFunctions::flameold(vec4 pos) {
 	*/
 	return retVal;
 
+}
+TornadoParameters::TornadoParameters( float a, float b, float c ) :
+		_a(a),
+		_b(b),
+		_c(c)
+{
+
+}
+
+float TornadoParameters::a( void )
+{
+	return _a;
+}
+float TornadoParameters::b( void )
+{
+	return _b;
+}
+float TornadoParameters::c( void )
+{
+	return _c;
 }
 
 FlameParameters::FlameParameters( vec3 theAtrPos, double theScl, float thePwr, float theRng) :

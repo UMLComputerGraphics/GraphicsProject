@@ -521,7 +521,7 @@ bool Engine::wearingAPhong()
 
 void Engine::setFullScreen()
 {
-    /*
+
     if(isFullScreen){
         isFullScreen = false;
         glutReshapeWindow(500, 500);
@@ -529,7 +529,7 @@ void Engine::setFullScreen()
     } else {
         isFullScreen = true;
         glutFullScreen();
-    }*/
+    }
 
-    glutFullScreenToggle();
+//    glutFullScreen();
 }

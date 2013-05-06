@@ -67,6 +67,9 @@ int main( int argc, char **argv ) {
                    &monolith, SLOT(slotUpdateFlameVecFunc(double[3], double, float, float)));
   QObject::connect(&w, SIGNAL(sigChangeCurrentView(int)), &monolith, SLOT(slotCurrentView(int))) ;
   QObject::connect(&w, SIGNAL(sigFlameVecParams()), &monolith, SLOT(slotUpdateFlameVecFunc()));
+  QObject::connect(&w, SIGNAL(sigTornadoVecParams(float,float,float)),
+                   &monolith, SLOT(slotUpdateTornadoVecFunc(float, float, float)));
+  QObject::connect(&w, SIGNAL(sigTornadoVecParams()), &monolith, SLOT(slotUpdateTornadoVecFunc()));
   QObject::connect(&w, SIGNAL(sigMorphToWhiskyBottle()),&monolith,SLOT(slotMorphToWhiskyBottle()));
   QObject::connect(&w, SIGNAL(sigMorphToWineBottle()), &monolith, SLOT(slotMorphToWineBottle()));
 

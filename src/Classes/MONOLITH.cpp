@@ -9,6 +9,9 @@
 
 #include "MONOLITH.hpp"
 
+
+using soundHelper::result;
+
 MONOLITH::~MONOLITH(void)
 {
   cleanup();
@@ -20,8 +23,18 @@ MONOLITH::MONOLITH(int argc, char** argv) :
     _defaultNumberOfParticles(3000)
     /*    zipo(boost::thread(boost::bind(&MONOLITH::aRomanticEvening, this))) */
 {
-  _argc = argc;
-  _argv = argv;
+
+  /* sound stuff */  
+  soundHelper::fModInit( &(this->fSystem) ) ; // init the system
+
+  soundHelper::add3dSound("../sounds/ForeverEndless_radio.wav", 
+			  this->fSystem,
+			  &(this->foreverEndless),
+			  true); // add a sound to the system
+
+
+    _argc = argc;
+    _argv = argv;
 
     Light* l = new Light( "CandleLight", 2.5, 6.8, 2.5 );
     l->color(vec3(1.0, 0.5, 0.2));
@@ -80,6 +93,10 @@ void MONOLITH::monolith_idle(void)
         }
 #endif
     }
+
+    soundHelper::updateListener(  Engine::instance()->mainScreen()->_camList.active(),
+				  this->fSystem);
+
 }
 
 #ifndef WITHOUT_QT
@@ -164,6 +181,18 @@ void MONOLITH::slotUpdateFlameVecFunc()
 {
     ps->setFuncParams(new FlameParameters() );
     ps->setVectorField( ParticleFieldFunctions::flame );
+}
+
+void MONOLITH::slotUpdateTornadoVecFunc( float a, float b, float c )
+{
+    ps->setFuncParams( new TornadoParameters( a, b, c ));
+    ps->setVectorField( ParticleFieldFunctions::tornado );
+}
+
+void MONOLITH::slotUpdateTornadoVecFunc()
+{
+    ps->setFuncParams( new TornadoParameters() );
+    ps->setVectorField( ParticleFieldFunctions::tornado );
 }
 
 /*
@@ -422,6 +451,13 @@ void MONOLITH::run() {
 
   // need this for smoothness
   glShadeModel(GL_SMOOTH);
+
+
+  soundHelper::play3dSound( vec4(0.0,0.0,0.0,1.0), 
+			    vec4(0.0,0.0,0.0,1.0), 
+			    this->fSystem,
+			    &(this->radio),
+			    this->foreverEndless);
   
 #ifndef WITHOUT_QT
 #ifndef __APPLE__
@@ -433,6 +469,7 @@ void MONOLITH::run() {
   glutMainLoop(); // if we are not using Qt, the glutMainLoop is called here for both platforms.
 #endif
 }
+
 /**
  * A simple animation callback.
  * Rotates the object about its Y axis,
