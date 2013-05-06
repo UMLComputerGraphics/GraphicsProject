@@ -9,6 +9,9 @@
 
 #include "MONOLITH.hpp"
 
+
+using soundHelper::result;
+
 MONOLITH::~MONOLITH(void)
 {
   cleanup();
@@ -17,8 +20,24 @@ MONOLITH::~MONOLITH(void)
 /* Default and only constructor */
 MONOLITH::MONOLITH(int argc, char** argv) :
     _defaultNumberOfParticles(3000),
-    zipo(boost::thread(boost::bind(&MONOLITH::aRomanticEvening, this)))
+    zipo(boost::thread(boost::bind(&MONOLITH::aRomanticEvening, this)))// :( whyyy
 {
+
+  /*
+  FMOD::System *fSystem;
+  FMOD::Sound  *foreverEndless, *fire;
+  FMOD::Channel *radio, *flame;
+  */
+
+  /* sound stuff */  
+  soundHelper::fModInit( &(this->fSystem) ) ; // init the system
+
+  soundHelper::add3dSound("../sounds/ForeverEndless_radio.wav", 
+			  this->fSystem,
+			  &(this->foreverEndless),
+			  true); // add a sound to the system
+
+
     _argc = argc;
     _argv = argv;
 
@@ -98,6 +117,10 @@ void MONOLITH::monolith_idle(void)
         }
 #endif
     }
+
+    soundHelper::updateListener(  Engine::instance()->mainScreen()->_camList.active(),
+				  this->fSystem);
+
 }
 
 #ifndef WITHOUT_QT
@@ -414,6 +437,13 @@ void MONOLITH::run() {
 
   // need this for smoothness
   glShadeModel(GL_SMOOTH);
+
+
+  soundHelper::play3dSound( vec4(0.0,0.0,0.0,1.0), 
+			    vec4(0.0,0.0,0.0,1.0), 
+			    this->fSystem,
+			    &(this->radio),
+			    this->foreverEndless);
   
 #ifndef WITHOUT_QT
 #ifndef __APPLE__
@@ -425,6 +455,7 @@ void MONOLITH::run() {
   glutMainLoop(); // if we are not using Qt, the glutMainLoop is called here for both platforms.
 #endif
 }
+
 /**
  * A simple animation callback.
  * Rotates the object about its Y axis,
