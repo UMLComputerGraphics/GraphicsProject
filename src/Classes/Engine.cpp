@@ -55,6 +55,7 @@ Engine::Engine( void ) :
   _renderingCamera = NULL;
   _raytraceChanged = false;
   _raytraceStatus = false;
+  _isFullScreen = false;
 
   _lights = new vector<Light*>;
   _lightsSize = (GLint *) malloc( sizeof( GLint ) );
@@ -286,7 +287,7 @@ void Engine::init( int *argc, char *argv[], const char *title ) {
 
   char *gtfs = getenv( "GLUT_FULLSCREEN" );
   if (gtfs && (strncmp(gtfs, "TRUE", 4) == 0)) {
-      glutFullScreen();
+    Engine::instance()->setFullScreen();
   }
 
   glutSetCursor( GLUT_CURSOR_NONE );
@@ -559,17 +560,15 @@ bool Engine::wearingAPhong()
   return _floss;
 }
 
-void Engine::setFullScreen()
-{
+void Engine::setFullScreen() {
 
-    if(isFullScreen){
-        isFullScreen = false;
-        glutReshapeWindow(500, 500);
-        glutPositionWindow(0, 0);
-    } else {
-        isFullScreen = true;
-        glutFullScreen();
-    }
+  if(_isFullScreen) {
+    _isFullScreen = false;
+    glutReshapeWindow(500, 500);
+    glutPositionWindow(0, 0);
+  } else {
+    _isFullScreen = true;
+    glutFullScreen();
+  }
 
-//    glutFullScreen();
 }

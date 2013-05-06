@@ -347,7 +347,7 @@ private:
 
   bool _raytraceChanged, _raytraceStatus;
 
-  bool isFullScreen;
+  bool _isFullScreen;
 
 #ifdef WII
   CWii _wii;
