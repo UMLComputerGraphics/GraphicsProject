@@ -134,11 +134,13 @@ void MONOLITH::slotEnableMorphing(bool isEnabled)
 void MONOLITH::slotMorphToWineBottle(void)
 {
    (*rootScene)["bottle"]->morphPercentage(0.0);
+    _percentageCallback(0);
 }
 
 void MONOLITH::slotMorphToWhiskyBottle(void)
 {
     (*rootScene)["bottle"]->morphPercentage(1.0);
+    _percentageCallback(100);
 }
 
 void MONOLITH::slotEnableMorphMatching(bool isEnabled){
