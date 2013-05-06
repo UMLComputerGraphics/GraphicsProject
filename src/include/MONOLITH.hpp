@@ -162,10 +162,6 @@ private:
     ParticleSystem *ps;
     bool _morphIsEnabled;
 
-    GLfloat *lightPositions;
-    GLfloat *lightAmbient;
-    GLfloat *lightDiffuse;
-    GLfloat *lightSpecular;
     GLint numLights;
  
     char **_argv;
