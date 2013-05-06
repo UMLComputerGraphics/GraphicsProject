@@ -669,7 +669,7 @@
         <enum>Qt::ScrollBarAlwaysOff</enum>
        </property>
       </widget>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
          <x>50</x>
@@ -759,26 +759,6 @@
         </item>
        </layout>
       </widget>
-      <zorder>xFieldLabel</zorder>
-      <zorder>attractorPositionLabel</zorder>
-      <zorder>flameDefaultButton</zorder>
-      <zorder>yFieldLabel</zorder>
-      <zorder>xFieldTextInput</zorder>
-      <zorder>zFieldLabel</zorder>
-      <zorder>zFieldTextInput</zorder>
-      <zorder>flameShowButton</zorder>
-      <zorder>yFieldTextInput</zorder>
-      <zorder></zorder>
-      <zorder>flameShowButton</zorder>
-      <zorder>attractorPositionLabel</zorder>
-      <zorder>flameDefaultButton</zorder>
-      <zorder>xFieldLabel</zorder>
-      <zorder>yFieldLabel</zorder>
-      <zorder>xFieldTextInput</zorder>
-      <zorder>zFieldLabel</zorder>
-      <zorder>zFieldTextInput</zorder>
-      <zorder>yFieldTextInput</zorder>
-      <zorder></zorder>
      </widget>
      <widget class="QGroupBox" name="userDefinedBox">
       <property name="geometry">
@@ -841,7 +821,7 @@
          <enum>QFormLayout::FieldsStayAtSizeHint</enum>
         </property>
         <item row="0" column="0">
-         <widget class="QLabel" name="VxLabel_2">
+         <widget class="QLabel" name="VxLabel">
           <property name="enabled">
            <bool>true</bool>
           </property>
@@ -857,7 +837,7 @@
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QPlainTextEdit" name="vxTextInput_2">
+         <widget class="QPlainTextEdit" name="vxTextInput">
           <property name="enabled">
            <bool>true</bool>
           </property>
@@ -885,7 +865,7 @@
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QLabel" name="VyLabel_2">
+         <widget class="QLabel" name="VyLabel">
           <property name="enabled">
            <bool>true</bool>
           </property>
@@ -901,7 +881,7 @@
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QPlainTextEdit" name="vyTextInput_2">
+         <widget class="QPlainTextEdit" name="vyTextInput">
           <property name="enabled">
            <bool>true</bool>
           </property>
@@ -929,7 +909,7 @@
          </widget>
         </item>
         <item row="2" column="0">
-         <widget class="QLabel" name="VzLabel_2">
+         <widget class="QLabel" name="VzLabel">
           <property name="enabled">
            <bool>true</bool>
           </property>
@@ -945,7 +925,7 @@
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="QPlainTextEdit" name="vzTextInput_2">
+         <widget class="QPlainTextEdit" name="vzTextInput">
           <property name="enabled">
            <bool>true</bool>
           </property>
@@ -975,19 +955,6 @@
        </layout>
       </widget>
      </widget>
-     <zorder>freezeParticlesCheckBox</zorder>
-     <zorder>layoutWidget</zorder>
-     <zorder>layoutWidget</zorder>
-     <zorder>scaleLabel</zorder>
-     <zorder>powerLabel</zorder>
-     <zorder>rangeSlider</zorder>
-     <zorder>rangeLabel</zorder>
-     <zorder>powerSlider</zorder>
-     <zorder>scaleSlider</zorder>
-     <zorder>updateVectorFieldButton</zorder>
-     <zorder>flameParamsGroup</zorder>
-     <zorder>pushButton_3</zorder>
-     <zorder>userDefinedBox</zorder>
     </widget>
     <widget class="QWidget" name="morphingTab">
      <attribute name="title">
@@ -1110,15 +1077,13 @@
      </widget>
     </widget>
    </widget>
-   <zorder>tabWidget</zorder>
-   <zorder>pushButton_2</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>529</width>
+     <width>502</width>
      <height>22</height>
     </rect>
    </property>

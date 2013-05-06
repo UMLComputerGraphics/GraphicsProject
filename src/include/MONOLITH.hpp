@@ -124,12 +124,13 @@ public slots:
     void slotEnableParticleSystem(bool isEnabled);
     void slotMorphToWineBottle(void);
     void slotMorphToWhiskyBottle(void);
-    void slotParticleFieldFunction(int index);
+    //void slotParticleFieldFunction(int index); Deprecated for now.
     void slotUpdateVectorField(std::string*);
     void slotMaxAcceleration(int num);
     void slotFriction(int num);
     void slotSpeed(int num);
     void slotMaxSpeed(int num);
+    void slotUpdateFlameVecFunc(double[3], double, float, float);
 
 signals:
     void sigMorphPercentage(int value);

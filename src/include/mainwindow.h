@@ -46,9 +46,14 @@ signals:
     /* Particles */
 	void sigChangeNumberOfParticles(int value);
 	void sigFreezeParticles(bool isEnabled);
-    void sigParticleFieldFunction(int index);
+    void sigUserDefVecParams( void );
+    void sigFlameVecParams( void );
 
-    void sigUpdateVectorField(std::string*);
+    void sigFlameVecParams(double[3], double, float, float);
+
+    // void sigParticleFieldFunction(int index);
+    // void sigTornadoVecParams( void );
+
 
 private slots:
     void on_addObjectButton_clicked();
@@ -56,6 +61,10 @@ private slots:
     void on_updateVectorFieldButton_clicked();
 
     void on_particleFieldFunctionComboBox_currentIndexChanged(int index);
+
+    void on_userDefinedShowButton_clicked();
+
+    void on_flameShowButton_clicked();
 
 private:
     Ui::MainWindow *ui;

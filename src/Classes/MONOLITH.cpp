@@ -159,6 +159,14 @@ void MONOLITH::slotEnableParticleSystem(bool isEnabled)
     }
 }
 
+void MONOLITH::slotUpdateFlameVecFunc(double pos[3], double scale, float power, float range)
+{
+    ps->setFuncParams(new FlameParameters( vec3(pos), scale, power, range));
+    ps->setVectorField( ParticleFieldFunctions::flame );
+}
+
+/*
+ * Deprecated... for now
 void MONOLITH::slotParticleFieldFunction(int index)
 {
     switch (index)
@@ -175,9 +183,8 @@ void MONOLITH::slotParticleFieldFunction(int index)
         ps->setVectorField( ParticleFieldFunctions::flame);
         break;
     }
-
-
 }
+*/
 
 void MONOLITH::slotUpdateVectorField(std::string* params)
 {

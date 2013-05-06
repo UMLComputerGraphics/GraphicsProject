@@ -35,9 +35,14 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->maxSpeedSlider, SIGNAL(valueChanged(int)),
             this, SIGNAL(sigSetMaxSpeed(int)));
     
+    connect(ui->userDefinedShowButton, SIGNAL(clicke()),
+            this, SIGNAL(sigUserDefVecParams(Parameters*)));
 
-    connect(ui->particleFieldFunctionComboBox, SIGNAL(currentIndexChanged(int)),
-            this, SIGNAL(sigParticleFieldFunction(int)));
+//    connect(ui->tornadoShowButton, SIGNAL(clicked()),
+//            this, SIGNAL(sigTornadoVecParams(Parameters*)));
+
+    //connect(ui->particleFieldFunctionComboBox, SIGNAL(currentIndexChanged(int)),
+    //        this, SIGNAL(sigParticleFieldFunction(int)));
 
     /* Attempt to get the 'connect' work the other way */
     //connect(this, SIGNAL(sigMorphPercentageOut(int)),
@@ -79,7 +84,7 @@ void MainWindow::on_particleFieldFunctionComboBox_currentIndexChanged(int index)
     // Clear the window
     ui->userDefinedBox->setVisible(false);
     ui->flameParamsGroup->setVisible(false);
-    ui->tornadoParamsGroup->setvisible(false);
+//    ui->tornadoParamsGroup->setvisible(false);
 
     // Show the appropriate widget box for each selection.
     // Index 0 = Flame function
@@ -90,7 +95,7 @@ void MainWindow::on_particleFieldFunctionComboBox_currentIndexChanged(int index)
             ui->flameParamsGroup->setVisible(true);
             break;
         case 1:
-            ui->tornadoParamsGroup->setVisible(true);
+  //          ui->tornadoParamsGroup->setVisible(true);
             break;
         case 2:
             ui->userDefinedBox->setVisible(true);
@@ -98,3 +103,15 @@ void MainWindow::on_particleFieldFunctionComboBox_currentIndexChanged(int index)
     }
 }
 
+
+void MainWindow::on_flameShowButton_clicked()
+{
+    double vec3Pos[3] = (ui->xFieldTextInput->toPlainText().toDouble(),
+                         ui->yFieldTextInput->toPlainText().toDouble(),
+                         ui->zFieldTextInput->toPlainText().toDouble());
+    double scale = ui->scaleSlider->value() / 100.0;
+    float power = ui->powerSlider->value() / 100.0;
+    float range = ui->rangeSlider->value() / 100.0;
+
+    sigFlameVecParams(vec3Pos, scale, power, range);
+}
