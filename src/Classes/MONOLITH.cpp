@@ -116,11 +116,24 @@ void MONOLITH::slotEnableMorphing(bool isEnabled)
 void MONOLITH::slotMorphToWineBottle(void)
 {
    (*rootScene)["bottle"]->morphPercentage(0.0);
+    _percentageCallback(0);
 }
 
 void MONOLITH::slotMorphToWhiskyBottle(void)
 {
     (*rootScene)["bottle"]->morphPercentage(1.0);
+    _percentageCallback(100);
+}
+
+void MONOLITH::slotEnableMorphMatching(bool isEnabled){
+	gprint(PRINT_WARNING, "MORPH MATCHING := %s\n", isEnabled?"ENABLED":"DISABLED");
+    if(isEnabled){
+        _rectangularMapping->copyToObjects((*rootScene)["bottle"],(*rootScene)["bottle"]->morphTarget());
+        _scaleModel->restoreModels();
+    }else{
+        _rectangularMapping->revertToOriginal((*rootScene)["bottle"],(*rootScene)["bottle"]->morphTarget());
+    }
+   	(*rootScene)["bottle"]->buffer();
 }
 
 
@@ -278,19 +291,18 @@ void MONOLITH::run() {
 
   //Morphing Items
   //Scale source and destination height to unit 0-1
-  if (0) {
+  static const bool useZachMorphing = false;
+  if (useZachMorphing) {
     int heightScale = 10;
     int widthScale = 1;
     int depthScale = 1;
-    ScaleModel * scaleModel = new ScaleModel(bottle, bottleMorphTarget,widthScale,heightScale,depthScale);
-    RectangularMapping * rectangularMapping = new RectangularMapping(bottle,bottleMorphTarget);
-    rectangularMapping->copyToObjects(bottle,bottleMorphTarget);
-    rectangularMapping->revertToOriginal(bottle,bottleMorphTarget);
-
+    _scaleModel = new ScaleModel(bottle, bottleMorphTarget,widthScale,heightScale,depthScale);
+    _rectangularMapping = new RectangularMapping(bottle,bottleMorphTarget);
+    //_rectangularMapping->copyToObjects(bottle,bottleMorphTarget);
+    
     //Rescale models to original size
-    scaleModel->restoreModels();
+    _scaleModel->restoreModels();
   }
-
 
   // Scale the bottle down!
   //bottle->_trans._scale.set( 0.30 );

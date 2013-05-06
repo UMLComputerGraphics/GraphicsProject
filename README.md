@@ -25,7 +25,7 @@ Authors
 
 - Franck Kamayou -- Graphical User Interface
 
-- Zach Maybury -- Model Morphing Logistics
+- Zach Maybury -- Model Morphing Logistics, Morphing UI Integration
 
 - Eric McCann -- Integration, Logistics, Bugfixes, 
                  Raytracing, Lighting, Kinect Support, Git Guru

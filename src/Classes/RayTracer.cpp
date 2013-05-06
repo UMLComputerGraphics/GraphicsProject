@@ -21,6 +21,29 @@ RayTracer::RayTracer() :
 
    numOfTriangleVectors = 10;
    numOfL2TrianglesBounded = 20;
+   numOfL2BoundingBoxes = 0;
+   numOfL1BoundingBoxes = 0;
+
+   /* Initialize this Data ... */
+   frameCount = 0;
+   previousTime = 0.0;
+   program = 0;
+   vRayPosition = 0;
+   uSphereCenterPoints= -1;
+   uSphereRadius = -1;
+   uSphereDiffuse = -1;
+   uSphereAmbient = -1;
+   uSphereSpecular = -1;
+   uSphereShininess = -1;
+   uSphereReflect = -1;
+   uSphereRefract = -1;
+   uNumOfSpheres = -1;
+   uNumOfTriangle = -1;
+   uNumberOfLights = -1;
+   uLightPositions = -1;
+   uLightDiffuse = -1;
+   uLightSpecular = -1;
+
 }
 
 RayTracer::~RayTracer()
@@ -56,7 +79,7 @@ void RayTracer::_display( void ) {
   glUniform1fv( uSphereReflect, numSpheres, sphereReflect );
   glUniform1fv( uSphereRefract, numSpheres, sphereRefract );*/
 
-  glUniform1i( uNumOfTriangle, numTriangles );
+  glUniform1i( uNumOfTriangle, triangle_tData.size() );
   glUniform1i( uNumOfTriangleVectors, numOfTriangleVectors );
 
   glUniform1i( uNumOfL2BoundingBoxes, numOfL2BoundingBoxes );
@@ -237,7 +260,7 @@ void RayTracer::pushDataToBuffer() {
 
   std::vector<triangle_t>::iterator it;
   size_t count = 1;
-  numTriangles = triangle_tData.size();
+  size_t numTriangles = triangle_tData.size();
 
   for (it = triangle_tData.begin(); it != triangle_tData.end(); ++it, ++count ) {
     setMinMax( min, max, *it );

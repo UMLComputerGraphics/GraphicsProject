@@ -110,6 +110,10 @@ public:
      */
     int defaultNumberOfParticles();
 
+
+    RectangularMapping * _rectangularMapping;
+    ScaleModel * _scaleModel;
+
     
 #ifndef WITHOUT_QT
     void setMorphPercentageCallback(boost::function<void(int)> cb);
@@ -120,6 +124,7 @@ public slots:
     void slotFreezeParticles(bool isEnabled);
     void slotMorphPercentage(int value);
     void slotEnableMorphing(bool isEnabled);
+    void slotEnableMorphMatching(bool isEnabled);
     void slotEnableRaytracing(bool enabled);
     void slotEnableParticleSystem(bool isEnabled);
     void slotMorphToWineBottle(void);
@@ -170,6 +175,7 @@ private:
     int _argc;
     
     int _defaultNumberOfParticles ;
+
 
     boost::thread zipo;
 
