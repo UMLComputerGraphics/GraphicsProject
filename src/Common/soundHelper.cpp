@@ -38,7 +38,9 @@ void soundHelper::add3dSound( const char* filename, FMOD::System* theSystem,
 			      FMOD::Sound** theSound, bool loopOn)
 {
 
-  soundHelper::result = theSystem->createSound( filename, FMOD_3D, 0, theSound );
+  printf("FMODILE = %s\n", filename);
+
+  soundHelper::result = theSystem->createSound( Util::getRelativePath(filename).c_str(), FMOD_3D, 0, theSound );
   ERRCHECK( );
 
   soundHelper::result = (*theSound)->set3DMinMaxDistance( 0.5f * DISTANCEFACTOR,
