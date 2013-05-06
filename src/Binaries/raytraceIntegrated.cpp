@@ -15,38 +15,55 @@
 
 #define GLCHECK(); if (glGetError()) { gprint( PRINT_ERROR, "glGetError() is true on line %d\n", __LINE__ ); exit(255); }
 
+RayTracer rt;
+
+/*
+void aRomanticEvening() {
+  while ( !extinguish ) {
+    // random number between 0 and 1
+    float lightness = (float) rand() / (float) RAND_MAX;
+    // between 0 and .3
+    lightness = lightness * 3.0 / 10.0;
+    
+    lightness += .7;
+    lightDiffuse[0] = lightness;
+    lightDiffuse[1] = lightness;
+    lightDiffuse[2] = lightness;
+    
+    sleep( 0.01 );
+  }
+  } */
+
+void RTdisplay( void ) {
+  rt._display();
+}
+
 /**
  * Not-So-Simple raytracer demo by Hoanh Nguyen.
  * @param argc Not used.
  * @param argv Not used.
  * @return 0.
  */
+
+
 int main( int argc, char **argv ) {
-  RayTracer rt;
+
   Engine::init( &argc, argv, "Raytracer" );
-  Engine::instance()->cams()->active()->z(10);
 
-  GLCHECK();
+  GLint program = Angel::InitShader( "shaders/vRaytracer.glsl",
+				     "shaders/fRaytracer.glsl" );
+  rt.init( program );
+  rt.legacySceneGen();
 
-  GLuint program = Angel::InitShader( "shaders/vRaytracer.glsl",
-             "shaders/fRaytracer.glsl" );
+  glutDisplayFunc( RTdisplay ); // register callback w/Window System
 
-  Scene *rootScene = Engine::instance()->rootScene();
-  Screen *primScreen = Engine::instance()->mainScreen();
-
-  Object *bottle = rootScene->addObject( "bottle", program );
-  ObjLoader::loadModelFromFile( bottle, "../models/bottle_wine_high.obj" );
-  ObjLoader::loadMaterialFromFile( bottle, "../models/bottle_wine_high.mtl" );
-
-  Engine::instance()->registerDisplayFunc(rt.display);
-  rt.init(program);
-  std::vector<Object *> objs;
-  //ITERATE OVER ALL OBJS IN SCENE!
-
-  Engine::instance()->rootScene()->bufferToRaytracer( rt );
-  rt.pushDataToBuffer();
+  //  boost::thread zipo( aRomanticEvening );
   
-  glutMainLoop();
-
+  GLCHECK();
+  Engine::run();
+  
+  //extinguish = true;
+  //zipo.join();
+  
   return 0;
 }

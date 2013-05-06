@@ -98,6 +98,9 @@ Object::Object( const std::string &name, GLuint gShader ) {
   // Pointer to an Object to Morph to.
   _morphTarget = NULL;
   _material = NULL;
+
+  // Default to no-morph -- please remember that C types need to be initialized! 
+  _morphEnabled = false;
   
   /* Create our VAO, which is our handle to all 
    the rest of the following information. */
@@ -854,6 +857,7 @@ void Object::bufferToRaytracer( RayTracer &rt ) {
   } else if (_colors.size() < _vertices.size()) {
     _material = new Material();
   }
+
   const float reflect = 0.5;
   
   std::vector< Angel::vec4 >::iterator it;
@@ -869,10 +873,14 @@ void Object::bufferToRaytracer( RayTracer &rt ) {
     if (_material)
       rt.addTriangle( a, b, c, diffuse, ambient, specular, shininess, reflect, refract );
     else {
-      vec4 color4 = _colors.at(i) + _colors.at(i+1) + _colors.at(i+2);
+      // TODO: Add color averaging for the facets;
+      // Once RTI works again.
+      rt.addTriangle( a, b, c, vec3(0.0,1.0,0.0), vec3(0.0,0.1,0.0), vec3(0.0,0.0,0.0), 1.0, 0.5, 0.0 );
+
+      /*      vec4 color4 = _colors.at(i) + _colors.at(i+1) + _colors.at(i+2);
       color = color / 3.0;
       vec3 color3( color4.x, color4.y, color4.z );
-      rt.addTriangle( a, b, c, color3, color3, color3, 0.0, reflect, 1.0 );
+      rt.addTriangle( a, b, c, color3, color3, color3, 0.0, reflect, 1.0 );*/
     }
   }
 
