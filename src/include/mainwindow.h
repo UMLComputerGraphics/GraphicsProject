@@ -63,7 +63,6 @@ private slots:
     //void on_userDefinedShowButton_clicked();
 
     void on_flameShowButton_clicked();
-
     void on_flameDefaultButton_clicked();
 
 private:

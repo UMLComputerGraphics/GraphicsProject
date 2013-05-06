@@ -123,23 +123,22 @@ class ParticleSystem : public Object {
 
   /* particle control variables */
   vector<ParticleP> _particles;
-  unsigned          _numParticles;   // Number of particles that each instance of ParticleSystem will manage
+  unsigned          _numParticles;
   float             _minLife;
   float             _maxLife;
 
   /* system control variables */
   bool     _pauseTheSystem;
   float    _slaughterHeight;
-  bool     _useGlobalParticleSpace;
   unsigned _fillSpeedLimit;
 
   /* emitter control */
   float      _emitterRadius;
-  PS_SHAPE   _emitterShape ; 
+  PS_SHAPE   _emitterShape ;
   PS_SHAPE   _systemShape  ;
   TransCache _emitterLoc   ;
 
-  Parameters* _funcParams;
+  Parameters* _funcParams;//
 
   Angel::vec3 (*_vecFieldFunc)(Angel::vec4 posIn, Parameters* functionParams);
   Angel::vec4 (*_colorFunc)(float lifePct, Angel::vec4 posIn);

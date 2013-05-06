@@ -160,11 +160,11 @@ vec3 ParticleFieldFunctions::flameold(vec4 pos) {
 
 }
 
-FlameParameters::FlameParameters( vec3 theAtrPos, 
-									double theScl, float thePwr,
-									 float theRng) : 
-									 _atrPos(theAtrPos),
-									_pwr(thePwr), _rng(theRng)
+FlameParameters::FlameParameters( vec3 theAtrPos, double theScl, float thePwr, float theRng) :
+		_atrPos(theAtrPos),
+		_pwr(thePwr),
+		_rng(theRng),
+		_scl(theScl)
 {
 	
 }	
