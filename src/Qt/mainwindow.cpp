@@ -7,6 +7,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    ui->userDefinedBox->setVisible(false);
+
     connect(ui->numberOfParticlesSpinBox, SIGNAL(valueChanged(int)),
             this, SIGNAL(sigChangeNumberOfParticles(int)));
     connect(ui->freezeParticlesCheckBox, SIGNAL(toggled(bool)),
@@ -35,8 +38,14 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->maxSpeedSlider, SIGNAL(valueChanged(int)),
             this, SIGNAL(sigSetMaxSpeed(int)));
     
-    connect(ui->particleFieldFunctionComboBox, SIGNAL(currentIndexChanged(int)),
-            this, SIGNAL(sigParticleFieldFunction(int)));
+    connect(ui->userDefinedShowButton, SIGNAL(clicke()),
+            this, SIGNAL(sigUserDefVecParams(Parameters*)));
+
+//    connect(ui->tornadoShowButton, SIGNAL(clicked()),
+//            this, SIGNAL(sigTornadoVecParams(Parameters*)));
+
+    //connect(ui->particleFieldFunctionComboBox, SIGNAL(currentIndexChanged(int)),
+    //        this, SIGNAL(sigParticleFieldFunction(int)));
 
     /* Attempt to get the 'connect' work the other way */
     //connect(this, SIGNAL(sigMorphPercentageOut(int)),
@@ -72,34 +81,50 @@ void MainWindow::on_addObjectButton_clicked()
     addObjectDialog.exec();
 }
 
-void MainWindow::on_updateVectorFieldButton_clicked()
-{
-    std::string temp[3] = {ui->vxTextInput->toPlainText().toStdString(), ui->vyTextInput->toPlainText().toStdString(), ui->vzTextInput->toPlainText().toStdString()};
-    sigUpdateVectorField(temp);
-}
+//void MainWindow::on_updateVectorFieldButton_clicked()
+//{
+//    std::string temp[3] = {ui->vxTextInput->toPlainText().toStdString(), ui->vyTextInput->toPlainText().toStdString(), ui->vzTextInput->toPlainText().toStdString()};
+//    sigUpdateVectorField(temp);
+//}
 
 void MainWindow::on_particleFieldFunctionComboBox_currentIndexChanged(int index)
 {
-    if( index == 2 )
-    {
-        ui->vxTextInput->setEnabled(true);
-        ui->vyTextInput->setEnabled(true);
-        ui->vzTextInput->setEnabled(true);
-        ui->updateVectorFieldButton->setEnabled(true);
-        ui->customFunctionLabel->setEnabled(true);
-        ui->VxLabel->setEnabled(true);
-        ui->VyLabel->setEnabled(true);
-        ui->VzLabel->setEnabled(true);
+    // Clear the window
+    ui->userDefinedBox->setVisible(false);
+    ui->flameParamsGroup->setVisible(false);
+//    ui->tornadoParamsGroup->setvisible(false);
+
+    // Show the appropriate widget box for each selection.
+    // Index 0 = Flame function
+    // Index 1 = Tornado function
+    // index 2 = User defined function
+    switch (index) {
+        case 0:
+            ui->flameParamsGroup->setVisible(true);
+            break;
+        case 1:
+  //          ui->tornadoParamsGroup->setVisible(true);
+            break;
+        case 2:
+            ui->userDefinedBox->setVisible(true);
+            break;
     }
-    else
-    {
-        ui->vxTextInput->setEnabled(false);
-        ui->vyTextInput->setEnabled(false);
-        ui->vzTextInput->setEnabled(false);
-        ui->updateVectorFieldButton->setEnabled(false);
-        ui->customFunctionLabel->setEnabled(false);
-        ui->VxLabel->setEnabled(false);
-        ui->VyLabel->setEnabled(false);
-        ui->VzLabel->setEnabled(false);
-    }
+}
+
+
+void MainWindow::on_flameShowButton_clicked()
+{
+    double vec3Pos[3] = { ui->xFieldTextInput->toPlainText().toDouble(),
+                          ui->yFieldTextInput->toPlainText().toDouble(),
+                          ui->zFieldTextInput->toPlainText().toDouble() };
+    double scale = ui->scaleSlider->value() / 100.0;
+    float power = ui->powerSlider->value() / 100.0;
+    float range = ui->rangeSlider->value() / 100.0;
+
+    sigFlameVecParams(vec3Pos, scale, power, range);
+}
+
+void MainWindow::on_flameDefaultButton_clicked()
+{
+    sigFlameVecParams();
 }
