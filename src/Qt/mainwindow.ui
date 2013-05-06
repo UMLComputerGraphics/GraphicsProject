@@ -27,7 +27,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="generalTab">
      <attribute name="title">
@@ -501,7 +501,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QGroupBox" name="flameParamsGroup">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>20</x>
