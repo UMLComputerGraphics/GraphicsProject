@@ -32,7 +32,7 @@ void main() {
     float y = vRayPosition.y;
     
     org = (T * vec4(0,0,0,-1)).xyz;
-    dir = normalize(R * vec4(x, y, -1.0, 0.0)).xyz;
+    dir = normalize(transpose(R) * vec4(x, y, -1.0, 0.0)).xyz;
     
     float xPos = vRayPosition.x;
     float yPos = vRayPosition.y;

@@ -25,6 +25,7 @@ signals:
 	void sigEnableMorphing(bool isEnabled);
 	void sigEnableRaytracing(bool isEnabled);
 	void sigEnableParticleSystem(bool isEnabled);
+    void sigEnableMorphMatching(bool isEnabled);
 	
 	/* Camera */
 	void sigChangeAspectRatio(int value);
@@ -46,16 +47,27 @@ signals:
     /* Particles */
 	void sigChangeNumberOfParticles(int value);
 	void sigFreezeParticles(bool isEnabled);
-    void sigParticleFieldFunction(int index);
+    void sigUserDefVecParams( void );
+    void sigFlameVecParams( void );
+    void sigFlameVecParams(double[3], double, float, float);
+    void sigTornadoVecParams( void );
+    void sigTornadoVecParams( float, float, float );
 
-    void sigUpdateVectorField(std::string*);
+    // void sigParticleFieldFunction(int index);
 
 private slots:
     void on_addObjectButton_clicked();
 
-    void on_updateVectorFieldButton_clicked();
-
     void on_particleFieldFunctionComboBox_currentIndexChanged(int index);
+
+    //void on_userDefinedShowButton_clicked();
+
+    void on_flameShowButton_clicked();
+    void on_flameDefaultButton_clicked();
+
+    void on_tornadoShowButton_clicked();
+
+    void on_tornadoDefaultButton_clicked();
 
 private:
     Ui::MainWindow *ui;

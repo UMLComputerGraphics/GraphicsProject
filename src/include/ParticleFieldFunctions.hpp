@@ -17,8 +17,9 @@ class FlameParameters : public Parameters
 {
 public:
     FlameParameters( vec3 theAtrPos = vec3(0.0, 0.45, 0.0), 
-									double theScl = 0.01, float thePwr = 0.1,
-									 float theRng = 0.24);
+									double theScl = 0.01,
+									float thePwr = 0.1,
+									float theRng = 0.24);
     vec3 atrPos(void);
     double scl(void);
     float pwr(void);
@@ -34,8 +35,16 @@ private:
 class TornadoParameters : public Parameters
 {
 public:
+	TornadoParameters( float a = 100.0, float b = 100.0, float c = 4.0 );
+
+	float a( void );
+	float b( void );
+	float c( void );
 
 private:
+	float _a;
+	float _b;
+	float _c;
 
 };
 

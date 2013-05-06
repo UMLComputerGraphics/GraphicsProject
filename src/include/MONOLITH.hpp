@@ -113,6 +113,10 @@ public:
      */
     int defaultNumberOfParticles();
 
+
+    RectangularMapping * _rectangularMapping;
+    ScaleModel * _scaleModel;
+
     
 #ifndef WITHOUT_QT
     void setMorphPercentageCallback(boost::function<void(int)> cb);
@@ -123,16 +127,21 @@ public slots:
     void slotFreezeParticles(bool isEnabled);
     void slotMorphPercentage(int value);
     void slotEnableMorphing(bool isEnabled);
+    void slotEnableMorphMatching(bool isEnabled);
     void slotEnableRaytracing(bool enabled);
     void slotEnableParticleSystem(bool isEnabled);
     void slotMorphToWineBottle(void);
     void slotMorphToWhiskyBottle(void);
-    void slotParticleFieldFunction(int index);
+    //void slotParticleFieldFunction(int index); Deprecated for now.
     void slotUpdateVectorField(std::string*);
     void slotMaxAcceleration(int num);
     void slotFriction(int num);
     void slotSpeed(int num);
     void slotMaxSpeed(int num);
+    void slotUpdateFlameVecFunc(double[3], double, float, float);
+    void slotUpdateFlameVecFunc( void );
+    void slotUpdateTornadoVecFunc( float, float, float );
+    void slotUpdateTornadoVecFunc( void );
     void slotCurrentView(int num) ;
 
 signals:
@@ -165,16 +174,13 @@ private:
     ParticleSystem *ps;
     bool _morphIsEnabled;
 
-    GLfloat *lightPositions;
-    GLfloat *lightAmbient;
-    GLfloat *lightDiffuse;
-    GLfloat *lightSpecular;
     GLint numLights;
  
     char **_argv;
     int _argc;
     
     int _defaultNumberOfParticles ;
+
 
     boost::thread zipo;
 

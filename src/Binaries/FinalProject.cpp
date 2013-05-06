@@ -56,13 +56,23 @@ int main( int argc, char **argv ) {
   QObject::connect(&w, SIGNAL(sigEnableMorphing(bool)), &monolith, SLOT(slotEnableMorphing(bool)));
   QObject::connect(&w, SIGNAL(sigEnableRaytracing(bool)), &monolith, SLOT(slotEnableRaytracing(bool)));
   QObject::connect(&w, SIGNAL(sigEnableParticleSystem(bool)), &monolith, SLOT(slotEnableParticleSystem(bool)));
-  QObject::connect(&w, SIGNAL(sigParticleFieldFunction(int)), &monolith, SLOT(slotParticleFieldFunction(int)));
+  //QObject::connect(&w, SIGNAL(sigParticleFieldFunction(int)), &monolith, SLOT(slotParticleFieldFunction(int)));
+  QObject::connect(&w, SIGNAL(sigEnableMorphMatching(bool)), &monolith, SLOT(slotEnableMorphMatching(bool)));
   QObject::connect(&w, SIGNAL(sigUpdateVectorField(std::string*)), &monolith, SLOT(slotUpdateVectorField(std::string*)));
   QObject::connect(&w, SIGNAL(sigSetMaxAcceleration(int)), &monolith, SLOT(slotMaxAcceleration(int)));
   QObject::connect(&w, SIGNAL(sigSetFrictionMagnitude(int)), &monolith, SLOT(slotFriction(int)));
   QObject::connect(&w, SIGNAL(sigCameraSpeed(int)), &monolith, SLOT(slotSpeed(int)));
   QObject::connect(&w, SIGNAL(sigSetMaxSpeed(int)), &monolith, SLOT(slotMaxSpeed(int)));
+  QObject::connect(&w, SIGNAL(sigFlameVecParams(double[3],double,float,float)),
+                   &monolith, SLOT(slotUpdateFlameVecFunc(double[3], double, float, float)));
   QObject::connect(&w, SIGNAL(sigChangeCurrentView(int)), &monolith, SLOT(slotCurrentView(int))) ;
+  QObject::connect(&w, SIGNAL(sigFlameVecParams()), &monolith, SLOT(slotUpdateFlameVecFunc()));
+  QObject::connect(&w, SIGNAL(sigTornadoVecParams(float,float,float)),
+                   &monolith, SLOT(slotUpdateTornadoVecFunc(float, float, float)));
+  QObject::connect(&w, SIGNAL(sigTornadoVecParams()), &monolith, SLOT(slotUpdateTornadoVecFunc()));
+  QObject::connect(&w, SIGNAL(sigMorphToWhiskyBottle()),&monolith,SLOT(slotMorphToWhiskyBottle()));
+  QObject::connect(&w, SIGNAL(sigMorphToWineBottle()), &monolith, SLOT(slotMorphToWineBottle()));
+
   w.show();
 
 #ifndef __APPLE__ // monolith.start has to be here for Linux. 

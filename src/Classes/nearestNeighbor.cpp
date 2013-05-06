@@ -84,12 +84,7 @@ void RectangularMapping::revertToOriginal(Object* model1, Object* model2){
 	model2->_vertices.clear();
 	model2->_colors.clear();
 	model2->_normals.clear();
-	//model1->_vertices = srcPrevVerts;
-	//model1->_normals = srcPrevNorms;
-	//model1->_colors = srcPrevColrs;
-	//model2->_vertices = dstPrevVerts;
-	//model2->_normals = dstPrevNorms;
-	//model2->_colors = dstPrevColrs;
+
 	copyToVector(model1->_vertices,srcPrevVerts);
 	copyToVector(model1->_normals,srcPrevNorms);
 	copyToVector(model1->_colors,srcPrevColrs);
