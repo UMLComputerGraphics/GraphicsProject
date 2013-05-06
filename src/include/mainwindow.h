@@ -25,6 +25,7 @@ signals:
 	void sigEnableMorphing(bool isEnabled);
 	void sigEnableRaytracing(bool isEnabled);
 	void sigEnableParticleSystem(bool isEnabled);
+    void sigEnableMorphMatching(bool isEnabled);
 	
 	/* Camera */
 	void sigChangeAspectRatio(int value);

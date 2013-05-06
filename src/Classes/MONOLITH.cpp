@@ -16,11 +16,12 @@ MONOLITH::~MONOLITH(void)
 
 /* Default and only constructor */
 MONOLITH::MONOLITH(int argc, char** argv) :
-    _defaultNumberOfParticles(3000),
-    zipo(boost::thread(boost::bind(&MONOLITH::aRomanticEvening, this)))
+    extinguish( false ),
+    _defaultNumberOfParticles(3000)
+    /*    zipo(boost::thread(boost::bind(&MONOLITH::aRomanticEvening, this))) */
 {
-    _argc = argc;
-    _argv = argv;
+  _argc = argc;
+  _argv = argv;
 
     Light* l = new Light( "CandleLight", 2.5, 6.8, 2.5 );
     l->color(vec3(1.0, 0.5, 0.2));
@@ -29,33 +30,14 @@ MONOLITH::MONOLITH(int argc, char** argv) :
     l2->intensity(28);
     Engine::instance()->addLight(l2);
 
-    extinguish = false;
-
-    /*    lightAmbient = (GLfloat*)malloc(sizeof(GLfloat)*4);
-    lightAmbient[0]=lightAmbient[1]=lightAmbient[2]=lightAmbient[3]=0.1;
-    lightPositions = (GLfloat*)malloc(sizeof(GLfloat)*4);
-    lightPositions[0]=1.3;
-    lightPositions[1]=4.13;
-    lightPositions[2]=1.3;
-    lightPositions[3]=1.0;
-    lightDiffuse = (GLfloat*)malloc(sizeof(GLfloat)*4);
-    lightSpecular = (GLfloat*)malloc(sizeof(GLfloat)*4);
-    lightDiffuse[0]=lightDiffuse[1]=lightDiffuse[2]=0.5;
-    lightDiffuse[3]=lightSpecular[3]=1.0;
-    lightSpecular[0]=lightSpecular[1]=lightSpecular[2]=0.5;
-    numLights = 1; */
 }
 
 /**
  * Cleans up our scene graph.
  */
-void MONOLITH::cleanup(void)
-{
+void MONOLITH::cleanup(void) {
     extinguish = true;
-    zipo.join();
-    if(lightPositions)free(lightPositions);
-    if(lightDiffuse)free(lightDiffuse);
-    if(lightSpecular)free(lightSpecular);
+    //zipo.join();
 }
 
 bool heisenbergUncertaintyPrinciple;
@@ -134,11 +116,24 @@ void MONOLITH::slotEnableMorphing(bool isEnabled)
 void MONOLITH::slotMorphToWineBottle(void)
 {
    (*rootScene)["bottle"]->morphPercentage(0.0);
+    _percentageCallback(0);
 }
 
 void MONOLITH::slotMorphToWhiskyBottle(void)
 {
     (*rootScene)["bottle"]->morphPercentage(1.0);
+    _percentageCallback(100);
+}
+
+void MONOLITH::slotEnableMorphMatching(bool isEnabled){
+	gprint(PRINT_WARNING, "MORPH MATCHING := %s\n", isEnabled?"ENABLED":"DISABLED");
+    if(isEnabled){
+        _rectangularMapping->copyToObjects((*rootScene)["bottle"],(*rootScene)["bottle"]->morphTarget());
+        _scaleModel->restoreModels();
+    }else{
+        _rectangularMapping->revertToOriginal((*rootScene)["bottle"],(*rootScene)["bottle"]->morphTarget());
+    }
+   	(*rootScene)["bottle"]->buffer();
 }
 
 
@@ -245,9 +240,8 @@ void MONOLITH::slotCurrentView( int num )
  * This will initialize and run MONOLITH
  */
 void MONOLITH::run() {
+  Engine::init( &_argc, _argv, "Graphics II Spring 2013 Final Project" );
   Engine *eng = Engine::instance();
-
-  eng->init( &_argc, _argv, "WE ARE THE BORG. RESISTANCE IS FUTILE!" );
   eng->registerIdle( boost::bind(&MONOLITH::monolith_idle, this) );
   eng->registerTraceFunc( (raytracerCallback)(boost::bind(&MONOLITH::raytraceStatusChanged, this, _1)));
 
@@ -297,17 +291,18 @@ void MONOLITH::run() {
 
   //Morphing Items
   //Scale source and destination height to unit 0-1
-  int heightScale = 10;
-  int widthScale = 1;
-  int depthScale = 1;
-  ScaleModel * scaleModel = new ScaleModel(bottle, bottleMorphTarget,widthScale,heightScale,depthScale);
-  RectangularMapping * rectangularMapping = new RectangularMapping(bottle,bottleMorphTarget);
-  rectangularMapping->copyToObjects(bottle,bottleMorphTarget);
-  rectangularMapping->revertToOriginal(bottle,bottleMorphTarget);
-
-  //Rescale models to original size
-  scaleModel->restoreModels();
-
+  static const bool useZachMorphing = false;
+  if (useZachMorphing) {
+    int heightScale = 10;
+    int widthScale = 1;
+    int depthScale = 1;
+    _scaleModel = new ScaleModel(bottle, bottleMorphTarget,widthScale,heightScale,depthScale);
+    _rectangularMapping = new RectangularMapping(bottle,bottleMorphTarget);
+    //_rectangularMapping->copyToObjects(bottle,bottleMorphTarget);
+    
+    //Rescale models to original size
+    _scaleModel->restoreModels();
+  }
 
   // Scale the bottle down!
   //bottle->_trans._scale.set( 0.30 );
@@ -467,7 +462,7 @@ void MONOLITH::raytraceStatusChanged(bool newstatus)
 {
   if (Engine::instance()->glslVersion() < 1.50)
   {
-    gprint(PRINT_ERROR, "Your hardware is tired, brah.\n");
+    gprint(PRINT_ERROR, "Raytracing is not supported on this system.\n");
     return;
   }
   static RayTracer rt;
