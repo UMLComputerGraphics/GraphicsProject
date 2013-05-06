@@ -265,6 +265,8 @@ struct RectangularMapping {
 	SquareVerticalMeshMap *squareMap4;
 	SquareHorizontalMeshMap *squareMapTop;
 	SquareHorizontalMeshMap *squareMapBottom;
+    Object* Src;
+    Object* Dst;
 	std::vector<Angel::vec4> srcPrevVerts;
 	std::vector<Angel::vec3> srcPrevNorms;
 	std::vector<Angel::vec4> srcPrevColrs;
@@ -272,7 +274,20 @@ struct RectangularMapping {
 	std::vector<Angel::vec3> dstPrevNorms;
 	std::vector<Angel::vec4> dstPrevColrs;
 
+	RectangularMapping(){
+		squareMapBottom = NULL;
+		squareMapTop = NULL;
+		squareMap1 = NULL;
+		squareMap2 = NULL;
+		squareMap3 = NULL;
+		squareMap4 = NULL;
+        Src = NULL;
+        Dst = NULL;
+	};
+
 	RectangularMapping(Object* model1, Object* model2){
+        Src = model1;
+        Dst = model2;
 		std::vector<Angel::vec4> vertsQ1SRC,colrsQ1SRC,vertsQ1DST,colrsQ1DST;
 		std::vector<Angel::vec3> normsQ1SRC,normsQ1DST;
 		std::vector<Angel::vec4> vertsQ2SRC,colrsQ2SRC,vertsQ2DST,colrsQ2DST;
@@ -434,8 +449,8 @@ struct RectangularMapping {
 
 
 	}
-	void copyToObjects(Object* model1, Object* model2);
-	void revertToOriginal(Object* model1, Object* model2);
+    void copyToObjects(Object* model1, Object* model2);
+    void revertToOriginal(Object* model1, Object* model2);
 	Angel::vec3 getMin(std::vector<Angel::vec4> points);
 	Angel::vec3 getMax(std::vector<Angel::vec4> points);
 };

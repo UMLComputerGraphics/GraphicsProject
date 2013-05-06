@@ -51,9 +51,9 @@ void init() {
   int depthScale = 1;
   ScaleModel * scaleModel = new ScaleModel(bottle, bottleMorphTarget,widthScale,heightScale,depthScale);
 
-  RectangularMapping * rectangularMapping = new RectangularMapping(bottle,bottleMorphTarget);
-  rectangularMapping->copyToObjects(bottle,bottleMorphTarget);
-  rectangularMapping->revertToOriginal(bottle,bottleMorphTarget);
+  RectangularMapping* rectangularMapping = new RectangularMapping(bottle,bottleMorphTarget);
+  rectangularMapping->copyToObjects(bottle, bottleMorphTarget);
+  //rectangularMapping->revertToOriginal(bottle,bottleMorphTarget);
 
   //Rescale models to original size
   scaleModel->restoreModels();
