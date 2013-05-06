@@ -53,9 +53,6 @@ void MONOLITH::cleanup(void)
 {
     extinguish = true;
     zipo.join();
-    if(lightPositions)free(lightPositions);
-    if(lightDiffuse)free(lightDiffuse);
-    if(lightSpecular)free(lightSpecular);
 }
 
 bool heisenbergUncertaintyPrinciple;
@@ -447,7 +444,7 @@ void MONOLITH::raytraceStatusChanged(bool newstatus)
     //ITERATE OVER ALL OBJS IN SCENE!
 
     Engine::instance()->rootScene()->bufferToRaytracer( rt );
-    rt.pushDataToBuffer();
+    rt.pushDataToBuffer(rt.bufferData);
     //    rt.genereateScene(objs);
   }
   else

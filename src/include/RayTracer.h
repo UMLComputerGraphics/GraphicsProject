@@ -22,6 +22,18 @@
 #include <boost/bind.hpp>
 #include "RaytraceBuffer.hpp"
 
+#define MINMACRO( XYZ, ABC ) if (min.XYZ > t.ABC.XYZ) min.XYZ = t.ABC.XYZ;
+#define MAXMACRO( XYZ, ABC ) if (max.XYZ < t.ABC.XYZ) max.XYZ = t.ABC.XYZ;
+#define MINTRIPLET( XYZ ) \
+  MINMACRO( XYZ, a )    \
+  MINMACRO( XYZ, b )    \
+  MINMACRO( XYZ, c )
+
+#define MAXTRIPLET( XYZ ) \
+  MAXMACRO( XYZ, a )    \
+  MAXMACRO( XYZ, b )    \
+  MAXMACRO( XYZ, c )
+
 class RayTracer
 {
   public:
@@ -30,16 +42,17 @@ class RayTracer
     void init(GLint shader);
     void generateScene(void);
     void addVec3ToVector(std::vector<GLfloat> *_vector, vec3 _vec3);
-    void setMinMax(vec3 *min, vec3 *max, vec3 v);
     void addTriangle( const vec3& a, const vec3& b, const vec3& c,
           const vec3& diffuse, const vec3& ambient, const vec3& specular,
           float shininess, float reflect, float refract);
-    void pushDataToBuffer();
+    void pushTriangleDataToBuffer( std::vector<GLfloat> &dataBuffer,
+        std::vector<triangle_t> &triangleBuffer,
+        size_t start, size_t count );
+    void pushDataToBuffer( std::vector<GLfloat> &dataBuffer );
     //void genereateScene(std::vector<Object*> objects);
-    virtual
-    ~RayTracer();
-  private:
+    virtual ~RayTracer();
     void _display(void);
+    void setMinMax( vec3 &min, vec3 &max, triangle_t &t );
 
     int frameCount;
     float previousTime;
@@ -57,9 +70,18 @@ class RayTracer
     GLint uSphereReflect;
     GLint uSphereRefract;
     GLint uNumOfSpheres;
+    GLfloat *sphereCenterPoints, *sphereRadius, *sphereAmbient, *sphereDiffuse, *sphereSpecular, *sphereShininess, *sphereReflect, *sphereRefract;
+    GLint numSpheres;
 
     GLint uNumOfTriangle;
     GLint uNumOfTriangleVectors;
+
+    GLint uNumOfL2BoundingBoxes;
+    GLint uNumOfL1BoundingBoxes;
+
+    GLint uNumOfL2TrianglesBounded;
+
+    GLint uNumberOfLights;
 
     GLint uNumOfBoundingBoxes;
     GLint uNumOfBoundingSpheres;
@@ -69,19 +91,23 @@ class RayTracer
     GLint uLightDiffuse;
     GLint uLightSpecular;
 
+    int numberOfLights;
     GLfloat *lightPositions;
     GLfloat *lightDiffuse;
     GLfloat *lightSpecular;
 
     int numTriangles;
 
-    int numOfBoundingSpheres;
-    std::vector< GLfloat > bufferData;
+    int numOfL2BoundingBoxes;
+    int numOfL1BoundingBoxes;
+    int numOfBoundingBoxes;
+
+    int numOfL2TrianglesBounded;
+
+    std::vector<GLfloat> bufferData;
+    std::vector<triangle_t> triangle_tData;
 
     int numOfTriangleVectors;
-    int numOfTrianglesBounded;
-
-    int numOfBoundingBoxes;
 
     GLint uDisplay;
 
