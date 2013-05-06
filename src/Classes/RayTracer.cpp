@@ -43,9 +43,6 @@ RayTracer::RayTracer() :
    uLightPositions = -1;
    uLightDiffuse = -1;
    uLightSpecular = -1;
-   lightPositions = NULL;
-   lightDiffuse = NULL;
-   lightSpecular = NULL;
 
 }
 
