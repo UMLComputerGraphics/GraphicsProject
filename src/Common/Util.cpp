@@ -55,7 +55,7 @@ bool dirExists(const std::string& where, const std::string& dir) {
   }
 }
 namespace Util {
-  static std::string dondeestalosshaders;
+  static std::string dondeestanlosshaders;
   /**
    * InitRelativePaths is a preparation step allowing files referred to relative to the executable to be referred to relative to the working dir AND the executable
    *
@@ -79,7 +79,7 @@ namespace Util {
           cat << slapchop[i] << "/";
         if (dirExists(cat.str(), "shaders"))
 	{          
-          dondeestalosshaders = cat.str();
+          dondeestanlosshaders = cat.str();
           break;
         }
       }
@@ -96,8 +96,8 @@ namespace Util {
   std::string getRelativePath( const char *path ) {
     std::stringstream wholepath;
 
-    wholepath << dondeestalosshaders << path;
-    gprint( PRINT_DEBUG, "Looking for \"%s\"\tExecutable is in \"%s\"\tResolving to \"%s\"\n", path, dondeestalosshaders.c_str(), wholepath.str().c_str());
+    wholepath << dondeestanlosshaders << path;
+    gprint( PRINT_DEBUG, "Looking for \"%s\"\tExecutable is in \"%s\"\tResolving to \"%s\"\n", path, dondeestanlosshaders.c_str(), wholepath.str().c_str());
     return wholepath.str();
   }
 
