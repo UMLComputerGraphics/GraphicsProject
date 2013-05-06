@@ -29,6 +29,10 @@
 #include "model.hpp"
 #include "InitShader.hpp"
 #include "ObjLoader.hpp"
+#ifdef WII
+#include <wiicpp.h>
+#include "WiiUtil.h"
+#endif
 
 /* System */
 #include <string>
@@ -205,6 +209,8 @@ b   * @param Option The name of the option to access.
 
   void setFullScreen();
 
+  void wiiInit( void );
+
 private:
   
   void glslVersion( float in );
@@ -342,6 +348,10 @@ private:
   bool _raytraceChanged, _raytraceStatus;
 
   bool isFullScreen;
+
+#ifdef WII
+  CWii _wii;
+#endif
 
 };
 

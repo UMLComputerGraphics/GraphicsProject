@@ -249,10 +249,27 @@ bool Engine::flip( const std::string &Option ) {
   return _engineSettings[Option] = (!_engineSettings[Option]);
 }
 
+void Engine::wiiInit( void ) {
+
+#ifdef WII
+  bool usingWii = initWii( _wii );
+  if (!usingWii) {
+    gprint( PRINT_WARNING, "Not using Wii controls for this runthrough.\n" );
+  }
+  opt( "wii", usingWii );
+#endif
+
+}
+
+
 /**
  * Initialize GLEW, GLUT and our Engine.
  */
 void Engine::init( int *argc, char *argv[], const char *title ) {
+
+#ifdef WII
+  Engine::instance()->wiiInit();
+#endif
 
   // OS X suppresses events after mouse warp.  This resets the suppression
   // interval to 0 so that events will not be suppressed. This also found
@@ -354,10 +371,13 @@ void Engine::display()
   instance()->_displayFunc();
 }
 
+
 /**
  * What should the engine be doing every idle()?
  */
 void Engine::idle( void ) {
+
+  static Engine *eng = Engine::instance();
 
   //YOU THOUGH' THA' WA' GO'N' TO BE WA'ER, BU' I' WA'N'... ROCK AND ROLLLLLLLL -Ozzy Osbourne
   if (instance()->_raytraceChanged) {
@@ -365,21 +385,40 @@ void Engine::idle( void ) {
     instance()->_raytraceChanged = false;
   }
 
-  static Cameras *camList = Engine::instance()->cams();
-
   // Compute the time since last idle().
   tick.tock();
 
   // Propagate Scene Graph Changes (Maybe!)
-  Engine::instance()->rootScene()->propagate();
+  eng->rootScene()->propagate();
 
   // Move all camera(s).
-  camList->idleMotion();
+  eng->cams()->idleMotion();
+
+#ifdef WII
+  if (eng->opt("wii")) {
+    static const unsigned NumPolls = 20;
+    Camera *camptr = dynamic_cast< Camera* >( myScreen._camList["AutoCamera2"] );
+    Angel::vec3 theta_diff;
+    Angel::vec3 accel_mag;
+    // Take many samples for two reasons:
+    // (1) Without this, we can't poll often enough and Wii Input "lags".
+    // (2) Average/Sample to "smooth" the data.
+    for (size_t i = 0; i < NumPolls; ++i) {
+      pollWii( Wii );
+      if (PollResults.Reset_Camera && camptr != NULL) camptr->resetRotation();
+      theta_diff += PollResults.wr_thetas;
+      accel_mag += PollResults.bb_magnitudes;
+    }
+    if (camptr) {
+      camptr->Accel( (accel_mag / NumPolls) * 2.0 );
+      wiilook( *camptr, theta_diff / NumPolls, PollResults.wr_rates );
+    }
+  }
+#endif
 
   Engine::instance()->callIdle();
 
   glutPostRedisplay();
-
 }
 
 void Engine::callIdle( void ) {
@@ -391,6 +430,7 @@ GLuint Engine::currentShader( void ) const {
 }
 
 void Engine::switchShader( GLint program ) {
+  if (glGetError()) { gprint( PRINT_ERROR, "Error, glGetError() true prior to switchShader()\n" ); }
   GLint currShader;
   glGetIntegerv( GL_CURRENT_PROGRAM, &currShader );
   if (currShader != _currentShader) {

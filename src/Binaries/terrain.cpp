@@ -384,31 +384,6 @@ void terrain_idle( void ) {
   
   Terrain.animation( TerrainGenerationAnimation );
   
-#ifdef WII
-  if (usingWii) {
-    static const unsigned NumPolls = 20;
-    Camera *camptr = dynamic_cast< Camera* >( myScreen._camList["AutoCamera2"] );
-    Angel::vec3 theta_diff;
-    Angel::vec3 accel_mag;
-
-    // Take many samples for two reasons:
-    // (1) Without this, we can't poll often enough and Wii Input "lags".
-    // (2) Average/Sample to "smooth" the data.
-    for (size_t i = 0; i < NumPolls; ++i) {
-      pollWii( Wii );
-      if (PollResults.Reset_Camera && camptr != NULL) camptr->resetRotation();
-      theta_diff += PollResults.wr_thetas;
-      accel_mag += PollResults.bb_magnitudes;
-    }
-
-    if (camptr) {
-      camptr->Accel( (accel_mag / NumPolls) * 2.0 );
-      wiilook( *camptr, theta_diff / NumPolls, PollResults.wr_rates );
-    }
-
-  }
-#endif
-  
 }
 
 //--------------------------------------------------------------------
@@ -442,12 +417,6 @@ void menufunc( int value ) {
  * @return EXIT_SUCCESS.
  */
 int main( int argc, char **argv ) {
-  
-#ifdef WII
-  if (!(usingWii = initWii( Wii ))) {
-    std::cerr << "Not using Wii controls for this runthrough.\n";
-  }
-#endif
   
   Engine::init( &argc, argv, "Terrain Generation Flythrough" );
   Engine::instance()->registerIdle( terrain_idle );

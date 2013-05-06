@@ -17,22 +17,9 @@
 
 RayTracer rt;
 
-/*
 void aRomanticEvening() {
-  while ( !extinguish ) {
-    // random number between 0 and 1
-    float lightness = (float) rand() / (float) RAND_MAX;
-    // between 0 and .3
-    lightness = lightness * 3.0 / 10.0;
-    
-    lightness += .7;
-    lightDiffuse[0] = lightness;
-    lightDiffuse[1] = lightness;
-    lightDiffuse[2] = lightness;
-    
-    sleep( 0.01 );
-  }
-  } */
+  rt.lightFlicker();
+}
 
 void RTdisplay( void ) {
   rt._display();
@@ -44,8 +31,6 @@ void RTdisplay( void ) {
  * @param argv Not used.
  * @return 0.
  */
-
-
 int main( int argc, char **argv ) {
 
   Engine::init( &argc, argv, "Raytracer" );
@@ -57,13 +42,13 @@ int main( int argc, char **argv ) {
 
   glutDisplayFunc( RTdisplay ); // register callback w/Window System
 
-  //  boost::thread zipo( aRomanticEvening );
+  boost::thread zipo( aRomanticEvening );
   
   GLCHECK();
   Engine::run();
   
   //extinguish = true;
-  //zipo.join();
+  zipo.join();
   
   return 0;
 }
