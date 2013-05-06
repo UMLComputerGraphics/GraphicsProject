@@ -462,7 +462,7 @@ void MONOLITH::raytraceStatusChanged(bool newstatus)
 {
   if (Engine::instance()->glslVersion() < 1.50)
   {
-    gprint(PRINT_ERROR, "Your hardware is tired, brah.\n");
+    gprint(PRINT_ERROR, "Raytracing is not supported on this system.\n");
     return;
   }
   static RayTracer rt;
