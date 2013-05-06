@@ -255,8 +255,14 @@ Object::~Object( void ) {
 
   for ( it = _textures.begin(); it != _textures.end(); ++it )
     delete (*it);
+  
+  if (_morphTarget != NULL) {
+    delete _morphTarget;
+    _morphTarget = NULL;
+  }
 
   if ( _material != NULL ) delete _material;
+
 }
 
 /**
@@ -831,24 +837,40 @@ Angel::vec3 Object::getMin( void ) {
 
 void Object::bufferToRaytracer( RayTracer &rt ) {
 
-  const vec3 diffuse = _material->getDiffuse();
-  const vec3 ambient = _material->getAmbient();
-  const vec3 specular = _material->getSpecular();
-  const float shininess = _material->getShininess();
+  vec3 diffuse, ambient, specular;
+  float shininess, refract;
+
+  // If _material doesn't exist, try to use colors.
+  // If no colors exist, make a default material.
+  if (_material) {
+    diffuse = _material->getDiffuse();
+    ambient = _material->getAmbient();
+    specular = _material->getSpecular();
+    shininess = _material->getShininess();
+    refract = _material->getRefract();
+  } else if (_colors.size() < _vertices.size()) {
+    _material = new Material();
+  }
   const float reflect = 0.5;
-  const float refract = _material->getRefract();
   
   std::vector< Angel::vec4 >::iterator it;
 
-  for ( it = _vertices.begin(); it != _vertices.end(); ++it ) {
+  size_t i = 0;
+  for ( it = _vertices.begin(); it != _vertices.end(); ++it, i += 3 ) {
     vec3 a = vec3( it->x, it->y, it->z );
     if ( ++it == _vertices.end() ) break;
     vec3 b = vec3( it->x, it->y, it->z );
     if ( ++it == _vertices.end() ) break;
     vec3 c = vec3( it->x, it->y, it->z );
 
-    rt.addTriangle( a, b, c, diffuse, ambient, specular, shininess, reflect, refract );
-
+    if (_material)
+      rt.addTriangle( a, b, c, diffuse, ambient, specular, shininess, reflect, refract );
+    else {
+      vec4 color4 = _colors.at(i) + _colors.at(i+1) + _colors.at(i+2);
+      color = color / 3.0;
+      vec3 color3( color4.x, color4.y, color4.z );
+      rt.addTriangle( a, b, c, color3, color3, color3, 0.0, reflect, 1.0 );
+    }
   }
 
   Scene::bufferToRaytracer( rt );

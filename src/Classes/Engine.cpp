@@ -54,6 +54,7 @@ Engine::Engine( void ) :
 
   _renderingCamera = NULL;
   _raytraceChanged = false;
+  _raytraceStatus = false;
 
   _lights = new vector<Light*>;
   _lightsSize = (GLint *) malloc( sizeof( GLint ) );
