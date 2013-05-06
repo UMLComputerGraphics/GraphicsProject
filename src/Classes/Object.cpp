@@ -300,7 +300,10 @@ void Object::drawPrep( void ) {
 /**
  * draw method: Render this object to the screen _buffer.
  */
-void Object::draw( void ) {
+void Object::draw( bool doDraw ) {
+
+  if (!doDraw)
+    Scene::draw( doDraw );
 
   drawPrep();
   
@@ -313,7 +316,7 @@ void Object::draw( void ) {
   
   // draw all of our Children.
   // (With clothes on, pervert.)
-  Scene::draw();
+  Scene::draw( doDraw );
   
 }
 

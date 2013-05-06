@@ -210,10 +210,10 @@ Object *Scene::active( void ) const {
  * Calls the draw method on all children.
  * @return void.
  */
-void Scene::draw( void ) {
+void Scene::draw( bool doDraw ) {
   std::list< Object* >::iterator it;
   for ( it = _list.begin(); it != _list.end(); ++it ) {
-    (*it)->draw();
+    (*it)->draw( doDraw );
   }
 }
 

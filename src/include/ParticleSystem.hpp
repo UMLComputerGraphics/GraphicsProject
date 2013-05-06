@@ -55,7 +55,7 @@ class ParticleSystem : public Object {
   void  setLifespan( float minLifespan, float maxLifespan );
   void  setEmitterRadius(float);
 
-  virtual void draw( void );
+  virtual void draw( bool doDraw = true );
 
   void  setVectorField(vec3 (*vectorFieldFunc)(vec4, Parameters* ) );
   void  setColorFunc(vec4 (*colorFunc)(float, vec4) );

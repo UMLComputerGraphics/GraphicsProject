@@ -114,7 +114,7 @@ public:
   /**
    * draw method: Render this object to the screen _buffer.
    */
-  virtual void draw( void );
+  virtual void draw( bool doDraw = true );
 
   /**
    * buffer all of our data: Vertices, TexUVs, Normals,
