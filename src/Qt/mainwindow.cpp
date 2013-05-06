@@ -7,6 +7,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    ui->userDefinedBox->setVisible(false);
+
     connect(ui->numberOfParticlesSpinBox, SIGNAL(valueChanged(int)),
             this, SIGNAL(sigChangeNumberOfParticles(int)));
     connect(ui->freezeParticlesCheckBox, SIGNAL(toggled(bool)),
@@ -48,7 +51,12 @@ MainWindow::MainWindow(QWidget *parent) :
     //connect(this, SIGNAL(sigMorphPercentageOut(int)),
     //        ui->morphPercentageSlider, SLOT(setValue(int)));
 
+    ui->currentViewComboBox->addItem("Ortho");
+    ui->currentViewComboBox->addItem("Ortho2D");
+    ui->currentViewComboBox->addItem("Identity");
+    ui->currentViewComboBox->addItem("Frustum");
 
+    connect(ui->currentViewComboBox, SIGNAL(currentIndexChanged(int)), this, SIGNAL(sigChangeCurrentView(int)));
 }
 
 void MainWindow::setMorphPercentageOut(int pct)
@@ -73,11 +81,11 @@ void MainWindow::on_addObjectButton_clicked()
     addObjectDialog.exec();
 }
 
-void MainWindow::on_updateVectorFieldButton_clicked()
-{
-    std::string temp[3] = {ui->vxTextInput->toPlainText().toStdString(), ui->vyTextInput->toPlainText().toStdString(), ui->vzTextInput->toPlainText().toStdString()};
-    sigUpdateVectorField(temp);
-}
+//void MainWindow::on_updateVectorFieldButton_clicked()
+//{
+//    std::string temp[3] = {ui->vxTextInput->toPlainText().toStdString(), ui->vyTextInput->toPlainText().toStdString(), ui->vzTextInput->toPlainText().toStdString()};
+//    sigUpdateVectorField(temp);
+//}
 
 void MainWindow::on_particleFieldFunctionComboBox_currentIndexChanged(int index)
 {
@@ -106,9 +114,9 @@ void MainWindow::on_particleFieldFunctionComboBox_currentIndexChanged(int index)
 
 void MainWindow::on_flameShowButton_clicked()
 {
-    double vec3Pos[3] = (ui->xFieldTextInput->toPlainText().toDouble(),
-                         ui->yFieldTextInput->toPlainText().toDouble(),
-                         ui->zFieldTextInput->toPlainText().toDouble());
+    double vec3Pos[3] = { ui->xFieldTextInput->toPlainText().toDouble(),
+                          ui->yFieldTextInput->toPlainText().toDouble(),
+                          ui->zFieldTextInput->toPlainText().toDouble() };
     double scale = ui->scaleSlider->value() / 100.0;
     float power = ui->powerSlider->value() / 100.0;
     float range = ui->rangeSlider->value() / 100.0;

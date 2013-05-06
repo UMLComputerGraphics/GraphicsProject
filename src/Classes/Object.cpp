@@ -300,7 +300,10 @@ void Object::drawPrep( void ) {
 /**
  * draw method: Render this object to the screen _buffer.
  */
-void Object::draw( void ) {
+void Object::draw( bool doDraw ) {
+
+  if (!doDraw)
+    Scene::draw( doDraw );
 
   drawPrep();
   
@@ -313,7 +316,7 @@ void Object::draw( void ) {
   
   // draw all of our Children.
   // (With clothes on, pervert.)
-  Scene::draw();
+  Scene::draw( doDraw );
   
 }
 
@@ -837,14 +840,17 @@ Angel::vec3 Object::getMin( void ) {
 
 void Object::bufferToRaytracer( RayTracer &rt ) {
 
+  vec3 diffuse, ambient, specular;
+  float shininess, refract;
+
   // If _material doesn't exist, try to use colors.
   // If no colors exist, make a default material.
   if (_material) {
-    const vec3 diffuse = _material->getDiffuse();
-    const vec3 ambient = _material->getAmbient();
-    const vec3 specular = _material->getSpecular();
-    const float shininess = _material->getShininess();
-    const float refract = _material->getRefract();
+    diffuse = _material->getDiffuse();
+    ambient = _material->getAmbient();
+    specular = _material->getSpecular();
+    shininess = _material->getShininess();
+    refract = _material->getRefract();
   } else if (_colors.size() < _vertices.size()) {
     _material = new Material();
   }
@@ -853,20 +859,21 @@ void Object::bufferToRaytracer( RayTracer &rt ) {
   std::vector< Angel::vec4 >::iterator it;
 
   size_t i = 0;
-  for ( it = _vertices.begin(); it != _vertices.end(); ++it ) {
+  for ( it = _vertices.begin(); it != _vertices.end(); ++it, i += 3 ) {
     vec3 a = vec3( it->x, it->y, it->z );
     if ( ++it == _vertices.end() ) break;
     vec3 b = vec3( it->x, it->y, it->z );
     if ( ++it == _vertices.end() ) break;
     vec3 c = vec3( it->x, it->y, it->z );
 
-    if (_materials)
+    if (_material)
       rt.addTriangle( a, b, c, diffuse, ambient, specular, shininess, reflect, refract );
-    else
-      rt.addTriangle( a, b, c, 
-		      _colors.at(i++), _colors.at(i++), _colors.at(i++), 
-		      reflect, 1.0 );
-
+    else {
+      vec4 color4 = _colors.at(i) + _colors.at(i+1) + _colors.at(i+2);
+      color = color / 3.0;
+      vec3 color3( color4.x, color4.y, color4.z );
+      rt.addTriangle( a, b, c, color3, color3, color3, 0.0, reflect, 1.0 );
+    }
   }
 
   Scene::bufferToRaytracer( rt );

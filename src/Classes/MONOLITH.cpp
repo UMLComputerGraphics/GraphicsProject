@@ -161,8 +161,9 @@ void MONOLITH::slotEnableParticleSystem(bool isEnabled)
 
 void MONOLITH::slotUpdateFlameVecFunc(double pos[3], double scale, float power, float range)
 {
-    ps->setFuncParams(new FlameParameters( vec3(pos), scale, power, range));
+    ps->setFuncParams(new FlameParameters( vec3(pos[0], pos[1], pos[2]), scale, power, range));
     ps->setVectorField( ParticleFieldFunctions::flame );
+    printf("In MONOLITH::slotUpdateFlameVecFunc\n");
 }
 
 /*
@@ -226,6 +227,11 @@ void MONOLITH::slotSpeed(int num)
 void MONOLITH::slotMaxSpeed( int num )
 {
     Engine::instance()->currentCamera()->setMaxSpeed((float) num) ;
+}
+
+void MONOLITH::slotCurrentView( int num )
+{
+    Engine::instance()->currentCamera()->setCurrentView(num) ;
 }
 
 #endif //WITHOUT_QT

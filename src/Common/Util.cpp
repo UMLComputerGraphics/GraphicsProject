@@ -76,7 +76,7 @@ namespace Util {
 	gprint( PRINT_DEBUG, "last = %lu\n", last);
         std::stringstream cat;
         for ( size_t i = 0; i < last; i++ )
-          //cat << slapchop[i] << "/";
+          cat << slapchop[i] << "/";
         if (dirExists(cat.str(), "shaders"))
 	{          
           dondeestalosshaders = cat.str();

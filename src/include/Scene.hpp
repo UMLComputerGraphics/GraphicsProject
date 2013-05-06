@@ -137,7 +137,7 @@ public:
    * Calls the draw method on all children.
    * @return void.
    */
-  void draw( void );
+  void draw( bool doDraw = true );
 
   /**
    * Fetch an Object pointer from the scene graph with the matching name.

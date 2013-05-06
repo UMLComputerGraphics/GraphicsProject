@@ -422,6 +422,8 @@ public:
 
   float getMaxSpeed();
 
+  void setCurrentView(int num);
+
 private:
   
   /**

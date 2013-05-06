@@ -522,9 +522,6 @@
         <height>190</height>
        </size>
       </property>
-      <property name="title">
-       <string/>
-      </property>
       <widget class="QPushButton" name="flameShowButton">
        <property name="geometry">
         <rect>
@@ -700,6 +697,9 @@
             <height>22</height>
            </size>
           </property>
+          <property name="maximum">
+           <number>10000</number>
+          </property>
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -726,6 +726,9 @@
             <height>22</height>
            </size>
           </property>
+          <property name="maximum">
+           <number>10000</number>
+          </property>
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -751,6 +754,9 @@
             <width>191</width>
             <height>22</height>
            </size>
+          </property>
+          <property name="maximum">
+           <number>10000</number>
           </property>
           <property name="orientation">
            <enum>Qt::Horizontal</enum>

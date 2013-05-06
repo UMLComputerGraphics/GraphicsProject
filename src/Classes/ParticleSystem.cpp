@@ -390,7 +390,7 @@ void  ParticleSystem::buffer( GLenum usage ) {
 
 }
 
-void ParticleSystem::draw( void ) {
+void ParticleSystem::draw( bool doDraw ) {
 
         //move/spawn/remove/color all particles
 	if ( ! this->_pauseTheSystem ) 

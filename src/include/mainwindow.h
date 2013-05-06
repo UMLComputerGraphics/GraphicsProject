@@ -58,11 +58,9 @@ signals:
 private slots:
     void on_addObjectButton_clicked();
 
-    void on_updateVectorFieldButton_clicked();
-
     void on_particleFieldFunctionComboBox_currentIndexChanged(int index);
 
-    void on_userDefinedShowButton_clicked();
+    //void on_userDefinedShowButton_clicked();
 
     void on_flameShowButton_clicked();
 

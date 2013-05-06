@@ -549,3 +549,25 @@ float Camera::getMaxSpeed()
 {
     return _maxSpeed;
 }
+
+void Camera::setCurrentView(int num)
+{
+    switch(num)
+    {
+        case 0:
+            changePerspective(PERSPECTIVE);
+            break;
+        case 1:
+            changePerspective(ORTHO);
+            break;
+        case 2:
+            changePerspective(ORTHO2D);
+            break;
+        case 3:
+            changePerspective(IDENTITY);
+            break;
+        case 4:
+            changePerspective(FRUSTUM);
+            break;
+   }
+}
