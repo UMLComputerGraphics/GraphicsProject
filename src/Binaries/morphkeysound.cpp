@@ -133,7 +133,7 @@ void fModInit( void ) {
    NOT RELATIVE TO THE EXECUTABLE'S PATH.
    */
 
-  result = fSystem->createSound( "../sounds/ding1.wav", FMOD_3D, 0, &ding1 );
+  result = fSystem->createSound( Util::getRelativePath("../sounds/ding1.wav").c_str(), FMOD_3D, 0, &ding1 );
   ERRCHECK( result );
   result = ding1->set3DMinMaxDistance( 0.5f * DISTANCEFACTOR,
                                        5000.0f * DISTANCEFACTOR );
@@ -141,7 +141,7 @@ void fModInit( void ) {
   result = ding1->setMode( FMOD_LOOP_OFF );
   ERRCHECK( result );
   
-  result = fSystem->createSound( "../sounds/ding2.wav", FMOD_3D, 0, &ding2 );
+  result = fSystem->createSound( Util::getRelativePath("../sounds/ding2.wav").c_str(), FMOD_3D, 0, &ding2 );
   ERRCHECK( result );
   result = ding2->set3DMinMaxDistance( 0.5f * DISTANCEFACTOR,
                                        5000.0f * DISTANCEFACTOR );
@@ -149,7 +149,7 @@ void fModInit( void ) {
   result = ding2->setMode( FMOD_LOOP_OFF );
   ERRCHECK( result );
   
-  result = fSystem->createSound( "../sounds/heavy_yell9.wav", FMOD_3D, 0,
+  result = fSystem->createSound( Util::getRelativePath("../sounds/heavy_yell9.wav").c_str(), FMOD_3D, 0,
                                  &heavy );
   ERRCHECK( result );
   result = heavy->set3DMinMaxDistance( 0.5f * DISTANCEFACTOR,

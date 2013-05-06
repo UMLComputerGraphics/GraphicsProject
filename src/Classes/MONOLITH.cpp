@@ -23,11 +23,13 @@ MONOLITH::MONOLITH(int argc, char** argv) :
   _defaultNumberOfParticles(3000),
   zipo(boost::thread(boost::bind(&MONOLITH::aRomanticEvening, this)))
 {
+    //As this happens before run() initializes relative paths, we need to initialize relative paths here
+    Util::InitRelativePaths(argc, argv);
 
-  /* sound stuff */  
-  soundHelper::fModInit( &(this->fSystem) ) ; // init the system
+    /* sound stuff */
+    soundHelper::fModInit( &(this->fSystem) ) ; // init the system
 
-  soundHelper::add3dSound("../sounds/ForeverEndless_radio.wav", 
+    soundHelper::add3dSound("../sounds/ForeverEndless_radio.wav",
 			  this->fSystem,
 			  &(this->foreverEndless),
 			  true); // add a sound to the system
@@ -89,7 +91,8 @@ void MONOLITH::monolith_idle(void)
         int pct = (int)floor(percent * 100.0);
         if (_percentageCallback)
         {
-		// ????
+          //prevents the slider event from being handled when the slider's value is set programatically.
+          //  (the position and velocity of a subatomic particle can't be known simultaneously)
           heisenbergUncertaintyPrinciple = true;
           _percentageCallback(pct);
           heisenbergUncertaintyPrinciple = false;
