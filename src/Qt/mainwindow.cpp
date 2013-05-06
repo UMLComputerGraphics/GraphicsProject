@@ -16,6 +16,8 @@ MainWindow::MainWindow(QWidget *parent) :
             this, SIGNAL(sigFreezeParticles(bool)));
     connect(ui->morphingEnabler, SIGNAL(toggled(bool)),
             this, SIGNAL(sigEnableMorphing(bool)));
+    connect(ui->morphMatchingCheckbox, SIGNAL(toggled(bool)),
+            this, SIGNAL(sigEnableMorphMatching(bool)));
     connect(ui->morphPercentageSlider, SIGNAL(valueChanged(int)),
             this, SIGNAL(sigMorphPercentage(int)));
     connect(ui->rayTracerEnabler, SIGNAL(toggled(bool)),
@@ -25,7 +27,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->WineBottleRadioButton, SIGNAL(clicked()),
             this, SIGNAL(sigMorphToWineBottle()));
-
     connect(ui->WhiskyBottleRadioButton, SIGNAL(clicked()),
             this, SIGNAL(sigMorphToWhiskyBottle()));
     connect(ui->maxAccelerationSlider, SIGNAL(valueChanged(int)),
