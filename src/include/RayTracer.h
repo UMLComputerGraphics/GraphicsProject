@@ -43,14 +43,10 @@ class RayTracer
     ~RayTracer();
   private:
     void _display(void);
-
     int frameCount;
     float previousTime;
-
     GLint program;
-
     GLint vRayPosition;
-
     GLint uSphereCenterPoints;
     GLint uSphereRadius;
     GLint uSphereDiffuse;
@@ -60,43 +56,24 @@ class RayTracer
     GLint uSphereReflect;
     GLint uSphereRefract;
     GLint uNumOfSpheres;
-
     GLint uNumOfTriangle;
     GLint uNumOfTriangleVectors;
-
     GLint uNumOfL2BoundingBoxes;
     GLint uNumOfL1BoundingBoxes;
-
     GLint uNumOfL2TrianglesBounded;
-
     GLint uNumberOfLights;
     GLint uLightPositions;
     GLint uLightDiffuse;
     GLint uLightSpecular;
-
     GLfloat *lightPositions;
     GLfloat *lightDiffuse;
     GLfloat *lightSpecular;
-
-    int numTriangles;
-
     int numOfL2BoundingBoxes;
     int numOfL1BoundingBoxes;
-
     int numOfL2TrianglesBounded;
-
     std::vector<GLfloat> bufferData;
     std::vector<triangle_t> triangle_tData;
-
     int numOfTriangleVectors;
-
-    GLint uDisplay;
-
-    /** Rotation matrix uniform shader variable location **/
-    GLuint uRotationMatrix;
-    /** Handle to uniform that will contain the position of the Camera. **/
-    GLint uCameraPosition;
-
 };
 
 #endif /* RAYTRACER_H_ */
