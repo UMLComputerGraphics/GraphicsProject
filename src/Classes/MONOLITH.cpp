@@ -221,6 +221,11 @@ void MONOLITH::slotMaxSpeed( int num )
     Engine::instance()->currentCamera()->setMaxSpeed((float) num) ;
 }
 
+void MONOLITH::slotCurrentView( int num )
+{
+    Engine::instance()->currentCamera()->setCurrentView(num) ;
+}
+
 #endif //WITHOUT_QT
 
 /**

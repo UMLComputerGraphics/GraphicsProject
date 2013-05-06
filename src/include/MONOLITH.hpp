@@ -130,6 +130,7 @@ public slots:
     void slotFriction(int num);
     void slotSpeed(int num);
     void slotMaxSpeed(int num);
+    void slotCurrentView(int num) ;
 
 signals:
     void sigMorphPercentage(int value);

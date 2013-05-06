@@ -35,7 +35,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->maxSpeedSlider, SIGNAL(valueChanged(int)),
             this, SIGNAL(sigSetMaxSpeed(int)));
     
-
     connect(ui->particleFieldFunctionComboBox, SIGNAL(currentIndexChanged(int)),
             this, SIGNAL(sigParticleFieldFunction(int)));
 
@@ -43,7 +42,12 @@ MainWindow::MainWindow(QWidget *parent) :
     //connect(this, SIGNAL(sigMorphPercentageOut(int)),
     //        ui->morphPercentageSlider, SLOT(setValue(int)));
 
+    ui->currentViewComboBox->addItem("Ortho");
+    ui->currentViewComboBox->addItem("Ortho2D");
+    ui->currentViewComboBox->addItem("Identity");
+    ui->currentViewComboBox->addItem("Frustum");
 
+    connect(ui->currentViewComboBox, SIGNAL(currentIndexChanged(int)), this, SIGNAL(sigChangeCurrentView(int)));
 }
 
 void MainWindow::setMorphPercentageOut(int pct)

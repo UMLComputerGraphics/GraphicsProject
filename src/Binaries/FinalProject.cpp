@@ -62,6 +62,7 @@ int main( int argc, char **argv ) {
   QObject::connect(&w, SIGNAL(sigSetFrictionMagnitude(int)), &monolith, SLOT(slotFriction(int)));
   QObject::connect(&w, SIGNAL(sigCameraSpeed(int)), &monolith, SLOT(slotSpeed(int)));
   QObject::connect(&w, SIGNAL(sigSetMaxSpeed(int)), &monolith, SLOT(slotMaxSpeed(int)));
+  QObject::connect(&w, SIGNAL(sigChangeCurrentView(int)), &monolith, SLOT(slotCurrentView(int))) ;
   w.show();
 
 #ifndef __APPLE__ // monolith.start has to be here for Linux. 
