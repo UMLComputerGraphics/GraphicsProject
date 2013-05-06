@@ -203,6 +203,8 @@ b   * @param Option The name of the option to access.
 
   void phongSong(bool enabled);
 
+  void setFullScreen();
+
 private:
   
   void glslVersion( float in );
@@ -338,6 +340,9 @@ private:
   bool _floss;
 
   bool _raytraceChanged, _raytraceStatus;
+
+  bool isFullScreen;
+
 };
 
 #endif

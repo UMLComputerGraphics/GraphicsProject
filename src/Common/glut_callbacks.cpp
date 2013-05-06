@@ -235,6 +235,11 @@ void engineSpecialKeyboard( int key, int x, int y ) {
   case GLUT_KEY_F4:
     mode = GL_TRIANGLES;
     break;
+
+  //Fullscreen
+  case GLUT_KEY_F7:
+    Engine::instance()->setFullScreen();
+    break;
   }
 
   if (mode != -1) {
