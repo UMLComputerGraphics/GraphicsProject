@@ -123,3 +123,8 @@ void MainWindow::on_flameShowButton_clicked()
 
     sigFlameVecParams(vec3Pos, scale, power, range);
 }
+
+void MainWindow::on_flameDefaultButton_clicked()
+{
+    sigFlameVecParams();
+}

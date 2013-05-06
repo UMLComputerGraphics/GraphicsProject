@@ -64,6 +64,8 @@ private slots:
 
     void on_flameShowButton_clicked();
 
+    void on_flameDefaultButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

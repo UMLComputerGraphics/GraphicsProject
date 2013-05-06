@@ -65,6 +65,7 @@ int main( int argc, char **argv ) {
   QObject::connect(&w, SIGNAL(sigFlameVecParams(double[3],double,float,float)),
                    &monolith, SLOT(slotUpdateFlameVecFunc(double[3], double, float, float)));
   QObject::connect(&w, SIGNAL(sigChangeCurrentView(int)), &monolith, SLOT(slotCurrentView(int))) ;
+  QObject::connect(&w, SIGNAL(sigFlameVecParams()), &monolith, SLOT(slotUpdateFlameVecFunc()));
   w.show();
 
 #ifndef __APPLE__ // monolith.start has to be here for Linux. 

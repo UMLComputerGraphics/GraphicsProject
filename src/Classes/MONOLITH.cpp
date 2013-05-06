@@ -163,7 +163,12 @@ void MONOLITH::slotUpdateFlameVecFunc(double pos[3], double scale, float power, 
 {
     ps->setFuncParams(new FlameParameters( vec3(pos[0], pos[1], pos[2]), scale, power, range));
     ps->setVectorField( ParticleFieldFunctions::flame );
-    printf("In MONOLITH::slotUpdateFlameVecFunc\n");
+}
+
+void MONOLITH::slotUpdateFlameVecFunc()
+{
+    ps->setFuncParams(new FlameParameters() );
+    ps->setVectorField( ParticleFieldFunctions::flame );
 }
 
 /*
