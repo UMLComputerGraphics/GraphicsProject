@@ -97,7 +97,6 @@ private:
 
     QImage qimgOriginal;
     QImage qimgProcessed;
-
     std::vector<cv::Vec3f> vecCircles;
     std::vector<cv::Vec3f>::iterator itrCircles;
 

@@ -241,17 +241,24 @@ void MainWindow::processFrameAndUpdateGUI()
         cv::circle(matOriginal, cv::Point((int)(*itrCircles)[0], (int)(*itrCircles)[1]), 3, cv::Scalar(0, 255, 0), CV_FILLED);
         cv::circle(matOriginal, cv::Point((int)(*itrCircles)[0], (int)(*itrCircles)[1]), (int)(*itrCircles)[2], cv::Scalar(0, 0, 255), 3);
         if(ui->vrMorphControl->isChecked()){
-            if((*itrCircles)[0] < 1/3.0*(280.0)){
+            /*if((*itrCircles)[0] < 1/3.0*(280.0)){
             //we have a detection and morph control is enabled, set the slider
-                ui->vrMorphSlider->setValue(ui->vrMorphSlider->value()-1);
+                ui->vrMorphSlider->setValue(ui->vrMorphSlider->value()-2);
             }else if((*itrCircles)[0] > 2/3.0*(280)){
-                ui->vrMorphSlider->setValue(ui->vrMorphSlider->value()+1);
-            }
+                ui->vrMorphSlider->setValue(ui->vrMorphSlider->value()+2);
+            }*/
+            ui->vrMorphSlider->setValue((int)((*itrCircles)[0]/280.0*100));
 
         }
         if(ui->vrParticleControl->isChecked()){
             //we have a detection and particle control is enabled, set the slider
-            ui->vrParticleSlider->setValue((int)(((*itrCircles)[1]/157.0)*2000));
+           /* if((*itrCircles)[1] < 1/3.0*(157.0)){
+            //we have a detection and morph control is enabled, set the slider
+                ui->vrParticleSlider->setValue(ui->vrParticleSlider->value()-50);
+            }else if((*itrCircles)[1] > 2/3.0*(157.0)){
+                ui->vrParticleSlider->setValue(ui->vrParticleSlider->value()+50);
+            }*/
+            ui->vrParticleSlider->setValue(2000-(int)((*itrCircles)[1]/157.0*2000));
         }
     }
 
