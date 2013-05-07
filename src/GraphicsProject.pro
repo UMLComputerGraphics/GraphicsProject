@@ -53,6 +53,7 @@ SOURCES += \
         Common/model.cpp \
         Common/modelFunctions.cpp \
         Common/ObjLoader.cpp \
+        Common/Animation.cpp \
         #Common/WiiUtil.cpp\
         Common/Util.cpp \
         #Qt
@@ -67,7 +68,8 @@ SOURCES += \
         # FMOD STUFF {<>,<>}
         Common/soundHelper.cpp
 
-HEADERS  += include/bipartiteGraph.hpp \
+HEADERS  += include/Animation.hpp \
+            include/bipartiteGraph.hpp \
             include/Camera.hpp \
             include/Cameras.hpp \
             include/ColorFunctions.hpp \
