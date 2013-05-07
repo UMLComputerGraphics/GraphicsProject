@@ -101,6 +101,11 @@ public:
    **/
   vector<Light*>* getLights( void );
 
+  /*
+   * Sets the intensity of light at specific index, while preventing doing so in the middle of a render.
+   */
+  void safeSetIntensity(int, float);
+
   /**
    * Pushes a new light onto the global light configuration vector
    * @return void
@@ -348,6 +353,8 @@ private:
   bool _raytraceChanged, _raytraceStatus;
 
   bool _isFullScreen;
+
+  boost::mutex LifeLock;
 
 #ifdef WII
 public:
