@@ -280,7 +280,7 @@ void MONOLITH::slotCurrentView( int num )
 
 void MONOLITH::slotPauseMusic(bool isPaused)
 { // PAUSED => true  ::  UNPAUSED => false
-    ERRCHECK(this->radio->setPaused(isPaused));
+    radio->setPaused(isPaused);
 }
 
 
