@@ -116,6 +116,7 @@ public:
 
     RectangularMapping * _rectangularMapping;
     ScaleModel * _scaleModel;
+    bool _morphMatchCalculated;
 
     
 #ifndef WITHOUT_QT

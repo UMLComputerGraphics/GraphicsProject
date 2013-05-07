@@ -841,6 +841,11 @@ Angel::vec3 Object::getMin( void ) {
 
 }
 
+void Object::sceneToRaytracer( RayTracer &rt ) {
+  rt.addTransformation( _trans.otm() );
+  Scene::sceneToRaytracer( rt );
+}
+
 #define vec3ify( invec ) vec3( invec.x, invec.y, invec.z )
 void Object::bufferToRaytracer( RayTracer &rt ) {
 
