@@ -32,6 +32,8 @@ MainWindow::MainWindow(QWidget *parent) :
             this, SIGNAL(sigMorphPercentage(int)));
     connect(ui->vrParticleSlider, SIGNAL(valueChanged(int)),
             this, SIGNAL(sigChangeNumberOfParticles(int)));
+    connect(ui->vrEnabler, SIGNAL(toggled(bool)),
+            this, SLOT(slotEnableVR(bool)));
 
 
     connect(ui->morphPercentageSlider, SIGNAL(valueChanged(int)),
@@ -87,17 +89,25 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->rangeSlider->setSliderPosition( 24 );
 
     connect(ui->currentViewComboBox, SIGNAL(currentIndexChanged(int)), this, SIGNAL(sigChangeCurrentView(int)));
-    capWebcam.open(0);
 
-    if(capWebcam.isOpened() == false)
-    {
-        return;
+}
+
+void MainWindow::slotEnableVR(bool isEnabled){
+    if((isEnabled)&&(capWebcam.isOpened() == false)){
+        capWebcam.open(0);
+
+        if(capWebcam.isOpened() == false)
+        {
+            return;
+        }
+
+        tmrTimer = new QTimer(this);
+        connect(tmrTimer, SIGNAL(timeout()), this, SLOT(processFrameAndUpdateGUI()));
+        tmrTimer->start(20);
+        ui->vrEnabler->setEnabled(false);
+    }else{
+        //capWebcam.release();
     }
-
-    tmrTimer = new QTimer(this);
-    connect(tmrTimer, SIGNAL(timeout()), this, SLOT(processFrameAndUpdateGUI()));
-    tmrTimer->start(20);
-
 }
 
 void MainWindow::setMorphPercentageOut(int pct)
