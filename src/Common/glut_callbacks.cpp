@@ -182,7 +182,7 @@ void engineKeyboard( unsigned char key, int x, int y ) {
 
   case 'r':
 	//testing stopAll function
-	cam.resetPosition();
+    cam.pos(2.0, 5.0, 9.0);
     break;
 
   case 't':
