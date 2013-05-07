@@ -449,12 +449,16 @@ void Camera::send( Object::UniformEnum which ) {
     Object::send( which );
     break;
   }
+
+  if (glGetError()) {
+    gprint( PRINT_ERROR, "Camera::send() failed for %s[%u], handle was %u\n",
+	    name().c_str(), which, _handles[which] );
+  }
 }
 
 void Camera::view( void ) {
   
-  glViewport( _viewportPosition.x, _viewportPosition.y, _viewportSize.x,
-              _viewportSize.y );
+  glViewport( _viewportPosition.x, _viewportPosition.y, _viewportSize.x, _viewportSize.y );
   /* send all of our matrices, who knows what the shader's gonna do with 'em */
   send( TRANSLATION );
   send( ROTATION );
