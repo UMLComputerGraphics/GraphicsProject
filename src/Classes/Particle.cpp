@@ -40,13 +40,13 @@ Particle::~Particle() {
 void Particle::updateSelf( void ) {
 
   // use the timer so the particle movement will look the same for everyone
-  float scale = tick.scale() ;
+  //float scale = tick.scale() ;
 
-  _pos.x += _vel.x * scale ;
-  _pos.y += _vel.y * scale ;
-  _pos.z += _vel.z * scale ;
+  _pos.x += _vel.x ;//* scale ;
+  _pos.y += _vel.y ;//* scale ;
+  _pos.z += _vel.z ;//* scale ;
 
-  this->_lifetime -= 0.05 * scale;
+  this->_lifetime -= 0.05 ;//* scale;
   //increase alive time (not lifeSPAN)
   //if ( _lifetime <= 0.0 ) _pos.x = _pos.y = _pos.z = 0.0 ;
 

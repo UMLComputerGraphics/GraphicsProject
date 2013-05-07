@@ -434,7 +434,7 @@ ParticleSystem::setEmitterRadius( float r )
 }
 
 
-void hideParticle(Particle *p ) {  p->setAlpha(0.0); }
+void hideParticle(Particle *p) {  p->setAlpha(0.0); }
 
 //Update the particles in our system >>> AND ALSO UPDATE OUR DRAW BUFFER
 void
@@ -443,7 +443,13 @@ ParticleSystem::update() {
 	// used to stagger the creation of particles
 	static unsigned currFillFrame=0;
 
-	int numRespawnsThisFrame = 33 ;
+	const int averageFrameLifetime = 10 * (_minLife+_maxLife) ;
+
+	int numRespawnsThisFrame ;
+
+	// The answer lies in one of these two functions... BUT WHICH ONE??
+	numRespawnsThisFrame = this->getNumParticles()/averageFrameLifetime ;
+	//numRespawnsThisFrame = this->getNumParticlesActual()/(averageFrameLifetime) ;
 
 	this->_emitterLoc.calcCTM();
 
@@ -485,7 +491,7 @@ ParticleSystem::update() {
 		if( ((*i)->getLifetime() <= 0.0)
 		/*|| ((*i)->getPosition().y >= maxHeight)*/ ) 
 		{
-
+		  
 		  if( numRespawnsThisFrame )
 		  {
 		          respawnParticle(**i)  ;
