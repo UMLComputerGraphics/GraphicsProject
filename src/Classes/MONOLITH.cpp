@@ -499,12 +499,14 @@ void MONOLITH::run() {
   
 #ifndef WITHOUT_QT
 #ifndef __APPLE__
-  printf("LOOPING!\n");
-  glutMainLoop(); // on Linux the glutMaintLoop is called here when using Qt
+  // on Linux the glutMaintLoop is called here when using Qt
+  Engine::run();
+  //glutMainLoop(); 
 #endif
 #else
-  printf("LOOPING!\n");
-  glutMainLoop(); // if we are not using Qt, the glutMainLoop is called here for both platforms.
+  // if we are not using Qt, the glutMainLoop is called here for both platforms.
+  Engine::run();
+  //glutMainLoop(); 
 #endif
 }
 
