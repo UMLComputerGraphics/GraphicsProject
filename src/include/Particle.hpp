@@ -40,6 +40,7 @@ public:
   void  setPos( vec4 newPos );
   void  setScale( vec3 newScale );
   void  setVel( vec3 newVel );
+  void  setRespawnFlag( bool );
 
   // getters
   vec4  getPosition( void );
@@ -47,6 +48,7 @@ public:
   float getLifetime( void );
   float setAlpha( void ) ;
   vec4 getColor( void );
+  bool getRespawnFlag( void );
   //void setSpin( float newSpin );
 
   void updateSelf( void );
@@ -58,6 +60,7 @@ private:
   vec4   _color;
   float  _lifetime;
   float  _maxLifetime;
+  bool   _respawnFlag;
   //  float spin;
 
 };

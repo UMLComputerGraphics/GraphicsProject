@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>578</width>
+    <width>627</width>
     <height>683</height>
    </rect>
   </property>
@@ -22,12 +22,12 @@
      <rect>
       <x>13</x>
       <y>10</y>
-      <width>551</width>
+      <width>601</width>
       <height>695</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>5</number>
+     <number>6</number>
     </property>
     <widget class="QWidget" name="generalTab">
      <attribute name="title">
@@ -413,6 +413,91 @@
      <zorder>fullScreenLabel</zorder>
      <zorder>layoutWidget</zorder>
      <zorder>layoutWidget</zorder>
+    </widget>
+    <widget class="QWidget" name="audioTab">
+     <attribute name="title">
+      <string>Audio</string>
+     </attribute>
+     <widget class="QCheckBox" name="audioOnCheckbox">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>20</y>
+        <width>87</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Auido On</string>
+      </property>
+      <property name="tristate">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QWidget" name="layoutWidget_4">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>70</y>
+        <width>101</width>
+        <height>261</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="dopplerLayout">
+       <item>
+        <widget class="QLabel" name="dopplerLabel">
+         <property name="text">
+          <string>Doppler Effect</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSlider" name="dopplerSlider">
+         <property name="maximum">
+          <number>100</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="tickPosition">
+          <enum>QSlider::TicksBelow</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>70</y>
+        <width>55</width>
+        <height>261</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="volumeLayout">
+       <item>
+        <widget class="QLabel" name="volumeLabel">
+         <property name="text">
+          <string>Volume</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSlider" name="verticalSlider">
+         <property name="maximum">
+          <number>100</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="tickPosition">
+          <enum>QSlider::TicksBelow</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
     <widget class="QWidget" name="particleTab">
      <attribute name="title">
@@ -1069,6 +1154,12 @@
             <height>20</height>
            </size>
           </property>
+          <property name="verticalScrollBarPolicy">
+           <enum>Qt::ScrollBarAlwaysOff</enum>
+          </property>
+          <property name="horizontalScrollBarPolicy">
+           <enum>Qt::ScrollBarAlwaysOff</enum>
+          </property>
          </widget>
         </item>
         <item row="1" column="0">
@@ -1091,6 +1182,12 @@
             <width>100</width>
             <height>20</height>
            </size>
+          </property>
+          <property name="verticalScrollBarPolicy">
+           <enum>Qt::ScrollBarAlwaysOff</enum>
+          </property>
+          <property name="horizontalScrollBarPolicy">
+           <enum>Qt::ScrollBarAlwaysOff</enum>
           </property>
          </widget>
         </item>
@@ -1115,9 +1212,149 @@
             <height>20</height>
            </size>
           </property>
+          <property name="verticalScrollBarPolicy">
+           <enum>Qt::ScrollBarAlwaysOff</enum>
+          </property>
+          <property name="horizontalScrollBarPolicy">
+           <enum>Qt::ScrollBarAlwaysOff</enum>
+          </property>
          </widget>
         </item>
        </layout>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="lifeSpanGroup">
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>10</y>
+        <width>241</width>
+        <height>151</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string/>
+      </property>
+      <widget class="QLabel" name="lifeSpanLabel">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>91</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Life Span</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="minLifeLabel">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>40</y>
+         <width>71</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Minimum</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="maxLifeLabel">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>70</y>
+         <width>71</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Maximum</string>
+       </property>
+      </widget>
+      <widget class="QPlainTextEdit" name="minLifeInput">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>40</y>
+         <width>100</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>100</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>100</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="verticalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+       </property>
+       <property name="horizontalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+       </property>
+      </widget>
+      <widget class="QPlainTextEdit" name="maxLifeInput">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>70</y>
+         <width>100</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>100</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>100</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="verticalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+       </property>
+       <property name="horizontalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="defaultLifespansButton">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>100</y>
+         <width>114</width>
+         <height>32</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Default</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="setLifespansButton">
+       <property name="geometry">
+        <rect>
+         <x>120</x>
+         <y>100</y>
+         <width>114</width>
+         <height>32</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Set</string>
+       </property>
       </widget>
      </widget>
     </widget>
@@ -1272,6 +1509,9 @@
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
           <widget class="QCheckBox" name="vrMorphControl">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
            <property name="text">
             <string>Enable Morph Control</string>
            </property>
@@ -1316,9 +1556,9 @@
       <property name="geometry">
        <rect>
         <x>140</x>
-        <y>360</y>
+        <y>310</y>
         <width>280</width>
-        <height>210</height>
+        <height>157</height>
        </rect>
       </property>
       <property name="autoFillBackground">
@@ -1334,7 +1574,7 @@
         <x>140</x>
         <y>120</y>
         <width>280</width>
-        <height>210</height>
+        <height>157</height>
        </rect>
       </property>
       <property name="autoFillBackground">
@@ -1361,7 +1601,7 @@
       <property name="geometry">
        <rect>
         <x>220</x>
-        <y>340</y>
+        <y>290</y>
         <width>111</width>
         <height>16</height>
        </rect>
@@ -1370,12 +1610,6 @@
        <string>Processed Video</string>
       </property>
      </widget>
-     <zorder>verticalLayoutWidget_2</zorder>
-     <zorder>horizontalLayoutWidget</zorder>
-     <zorder>lblProcessed</zorder>
-     <zorder>lblOriginal</zorder>
-     <zorder>label_9</zorder>
-     <zorder>label_10</zorder>
     </widget>
    </widget>
   </widget>
@@ -1384,7 +1618,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>578</width>
+     <width>627</width>
      <height>22</height>
     </rect>
    </property>

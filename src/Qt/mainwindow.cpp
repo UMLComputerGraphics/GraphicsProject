@@ -84,6 +84,7 @@ MainWindow::MainWindow(QWidget *parent) :
     tmrTimer = new QTimer(this);
     connect(tmrTimer, SIGNAL(timeout()), this, SLOT(processFrameAndUpdateGUI()));
     tmrTimer->start(20);
+
 }
 
 void MainWindow::setMorphPercentageOut(int pct)
@@ -171,15 +172,30 @@ void MainWindow::on_tornadoDefaultButton_clicked()
     sigTornadoVecParams();
 }
 
+void MainWindow::on_setLifespansButton_clicked()
+{
+    float min = ui->minLifeInput->toPlainText().toDouble();
+    float max = ui->maxLifeInput->toPlainText().toDouble();
+
+    sigSetParticleLife( min, max );
+}
+
+void MainWindow::on_defaultLifespansButton_clicked()
+{
+    sigSetParticleLife( 9.0, 12.0 );
+}
+
 void MainWindow::processFrameAndUpdateGUI()
 {
     capWebcam.read(matOriginal);
+    cv::Size size = cv::Size(280,157);
+    cv::resize(matOriginal,matOriginal,size);
 
     if(matOriginal.empty() == true) return;
 
     cv::inRange(matOriginal, cv::Scalar(0,0,175), cv::Scalar(100,100,256), matProcessed);
     cv::GaussianBlur(matProcessed, matProcessed, cv::Size(9,9), 1.5);
-    cv::HoughCircles(matProcessed, vecCircles, CV_HOUGH_GRADIENT, 2, matProcessed.rows / 4, 100, 50, 10, 400);
+    cv::HoughCircles(matProcessed, vecCircles, CV_HOUGH_GRADIENT, 2, matProcessed.rows / 4, 100, 50, 5, 400);
 
     for(itrCircles = vecCircles.begin(); itrCircles != vecCircles.end(); itrCircles++)
     {
@@ -188,13 +204,18 @@ void MainWindow::processFrameAndUpdateGUI()
         //        QString(", radius = ") + QString::number((*itrCircles)[2], 'f', 3).rightJustified(7, ' '));
         cv::circle(matOriginal, cv::Point((int)(*itrCircles)[0], (int)(*itrCircles)[1]), 3, cv::Scalar(0, 255, 0), CV_FILLED);
         cv::circle(matOriginal, cv::Point((int)(*itrCircles)[0], (int)(*itrCircles)[1]), (int)(*itrCircles)[2], cv::Scalar(0, 0, 255), 3);
-        if(ui->vrMorphControl->isEnabled()){
+        if(ui->vrMorphControl->isChecked()){
+            if((*itrCircles)[0] < 1/3.0*(280.0)){
             //we have a detection and morph control is enabled, set the slider
-            ui->vrMorphSlider->setValue((int)(((*itrCircles)[0]/280.0)*100));
+                ui->vrMorphSlider->setValue(ui->vrMorphSlider->value()-1);
+            }else if((*itrCircles)[0] > 2/3.0*(280)){
+                ui->vrMorphSlider->setValue(ui->vrMorphSlider->value()+1);
+            }
 
-        }else if(ui->vrParticleControl->isEnabled()){
+        }
+        if(ui->vrParticleControl->isChecked()){
             //we have a detection and particle control is enabled, set the slider
-            ui->vrParticleSlider->setValue((int)(((*itrCircles)[0]/280.0)*2000));
+            ui->vrParticleSlider->setValue((int)(((*itrCircles)[1]/157.0)*2000));
         }
     }
 
@@ -205,5 +226,4 @@ void MainWindow::processFrameAndUpdateGUI()
 
     ui->lblOriginal->setPixmap(QPixmap::fromImage(qimgOriginal));
     ui->lblProcessed->setPixmap(QPixmap::fromImage(qimgProcessed));
-
 }
