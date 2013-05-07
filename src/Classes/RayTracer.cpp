@@ -103,8 +103,9 @@ void RayTracer::_display( void ) {
   glUniform3fv( _uLightSpecular, _numberOfLights, _lightSpecular );
 
   glUniform1i( _uNumSGTransformations, _sceneData.size() );
-  glUniformMatrix4fv( _uSceneGraphTransformations, _sceneData.size(),
-		      GL_TRUE, (GLfloat*)&(_sceneData.at(0)) );
+  if (_sceneData.size() > 0)
+    glUniformMatrix4fv( _uSceneGraphTransformations, _sceneData.size(),
+			GL_TRUE, (GLfloat*)&(_sceneData.at(0)) );
 
   static const GLfloat vertices[] = { 1.0, 1.0, -1.0, 1.0, 1.0, -1.0, -1.0, -1.0, };
 
@@ -146,6 +147,10 @@ void RayTracer::_display( void ) {
       gprint( PRINT_INFO, "Calculated rebuffer frequency @: %d\n", _rebuffer_frequency );
     }
   }
+
+  // Draw particles-only
+  // Broken >_<
+  // Engine::instance()->rootScene()->draw( false );
 #endif
 }
 

@@ -88,4 +88,7 @@ void EngineMousePassive( int x, int y );
  */
 void engineResize( int width, int height );
 
+void wiilook( Camera &WiiCamera, const Angel::vec3 &NewTheta,
+              const Angel::vec3 &MovementRates );
+
 #endif

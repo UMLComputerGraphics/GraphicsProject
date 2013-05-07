@@ -376,13 +376,14 @@ void MONOLITH::run() {
   //load radio model
   Object *radio;
   radio = rootScene->addObject( "radio", noMorphShader );
-  ObjLoader::loadModelFromFile( radio, "../models/radio-ntx.obj" );
-  ObjLoader::loadMaterialFromFile( radio, "../models/radio-ntx.obj" );
+  ObjLoader::loadModelFromFile( radio, "../models/radio-tx.obj" );
+  ObjLoader::loadMaterialFromFile( radio, "../models/radio-tx.mtl" );
   glUniform1i(glGetUniformLocation(radio->shader(),"letMeSeeThatPhong"),1);
 
   radio->_trans._offset.set( 9.0, 2.0, -7.0);
   radio->_trans._rotation.rotateY( -45.0, true );
 
+  radio->texture("../Textures/texture_radio.png");
   radio->propagateOLD();
   radio->buffer();
 
@@ -545,8 +546,8 @@ void MONOLITH::raytraceStatusChanged(bool newstatus)
     //ITERATE OVER ALL OBJS IN SCENE!
 
     Engine::instance()->rootScene()->bufferToRaytracer( rt );
+    Engine::instance()->rootScene()->sceneToRaytracer( rt );
     rt.pushDataToBuffer();
-    //    rt.genereateScene(objs);
   }
   else
   {

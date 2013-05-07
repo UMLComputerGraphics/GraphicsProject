@@ -92,7 +92,10 @@ void engineKeyboard( unsigned char key, int x, int y ) {
   
 #ifdef WII
   // Hacky, for the wii reset, below.
-  Camera *wiiCam = dynamic_cast< Camera* >((*camList)["AutoCamera2"] );
+  Camera *wiiCam = NULL;
+  try {
+    Camera *wiiCam = dynamic_cast< Camera* >((*camList)["AutoCamera2"] );
+  } catch ( ... ) { }
 #endif
   
   switch ( key ) {
@@ -113,7 +116,7 @@ void engineKeyboard( unsigned char key, int x, int y ) {
     
   case '~':
 #ifdef WII
-    calibrateGyro( Wii );
+    calibrateGyro( Engine::instance()->_wii );
     if (wiiCam) wiiCam->resetRotation();
 #endif
     break;
@@ -380,4 +383,52 @@ void engineResize( int width, int height ) {
     glutWarpPointer( scr->midpointX(), scr->midpointY() );
   }
   
+}
+
+
+/**
+ wiilook is an analog of mouselook, for wii remote controls.
+ It takes a reference to a Camera, and two vec3s,
+ and uses the information to adjust the Camera's _rotation.
+
+ @param WiiCamera The camera to adjust the _rotation of.
+ @param NewTheta  The X,Y,Z angles of the Wii Remote.
+ @param MovementRates The X, Y, Z angular velocities of the Wii Remote.
+
+ @return Void.
+
+**/
+void wiilook( Camera &WiiCamera, const Angel::vec3 &NewTheta,
+              const Angel::vec3 &MovementRates ) {
+
+  static Angel::vec3 OldTheta;
+  static Angel::vec3 accumulated;
+
+  // Rotation Order: Y-X-Z looks the best, I think.
+  //WiiCamera.yaw( NewTheta.y - OldTheta.y );
+  //WiiCamera.pitch( OldTheta.x - NewTheta.x );
+  //WiiCamera.roll( NewTheta.z - OldTheta.z );
+  float yaw = -MovementRates.y / 20;
+  float pitch = -MovementRates.x / 20;
+  float roll = MovementRates.z / 20;
+
+  accumulated += vec3( yaw, pitch, roll );
+
+  if ( abs(accumulated.x) >= 0.1 ) {
+    WiiCamera.yaw( accumulated.x, Engine::instance()->opt( "fixed_yaw" ) );
+    accumulated.x = 0;
+  }
+
+  if ( abs(accumulated.y) >= 0.1 ) {
+    WiiCamera.pitch( accumulated.y );
+    accumulated.y = 0;
+  }
+    
+  if ( abs(accumulated.z) >= 0.1 ) {
+    WiiCamera.roll( accumulated.z );
+    accumulated.z = 0;
+  }
+  
+  OldTheta = NewTheta;
+
 }
