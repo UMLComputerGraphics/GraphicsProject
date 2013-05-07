@@ -24,6 +24,10 @@ public:
 public slots:
     void processFrameAndUpdateGUI();
 
+private slots:
+    /* VR stuff */
+    void slotEnableVR(bool isEnabled);
+
 signals:
 	/* General Settings */
 	/* Engine */
@@ -41,7 +45,6 @@ signals:
 	void sigCameraSpeed(int value);
 	
 	/* Scene Graph */
-	
 	
     /* Morph stuff */
     void sigMorphPercentage(int value);

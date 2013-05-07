@@ -91,7 +91,7 @@
         <x>10</x>
         <y>20</y>
         <width>165</width>
-        <height>103</height>
+        <height>105</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -120,6 +120,13 @@
         <widget class="QCheckBox" name="particleSystemEnabler">
          <property name="text">
           <string>Light up the Candle</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="vrEnabler">
+         <property name="text">
+          <string>Enable Virtual Reality</string>
          </property>
         </widget>
        </item>
