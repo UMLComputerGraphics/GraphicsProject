@@ -96,7 +96,7 @@ void Particle::setVel( vec3 newVel ) {
   _vel = newVel;
 }
 
-void Particle::setRespawnFlag( bool flag )
+void Particle::setParticleRespawnFlag( bool flag )
 {
     _respawnFlag = flag ;
 }

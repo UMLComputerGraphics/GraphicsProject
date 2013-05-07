@@ -151,7 +151,7 @@ ParticleSystem::respawnParticle(Particle &p)
     if ( p.getRespawnFlag() )
     {
         p.setMaxLifetime( generateLifespan() );
-        p.setRespawnFlag( false );
+        p.setParticleRespawnFlag( false );
     }
     else
     {
@@ -549,7 +549,7 @@ void ParticleSystem::setRespawnFlag( bool flag )
 
     for( i = this->_particles.begin() ; i != this->_particles.end() ; ++i )
     {
-        (*i)->setRespawnFlag( flag );
+        (*i)->setParticleRespawnFlag( flag );
     }
 }
 

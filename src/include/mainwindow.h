@@ -57,7 +57,7 @@ signals:
 	void sigFreezeParticles(bool isEnabled);
     void sigUserDefVecParams( void );
     void sigFlameVecParams( void );
-    void sigFlameVecParams(double[3], double, float, float);
+    void sigFlameVecParams(float[3], double, float, float);
     void sigTornadoVecParams( void );
     void sigTornadoVecParams( float, float, float );
     void sigSetParticleLife( float, float );

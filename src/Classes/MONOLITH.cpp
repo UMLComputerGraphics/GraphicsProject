@@ -174,7 +174,7 @@ void MONOLITH::slotEnableParticleSystem(bool isEnabled)
     }
 }
 
-void MONOLITH::slotUpdateFlameVecFunc(double pos[3], double scale, float power, float range)
+void MONOLITH::slotUpdateFlameVecFunc(float pos[3], double scale, float power, float range)
 {
     ps->setFuncParams(new FlameParameters( vec3(pos[0], pos[1], pos[2]), scale, power, range));
     ps->setVectorField( ParticleFieldFunctions::flame );

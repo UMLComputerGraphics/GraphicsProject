@@ -63,8 +63,8 @@ int main( int argc, char **argv ) {
   QObject::connect(&w, SIGNAL(sigSetFrictionMagnitude(int)), &monolith, SLOT(slotFriction(int)));
   QObject::connect(&w, SIGNAL(sigCameraSpeed(int)), &monolith, SLOT(slotSpeed(int)));
   QObject::connect(&w, SIGNAL(sigSetMaxSpeed(int)), &monolith, SLOT(slotMaxSpeed(int)));
-  QObject::connect(&w, SIGNAL(sigFlameVecParams(double[3],double,float,float)),
-                   &monolith, SLOT(slotUpdateFlameVecFunc(double[3], double, float, float)));
+  QObject::connect(&w, SIGNAL(sigFlameVecParams(float[3],double,float,float)),
+                   &monolith, SLOT(slotUpdateFlameVecFunc(float[3], double, float, float)));
   QObject::connect(&w, SIGNAL(sigChangeCurrentView(int)), &monolith, SLOT(slotCurrentView(int))) ;
   QObject::connect(&w, SIGNAL(sigFlameVecParams()), &monolith, SLOT(slotUpdateFlameVecFunc()));
   QObject::connect(&w, SIGNAL(sigTornadoVecParams(float,float,float)),
