@@ -74,6 +74,12 @@ void Transformation::combine( Transformation *rhs ) {
 
 /* ROTATION */
 
+RotMat::RotMat( float rx, float ry, float rz ) {
+  rotateX( rx );
+  rotateY( ry );
+  rotateZ( rz );
+}
+
 const RotMat &RotMat::reset( const Angel::mat4 &NewState ) {
   _mat = NewState;
   return (*this);
@@ -205,6 +211,13 @@ Transformation *TransMat::newCopy( void ) const {
 }
 
 /* SCALE */
+
+ScaleMat::ScaleMat( float amt ) {
+  set( amt );
+}
+ScaleMat::ScaleMat( float x, float y, float z ) {
+  set( x, y, z );
+}
 
 const ScaleMat &ScaleMat::set( const float x, const float y, const float z ) {
   

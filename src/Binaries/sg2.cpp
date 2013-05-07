@@ -14,19 +14,15 @@
 #include "Engine.hpp"
 #include "Animation.hpp"
 
-void candleMelt( TransCache &obj ) {
-
-  ScaleMat melt;
-  melt.inheritable( false );
-  melt.adjust( 1.0, pow(0.999, tick.scale()), 1.0 );
-  obj.push( melt );
-
-}
-
 void sgIdle( void ) {
-  //Scene *s = Engine::instance()->rootScene();
-  //Object *candle = s->search( "candle" );
-  //candle->animation( candleMelt );
+  Scene *s = Engine::instance()->rootScene();
+
+  // Candle Melting Animation
+  Object *candle = s->search( "candle" );
+  Object *candletip = s->search( "candletip" );
+  float adj = Animation::scaleBottomFixed( candle, pow(0.999, tick.scale()) );
+  candletip->_trans.push( TransMat( 0, adj, 0 ) );
+
 }
 
 void act_one( void ) {

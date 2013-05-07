@@ -36,8 +36,8 @@
 
 using namespace std;
 
-int ::ledMap[4] = { CWiimote::LED_1, CWiimote::LED_2, CWiimote::LED_3,
-                    CWiimote::LED_4 };
+int ledMap[4] = { CWiimote::LED_1, CWiimote::LED_2, CWiimote::LED_3,
+		  CWiimote::LED_4 };
 
 void HandleEvent( CWiimote &wm ) {
   char prefixString[64];

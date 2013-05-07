@@ -29,6 +29,7 @@
 #include "model.hpp"
 #include "InitShader.hpp"
 #include "ObjLoader.hpp"
+#include "Animation.hpp"
 #ifdef WII
 #include <wiicpp.h>
 #include "WiiUtil.h"

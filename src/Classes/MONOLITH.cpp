@@ -65,44 +65,34 @@ bool heisenbergUncertaintyPrinciple;
 void MONOLITH::monolith_idle(void)
 {
     static Scene *rootScene = Engine::instance()->rootScene();
+    Object *bottle = rootScene->search("bottle");
     
     // Animation variables.
     double timer = glutGet( GLUT_ELAPSED_TIME ) / 500.0;
     float percent = (sin( timer ) + 1.0) / 2.0;
     
-    Object &candle = *((*rootScene)["bottle"]);
-    candle.animation( simpleRotateAnim );
-
-    //(*rootScene)["candle_top"]->morphPercentage(percent);
-
-    /*
-	  Object &candle_base = *((*rootScene)["candle_base"]);
-	  Object &candle_top = *((*rootScene)["candle_top"]);
-	  candle_base.animation( candleMeltAnim );
-	  candle_top.animation(candleTopMeltDown);
-	*/
+    //Object &candle = *((*rootScene)["bottle"]);
+    //candle.animation( simpleRotateAnim );
     
     // Update the morph percentage.
-    if((*rootScene)["bottle"]->morphEnabled())
-    {
-        (*rootScene)["bottle"]->morphPercentage(percent);
+    if (bottle && (bottle->morphEnabled())) {
+      bottle->morphPercentage(percent);
 
 #ifndef WITHOUT_QT
-        int pct = (int)floor(percent * 100.0);
-        if (_percentageCallback)
-        {
-          //prevents the slider event from being handled when the slider's value is set programatically.
-          //  (the position and velocity of a subatomic particle can't be known simultaneously)
-          heisenbergUncertaintyPrinciple = true;
-          _percentageCallback(pct);
-          heisenbergUncertaintyPrinciple = false;
-        }
+      int pct = (int)floor(percent * 100.0);
+      if (_percentageCallback) {
+	//prevents the slider event from being handled when the slider's value is set programatically.
+	//  (the position and velocity of a subatomic particle can't be known simultaneously)
+	heisenbergUncertaintyPrinciple = true;
+	_percentageCallback(pct);
+	heisenbergUncertaintyPrinciple = false;
+      }
 #endif
     }
-
+    
     soundHelper::updateListener(  Engine::instance()->mainScreen()->_camList.active(),
 				  this->fSystem);
-
+    
 }
 
 #ifndef WITHOUT_QT
@@ -304,29 +294,40 @@ void MONOLITH::run() {
   GLint particleShader = shader[2];
   GLint raytraceShader = shader[3];
 
+  glUniform1i( glGetUniformLocation( morphingShader, "letMeSeeThatPhong" ), 1 );
+  glUniform1i( glGetUniformLocation( noMorphShader, "letMeSeeThatPhong" ), 1 );
+
+
   tick.setTimeUniform( glGetUniformLocation( morphingShader, "ftime" ) );
   tick.setTimeUniform( glGetUniformLocation( noMorphShader, "ftime" ) );
   if (raytraceShader)
     tick.setTimeUniform( glGetUniformLocation( raytraceShader, "ftime" ) );
 
-  // --- Wine Bottle --- //
-  
-  // Create the Bottle Object handle...
-  bottle = rootScene->addObject( "bottle", morphingShader );
+  // ============ Object Placement / Scene Generation ============
 
-  // Load model from file.
+
+  // ************ Table ************
+  Object *table;
+  table = rootScene->addObject( "table", noMorphShader );
+  ObjLoader::loadModelFromFile(table, "../models/table_tx.obj");
+  ObjLoader::loadMaterialFromFile(table, "../models/table_tx.mtl");
+  table->texture("../Textures/texture_wood.png");
+  Animation::seekTopTo( table, 0 );
+  table->buffer();
+
+
+  // ************ Wine Bottle ************
+  bottle = table->addObject( "bottle", morphingShader );
   ObjLoader::loadModelFromFile( bottle, "../models/bottle_wine_high.obj" );
   ObjLoader::loadMaterialFromFile( bottle, "../models/bottle_wine_high.mtl" );
-  //bottle->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
+  Animation::seekBottomTo( bottle, 0.001 );
 
   bottle->genMorphTarget();
   Object *bottleMorphTarget = bottle->morphTarget();
   ObjLoader::loadModelFromFile( bottleMorphTarget, "../models/bottle_liquor_high3.obj" );
   ObjLoader::loadMaterialFromFile( bottleMorphTarget, "../models/bottle_liquor_high.mtl" );
-  //bottleMorphTarget->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
+  Animation::seekBottomTo( bottleMorphTarget, 0.001 );
 
-  //Morphing Items
-  //Scale source and destination height to unit 0-1
   static const bool useZachMorphing = false;
   if (useZachMorphing) {
     int heightScale = 10;
@@ -334,139 +335,68 @@ void MONOLITH::run() {
     int depthScale = 1;
     _scaleModel = new ScaleModel(bottle, bottleMorphTarget,widthScale,heightScale,depthScale);
     _rectangularMapping = new RectangularMapping(bottle,bottleMorphTarget);
-    //_rectangularMapping->copyToObjects(bottle,bottleMorphTarget);
-    
-    //Rescale models to original size
     _scaleModel->restoreModels();
     _morphMatchCalculated = true;
-  }else{
-	  _morphMatchCalculated = false;
+  } else {
+    _morphMatchCalculated = false;
   }
-
-  // Scale the bottle down!
-  //bottle->_trans._scale.set( 0.30 );
-  vec4 min = bottle->getMin();
-  bottle->_trans._offset.set( 0, (0 - min.y), 0 );
   bottle->buffer();
-  bottle->propagateOLD();
 
-  // this obscure allusion to "the thong song" brought to you by Eric McCann
-  glUniform1i( glGetUniformLocation( bottle->shader(), "letMeSeeThatPhong" ), 1 );
-  
-  // Let the bodies hit the table
-  Object *table;
-  table = rootScene->addObject( "table", noMorphShader );
-  ObjLoader::loadModelFromFile(table, "../models/table_tx.obj");
-  ObjLoader::loadMaterialFromFile(table, "../models/table_tx.mtl");
-  glUniform1i( glGetUniformLocation( table->shader(), "letMeSeeThatPhong" ), 1 );
-  //table->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
-  table->texture("../Textures/texture_wood.png");
-  table->buffer();
 
-  fprintf(stderr, "table! (%f, %f, %f)\n", table->getMax().x, table->getMax().y, table->getMax().z);
-  
-  //load radio model
+  // ************ Radio ************
   Object *radio;
-  radio = rootScene->addObject( "radio", noMorphShader );
+  radio = table->addObject( "radio", noMorphShader );
   ObjLoader::loadModelFromFile( radio, "../models/radio-tx.obj" );
   ObjLoader::loadMaterialFromFile( radio, "../models/radio-tx.mtl" );
-  glUniform1i(glGetUniformLocation(radio->shader(),"letMeSeeThatPhong"),1);
-
-  radio->_trans._offset.set( 9.0, 2.0, -7.0);
-  radio->_trans._rotation.rotateY( -45.0, true );
-
   radio->texture("../Textures/texture_radio.png");
-  radio->propagateOLD();
+  Animation::seekBottomTo( radio, 0.001 );
+  radio->_trans.push( RotMat( 0.0, -45.0, 0.0 ) );
+  radio->_trans.push( TransMat( 9.0, 0.0, -7.0 ) );
   radio->buffer();
 
-  // Load up that candle
-  Object *stick;
-  Object *candle_top;
-  Object *candle_base;
 
-  //candle_top = rootScene->addObject( "candle_top", morphingShader );
-  candle_top = rootScene->addObject( "candle_top", noMorphShader );
-  candle_base = rootScene->addObject("candle_base", noMorphShader );
-  stick = rootScene->addObject("stick", noMorphShader );
+  // ************ Candlestick ************
+  Object *candlestick = table->addObject( "candlestick", noMorphShader );
+  ObjLoader::loadModelFromFile(candlestick, "../models/candlestick.obj");
+  ObjLoader::loadMaterialFromFile(candlestick, "../models/candlestick.mtl");
+  Animation::seekBottomTo( candlestick, 0.001 );
+  candlestick->_trans.push( TransMat( 2.5, 0, 2.5 ) );
+  candlestick->buffer();
 
-  ObjLoader::loadModelFromFile( candle_top, "../models/candle_top_unmelted.obj" );
-  ObjLoader::loadMaterialFromFile( candle_top, "../models/candle.mtl" );
-  ObjLoader::loadModelFromFile(candle_base, "../models/candle_bottom.obj");
-  ObjLoader::loadMaterialFromFile( candle_base, "../models/candle.mtl" );
-  ObjLoader::loadModelFromFile(stick, "../models/candlestick.obj");
-  ObjLoader::loadMaterialFromFile(stick, "../models/candlestick.mtl");
 
-  /*
-  candle_top->genMorphTarget();
-  Object *candle_top_melted = candle_top->morphTarget();
-  ObjLoader::loadModelFromFile(candle_top_melted, "../models/candle_top_melted.obj");
-  ObjLoader::loadMaterialFromFile(candle_top_melted, "../models/candle.mtl");
-  */
+  // ************ Candle ************
+  Object *candle = candlestick->addObject( "candle", noMorphShader );
+  ObjLoader::loadModelFromFile( candle, "../models/candle_bottom.obj");
+  ObjLoader::loadMaterialFromFile( candle, "../models/candle.mtl" );
+  candle->buffer();
 
-  //candle_top->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
-  //candle_base->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
-  //stick->setLights(lightAmbient, &numLights, lightPositions, lightDiffuse, lightSpecular);
 
-  glUniform1i(glGetUniformLocation(candle_top->shader(),"letMeSeeThatPhong"),1);
-  glUniform1i(glGetUniformLocation(candle_base->shader(),"letMeSeeThatPhong"),1);
-  glUniform1i(glGetUniformLocation(stick->shader(),"letMeSeeThatPhong"),1);
-  //glUniform1i(glGetUniformLocation(candle_top_melted->shader(),"letMeSeeThatPhong"),1);
+  // ************ Candletip ************
+  Object *candletip = candle->addObject( "candletip", noMorphShader );
+  ObjLoader::loadModelFromFile( candletip, "../models/candle_top_unmelted.obj" );
+  ObjLoader::loadMaterialFromFile( candletip, "../models/candle.mtl" );
+  candletip->buffer();
 
-  min = candle_base->getMin();
-  vec4 max = stick->getMax();
-  fprintf( stderr, "Min: (%f,%f,%f)\nMax: (%f,%f,%f)\n", min.x, min.y, min.z,
-           max.x, max.y, max.z );
-  candle_top->_trans._offset.set( 2.5, max.y - 4.4, 2.5 );
-  candle_base->_trans._offset.set( 2.5, max.y - 4.4, 2.5 );
-  stick->_trans._offset.set( 2.5, 0, 2.5);
 
-  /*
-  ScaleModel * scaleModelCandle = new ScaleModel(candle_top, candle_top_melted,widthScale,heightScale,depthScale);
-  RectangularMapping * rectangularMappingCandle = new RectangularMapping(candle_top, candle_top_melted);
-  rectangularMappingCandle->copyToObjects(candle_top, candle_top_melted);
-  rectangularMappingCandle->revertToOriginal(candle_top, candle_top_melted);
-  scaleModelCandle->restoreModels();
-  */
-
-  candle_top->propagateOLD();
-  candle_base->propagateOLD();
-  stick->propagateOLD();
-
-  candle_top->buffer();
-  candle_base->buffer();
-  stick->buffer();
-  //candle_top_melted->buffer();
-
-  stick->insertObject(candle_top);
-  stick->insertObject(candle_base);
-
-  max = candle_top->getMax();
-
-  #ifndef WITHOUT_QT
+  // ************ Particle System ************
+#ifndef WITHOUT_QT
   ps = new ParticleSystem(0, "ps1", particleShader);
-  #else
+#else
   ps = new ParticleSystem( _defaultNumberOfParticles, "ps1", particleShader );
-  #endif
+#endif
 
   ps->setLifespan( 9.0, 12.0 );
-  ps->setVectorField( ParticleFieldFunctions::flame);
-  ps->setColorFunc(   ColorFunctions::flame );
+  ps->setVectorField( ParticleFieldFunctions::flame );
+  ps->setColorFunc( ColorFunctions::flame );
   ps->setEmitterRadius( 0.05 );
-  candle_top->insertObject( ps );
-  ps->_trans._offset.set( 0, max.y - 0.02 , 0 );
-  ps->_trans._scale.set( 1.5 );
+  candletip->insertObject( ps );
+  ps->_trans.push( ScaleMat( 1.5 ) );
+  /** We're going to move the flame roughly 75% into the candletip. **/
+  float heightAdj = (0.25) * (candletip->getMax().y - candletip->getMin().y);
+  ps->_trans.push( TransMat( 0, candletip->getMax().y - heightAdj, 0 ) );
   ps->setEmitterShape(PS_HEMI_D);
-
- /* If you fill the system, the flame will have a non-flamelike pulsing effect. 
-    Please don't!
- */
-  //ps->fillSystemWithParticles(); 
-
-  //ps->propagateOLD();
-  candle_top->propagateOLD();
-  
-  //Make the particles look bigger and awesomer
   glPointSize( 1.8 );
+
 
   Engine::instance()->cams()->active()->pos(2.0, 5.0, 9.0);
   
@@ -475,7 +405,6 @@ void MONOLITH::run() {
 
   // need this for smoothness
   glShadeModel(GL_SMOOTH);
-
 
   soundHelper::play3dSound( vec4(-9.0,2.0,7.0,1.0), 
 			    vec4(0.0,0.0,0.0,1.0), 

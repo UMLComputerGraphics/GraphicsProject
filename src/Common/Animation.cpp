@@ -4,7 +4,7 @@
 #include "Transformation.hpp"
 #include "TransCache.hpp"
 
-void Animation::seekTopTo( Object *obj, int y ) {
+void Animation::seekTopTo( Object *obj, float y ) {
 
   TransMat initialPlacement;
   initialPlacement.inheritable( false );
@@ -13,12 +13,34 @@ void Animation::seekTopTo( Object *obj, int y ) {
 
 }
 
-
-void Animation::seekBottomTo( Object *obj, int y ) {
+void Animation::seekBottomTo( Object *obj, float y ) {
 
   TransMat initialPlacement;
   initialPlacement.inheritable( false );
   initialPlacement.set( 0, y - obj->getMin().y, 0 );
   obj->_trans.push( initialPlacement );
+
+}
+
+float Animation::scaleBottomFixed( Object *obj, float scaleAmt ) {
+
+  // This is where the minimum coordinates are, right now ...
+  vec4 min = obj->_trans.otm() * vec4( obj->getMin(), 1.0 );
+  vec4 max = obj->_trans.otm() * vec4( obj->getMax(), 1.0 );
+
+  float height = max.y - min.y;
+  float yAdjustment = min.y - (scaleAmt * min.y);
+
+  fprintf( stderr, "scaleAmt: %f\n", scaleAmt );
+  ScaleMat shrink( 1, scaleAmt, 1 );
+  shrink.inheritable( false );
+  TransMat adjustment;
+  adjustment.set( 0, yAdjustment, 0 );
+  adjustment.inheritable( false );
+
+  obj->_trans.push( shrink );
+  obj->_trans.push( adjustment );
+
+  return -((1 - scaleAmt) * height);
 
 }
