@@ -34,7 +34,9 @@ class RayTracer {
   void setMinMax( vec3 &min, vec3 &max, triangle_t &t );
   void addTriangle( const vec3& a, const vec3& b, const vec3& c,
 		    const vec3& diffuse, const vec3& ambient, const vec3& specular,
-		    float shininess, float reflect, float refract);
+		    float shininess, float reflect, float refract,
+		    vec3 normal = vec3(-INFINITY,-INFINITY,-INFINITY) );
+
   void pushTriangleDataToBuffer( std::vector<GLfloat> &dataBuffer,
 				 std::vector<triangle_t> &triangleBuffer,
 				 size_t start, size_t count );

@@ -176,7 +176,7 @@ void soundHelper::updateListener(vec4 pos,     vec3 vel,
    #endif
    */
 
-  float framesToSeconds = tick.scale() / 5000;
+  float framesToSeconds = tick.scale() / 1250;
 
   FVvel.x *= framesToSeconds;
   FVvel.y *= framesToSeconds;

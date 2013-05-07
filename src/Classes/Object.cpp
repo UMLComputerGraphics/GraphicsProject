@@ -841,51 +841,61 @@ Angel::vec3 Object::getMin( void ) {
 
 }
 
+#define vec3ify( invec ) vec3( invec.x, invec.y, invec.z )
 void Object::bufferToRaytracer( RayTracer &rt ) {
 
   vec3 diffuse, ambient, specular;
   float shininess, refract;
+  const float reflect = 0.5;
 
   // If _material doesn't exist, try to use colors.
   // If no colors exist, make a default material.
+  if ((_colors.size() < _vertices.size()) && (_material == NULL)) {
+    _material = new Material();
+    fprintf( stderr, "Using default Material\n" );
+  }
   if (_material) {
+    fprintf( stderr, "Using material properties.\n" );
     diffuse = _material->getDiffuse();
     ambient = _material->getAmbient();
     specular = _material->getSpecular();
     shininess = _material->getShininess();
     refract = _material->getRefract();
-  } else if (_colors.size() < _vertices.size()) {
-    _material = new Material();
   }
 
-  const float reflect = 0.5;
-  
   std::vector< Angel::vec4 >::iterator it;
 
   size_t i = 0;
   for ( it = _vertices.begin(); it != _vertices.end(); ++it, i += 3 ) {
-    vec3 a = vec3( it->x, it->y, it->z );
+    vec4 a = *it;
     if ( ++it == _vertices.end() ) break;
-    vec3 b = vec3( it->x, it->y, it->z );
+    vec4 b = *(it);
     if ( ++it == _vertices.end() ) break;
-    vec3 c = vec3( it->x, it->y, it->z );
+    vec4 c = *(it);
 
-    if (_material)
-      rt.addTriangle( a, b, c, diffuse, ambient, specular, shininess, reflect, refract );
-    else {
-      // TODO: Add color averaging for the facets;
-      // Once RTI works again.
-      rt.addTriangle( a, b, c, vec3(0.0,1.0,0.0), vec3(0.0,0.1,0.0), vec3(0.0,0.0,0.0), 1.0, 0.5, 0.0 );
-
-      /*      vec4 color4 = _colors.at(i) + _colors.at(i+1) + _colors.at(i+2);
-      color = color / 3.0;
-      vec3 color3( color4.x, color4.y, color4.z );
-      rt.addTriangle( a, b, c, color3, color3, color3, 0.0, reflect, 1.0 );*/
+    a = _trans.otm() * a;
+    b = _trans.otm() * b;
+    c = _trans.otm() * c;
+ 
+    if (_material) {
+      rt.addTriangle( vec3ify(a), vec3ify(b), vec3ify(c),
+		      diffuse, ambient, specular, 
+		      shininess, reflect, refract,
+		      _normals.at(i) );
+    } else {
+      vec4 color4 = _colors.at(i) + _colors.at(i+1) + _colors.at(i+2);
+      color4 = color4 / 3.0;
+      
+      rt.addTriangle( vec3ify(a), vec3ify(b), vec3ify(c), 
+		      vec3ify(color4), vec3ify(color4), vec3ify(color4),
+		      //vec3(0.5,0.5,0.5), vec3(0.05,0.05,0.05), vec3(1.0,1.0,1.0),
+		      100.0,0.3,0.0,
+		      _normals.at(i) );
     }
   }
-
+  
   Scene::bufferToRaytracer( rt );
-
+  
 }
 
 /*void Object::setLights(GLfloat* ambient, GLint* numlights, GLfloat* positions, GLfloat* diffuse, GLfloat* specular)

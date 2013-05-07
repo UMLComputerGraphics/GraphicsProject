@@ -38,7 +38,15 @@ int main( int argc, char **argv ) {
   GLint program = Angel::InitShader( "shaders/vRaytracer.glsl",
 				     "shaders/fRaytracer.glsl" );
   rt.init( program );
-  rt.legacySceneGen();
+  if (1) {
+    Object *bottle = Engine::instance()->rootScene()->addObject( "bottle", program );
+    ObjLoader::loadModelFromFile( bottle, "../models/bottle_wine_med.obj" );
+    //ObjLoader::loadMaterialFromFile( bottle, "../models/bottle_wine_med.mtl" );
+    Engine::instance()->rootScene()->bufferToRaytracer( rt );
+    rt.pushDataToBuffer();
+  } else {
+    rt.legacySceneGen();
+  }
 
   glutDisplayFunc( RTdisplay ); // register callback w/Window System
 

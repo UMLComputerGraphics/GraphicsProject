@@ -171,13 +171,16 @@ void RayTracer::setMinMax( vec3 &min, vec3 &max, triangle_t &t ) {
   MAXTRIPLET( z );
 }
 
-void RayTracer::addTriangle( const vec3& a, const vec3& b, const vec3& c,
-      const vec3& diffuse, const vec3& ambient, const vec3& specular,
-      float shininess, float reflect, float refract) {
+void RayTracer::addTriangle( const vec3 &a, const vec3 &b, const vec3 &c,
+			     const vec3 &diffuse, const vec3 &ambient, const vec3 &specular,
+			     float shininess, float reflect, float refract,
+			     vec3 normal ) {
 
   triangle_t newTriangle;
 
-  vec3 normal = normalize(cross(b - a, c - b));
+  if (normal.x == -INFINITY) {
+    normal = normalize(cross(b - a, c - b));
+  }
   float centerX, centerY, centerZ, x, y, z;
 
   centerX = (a.x + b.x + c.x) / 3;
@@ -369,7 +372,7 @@ void RayTracer::legacySceneGen( void ) {
     
     addTriangle(a, b, c, vec3(0.5, 0.5, 0.5), vec3(0.05, 0.05, 0.05), vec3(1.0, 1.0, 1.0), 100.0, 0.3, 0.0);
   }
-
+  /*
   addTriangle(vec3(-5.0, -3.0, -5.0), vec3(5.0, -3.0, -5.0), vec3(5.0, 7.0, -5.0), vec3(1.0, 1.0, 1.0), vec3(0.05, 0.05, 0.05), vec3(1.0, 1.0, 1.0), 100.0, 0.0, 0.0);
   addTriangle(vec3(-5.0, -3.0, -5.0), vec3(5.0, 7.0, -5.0), vec3(-5.0, 7.0, -5.0), vec3(0.0, 0.0, 1.0), vec3(0.0, 0.0, 0.05), vec3(0.0, 0.0, 1.0), 100.0, 0.0, 0.0);
 
@@ -378,9 +381,9 @@ void RayTracer::legacySceneGen( void ) {
 
   addTriangle(vec3(-5.0, -3.0, -5.0), vec3(-5.0, 7.0, 5.0), vec3(-5.0, -3.0, 5.0), vec3(1.0, 0.0, 1.0), vec3(0.05, 0.0, 0.05), vec3(1.0, 0.0, 1.0), 100.0, 0.0, 0.0);
   addTriangle(vec3(-5.0, -3.0, -5.0), vec3(-5.0, 7.0, -5.0), vec3(-5.0, 7.0, 5.0), vec3(1.0, 1.0, 0.0), vec3(0.05, 0.05, 0.0), vec3(1.0, 1.0, 0.0), 100.0, 0.0, 0.0);
+  */
 
   pushDataToBuffer();
-
 }
 
 void RayTracer::lightFlicker( void ) {
