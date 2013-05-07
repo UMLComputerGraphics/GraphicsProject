@@ -72,6 +72,7 @@ Engine::Engine( void ) :
  */
 Engine::~Engine( void ) {
   // Nihil.
+  LifeLock.unlock();
 }
 
 /**
@@ -356,8 +357,7 @@ void Engine::run( void ) {
 
   glutMainLoop();
 
-  delete Engine::instance();
-
+  //delete Engine::instance(); //this causes bad juju when other things try to clean up shop
 }
 
 void Engine::registerIdle( boost::function<void(void)> idleFunc ) {

@@ -864,10 +864,15 @@ void Object::bufferToRaytracer( RayTracer &rt ) {
   // If no colors exist, make a default material.
   if ((_colors.size() < _vertices.size()) && (_material == NULL)) {
     _material = new Material();
-    fprintf( stderr, "Using default Material\n" );
+    diffuse = _material->getDiffuse();
+    ambient = _material->getAmbient();
+    specular = _material->getSpecular();
+    shininess = _material->getShininess();
+    refract = _material->getRefract();
+    gprint( PRINT_INFO, "Using DEFAULT material properties.\n" );
   }
   if (_material) {
-    fprintf( stderr, "Using material properties.\n" );
+    gprint( PRINT_DEBUG, "Using material properties.\n" );
     diffuse = _material->getDiffuse();
     ambient = _material->getAmbient();
     specular = _material->getSpecular();
@@ -897,8 +902,8 @@ void Object::bufferToRaytracer( RayTracer &rt ) {
     } else {
       vec4 color4 = _colors.at(i) + _colors.at(i+1) + _colors.at(i+2);
       color4 = color4 / 3.0;
-      
-      rt.addTriangle( vec3ify(a), vec3ify(b), vec3ify(c), 
+
+      rt.addTriangle( vec3ify(a), vec3ify(b), vec3ify(c),
 		      vec3ify(color4), vec3ify(color4), vec3ify(color4),
 		      //vec3(0.5,0.5,0.5), vec3(0.05,0.05,0.05), vec3(1.0,1.0,1.0),
 		      100.0,0.3,0.0,

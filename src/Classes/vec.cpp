@@ -189,9 +189,14 @@ namespace Angel {
   }
   
   vec3::vec3( const vec3& v ) {
-    x = v.x;
-    y = v.y;
-    z = v.z;
+    if (!v)
+      x=y=z=0.0;
+    else
+    {
+      x = v.x;
+      y = v.y;
+      z = v.z;
+    }
   }
   
   vec3::vec3( const vec2& v, const float f ) {

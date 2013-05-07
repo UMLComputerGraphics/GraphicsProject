@@ -44,6 +44,7 @@ MONOLITH::MONOLITH(int argc, char** argv) :
 void MONOLITH::cleanup(void) {
     extinguish = true;
     zipo.join();
+    fSystem->close();
 }
 
 bool heisenbergUncertaintyPrinciple;
@@ -52,6 +53,8 @@ bool heisenbergUncertaintyPrinciple;
  */
 void MONOLITH::monolith_idle(void)
 {
+    rt.idleHandsSpendTimeWithTheTextureBuffer();
+
     static Scene *rootScene = Engine::instance()->rootScene();
     
     // Animation variables.
@@ -533,7 +536,6 @@ void MONOLITH::raytraceStatusChanged(bool newstatus)
     gprint(PRINT_ERROR, "Raytracing is not supported on this system.\n");
     return;
   }
-  static RayTracer rt;
   if (newstatus)
   {
     //TODO handle particles
@@ -541,11 +543,6 @@ void MONOLITH::raytraceStatusChanged(bool newstatus)
     printf("SWITCHING TO RAY TRACING SHADER!\n");
     Engine::instance()->registerDisplayFunc(rt.display);
     rt.init(shader[3]);
-    std::vector<Object *> objs;
-    //ITERATE OVER ALL OBJS IN SCENE!
-
-    Engine::instance()->rootScene()->bufferToRaytracer( rt );
-    Engine::instance()->rootScene()->sceneToRaytracer( rt );
     rt.pushDataToBuffer();
   }
   else
@@ -560,6 +557,7 @@ void MONOLITH::raytraceStatusChanged(bool newstatus)
 void MONOLITH::aRomanticEvening() {
   printf("STARTING ROMANCE!\n");
   while ( !extinguish ) {
+
     // random number between 0 and 1
     float lightness = (float) rand() / (float) RAND_MAX;
     // between 0 and .3
