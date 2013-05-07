@@ -27,7 +27,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="generalTab">
      <attribute name="title">
@@ -91,7 +91,7 @@
         <x>10</x>
         <y>20</y>
         <width>165</width>
-        <height>103</height>
+        <height>105</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -120,6 +120,13 @@
         <widget class="QCheckBox" name="particleSystemEnabler">
          <property name="text">
           <string>Light up the Candle</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="vrEnabler">
+         <property name="text">
+          <string>Enable Virtual Reality</string>
          </property>
         </widget>
        </item>
@@ -173,211 +180,6 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>241</y>
-        <width>451</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <layout class="QHBoxLayout" name="Speed">
-       <property name="leftMargin">
-        <number>108</number>
-       </property>
-       <item>
-        <widget class="QLabel" name="speedLabel">
-         <property name="text">
-          <string>Speed:</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_6">
-         <property name="text">
-          <string>0</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSlider" name="speedHorizontalSlider">
-         <property name="maximum">
-          <number>100</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>100</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="layoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>200</y>
-        <width>451</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <layout class="QHBoxLayout" name="MaxSpeed">
-       <property name="spacing">
-        <number>0</number>
-       </property>
-       <property name="sizeConstraint">
-        <enum>QLayout::SetNoConstraint</enum>
-       </property>
-       <property name="leftMargin">
-        <number>77</number>
-       </property>
-       <item>
-        <widget class="QLabel" name="maxSpeedLabel">
-         <property name="text">
-          <string>Max Speed:</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_5">
-         <property name="text">
-          <string>  0  </string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSlider" name="maxSpeedSlider">
-         <property name="maximum">
-          <number>4000</number>
-         </property>
-         <property name="singleStep">
-          <number>100</number>
-         </property>
-         <property name="sliderPosition">
-          <number>2000</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>4000</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="layoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>280</y>
-        <width>451</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <layout class="QHBoxLayout" name="MaxAccel">
-       <property name="leftMargin">
-        <number>32</number>
-       </property>
-       <item>
-        <widget class="QLabel" name="maxAccelerationLabel">
-         <property name="text">
-          <string>Max Acceleration:</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_7">
-         <property name="text">
-          <string>0</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSlider" name="maxAccelerationSlider">
-         <property name="maximum">
-          <number>1000</number>
-         </property>
-         <property name="singleStep">
-          <number>10</number>
-         </property>
-         <property name="sliderPosition">
-          <number>500</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string>1000</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="layoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>330</y>
-        <width>451</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <layout class="QHBoxLayout" name="Friction">
-       <property name="leftMargin">
-        <number>20</number>
-       </property>
-       <item>
-        <widget class="QLabel" name="frictionMagnitudeLabel">
-         <property name="text">
-          <string>Friction Magnitude:</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_8">
-         <property name="text">
-          <string>0</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSlider" name="frictionHorizontalSlider">
-         <property name="maximum">
-          <number>100</number>
-         </property>
-         <property name="sliderPosition">
-          <number>50</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_4">
-         <property name="text">
-          <string>100</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="layoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
         <y>160</y>
         <width>213</width>
         <height>29</height>
@@ -402,15 +204,211 @@
        </item>
       </layout>
      </widget>
-     <zorder>layoutWidget</zorder>
-     <zorder>layoutWidget</zorder>
-     <zorder>layoutWidget</zorder>
-     <zorder>layoutWidget</zorder>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>200</y>
+        <width>424</width>
+        <height>126</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <widget class="QLabel" name="maxSpeedLabel">
+         <property name="text">
+          <string>Max Speed:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>0</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QSlider" name="maxSpeedSlider">
+         <property name="minimumSize">
+          <size>
+           <width>220</width>
+           <height>22</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>220</width>
+           <height>22</height>
+          </size>
+         </property>
+         <property name="maximum">
+          <number>4000</number>
+         </property>
+         <property name="singleStep">
+          <number>100</number>
+         </property>
+         <property name="sliderPosition">
+          <number>2000</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>4000</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="speedLabel">
+         <property name="text">
+          <string>Speed:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>0</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QSlider" name="speedHorizontalSlider">
+         <property name="minimumSize">
+          <size>
+           <width>220</width>
+           <height>22</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>220</width>
+           <height>22</height>
+          </size>
+         </property>
+         <property name="maximum">
+          <number>100</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>100</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="maxAccelerationLabel">
+         <property name="text">
+          <string>Max Acceleration:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLabel" name="label_7">
+         <property name="text">
+          <string>0</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QSlider" name="maxAccelerationSlider">
+         <property name="minimumSize">
+          <size>
+           <width>220</width>
+           <height>22</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>220</width>
+           <height>22</height>
+          </size>
+         </property>
+         <property name="maximum">
+          <number>1000</number>
+         </property>
+         <property name="singleStep">
+          <number>10</number>
+         </property>
+         <property name="sliderPosition">
+          <number>500</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>1000</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="frictionMagnitudeLabel">
+         <property name="text">
+          <string>Friction Magnitude:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLabel" name="label_8">
+         <property name="text">
+          <string>0</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QSlider" name="frictionHorizontalSlider">
+         <property name="minimumSize">
+          <size>
+           <width>220</width>
+           <height>22</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>220</width>
+           <height>22</height>
+          </size>
+         </property>
+         <property name="maximum">
+          <number>100</number>
+         </property>
+         <property name="sliderPosition">
+          <number>50</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="3">
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>100</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
      <zorder>layoutWidget</zorder>
      <zorder>cameraLabel</zorder>
      <zorder>line</zorder>
      <zorder>line_2</zorder>
      <zorder>fullScreenLabel</zorder>
+     <zorder>layoutWidget</zorder>
      <zorder>layoutWidget</zorder>
      <zorder>layoutWidget</zorder>
     </widget>
@@ -428,7 +426,10 @@
        </rect>
       </property>
       <property name="text">
-       <string>Auido On</string>
+       <string>Audio On</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
       </property>
       <property name="tristate">
        <bool>false</bool>
@@ -466,7 +467,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>50</x>
@@ -484,8 +485,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QSlider" name="verticalSlider">
+        <widget class="QSlider" name="volumeSlider">
          <property name="maximum">
+          <number>100</number>
+         </property>
+         <property name="sliderPosition">
           <number>100</number>
          </property>
          <property name="orientation">
@@ -649,7 +653,7 @@
       <widget class="QLabel" name="xFieldLabel">
        <property name="geometry">
         <rect>
-         <x>140</x>
+         <x>150</x>
          <y>0</y>
          <width>16</width>
          <height>16</height>
@@ -662,7 +666,7 @@
       <widget class="QLabel" name="yFieldLabel">
        <property name="geometry">
         <rect>
-         <x>170</x>
+         <x>200</x>
          <y>0</y>
          <width>16</width>
          <height>16</height>
@@ -677,13 +681,13 @@
         <rect>
          <x>130</x>
          <y>20</y>
-         <width>31</width>
+         <width>50</width>
          <height>21</height>
         </rect>
        </property>
        <property name="maximumSize">
         <size>
-         <width>31</width>
+         <width>50</width>
          <height>21</height>
         </size>
        </property>
@@ -700,7 +704,7 @@
       <widget class="QLabel" name="zFieldLabel">
        <property name="geometry">
         <rect>
-         <x>200</x>
+         <x>250</x>
          <y>0</y>
          <width>16</width>
          <height>16</height>
@@ -713,15 +717,15 @@
       <widget class="QPlainTextEdit" name="zFieldTextInput">
        <property name="geometry">
         <rect>
-         <x>190</x>
+         <x>230</x>
          <y>20</y>
-         <width>31</width>
+         <width>50</width>
          <height>21</height>
         </rect>
        </property>
        <property name="maximumSize">
         <size>
-         <width>31</width>
+         <width>50</width>
          <height>21</height>
         </size>
        </property>
@@ -738,15 +742,15 @@
       <widget class="QPlainTextEdit" name="yFieldTextInput">
        <property name="geometry">
         <rect>
-         <x>160</x>
+         <x>180</x>
          <y>20</y>
-         <width>31</width>
+         <width>50</width>
          <height>21</height>
         </rect>
        </property>
        <property name="maximumSize">
         <size>
-         <width>31</width>
+         <width>50</width>
          <height>21</height>
         </size>
        </property>
@@ -1509,6 +1513,9 @@
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
           <widget class="QCheckBox" name="vrMorphControl">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
            <property name="text">
             <string>Enable Morph Control</string>
            </property>
@@ -1553,9 +1560,9 @@
       <property name="geometry">
        <rect>
         <x>140</x>
-        <y>360</y>
+        <y>310</y>
         <width>280</width>
-        <height>210</height>
+        <height>157</height>
        </rect>
       </property>
       <property name="autoFillBackground">
@@ -1571,7 +1578,7 @@
         <x>140</x>
         <y>120</y>
         <width>280</width>
-        <height>210</height>
+        <height>157</height>
        </rect>
       </property>
       <property name="autoFillBackground">
@@ -1598,7 +1605,7 @@
       <property name="geometry">
        <rect>
         <x>220</x>
-        <y>340</y>
+        <y>290</y>
         <width>111</width>
         <height>16</height>
        </rect>
@@ -1607,12 +1614,6 @@
        <string>Processed Video</string>
       </property>
      </widget>
-     <zorder>verticalLayoutWidget_2</zorder>
-     <zorder>horizontalLayoutWidget</zorder>
-     <zorder>lblProcessed</zorder>
-     <zorder>lblOriginal</zorder>
-     <zorder>label_9</zorder>
-     <zorder>label_10</zorder>
     </widget>
    </widget>
   </widget>

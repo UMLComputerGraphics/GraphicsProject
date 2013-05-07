@@ -19,9 +19,8 @@ MONOLITH::~MONOLITH(void)
 
 /* Default and only constructor */
 MONOLITH::MONOLITH(int argc, char** argv) :
-  extinguish( true ),
-  _defaultNumberOfParticles(3000),
-  zipo(boost::thread(boost::bind(&MONOLITH::aRomanticEvening, this)))
+   extinguish(false),
+  _defaultNumberOfParticles(3000)
 {
     //As this happens before run() initializes relative paths, we need to initialize relative paths here
     Util::InitRelativePaths(argc, argv);
@@ -37,17 +36,6 @@ MONOLITH::MONOLITH(int argc, char** argv) :
 
     _argc = argc;
     _argv = argv;
-
-    Light* l = new Light( "CandleLight", 2.5, 6.8, 2.5 );
-    l->color(vec3(1.0, 0.5, 0.2));
-    Engine::instance()->addLight(l);
-    Light *l2 = new Light( "Scene Light", 0, 18, 0 );
-    l2->intensity(28);
-    Engine::instance()->addLight(l2);
-
-    // Now that we have lights, let the romantic evening flicker do his thang.
-    extinguish = false;
-
 }
 
 /**
@@ -56,6 +44,7 @@ MONOLITH::MONOLITH(int argc, char** argv) :
 void MONOLITH::cleanup(void) {
     extinguish = true;
     zipo.join();
+    fSystem->close();
 }
 
 bool heisenbergUncertaintyPrinciple;
@@ -64,6 +53,8 @@ bool heisenbergUncertaintyPrinciple;
  */
 void MONOLITH::monolith_idle(void)
 {
+    rt.idleHandsSpendTimeWithTheTextureBuffer();
+
     static Scene *rootScene = Engine::instance()->rootScene();
     Object *bottle = rootScene->search("bottle");
     
@@ -265,7 +256,13 @@ void MONOLITH::slotPauseMusic(bool isPaused)
     soundHelper::ERRCHECK();
 }
 
+void MONOLITH::slotMusicVolume(int vol)
+{ // 0.0 => silent :: 1.0 => MAX VOLUME
+    float newVol = vol / 100.0 ;
 
+    radio->setVolume(newVol);
+    soundHelper::ERRCHECK();
+}
 #endif //WITHOUT_QT
 
 /**
@@ -274,6 +271,17 @@ void MONOLITH::slotPauseMusic(bool isPaused)
 void MONOLITH::run() {
   Engine::init( &_argc, _argv, "Graphics II Spring 2013 Final Project" );
   Engine *eng = Engine::instance();
+
+  Light* l = new Light( "CandleLight", 2.5, 6.8, 2.5 );
+  l->color(vec3(1.0, 0.5, 0.2));
+  Engine::instance()->addLight(l);
+  Light *l2 = new Light( "Scene Light", 0, 18, 0 );
+  l2->intensity(28);
+  Engine::instance()->addLight(l2);
+
+  // Now that we have lights, let's make the thread, rather than hoping it will magically re-enter the thread function it broke out of.
+  zipo = boost::thread(boost::bind(&MONOLITH::aRomanticEvening, this));
+
   eng->registerIdle( boost::bind(&MONOLITH::monolith_idle, this) );
   eng->registerTraceFunc( (raytracerCallback)(boost::bind(&MONOLITH::raytraceStatusChanged, this, _1)));
 
@@ -464,7 +472,6 @@ void MONOLITH::raytraceStatusChanged(bool newstatus)
     gprint(PRINT_ERROR, "Raytracing is not supported on this system.\n");
     return;
   }
-  static RayTracer rt;
   if (newstatus)
   {
     //TODO handle particles
@@ -472,11 +479,6 @@ void MONOLITH::raytraceStatusChanged(bool newstatus)
     printf("SWITCHING TO RAY TRACING SHADER!\n");
     Engine::instance()->registerDisplayFunc(rt.display);
     rt.init(shader[3]);
-    std::vector<Object *> objs;
-    //ITERATE OVER ALL OBJS IN SCENE!
-
-    Engine::instance()->rootScene()->bufferToRaytracer( rt );
-    Engine::instance()->rootScene()->sceneToRaytracer( rt );
     rt.pushDataToBuffer();
   }
   else
@@ -489,7 +491,9 @@ void MONOLITH::raytraceStatusChanged(bool newstatus)
 
 //flicker at constant rate, regardless of update loop
 void MONOLITH::aRomanticEvening() {
+  printf("STARTING ROMANCE!\n");
   while ( !extinguish ) {
+
     // random number between 0 and 1
     float lightness = (float) rand() / (float) RAND_MAX;
     // between 0 and .3
@@ -497,9 +501,10 @@ void MONOLITH::aRomanticEvening() {
 
     lightness += .7;
 
-    Engine::instance()->getLights()->at(0)->intensity(lightness);
+    Engine::instance()->safeSetIntensity(0, lightness);
     Engine::instance()->setLights();
 
     sleep( 0.01 );
   }
+  printf("ENDING ROMANCE!\n");
 }

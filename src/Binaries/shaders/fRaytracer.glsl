@@ -310,6 +310,7 @@ void Intersect(in Ray r, inout Intersection i, int back)
 	Triangle triangle;
 
 	vec3 centerPoint, rs, triangleNormal, temp;
+	vec4 temp4;
 	float radius, radiusSquared, B, C, D, sqrtOfD, t, tPlus;
 	int pointIndex;
 
@@ -328,8 +329,9 @@ void Intersect(in Ray r, inout Intersection i, int back)
 			for (int l2 = 0; l2 < int(startEndVec.x); l2++) 
 			{
 				centerPoint = (texelFetch(bufferData, pointIndex+8)).xyz;
-				radius = texelFetch(bufferData, pointIndex+9).x;
-				radiusSquared = texelFetch(bufferData, pointIndex+9).y;
+				temp4 = texelFetch(bufferData, pointIndex+9);
+				radius = temp4.x;
+				radiusSquared = temp4.y;
 				rs = r.org - centerPoint;
 				B = dot(rs, r.dir);
 				C = dot(rs, rs) - radiusSquared;

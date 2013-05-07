@@ -15,13 +15,14 @@
 #include <vector>
 #include <boost/thread.hpp>
 #include <boost/bind.hpp>
+#include <boost/thread/mutex.hpp>
 #include "RaytraceBuffer.hpp"
 #include "mat.hpp"
+#include "Util.hpp"
 
 class RayTracer {
   /* These need to be declared prior to the boost-threading so they can be initialized before the boost thread forks off. */
  private:
-  bool _extinguish;
   GLfloat *_lightPositions;
   GLfloat *_lightDiffuse;
   GLfloat *_lightSpecular;
@@ -46,8 +47,9 @@ class RayTracer {
   void legacySceneGen( void );
   virtual ~RayTracer();
   void _display(void);
-  void lightFlicker(void);
   void thisDateIsOver(void);
+  void lightFlicker();
+  void idleHandsSpendTimeWithTheTextureBuffer();
 
  private:
   
@@ -80,8 +82,10 @@ class RayTracer {
   
   int _numOfTriangleVectors;
 
-  //re-buffering rate calibration -- shoot for 2/3 initial fps
-  int _rebuffer_frequency;
+  bool _extinguish;
+
+  //rebuffering magic
+  bool _readytorebuffer;
 };
 
 #endif /* RAYTRACER_H_ */

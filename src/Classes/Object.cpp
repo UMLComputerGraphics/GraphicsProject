@@ -523,14 +523,6 @@ void Object::send( Object::UniformEnum which ) {
     return;
   }
 
-  // light stuff
-  GLint *numL = Engine::instance()->getNumLights();
-  GLfloat *amb = Engine::instance()->getLightAmbient();
-  GLfloat *diff = Engine::instance()->getLightDiffuses();
-  GLfloat *spec = Engine::instance()->getLightSpeculars();
-  GLfloat *pos = Engine::instance()->getLightPositions();
-  GLfloat *intens = Engine::instance()->getLightIntensities();
-
   switch ( which ) {
   
   case Object::IS_TEXTURED:
@@ -553,39 +545,51 @@ void Object::send( Object::UniformEnum which ) {
       //fprintf( stderr, "Sending sampler uniform: %d textures\n", _numTextures );
     }
     break;
-    
-  case Object::LIGHT_AMBIENT:
-    if (_isLit && amb) {
-      glUniform4fv( _handles[Object::LIGHT_AMBIENT], 1, amb);
-    }
-    break;
-  case Object::LIGHT_DIFFUSE:
-    if (_isLit && diff && numL && *numL > 0) {
-      glUniform4fv( _handles[Object::LIGHT_DIFFUSE], *numL, diff);
-    }
-    break;
-  case Object::LIGHT_SPECULAR:
-    if (_isLit && spec && numL && *numL > 0) {
-      glUniform4fv( _handles[Object::LIGHT_SPECULAR], *numL, spec);
-    }
-    break;
-  case Object::NUM_LIGHTS:
-    if (_isLit && numL && *numL > 0) {
-      glUniform1i( _handles[Object::NUM_LIGHTS], *numL);
-    }
-    break;
-  case Object::LIGHT_POSITIONS:
-    if (_isLit && pos && numL && *numL > 0) {
-      glUniform4fv( _handles[Object::LIGHT_POSITIONS], *numL, pos);
-    }
-    break;
-  case Object::LIGHT_INTENSITY:
-    if (_isLit && intens && numL && *numL > 0) {
-      glUniform1fv( _handles[Object::LIGHT_INTENSITY], *numL, intens);
-    }
-    break;
   default:
-    throw std::invalid_argument( "Unknown Uniform Handle Enumeration." );
+    {
+      GLint *numL = Engine::instance()->getNumLights();
+      GLfloat *amb = Engine::instance()->getLightAmbient();
+      GLfloat *diff = Engine::instance()->getLightDiffuses();
+      GLfloat *spec = Engine::instance()->getLightSpeculars();
+      GLfloat *pos = Engine::instance()->getLightPositions();
+      GLfloat *intens = Engine::instance()->getLightIntensities();
+      switch ( which )
+      {
+        case Object::LIGHT_AMBIENT:
+          if (_isLit && amb) {
+            glUniform4fv( _handles[Object::LIGHT_AMBIENT], 1, amb);
+          }
+          break;
+        case Object::LIGHT_DIFFUSE:
+          if (_isLit && diff && numL && *numL > 0) {
+            glUniform4fv( _handles[Object::LIGHT_DIFFUSE], *numL, diff);
+          }
+          break;
+        case Object::LIGHT_SPECULAR:
+          if (_isLit && spec && numL && *numL > 0) {
+            glUniform4fv( _handles[Object::LIGHT_SPECULAR], *numL, spec);
+          }
+          break;
+        case Object::NUM_LIGHTS:
+          if (_isLit && numL && *numL > 0) {
+            glUniform1i( _handles[Object::NUM_LIGHTS], *numL);
+          }
+          break;
+        case Object::LIGHT_POSITIONS:
+          if (_isLit && pos && numL && *numL > 0) {
+            glUniform4fv( _handles[Object::LIGHT_POSITIONS], *numL, pos);
+          }
+          break;
+        case Object::LIGHT_INTENSITY:
+          if (_isLit && intens && numL && *numL > 0) {
+            glUniform1fv( _handles[Object::LIGHT_INTENSITY], *numL, intens);
+          }
+          break;
+        default:
+          throw std::invalid_argument( "Unknown Uniform Handle Enumeration." );
+      }
+      break;
+    }
   }
 
   if (glGetError()) {
@@ -860,10 +864,15 @@ void Object::bufferToRaytracer( RayTracer &rt ) {
   // If no colors exist, make a default material.
   if ((_colors.size() < _vertices.size()) && (_material == NULL)) {
     _material = new Material();
-    fprintf( stderr, "Using default Material\n" );
+    diffuse = _material->getDiffuse();
+    ambient = _material->getAmbient();
+    specular = _material->getSpecular();
+    shininess = _material->getShininess();
+    refract = _material->getRefract();
+    gprint( PRINT_INFO, "Using DEFAULT material properties.\n" );
   }
   if (_material) {
-    fprintf( stderr, "Using material properties.\n" );
+    gprint( PRINT_DEBUG, "Using material properties.\n" );
     diffuse = _material->getDiffuse();
     ambient = _material->getAmbient();
     specular = _material->getSpecular();
@@ -893,8 +902,8 @@ void Object::bufferToRaytracer( RayTracer &rt ) {
     } else {
       vec4 color4 = _colors.at(i) + _colors.at(i+1) + _colors.at(i+2);
       color4 = color4 / 3.0;
-      
-      rt.addTriangle( vec3ify(a), vec3ify(b), vec3ify(c), 
+
+      rt.addTriangle( vec3ify(a), vec3ify(b), vec3ify(c),
 		      vec3ify(color4), vec3ify(color4), vec3ify(color4),
 		      //vec3(0.5,0.5,0.5), vec3(0.05,0.05,0.05), vec3(1.0,1.0,1.0),
 		      100.0,0.3,0.0,

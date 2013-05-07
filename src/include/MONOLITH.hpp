@@ -146,12 +146,15 @@ public slots:
     void slotCurrentView(int num) ;
     void slotSetParticleLife( float, float );
     void slotPauseMusic(bool isPaused);
+    void slotMusicVolume( int );
 
 signals:
     void sigMorphPercentage(int value);
 #endif
 
 private:
+    // Beware all those who dare venture here
+    RayTracer rt;
     
     /**
      * A simple animation callback.

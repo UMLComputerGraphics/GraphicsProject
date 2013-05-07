@@ -24,6 +24,10 @@ public:
 public slots:
     void processFrameAndUpdateGUI();
 
+private slots:
+    /* VR stuff */
+    void slotEnableVR(bool isEnabled);
+
 signals:
 	/* General Settings */
 	/* Engine */
@@ -42,7 +46,6 @@ signals:
 	
 	/* Scene Graph */
 	
-	
     /* Morph stuff */
     void sigMorphPercentage(int value);
     void sigMorphPercentageOut(int value);
@@ -58,6 +61,7 @@ signals:
     void sigTornadoVecParams( void );
     void sigTornadoVecParams( float, float, float );
     void sigSetParticleLife( float, float );
+    void sigMusicVolume( int );
 
     // void sigParticleFieldFunction(int index);
 
@@ -79,6 +83,10 @@ private slots:
 
     void on_defaultLifespansButton_clicked();
 
+    void on_volumeSlider_sliderMoved(int position);
+
+    void on_audioOnCheckbox_stateChanged(int arg1);
+
 private:
     Ui::MainWindow *ui;
 
@@ -89,7 +97,6 @@ private:
 
     QImage qimgOriginal;
     QImage qimgProcessed;
-
     std::vector<cv::Vec3f> vecCircles;
     std::vector<cv::Vec3f>::iterator itrCircles;
 
