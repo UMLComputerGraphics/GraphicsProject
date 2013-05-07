@@ -278,6 +278,12 @@ void MONOLITH::slotCurrentView( int num )
     Engine::instance()->currentCamera()->setCurrentView(num) ;
 }
 
+void MONOLITH::slotPauseMusic(bool isPaused)
+{ // PAUSED => true  ::  UNPAUSED => false
+    ERRCHECK(this->radio->setPaused(isPaused));
+}
+
+
 #endif //WITHOUT_QT
 
 /**
