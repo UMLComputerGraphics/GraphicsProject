@@ -9,7 +9,7 @@
 #include "Engine.hpp"
 
 RayTracer::RayTracer() : 
-  _extinguish( true ), // TRUE until we can initialize lights!
+  //_extinguish( true ), // TRUE so the thread breaks out of its loop immediately!
   _lightPositions( NULL ),
   _lightDiffuse( NULL ),
   _lightSpecular( NULL ),
@@ -409,7 +409,9 @@ void RayTracer::lightFlicker( void ) {
     lightness += .7;
     _lightDiffuse[0] = _lightDiffuse[1] = _lightDiffuse[2] = lightness;
 
-    boost::this_thread::yield();
+
+    //boost::this_thread::yield();
+    sleep(0.01); //yielding is for sissies. I exist, therefore I have the right of way.
   }
 }
 

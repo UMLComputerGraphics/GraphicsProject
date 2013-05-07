@@ -31,8 +31,6 @@ void sgIdle( void ) {
 
 void act_one( void ) {
 
-  vec4 min, max;
-  TransMat initialPlacement;
   Scene *rootScene = Engine::instance()->rootScene();
 
 #ifdef __APPLE__
@@ -64,6 +62,7 @@ void act_one( void ) {
   ObjLoader::loadModelFromFile(candlestick, "../models/candlestick.obj");
   ObjLoader::loadMaterialFromFile(candlestick, "../models/candlestick.mtl");
   // Note that, unlike earlier adjustment, we DO want this translation to propagate.
+  TransMat initialPlacement;
   initialPlacement.inheritable( true );
   initialPlacement.set( 5.0, 0, 5.0 );
   candlestick->_trans.push( initialPlacement );
