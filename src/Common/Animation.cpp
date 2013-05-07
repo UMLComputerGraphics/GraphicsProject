@@ -48,6 +48,11 @@ float Animation::scaleBottomFixed( Object *obj, float scaleAmt ) {
 void Animation::candleMelt( Object *candle, Object *tip, float rawScale ) {
   
   float adj = Animation::scaleBottomFixed( candle, pow(rawScale, tick.scale()) );
+  vec4 currentTipPos = tip->_trans.otm() * vec4(tip->getMax(),1.0);
   tip->_trans.push( TransMat( 0, adj, 0 ) );
+
+  currentTipPos.y += adj;
+  Engine::instance()->getLights()->at(0)->y( currentTipPos.y );
+  Engine::instance()->setLights();
 
 }

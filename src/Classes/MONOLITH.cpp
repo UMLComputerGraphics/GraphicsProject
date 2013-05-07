@@ -76,7 +76,7 @@ void MONOLITH::monolith_idle(void)
       Object *candle = rootScene->search( "candle" );
       Object *candletip = rootScene->search( "candletip" );
       if (candle && candletip) {
-        Animation::candleMelt( candle, candletip, 0.9999 );
+        Animation::candleMelt( candle, candletip, 0.999 );
       }
     }
     
@@ -309,13 +309,13 @@ void MONOLITH::run() {
 
 
   // ************ Table ************
-  Object *table;
-  table = rootScene->addObject( "table", noMorphShader );
+  Object *table = rootScene->addObject( "table", noMorphShader );
   ObjLoader::loadModelFromFile(table, "../models/table_tx.obj");
   ObjLoader::loadMaterialFromFile(table, "../models/table_tx.mtl");
   table->texture("../Textures/texture_wood.png");
   Animation::seekTopTo( table, 0 );
   table->buffer();
+  glUniform1i( glGetUniformLocation( table->shader(), "letMeSeeThatPhong" ), 1 );
 
 
   // ************ Wine Bottle ************
@@ -343,11 +343,10 @@ void MONOLITH::run() {
     _morphMatchCalculated = false;
   }
   bottle->buffer();
-
+  glUniform1i( glGetUniformLocation( bottle->shader(), "letMeSeeThatPhong" ), 1 );
 
   // ************ Radio ************
-  Object *radio;
-  radio = table->addObject( "radio", noMorphShader );
+  Object *radio = table->addObject( "radio", noMorphShader );
   ObjLoader::loadModelFromFile( radio, "../models/radio-tx.obj" );
   ObjLoader::loadMaterialFromFile( radio, "../models/radio-tx.mtl" );
   radio->texture("../Textures/texture_radio.png");
@@ -355,6 +354,7 @@ void MONOLITH::run() {
   radio->_trans.push( RotMat( 0.0, -45.0, 0.0 ) );
   radio->_trans.push( TransMat( 9.0, 0.0, -7.0 ) );
   radio->buffer();
+  glUniform1i( glGetUniformLocation( radio->shader(), "letMeSeeThatPhong" ), 1 );
 
 
   // ************ Candlestick ************
@@ -364,6 +364,7 @@ void MONOLITH::run() {
   Animation::seekBottomTo( candlestick, 0.001 );
   candlestick->_trans.push( TransMat( 2.5, 0, 2.5 ) );
   candlestick->buffer();
+  glUniform1i( glGetUniformLocation( candlestick->shader(), "letMeSeeThatPhong" ), 1 );
 
 
   // ************ Candle ************
@@ -371,13 +372,14 @@ void MONOLITH::run() {
   ObjLoader::loadModelFromFile( candle, "../models/candle_bottom.obj");
   ObjLoader::loadMaterialFromFile( candle, "../models/candle.mtl" );
   candle->buffer();
-
+  glUniform1i( glGetUniformLocation( candle->shader(), "letMeSeeThatPhong" ), 1 );
 
   // ************ Candletip ************
   Object *candletip = candle->addObject( "candletip", noMorphShader );
   ObjLoader::loadModelFromFile( candletip, "../models/candle_top_unmelted.obj" );
   ObjLoader::loadMaterialFromFile( candletip, "../models/candle.mtl" );
   candletip->buffer();
+  glUniform1i( glGetUniformLocation( candletip->shader(), "letMeSeeThatPhong" ), 1 );
 
 
   // ************ Particle System ************
