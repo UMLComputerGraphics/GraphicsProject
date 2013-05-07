@@ -18,7 +18,7 @@
 using namespace Angel;
 using namespace FMOD;
 
-const float soundHelper::DISTANCEFACTOR = 1.2f;// Units per meter.  I.e feet would = 3.28. cm would = 100.
+const float soundHelper::DISTANCEFACTOR = 6.56f;// Units per meter.  I.e feet would = 3.28. cm would = 100.
 FMOD_RESULT soundHelper::result;
 
 /**
