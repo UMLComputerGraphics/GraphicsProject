@@ -1,2 +1,7 @@
 Makefile
 ui_dialog.h
+dialog.o
+main.o
+moc_dialog.o
+moc_dialog.cpp
+moc_dialog.o
