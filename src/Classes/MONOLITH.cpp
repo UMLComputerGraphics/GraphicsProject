@@ -149,14 +149,23 @@ void MONOLITH::slotMorphToWhiskyBottle(void)
 }
 
 void MONOLITH::slotEnableMorphMatching(bool isEnabled){
+	if(!_morphMatchCalculated){
+		int heightScale = 10;
+		int widthScale = 1;
+		int depthScale = 1;
+		_scaleModel = new ScaleModel(bottle, bottle->morphTarget(),widthScale,heightScale,depthScale);
+		_rectangularMapping = new RectangularMapping(bottle,bottle->morphTarget());
+		_scaleModel->restoreModels();
+		_morphMatchCalculated = true;
+	}
 	gprint(PRINT_WARNING, "MORPH MATCHING := %s\n", isEnabled?"ENABLED":"DISABLED");
-    if(isEnabled){
-        _rectangularMapping->copyToObjects((*rootScene)["bottle"],(*rootScene)["bottle"]->morphTarget());
-        _scaleModel->restoreModels();
-    }else{
-        _rectangularMapping->revertToOriginal((*rootScene)["bottle"],(*rootScene)["bottle"]->morphTarget());
-    }
-   	(*rootScene)["bottle"]->buffer();
+	if(isEnabled){
+		_rectangularMapping->copyToObjects((*rootScene)["bottle"],(*rootScene)["bottle"]->morphTarget());
+		_scaleModel->restoreModels();
+	}else{
+		_rectangularMapping->revertToOriginal((*rootScene)["bottle"],(*rootScene)["bottle"]->morphTarget());
+	}
+	(*rootScene)["bottle"]->buffer();
 }
 
 
@@ -337,6 +346,9 @@ void MONOLITH::run() {
     
     //Rescale models to original size
     _scaleModel->restoreModels();
+    _morphMatchCalculated = true;
+  }else{
+	  _morphMatchCalculated = false;
   }
 
   // Scale the bottle down!
@@ -473,7 +485,7 @@ void MONOLITH::run() {
   glShadeModel(GL_SMOOTH);
 
 
-  soundHelper::play3dSound( vec4(9.0,0.0,-7.0,1.0), 
+  soundHelper::play3dSound( vec4(-9.0,2.0,7.0,1.0), 
 			    vec4(0.0,0.0,0.0,1.0), 
 			    this->fSystem,
 			    &(this->radio),
@@ -534,8 +546,8 @@ void MONOLITH::raytraceStatusChanged(bool newstatus)
     //ITERATE OVER ALL OBJS IN SCENE!
 
     Engine::instance()->rootScene()->bufferToRaytracer( rt );
+    Engine::instance()->rootScene()->sceneToRaytracer( rt );
     rt.pushDataToBuffer();
-    //    rt.genereateScene(objs);
   }
   else
   {

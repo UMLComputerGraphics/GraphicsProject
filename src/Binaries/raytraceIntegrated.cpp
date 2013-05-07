@@ -42,7 +42,10 @@ int main( int argc, char **argv ) {
     Object *bottle = Engine::instance()->rootScene()->addObject( "bottle", program );
     ObjLoader::loadModelFromFile( bottle, "../models/bottle_wine_med.obj" );
     //ObjLoader::loadMaterialFromFile( bottle, "../models/bottle_wine_med.mtl" );
+
     Engine::instance()->rootScene()->bufferToRaytracer( rt );
+    Engine::instance()->rootScene()->sceneToRaytracer( rt );
+
     rt.pushDataToBuffer();
   } else {
     rt.legacySceneGen();

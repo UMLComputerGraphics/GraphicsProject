@@ -467,7 +467,7 @@ void Camera::resetRotation( void ) {
   
   // The transpose of any _rotation is its inverse.
   // Thus, this resets the rotational matrix.
-  this->_ctm._orbit.adjust( transpose( this->_ctm._rotation.matrix() ) );
+  this->_ctm._orbit.adjust( transpose( this->_ctm._orbit.matrix() ) );
   
 }
 

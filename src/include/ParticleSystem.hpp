@@ -144,6 +144,7 @@ class ParticleSystem : public Object {
   Angel::vec3 (*_vecFieldFunc)(Angel::vec4 posIn, Parameters* functionParams);
   Angel::vec4 (*_colorFunc)(float lifePct, Angel::vec4 posIn);
 
+  
 
 };
 

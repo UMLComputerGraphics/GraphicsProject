@@ -30,6 +30,8 @@ RayTracer::RayTracer() :
   _uLightPositions = -1;
   _uLightDiffuse = -1;
   _uLightSpecular = -1;
+  _uNumSGTransformations = -1;
+  _uSceneGraphTransformations = -1;
   // State
   _numberOfLights = 2;
   _numTriangles = 0;
@@ -100,6 +102,11 @@ void RayTracer::_display( void ) {
   glUniform3fv( _uLightDiffuse, _numberOfLights, _lightDiffuse );
   glUniform3fv( _uLightSpecular, _numberOfLights, _lightSpecular );
 
+  glUniform1i( _uNumSGTransformations, _sceneData.size() );
+  if (_sceneData.size() > 0)
+    glUniformMatrix4fv( _uSceneGraphTransformations, _sceneData.size(),
+			GL_TRUE, (GLfloat*)&(_sceneData.at(0)) );
+
   static const GLfloat vertices[] = { 1.0, 1.0, -1.0, 1.0, 1.0, -1.0, -1.0, -1.0, };
 
   GLuint vbo_vertices;
@@ -140,6 +147,10 @@ void RayTracer::_display( void ) {
       gprint( PRINT_INFO, "Calculated rebuffer frequency @: %d\n", _rebuffer_frequency );
     }
   }
+
+  // Draw particles-only
+  // Broken >_<
+  // Engine::instance()->rootScene()->draw( false );
 #endif
 }
 
@@ -351,7 +362,8 @@ void RayTracer::init( GLuint shader ) {
   _uLightPositions = glGetUniformLocation( _program, "uLightPositions" );
   _uLightDiffuse = glGetUniformLocation( _program, "uLightDiffuse" );
   _uLightSpecular = glGetUniformLocation( _program, "uLightSpecular" );
-  
+  _uNumSGTransformations = glGetUniformLocation( _program, "uNumSGTransformations" );
+  _uSceneGraphTransformations = glGetUniformLocation( _program, "uSceneGraphTransformations" );
   tick.setTimeUniform( glGetUniformLocation( _program, "ftime" ) );
   
 }
