@@ -13,6 +13,7 @@ RayTracer::RayTracer() :
   _lightPositions( NULL ),
   _lightDiffuse( NULL ),
   _lightSpecular( NULL ),
+  _rebuffer_frequency(-1),
   display(boost::bind(&RayTracer::_display,this)) {
 
   // Handles
@@ -68,6 +69,19 @@ void RayTracer::_display( void ) {
   gprint( PRINT_INFO, "Raytracer::display() unsupported on Apple OSX at this time.\n" );
   return;
 #else
+  static int sincerebuffer=0;
+  if (_rebuffer_frequency != -1 && (++sincerebuffer)%_rebuffer_frequency == 0)
+  {
+    gprint( PRINT_INFO, "Rebuffering\n");
+    _bufferData.clear();
+    _triangleData.clear();
+    _numOfL2BoundingBoxes = 0;
+    _numTriangles = 0;
+    _numOfL1BoundingBoxes = 0;
+    Engine::instance()->rootScene()->bufferToRaytracer( *this );
+    pushDataToBuffer();
+  }
+
 
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
   glUniform1i( _uNumOfSpheres, _numSpheres );
@@ -119,6 +133,11 @@ void RayTracer::_display( void ) {
     gprint( PRINT_INFO, "fps: %f\n", fps );
     previousTime = elapsedTime;
     frameCount = 0;
+    if (_rebuffer_frequency == -1)
+    {
+      _rebuffer_frequency = (int)floor(fps*2.0);
+      gprint( PRINT_INFO, "Calculated rebuffer frequency @: %d\n", _rebuffer_frequency );
+    }
   }
 #endif
 }
