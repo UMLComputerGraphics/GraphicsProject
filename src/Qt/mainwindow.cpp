@@ -73,6 +73,19 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->currentViewComboBox->addItem("Identity");
     ui->currentViewComboBox->addItem("Frustum");
 
+    // Make sure that the Particle Parameters display default values at start.
+    ui->minLifeInput->setPlainText( "9.0" );
+    ui->maxLifeInput->setPlainText( "12.0" );
+    ui->paramATextInput->setPlainText( "100.0" );
+    ui->paramBTextInput->setPlainText( "100.0" );
+    ui->paramCTextInput->setPlainText( "4.0" );
+    ui->xFieldTextInput->setPlainText( "0.0" );
+    ui->yFieldTextInput->setPlainText( "0.45" );
+    ui->zFieldTextInput->setPlainText( "0.0" );
+    ui->powerSlider->setSliderPosition( 10 );
+    ui->scaleSlider->setSliderPosition( 1 );
+    ui->rangeSlider->setSliderPosition( 24 );
+
     connect(ui->currentViewComboBox, SIGNAL(currentIndexChanged(int)), this, SIGNAL(sigChangeCurrentView(int)));
     capWebcam.open(0);
 
@@ -155,6 +168,14 @@ void MainWindow::on_flameShowButton_clicked()
 void MainWindow::on_flameDefaultButton_clicked()
 {
     sigFlameVecParams();
+
+    // Set UI to display the defaults
+    ui->xFieldTextInput->setPlainText( "0.0" );
+    ui->yFieldTextInput->setPlainText( "0.45" );
+    ui->zFieldTextInput->setPlainText( "0.0" );
+    ui->powerSlider->setSliderPosition( 10 );
+    ui->scaleSlider->setSliderPosition( 1 );
+    ui->rangeSlider->setSliderPosition( 24 );
 }
 
 void MainWindow::on_tornadoShowButton_clicked()
@@ -169,6 +190,24 @@ void MainWindow::on_tornadoShowButton_clicked()
 void MainWindow::on_tornadoDefaultButton_clicked()
 {
     sigTornadoVecParams();
+    ui->paramATextInput->setPlainText( "100.0" );
+    ui->paramBTextInput->setPlainText( "100.0" );
+    ui->paramCTextInput->setPlainText( "4.0" );
+}
+
+void MainWindow::on_setLifespansButton_clicked()
+{
+    float min = ui->minLifeInput->toPlainText().toDouble();
+    float max = ui->maxLifeInput->toPlainText().toDouble();
+
+    sigSetParticleLife( min, max );
+}
+
+void MainWindow::on_defaultLifespansButton_clicked()
+{
+    sigSetParticleLife( 9.0, 12.0 );
+    ui->minLifeInput->setPlainText( "9.0" );
+    ui->maxLifeInput->setPlainText( "12.0" );
 }
 
 void MainWindow::processFrameAndUpdateGUI()
@@ -197,5 +236,4 @@ void MainWindow::processFrameAndUpdateGUI()
 
     ui->lblOriginal->setPixmap(QPixmap::fromImage(qimgOriginal));
     ui->lblProcessed->setPixmap(QPixmap::fromImage(qimgProcessed));
-
 }

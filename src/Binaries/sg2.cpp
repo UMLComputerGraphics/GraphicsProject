@@ -12,6 +12,7 @@
 #include <unistd.h>
 #include <cstdlib>
 #include "Engine.hpp"
+#include "Animation.hpp"
 
 void candleMelt( TransCache &obj ) {
 
@@ -30,8 +31,6 @@ void sgIdle( void ) {
 
 void act_one( void ) {
 
-  vec4 min, max;
-  TransMat initialPlacement;
   Scene *rootScene = Engine::instance()->rootScene();
 
 #ifdef __APPLE__
@@ -43,26 +42,19 @@ void act_one( void ) {
   rootScene->shader( macShader );
 #endif
 
-  initialPlacement.inheritable( false );
-
   // Table
   Object *table = rootScene->addObject( "table" );
   ObjLoader::loadModelFromFile(table, "../models/table_tx.obj");
   ObjLoader::loadMaterialFromFile(table, "../models/table_tx.mtl");
   table->texture( "../Textures/texture_wood.png" );
-  max = table->getMax();
-  initialPlacement.set( 0, -max.y, 0 );
-  table->_trans.push( initialPlacement );
+  Animation::seekTopTo( table, 0 );
   table->buffer();
 
   // Bottle
   Object *bottle = table->addObject( "bottle" );
   ObjLoader::loadModelFromFile( bottle, "../models/bottle_wine_high.obj" );
   ObjLoader::loadMaterialFromFile( bottle, "../models/bottle_wine_high.mtl" );
-  // Non-propagating bottle-adjustment.
-  min = bottle->getMin();
-  initialPlacement.set( 0, -min.y, 0 );
-  bottle->_trans.push( initialPlacement );
+  Animation::seekBottomTo( bottle, 0 );
   bottle->buffer();
 
   // Candlestick
@@ -70,6 +62,7 @@ void act_one( void ) {
   ObjLoader::loadModelFromFile(candlestick, "../models/candlestick.obj");
   ObjLoader::loadMaterialFromFile(candlestick, "../models/candlestick.mtl");
   // Note that, unlike earlier adjustment, we DO want this translation to propagate.
+  TransMat initialPlacement;
   initialPlacement.inheritable( true );
   initialPlacement.set( 5.0, 0, 5.0 );
   candlestick->_trans.push( initialPlacement );

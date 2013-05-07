@@ -72,6 +72,7 @@ int main( int argc, char **argv ) {
   QObject::connect(&w, SIGNAL(sigTornadoVecParams()), &monolith, SLOT(slotUpdateTornadoVecFunc()));
   QObject::connect(&w, SIGNAL(sigMorphToWhiskyBottle()),&monolith,SLOT(slotMorphToWhiskyBottle()));
   QObject::connect(&w, SIGNAL(sigMorphToWineBottle()), &monolith, SLOT(slotMorphToWineBottle()));
+  QObject::connect(&w, SIGNAL(sigSetParticleLife(float,float)), &monolith, SLOT(slotSetParticleLife(float, float)));
 
   w.show();
 
