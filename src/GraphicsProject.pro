@@ -53,6 +53,7 @@ SOURCES += \
         Common/model.cpp \
         Common/modelFunctions.cpp \
         Common/ObjLoader.cpp \
+        Common/soundHelper.cpp \
         #Common/WiiUtil.cpp\
         Common/Util.cpp \
         #Qt
@@ -108,7 +109,9 @@ HEADERS  += include/bipartiteGraph.hpp \
             # QT Stuff >(^_^)>
             include/mainwindow.h \
             include/MONOLITH.hpp \
-            include/dialog.h
+            include/dialog.h \
+            fMod/include/*.* \
+            include/soundHelper.hpp
 
 # Common Settings
 INCLUDEPATH += . ./include/
@@ -116,15 +119,15 @@ LIBS += -lMagick++
 
 # Linux Settings
 unix:!macx {
-LIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm -lMagick++ -lboost_thread-mt
-INCLUDEPATH +=. /usr/include/ImageMagick/ include/ #fMod/include
+LIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm -lMagick++ -lboost_thread-mt -lfModex
+INCLUDEPATH +=. /usr/include/ImageMagick/ include/ fMod/include
 }
 
 # Mac OSX Settings
 macx {
 LIBS += -framework Carbon -framework OpenGL -framework GLUT 
 INCLUDEPATH += . include /opt/local/include/ImageMagick/ /opt/local/include/ fMod/include
-LIBS += -L/opt/local/lib -lMagick++ -lboost_thread-mt #fMod/lib/libfmodex.dylib
+LIBS += -L/opt/local/lib -lMagick++ -lboost_thread-mt fMod/lib/libfmodex.dylib
 }
 
 WITH_EXPRTK {
