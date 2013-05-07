@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>502</width>
+    <width>627</width>
     <height>683</height>
    </rect>
   </property>
@@ -22,7 +22,7 @@
      <rect>
       <x>13</x>
       <y>10</y>
-      <width>481</width>
+      <width>601</width>
       <height>695</height>
      </rect>
     </property>
@@ -413,6 +413,91 @@
      <zorder>fullScreenLabel</zorder>
      <zorder>layoutWidget</zorder>
      <zorder>layoutWidget</zorder>
+    </widget>
+    <widget class="QWidget" name="audioTab">
+     <attribute name="title">
+      <string>Audio</string>
+     </attribute>
+     <widget class="QCheckBox" name="audioOnCheckbox">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>20</y>
+        <width>87</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Auido On</string>
+      </property>
+      <property name="tristate">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QWidget" name="layoutWidget_4">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>70</y>
+        <width>101</width>
+        <height>261</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="dopplerLayout">
+       <item>
+        <widget class="QLabel" name="dopplerLabel">
+         <property name="text">
+          <string>Doppler Effect</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSlider" name="dopplerSlider">
+         <property name="maximum">
+          <number>100</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="tickPosition">
+          <enum>QSlider::TicksBelow</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>70</y>
+        <width>55</width>
+        <height>261</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="volumeLayout">
+       <item>
+        <widget class="QLabel" name="volumeLabel">
+         <property name="text">
+          <string>Volume</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSlider" name="verticalSlider">
+         <property name="maximum">
+          <number>100</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="tickPosition">
+          <enum>QSlider::TicksBelow</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
     <widget class="QWidget" name="particleTab">
      <attribute name="title">
@@ -1038,7 +1123,7 @@
         <string>Default</string>
        </property>
       </widget>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
          <x>20</x>
@@ -1261,7 +1346,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>502</width>
+     <width>627</width>
      <height>22</height>
     </rect>
    </property>
