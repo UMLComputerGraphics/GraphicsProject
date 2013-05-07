@@ -1,5 +1,6 @@
 #include "dialog.h"
 #include "ui_dialog.h"
+#include <QFileDialog>
 
 #include <QtCore>
 
@@ -53,7 +54,6 @@ void Dialog::processFrameAndUpdateGUI()
 
     ui->lblOriginal->setPixmap(QPixmap::fromImage(qimgOriginal));
     ui->lblProcessed->setPixmap(QPixmap::fromImage(qimgProcessed));
-
 
 }
 

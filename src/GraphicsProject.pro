@@ -121,14 +121,50 @@ LIBS += -lMagick++
 
 # Linux Settings
 unix:!macx {
-LIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm -lMagick++ -lboost_thread-mt -lfmodex
-INCLUDEPATH +=. /usr/include/ImageMagick/ include/
+LIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm -lMagick++ -lboost_thread-mt -lfmodex \
+        /usr/local/lib/libopencv_calib3d.so \
+        /usr/local/lib/libopencv_contrib.so \
+        /usr/local/lib/libopencv_core.so \
+        /usr/local/lib/libopencv_features2d.so \
+        /usr/local/lib/libopencv_flann.so \
+        /usr/local/lib/libopencv_gpu.so \
+        /usr/local/lib/libopencv_highgui.so \
+        /usr/local/lib/libopencv_imgproc.so \
+        /usr/local/lib/libopencv_legacy.so \
+        /usr/local/lib/libopencv_ml.so \
+        /usr/local/lib/libopencv_nonfree.so \
+        /usr/local/lib/libopencv_objdetect.so \
+        /usr/local/lib/libopencv_photo.so \
+        /usr/local/lib/libopencv_stitching.so \
+        /usr/local/lib/libopencv_superres.so \
+        /usr/local/lib/libopencv_ts.so \
+        /usr/local/lib/libopencv_video.so \
+        /usr/local/lib/libopencv_videostab.so
+INCLUDEPATH +=. /usr/include/ImageMagick/ include/ /usr/local/include/opencv
 }
 
 # Mac OSX Settings
 macx {
-LIBS += -framework Carbon -framework OpenGL -framework GLUT 
-INCLUDEPATH += . include /opt/local/include/ImageMagick/ /opt/local/include/
+LIBS += -framework Carbon -framework OpenGL -framework GLUT \
+        /opt/local/lib/libopencv_calib3d.dylib \
+        /opt/local/lib/libopencv_contrib.dylib \
+        /opt/local/lib/libopencv_core.dylib \
+        /opt/local/lib/libopencv_features2d.dylib \
+        /opt/local/lib/libopencv_flann.dylib \
+        /opt/local/lib/libopencv_gpu.dylib \
+        /opt/local/lib/libopencv_highgui.dylib \
+        /opt/local/lib/libopencv_imgproc.dylib \
+        /opt/local/lib/libopencv_legacy.dylib \
+        /opt/local/lib/libopencv_ml.dylib \
+        /opt/local/lib/libopencv_nonfree.dylib \
+        /opt/local/lib/libopencv_objdetect.dylib \
+        /opt/local/lib/libopencv_photo.dylib \
+        /opt/local/lib/libopencv_stitching.dylib \
+        /opt/local/lib/libopencv_superres.dylib \
+        /opt/local/lib/libopencv_ts.dylib \
+        /opt/local/lib/libopencv_video.dylib \
+        /opt/local/lib/libopencv_videostab.dylib
+INCLUDEPATH += . include /opt/local/include/ImageMagick/ /opt/local/include/ /opt/local/include/opencv
 LIBS += -L/opt/local/lib -lMagick++ -lboost_thread-mt fMod/lib/libfmodex.dylib
 }
 
