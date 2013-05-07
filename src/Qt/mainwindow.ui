@@ -522,11 +522,11 @@
         <height>31</height>
        </rect>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout">
+      <layout class="QHBoxLayout" name="numParticlesLayout">
        <item>
         <widget class="QLabel" name="numberOfParticlesLabel">
          <property name="text">
-          <string>Number of Particles</string>
+          <string>Number of Particles:</string>
          </property>
         </widget>
        </item>
@@ -554,11 +554,11 @@
         <height>29</height>
        </rect>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <layout class="QHBoxLayout" name="equationBoxLayout">
        <item>
         <widget class="QLabel" name="flameEquationLabel">
          <property name="text">
-          <string>Flame Equation</string>
+          <string>Particles Equation:</string>
          </property>
         </widget>
        </item>
@@ -1133,7 +1133,7 @@
         <item row="0" column="0">
          <widget class="QLabel" name="ParamALabel">
           <property name="text">
-           <string>Param A</string>
+           <string>f(sin):</string>
           </property>
          </widget>
         </item>
@@ -1162,7 +1162,7 @@
         <item row="1" column="0">
          <widget class="QLabel" name="ParamBLabel">
           <property name="text">
-           <string>Param B</string>
+           <string>f(cos):</string>
           </property>
          </widget>
         </item>
@@ -1191,7 +1191,7 @@
         <item row="2" column="0">
          <widget class="QLabel" name="ParamCLabel">
           <property name="text">
-           <string>Param C</string>
+           <string>f(pi):</string>
           </property>
          </widget>
         </item>
@@ -1242,89 +1242,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>Life Span</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="minLifeLabel">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>40</y>
-         <width>71</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Minimum</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="maxLifeLabel">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>70</y>
-         <width>71</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Maximum</string>
-       </property>
-      </widget>
-      <widget class="QPlainTextEdit" name="minLifeInput">
-       <property name="geometry">
-        <rect>
-         <x>80</x>
-         <y>40</y>
-         <width>100</width>
-         <height>20</height>
-        </rect>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>100</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>100</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="verticalScrollBarPolicy">
-        <enum>Qt::ScrollBarAlwaysOff</enum>
-       </property>
-       <property name="horizontalScrollBarPolicy">
-        <enum>Qt::ScrollBarAlwaysOff</enum>
-       </property>
-      </widget>
-      <widget class="QPlainTextEdit" name="maxLifeInput">
-       <property name="geometry">
-        <rect>
-         <x>80</x>
-         <y>70</y>
-         <width>100</width>
-         <height>20</height>
-        </rect>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>100</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>100</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="verticalScrollBarPolicy">
-        <enum>Qt::ScrollBarAlwaysOff</enum>
-       </property>
-       <property name="horizontalScrollBarPolicy">
-        <enum>Qt::ScrollBarAlwaysOff</enum>
+        <string>Life Span:</string>
        </property>
       </widget>
       <widget class="QPushButton" name="defaultLifespansButton">
@@ -1351,6 +1269,99 @@
        </property>
        <property name="text">
         <string>Set</string>
+       </property>
+      </widget>
+      <widget class="QWidget" name="layoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>40</y>
+         <width>177</width>
+         <height>52</height>
+        </rect>
+       </property>
+       <layout class="QFormLayout" name="formLayout_4">
+        <item row="0" column="0">
+         <widget class="QLabel" name="minLifeLabel">
+          <property name="text">
+           <string>Minimum:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QPlainTextEdit" name="minLifeInput">
+          <property name="minimumSize">
+           <size>
+            <width>100</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="verticalScrollBarPolicy">
+           <enum>Qt::ScrollBarAlwaysOff</enum>
+          </property>
+          <property name="horizontalScrollBarPolicy">
+           <enum>Qt::ScrollBarAlwaysOff</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="maxLifeLabel">
+          <property name="text">
+           <string>Maximum:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QPlainTextEdit" name="maxLifeInput">
+          <property name="minimumSize">
+           <size>
+            <width>100</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="verticalScrollBarPolicy">
+           <enum>Qt::ScrollBarAlwaysOff</enum>
+          </property>
+          <property name="horizontalScrollBarPolicy">
+           <enum>Qt::ScrollBarAlwaysOff</enum>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+     <widget class="QScrollArea" name="scrollArea">
+      <property name="geometry">
+       <rect>
+        <x>400</x>
+        <y>310</y>
+        <width>120</width>
+        <height>80</height>
+       </rect>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidgetContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>118</width>
+         <height>78</height>
+        </rect>
        </property>
       </widget>
      </widget>
