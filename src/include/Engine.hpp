@@ -350,6 +350,7 @@ private:
   bool _isFullScreen;
 
 #ifdef WII
+public:
   CWii _wii;
 #endif
 

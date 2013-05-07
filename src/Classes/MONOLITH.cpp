@@ -545,8 +545,8 @@ void MONOLITH::raytraceStatusChanged(bool newstatus)
     //ITERATE OVER ALL OBJS IN SCENE!
 
     Engine::instance()->rootScene()->bufferToRaytracer( rt );
+    Engine::instance()->rootScene()->sceneToRaytracer( rt );
     rt.pushDataToBuffer();
-    //    rt.genereateScene(objs);
   }
   else
   {
