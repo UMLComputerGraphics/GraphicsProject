@@ -148,8 +148,15 @@ ParticleSystem::respawnParticle(Particle &p)
 
     p.setPos(spawnPosition);
 
-    p.setLifetime( p.getMaxLifetime() ) ;
-
+    if ( p.getRespawnFlag() )
+    {
+        p.setMaxLifetime( generateLifespan() );
+        p.setRespawnFlag( false );
+    }
+    else
+    {
+        p.setLifetime( p.getMaxLifetime() ) ;
+    }
 }
 
 vec4 negateY(vec4 in)
@@ -514,6 +521,16 @@ ParticleSystem::update() {
 	}
 
 
+}
+
+void ParticleSystem::setRespawnFlag( bool flag )
+{
+    vector<ParticleP>::iterator i;
+
+    for( i = this->_particles.begin() ; i != this->_particles.end() ; ++i )
+    {
+        (*i)->setRespawnFlag( flag );
+    }
 }
 
 void ParticleSystem::setVectorField(vec3 (*vectorFieldFunc)(vec4, Parameters*) )

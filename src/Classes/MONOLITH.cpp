@@ -201,31 +201,16 @@ void MONOLITH::slotUpdateTornadoVecFunc()
     ps->setVectorField( ParticleFieldFunctions::tornado );
 }
 
-/*
- * Deprecated... for now
-void MONOLITH::slotParticleFieldFunction(int index)
-{
-    switch (index)
-    {
-    case 0:
-        ps->setVectorField( ParticleFieldFunctions::flame);
-        break;
-    case 1:
-        ps->setVectorField(ParticleFieldFunctions::tornado);
-        break;
-    case 2:
-
-    default:
-        ps->setVectorField( ParticleFieldFunctions::flame);
-        break;
-    }
-}
-*/
-
 void MONOLITH::slotUpdateVectorField(std::string* params)
 {
     Parameters* funcParams = new UserParameters(params);
     ps->setFuncParams(funcParams);
+}
+
+void MONOLITH::slotSetParticleLife( float min, float max )
+{
+    ps->setLifespan( min, max );
+    ps->setRespawnFlag( true );
 }
 
 /**

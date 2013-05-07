@@ -52,6 +52,7 @@ signals:
     void sigFlameVecParams(double[3], double, float, float);
     void sigTornadoVecParams( void );
     void sigTornadoVecParams( float, float, float );
+    void sigSetParticleLife( float, float );
 
     // void sigParticleFieldFunction(int index);
 
@@ -68,6 +69,10 @@ private slots:
     void on_tornadoShowButton_clicked();
 
     void on_tornadoDefaultButton_clicked();
+
+    void on_setLifespansButton_clicked();
+
+    void on_defaultLifespansButton_clicked();
 
 private:
     Ui::MainWindow *ui;
