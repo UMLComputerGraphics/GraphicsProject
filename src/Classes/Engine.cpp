@@ -344,6 +344,10 @@ void Engine::init( int *argc, char *argv[], const char *title ) {
 
 void Engine::run( void ) {
 
+  if (glGetError()) {
+    gprint( PRINT_ERROR, "glGetError() returning true prior to Engine::run().\n" );
+  }
+
   glutMainLoop();
 
   delete Engine::instance();
@@ -398,21 +402,27 @@ void Engine::idle( void ) {
 #ifdef WII
   if (eng->opt("wii")) {
     static const unsigned NumPolls = 20;
-    Camera *camptr = dynamic_cast< Camera* >( myScreen._camList["AutoCamera2"] );
+    Camera *camptr = NULL;
+    try {
+      camptr = dynamic_cast< Camera* >( (*eng->cams())["AutoCamera2"] );
+    } catch ( ... ) {
+      camptr = NULL;
+    }
+
     Angel::vec3 theta_diff;
     Angel::vec3 accel_mag;
     // Take many samples for two reasons:
     // (1) Without this, we can't poll often enough and Wii Input "lags".
     // (2) Average/Sample to "smooth" the data.
     for (size_t i = 0; i < NumPolls; ++i) {
-      pollWii( Wii );
-      if (PollResults.Reset_Camera && camptr != NULL) camptr->resetRotation();
-      theta_diff += PollResults.wr_thetas;
-      accel_mag += PollResults.bb_magnitudes;
+      pollWii( eng->_wii );
+      if (pollResults.resetCamera && camptr != NULL) camptr->resetRotation();
+      theta_diff += pollResults.wrThetas;
+      accel_mag += pollResults.bbMagnitudes;
     }
     if (camptr) {
-      camptr->Accel( (accel_mag / NumPolls) * 2.0 );
-      wiilook( *camptr, theta_diff / NumPolls, PollResults.wr_rates );
+      camptr->accel( (accel_mag / NumPolls) * 2.0 );
+      wiilook( *camptr, theta_diff / NumPolls, pollResults.wrRates );
     }
   }
 #endif
@@ -496,6 +506,7 @@ void Engine::displayViewport( void ) {
   static Scene *theScene = Engine::instance()->rootScene();
   static Cameras *camList = Engine::instance()->cams();
 
+  if (glGetError()) { gprint( PRINT_ERROR, "true in displayViewport\n" ); }
   instance()->_displayExtension();
 
   theScene->draw();
