@@ -5,7 +5,6 @@
 #-------------------------------------------------
 
 QT       += core gui
-
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = OpencvTest
@@ -20,8 +19,26 @@ HEADERS  += dialog.h
 FORMS    += dialog.ui
 
 unix:!macx {
-INCLUDEPATH += . $(shell pkg-config opencv --cflags | sed 's/-I//g')
-LIBS += $(shell pkg-config opencv --libs)
+LIBS += /usr/local/lib/libopencv_calib3d.so \
+	/usr/local/lib/libopencv_contrib.so \
+	/usr/local/lib/libopencv_core.so \	
+	/usr/local/lib/libopencv_features2d.so \
+	/usr/local/lib/libopencv_flann.so \
+	/usr/local/lib/libopencv_gpu.so \
+	/usr/local/lib/libopencv_highgui.so \
+	/usr/local/lib/libopencv_imgproc.so \
+	/usr/local/lib/libopencv_legacy.so \
+	/usr/local/lib/libopencv_ml.so \
+	/usr/local/lib/libopencv_nonfree.so \
+	/usr/local/lib/libopencv_objdetect.so \
+	/usr/local/lib/libopencv_photo.so \
+	/usr/local/lib/libopencv_stitching.so \
+	/usr/local/lib/libopencv_superres.so \
+	/usr/local/lib/libopencv_ts.so \
+	/usr/local/lib/libopencv_video.so \
+	/usr/local/lib/libopencv_videostab.so  
+
+INCLUDEPATH += . /usr/local/include /usr/local/include/opencv
 }
 
 unix:macx {

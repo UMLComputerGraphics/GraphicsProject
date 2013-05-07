@@ -484,7 +484,7 @@ void MONOLITH::run() {
   glShadeModel(GL_SMOOTH);
 
 
-  soundHelper::play3dSound( vec4(9.0,0.0,-7.0,1.0), 
+  soundHelper::play3dSound( vec4(-9.0,2.0,7.0,1.0), 
 			    vec4(0.0,0.0,0.0,1.0), 
 			    this->fSystem,
 			    &(this->radio),
