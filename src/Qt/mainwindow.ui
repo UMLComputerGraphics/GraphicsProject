@@ -466,7 +466,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>50</x>
@@ -649,7 +649,7 @@
       <widget class="QLabel" name="xFieldLabel">
        <property name="geometry">
         <rect>
-         <x>140</x>
+         <x>150</x>
          <y>0</y>
          <width>16</width>
          <height>16</height>
@@ -662,7 +662,7 @@
       <widget class="QLabel" name="yFieldLabel">
        <property name="geometry">
         <rect>
-         <x>170</x>
+         <x>200</x>
          <y>0</y>
          <width>16</width>
          <height>16</height>
@@ -677,13 +677,13 @@
         <rect>
          <x>130</x>
          <y>20</y>
-         <width>31</width>
+         <width>50</width>
          <height>21</height>
         </rect>
        </property>
        <property name="maximumSize">
         <size>
-         <width>31</width>
+         <width>50</width>
          <height>21</height>
         </size>
        </property>
@@ -700,7 +700,7 @@
       <widget class="QLabel" name="zFieldLabel">
        <property name="geometry">
         <rect>
-         <x>200</x>
+         <x>250</x>
          <y>0</y>
          <width>16</width>
          <height>16</height>
@@ -713,15 +713,15 @@
       <widget class="QPlainTextEdit" name="zFieldTextInput">
        <property name="geometry">
         <rect>
-         <x>190</x>
+         <x>230</x>
          <y>20</y>
-         <width>31</width>
+         <width>50</width>
          <height>21</height>
         </rect>
        </property>
        <property name="maximumSize">
         <size>
-         <width>31</width>
+         <width>50</width>
          <height>21</height>
         </size>
        </property>
@@ -738,15 +738,15 @@
       <widget class="QPlainTextEdit" name="yFieldTextInput">
        <property name="geometry">
         <rect>
-         <x>160</x>
+         <x>180</x>
          <y>20</y>
-         <width>31</width>
+         <width>50</width>
          <height>21</height>
         </rect>
        </property>
        <property name="maximumSize">
         <size>
-         <width>31</width>
+         <width>50</width>
          <height>21</height>
         </size>
        </property>
@@ -1607,12 +1607,6 @@
        <string>Processed Video</string>
       </property>
      </widget>
-     <zorder>verticalLayoutWidget_2</zorder>
-     <zorder>horizontalLayoutWidget</zorder>
-     <zorder>lblProcessed</zorder>
-     <zorder>lblOriginal</zorder>
-     <zorder>label_9</zorder>
-     <zorder>label_10</zorder>
     </widget>
    </widget>
   </widget>
