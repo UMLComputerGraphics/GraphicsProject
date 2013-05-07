@@ -68,51 +68,52 @@ SOURCES += \
         Common/soundHelper.cpp
 
 HEADERS  += include/bipartiteGraph.hpp \
-        include/Camera.hpp \
-        include/Cameras.hpp \
-        include/ColorFunctions.hpp \
-        include/Engine.hpp \
-        include/globals.h \
-        include/glut_callbacks.h \
-        include/InitShader.hpp \
-        include/Light.hpp \
-        #include/KinectInator.hpp\
-        include/mat.hpp \
-        include/Material.hpp \
-        # not needed anymore include/meshMapping.hpp \
-        include/modelFunctions.hpp \
-        include/model.hpp \
-        include/Object.hpp \
-        include/ObjLoader.hpp \
-        include/OpenGL.h \ 
-        include/Particle.hpp \
-        include/nearestNeighbor.hpp \
-        include/RaytraceBuffer.hpp \
-        include/RayTracer.h \
-        include/scaleModel.hpp \
-        include/scanMatching.hpp \
-        include/ParticleFieldFunctions.hpp \
-        include/ParticleSystem.hpp \
-        include/partTest.hpp \
-        include/platform.h \ 
-        include/Scene.hpp \ 
-        include/Screen.hpp \ 
-        include/SpelchkCamera.hpp \
-        include/Texture.hpp \ 
-        include/TextureMan.hpp \ 
-        include/Timer.hpp \ 
-        include/TransCache.hpp \ 
-        include/Transformation.hpp \ 
-        include/UserVectorField.hpp \
-        include/Util.hpp \ 
-        include/vec.hpp \ 
-        include/WiiUtil.h \
-        # QT Stuff >(^_^)>
-        include/mainwindow.h \
-        include/MONOLITH.hpp \
-        include/dialog.h \
-        # FMOD STUFF {<>,<>}
-        include/soundHelper.hpp
+            include/Camera.hpp \
+            include/Cameras.hpp \
+            include/ColorFunctions.hpp \
+            include/Engine.hpp \
+            include/globals.h \
+            include/glut_callbacks.h \
+            include/InitShader.hpp \
+            include/Light.hpp \
+            #include/KinectInator.hpp\
+            include/mat.hpp \
+            include/Material.hpp \
+            # not needed anymore include/meshMapping.hpp \
+            include/modelFunctions.hpp \
+            include/model.hpp \
+            include/Object.hpp \
+            include/ObjLoader.hpp \
+            include/OpenGL.h \ 
+            include/Particle.hpp \
+	    include/nearestNeighbor.hpp \
+	    include/RaytraceBuffer.hpp \
+	    include/RayTracer.h \
+	    include/scaleModel.hpp \
+	    include/scanMatching.hpp \
+            include/ParticleFieldFunctions.hpp \
+            include/ParticleSystem.hpp \
+            include/partTest.hpp \
+            include/platform.h \ 
+            include/Scene.hpp \ 
+            include/Screen.hpp \ 
+            include/SpelchkCamera.hpp \
+            include/Texture.hpp \ 
+            include/TextureMan.hpp \ 
+            include/Timer.hpp \ 
+            include/TransCache.hpp \ 
+            include/Transformation.hpp \ 
+            include/UserVectorField.hpp \
+            include/Util.hpp \ 
+            include/vec.hpp \ 
+            include/WiiUtil.h \
+            # QT Stuff >(^_^)>
+            include/mainwindow.h \
+            include/MONOLITH.hpp \
+            include/dialog.h \
+            # fMod Suff
+            fMod/include/*.* \
+            include/soundHelper.hpp
 
 # Common Settings
 INCLUDEPATH += . ./include/ ./fMod/include

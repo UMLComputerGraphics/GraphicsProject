@@ -77,6 +77,9 @@ class RayTracer {
   std::vector<Angel::mat4> _sceneData;
   
   int _numOfTriangleVectors;
+
+  //re-buffering rate calibration -- shoot for 2/3 initial fps
+  int _rebuffer_frequency;
 };
 
 #endif /* RAYTRACER_H_ */
