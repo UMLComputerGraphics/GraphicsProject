@@ -378,3 +378,9 @@ void RayTracer::lightFlicker( void ) {
     boost::this_thread::yield();
   }
 }
+
+void RayTracer::addTransformation( const Angel::mat4 &mat ) {
+
+  _sceneData.push_back( mat );
+
+}

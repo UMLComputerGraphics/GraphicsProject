@@ -601,5 +601,6 @@ Parameters* ParticleSystem::getFuncParams(void)
 }
 // Nada. Don't buffer particles to the raytracer,
 // That's crazy-talk!
+void ParticleSystem::sceneToRaytracer( RayTracer &rt ) { /* WOW, NOTHING.*/ }
 void ParticleSystem::bufferToRaytracer( RayTracer &rt ) { /* WOW, NOTHING.*/ }
 
