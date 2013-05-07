@@ -43,6 +43,7 @@ ParticleSystem::ParticleSystem( int particleAmt, const std::string &name,
   _minLife( 0.1 ),
   _maxLife( 1 ), 
   _pauseTheSystem( false ), 
+  _enableTheSystem( false ),
   _slaughterHeight( 0.0 ),
   _fillSpeedLimit( 5 ), 
   _emitterRadius( 0.0 ),
@@ -148,9 +149,10 @@ ParticleSystem::respawnParticle(Particle &p)
 
     p.setPos(spawnPosition);
 
-    if ( p.getRespawnFlag() )
+    if ( p.getRespawnFlag() == true )
     {
         p.setMaxLifetime( generateLifespan() );
+        p.setLifetime( p.getMaxLifetime() );
         p.setParticleRespawnFlag( false );
     }
     else
@@ -614,6 +616,16 @@ void ParticleSystem::pauseTheSystem(void)
 void ParticleSystem::unpauseTheSystem(void)
 {
 	_pauseTheSystem = false;
+}
+
+void setEnableTheSystem( bool theBool )
+{
+    _enableTheSystem = theBool;
+}
+
+bool getEnableTheSystem( void )
+{
+    return _enableTheSystem;
 }
 
 void ParticleSystem::togglePause(void)

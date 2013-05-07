@@ -27,7 +27,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="generalTab">
      <attribute name="title">
@@ -119,7 +119,7 @@
        <item>
         <widget class="QCheckBox" name="particleSystemEnabler">
          <property name="text">
-          <string>Light up the Candle</string>
+          <string>Light the Candle</string>
          </property>
         </widget>
        </item>

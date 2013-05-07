@@ -67,6 +67,8 @@ class ParticleSystem : public Object {
   void unpauseTheSystem(void);
   void togglePause(void);
   void setPause(bool);
+  void setEnableTheSystem( bool );
+  bool getEnableTheSsytem( void );
 
   //overrides for Engine functionality
   virtual void buffer( GLenum usage = GL_DYNAMIC_DRAW );
@@ -132,6 +134,7 @@ class ParticleSystem : public Object {
 
   /* system control variables */
   bool     _pauseTheSystem;
+  bool     _enableTheSystem;
   float    _slaughterHeight;
   unsigned _fillSpeedLimit;
 

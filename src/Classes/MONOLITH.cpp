@@ -167,10 +167,12 @@ void MONOLITH::slotEnableParticleSystem(bool isEnabled)
     if (isEnabled)
     {
         ps->setNumParticles(_defaultNumberOfParticles);
+        ps->setEnableTheSystem( true );
     }
     else
     {
         ps->setNumParticles(0);
+        ps->setEnableTheSystem( false );
     }
 }
 
