@@ -84,6 +84,10 @@ Credits and Acknowledgements
       Founder of www.goodtextures.com from which we obtained
       all of our terrain textures.
 
+  - blacknote:
+      Composer of Forever Endless, our audio loop.
+      blacknote: http://blacknote.newgrounds.com/
+      Forever Endless: http://www.newgrounds.com/audio/listen/371629
 
 Outdated HSC Readme
 ===

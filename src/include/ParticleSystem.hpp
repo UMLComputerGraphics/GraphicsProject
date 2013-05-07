@@ -70,6 +70,7 @@ class ParticleSystem : public Object {
 
   //overrides for Engine functionality
   virtual void buffer( GLenum usage = GL_DYNAMIC_DRAW );
+  virtual void sceneToRaytracer( RayTracer &rt );
   virtual void bufferToRaytracer( RayTracer &rt );
 
   //TransCache _emitterTrans ; // this transcache represnts the position of the emitter
@@ -145,6 +146,7 @@ class ParticleSystem : public Object {
   Angel::vec3 (*_vecFieldFunc)(Angel::vec4 posIn, Parameters* functionParams);
   Angel::vec4 (*_colorFunc)(float lifePct, Angel::vec4 posIn);
 
+  
 
 };
 

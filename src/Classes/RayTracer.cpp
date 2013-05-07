@@ -13,6 +13,7 @@ RayTracer::RayTracer() :
   _lightPositions( NULL ),
   _lightDiffuse( NULL ),
   _lightSpecular( NULL ),
+  _rebuffer_frequency(-1),
   display(boost::bind(&RayTracer::_display,this)) {
 
   // Handles
@@ -29,6 +30,8 @@ RayTracer::RayTracer() :
   _uLightPositions = -1;
   _uLightDiffuse = -1;
   _uLightSpecular = -1;
+  _uNumSGTransformations = -1;
+  _uSceneGraphTransformations = -1;
   // State
   _numberOfLights = 2;
   _numTriangles = 0;
@@ -54,6 +57,7 @@ RayTracer::RayTracer() :
 
 RayTracer::~RayTracer()
 {
+  thisDateIsOver();
   if (_lightPositions) free(_lightPositions);
   if (_lightDiffuse)   free(_lightDiffuse);
   if (_lightSpecular)  free(_lightSpecular);
@@ -68,6 +72,19 @@ void RayTracer::_display( void ) {
   gprint( PRINT_INFO, "Raytracer::display() unsupported on Apple OSX at this time.\n" );
   return;
 #else
+  static int sincerebuffer=0;
+  if (_rebuffer_frequency != -1 && (++sincerebuffer)%_rebuffer_frequency == 0)
+  {
+    gprint( PRINT_INFO, "Rebuffering\n");
+    _bufferData.clear();
+    _triangleData.clear();
+    _numOfL2BoundingBoxes = 0;
+    _numTriangles = 0;
+    _numOfL1BoundingBoxes = 0;
+    Engine::instance()->rootScene()->bufferToRaytracer( *this );
+    pushDataToBuffer();
+  }
+
 
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
   glUniform1i( _uNumOfSpheres, _numSpheres );
@@ -84,6 +101,11 @@ void RayTracer::_display( void ) {
   glUniform3fv( _uLightPositions, _numberOfLights, _lightPositions );
   glUniform3fv( _uLightDiffuse, _numberOfLights, _lightDiffuse );
   glUniform3fv( _uLightSpecular, _numberOfLights, _lightSpecular );
+
+  glUniform1i( _uNumSGTransformations, _sceneData.size() );
+  if (_sceneData.size() > 0)
+    glUniformMatrix4fv( _uSceneGraphTransformations, _sceneData.size(),
+			GL_TRUE, (GLfloat*)&(_sceneData.at(0)) );
 
   static const GLfloat vertices[] = { 1.0, 1.0, -1.0, 1.0, 1.0, -1.0, -1.0, -1.0, };
 
@@ -119,7 +141,16 @@ void RayTracer::_display( void ) {
     gprint( PRINT_INFO, "fps: %f\n", fps );
     previousTime = elapsedTime;
     frameCount = 0;
+    if (_rebuffer_frequency == -1)
+    {
+      _rebuffer_frequency = (int)floor(fps*2.0);
+      gprint( PRINT_INFO, "Calculated rebuffer frequency @: %d\n", _rebuffer_frequency );
+    }
   }
+
+  // Draw particles-only
+  // Broken >_<
+  // Engine::instance()->rootScene()->draw( false );
 #endif
 }
 
@@ -331,7 +362,8 @@ void RayTracer::init( GLuint shader ) {
   _uLightPositions = glGetUniformLocation( _program, "uLightPositions" );
   _uLightDiffuse = glGetUniformLocation( _program, "uLightDiffuse" );
   _uLightSpecular = glGetUniformLocation( _program, "uLightSpecular" );
-  
+  _uNumSGTransformations = glGetUniformLocation( _program, "uNumSGTransformations" );
+  _uSceneGraphTransformations = glGetUniformLocation( _program, "uSceneGraphTransformations" );
   tick.setTimeUniform( glGetUniformLocation( _program, "ftime" ) );
   
 }
@@ -367,6 +399,8 @@ void RayTracer::legacySceneGen( void ) {
   pushDataToBuffer();
 }
 
+// Artist formerly known as ARomanticEvening.
+// Well, STILL known as that, if you look in Classes/MONOLITH.cpp.
 void RayTracer::lightFlicker( void ) {
   while ( !_extinguish ) {
     float lightness = (float)rand() / (float)RAND_MAX;
@@ -377,4 +411,14 @@ void RayTracer::lightFlicker( void ) {
 
     boost::this_thread::yield();
   }
+}
+
+void RayTracer::addTransformation( const Angel::mat4 &mat ) {
+
+  _sceneData.push_back( mat );
+
+}
+
+void RayTracer::thisDateIsOver( void ) {
+  _extinguish = true;
 }

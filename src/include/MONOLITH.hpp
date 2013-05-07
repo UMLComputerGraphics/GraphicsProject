@@ -116,6 +116,7 @@ public:
 
     RectangularMapping * _rectangularMapping;
     ScaleModel * _scaleModel;
+    bool _morphMatchCalculated;
 
     
 #ifndef WITHOUT_QT
@@ -144,6 +145,7 @@ public slots:
     void slotUpdateTornadoVecFunc( void );
     void slotCurrentView(int num) ;
     void slotSetParticleLife( float, float );
+    void slotPauseMusic(bool isPaused);
 
 signals:
     void sigMorphPercentage(int value);

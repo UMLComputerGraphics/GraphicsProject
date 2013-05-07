@@ -542,7 +542,7 @@
           <number>1</number>
          </property>
          <property name="value">
-          <number>1000</number>
+          <number>0</number>
          </property>
         </widget>
        </item>
@@ -1490,6 +1490,129 @@
        <string>Add Object...</string>
       </property>
      </widget>
+    </widget>
+    <widget class="QWidget" name="VRTab">
+     <attribute name="title">
+      <string>VR</string>
+     </attribute>
+     <widget class="QWidget" name="verticalLayoutWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>10</y>
+        <width>461</width>
+        <height>70</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_6">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QCheckBox" name="vrMorphControl">
+           <property name="text">
+            <string>Enable Morph Control</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="vrMorphSlider">
+           <property name="maximum">
+            <number>100</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <item>
+          <widget class="QCheckBox" name="vrParticleControl">
+           <property name="text">
+            <string>Enable Particle Control</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="vrParticleSlider">
+           <property name="maximum">
+            <number>2000</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QLabel" name="lblProcessed">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>360</y>
+        <width>280</width>
+        <height>210</height>
+       </rect>
+      </property>
+      <property name="autoFillBackground">
+       <bool>true</bool>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblOriginal">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>120</y>
+        <width>280</width>
+        <height>210</height>
+       </rect>
+      </property>
+      <property name="autoFillBackground">
+       <bool>true</bool>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_9">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>90</y>
+        <width>101</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Original Video</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_10">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>340</y>
+        <width>111</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Processed Video</string>
+      </property>
+     </widget>
+     <zorder>verticalLayoutWidget_2</zorder>
+     <zorder>horizontalLayoutWidget</zorder>
+     <zorder>lblProcessed</zorder>
+     <zorder>lblOriginal</zorder>
+     <zorder>label_9</zorder>
+     <zorder>label_10</zorder>
     </widget>
    </widget>
   </widget>

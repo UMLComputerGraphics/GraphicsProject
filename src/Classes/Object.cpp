@@ -154,6 +154,10 @@ Object::Object( const std::string &name, GLuint gShader ) {
 	  _buffer[TEXCOORDS], _buffer[INDICES], _buffer[VERTICES_MORPH],
 	  _buffer[NORMALS_MORPH], _buffer[COLORS_MORPH] );
   
+  if (glGetError()) {
+    gprint( PRINT_ERROR, "glGetError() true after %s construction\n", _name.c_str() );
+  }
+
   /* Unset the VAO context. */
   glBindVertexArray( 0 );
 }
@@ -511,12 +515,11 @@ void Object::link( UniformEnum which, const std::string &name ) {
 void Object::send( Object::UniformEnum which ) {
 
   if (glGetError()) {
-    fprintf( stderr, "ERROR: glGetError() returning true prior to exec of send() ...\n" );
-    //exit( 255 );
+    gprint( PRINT_ERROR, "ERROR: glGetError() returning true prior to exec of send().\n" );
   }
 
   if (shader() == 0) {
-    fprintf( stderr, "Warning: Object::send() for [%s][%u] called with no shader.\n", _name.c_str(), which );
+    gprint( PRINT_WARNING, "Warning: Object::send() for [%s][%u] called with no shader.\n", _name.c_str(), which );
     return;
   }
 
@@ -586,7 +589,7 @@ void Object::send( Object::UniformEnum which ) {
   }
 
   if (glGetError()) {
-    fprintf( stderr, "ERROR: Object::send() failed for [%s][%u]\n", _name.c_str(), which );
+    fprintf( stderr, "ERROR: Object::send() failed for [%s][%u] (handle was %u)\n", _name.c_str(), which, _handles[which] );
     //exit(EXIT_FAILURE);
   }
 
@@ -839,6 +842,11 @@ Angel::vec3 Object::getMin( void ) {
 
   return min;
 
+}
+
+void Object::sceneToRaytracer( RayTracer &rt ) {
+  rt.addTransformation( _trans.otm() );
+  Scene::sceneToRaytracer( rt );
 }
 
 #define vec3ify( invec ) vec3( invec.x, invec.y, invec.z )

@@ -16,14 +16,6 @@
 // Multi-platform support and OpenGL headers
 #include "Engine.hpp"
 
-// Wii Connectivity 
-#ifdef WII
-#include <wiicpp.h>  // WiiC++ API
-#include "WiiUtil.h" // Wii Controller Handler Util
-CWii Wii;
-bool usingWii = false;
-#endif
-
 /**
  randomize_terrain is called to regenerate the terrain in this application.
  It assumes the terrain is named "terrain" and is located as a direct
@@ -260,40 +252,6 @@ void TerrainGenerationAnimation( TransCache &obj ) {
 }
 
 /**
- wiilook is an analog of mouselook, for wii remote controls.
- It takes a reference to a Camera, and two vec3s,
- and uses the information to adjust the Camera's _rotation.
-
- @param WiiCamera The camera to adjust the _rotation of.
- @param NewTheta  The X,Y,Z angles of the Wii Remote.
- @param MovementRates The X, Y, Z angular velocities of the Wii Remote.
-
- @return Void.
- **/
-void wiilook( Camera &WiiCamera, const Angel::vec3 &NewTheta,
-              const Angel::vec3 &MovementRates ) {
-  
-  static Angel::vec3 OldTheta; /* Defaults to 0,0,0 */
-  // Rotation Order: Y-X-Z looks the best, I think.
-  //WiiCamera.yaw( NewTheta.y - OldTheta.y );
-  //WiiCamera.pitch( OldTheta.x - NewTheta.x );
-  //WiiCamera.roll( NewTheta.z - OldTheta.z );
-  
-  float yaw = -MovementRates.y / 20;
-  float pitch = -MovementRates.x / 20;
-  float roll = MovementRates.z / 20;
-  
-  if ( abs( yaw ) >= 0.1 )
-    WiiCamera.yaw( -MovementRates.y / 20,
-                   Engine::instance()->opt( "fixed_yaw" ) );
-  if ( abs( pitch ) >= 0.1 ) WiiCamera.pitch( -MovementRates.x / 20 );
-  if ( abs( roll ) >= 0.1 ) WiiCamera.roll( MovementRates.z / 20 );
-  
-  OldTheta = NewTheta;
-  
-}
-
-/**
  * A simple animation callback.
  * Rotates the object about its Y axis.
  * @param obj The object to rotate.
@@ -429,7 +387,7 @@ int main( int argc, char **argv ) {
   glutAttachMenu( GLUT_RIGHT_BUTTON );
   
   /* PULL THE TRIGGER */
-  glutMainLoop();
+  Engine::run();
   return EXIT_SUCCESS;
   
 }

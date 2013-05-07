@@ -58,6 +58,7 @@ ifdef POSTMULT
 	CXXDEFS += -DPOSTMULT
 endif
 ifdef WII
+    CXXOPTS = -DWITHOUT_QT
     CXXDEFS += -DWII -I/usr/local/include/wiic
     LDLIBS += -lwiic -lwiicpp
 endif

@@ -319,6 +319,7 @@ public:
    */
   Angel::vec3 getMin( void );
 
+  virtual void sceneToRaytracer( RayTracer &rt );
   virtual void bufferToRaytracer( RayTracer &rt );
   //void setLights(GLfloat* ambient, GLint* numlights, GLfloat* positions, GLfloat* diffuse, GLfloat* specular);
 
