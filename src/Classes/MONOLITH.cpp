@@ -368,7 +368,7 @@ void MONOLITH::run() {
   ObjLoader::loadMaterialFromFile( radio, "../models/radio-ntx.obj" );
   glUniform1i(glGetUniformLocation(radio->shader(),"letMeSeeThatPhong"),1);
 
-  radio->_trans._offset.set( 9.0, 0, -7.0);
+  radio->_trans._offset.set( 9.0, 2.0, -7.0);
   radio->_trans._rotation.rotateY( -45.0, true );
 
   radio->propagateOLD();
