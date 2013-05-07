@@ -64,6 +64,8 @@ class RayTracer {
   GLint _uLightPositions;
   GLint _uLightDiffuse;
   GLint _uLightSpecular;
+  GLint _uNumSGTransformations;
+  GLint _uSceneGraphTransformations;
   //
   int _numberOfLights;
   int _numTriangles;
