@@ -20,6 +20,8 @@ uniform float uSphereShininess[maxNumSphere];
 uniform float uSphereReflect[maxNumSphere];
 uniform float uSphereRefract[maxNumSphere];
 
+uniform mat4 sceneGraphTransformations[];
+
 uniform int uNumOfTriangle;
 uniform int uNumOfTriangleVectors;
 

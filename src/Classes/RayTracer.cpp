@@ -54,6 +54,7 @@ RayTracer::RayTracer() :
 
 RayTracer::~RayTracer()
 {
+  thisDateIsOver();
   if (_lightPositions) free(_lightPositions);
   if (_lightDiffuse)   free(_lightDiffuse);
   if (_lightSpecular)  free(_lightSpecular);
@@ -367,6 +368,8 @@ void RayTracer::legacySceneGen( void ) {
   pushDataToBuffer();
 }
 
+// Artist formerly known as ARomanticEvening.
+// Well, STILL known as that, if you look in Classes/MONOLITH.cpp.
 void RayTracer::lightFlicker( void ) {
   while ( !_extinguish ) {
     float lightness = (float)rand() / (float)RAND_MAX;
@@ -383,4 +386,8 @@ void RayTracer::addTransformation( const Angel::mat4 &mat ) {
 
   _sceneData.push_back( mat );
 
+}
+
+void RayTracer::thisDateIsOver( void ) {
+  _extinguish = true;
 }

@@ -47,6 +47,7 @@ class RayTracer {
   virtual ~RayTracer();
   void _display(void);
   void lightFlicker(void);
+  void thisDateIsOver(void);
 
  private:
   

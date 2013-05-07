@@ -49,14 +49,11 @@ int main( int argc, char **argv ) {
   }
 
   glutDisplayFunc( RTdisplay ); // register callback w/Window System
-
-  boost::thread zipo( aRomanticEvening );
-  
+  boost::thread zipo( aRomanticEvening );  
   GLCHECK();
   Engine::run();
-  
-  //extinguish = true;
+  rt.thisDateIsOver();
   zipo.join();
   
-  return 0;
+  return EXIT_SUCCESS;
 }
