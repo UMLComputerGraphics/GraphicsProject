@@ -149,14 +149,23 @@ void MONOLITH::slotMorphToWhiskyBottle(void)
 }
 
 void MONOLITH::slotEnableMorphMatching(bool isEnabled){
+	if(!_morphMatchCalculated){
+		int heightScale = 10;
+		int widthScale = 1;
+		int depthScale = 1;
+		_scaleModel = new ScaleModel(bottle, bottle->morphTarget(),widthScale,heightScale,depthScale);
+		_rectangularMapping = new RectangularMapping(bottle,bottle->morphTarget());
+		_scaleModel->restoreModels();
+		_morphMatchCalculated = true;
+	}
 	gprint(PRINT_WARNING, "MORPH MATCHING := %s\n", isEnabled?"ENABLED":"DISABLED");
-    if(isEnabled){
-        _rectangularMapping->copyToObjects((*rootScene)["bottle"],(*rootScene)["bottle"]->morphTarget());
-        _scaleModel->restoreModels();
-    }else{
-        _rectangularMapping->revertToOriginal((*rootScene)["bottle"],(*rootScene)["bottle"]->morphTarget());
-    }
-   	(*rootScene)["bottle"]->buffer();
+	if(isEnabled){
+		_rectangularMapping->copyToObjects((*rootScene)["bottle"],(*rootScene)["bottle"]->morphTarget());
+		_scaleModel->restoreModels();
+	}else{
+		_rectangularMapping->revertToOriginal((*rootScene)["bottle"],(*rootScene)["bottle"]->morphTarget());
+	}
+	(*rootScene)["bottle"]->buffer();
 }
 
 
@@ -337,6 +346,9 @@ void MONOLITH::run() {
     
     //Rescale models to original size
     _scaleModel->restoreModels();
+    _morphMatchCalculated = true;
+  }else{
+	  _morphMatchCalculated = false;
   }
 
   // Scale the bottle down!
@@ -368,7 +380,7 @@ void MONOLITH::run() {
   ObjLoader::loadMaterialFromFile( radio, "../models/radio-ntx.obj" );
   glUniform1i(glGetUniformLocation(radio->shader(),"letMeSeeThatPhong"),1);
 
-  radio->_trans._offset.set( 9.0, 0, -7.0);
+  radio->_trans._offset.set( 9.0, 2.0, -7.0);
   radio->_trans._rotation.rotateY( -45.0, true );
 
   radio->propagateOLD();

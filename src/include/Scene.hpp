@@ -175,6 +175,7 @@ public:
 
   void printTree( unsigned level = 0 );
 
+  virtual void sceneToRaytracer( RayTracer &rt );
   virtual void bufferToRaytracer( RayTracer &rt );
 
 protected:

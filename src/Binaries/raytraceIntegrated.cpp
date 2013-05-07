@@ -42,21 +42,21 @@ int main( int argc, char **argv ) {
     Object *bottle = Engine::instance()->rootScene()->addObject( "bottle", program );
     ObjLoader::loadModelFromFile( bottle, "../models/bottle_wine_med.obj" );
     //ObjLoader::loadMaterialFromFile( bottle, "../models/bottle_wine_med.mtl" );
+
     Engine::instance()->rootScene()->bufferToRaytracer( rt );
+    Engine::instance()->rootScene()->sceneToRaytracer( rt );
+
     rt.pushDataToBuffer();
   } else {
     rt.legacySceneGen();
   }
 
   glutDisplayFunc( RTdisplay ); // register callback w/Window System
-
-  boost::thread zipo( aRomanticEvening );
-  
+  boost::thread zipo( aRomanticEvening );  
   GLCHECK();
   Engine::run();
-  
-  //extinguish = true;
+  rt.thisDateIsOver();
   zipo.join();
   
-  return 0;
+  return EXIT_SUCCESS;
 }

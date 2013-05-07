@@ -70,6 +70,7 @@ class ParticleSystem : public Object {
 
   //overrides for Engine functionality
   virtual void buffer( GLenum usage = GL_DYNAMIC_DRAW );
+  virtual void sceneToRaytracer( RayTracer &rt );
   virtual void bufferToRaytracer( RayTracer &rt );
 
   //TransCache _emitterTrans ; // this transcache represnts the position of the emitter

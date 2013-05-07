@@ -16,6 +16,7 @@
 #include <boost/thread.hpp>
 #include <boost/bind.hpp>
 #include "RaytraceBuffer.hpp"
+#include "mat.hpp"
 
 class RayTracer {
   /* These need to be declared prior to the boost-threading so they can be initialized before the boost thread forks off. */
@@ -36,6 +37,7 @@ class RayTracer {
 		    const vec3& diffuse, const vec3& ambient, const vec3& specular,
 		    float shininess, float reflect, float refract,
 		    vec3 normal = vec3(-INFINITY,-INFINITY,-INFINITY) );
+  void addTransformation( const Angel::mat4 &mat );
 
   void pushTriangleDataToBuffer( std::vector<GLfloat> &dataBuffer,
 				 std::vector<triangle_t> &triangleBuffer,
@@ -45,6 +47,7 @@ class RayTracer {
   virtual ~RayTracer();
   void _display(void);
   void lightFlicker(void);
+  void thisDateIsOver(void);
 
  private:
   
@@ -61,6 +64,8 @@ class RayTracer {
   GLint _uLightPositions;
   GLint _uLightDiffuse;
   GLint _uLightSpecular;
+  GLint _uNumSGTransformations;
+  GLint _uSceneGraphTransformations;
   //
   int _numberOfLights;
   int _numTriangles;
@@ -71,6 +76,7 @@ class RayTracer {
   
   std::vector<GLfloat> _bufferData;
   std::vector<triangle_t> _triangleData;
+  std::vector<Angel::mat4> _sceneData;
   
   int _numOfTriangleVectors;
 
