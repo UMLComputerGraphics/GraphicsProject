@@ -27,7 +27,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>6</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="generalTab">
      <attribute name="title">
@@ -428,7 +428,10 @@
        </rect>
       </property>
       <property name="text">
-       <string>Auido On</string>
+       <string>Audio On</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
       </property>
       <property name="tristate">
        <bool>false</bool>
@@ -484,8 +487,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QSlider" name="verticalSlider">
+        <widget class="QSlider" name="volumeSlider">
          <property name="maximum">
+          <number>100</number>
+         </property>
+         <property name="sliderPosition">
           <number>100</number>
          </property>
          <property name="orientation">

@@ -58,6 +58,7 @@ signals:
     void sigTornadoVecParams( void );
     void sigTornadoVecParams( float, float, float );
     void sigSetParticleLife( float, float );
+    void sigMusicVolume( int );
 
     // void sigParticleFieldFunction(int index);
 
@@ -78,6 +79,10 @@ private slots:
     void on_setLifespansButton_clicked();
 
     void on_defaultLifespansButton_clicked();
+
+    void on_volumeSlider_sliderMoved(int position);
+
+    void on_audioOnCheckbox_stateChanged(int arg1);
 
 private:
     Ui::MainWindow *ui;
