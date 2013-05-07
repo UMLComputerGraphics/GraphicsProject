@@ -18,6 +18,7 @@
 #include "glut_callbacks.h"
 
 #include <boost/bind.hpp>
+#include <boost/thread/mutex.hpp>
 
 /**
  * static, stateful variable that is our singleton pointer.
@@ -142,6 +143,11 @@ TextureManagement *Engine::texMan( void ){
  **/
 vector<Light*>* Engine::getLights( void ) {
   return _lights;
+}
+
+void Engine::safeSetIntensity( int index, float intensity ) {
+  boost::mutex::scoped_lock l(LifeLock);
+  _lights->at(index)->intensity(intensity);
 }
 
 /**
@@ -484,7 +490,6 @@ void Engine::switchCamera( Camera *camera ){
  * Display/render the entire screen.
  */
 void Engine::displayScreen( void ) {
-
   static Cameras *camList = Engine::instance()->cams();
 
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
@@ -495,7 +500,6 @@ void Engine::displayScreen( void ) {
   camList->view( Engine::displayViewport );
 
   glutSwapBuffers();
-
 }
 
 /**
@@ -509,6 +513,8 @@ void Engine::displayViewport( void ) {
   if (glGetError()) { gprint( PRINT_ERROR, "true in displayViewport\n" ); }
   instance()->_displayExtension();
 
+  //ensure all objects are lit the same
+  boost::mutex::scoped_lock stopFlashingItsAFellony(instance()->LifeLock);
   theScene->draw();
   camList->draw();
 
