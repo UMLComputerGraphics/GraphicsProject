@@ -9,12 +9,12 @@
 #include "Engine.hpp"
 
 RayTracer::RayTracer() : 
-  //_extinguish( true ), // TRUE so the thread breaks out of its loop immediately!
+  _extinguish( false ), // TRUE so the thread breaks out of its loop immediately!
+  _readytorebuffer(false),
   _lightPositions( NULL ),
   _lightDiffuse( NULL ),
   _lightSpecular( NULL ),
-  _rebuffer_frequency(-1),
-  display(boost::bind(&RayTracer::_display,this)) {
+  display(boost::bind(&RayTracer::_display,this)){
 
   // Handles
   _program = 0;
@@ -72,20 +72,6 @@ void RayTracer::_display( void ) {
   gprint( PRINT_INFO, "Raytracer::display() unsupported on Apple OSX at this time.\n" );
   return;
 #else
-  static int sincerebuffer=0;
-  if (_rebuffer_frequency != -1 && (++sincerebuffer)%_rebuffer_frequency == 0)
-  {
-    gprint( PRINT_INFO, "Rebuffering\n");
-    _bufferData.clear();
-    _triangleData.clear();
-    _numOfL2BoundingBoxes = 0;
-    _numTriangles = 0;
-    _numOfL1BoundingBoxes = 0;
-    Engine::instance()->rootScene()->bufferToRaytracer( *this );
-    pushDataToBuffer();
-  }
-
-
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
   glUniform1i( _uNumOfSpheres, _numSpheres );
 
@@ -97,10 +83,10 @@ void RayTracer::_display( void ) {
 
   glUniform1i( _uNumOfL2TrianglesBounded, _numOfL2TrianglesBounded );
 
-  glUniform1i( _uNumberOfLights, _numberOfLights );
-  glUniform3fv( _uLightPositions, _numberOfLights, _lightPositions );
-  glUniform3fv( _uLightDiffuse, _numberOfLights, _lightDiffuse );
-  glUniform3fv( _uLightSpecular, _numberOfLights, _lightSpecular );
+  glUniform1i( _uNumberOfLights, *(Engine::instance()->getNumLights()) );
+  glUniform3fv( _uLightPositions, _numberOfLights, Engine::instance()->getLightPositions() );
+  glUniform3fv( _uLightDiffuse, _numberOfLights, Engine::instance()->getLightDiffuses() );
+  glUniform3fv( _uLightSpecular, _numberOfLights, Engine::instance()->getLightSpeculars() );
 
   glUniform1i( _uNumSGTransformations, _sceneData.size() );
   if (_sceneData.size() > 0)
@@ -141,12 +127,9 @@ void RayTracer::_display( void ) {
     gprint( PRINT_INFO, "fps: %f\n", fps );
     previousTime = elapsedTime;
     frameCount = 0;
-    if (_rebuffer_frequency == -1)
-    {
-      _rebuffer_frequency = (int)floor(fps*2.0);
-      gprint( PRINT_INFO, "Calculated rebuffer frequency @: %d\n", _rebuffer_frequency );
-    }
   }
+
+  _readytorebuffer = true;
 
   // Draw particles-only
   // Broken >_<
@@ -284,6 +267,16 @@ void RayTracer::pushDataToBuffer() {
   gprint( PRINT_INFO, "Non-supported on Apple OSX with glsl 1.2 at this time." );
   return;
 #else
+  //boost::mutex::scoped_lock l(_framelock);
+
+  _bufferData.clear();
+  _bufferData.resize(0);
+  _triangleData.resize(0);
+  _numOfL2BoundingBoxes = 0;
+  _numTriangles = 0;
+  _numOfL1BoundingBoxes = 0;
+  Engine::instance()->rootScene()->bufferToRaytracer( *this );
+  Engine::instance()->rootScene()->sceneToRaytracer( *this );
 
   vec3 min, max;
   min = vec3( INFINITY, INFINITY, INFINITY );
@@ -328,13 +321,6 @@ void RayTracer::pushDataToBuffer() {
 
   gprint( PRINT_DEBUG, "numTriangles %d\n", numTriangles );
   gprint( PRINT_DEBUG, "numOfL2BoundingBoxes %d\n", _numOfL2BoundingBoxes );
-
-  GLuint bufObj;
-  glActiveTexture(GL_TEXTURE0);
-  glGenBuffers(1, &bufObj);
-  glBindBuffer(GL_TEXTURE_BUFFER, bufObj);
-  glBufferData(GL_TEXTURE_BUFFER, sizeof(GLfloat) * _bufferData.size(), _bufferData.data(), GL_STATIC_DRAW);
-  glTexBuffer(GL_TEXTURE_BUFFER, GL_RGB32F, bufObj);
 #endif
 }
 
@@ -365,7 +351,6 @@ void RayTracer::init( GLuint shader ) {
   _uNumSGTransformations = glGetUniformLocation( _program, "uNumSGTransformations" );
   _uSceneGraphTransformations = glGetUniformLocation( _program, "uSceneGraphTransformations" );
   tick.setTimeUniform( glGetUniformLocation( _program, "ftime" ) );
-  
 }
 
 void RayTracer::legacySceneGen( void ) {
@@ -409,8 +394,6 @@ void RayTracer::lightFlicker( void ) {
     lightness += .7;
     _lightDiffuse[0] = _lightDiffuse[1] = _lightDiffuse[2] = lightness;
 
-
-    //boost::this_thread::yield();
     sleep(0.01); //yielding is for sissies. I exist, therefore I have the right of way.
   }
 }
@@ -419,6 +402,23 @@ void RayTracer::addTransformation( const Angel::mat4 &mat ) {
 
   _sceneData.push_back( mat );
 
+}
+
+void RayTracer::idleHandsSpendTimeWithTheTextureBuffer()
+{
+  if (_readytorebuffer)
+  {
+    printf("buffering...\n");
+    pushDataToBuffer();
+
+    GLuint bufObj;
+    glGenBuffers(1, &bufObj);
+    glBindBuffer(GL_TEXTURE_BUFFER, bufObj);
+    glBufferData(GL_TEXTURE_BUFFER, sizeof(GLfloat) * _bufferData.size(), _bufferData.data(), GL_STATIC_DRAW);
+    glTexBuffer(GL_TEXTURE_BUFFER, GL_RGB32F, bufObj);
+    glActiveTexture(GL_TEXTURE0);
+    _readytorebuffer = false;
+  }
 }
 
 void RayTracer::thisDateIsOver( void ) {

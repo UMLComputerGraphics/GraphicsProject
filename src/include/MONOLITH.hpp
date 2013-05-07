@@ -153,6 +153,8 @@ signals:
 #endif
 
 private:
+    // Beware all those who dare venture here
+    RayTracer rt;
     
     /**
      * A simple animation callback.

@@ -66,6 +66,7 @@ class RotMat : public Transformation {
   
 public:
   
+  RotMat( float rx = 0.0, float ry = 0.0, float rz = 0.0 );
   const RotMat &reset( const Angel::mat4 &NewState );
   const RotMat &rotateX( const GLfloat theta, bool postmult = true );
   const RotMat &rotateY( const GLfloat theta, bool postmult = true );
@@ -107,6 +108,9 @@ public:
 class ScaleMat : public Transformation {
   
 public:
+
+  ScaleMat( float amt = 1.0 );
+  ScaleMat( float x, float y, float z );
   
   const ScaleMat &set( const float x, const float y, const float z );
   const ScaleMat &set( const float pct );
