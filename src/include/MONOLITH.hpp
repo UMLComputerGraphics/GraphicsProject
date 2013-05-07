@@ -146,6 +146,7 @@ public slots:
     void slotCurrentView(int num) ;
     void slotSetParticleLife( float, float );
     void slotPauseMusic(bool isPaused);
+    void slotMusicVolume(float);
 
 signals:
     void sigMorphPercentage(int value);

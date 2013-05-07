@@ -269,7 +269,11 @@ void MONOLITH::slotPauseMusic(bool isPaused)
     soundHelper::ERRCHECK();
 }
 
-
+void slotMusicVolume(float vol)
+{ // 0.0 => silent :: 1.0 => MAX VOLUME
+    radio->setVolume(vol);
+    soundHelper::ERRCHECK();
+}
 #endif //WITHOUT_QT
 
 /**
