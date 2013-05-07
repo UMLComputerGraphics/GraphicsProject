@@ -434,6 +434,8 @@ ParticleSystem::setEmitterRadius( float r )
 }
 
 
+void hideParticle(Particle *p ) {  p->setAlpha(0.0); }
+
 //Update the particles in our system >>> AND ALSO UPDATE OUR DRAW BUFFER
 void
 ParticleSystem::update() {
@@ -441,9 +443,7 @@ ParticleSystem::update() {
 	// used to stagger the creation of particles
 	static unsigned currFillFrame=0;
 
-	// if we are paused, don't change a damn thing.
-	// TODO remove this and test
-	//if ( this->_pauseTheSystem ) return;
+	int numRespawnsThisFrame = 33 ;
 
 	this->_emitterLoc.calcCTM();
 
@@ -483,8 +483,18 @@ ParticleSystem::update() {
 
 		//check to see if the particle is dead BEFORE we change it's members
 		if( ((*i)->getLifetime() <= 0.0)
-		/*|| ((*i)->getPosition().y >= maxHeight)*/ ) {
-			respawnParticle(**i) ;
+		/*|| ((*i)->getPosition().y >= maxHeight)*/ ) 
+		{
+
+		  if( numRespawnsThisFrame )
+		  {
+		          respawnParticle(**i)  ;
+			  numRespawnsThisFrame--;
+		  }
+		  else
+		  {	
+		          hideParticle(*i);
+		  }
 		}
 
 		// call the update function on each particle
@@ -499,7 +509,11 @@ ParticleSystem::update() {
 		if ( this->_vecFieldFunc != NULL ) {
 			(*i)->setVel( (*_vecFieldFunc)((*i)->getPosition(), this->getFuncParams()) ) ;
 		}
-		else{        // sphere generating method
+		else
+		{  
+		  /* We "need" a default particle velocity behavior, and don't have one yet. */
+
+		  // sphere generating method
 		  float row   = rangeRandom( 0.001f, 0.004f ); // equivalent to magnitude
 		  float phi   = rangeRandom( 0.0f, 2 * M_PI );
 		  float theta = rangeRandom( 0.0f, 2 * M_PI );
