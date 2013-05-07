@@ -237,3 +237,17 @@ void MainWindow::processFrameAndUpdateGUI()
     ui->lblOriginal->setPixmap(QPixmap::fromImage(qimgOriginal));
     ui->lblProcessed->setPixmap(QPixmap::fromImage(qimgProcessed));
 }
+
+void MainWindow::on_volumeSlider_sliderMoved(int position)
+{
+    if ( ui->audioOnCheckbox->isChecked() )
+        sigMusicVolume( position );
+}
+
+void MainWindow::on_audioOnCheckbox_stateChanged(int arg1)
+{
+    if ( arg1 )
+        sigMusicVolume( ui->volumeSlider->value() );
+    else
+        sigMusicVolume( 0 );
+}

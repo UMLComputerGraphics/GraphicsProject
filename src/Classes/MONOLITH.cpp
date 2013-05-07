@@ -269,8 +269,10 @@ void MONOLITH::slotPauseMusic(bool isPaused)
     soundHelper::ERRCHECK();
 }
 
-void slotMusicVolume(float vol)
+void MONOLITH::slotMusicVolume(int vol)
 { // 0.0 => silent :: 1.0 => MAX VOLUME
+    vol = vol / 100.0 ;
+
     radio->setVolume(vol);
     soundHelper::ERRCHECK();
 }
