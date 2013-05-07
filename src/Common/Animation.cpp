@@ -3,6 +3,7 @@
 #include "vec.hpp"
 #include "Transformation.hpp"
 #include "TransCache.hpp"
+#include "Timer.hpp"
 
 void Animation::seekTopTo( Object *obj, float y ) {
 
@@ -31,7 +32,6 @@ float Animation::scaleBottomFixed( Object *obj, float scaleAmt ) {
   float height = max.y - min.y;
   float yAdjustment = min.y - (scaleAmt * min.y);
 
-  fprintf( stderr, "scaleAmt: %f\n", scaleAmt );
   ScaleMat shrink( 1, scaleAmt, 1 );
   shrink.inheritable( false );
   TransMat adjustment;
@@ -42,5 +42,12 @@ float Animation::scaleBottomFixed( Object *obj, float scaleAmt ) {
   obj->_trans.push( adjustment );
 
   return -((1 - scaleAmt) * height);
+
+}
+
+void Animation::candleMelt( Object *candle, Object *tip, float rawScale ) {
+  
+  float adj = Animation::scaleBottomFixed( candle, pow(rawScale, tick.scale()) );
+  tip->_trans.push( TransMat( 0, adj, 0 ) );
 
 }

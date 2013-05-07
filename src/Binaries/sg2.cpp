@@ -20,8 +20,7 @@ void sgIdle( void ) {
   // Candle Melting Animation
   Object *candle = s->search( "candle" );
   Object *candletip = s->search( "candletip" );
-  float adj = Animation::scaleBottomFixed( candle, pow(0.999, tick.scale()) );
-  candletip->_trans.push( TransMat( 0, adj, 0 ) );
+  Animation::candleMelt( candle, candletip, 0.999 );
 
 }
 

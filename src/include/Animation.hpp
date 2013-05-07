@@ -11,6 +11,7 @@ namespace Animation {
   void seekTopTo( Object *obj, float y = 0 );
   void seekBottomTo( Object *obj, float y = 0 );
   float scaleBottomFixed( Object *obj, float amt = 1.0 );
+  void candleMelt( Object *candle, Object *tip, float rawScale );
 
 }
 

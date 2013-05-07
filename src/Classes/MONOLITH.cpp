@@ -71,8 +71,14 @@ void MONOLITH::monolith_idle(void)
     double timer = glutGet( GLUT_ELAPSED_TIME ) / 500.0;
     float percent = (sin( timer ) + 1.0) / 2.0;
     
-    //Object &candle = *((*rootScene)["bottle"]);
-    //candle.animation( simpleRotateAnim );
+    // Candle-melt Animation.
+    {
+      Object *candle = rootScene->search( "candle" );
+      Object *candletip = rootScene->search( "candletip" );
+      if (candle && candletip) {
+        Animation::candleMelt( candle, candletip, 0.9999 );
+      }
+    }
     
     // Update the morph percentage.
     if (bottle && (bottle->morphEnabled())) {
@@ -294,10 +300,6 @@ void MONOLITH::run() {
   GLint particleShader = shader[2];
   GLint raytraceShader = shader[3];
 
-  glUniform1i( glGetUniformLocation( morphingShader, "letMeSeeThatPhong" ), 1 );
-  glUniform1i( glGetUniformLocation( noMorphShader, "letMeSeeThatPhong" ), 1 );
-
-
   tick.setTimeUniform( glGetUniformLocation( morphingShader, "ftime" ) );
   tick.setTimeUniform( glGetUniformLocation( noMorphShader, "ftime" ) );
   if (raytraceShader)
@@ -411,6 +413,9 @@ void MONOLITH::run() {
 			    this->fSystem,
 			    &(this->radio),
 			    this->foreverEndless);
+
+  glUniform1i( glGetUniformLocation( morphingShader, "letMeSeeThatPhong" ), 1 );
+  glUniform1i( glGetUniformLocation( noMorphShader, "letMeSeeThatPhong" ), 1 );
   
 #ifndef WITHOUT_QT
 #ifndef __APPLE__
