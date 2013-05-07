@@ -67,7 +67,7 @@ void MONOLITH::monolith_idle(void)
       Object *candle = rootScene->search( "candle" );
       Object *candletip = rootScene->search( "candletip" );
       if (candle && candletip) {
-        Animation::candleMelt( candle, candletip, 0.999 );
+        Animation::candleMelt( candle, candletip, 0.9999 );
       }
     }
     
