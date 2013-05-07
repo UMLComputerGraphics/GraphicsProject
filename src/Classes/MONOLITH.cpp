@@ -210,31 +210,16 @@ void MONOLITH::slotUpdateTornadoVecFunc()
     ps->setVectorField( ParticleFieldFunctions::tornado );
 }
 
-/*
- * Deprecated... for now
-void MONOLITH::slotParticleFieldFunction(int index)
-{
-    switch (index)
-    {
-    case 0:
-        ps->setVectorField( ParticleFieldFunctions::flame);
-        break;
-    case 1:
-        ps->setVectorField(ParticleFieldFunctions::tornado);
-        break;
-    case 2:
-
-    default:
-        ps->setVectorField( ParticleFieldFunctions::flame);
-        break;
-    }
-}
-*/
-
 void MONOLITH::slotUpdateVectorField(std::string* params)
 {
     Parameters* funcParams = new UserParameters(params);
     ps->setFuncParams(funcParams);
+}
+
+void MONOLITH::slotSetParticleLife( float min, float max )
+{
+    ps->setLifespan( min, max );
+    ps->setRespawnFlag( true );
 }
 
 /**
@@ -500,12 +485,14 @@ void MONOLITH::run() {
   
 #ifndef WITHOUT_QT
 #ifndef __APPLE__
-  printf("LOOPING!\n");
-  glutMainLoop(); // on Linux the glutMaintLoop is called here when using Qt
+  // on Linux the glutMaintLoop is called here when using Qt
+  Engine::run();
+  //glutMainLoop(); 
 #endif
 #else
-  printf("LOOPING!\n");
-  glutMainLoop(); // if we are not using Qt, the glutMainLoop is called here for both platforms.
+  // if we are not using Qt, the glutMainLoop is called here for both platforms.
+  Engine::run();
+  //glutMainLoop(); 
 #endif
 }
 

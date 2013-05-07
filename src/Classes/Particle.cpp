@@ -22,12 +22,15 @@ using Angel::mat4;
 
 // Constructor(s)
 Particle::Particle( vec4 position, float scale, float lifetime ) :
-  _pos( position ), _scale( scale ), _vel(vec3(0.0, 0.0, 0.0)){
+  _pos( position ), _scale( scale ), _vel(vec3(0.0, 0.0, 0.0)),
+  _respawnFlag( false )
+{
   setMaxLifetime(lifetime), setColor(vec4(1.0,0.0,1.0,1.0));
 }
 
 Particle::Particle( vec4 position, float lifetime ) :
-  _pos( position ), _vel(vec3(0.0, 0.0, 0.0)){
+    _pos( position ), _vel(vec3(0.0, 0.0, 0.0)), _respawnFlag( false )
+{
   setMaxLifetime(lifetime), setColor(vec4(1.0,0.0,1.0,1.0));
 }
 
@@ -91,6 +94,16 @@ void Particle::setScale( vec3 newScale ) {
 
 void Particle::setVel( vec3 newVel ) {
   _vel = newVel;
+}
+
+void Particle::setRespawnFlag( bool flag )
+{
+    _respawnFlag = flag ;
+}
+
+bool Particle::getRespawnFlag()
+{
+    return _respawnFlag;
 }
 
 vec4

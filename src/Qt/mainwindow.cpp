@@ -171,6 +171,19 @@ void MainWindow::on_tornadoDefaultButton_clicked()
     sigTornadoVecParams();
 }
 
+void MainWindow::on_setLifespansButton_clicked()
+{
+    float min = ui->minLifeInput->toPlainText().toDouble();
+    float max = ui->maxLifeInput->toPlainText().toDouble();
+
+    sigSetParticleLife( min, max );
+}
+
+void MainWindow::on_defaultLifespansButton_clicked()
+{
+    sigSetParticleLife( 9.0, 12.0 );
+}
+
 void MainWindow::processFrameAndUpdateGUI()
 {
     capWebcam.read(matOriginal);
@@ -197,5 +210,4 @@ void MainWindow::processFrameAndUpdateGUI()
 
     ui->lblOriginal->setPixmap(QPixmap::fromImage(qimgOriginal));
     ui->lblProcessed->setPixmap(QPixmap::fromImage(qimgProcessed));
-
 }
