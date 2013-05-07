@@ -360,6 +360,19 @@ void MONOLITH::run() {
   table->buffer();
 
   fprintf(stderr, "table! (%f, %f, %f)\n", table->getMax().x, table->getMax().y, table->getMax().z);
+  
+  //load radio model
+  Object *radio;
+  radio = rootScene->addObject( "radio", noMorphShader );
+  ObjLoader::loadModelFromFile( radio, "../models/radio-ntx.obj" );
+  ObjLoader::loadMaterialFromFile( radio, "../models/radio-ntx.obj" );
+  glUniform1i(glGetUniformLocation(radio->shader(),"letMeSeeThatPhong"),1);
+
+  radio->_trans._offset.set( 9.0, 0, -7.0);
+  radio->_trans._rotation.rotateY( -45.0, true );
+
+  radio->propagateOLD();
+  radio->buffer();
 
   // Load up that candle
   Object *stick;
@@ -459,7 +472,7 @@ void MONOLITH::run() {
   glShadeModel(GL_SMOOTH);
 
 
-  soundHelper::play3dSound( vec4(0.0,0.0,0.0,1.0), 
+  soundHelper::play3dSound( vec4(9.0,0.0,-7.0,1.0), 
 			    vec4(0.0,0.0,0.0,1.0), 
 			    this->fSystem,
 			    &(this->radio),
