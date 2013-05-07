@@ -848,6 +848,13 @@ Angel::vec3 Object::getMin( void ) {
 
 }
 
+Angel::vec4 Object::getRealMax( void ) {
+  return _trans.otm() * Angel::vec4( getMax(), 1.0 );
+}
+Angel::vec4 Object::getRealMin( void ) {
+  return _trans.otm() * Angel::vec4( getMin(), 1.0 );
+}
+
 void Object::sceneToRaytracer( RayTracer &rt ) {
   rt.addTransformation( _trans.otm() );
   Scene::sceneToRaytracer( rt );
