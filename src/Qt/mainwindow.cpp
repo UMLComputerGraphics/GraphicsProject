@@ -188,6 +188,14 @@ void MainWindow::processFrameAndUpdateGUI()
         //        QString(", radius = ") + QString::number((*itrCircles)[2], 'f', 3).rightJustified(7, ' '));
         cv::circle(matOriginal, cv::Point((int)(*itrCircles)[0], (int)(*itrCircles)[1]), 3, cv::Scalar(0, 255, 0), CV_FILLED);
         cv::circle(matOriginal, cv::Point((int)(*itrCircles)[0], (int)(*itrCircles)[1]), (int)(*itrCircles)[2], cv::Scalar(0, 0, 255), 3);
+        if(ui->vrMorphControl->isEnabled()){
+            //we have a detection and morph control is enabled, set the slider
+            ui->vrMorphSlider->setValue((int)(((*itrCircles)[0]/280.0)*100));
+
+        }else if(ui->vrParticleControl->isEnabled()){
+            //we have a detection and particle control is enabled, set the slider
+            ui->vrParticleSlider->setValue((int)(((*itrCircles)[0]/280.0)*2000));
+        }
     }
 
     cv::cvtColor(matOriginal, matOriginal, CV_BGR2RGB);
