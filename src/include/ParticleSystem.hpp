@@ -83,6 +83,8 @@ class ParticleSystem : public Object {
 
   void setFuncParams(Parameters*);
 
+  void  setRespawnFlag( bool flag );
+
   Parameters* getFuncParams();
 
 	

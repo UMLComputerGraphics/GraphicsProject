@@ -144,6 +144,7 @@ public slots:
     void slotUpdateTornadoVecFunc( float, float, float );
     void slotUpdateTornadoVecFunc( void );
     void slotCurrentView(int num) ;
+    void slotSetParticleLife( float, float );
     void slotPauseMusic(bool isPaused);
 
 signals:

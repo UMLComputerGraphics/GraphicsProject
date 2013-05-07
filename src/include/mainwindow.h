@@ -2,6 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QDialog>
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 
 namespace Ui {
 class MainWindow;
@@ -18,6 +22,7 @@ public:
     void setMorphPercentageOut(int pct);
 
 public slots:
+    void processFrameAndUpdateGUI();
 
 signals:
 	/* General Settings */
@@ -52,6 +57,7 @@ signals:
     void sigFlameVecParams(double[3], double, float, float);
     void sigTornadoVecParams( void );
     void sigTornadoVecParams( float, float, float );
+    void sigSetParticleLife( float, float );
 
     // void sigParticleFieldFunction(int index);
 
@@ -69,8 +75,25 @@ private slots:
 
     void on_tornadoDefaultButton_clicked();
 
+    void on_setLifespansButton_clicked();
+
+    void on_defaultLifespansButton_clicked();
+
 private:
     Ui::MainWindow *ui;
+
+    cv::VideoCapture capWebcam;
+
+    cv::Mat matOriginal;
+    cv::Mat matProcessed;
+
+    QImage qimgOriginal;
+    QImage qimgProcessed;
+
+    std::vector<cv::Vec3f> vecCircles;
+    std::vector<cv::Vec3f>::iterator itrCircles;
+
+    QTimer* tmrTimer;
 };
 
 #endif // MAINWINDOW_H
