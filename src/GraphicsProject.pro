@@ -22,19 +22,19 @@ UI_DIR =  Qt/ui/
 
 SOURCES += \
         # Classes
-	   Classes/bipartiteGraph.cpp \
+        Classes/bipartiteGraph.cpp \
         Classes/Camera.cpp \
         Classes/Cameras.cpp \
-	   Classes/ColorFunctions.cpp \
+        Classes/ColorFunctions.cpp \
         Classes/Engine.cpp \
         Classes/Light.cpp \
         # KinectInator.cpp \
         Classes/mat.cpp \
-	   Classes/Material.cpp \
+        Classes/Material.cpp \
         # not needed anymore Classes/meshMapping.cpp \
         Classes/Object.cpp \
         Classes/Particle.cpp \
-	   Classes/ParticleFieldFunctions.cpp \
+        Classes/ParticleFieldFunctions.cpp \
         Classes/ParticleSystem.cpp \
         #Classes/scaleModel.cpp \
         Classes/Scene.cpp \
@@ -53,18 +53,19 @@ SOURCES += \
         Common/model.cpp \
         Common/modelFunctions.cpp \
         Common/ObjLoader.cpp \
-        Common/soundHelper.cpp \
         #Common/WiiUtil.cpp\
         Common/Util.cpp \
         #Qt
         Qt/mainwindow.cpp \
         Binaries/FinalProject.cpp \
-	Classes/nearestNeighbor.cpp \
-	Classes/RayTracer.cpp \
-	Classes/scanMatching.cpp \
+        Classes/nearestNeighbor.cpp \
+        Classes/RayTracer.cpp \
+        Classes/scanMatching.cpp \
         Classes/UserVectorField.cpp \
         Qt/dialog.cpp \
-        Classes/scaleModel.cpp
+        Classes/scaleModel.cpp \
+        # FMOD STUFF {<>,<>}
+        Common/soundHelper.cpp
 
 HEADERS  += include/bipartiteGraph.hpp \
             include/Camera.hpp \
@@ -110,23 +111,24 @@ HEADERS  += include/bipartiteGraph.hpp \
             include/mainwindow.h \
             include/MONOLITH.hpp \
             include/dialog.h \
+            # fMod Suff
             fMod/include/*.* \
             include/soundHelper.hpp
 
 # Common Settings
-INCLUDEPATH += . ./include/
+INCLUDEPATH += . ./include/ ./fMod/include
 LIBS += -lMagick++
 
 # Linux Settings
 unix:!macx {
-LIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm -lMagick++ -lboost_thread-mt -lfModex
-INCLUDEPATH +=. /usr/include/ImageMagick/ include/ fMod/include
+LIBS += -lGL -lGLU -lGLEW -lglut -lX11 -lm -lMagick++ -lboost_thread-mt -lfmodex
+INCLUDEPATH +=. /usr/include/ImageMagick/ include/
 }
 
 # Mac OSX Settings
 macx {
 LIBS += -framework Carbon -framework OpenGL -framework GLUT 
-INCLUDEPATH += . include /opt/local/include/ImageMagick/ /opt/local/include/ fMod/include
+INCLUDEPATH += . include /opt/local/include/ImageMagick/ /opt/local/include/
 LIBS += -L/opt/local/lib -lMagick++ -lboost_thread-mt fMod/lib/libfmodex.dylib
 }
 
