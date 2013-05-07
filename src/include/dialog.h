@@ -25,6 +25,19 @@ public slots:
 
 private:
     Ui::Dialog *ui;
+
+    cv::VideoCapture capWebcam;
+
+    cv::Mat matOriginal;
+    cv::Mat matProcessed;
+
+    QImage qimgOriginal;
+    QImage qimgProcessed;
+
+    std::vector<cv::Vec3f> vecCircles;
+    std::vector<cv::Vec3f>::iterator itrCircles;
+
+    QTimer* tmrTimer;
 };
 
 #endif // DIALOG_H

@@ -1258,27 +1258,27 @@
      <attribute name="title">
       <string>VR</string>
      </attribute>
-     <widget class="QWidget" name="verticalLayoutWidget">
+     <widget class="QWidget" name="verticalLayoutWidget_2">
       <property name="geometry">
        <rect>
         <x>50</x>
-        <y>60</y>
+        <y>10</y>
         <width>461</width>
-        <height>61</height>
+        <height>70</height>
        </rect>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_5">
+      <layout class="QVBoxLayout" name="verticalLayout_6">
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
-          <widget class="QCheckBox" name="checkBox">
+          <widget class="QCheckBox" name="vrMorphControl">
            <property name="text">
             <string>Enable Morph Control</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QSlider" name="horizontalSlider">
+          <widget class="QSlider" name="vrMorphSlider">
            <property name="maximum">
             <number>100</number>
            </property>
@@ -1289,31 +1289,19 @@
          </item>
         </layout>
        </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="verticalLayoutWidget_2">
-      <property name="geometry">
-       <rect>
-        <x>50</x>
-        <y>130</y>
-        <width>461</width>
-        <height>61</height>
-       </rect>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_6">
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_6">
          <item>
-          <widget class="QCheckBox" name="checkBox_2">
+          <widget class="QCheckBox" name="vrParticleControl">
            <property name="text">
             <string>Enable Particle Control</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QSlider" name="horizontalSlider_2">
+          <widget class="QSlider" name="vrParticleSlider">
            <property name="maximum">
-            <number>100000</number>
+            <number>2000</number>
            </property>
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -1327,10 +1315,10 @@
      <widget class="QLabel" name="lblProcessed">
       <property name="geometry">
        <rect>
-        <x>300</x>
-        <y>230</y>
-        <width>160</width>
-        <height>120</height>
+        <x>140</x>
+        <y>360</y>
+        <width>280</width>
+        <height>210</height>
        </rect>
       </property>
       <property name="autoFillBackground">
@@ -1343,10 +1331,10 @@
      <widget class="QLabel" name="lblOriginal">
       <property name="geometry">
        <rect>
-        <x>90</x>
-        <y>230</y>
-        <width>160</width>
-        <height>120</height>
+        <x>140</x>
+        <y>120</y>
+        <width>280</width>
+        <height>210</height>
        </rect>
       </property>
       <property name="autoFillBackground">
@@ -1359,8 +1347,8 @@
      <widget class="QLabel" name="label_9">
       <property name="geometry">
        <rect>
-        <x>120</x>
-        <y>360</y>
+        <x>220</x>
+        <y>90</y>
         <width>101</width>
         <height>16</height>
        </rect>
@@ -1372,8 +1360,8 @@
      <widget class="QLabel" name="label_10">
       <property name="geometry">
        <rect>
-        <x>320</x>
-        <y>360</y>
+        <x>220</x>
+        <y>340</y>
         <width>111</width>
         <height>16</height>
        </rect>
@@ -1382,7 +1370,6 @@
        <string>Processed Video</string>
       </property>
      </widget>
-     <zorder>verticalLayoutWidget</zorder>
      <zorder>verticalLayoutWidget_2</zorder>
      <zorder>horizontalLayoutWidget</zorder>
      <zorder>lblProcessed</zorder>

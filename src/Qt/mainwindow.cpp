@@ -22,6 +22,18 @@ MainWindow::MainWindow(QWidget *parent) :
             this, SIGNAL(sigEnableMorphing(bool)));
     connect(ui->morphMatchingCheckbox, SIGNAL(toggled(bool)),
             this, SIGNAL(sigEnableMorphMatching(bool)));
+
+    //VR connections
+    connect(ui->vrMorphControl, SIGNAL(toggled(bool)),
+            this, SIGNAL(sigEnableVRMorphControl(bool)));
+    connect(ui->vrParticleControl, SIGNAL(toggled(bool)),
+            this, SIGNAL(sigEnableVRParticleControl(bool)));
+    connect(ui->vrMorphSlider, SIGNAL(valueChanged(int)),
+            this, SIGNAL(sigMorphPercentage(int)));
+    connect(ui->vrParticleSlider, SIGNAL(valueChanged(int)),
+            this, SIGNAL(sigChangeNumberOfParticles(int)));
+
+
     connect(ui->morphPercentageSlider, SIGNAL(valueChanged(int)),
             this, SIGNAL(sigMorphPercentage(int)));
     connect(ui->rayTracerEnabler, SIGNAL(toggled(bool)),
@@ -77,6 +89,7 @@ MainWindow::MainWindow(QWidget *parent) :
 void MainWindow::setMorphPercentageOut(int pct)
 {
     ui->morphPercentageSlider->setValue(pct);
+    ui->vrMorphSlider->setValue(pct);
 }
 
 MainWindow::~MainWindow()

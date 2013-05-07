@@ -8,7 +8,6 @@
 
 #ifndef WITHOUT_QT
 #include "mainwindow.h"
-#include "dialog.h"
 #include <QApplication>
 #endif
 
@@ -35,7 +34,6 @@ int main( int argc, char **argv ) {
 
   QApplication a( argc, argv );
   MainWindow w;
-  QDialog dialog;
   w.setWindowTitle( "GUI Interface - Graphics II" );
   w.setGeometry(700, 0, w.width(), w.height());
 
@@ -76,7 +74,6 @@ int main( int argc, char **argv ) {
   QObject::connect(&w, SIGNAL(sigMorphToWineBottle()), &monolith, SLOT(slotMorphToWineBottle()));
 
   w.show();
-  dialog.show();
 
 #ifndef __APPLE__ // monolith.start has to be here for Linux. 
    monolith.start();
