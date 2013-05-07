@@ -1523,6 +1523,9 @@
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
           <widget class="QCheckBox" name="vrMorphControl">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
            <property name="text">
             <string>Enable Morph Control</string>
            </property>
@@ -1567,9 +1570,9 @@
       <property name="geometry">
        <rect>
         <x>140</x>
-        <y>360</y>
+        <y>310</y>
         <width>280</width>
-        <height>210</height>
+        <height>157</height>
        </rect>
       </property>
       <property name="autoFillBackground">
@@ -1585,7 +1588,7 @@
         <x>140</x>
         <y>120</y>
         <width>280</width>
-        <height>210</height>
+        <height>157</height>
        </rect>
       </property>
       <property name="autoFillBackground">
@@ -1612,7 +1615,7 @@
       <property name="geometry">
        <rect>
         <x>220</x>
-        <y>340</y>
+        <y>290</y>
         <width>111</width>
         <height>16</height>
        </rect>
