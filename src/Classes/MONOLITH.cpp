@@ -281,6 +281,7 @@ void MONOLITH::slotCurrentView( int num )
 void MONOLITH::slotPauseMusic(bool isPaused)
 { // PAUSED => true  ::  UNPAUSED => false
     radio->setPaused(isPaused);
+    soundHelper::ERRCHECK();
 }
 
 
