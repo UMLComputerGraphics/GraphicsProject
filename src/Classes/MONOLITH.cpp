@@ -259,9 +259,9 @@ void MONOLITH::slotPauseMusic(bool isPaused)
 
 void MONOLITH::slotMusicVolume(int vol)
 { // 0.0 => silent :: 1.0 => MAX VOLUME
-    vol = vol / 100.0 ;
+    float newVol = vol / 100.0 ;
 
-    radio->setVolume(vol);
+    radio->setVolume(newVol);
     soundHelper::ERRCHECK();
 }
 #endif //WITHOUT_QT
