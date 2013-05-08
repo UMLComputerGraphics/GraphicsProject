@@ -69,7 +69,7 @@ void MONOLITH::monolith_idle(void)
       if (candle && candletip) {
           if( candle->getRealMax().y - candle->getRealMin().y <= .05 ) sigEnableParticles( false );
           if( ps->getEnableTheSystem() && (ps->getNumParticlesActual() >= 500) ){
-              Animation::candleMelt( candle, candletip, 0.99 );
+              Animation::candleMelt( candle, candletip, 0.9999 );
           }
       }
     }
