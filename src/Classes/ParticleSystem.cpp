@@ -58,10 +58,12 @@ ParticleSystem::ParticleSystem( int particleAmt, const std::string &name,
 
 
 ParticleSystem::~ParticleSystem( void ) {
-	for ( size_t i = 0; i < _particles.size(); i++ ) {
-		free( _particles[i] );
-	}
-	_particles.clear();
+  for ( size_t i = 0; i < _particles.size(); i++ ) {
+    delete _particles[i];
+  }
+  _particles.clear();
+
+  delete _funcParams;
 }
 
 vec4

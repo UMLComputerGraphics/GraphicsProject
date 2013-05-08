@@ -199,6 +199,9 @@ private:
     FMOD::System *fSystem;
     FMOD::Sound  *foreverEndless, *fire;
     FMOD::Channel *radio, *flame;
+    
+    Light *_l1;
+    Light *_l2;
 
 };
 

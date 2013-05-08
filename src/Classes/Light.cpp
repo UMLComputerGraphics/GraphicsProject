@@ -52,6 +52,11 @@ Light::Light( const std::string &name, vec4 &in ) {
 }
 
 Light::~Light( void ) {
+
+  if (_lightAmbient) free( _lightAmbient );
+  if (_lightPositions) free( _lightPositions );
+  if (_lightDiffuse) free( _lightDiffuse );
+  if (_lightSpecular) free( _lightSpecular );
   
 }
 

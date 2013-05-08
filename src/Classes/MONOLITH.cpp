@@ -34,6 +34,7 @@ MONOLITH::MONOLITH(int argc, char** argv) :
 			  true); // add a sound to the system
 
 
+    _l1 = _l2 = NULL;
     _argc = argc;
     _argv = argv;
 }
@@ -44,7 +45,13 @@ MONOLITH::MONOLITH(int argc, char** argv) :
 void MONOLITH::cleanup(void) {
     extinguish = true;
     zipo.join();
+
+    foreverEndless->release();
     fSystem->close();
+    fSystem->release();
+    
+    if (_l1) delete _l1;
+    if (_l2) delete _l2;
 }
 
 bool heisenbergUncertaintyPrinciple;
@@ -282,12 +289,12 @@ void MONOLITH::run() {
   Engine::init( &_argc, _argv, "Graphics II Spring 2013 Final Project" );
   Engine *eng = Engine::instance();
 
-  Light* l = new Light( "CandleLight", 2.5, 6.8, 2.5 );
-  l->color(vec3(1.0, 0.5, 0.2));
-  Engine::instance()->addLight(l);
-  Light *l2 = new Light( "Scene Light", 0, 18, 0 );
-  l2->intensity(28);
-  Engine::instance()->addLight(l2);
+  _l1 = new Light( "CandleLight", 2.5, 6.8, 2.5 );
+  _l1->color(vec3(1.0, 0.5, 0.2));
+  Engine::instance()->addLight(_l1);
+  _l2 = new Light( "Scene Light", 0, 18, 0 );
+  _l2->intensity(28);
+  Engine::instance()->addLight(_l2);
 
   // Now that we have lights, let's make the thread, rather than hoping it will magically re-enter the thread function it broke out of.
   zipo = boost::thread(boost::bind(&MONOLITH::aRomanticEvening, this));
@@ -514,6 +521,7 @@ void MONOLITH::aRomanticEvening() {
     Engine::instance()->safeSetIntensity(0, lightness);
     Engine::instance()->setLights();
 
+    boost::this_thread::yield();
     sleep( 0.01 );
   }
   printf("ENDING ROMANCE!\n");
