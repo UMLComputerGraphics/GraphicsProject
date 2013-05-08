@@ -238,9 +238,13 @@ void MONOLITH::slotSetParticleLife( float min, float max )
 
 void MONOLITH::slotUpdateVectorField(std::string fx, std::string fy, std::string fz)
 {
+  try {
     ps->uvf()->setAll(fx, fy, fz);
     ps->setFuncParams( new UserParameters(ps->uvf()));
     ps->setVectorField(ParticleFieldFunctions::userSupplied);
+  } catch( std::exception &e ) {
+    gprint( PRINT_WARNING, "Could not enable the requested user function, because: %s\n", e.what() );
+  }
 }
 /**
  * @brief defaultNumberOfParticles (setter)
