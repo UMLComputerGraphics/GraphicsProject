@@ -1100,6 +1100,28 @@
         </item>
        </layout>
       </widget>
+      <widget class="QPlainTextEdit" name="udfMessageBox">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>150</y>
+         <width>280</width>
+         <height>30</height>
+        </rect>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>280</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>280</width>
+         <height>30</height>
+        </size>
+       </property>
+      </widget>
      </widget>
      <widget class="QGroupBox" name="tornadoParamsGroup">
       <property name="geometry">
@@ -1397,6 +1419,21 @@
          <item>
           <property name="text">
            <string>Aurora</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Rainbow</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Tropical</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Galaxy</string>
           </property>
          </item>
         </widget>

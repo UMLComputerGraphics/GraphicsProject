@@ -152,6 +152,7 @@ public slots:
 signals:
     void sigMorphPercentage(int value);
     void sigEnableParticlesMelted( bool );
+    void sigUpdateUdfMessage( QString );
 #endif
 
 private:

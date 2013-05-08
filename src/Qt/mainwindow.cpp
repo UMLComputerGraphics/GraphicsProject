@@ -114,6 +114,11 @@ void MainWindow::slotEnableVR(bool isEnabled){
     }
 }
 
+void MainWindow::updateUdfMessage( const QString text )
+{
+    ui->udfMessageBox->setPlainText( text );
+}
+
 void MainWindow::setMorphPercentageOut(int pct)
 {
     ui->morphPercentageSlider->setValue(pct);

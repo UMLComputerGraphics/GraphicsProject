@@ -238,13 +238,17 @@ void MONOLITH::slotSetParticleLife( float min, float max )
 
 void MONOLITH::slotUpdateVectorField(std::string fx, std::string fy, std::string fz)
 {
+    sigUpdateUdfMessage( "" );
   try {
     ps->uvf()->setAll(fx, fy, fz);
     ps->setFuncParams( new UserParameters(ps->uvf()));
     ps->setVectorField(ParticleFieldFunctions::userSupplied);
-  } catch( std::exception &e ) {
+  }
+  catch( std::exception &e ) {
+    sigUpdateUdfMessage( "Could not compute user function" );
     gprint( PRINT_WARNING, "Could not enable the requested user function, because: %s\n", e.what() );
   }
+
 }
 /**
  * @brief defaultNumberOfParticles (setter)
@@ -312,10 +316,13 @@ void MONOLITH::slotPartColorFunc( int index )
         ps->setColorFunc( ColorFunctions::aurora );
         break;
     case 2:
+        ps->setColorFunc( ColorFunctions::rainbow );
         break;
     case 3:
+        ps->setColorFunc( ColorFunctions::tropical );
         break;
     case 4:
+        ps->setColorFunc( ColorFunctions::galaxy );
         break;
     }
 }

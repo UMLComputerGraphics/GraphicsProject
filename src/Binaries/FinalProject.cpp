@@ -80,6 +80,7 @@ int main( int argc, char **argv ) {
                    &monolith, SLOT(slotUpdateVectorField(std::string, std::string, std::string)));
   //  QObject::connect(&monolith, SIGNAL(sigEnableParticles(bool)), &w, SLOT(on_particleSystemEnabler_toggled(bool)));
   QObject::connect(&w, SIGNAL(sigPartColorFunc(int)), &monolith, SLOT(slotPartColorFunc(int)));
+  QObject::connect(&monolith, SIGNAL(sigUpdateUdfMessage(QString)), &w, SLOT(updateUdfMessage(QString)));
 
   w.show();
 

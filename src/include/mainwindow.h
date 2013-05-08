@@ -67,6 +67,8 @@ signals:
     // void sigParticleFieldFunction(int index);
 
 private slots:
+    void updateUdfMessage( QString );
+
     void on_addObjectButton_clicked();
 
     void on_particleFieldFunctionComboBox_currentIndexChanged(int index);
