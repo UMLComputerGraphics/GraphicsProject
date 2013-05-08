@@ -88,6 +88,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->scaleSlider->setSliderPosition( 1 );
     ui->rangeSlider->setSliderPosition( 24 );
 
+    //turn off VR sliders by defualt
+    ui->vrMorphSlider->setEnabled(false);
+    ui->vrParticleSlider->setEnabled(false);
+
     connect(ui->currentViewComboBox, SIGNAL(currentIndexChanged(int)), this, SIGNAL(sigChangeCurrentView(int)));
 
 }
@@ -240,6 +244,18 @@ void MainWindow::on_defaultLifespansButton_clicked()
 
 void MainWindow::processFrameAndUpdateGUI()
 {
+    if(ui->vrMorphControl->isChecked()){
+        ui->vrMorphSlider->setEnabled(true);
+    }else{
+        ui->vrMorphSlider->setEnabled(false);
+    }
+
+    if(ui->vrParticleControl->isChecked()){
+        ui->vrParticleSlider->setEnabled(true);
+    }else{
+        ui->vrParticleSlider->setEnabled(false);
+    }
+
     capWebcam.read(matOriginal);
     cv::Size size = cv::Size(280,157);
     cv::resize(matOriginal,matOriginal,size);
@@ -265,6 +281,7 @@ void MainWindow::processFrameAndUpdateGUI()
                 ui->vrMorphSlider->setValue(ui->vrMorphSlider->value()+2);
             }*/
             ui->vrMorphSlider->setValue((int)((*itrCircles)[0]/280.0*100));
+            ui->morphPercentageSlider->setValue((int)((*itrCircles)[0]/280.0*100));
 
         }
         if(ui->vrParticleControl->isChecked()){
@@ -276,6 +293,7 @@ void MainWindow::processFrameAndUpdateGUI()
                 ui->vrParticleSlider->setValue(ui->vrParticleSlider->value()+50);
             }*/
             ui->vrParticleSlider->setValue(2000-(int)((*itrCircles)[1]/157.0*2000));
+            ui->numberOfParticlesSpinBox->setValue(2000-(int)((*itrCircles)[1]/157.0*2000));
         }
     }
 
