@@ -53,11 +53,9 @@ void Animation::candleMelt( Object *candle, Object *tip, float rawScale ) {
 
   currentTipPos.y += adj;
 
-  /*
-    if (*(Engine::instance()->getNumLights()) > 0) {
+  if (*(Engine::instance()->getNumLights()) > 0) {
     Engine::instance()->getLights()->at(0)->y( currentTipPos.y );
     Engine::instance()->setLights();
-    }
-  */
+  }
 
 }
