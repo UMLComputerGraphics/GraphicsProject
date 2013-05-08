@@ -559,6 +559,7 @@ ParticleSystem::update() {
 		  else
 		  {	
 		          hideParticle(*i);
+			  continue; // if the particle is dead, leave it dead.
 		  }
 
 		}
