@@ -52,3 +52,14 @@ vec4 ColorFunctions::flameSt( float lifePct, vec4 posIn ) {
   return vec4(r, g, b, w);
 
 }
+
+vec4 ColorFunctions::aurora( float lifePct, vec4 posIn ) {
+  float r, g, b, w;
+  
+  r = sin(1-lifePct*4);
+  g = cos(1-posIn.y);
+  b = 0.5;
+  w = sin(lifePct*4);
+
+  return vec4(r, g, b, w);
+}
