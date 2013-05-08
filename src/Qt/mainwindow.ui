@@ -552,7 +552,7 @@
           </size>
          </property>
          <property name="maximum">
-          <number>100000</number>
+          <number>1000000000</number>
          </property>
          <property name="singleStep">
           <number>100</number>
