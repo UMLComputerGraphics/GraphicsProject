@@ -62,11 +62,11 @@ Engine::Engine( void ) :
   _lightsSize = (GLint *) malloc( sizeof( GLint ) );
   *_lightsSize = 0;
 
-  _lightPositions = NULL;
-  _lightSpeculars = NULL;
-  _lightDiffuses = NULL;
-  _lightAmbient = NULL;
-  _lightIntensities = NULL;
+  _lightPositions = (GLfloat *) malloc(sizeof(GLfloat) * 20);
+  _lightSpeculars = (GLfloat *) malloc(sizeof(GLfloat) * 20);
+  _lightDiffuses = (GLfloat *) malloc(sizeof(GLfloat) * 20);
+  _lightAmbient = (GLfloat *) malloc(sizeof(GLfloat) * 4);
+  _lightIntensities = (GLfloat *) malloc(sizeof(GLfloat) * 5);
 
   opt("fixed_yaw", true);
   opt("trap_pointer", true);
@@ -199,36 +199,37 @@ GLfloat* Engine::getLightIntensities( void ) {
 void Engine::setLights( void ) {
    vector<Light*>::iterator it;
 
-   //20 of each, 4 floats * 5 maxlights
-   //TODO: make this actually a product 4 * maxlights, and have a maxlights variable
-   GLfloat *allPos = (GLfloat *) malloc(sizeof(GLfloat) * 20);
-   GLfloat *allDiff = (GLfloat *) malloc(sizeof(GLfloat) * 20);
-   GLfloat *allSpec = (GLfloat *) malloc(sizeof(GLfloat) * 20);
-   GLfloat *allIntens= (GLfloat *) malloc(sizeof(GLfloat) * 5);
+   int j = 0;
 
-   _lightPositions   = allPos;
-   _lightDiffuses    = allDiff;
-   _lightSpeculars   = allSpec;
-   _lightIntensities = allIntens;
-   
+   //remember starting positions for pointers
+   GLfloat *posReset = _lightPositions;
+   GLfloat *specReset = _lightSpeculars;
+   GLfloat *diffReset = _lightDiffuses;
+   GLfloat *intenReset = _lightIntensities;
+
    for(it = _lights->begin(); it != _lights->end(); ++it) {
     //Ambient is one ambience for whole scene, so only grab this from light 0
     if( it == _lights->begin() ) _lightAmbient = (*it)->getGLAmbient();
 
     for(int i = 0; i < 4; i++) {
-      allPos[i] = (*it)->getGLPosition()[i];
-      allDiff[i] = (*it)->getGLDiffuse()[i];
-      allSpec[i] = (*it)->getGLSpecular()[i];
-
+      _lightPositions[i] = (*it)->getGLPosition()[i];
+      _lightDiffuses[i] = (*it)->getGLDiffuse()[i];
+      _lightSpeculars[i] = (*it)->getGLSpecular()[i];
     } 
 
-    *allIntens = (GLfloat) (*it)->intensity();
+    _lightIntensities[j] = (GLfloat) (*it)->intensity();
 
-    allPos += 4;
-    allDiff += 4;
-    allSpec += 4;
-    allIntens++;
+    _lightPositions += 4;
+    _lightDiffuses += 4;
+    _lightSpeculars += 4;
+    j++;
   }
+
+   //rewind pointers
+   _lightPositions = posReset;
+   _lightSpeculars = specReset;
+   _lightDiffuses = diffReset;
+   _lightIntensities = intenReset;
 
 }
 
