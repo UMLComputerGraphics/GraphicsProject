@@ -89,6 +89,8 @@ private slots:
 
     void on_particleSystemEnabler_toggled(bool checked);
 
+    void on_userDefinedDefaultButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 

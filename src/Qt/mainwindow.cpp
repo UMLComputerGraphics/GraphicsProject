@@ -207,6 +207,14 @@ void MainWindow::on_userDefinedShowButton_clicked()
     sigUserDefVecParams( fx, fy, fz );
 }
 
+void MainWindow::on_userDefinedDefaultButton_clicked()
+{
+    sigUserDefVecParams("0.0", "0.1", "0,0");
+    ui->vxTextInput->setPlainText(QString("0.0"));
+    ui->vyTextInput->setPlainText(QString("0.1"));
+    ui->vyTextInput->setPlainText(QString("0.0"));
+}
+
 void MainWindow::on_tornadoDefaultButton_clicked()
 {
     sigTornadoVecParams();
