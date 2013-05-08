@@ -254,8 +254,6 @@ UserVectorField *UserParameters::uvf()
 Angel::vec3 ParticleFieldFunctions::userSupplied( Angel::vec4 pos, Parameters* parameters )
 {
     UserParameters* theparams = (UserParameters*) parameters;
-    printf("The vec 4 x position is: %f\n", pos.x);
-    printf("The ouput x position is: %f\n", theparams->uvf()->eval(pos).x );
     return theparams->uvf()->eval( pos );
 }
 //#endif

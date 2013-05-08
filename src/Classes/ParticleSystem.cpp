@@ -65,6 +65,7 @@ ParticleSystem::~ParticleSystem( void ) {
   _particles.clear();
 
   delete _funcParams;
+  delete _uvf;
 }
 
 vec4
