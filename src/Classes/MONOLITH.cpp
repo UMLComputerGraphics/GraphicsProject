@@ -50,20 +50,28 @@ void MONOLITH::cleanup(void) {
 }
 
 bool heisenbergUncertaintyPrinciple;
+double morphTime, prevTime;
 /**
  * Apply animations and whatever else your heart desires.
  */
 void MONOLITH::monolith_idle(void)
 {
-    rt.idleHandsSpendTimeWithTheTextureBuffer();
-
-    static Scene *rootScene = Engine::instance()->rootScene();
+#ifndef __APPLE__
+  rt.idleHandsSpendTimeWithTheTextureBuffer();
+#endif
+  static Scene *rootScene = Engine::instance()->rootScene();
     Object *bottle = rootScene->search("bottle");
 
     // Animation variables.
     double timer = glutGet( GLUT_ELAPSED_TIME ) / 500.0;
-    float percent = (sin( timer ) + 1.0) / 2.0;
 
+    if (bottle && (bottle->morphEnabled())) {
+	    morphTime += timer-prevTime;
+    }
+    prevTime = timer;
+
+    float percent = (sin( morphTime ) + 1.0) / 2.0;
+    
     // Candle-melt Animation.
     {
       Object *candle = rootScene->search( "candle" );
@@ -121,8 +129,10 @@ void MONOLITH::slotFreezeParticles(bool isEnabled)
 }
 void MONOLITH::slotMorphPercentage(int value)
 {
-  if (!heisenbergUncertaintyPrinciple)
+  if (!heisenbergUncertaintyPrinciple){
     rootScene->search("bottle")->morphPercentage(value / 100.0);
+    _percentageCallback(value);
+  }
 }
 void MONOLITH::setMorphPercentageCallback(boost::function<void(int)> cb)
 {
@@ -216,18 +226,18 @@ void MONOLITH::slotUpdateTornadoVecFunc()
     ps->setVectorField( ParticleFieldFunctions::tornado );
 }
 
-void MONOLITH::slotUpdateVectorField(std::string* params)
-{
-    Parameters* funcParams = new UserParameters(params);
-    ps->setFuncParams(funcParams);
-}
-
 void MONOLITH::slotSetParticleLife( float min, float max )
 {
     ps->setLifespan( min, max );
     ps->setRespawnFlag( true );
 }
 
+void MONOLITH::slotUpdateVectorField(std::string fx, std::string fy, std::string fz)
+{
+    ps->uvf()->setAll(fx, fy, fz);
+    ps->setFuncParams( new UserParameters(ps->uvf()));
+    ps->setVectorField(ParticleFieldFunctions::userSupplied);
+}
 /**
  * @brief defaultNumberOfParticles (setter)
  * @param value
@@ -422,7 +432,6 @@ void MONOLITH::run() {
 #else
   ps = new ParticleSystem( _defaultNumberOfParticles, "ps1", particleShader );
 #endif
-
   ps->setLifespan( 9.0, 12.0 );
   ps->setVectorField( ParticleFieldFunctions::flame );
   ps->setColorFunc( ColorFunctions::flame );

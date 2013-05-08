@@ -215,35 +215,33 @@ float FlameParameters::rng(void)
 }
 
 /* only constructor */
-UserParameters::UserParameters (std::string* functions) : _functions(functions)
+UserParameters::UserParameters (UserVectorField* value) : _uvf(value)
 {
 
 }
 
-/* no setter, the only chance to set the parameters is at construction.
-other wise you will get the defaults. */
-std::string* UserParameters::functions(void)
+UserVectorField *UserParameters::uvf()
 {
-	return _functions;
+    return _uvf;
 }
 
-#ifdef EXPRTK
-/**
-   Revert:
-   The userSupplied callback should not accept strings as an input.
-   The userSupplied callback is an example and should do one thing and one thing only:   
-   It should return the value of its function.
+//#ifdef EXPRTK
+///**
+//   Revert:
+//   The userSupplied callback should not accept strings as an input.
+//   The userSupplied callback is an example and should do one thing and one thing only:
+//   It should return the value of its function.
 
-   If you supply it strings and re-compile every time, it will be too slow to use.
-   Compile once, evaluate many times is the paradigm, here.
-**/
-Angel::vec3 ParticleFieldFunctions::userSupplied( Angel::vec4 pos ) {
-  static UserVectorField *uvf = NULL;
-  if (uvf == NULL) { 
-    uvf = new UserVectorField(); 
-  }
-  return uvf->eval( pos );
-}
+//   If you supply it strings and re-compile every time, it will be too slow to use.
+//   Compile once, evaluate many times is the paradigm, here.
+//**/
+//Angel::vec3 ParticleFieldFunctions::userSupplied( Angel::vec4 pos ) {
+//  static UserVectorField *uvf = NULL;
+//  if (uvf == NULL) {
+//    uvf = new UserVectorField();
+//  }
+//  return uvf->eval( pos );
+//}
 
 /**
    Try this, instead.
@@ -253,10 +251,14 @@ Angel::vec3 ParticleFieldFunctions::userSupplied( Angel::vec4 pos ) {
    You can manage /that/ UVF object inside of QT if you'd like.
    If you get the Parameters system working, the UVF can be a parameter.
 **/
-Angel::vec3 ParticleFieldFunctions::userSupplied( Angel::vec4 &pos, UserVectorField &uvf ) {
-  return uvf.eval( pos );
+Angel::vec3 ParticleFieldFunctions::userSupplied( Angel::vec4 pos, Parameters* parameters )
+{
+    UserParameters* theparams = (UserParameters*) parameters;
+    printf("The vec 4 x position is: %f\n", pos.x);
+    printf("The ouput x position is: %f\n", theparams->uvf()->eval(pos).x );
+    return theparams->uvf()->eval( pos );
 }
-#endif
+//#endif
 
 /* // jet 1?
 vec3 ParticleFieldFunctions::idk(vec4 pos)

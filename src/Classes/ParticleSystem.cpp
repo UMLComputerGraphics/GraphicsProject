@@ -50,10 +50,11 @@ ParticleSystem::ParticleSystem( int particleAmt, const std::string &name,
   _emitterShape(PS_NONE),
   _systemShape(PS_NONE),
   _funcParams( new FlameParameters() ),
+  _uvf( new UserVectorField() ),
   _vecFieldFunc( NULL ), 
   _colorFunc(ColorFunctions::standard)
 {
-  this->drawMode( GL_POINTS );	 
+  this->drawMode( GL_POINTS );
 }
 
 
@@ -657,7 +658,12 @@ void ParticleSystem::setFuncParams(Parameters* theParameters)
 
 Parameters* ParticleSystem::getFuncParams(void)
 {
-	return _funcParams;
+    return _funcParams;
+}
+
+UserVectorField *ParticleSystem::uvf()
+{
+    return _uvf;
 }
 // Nada. Don't buffer particles to the raytracer,
 // That's crazy-talk!

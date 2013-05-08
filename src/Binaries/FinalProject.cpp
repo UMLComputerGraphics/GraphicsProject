@@ -76,7 +76,9 @@ int main( int argc, char **argv ) {
   QObject::connect(&w, SIGNAL(sigMusicVolume(int)), &monolith, SLOT(slotMusicVolume( int )));
   QObject::connect(&monolith, SIGNAL(sigEnableParticlesMelted(bool)), &w, SLOT(on_particleSystemEnabler_toggled_melted(bool)));
   QObject::connect(&monolith, SIGNAL(sigEnableParticlesMelted(bool)), &w, SLOT(slotEnableParticleSystem(bool)));
-
+  QObject::connect(&w, SIGNAL(sigUserDefVecParams(std::string, std::string, std::string)),
+                   &monolith, SLOT(slotUpdateVectorField(std::string, std::string, std::string)));
+  //  QObject::connect(&monolith, SIGNAL(sigEnableParticles(bool)), &w, SLOT(on_particleSystemEnabler_toggled(bool)));
 
   w.show();
 
