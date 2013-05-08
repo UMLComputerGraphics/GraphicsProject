@@ -54,9 +54,10 @@ double morphTime, prevTime;
  */
 void MONOLITH::monolith_idle(void)
 {
-    rt.idleHandsSpendTimeWithTheTextureBuffer();
-
-    static Scene *rootScene = Engine::instance()->rootScene();
+#ifndef __APPLE__
+  rt.idleHandsSpendTimeWithTheTextureBuffer();
+#endif
+  static Scene *rootScene = Engine::instance()->rootScene();
     Object *bottle = rootScene->search("bottle");
     
     // Animation variables.
