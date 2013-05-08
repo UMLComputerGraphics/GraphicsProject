@@ -9,12 +9,12 @@
 #include "Engine.hpp"
 
 RayTracer::RayTracer() : 
-  _extinguish( false ), // TRUE so the thread breaks out of its loop immediately!
-  _readytorebuffer(false),
   _lightPositions( NULL ),
   _lightDiffuse( NULL ),
   _lightSpecular( NULL ),
-  display(boost::bind(&RayTracer::_display,this)){
+  display(boost::bind(&RayTracer::_display,this)),
+  _extinguish( false ),
+  _readytorebuffer(false) {
 
   // Handles
   _program = 0;

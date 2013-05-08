@@ -21,8 +21,8 @@ MONOLITH::~MONOLITH(void)
 MONOLITH::MONOLITH(int argc, char** argv) :
    extinguish(false),
    flicker(false),
-  _defaultNumberOfParticles(3000),
-  ps(NULL)
+   ps(NULL),
+   _defaultNumberOfParticles(3000)
 {
     //As this happens before run() initializes relative paths, we need to initialize relative paths here
     Util::InitRelativePaths(argc, argv);
@@ -89,7 +89,7 @@ void MONOLITH::monolith_idle(void)
           if( candle->getRealMax().y - candle->getRealMin().y <= .15 ) sigEnableParticlesMelted( false );
 #endif
           if( ps->getEnableTheSystem() && (ps->getNumParticlesActual() >= 500) ){
-              Animation::candleMelt( candle, candletip, 0.9999 );
+              Animation::candleMelt( candle, candletip, 0.9995 );
           }
       }
     }
@@ -544,7 +544,7 @@ void MONOLITH::aRomanticEvening() {
     lightness += .7;
 
     if (ps) lightness *= (ps->getNumParticlesVisible() / 3000.0);
-    //lightness = (float)std::max(0.0,std::min((double)lightness,1.0));
+    lightness = (float)std::max(0.0,std::min((double)lightness,1.0));
     Engine::instance()->safeSetIntensity(0, lightness);
     Engine::instance()->setLights();
 

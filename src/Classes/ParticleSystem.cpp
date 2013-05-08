@@ -508,7 +508,7 @@ ParticleSystem::update() {
 
 	// if we need fewer particles...
 	else if ( ( _particles.size() > (unsigned int) this->_numParticles ) &&
-		  ( abs(this->_numParticles - (int)_particles.size() ) >= _numToAddEachFrame ) 
+		  ( (unsigned)abs(this->_numParticles - (int)_particles.size() ) >= _numToAddEachFrame ) 
 		  //^^ condition to make sure the system doesn't bang back and forth between values
 		  ){
 
