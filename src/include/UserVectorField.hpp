@@ -1,9 +1,7 @@
 #ifndef __UserVectorField_HPP
 #define __UserVectorField_HPP
 
-class UserVectorField;
-
-#ifdef EXPRTK
+//#ifdef EXPRTK
 
 #include <string>
 #include "vec.hpp"
@@ -33,6 +31,6 @@ private:
 
 };
 
-#endif // ifdef EXPRTK
+//#endif // ifdef EXPRTK
 #endif // ifndef __UserVectorField_HPP
 

@@ -197,18 +197,18 @@ void MONOLITH::slotUpdateTornadoVecFunc()
     ps->setVectorField( ParticleFieldFunctions::tornado );
 }
 
-void MONOLITH::slotUpdateVectorField(std::string* params)
-{
-    Parameters* funcParams = new UserParameters(params);
-    ps->setFuncParams(funcParams);
-}
-
 void MONOLITH::slotSetParticleLife( float min, float max )
 {
     ps->setLifespan( min, max );
     ps->setRespawnFlag( true );
 }
 
+void MONOLITH::slotUpdateVectorField(std::string fx, std::string fy, std::string fz)
+{
+    ps->uvf()->setAll(fx, fy, fz);
+    ps->setFuncParams( new UserParameters(ps->uvf()));
+    ps->setVectorField(ParticleFieldFunctions::userSupplied);
+}
 /**
  * @brief defaultNumberOfParticles (setter)
  * @param value
@@ -396,7 +396,6 @@ void MONOLITH::run() {
 #else
   ps = new ParticleSystem( _defaultNumberOfParticles, "ps1", particleShader );
 #endif
-
   ps->setLifespan( 9.0, 12.0 );
   ps->setVectorField( ParticleFieldFunctions::flame );
   ps->setColorFunc( ColorFunctions::flame );

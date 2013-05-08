@@ -134,7 +134,7 @@ public slots:
     void slotMorphToWineBottle(void);
     void slotMorphToWhiskyBottle(void);
     //void slotParticleFieldFunction(int index); Deprecated for now.
-    void slotUpdateVectorField(std::string*);
+    void slotUpdateVectorField(std::string, std::string, std::string);
     void slotMaxAcceleration(int num);
     void slotFriction(int num);
     void slotSpeed(int num);
@@ -186,7 +186,6 @@ private:
     int _argc;
     
     int _defaultNumberOfParticles ;
-
 
     boost::thread zipo;
 

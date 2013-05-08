@@ -19,6 +19,7 @@
 #include "vec.hpp"
 #include "TransCache.hpp"
 #include "ParticleFieldFunctions.hpp"
+#include "UserVectorField.hpp"
 
 using Angel::vec2;
 using Angel::vec3;
@@ -87,7 +88,7 @@ class ParticleSystem : public Object {
 
   Parameters* getFuncParams();
 
-	
+  UserVectorField* uvf(void);
 
  private:  
 
@@ -142,6 +143,7 @@ class ParticleSystem : public Object {
   TransCache _emitterLoc   ;
 
   Parameters* _funcParams;//
+  UserVectorField* _uvf;
 
   Angel::vec3 (*_vecFieldFunc)(Angel::vec4 posIn, Parameters* functionParams);
   Angel::vec4 (*_colorFunc)(float lifePct, Angel::vec4 posIn);

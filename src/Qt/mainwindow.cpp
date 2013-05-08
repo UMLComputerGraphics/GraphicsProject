@@ -198,6 +198,15 @@ void MainWindow::on_tornadoShowButton_clicked()
     sigTornadoVecParams( a, b, c );
 }
 
+void MainWindow::on_userDefinedShowButton_clicked()
+{
+    std::string fx = ui->vxTextInput->toPlainText().toStdString();
+    std::string fy = ui->vyTextInput->toPlainText().toStdString();
+    std::string fz = ui->vzTextInput->toPlainText().toStdString();
+
+    sigUserDefVecParams( fx, fy, fz );
+}
+
 void MainWindow::on_tornadoDefaultButton_clicked()
 {
     sigTornadoVecParams();
