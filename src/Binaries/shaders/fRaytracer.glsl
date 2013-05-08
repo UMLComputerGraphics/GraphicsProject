@@ -509,12 +509,15 @@ void main()
 		
 		if(isect.refract > eps) 
 		{
-
-			float n = rIndex / isect.refract;
+			float n = 1 / isect.refract;
 			vec3 N = isect.n;
 			rIndex = isect.refract;
 			
-			if(back == 1) N = isect.n * -1;
+			if(back == 1) 
+			{
+				N = isect.n * -1;
+				n = isect.refract;
+			}
 
 			float cosI = -dot( N, r2.dir );
 			float cosT2 = 1.0 - n * n * (1.0 - cosI * cosI);
