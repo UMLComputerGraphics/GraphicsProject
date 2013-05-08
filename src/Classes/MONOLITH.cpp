@@ -313,7 +313,7 @@ void MONOLITH::run() {
   Engine::instance()->addLight(_l2);
 
 #ifndef WITHOUT_QT
-  l->intensity(0);
+  _l1->intensity(0);
   flicker = false;
 #else
   flicker = true;
