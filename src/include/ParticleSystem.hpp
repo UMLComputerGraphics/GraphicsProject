@@ -155,13 +155,14 @@ public:
   TransCache _emitterLoc   ;
 
 private:
-  Parameters* _funcParams;//
+  Parameters* _funcParams;
   UserVectorField* _uvf;
 
   Angel::vec3 (*_vecFieldFunc)(Angel::vec4 posIn, Parameters* functionParams);
   Angel::vec4 (*_colorFunc)(float lifePct, Angel::vec4 posIn);
 
   unsigned _numToAddEachFrame;
+  int      _cachedVisibleCount;
 
 };
 

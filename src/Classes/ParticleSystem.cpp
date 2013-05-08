@@ -50,8 +50,8 @@ ParticleSystem::ParticleSystem( int particleAmt, const std::string &name,
   _uvf( new UserVectorField() ),
   _vecFieldFunc( NULL ), 
   _colorFunc(ColorFunctions::standard),
-  _numToAddEachFrame(12)
-
+  _numToAddEachFrame(12),
+  _cachedVisibleCount(0)
 {
   this->drawMode( GL_POINTS );
 }
@@ -132,14 +132,7 @@ ParticleSystem::getRandomSphericalSpawnPointHelper(float in)
 
 }
 
-/*
 
-TODO
-void  setAlpha( float newAlpha );
-void  setColor( vec4 newColor );
-void  setScale( vec3 newScale );
-void  setVel( vec3 newVel );
- */
 void
 ParticleSystem::respawnParticle(Particle &p)
 {
@@ -410,13 +403,15 @@ ParticleSystem::getNumParticlesActual( void ) const {
 int
 ParticleSystem::getNumParticlesVisible( void ) const
 {
-    int count = 0;
+  return _cachedVisibleCount;
+}
+/*    int count = 0;
     for( vector<ParticleP>::const_iterator i = _particles.begin() ;
          i != _particles.end() ; ++i )
         if( (*i)->getAlpha() > 0.1 ) count++;
 
     return count;
-}
+    }*/
 
 void
 ParticleSystem::setLifespan( float minLifespan, float maxLifespan ) {
@@ -492,7 +487,7 @@ ParticleSystem::update() {
 
 	const int averageFrameLifetime = 10 * (_minLife+_maxLife) ;
 
-	int numRespawnsThisFrame ;
+	int numRespawnsThisFrame, visibleCount=0 ;
 
 	// The answer lies in one of these two functions... BUT WHICH ONE??
 	numRespawnsThisFrame = this->getNumParticles()/averageFrameLifetime ;
@@ -580,17 +575,18 @@ ParticleSystem::update() {
 		if ( this->_vecFieldFunc != NULL ) {
 			(*i)->setVel( (*_vecFieldFunc)((*i)->getPosition(), this->getFuncParams()) ) ;
 		}
-		/*else
-		{  
-		  ;
-		  }*/
+		
+
+		if( (*i)->getAlpha() > 0.1 ) visibleCount++;
 		
 		_vertices.push_back((*i)->getPosition());
 		_colors.push_back((*i)->getColor());
 
 	}
 
-
+	//MUTEX_LOCK(IMAGINARY);
+	_cachedVisibleCount = visibleCount;
+	//MUTEX_UNLOCK(IMAGINARY);
 }
 
 void ParticleSystem::setRespawnFlag( bool flag )

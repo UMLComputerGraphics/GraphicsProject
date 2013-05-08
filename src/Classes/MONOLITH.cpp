@@ -539,7 +539,7 @@ void MONOLITH::aRomanticEvening() {
     lightness = lightness * 3.0 / 10.0;
     lightness += .7;
 
-    //if (ps) lightness *= (ps->getNumParticlesVisible() / 3000.0);
+    if (ps) lightness *= (ps->getNumParticlesVisible() / 3000.0);
     //lightness = (float)std::max(0.0,std::min((double)lightness,1.0));
     Engine::instance()->safeSetIntensity(0, lightness);
     Engine::instance()->setLights();
