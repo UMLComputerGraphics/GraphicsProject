@@ -31,9 +31,6 @@ using namespace Angel;
 #define MIN_EMITTER_RADIUS 1.0/2048.0
 #endif
 
-#ifndef NUM_PARTICLES_TO_ADD_ON_UPDATE
-#define NUM_PARTICLES_TO_ADD_ON_UPDATE 12
-#endif
 
 // Constructor(s)
 ParticleSystem::ParticleSystem( int particleAmt, const std::string &name,
@@ -52,7 +49,9 @@ ParticleSystem::ParticleSystem( int particleAmt, const std::string &name,
   _funcParams( new FlameParameters() ),
   _uvf( new UserVectorField() ),
   _vecFieldFunc( NULL ), 
-  _colorFunc(ColorFunctions::standard)
+  _colorFunc(ColorFunctions::standard),
+  _numToAddEachFrame(12)
+
 {
   this->drawMode( GL_POINTS );
 }
@@ -164,6 +163,24 @@ ParticleSystem::respawnParticle(Particle &p)
     }
 }
 
+vec4
+ParticleSystem::getRandomLinearSpawnPoint(void)
+{
+
+  float rad, nrad, thickness;
+
+  thickness = 0.05;
+
+  nrad = -(rad = this->_emitterRadius);
+
+  return vec4( rangeRandom( nrad, rad ), 
+	       rangeRandom( -thickness, thickness ), 
+	       0.0,
+	       1.0  );
+
+}
+
+
 vec4 negateY(vec4 in)
 {
   in.y = -in.y;
@@ -184,6 +201,9 @@ ParticleSystem::getSpawnPos(PS_SHAPE s)
 
     case PS_CIRCLE:
       return getRandomCircularSpawnPoint();
+
+    case PS_LINE:
+      return getRandomLinearSpawnPoint();
 
     case PS_SPHERE:
       return getRandomSphericalSpawnPoint();
@@ -459,6 +479,10 @@ ParticleSystem::setEmitterRadius( float r )
 
 void hideParticle(Particle *p) {  p->setAlpha(0.0); }
 
+
+void ParticleSystem::setNumToAddEachFrame(unsigned in){ _numToAddEachFrame = in ; }
+
+
 //Update the particles in our system >>> AND ALSO UPDATE OUR DRAW BUFFER
 void
 ParticleSystem::update() {
@@ -480,7 +504,7 @@ ParticleSystem::update() {
 	if ( _particles.size() < (unsigned int) this->_numParticles ){
 
 		if ( currFillFrame == _fillSpeedLimit ) {
-			updateNumParticles( NUM_PARTICLES_TO_ADD_ON_UPDATE );
+			updateNumParticles( _numToAddEachFrame );
 			currFillFrame = 0;
 		}
 		currFillFrame++;
@@ -488,12 +512,12 @@ ParticleSystem::update() {
 
 	// if we need fewer particles...
 	else if ( ( _particles.size() > (unsigned int) this->_numParticles ) &&
-		  ( abs(this->_numParticles - (int)_particles.size() ) >= NUM_PARTICLES_TO_ADD_ON_UPDATE ) 
+		  ( abs(this->_numParticles - (int)_particles.size() ) >= _numToAddEachFrame ) 
 		  //^^ condition to make sure the system doesn't bang back and forth between values
 		  ){
 
 		if ( currFillFrame == _fillSpeedLimit ) {
-			updateNumParticles( -1 * NUM_PARTICLES_TO_ADD_ON_UPDATE );
+			updateNumParticles( -1 * _numToAddEachFrame );
 			currFillFrame = 0;
 		}
 		currFillFrame++;
@@ -514,17 +538,35 @@ ParticleSystem::update() {
 		if( ((*i)->getLifetime() <= 0.0)
 		/*|| ((*i)->getPosition().y >= maxHeight)*/ ) 
 		{
+		  
+		  if( numRespawnsThisFrame )
+		  {
+		          respawnParticle(**i)  ;
+			  numRespawnsThisFrame--;
 
-          if( numRespawnsThisFrame )
-          {
-                  respawnParticle(**i)  ;
-              numRespawnsThisFrame--;
-          }
-          else
-          {
-                  hideParticle(*i);
-          }
+
+			  if ( this->_vecFieldFunc == NULL ) {
+
+			    /* We "need" a default particle velocity behavior, and don't have one yet. */
+
+			    // sphere generating method
+			    float row   = rangeRandom( 0.001f, 0.004f ); // equivalent to magnitude
+			    float phi   = rangeRandom( 0.0f, 2 * M_PI );
+			    float theta = rangeRandom( 0.0f, 2 * M_PI );
+			    (*i)->setVel( vec3( row*sin(phi)*cos(theta),
+						row*sin(phi)*sin(theta),
+						row*cos(phi) ));
+
+			  }
+
+		  }
+		  else
+		  {	
+		          hideParticle(*i);
+		  }
+
 		}
+
 
 		// call the update function on each particle
 		(*i)->updateSelf();
@@ -538,18 +580,10 @@ ParticleSystem::update() {
 		if ( this->_vecFieldFunc != NULL ) {
 			(*i)->setVel( (*_vecFieldFunc)((*i)->getPosition(), this->getFuncParams()) ) ;
 		}
-		else
+		/*else
 		{  
-		  /* We "need" a default particle velocity behavior, and don't have one yet. */
-
-		  // sphere generating method
-		  float row   = rangeRandom( 0.001f, 0.004f ); // equivalent to magnitude
-		  float phi   = rangeRandom( 0.0f, 2 * M_PI );
-		  float theta = rangeRandom( 0.0f, 2 * M_PI );
-		  (*i)->setVel( vec3( row*sin(phi)*cos(theta),
-				      row*sin(phi)*sin(theta),
-				      row*cos(phi) ));
-		}
+		  ;
+		  }*/
 		
 		_vertices.push_back((*i)->getPosition());
 		_colors.push_back((*i)->getColor());

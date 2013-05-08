@@ -31,7 +31,7 @@ using std::vector;
 
 typedef Particle* ParticleP;
 
-typedef enum { PS_NONE, PS_CIRCLE, PS_SPHERE, PS_HEMI_D, PS_HEMI_U, PS_CUBE, PS_EXTERNAL } PS_SHAPE;
+typedef enum { PS_NONE, PS_LINE, PS_CIRCLE, PS_SPHERE, PS_HEMI_D, PS_HEMI_U, PS_CUBE, PS_EXTERNAL } PS_SHAPE;
 
 class ParticleSystem : public Object {
   
@@ -87,11 +87,16 @@ class ParticleSystem : public Object {
 
   void setFuncParams(Parameters*);
 
-  void  setRespawnFlag( bool flag );
+  void setRespawnFlag( bool flag );
 
   Parameters* getFuncParams();
 
+
+  void setNumToAddEachFrame(unsigned);
+
+
   UserVectorField* uvf();
+
 
  private:  
 
@@ -111,6 +116,7 @@ class ParticleSystem : public Object {
   vec4  getRandomCubeSpawnPoint(void);
   vec4  getRandomSphericalSpawnPoint(void);
   vec4  getRandomHemisphericalSpawnPoint(void);
+  vec4  getRandomLinearSpawnPoint(void);
 
   vec4  getRandomSphericalSpawnPointHelper(float);
 
@@ -144,15 +150,18 @@ class ParticleSystem : public Object {
   float      _emitterRadius;
   PS_SHAPE   _emitterShape ;
   PS_SHAPE   _systemShape  ;
+
+public:
   TransCache _emitterLoc   ;
 
+private:
   Parameters* _funcParams;//
   UserVectorField* _uvf;
 
   Angel::vec3 (*_vecFieldFunc)(Angel::vec4 posIn, Parameters* functionParams);
   Angel::vec4 (*_colorFunc)(float lifePct, Angel::vec4 posIn);
 
-  
+  unsigned _numToAddEachFrame;
 
 };
 

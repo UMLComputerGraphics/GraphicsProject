@@ -537,13 +537,12 @@ void MONOLITH::aRomanticEvening() {
     float lightness = (float) rand() / (float) RAND_MAX;
     // between 0 and .3
     lightness = lightness * 3.0 / 10.0;
-
     lightness += .7;
 
     //if (ps) lightness *= (ps->getNumParticlesVisible() / 3000.0);
     //lightness = (float)std::max(0.0,std::min((double)lightness,1.0));
-    //Engine::instance()->safeSetIntensity(0, lightness);
-    //Engine::instance()->setLights();
+    Engine::instance()->safeSetIntensity(0, lightness);
+    Engine::instance()->setLights();
 
     boost::this_thread::yield();
     sleep( 0.01 );
