@@ -539,11 +539,23 @@
        </item>
        <item>
         <widget class="QSpinBox" name="numberOfParticlesSpinBox">
+         <property name="minimumSize">
+          <size>
+           <width>140</width>
+           <height>24</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>140</width>
+           <height>24</height>
+          </size>
+         </property>
          <property name="maximum">
-          <number>1000000000</number>
+          <number>100000</number>
          </property>
          <property name="singleStep">
-          <number>1</number>
+          <number>100</number>
          </property>
          <property name="value">
           <number>0</number>
