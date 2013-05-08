@@ -60,45 +60,45 @@ GLint uLightSpecular = -1;
 
 //----------------------------------------------------------------------------
 
-GLfloat sphereCenterPoints[] = { -3.0, 0.5, 3.0,
-                                 3.0, 0.5, 3.0,
-                                 -3.0, 0.5, -3.0,
-                                 3.0, 0.5, -3.0 };
+GLfloat sphereCenterPoints[] = { 0.0, 0.0, 5.0,
+                                 5.0, 0.0, 0.0,
+                                 5.0, 0.0, 5.0,
+                                 1.0, 1.0, -2.0 };
 
 GLfloat sphereRadius[] = { 0.5,
                            0.5,
                            0.5,
-                           0.5 };
+                           0.8 };
 
 GLfloat sphereDiffuse[] = { 0.05, 0.05, 0.05,
-                            1.0, 0.0, 0.0,
-                            0.0, 1.0, 0.0,
-                            0.0, 0.0, 1.0 };
+                            0.05, 0.05, 0.05,
+                            0.05, 0.05, 0.05,
+                           1.0, 0.3, 0.3 };
 
 GLfloat sphereAmbient[] = { 0.05, 0.05, 0.05,
-                            0.05, 0.0, 0.0,
-                            0.0, 0.05, 0.0,
-                            0.0, 0.0, 0.05 };
+                            0.05, 0.05, 0.05,
+                            0.05, 0.05, 0.05,
+                            0.0, 0.0, 0.0 };
 
 GLfloat sphereSpecular[] = { 1.0, 1.0, 1.0,
-                             1.0, 0.0, 0.0,
-                             0.0, 1.0, 0.0,
-                             0.0, 0.0, 1.0 };
+                             1.0, 1.0, 1.0,
+                             1.0, 1.0, 1.0,
+                             0.0, 0.0, 0.0 };
 
 GLfloat sphereShininess[] = { 1000.0,
                               1000.0,
                               1000.0,
-                              1000.0 };
+                              1.0 };
 
-GLfloat sphereReflect[] = { 1.0,
+GLfloat sphereReflect[] = { 0.5,
                             1.0,
                             1.0,
                             1.0 };
 
-GLfloat sphereRefract[] = { 2.0,
-                            0.0,
-                            0.0,
-                            0.0 };
+GLfloat sphereRefract[] = { 1.0,
+                            1.0,
+                            1.0,
+                            1.0 };
 
 int numberOfLights = 2;
 
@@ -115,7 +115,7 @@ std::vector<vec3> trianglePoints;
 int numOfL2BoundingBoxes = 0;
 int numOfL1BoundingBoxes = 0;
 
-int numOfL2TrianglesBounded = 30;
+int numOfL2TrianglesBounded = 20;
 
 std::vector<GLfloat> bufferData;
 std::vector<GLfloat> triangleData;
@@ -175,19 +175,15 @@ void reshape( int width, int height ) {
 void customkeyboard( unsigned char key, int x, int y ) {
   switch ( key ) {
   case 033: // Escape Key
+  case 'q':
+  case 'Q':
     exit( EXIT_SUCCESS );
     break;
-  case 'q':// move up
+  case 'w': // move up
     camera.moveCamera( 0.0, 0.2, 0.0 );
     break;
-  case 'e':// move down
+  case 's': // move down
     camera.moveCamera( 0.0, -0.2, 0.0 );
-    break;
-  case 'w': //move forward
-    camera.moveCamera( 0.0, 0.0, -0.2 );
-    break;
-  case 's': //move back
-    camera.moveCamera( 0.0, 0.0, 0.2 );
     break;
   case 'a': // move left
     camera.moveCamera( -0.2, 0.0, 0.0 );
@@ -195,7 +191,13 @@ void customkeyboard( unsigned char key, int x, int y ) {
   case 'd': // move right
     camera.moveCamera( 0.2, 0.0, 0.0 );
     break;
-  case '1': // stereo
+  case 'z': //move back
+    camera.moveCamera( 0.0, 0.0, 0.2 );
+    break;
+  case 'x': //move forward
+    camera.moveCamera( 0.0, 0.0, -0.2 );
+    break;
+  case '1': //move somewhere
     stereo = !stereo;
     break;
   case ' ': // reset values to their defaults
@@ -299,7 +301,7 @@ float previousTime = 0.0;
 void display( void ) {
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
   
-  int numSpheres = 4;
+  int numSpheres = 3;
   glUniform1i( uNumOfSpheres, numSpheres );
   glUniform3fv( uSphereCenterPoints, numSpheres, sphereCenterPoints );
   glUniform1fv( uSphereRadius, numSpheres, sphereRadius );
@@ -590,46 +592,39 @@ void pushDataToBuffer() {
 
 void genereateScene() {
 
+  //TODO: raytrace1 use class/Raytrace
+
   Object *bottle = new Object("", -1);
-  ObjLoader::loadModelFromFile( bottle, "../models/bottle_liquor_low.obj" );
+  ObjLoader::loadModelFromFile( bottle, "../models/bottle_liquor_med.obj" );
 
   vec4 *vertices = bottle->_vertices.data();
 
   unsigned long int count = 0;
   while(count < bottle->_vertices.size()) {
     vec4 vertex = vertices[count++];
-    vec3 offset = vec3(0.0, 0.2, 0.0);
-
-    vec3 a = vec3(vertex.x, vertex.y, vertex.z) + offset;
+    vec3 a = vec3(vertex.x, vertex.y, vertex.z);
     vertex = vertices[count++];
-    vec3 b = vec3(vertex.x, vertex.y, vertex.z) + offset;
+    vec3 b = vec3(vertex.x, vertex.y, vertex.z);
     vertex = vertices[count++];
-    vec3 c = vec3(vertex.x, vertex.y, vertex.z) + offset;
+    vec3 c = vec3(vertex.x, vertex.y, vertex.z);
 
-    addTriangle(a, b, c, vec3(0.1, 0.1, 0.1), vec3(0.01, 0.01, 0.01), vec3(1.0, 1.0, 1.0), 100.0, 0.3, 1.2);
+    addTriangle(a, b, c, vec3(0.5, 0.5, 0.5), vec3(0.05, 0.05, 0.05), vec3(1.0, 1.0, 1.0), 100.0, 0.3, 1.0);
   }
 
-  Object *table = new Object("", -1);
-  ObjLoader::loadModelFromFile( table, "../models/bottle_wine_low.obj" );
 
-  vertices = table->_vertices.data();
+  addCube(vec3(-2.0, 1.0, -3.0), vec3(0.8, 0.8, 0.8), vec3(0.05, 0.05, 0.05), vec3(0.0, 0.0, 0.0), 1000.0, 0.5, 0.0);
+  addCube(vec3(2.0, 1.0, -3.0), vec3(0.8, 0.8, 0.8), vec3(0.05, 0.05, 0.05), vec3(0.0, 0.0, 0.0), 1000.0, 0.5, 0.0);
 
-  count = 0;
-  while(count < table->_vertices.size()) {
-    vec4 vertex = vertices[count++];
-    vec3 offset = vec3(0.0, 0.2, -3.0);
 
-    vec3 a = vec3(vertex.x, vertex.y, vertex.z) + offset;
-    vertex = vertices[count++];
-    vec3 b = vec3(vertex.x, vertex.y, vertex.z) + offset;
-    vertex = vertices[count++];
-    vec3 c = vec3(vertex.x, vertex.y, vertex.z) + offset;
+  addTriangle(vec3(-5.0, -3.0, -5.0), vec3(5.0, -3.0, -5.0), vec3(5.0, 7.0, -5.0), vec3(1.0, 1.0, 1.0), vec3(0.05, 0.05, 0.05), vec3(1.0, 1.0, 1.0), 100.0, 0.0, 0.0);
+  addTriangle(vec3(-5.0, -3.0, -5.0), vec3(5.0, 7.0, -5.0), vec3(-5.0, 7.0, -5.0), vec3(0.0, 0.0, 1.0), vec3(0.0, 0.0, 0.05), vec3(0.0, 0.0, 1.0), 100.0, 0.0, 0.0);
 
-    addTriangle(a, b, c, vec3(0.043659, 0.161515, 0.000000), vec3(0.000436, 0.001615, 0.000000), vec3(0.043659, 0.161515, 0.000000), 100.0, 0.3, 0.0);
-  }
+  addTriangle(vec3(-5.0, -3.0, -5.0), vec3(-5.0, -3.0, 5.0), vec3(5.0, -3.0, 5.0), vec3(0.0, 1.0, 0.0), vec3(0.0, 0.05, 0.0), vec3(0.0, 1.0, 0.0), 100.0, 0.0, 0.0);
+  addTriangle(vec3(-5.0, -3.0, -5.0), vec3(5.0, -3.0, 5.0), vec3(5.0, -3.0, -5.0), vec3(1.0, 0.0, 0.0), vec3(0.05, 0.0, 0.0), vec3(1.0, 0.0, 0.0), 100.0, 0.0, 0.0);
 
-  addTriangle(vec3(-10.0, 0.0, -10.0), vec3(-10.0, 0.0, 10.0), vec3(10.0, 0.0, 10.0), vec3(0.5, 0.2, 0.1), vec3(0.005, 0.002, 0.001), vec3(0.0, 0.0, 0.0), 100.0, 0.0, 0.0);
-  addTriangle(vec3(-10.0, 0.0, -10.0), vec3(10.0, 0.0, 10.0), vec3(10.0, 0.0, -10.0), vec3(0.5, 0.2, 0.1), vec3(0.005, 0.002, 0.001), vec3(0.0, 0.0, 0.0), 100.0, 0.0, 0.0);
+
+  addTriangle(vec3(-5.0, -3.0, -5.0), vec3(-5.0, 7.0, 5.0), vec3(-5.0, -3.0, 5.0), vec3(1.0, 0.0, 1.0), vec3(0.05, 0.0, 0.05), vec3(1.0, 0.0, 1.0), 100.0, 0.0, 0.0);
+  addTriangle(vec3(-5.0, -3.0, -5.0), vec3(-5.0, 7.0, -5.0), vec3(-5.0, 7.0, 5.0), vec3(1.0, 1.0, 0.0), vec3(0.05, 0.05, 0.0), vec3(1.0, 1.0, 0.0), 100.0, 0.0, 0.0);
 
   pushDataToBuffer();
 }
@@ -646,7 +641,7 @@ void init( void ) {
   
   // Load shaders and use the resulting shader program
   GLuint program = Angel::InitShader( "shaders/vShaderOrgAndDir.glsl",
-                                      "shaders/fRaytracer.glsl" );
+                                      "shaders/fShaderSpheres2.glsl" );
   glUseProgram( program );
   
   vRayPosition = glGetAttribLocation( program, "vRayPosition" );
@@ -682,7 +677,7 @@ void init( void ) {
   
   glShadeModel( GL_FLAT );
   glEnable( GL_DEPTH_TEST );
-  glClearColor( 0.0, 0.0, 0.0, 1.0 );
+  glClearColor( 0.1, 0.1, 0.1, 1.0 );
   
   genereateScene();
 }
