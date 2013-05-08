@@ -119,8 +119,10 @@ void MONOLITH::slotFreezeParticles(bool isEnabled)
 }
 void MONOLITH::slotMorphPercentage(int value)
 {
-  if (!heisenbergUncertaintyPrinciple)
+  if (!heisenbergUncertaintyPrinciple){
     rootScene->search("bottle")->morphPercentage(value / 100.0);
+    _percentageCallback(value);
+  }
 }
 void MONOLITH::setMorphPercentageCallback(boost::function<void(int)> cb)
 {

@@ -88,6 +88,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->scaleSlider->setSliderPosition( 1 );
     ui->rangeSlider->setSliderPosition( 24 );
 
+    //turn off VR sliders by defualt
+    ui->vrMorphSlider->setEnabled(false);
+    ui->vrParticleSlider->setEnabled(false);
+
     connect(ui->currentViewComboBox, SIGNAL(currentIndexChanged(int)), this, SIGNAL(sigChangeCurrentView(int)));
 
 }
