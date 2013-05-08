@@ -117,6 +117,15 @@ public:
     RectangularMapping * _rectangularMapping;
     ScaleModel * _scaleModel;
     bool _morphMatchCalculated;
+    bool _VRCameraControl;
+    bool _VRMoveLeft;
+    bool _VRMoveUp;
+    bool _VRMoveRight;
+    bool _VRMoveDown;
+    bool _VRMoving;
+    Angel::vec2 _VRCameraCoordinates;
+    void vrlook( Camera *VRCamera, const Angel::vec2 &NewTheta,
+                  const Angel::vec2 &MovementRates );
 
     
 #ifndef WITHOUT_QT
@@ -129,6 +138,8 @@ public slots:
     void slotMorphPercentage(int value);
     void slotEnableMorphing(bool isEnabled);
     void slotEnableMorphMatching(bool isEnabled);
+    void slotEnableVRCameraControl(bool isEnabled);
+    void slotVRCameraCoordinates(float, float);
     void slotEnableRaytracing(bool enabled);
     void slotEnableParticleSystem(bool isEnabled);
     void slotMorphToWineBottle(void);

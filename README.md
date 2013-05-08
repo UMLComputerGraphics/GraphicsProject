@@ -1,12 +1,6 @@
-Laziness
-==
 
-- This README is hideously out of date.
-
-
-- This is (mostly) README file for John Huston's, Nick St.Pierre's and 
-  Chris Compton's Graphics I project for Fall 2012. It needs to
-  be updated for Spring 2013!
+- This is the Readme file for the UMass Lowell Computer Graphics 2 class project, Spring semester 2013.
+  It it based on the Computer Graphics 1 final project by Chris Compton, Nick St. Pierre, and John Huston.
 
 License
 ==

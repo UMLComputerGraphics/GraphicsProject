@@ -5,6 +5,7 @@
 #include <QFileDialog>
 #include <QtCore>
 
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -34,6 +35,10 @@ MainWindow::MainWindow(QWidget *parent) :
             this, SIGNAL(sigChangeNumberOfParticles(int)));
     connect(ui->vrEnabler, SIGNAL(toggled(bool)),
             this, SLOT(slotEnableVR(bool)));
+    connect(ui->VRCameraEnabler, SIGNAL(toggled(bool)),
+            this,SIGNAL(sigEnableVRCameraControl(bool)));
+    connect(ui->VRXLocation, SIGNAL(valueChanged(int)),
+            this, SIGNAL(sigVRCameraCoordinates(float,float)));
 
 
     connect(ui->morphPercentageSlider, SIGNAL(valueChanged(int)),
@@ -91,6 +96,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //turn off VR sliders by defualt
     ui->vrMorphSlider->setEnabled(false);
     ui->vrParticleSlider->setEnabled(false);
+    ui->VRTab->setEnabled(false);
 
     connect(ui->currentViewComboBox, SIGNAL(currentIndexChanged(int)), this, SIGNAL(sigChangeCurrentView(int)));
 
@@ -109,6 +115,8 @@ void MainWindow::slotEnableVR(bool isEnabled){
         connect(tmrTimer, SIGNAL(timeout()), this, SLOT(processFrameAndUpdateGUI()));
         tmrTimer->start(20);
         ui->vrEnabler->setEnabled(false);
+        ui->VRTab->setEnabled(true);
+        ui->vrMorphControl->setEnabled(true);
     }else{
         //capWebcam.release();
     }
@@ -273,9 +281,6 @@ void MainWindow::processFrameAndUpdateGUI()
 
     for(itrCircles = vecCircles.begin(); itrCircles != vecCircles.end(); itrCircles++)
     {
-        //ui->txtXYRadius->appendPlainText(QString("ball position x = ")  + QString::number((*itrCircles)[0]).rightJustified(4, ' ') +
-        //        QString(", y = ") + QString::number((*itrCircles)[1]).rightJustified(4, ' ') +
-        //        QString(", radius = ") + QString::number((*itrCircles)[2], 'f', 3).rightJustified(7, ' '));
         cv::circle(matOriginal, cv::Point((int)(*itrCircles)[0], (int)(*itrCircles)[1]), 3, cv::Scalar(0, 255, 0), CV_FILLED);
         cv::circle(matOriginal, cv::Point((int)(*itrCircles)[0], (int)(*itrCircles)[1]), (int)(*itrCircles)[2], cv::Scalar(0, 0, 255), 3);
         if(ui->vrMorphControl->isChecked()){
@@ -300,6 +305,8 @@ void MainWindow::processFrameAndUpdateGUI()
             ui->vrParticleSlider->setValue(2000-(int)((*itrCircles)[1]/157.0*2000));
             ui->numberOfParticlesSpinBox->setValue(2000-(int)((*itrCircles)[1]/157.0*2000));
         }
+        ui->VRXLocation->setValue((*itrCircles)[0]);
+        ui->VRYLocation->setValue(157-(*itrCircles)[1]);
     }
 
     cv::cvtColor(matOriginal, matOriginal, CV_BGR2RGB);
@@ -332,6 +339,11 @@ void MainWindow::on_particleSystemEnabler_toggled_melted(bool checked)
         ui->particleSystemEnabler->setChecked( false );
         ui->particleSystemEnabler->setEnabled( false );
     }
+}
+
+
+void MainWindow::on_VRXLocation_valueChanged(int value){
+    sigVRCameraCoordinates(ui->VRXLocation->value(),ui->VRYLocation->value());
 }
 
 void MainWindow::on_particleColorComboBox_currentIndexChanged(int index)

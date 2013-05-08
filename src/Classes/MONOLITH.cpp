@@ -39,6 +39,11 @@ MONOLITH::MONOLITH(int argc, char** argv) :
     _l1 = _l2 = NULL;
     _argc = argc;
     _argv = argv;
+    _VRMoveLeft = false;
+    _VRMoveRight = false;
+    _VRMoveUp = false;
+    _VRMoveDown = false;
+    _VRMoving = false;
 }
 
 /**
@@ -67,7 +72,7 @@ void MONOLITH::monolith_idle(void)
   rt.idleHandsSpendTimeWithTheTextureBuffer();
 #endif
   static Scene *rootScene = Engine::instance()->rootScene();
-    Object *bottle = rootScene->search("bottle");
+  Object *bottle = rootScene->search("bottle");
 
     // Animation variables.
     double timer = glutGet( GLUT_ELAPSED_TIME ) / 500.0;
@@ -92,6 +97,10 @@ void MONOLITH::monolith_idle(void)
               Animation::candleMelt( candle, candletip, 0.9995 );
           }
       }
+    }
+
+    if(_VRCameraControl){
+        vrlook(Engine::instance()->currentCamera(),_VRCameraCoordinates,Angel::vec2(1,1));
     }
 
     // Update the morph percentage.
@@ -131,6 +140,15 @@ void MONOLITH::slotFreezeParticles(bool isEnabled)
 {
     ps->setPause(isEnabled);
 }
+
+void MONOLITH::slotEnableVRCameraControl(bool isEnabled){
+    _VRCameraControl = isEnabled;
+}
+
+void MONOLITH::slotVRCameraCoordinates(float x, float y){
+    _VRCameraCoordinates = Angel::vec2(x,y);
+}
+
 void MONOLITH::slotMorphPercentage(int value)
 {
   if (!heisenbergUncertaintyPrinciple){
@@ -586,4 +604,63 @@ void MONOLITH::aRomanticEvening() {
     sleep( 0.01 );
   }
   printf("ENDING ROMANCE!\n");
+}
+
+/**
+ VRlook is an analog of mouselook, for VR location controls.
+ It takes a reference to a Camera, and two vec2s,
+ and uses the information to adjust the Camera's _rotation.
+
+ @param VRCamera The camera to adjust the _rotation of.
+ @param NewTheta  The X,Y coordinates of the VR contorls.
+ @param MovementRates The X, Y angular velocities of the VR Controls.
+
+ @return Void.
+
+**/
+void MONOLITH::vrlook( Camera *VRCamera, const Angel::vec2 &NewTheta,
+              const Angel::vec2 &MovementRates ){
+
+    if((NewTheta.x > 1/3.0*280.0)&&(NewTheta.x < 2/3.0*280.0)&&(NewTheta.y < 2/3.0*157.0)&&(NewTheta.y >1/3.0*157.0)&&(NewTheta.x != 0.0)&&(NewTheta.y != 0.0)){
+        if(_VRMoveLeft){
+            //printf("VR Stop Left\n");
+          VRCamera->stop( Camera::DIR_LEFT );
+          _VRMoveLeft = false;
+        }else if (_VRMoveRight){
+            //printf("VR Stop Right\n");
+          VRCamera->stop( Camera::DIR_RIGHT);
+          _VRMoveRight = false;
+        }
+
+        if(_VRMoveUp){
+            VRCamera->stop( Camera::DIR_UP);
+            //printf("VR Stop Up\n");
+            _VRMoveUp = false;
+        }else if (_VRMoveDown){
+            VRCamera->stop( Camera::DIR_DOWN);
+            //printf("VR Stop Down\n");
+            _VRMoveDown = false;
+        }
+
+    }else if((NewTheta.x != 0.0)&&(NewTheta.y != 0.0)){
+      if(NewTheta.x < 1/3.0*280.0){
+          //printf("VR Move Left: %f < %f\n",NewTheta.x,1/3.0*280.0);
+            _VRMoveLeft = true;
+            VRCamera->move( Camera::DIR_LEFT );
+      }else if(NewTheta.x > 2/3.0*280.0){
+          //printf("VR Move Right\n");
+            VRCamera->move( Camera::DIR_RIGHT );
+            _VRMoveRight = true;
+      }
+
+      if(NewTheta.y > 2/3.0*157.0){
+          //printf("VR Move Up\n");
+        VRCamera->move( Camera::DIR_UP );
+        _VRMoveUp = true;
+      }else if(NewTheta.y < 1/3.0*157.0){
+          //printf("VR Move Down\n");
+        VRCamera->move( Camera::DIR_DOWN );
+        _VRMoveDown = true;
+      }
+    }
 }
