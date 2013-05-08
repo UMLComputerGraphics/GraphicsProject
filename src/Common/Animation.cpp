@@ -52,7 +52,10 @@ void Animation::candleMelt( Object *candle, Object *tip, float rawScale ) {
   tip->_trans.push( TransMat( 0, adj, 0 ) );
 
   currentTipPos.y += adj;
-  Engine::instance()->getLights()->at(0)->y( currentTipPos.y );
-  Engine::instance()->setLights();
+
+  if (*(Engine::instance()->getNumLights()) > 0) {
+    Engine::instance()->getLights()->at(0)->y( currentTipPos.y );
+    Engine::instance()->setLights();
+  }
 
 }

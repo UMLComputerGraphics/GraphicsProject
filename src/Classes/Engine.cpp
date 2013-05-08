@@ -60,7 +60,13 @@ Engine::Engine( void ) :
 
   _lights = new vector<Light*>;
   _lightsSize = (GLint *) malloc( sizeof( GLint ) );
-  
+  *_lightsSize = 0;
+
+  _lightPositions = NULL;
+  _lightSpeculars = NULL;
+  _lightDiffuses = NULL;
+  _lightAmbient = NULL;
+  _lightIntensities = NULL;
 
   opt("fixed_yaw", true);
   opt("trap_pointer", true);
@@ -72,6 +78,16 @@ Engine::Engine( void ) :
  */
 Engine::~Engine( void ) {
   // Nihil.
+
+  if (_lights) delete _lights;
+  if (_lightsSize) free( _lightsSize);
+
+  if(_lightPositions) free(_lightPositions);
+  if(_lightSpeculars) free(_lightSpeculars);
+  if(_lightDiffuses) free(_lightDiffuses);
+  if(_lightAmbient) free(_lightAmbient);
+  if(_lightIntensities) free(_lightIntensities);
+
   LifeLock.unlock();
 }
 
@@ -357,7 +373,7 @@ void Engine::run( void ) {
 
   glutMainLoop();
 
-  //delete Engine::instance(); //this causes bad juju when other things try to clean up shop
+  delete Engine::instance();
 }
 
 void Engine::registerIdle( boost::function<void(void)> idleFunc ) {
