@@ -40,14 +40,15 @@ void init() {
 
   funInTheSin = new ParticleSystem( numberOfParticles, "FunInTheSine",
                                     particleSystemShader );
-  funInTheSin->setLifespan( 10.0, 14.0 );
+  funInTheSin->setLifespan( 8.0, 14.0 );
   funInTheSin->setEmitterRadius( 0.01 );
 
   rootScene->insertObject( funInTheSin );
 
   funInTheSin->setEmitterShape(PS_LINE);
   funInTheSin->setVectorField( ParticleFieldFunctions::up );
-  funInTheSin->texture("../Textures/texture_logo.png");
+  //funInTheSin->texture("../Textures/texture_logo.png");
+  funInTheSin->texture("../Textures/texture_logo_b.png");
 
   funInTheSin->setNumToAddEachFrame(200);
 
