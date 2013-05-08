@@ -545,8 +545,14 @@ void MONOLITH::aRomanticEvening() {
 
     if (ps) lightness *= (ps->getNumParticlesVisible() / 3000.0);
     lightness = (float)std::max(0.0,std::min((double)lightness,1.0));
-    Engine::instance()->safeSetIntensity(0, lightness);
-    Engine::instance()->setLights();
+
+    // This is dumb and it's why singletons are stupid,
+    // but if the engine has exited before we can extinguish this,
+    // we need to not re-recreate the engine :P
+    if (Engine::exists()) {
+      Engine::instance()->safeSetIntensity(0, lightness);
+      Engine::instance()->setLights();
+    }
 
     boost::this_thread::yield();
     sleep( 0.01 );
