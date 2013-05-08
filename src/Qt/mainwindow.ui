@@ -93,7 +93,7 @@
        <rect>
         <x>10</x>
         <y>20</y>
-        <width>165</width>
+        <width>183</width>
         <height>105</height>
        </rect>
       </property>
@@ -122,7 +122,7 @@
        <item>
         <widget class="QCheckBox" name="particleSystemEnabler">
          <property name="text">
-          <string>Enable Particles</string>
+          <string>Enable Candle Animation</string>
          </property>
         </widget>
        </item>
@@ -542,11 +542,23 @@
        </item>
        <item>
         <widget class="QSpinBox" name="numberOfParticlesSpinBox">
+         <property name="minimumSize">
+          <size>
+           <width>140</width>
+           <height>24</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>140</width>
+           <height>24</height>
+          </size>
+         </property>
          <property name="maximum">
-          <number>1000000000</number>
+          <number>100000</number>
          </property>
          <property name="singleStep">
-          <number>1</number>
+          <number>100</number>
          </property>
          <property name="value">
           <number>0</number>
@@ -559,7 +571,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>110</y>
+        <y>80</y>
         <width>301</width>
         <height>29</height>
        </rect>
@@ -1091,6 +1103,28 @@
         </item>
        </layout>
       </widget>
+      <widget class="QPlainTextEdit" name="udfMessageBox">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>150</y>
+         <width>280</width>
+         <height>30</height>
+        </rect>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>280</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>280</width>
+         <height>30</height>
+        </size>
+       </property>
+      </widget>
      </widget>
      <widget class="QGroupBox" name="tornadoParamsGroup">
       <property name="geometry">
@@ -1360,6 +1394,54 @@
         </item>
        </layout>
       </widget>
+     </widget>
+     <widget class="QWidget" name="layoutWidget_5">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>120</y>
+        <width>301</width>
+        <height>29</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="colorLayoutBox">
+       <item>
+        <widget class="QLabel" name="particleColorLabel">
+         <property name="text">
+          <string>Particle Color:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="particleColorComboBox">
+         <item>
+          <property name="text">
+           <string>Flame</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Aurora</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Rainbow</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Tropical</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Galaxy</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
     <widget class="QWidget" name="morphingTab">

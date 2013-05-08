@@ -21,8 +21,8 @@ MONOLITH::~MONOLITH(void)
 MONOLITH::MONOLITH(int argc, char** argv) :
    extinguish(false),
    flicker(false),
-  _defaultNumberOfParticles(3000),
-  ps(NULL)
+   ps(NULL),
+   _defaultNumberOfParticles(3000)
 {
     //As this happens before run() initializes relative paths, we need to initialize relative paths here
     Util::InitRelativePaths(argc, argv);
@@ -62,7 +62,7 @@ void MONOLITH::cleanup(void) {
 }
 
 bool heisenbergUncertaintyPrinciple;
-double morphTime, prevTime;
+double morphTime = 0, prevTime = 0;
 /**
  * Apply animations and whatever else your heart desires.
  */
@@ -82,8 +82,8 @@ void MONOLITH::monolith_idle(void)
     }
     prevTime = timer;
 
-    float percent = (sin( morphTime ) + 1.0) / 2.0;
-    
+    float percent = (-cos( morphTime ) + 1.0) / 2.0;
+
     // Candle-melt Animation.
     {
       Object *candle = rootScene->search( "candle" );
@@ -94,7 +94,7 @@ void MONOLITH::monolith_idle(void)
           if( candle->getRealMax().y - candle->getRealMin().y <= .15 ) sigEnableParticlesMelted( false );
 #endif
           if( ps->getEnableTheSystem() && (ps->getNumParticlesActual() >= 500) ){
-              Animation::candleMelt( candle, candletip, 0.9999 );
+              Animation::candleMelt( candle, candletip, 0.9995 );
           }
       }
     }
@@ -256,9 +256,17 @@ void MONOLITH::slotSetParticleLife( float min, float max )
 
 void MONOLITH::slotUpdateVectorField(std::string fx, std::string fy, std::string fz)
 {
+    sigUpdateUdfMessage( "" );
+  try {
     ps->uvf()->setAll(fx, fy, fz);
     ps->setFuncParams( new UserParameters(ps->uvf()));
     ps->setVectorField(ParticleFieldFunctions::userSupplied);
+  }
+  catch( std::exception &e ) {
+    sigUpdateUdfMessage( "Could not compute user function" );
+    gprint( PRINT_WARNING, "Could not enable the requested user function, because: %s\n", e.what() );
+  }
+
 }
 /**
  * @brief defaultNumberOfParticles (setter)
@@ -314,6 +322,29 @@ void MONOLITH::slotMusicVolume(int vol)
     radio->setVolume(newVol);
     soundHelper::ERRCHECK();
 }
+
+void MONOLITH::slotPartColorFunc( int index )
+{
+    switch ( index )
+    {
+    case 0:
+        ps->setColorFunc( ColorFunctions::flame );
+        break;
+    case 1:
+        ps->setColorFunc( ColorFunctions::aurora );
+        break;
+    case 2:
+        ps->setColorFunc( ColorFunctions::rainbow );
+        break;
+    case 3:
+        ps->setColorFunc( ColorFunctions::tropical );
+        break;
+    case 4:
+        ps->setColorFunc( ColorFunctions::galaxy );
+        break;
+    }
+}
+
 #endif //WITHOUT_QT
 
 /**
@@ -418,7 +449,7 @@ void MONOLITH::run() {
   radio->texture("../Textures/texture_radio.png");
   Animation::seekBottomTo( radio, 0.001 );
   radio->_trans.push( RotMat( 0.0, -45.0, 0.0 ) );
-  radio->_trans.push( TransMat( 9.0, 0.0, -7.0 ) );
+  Animation::seekCenterTo( radio, 9.0, -7.0 );
   radio->buffer();
   glUniform1i( glGetUniformLocation( radio->shader(), "letMeSeeThatPhong" ), 1 );
 
@@ -428,7 +459,7 @@ void MONOLITH::run() {
   ObjLoader::loadModelFromFile(candlestick, "../models/candlestick.obj");
   ObjLoader::loadMaterialFromFile(candlestick, "../models/candlestick.mtl");
   Animation::seekBottomTo( candlestick, 0.001 );
-  candlestick->_trans.push( TransMat( 2.5, 0, 2.5 ) );
+  Animation::seekCenterTo( candlestick, 2.5, 2.5, true );
   candlestick->buffer();
   glUniform1i( glGetUniformLocation( candlestick->shader(), "letMeSeeThatPhong" ), 1 );
 
@@ -439,6 +470,7 @@ void MONOLITH::run() {
   ObjLoader::loadMaterialFromFile( candle, "../models/candle.mtl" );
   candle->buffer();
   glUniform1i( glGetUniformLocation( candle->shader(), "letMeSeeThatPhong" ), 1 );
+  
 
   // ************ Candletip ************
   Object *candletip = candle->addObject( "candletip", noMorphShader );
@@ -555,13 +587,18 @@ void MONOLITH::aRomanticEvening() {
     float lightness = (float) rand() / (float) RAND_MAX;
     // between 0 and .3
     lightness = lightness * 3.0 / 10.0;
-
     lightness += .7;
 
-    //if (ps) lightness *= (ps->getNumParticlesVisible() / 3000.0);
-    //lightness = (float)std::max(0.0,std::min((double)lightness,1.0));
-    //Engine::instance()->safeSetIntensity(0, lightness);
-    //Engine::instance()->setLights();
+    if (ps) lightness *= (ps->getNumParticlesVisible() / 3000.0);
+    lightness = (float)std::max(0.0,std::min((double)lightness,1.0));
+
+    // This is dumb and it's why singletons are stupid,
+    // but if the engine has exited before we can extinguish this,
+    // we need to not re-recreate the engine :P
+    if (Engine::exists()) {
+      Engine::instance()->safeSetIntensity(0, lightness);
+      Engine::instance()->setLights();
+    }
 
     boost::this_thread::yield();
     sleep( 0.01 );

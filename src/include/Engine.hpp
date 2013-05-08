@@ -71,6 +71,8 @@ public:
    */
   static Engine *instance( void );
 
+  static bool exists( void );
+
   // Getters for core components.
   /**
    * Retrieves a pointer to the Camera List.

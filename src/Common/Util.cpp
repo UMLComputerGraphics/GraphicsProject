@@ -71,7 +71,8 @@ namespace Util {
 
     //slapchop[0..length-2] == path without executable name
     if ( slapchop.size() > 1 ) {
-      for (size_t last = slapchop.size() - 1; last >= 0; last=last-1)
+      for (size_t last = slapchop.size() - 1; last > 0;
+	   last=last-1)
       {       
 	gprint( PRINT_DEBUG, "last = %lu\n", last);
         std::stringstream cat;

@@ -81,6 +81,8 @@ int main( int argc, char **argv ) {
   //  QObject::connect(&monolith, SIGNAL(sigEnableParticles(bool)), &w, SLOT(on_particleSystemEnabler_toggled(bool)));
   QObject::connect(&w, SIGNAL(sigEnableVRCameraControl(bool)), &monolith, SLOT(slotEnableVRCameraControl(bool)));
   QObject::connect(&w, SIGNAL(sigVRCameraCoordinates(float,float)), &monolith, SLOT(slotVRCameraCoordinates(float,float)));
+  QObject::connect(&w, SIGNAL(sigPartColorFunc(int)), &monolith, SLOT(slotPartColorFunc(int)));
+  QObject::connect(&monolith, SIGNAL(sigUpdateUdfMessage(QString)), &w, SLOT(updateUdfMessage(QString)));
 
   w.show();
 

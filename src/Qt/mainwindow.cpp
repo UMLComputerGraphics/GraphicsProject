@@ -122,6 +122,11 @@ void MainWindow::slotEnableVR(bool isEnabled){
     }
 }
 
+void MainWindow::updateUdfMessage( const QString text )
+{
+    ui->udfMessageBox->setPlainText( text );
+}
+
 void MainWindow::setMorphPercentageOut(int pct)
 {
     ui->morphPercentageSlider->setValue(pct);
@@ -336,6 +341,12 @@ void MainWindow::on_particleSystemEnabler_toggled_melted(bool checked)
     }
 }
 
+
 void MainWindow::on_VRXLocation_valueChanged(int value){
     sigVRCameraCoordinates(ui->VRXLocation->value(),ui->VRYLocation->value());
+}
+
+void MainWindow::on_particleColorComboBox_currentIndexChanged(int index)
+{
+    sigPartColorFunc( index );
 }

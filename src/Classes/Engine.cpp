@@ -33,11 +33,12 @@ Engine *Engine::_engineSingleton = NULL;
  * @return A pointer to the Engine object.
  */
 Engine *Engine::instance( void ) {
-  
   if ( _engineSingleton == NULL ) _engineSingleton = new Engine();
-  
-  return _engineSingleton;
-  
+  return _engineSingleton;  
+}
+bool Engine::exists( void ) {
+  if ( _engineSingleton == NULL ) return false;
+  return true;
 }
 
 /**
@@ -71,16 +72,8 @@ Engine::Engine( void ) :
  */
 Engine::~Engine( void ) {
   // Nihil.
-
+  _engineSingleton = NULL;
   if (_lights) delete _lights;
-  //if (_lightsSize) free( _lightsSize);
-
-  /*if(_lightPositions) free(_lightPositions);
-  if(_lightSpeculars) free(_lightSpeculars);
-  if(_lightDiffuses) free(_lightDiffuses);
-  if(_lightAmbient) free(_lightAmbient);
-  if(_lightIntensities) free(_lightIntensities);*/
-
   LifeLock.unlock();
 }
 
