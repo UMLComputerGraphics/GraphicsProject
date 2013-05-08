@@ -15,6 +15,7 @@ namespace ColorFunctions
 
   Angel::vec4 aurora(float, Angel::vec4);
   Angel::vec4 rainbow(float, Angel::vec4);
+  Angel::vec4 tropical(float, Angel::vec4);
 }
 
 #endif

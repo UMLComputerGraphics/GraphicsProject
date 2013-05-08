@@ -71,6 +71,7 @@ float scaleOverRange( float min, float max, float pct ) {
 vec4 ColorFunctions::rainbow( float lifePct, vec4 posIn ) {
   float r, g, b, w;
 
+  //D'oh, this is needed to avoid backwards rainbows
   float pct = 1 - lifePct;
   
   r = 1.0;
@@ -110,6 +111,26 @@ vec4 ColorFunctions::rainbow( float lifePct, vec4 posIn ) {
     b = -scaleOverRange( 0.8, 1.0, pct );
     r = 1.0;
   }
+
+  //fade out gracefully
+  if( pct > 0.9 ) {
+    w = -scaleOverRange( 0.9, 1.0, pct );
+  }
   
+  return vec4(r, g, b, w);
+}
+
+vec4 ColorFunctions::tropical( float lifePct, vec4 posIn ) {
+  float r, g, b, w;
+
+  r = 0.5;
+  g = sin(posIn.x);
+  b = sin(posIn.z);
+
+  //fade out gracefully
+  if( lifePct > 0.9 ) {
+    w = -scaleOverRange( 0.9, 1.0, lifePct );
+  }
+
   return vec4(r, g, b, w);
 }
