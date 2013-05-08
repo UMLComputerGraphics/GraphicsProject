@@ -2,6 +2,8 @@
 #include "vec.hpp"
 #include "mat.hpp"
 
+#include "ParticleSystem.hpp"
+
 #include <cmath>
 
 using Angel::vec2;
@@ -130,6 +132,27 @@ vec4 ColorFunctions::tropical( float lifePct, vec4 posIn ) {
   //fade out gracefully
   if( lifePct > 0.9 ) {
     w = -scaleOverRange( 0.9, 1.0, lifePct );
+  }
+
+  return vec4(r, g, b, w);
+}
+
+vec4 ColorFunctions::galaxy( float lifePct, vec4 posIn ) {
+  float r, g, b, w;
+
+  if( lifePct > 0.9 ) {
+    r = 1.0;
+    g = 0.8;
+    b = 0.7;
+  }  else {
+    r = lifePct * 1.25;
+    b = 0.7 + (0.3 * (1-lifePct));
+    g = 0.7;
+  }
+ 
+  //fade out gracefully
+  if( lifePct > 0.8 ) {
+    w = -scaleOverRange( 0.8, 1.0, lifePct );
   }
 
   return vec4(r, g, b, w);

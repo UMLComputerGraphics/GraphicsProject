@@ -864,7 +864,7 @@ void Object::sceneToRaytracer( RayTracer &rt ) {
 void Object::bufferToRaytracer( RayTracer &rt ) {
 
   vec3 diffuse, ambient, specular;
-  float shininess, refract;
+  float shininess = 0.0, refract = 0.0;
   const float reflect = 0.5;
 
   // If _material doesn't exist, try to use colors.

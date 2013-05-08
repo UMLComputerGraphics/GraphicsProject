@@ -21,8 +21,8 @@ MONOLITH::~MONOLITH(void)
 MONOLITH::MONOLITH(int argc, char** argv) :
    extinguish(false),
    flicker(false),
-  _defaultNumberOfParticles(3000),
-  ps(NULL)
+   ps(NULL),
+   _defaultNumberOfParticles(3000)
 {
     //As this happens before run() initializes relative paths, we need to initialize relative paths here
     Util::InitRelativePaths(argc, argv);
@@ -89,7 +89,7 @@ void MONOLITH::monolith_idle(void)
           if( candle->getRealMax().y - candle->getRealMin().y <= .15 ) sigEnableParticlesMelted( false );
 #endif
           if( ps->getEnableTheSystem() && (ps->getNumParticlesActual() >= 500) ){
-              Animation::candleMelt( candle, candletip, 0.9999 );
+              Animation::candleMelt( candle, candletip, 0.9995 );
           }
       }
     }
@@ -431,7 +431,7 @@ void MONOLITH::run() {
   radio->texture("../Textures/texture_radio.png");
   Animation::seekBottomTo( radio, 0.001 );
   radio->_trans.push( RotMat( 0.0, -45.0, 0.0 ) );
-  radio->_trans.push( TransMat( 9.0, 0.0, -7.0 ) );
+  Animation::seekCenterTo( radio, 9.0, -7.0 );
   radio->buffer();
   glUniform1i( glGetUniformLocation( radio->shader(), "letMeSeeThatPhong" ), 1 );
 
@@ -441,7 +441,7 @@ void MONOLITH::run() {
   ObjLoader::loadModelFromFile(candlestick, "../models/candlestick.obj");
   ObjLoader::loadMaterialFromFile(candlestick, "../models/candlestick.mtl");
   Animation::seekBottomTo( candlestick, 0.001 );
-  candlestick->_trans.push( TransMat( 2.5, 0, 2.5 ) );
+  Animation::seekCenterTo( candlestick, 2.5, 2.5, true );
   candlestick->buffer();
   glUniform1i( glGetUniformLocation( candlestick->shader(), "letMeSeeThatPhong" ), 1 );
 
@@ -452,6 +452,7 @@ void MONOLITH::run() {
   ObjLoader::loadMaterialFromFile( candle, "../models/candle.mtl" );
   candle->buffer();
   glUniform1i( glGetUniformLocation( candle->shader(), "letMeSeeThatPhong" ), 1 );
+  
 
   // ************ Candletip ************
   Object *candletip = candle->addObject( "candletip", noMorphShader );
@@ -571,9 +572,15 @@ void MONOLITH::aRomanticEvening() {
     lightness += .7;
 
     if (ps) lightness *= (ps->getNumParticlesVisible() / 3000.0);
-    //lightness = (float)std::max(0.0,std::min((double)lightness,1.0));
-    Engine::instance()->safeSetIntensity(0, lightness);
-    Engine::instance()->setLights();
+    lightness = (float)std::max(0.0,std::min((double)lightness,1.0));
+
+    // This is dumb and it's why singletons are stupid,
+    // but if the engine has exited before we can extinguish this,
+    // we need to not re-recreate the engine :P
+    if (Engine::exists()) {
+      Engine::instance()->safeSetIntensity(0, lightness);
+      Engine::instance()->setLights();
+    }
 
     boost::this_thread::yield();
     sleep( 0.01 );

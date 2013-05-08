@@ -23,6 +23,21 @@ void Animation::seekBottomTo( Object *obj, float y ) {
 
 }
 
+void Animation::seekCenterTo( Object *obj, float x, float z, bool inherit ) {
+
+  TransMat seek;
+  seek.inheritable( inherit );
+  vec3 min = obj->getMin();
+  vec3 max = obj->getMax();
+
+  float xSeek = (max.x + min.x) / 2.0;
+  float zSeek = (max.z + min.z) / 2.0;
+  seek.set( x - xSeek, 0, z - zSeek );
+  obj->_trans.push( seek );
+
+}
+
+
 float Animation::scaleBottomFixed( Object *obj, float scaleAmt ) {
 
   // This is where the minimum coordinates are, right now ...
