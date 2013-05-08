@@ -695,10 +695,16 @@ Parameters* ParticleSystem::getFuncParams(void)
     return _funcParams;
 }
 
-UserVectorField *ParticleSystem::uvf()
-{
-    return _uvf;
+UserVectorField *ParticleSystem::uvf() {
+  return _uvf;
 }
+
+void ParticleSystem::switchUVF( UserVectorField *newUVF ) {
+  UserVectorField *old = _uvf;
+  _uvf = newUVF;
+  delete old;
+}
+
 // Nada. Don't buffer particles to the raytracer,
 // That's crazy-talk!
 void ParticleSystem::sceneToRaytracer( RayTracer &rt ) { /* WOW, NOTHING.*/ }
