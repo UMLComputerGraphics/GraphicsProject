@@ -1,4 +1,3 @@
-
 - This is the Readme file for the UMass Lowell Computer Graphics 2 class project, Spring semester 2013.
   It it based on the Computer Graphics 1 final project by Chris Compton, Nick St. Pierre, and John Huston.
 
@@ -19,7 +18,7 @@ Authors
 
 - Franck Kamayou -- Graphical User Interface
 
-- Zach Maybury -- Model Morphing Logistics, Morphing UI Integration
+- Zach Maybury -- Model Morphing Logistics, Morphing UI Integration, VR-QT integration, VR
 
 - Eric McCann -- Integration, Logistics, Bugfixes, 
                  Raytracing, Lighting, Kinect Support, Git Guru
