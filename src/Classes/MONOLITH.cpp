@@ -535,12 +535,6 @@ void MONOLITH::raytraceStatusChanged(bool newstatus)
 void MONOLITH::aRomanticEvening() {
   printf("STARTING ROMANCE!\n");
   while ( !extinguish ) {
-
-//      if( !flicker ){
-//          boost::this_thread::yield();
-//          continue;
-//      }
-
     // random number between 0 and 1
     float lightness = (float) rand() / (float) RAND_MAX;
     // between 0 and .3
@@ -548,10 +542,9 @@ void MONOLITH::aRomanticEvening() {
 
     lightness += .7;
 
-    if (ps) lightness *= (ps->getNumParticlesVisible() / 1000.0);
-
-    Engine::instance()->safeSetIntensity(0, lightness);
-    Engine::instance()->setLights();
+    //if (ps) lightness *= (ps->getNumParticlesVisible() / 1000.0);
+    //Engine::instance()->safeSetIntensity(0, lightness);
+    //Engine::instance()->setLights();
 
     boost::this_thread::yield();
     sleep( 0.01 );
