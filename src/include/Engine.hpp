@@ -308,12 +308,12 @@ private:
      The global light configuration
    **/
   vector<Light*> *_lights;
-  GLint *_lightsSize;
-  GLfloat *_lightPositions;
-  GLfloat *_lightSpeculars;
-  GLfloat *_lightDiffuses;
-  GLfloat *_lightAmbient;
-  GLfloat *_lightIntensities;
+  GLint _lightsSize;
+  GLfloat _lightPositions[20];
+  GLfloat _lightSpeculars[20];
+  GLfloat _lightDiffuses[20];
+  GLfloat _lightAmbient[4];
+  GLfloat _lightIntensities[5];
 
   // Singleton Enforcement
   /**

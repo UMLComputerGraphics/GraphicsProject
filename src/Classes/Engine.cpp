@@ -59,14 +59,7 @@ Engine::Engine( void ) :
   _isFullScreen = false;
 
   _lights = new vector<Light*>;
-  _lightsSize = (GLint *) malloc( sizeof( GLint ) );
-  *_lightsSize = 0;
-
-  _lightPositions = (GLfloat *) malloc(sizeof(GLfloat) * 20);
-  _lightSpeculars = (GLfloat *) malloc(sizeof(GLfloat) * 20);
-  _lightDiffuses = (GLfloat *) malloc(sizeof(GLfloat) * 20);
-  _lightAmbient = (GLfloat *) malloc(sizeof(GLfloat) * 4);
-  _lightIntensities = (GLfloat *) malloc(sizeof(GLfloat) * 5);
+  _lightsSize = 0;
 
   opt("fixed_yaw", true);
   opt("trap_pointer", true);
@@ -80,13 +73,13 @@ Engine::~Engine( void ) {
   // Nihil.
 
   if (_lights) delete _lights;
-  if (_lightsSize) free( _lightsSize);
+  //if (_lightsSize) free( _lightsSize);
 
-  if(_lightPositions) free(_lightPositions);
+  /*if(_lightPositions) free(_lightPositions);
   if(_lightSpeculars) free(_lightSpeculars);
   if(_lightDiffuses) free(_lightDiffuses);
   if(_lightAmbient) free(_lightAmbient);
-  if(_lightIntensities) free(_lightIntensities);
+  if(_lightIntensities) free(_lightIntensities);*/
 
   LifeLock.unlock();
 }
@@ -173,11 +166,12 @@ void Engine::safeSetIntensity( int index, float intensity ) {
  **/
 void Engine::addLight( Light *newLight ) {
   _lights->push_back( newLight );
-  *_lightsSize = (GLint) ( _lights->size() );
+  getNumLights();
 }
 
 GLint* Engine::getNumLights( void ) {
-  return _lightsSize;
+  _lightsSize = (GLint) ( _lights->size() );
+  return &_lightsSize;
 }
 
 GLfloat* Engine::getLightPositions( void ) {
@@ -201,35 +195,20 @@ void Engine::setLights( void ) {
 
    int j = 0;
 
-   //remember starting positions for pointers
-   GLfloat *posReset = _lightPositions;
-   GLfloat *specReset = _lightSpeculars;
-   GLfloat *diffReset = _lightDiffuses;
-   GLfloat *intenReset = _lightIntensities;
-
    for(it = _lights->begin(); it != _lights->end(); ++it) {
     //Ambient is one ambience for whole scene, so only grab this from light 0
-    if( it == _lights->begin() ) _lightAmbient = (*it)->getGLAmbient();
 
     for(int i = 0; i < 4; i++) {
-      _lightPositions[i] = (*it)->getGLPosition()[i];
-      _lightDiffuses[i] = (*it)->getGLDiffuse()[i];
-      _lightSpeculars[i] = (*it)->getGLSpecular()[i];
+      if( it == _lights->begin() ) _lightAmbient[i] = (*it)->getGLAmbient()[i];
+      _lightPositions[i+(j*4)] = (*it)->getGLPosition()[i];
+      _lightDiffuses[i+(j*4)] = (*it)->getGLDiffuse()[i];
+      _lightSpeculars[i+(j*4)] = (*it)->getGLSpecular()[i];
     } 
 
     _lightIntensities[j] = (GLfloat) (*it)->intensity();
 
-    _lightPositions += 4;
-    _lightDiffuses += 4;
-    _lightSpeculars += 4;
     j++;
   }
-
-   //rewind pointers
-   _lightPositions = posReset;
-   _lightSpeculars = specReset;
-   _lightDiffuses = diffReset;
-   _lightIntensities = intenReset;
 
 }
 
