@@ -404,7 +404,7 @@ void MONOLITH::run() {
   radio->texture("../Textures/texture_radio.png");
   Animation::seekBottomTo( radio, 0.001 );
   radio->_trans.push( RotMat( 0.0, -45.0, 0.0 ) );
-  radio->_trans.push( TransMat( 9.0, 0.0, -7.0 ) );
+  Animation::seekCenterTo( radio, 9.0, -7.0 );
   radio->buffer();
   glUniform1i( glGetUniformLocation( radio->shader(), "letMeSeeThatPhong" ), 1 );
 
@@ -414,7 +414,7 @@ void MONOLITH::run() {
   ObjLoader::loadModelFromFile(candlestick, "../models/candlestick.obj");
   ObjLoader::loadMaterialFromFile(candlestick, "../models/candlestick.mtl");
   Animation::seekBottomTo( candlestick, 0.001 );
-  candlestick->_trans.push( TransMat( 2.5, 0, 2.5 ) );
+  Animation::seekCenterTo( candlestick, 2.5, 2.5, true );
   candlestick->buffer();
   glUniform1i( glGetUniformLocation( candlestick->shader(), "letMeSeeThatPhong" ), 1 );
 
@@ -425,6 +425,7 @@ void MONOLITH::run() {
   ObjLoader::loadMaterialFromFile( candle, "../models/candle.mtl" );
   candle->buffer();
   glUniform1i( glGetUniformLocation( candle->shader(), "letMeSeeThatPhong" ), 1 );
+  
 
   // ************ Candletip ************
   Object *candletip = candle->addObject( "candletip", noMorphShader );
