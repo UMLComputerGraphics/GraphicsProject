@@ -205,6 +205,8 @@ private:
     Light *_l1;
     Light *_l2;
 
+    bool _burntOut; //like Ozzy
+
 };
 
 #endif

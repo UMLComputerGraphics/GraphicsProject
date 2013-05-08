@@ -85,12 +85,21 @@ void MONOLITH::monolith_idle(void)
       Object *candletip = rootScene->search( "candletip" );
 
       if (candle && candletip) {
+          if( candle->getRealMax().y - candle->getRealMin().y <= .15  && !_burntOut )
+          {
 #ifndef WITHOUT_QT
-          if( candle->getRealMax().y - candle->getRealMin().y <= .15 ) sigEnableParticlesMelted( false );
+            sigEnableParticlesMelted( false );
 #endif
-          if( ps->getEnableTheSystem() && (ps->getNumParticlesActual() >= 500) ){
-              Animation::candleMelt( candle, candletip, 0.9995 );
+            _burntOut = true;
+            printf("BURNED OUT!\n");
           }
+#ifdef WITHOUT_QT
+          if( _burntOut && ps->getEnableTheSystem() && (ps->getNumParticlesActual() >= 500) ){
+              printf("UNMELTING IN IDLE!\n");
+              Animation::scaleBottomFixed(candle, 1.0);
+              Animation::scaleBottomFixed(candletip, 1.0);
+          }
+#endif
       }
     }
 
@@ -123,6 +132,20 @@ void MONOLITH::monolith_idle(void)
 void MONOLITH::slotParticleAdd(int value)
 {
 //    int delta = value - ps->getNumParticles();
+    if (_burntOut)
+    {
+      printf("UNMELTING IN NUM SLOT!\n");
+      Object *candle = rootScene->search( "candle" );
+      Object *candletip = rootScene->search( "candletip" );
+
+      if( ps->getEnableTheSystem() && (ps->getNumParticlesActual() >= 500) ){
+          Animation::scaleBottomFixed(candle, 1.0);
+          Animation::scaleBottomFixed(candletip, 1.0);
+      }
+
+      _burntOut = false;
+    }
+    _defaultNumberOfParticles = value;
     ps->setNumParticles(value);
     //printf("Particle system now has %d particles.\n", ps->getNumParticles());
 }
@@ -190,8 +213,21 @@ void MONOLITH::slotEnableParticleSystem(bool isEnabled)
 {
     if (isEnabled)
     {
+        if (_burntOut)
+        {
+          Object *candle = rootScene->search( "candle" );
+          Object *candletip = rootScene->search( "candletip" );
+
+          if( ps->getEnableTheSystem() && (ps->getNumParticlesActual() >= 500) ){
+              Animation::scaleBottomFixed(candle, 1.0);
+              Animation::scaleBottomFixed(candletip, 1.0);
+              printf("UNMELTING IN ENABLE SLOT!\n");
+          }
+
+          _burntOut = false;
+        }
         ps->setEnableTheSystem( true );
-        ps->setNumParticles(1000);
+        ps->setNumParticles(_defaultNumberOfParticles);
 //        Engine::instance()->getLights()->at(0)->intensity(1);
 //        Engine::instance()->setLights();
 //        flicker = true;
