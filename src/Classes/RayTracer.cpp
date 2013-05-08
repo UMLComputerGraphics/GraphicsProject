@@ -404,8 +404,12 @@ void RayTracer::addTransformation( const Angel::mat4 &mat ) {
 
 }
 
+
 void RayTracer::idleHandsSpendTimeWithTheTextureBuffer()
 {
+#ifdef __APPLE__
+  return;
+#else
   if (_readytorebuffer)
   {
     printf("buffering...\n");
@@ -419,6 +423,7 @@ void RayTracer::idleHandsSpendTimeWithTheTextureBuffer()
     glActiveTexture(GL_TEXTURE0);
     _readytorebuffer = false;
   }
+#endif
 }
 
 void RayTracer::thisDateIsOver( void ) {

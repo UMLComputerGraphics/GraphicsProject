@@ -40,26 +40,30 @@ ParticleSystem::ParticleSystem( int particleAmt, const std::string &name,
   _minLife( 0.1 ),
   _maxLife( 1 ), 
   _pauseTheSystem( false ), 
+  _enableTheSystem( false ),
   _slaughterHeight( 0.0 ),
   _fillSpeedLimit( 5 ), 
   _emitterRadius( 0.0 ),
   _emitterShape(PS_NONE),
   _systemShape(PS_NONE),
   _funcParams( new FlameParameters() ),
+  _uvf( new UserVectorField() ),
   _vecFieldFunc( NULL ), 
   _colorFunc(ColorFunctions::standard),
   _numToAddEachFrame(12)
 
 {
-  this->drawMode( GL_POINTS );	 
+  this->drawMode( GL_POINTS );
 }
 
 
 ParticleSystem::~ParticleSystem( void ) {
-	for ( size_t i = 0; i < _particles.size(); i++ ) {
-		free( _particles[i] );
-	}
-	_particles.clear();
+  for ( size_t i = 0; i < _particles.size(); i++ ) {
+    delete _particles[i];
+  }
+  _particles.clear();
+
+  delete _funcParams;
 }
 
 vec4
@@ -147,10 +151,11 @@ ParticleSystem::respawnParticle(Particle &p)
 
     p.setPos(spawnPosition);
 
-    if ( p.getRespawnFlag() )
+    if ( p.getRespawnFlag() == true )
     {
         p.setMaxLifetime( generateLifespan() );
-        p.setRespawnFlag( false );
+        p.setLifetime( p.getMaxLifetime() );
+        p.setParticleRespawnFlag( false );
     }
     else
     {
@@ -402,6 +407,17 @@ ParticleSystem::getNumParticlesActual( void ) const {
         return _vertices.size();
 }
 
+int
+ParticleSystem::getNumParticlesVisible( void ) const
+{
+    int count = 0;
+    for( vector<ParticleP>::const_iterator i = _particles.begin() ;
+         i != _particles.end() ; ++i )
+        if( (*i)->getAlpha() > 0.1 ) count++;
+
+    return count;
+}
+
 void
 ParticleSystem::setLifespan( float minLifespan, float maxLifespan ) {
 	_minLife = minLifespan;
@@ -441,10 +457,8 @@ void ParticleSystem::draw( bool doDraw ) {
 
 	// use additive blending (makes the flame better!)
 	// TODO make the blend mode an attribute of the particle system
-#ifndef ALPHAHACK
 	glBlendFunc( GL_SRC_ALPHA, GL_ONE );
-#endif
-	glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+
 	// We can handle this ourselves, because we're pretty.
 	glDrawArrays( _drawMode, 0, _vertices.size() );
 
@@ -550,6 +564,7 @@ ParticleSystem::update() {
 		  {	
 		          hideParticle(*i);
 		  }
+
 		}
 
 
@@ -584,7 +599,7 @@ void ParticleSystem::setRespawnFlag( bool flag )
 
     for( i = this->_particles.begin() ; i != this->_particles.end() ; ++i )
     {
-        (*i)->setRespawnFlag( flag );
+        (*i)->setParticleRespawnFlag( flag );
     }
 }
 
@@ -651,6 +666,16 @@ void ParticleSystem::unpauseTheSystem(void)
 	_pauseTheSystem = false;
 }
 
+void ParticleSystem::setEnableTheSystem( bool theBool )
+{
+    _enableTheSystem = theBool;
+}
+
+bool ParticleSystem::getEnableTheSystem( void )
+{
+    return _enableTheSystem;
+}
+
 void ParticleSystem::togglePause(void)
 {
 	_pauseTheSystem =  !_pauseTheSystem ;
@@ -669,7 +694,12 @@ void ParticleSystem::setFuncParams(Parameters* theParameters)
 
 Parameters* ParticleSystem::getFuncParams(void)
 {
-	return _funcParams;
+    return _funcParams;
+}
+
+UserVectorField *ParticleSystem::uvf()
+{
+    return _uvf;
 }
 // Nada. Don't buffer particles to the raytracer,
 // That's crazy-talk!

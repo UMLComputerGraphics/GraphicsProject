@@ -51,11 +51,13 @@ private:
 class UserParameters : public Parameters
 {
 public:
-  UserParameters(std::string *value);
-  
-  std::string* functions (void);
+
+     UserParameters(UserVectorField *value);
+     UserVectorField* uvf();
+
 private:
-  std::string* _functions;	
+    UserVectorField* _uvf;
+
 };
 
 namespace ParticleFieldFunctions
@@ -72,8 +74,8 @@ namespace ParticleFieldFunctions
   Angel::vec3 up(Angel::vec4, Parameters* value = NULL );
   //Angel::vec3 up(Angel::vec4 );
 
-  Angel::vec3 userSupplied( Angel::vec4 );
-  Angel::vec3 userSupplied( Angel::vec4 &pos, UserVectorField &uvf );
+  // Angel::vec3 userSupplied( Angel::vec4 );
+  Angel::vec3 userSupplied( Angel::vec4, Parameters* parameters );
 
 }
 

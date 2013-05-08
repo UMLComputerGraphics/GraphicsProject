@@ -20,7 +20,9 @@ MONOLITH::~MONOLITH(void)
 /* Default and only constructor */
 MONOLITH::MONOLITH(int argc, char** argv) :
    extinguish(false),
-  _defaultNumberOfParticles(3000)
+   flicker(false),
+  _defaultNumberOfParticles(3000),
+  ps(NULL)
 {
     //As this happens before run() initializes relative paths, we need to initialize relative paths here
     Util::InitRelativePaths(argc, argv);
@@ -29,11 +31,12 @@ MONOLITH::MONOLITH(int argc, char** argv) :
     soundHelper::fModInit( &(this->fSystem) ) ; // init the system
 
     soundHelper::add3dSound("../sounds/ForeverEndless_radio.wav",
-			  this->fSystem,
-			  &(this->foreverEndless),
-			  true); // add a sound to the system
+              this->fSystem,
+              &(this->foreverEndless),
+              true); // add a sound to the system
 
 
+    _l1 = _l2 = NULL;
     _argc = argc;
     _argv = argv;
 }
@@ -44,33 +47,53 @@ MONOLITH::MONOLITH(int argc, char** argv) :
 void MONOLITH::cleanup(void) {
     extinguish = true;
     zipo.join();
+
+    foreverEndless->release();
     fSystem->close();
+    fSystem->release();
+    
+    if (_l1) delete _l1;
+    if (_l2) delete _l2;
 }
 
 bool heisenbergUncertaintyPrinciple;
+double morphTime, prevTime;
 /**
  * Apply animations and whatever else your heart desires.
  */
 void MONOLITH::monolith_idle(void)
 {
-    rt.idleHandsSpendTimeWithTheTextureBuffer();
-
-    static Scene *rootScene = Engine::instance()->rootScene();
+#ifndef __APPLE__
+  rt.idleHandsSpendTimeWithTheTextureBuffer();
+#endif
+  static Scene *rootScene = Engine::instance()->rootScene();
     Object *bottle = rootScene->search("bottle");
-    
+
     // Animation variables.
     double timer = glutGet( GLUT_ELAPSED_TIME ) / 500.0;
-    float percent = (sin( timer ) + 1.0) / 2.0;
+
+    if (bottle && (bottle->morphEnabled())) {
+	    morphTime += timer-prevTime;
+    }
+    prevTime = timer;
+
+    float percent = (sin( morphTime ) + 1.0) / 2.0;
     
     // Candle-melt Animation.
     {
       Object *candle = rootScene->search( "candle" );
       Object *candletip = rootScene->search( "candletip" );
+
       if (candle && candletip) {
-        Animation::candleMelt( candle, candletip, 0.9999 );
+#ifndef WITHOUT_QT
+          if( candle->getRealMax().y - candle->getRealMin().y <= .15 ) sigEnableParticlesMelted( false );
+#endif
+          if( ps->getEnableTheSystem() && (ps->getNumParticlesActual() >= 500) ){
+              Animation::candleMelt( candle, candletip, 0.9999 );
+          }
       }
     }
-    
+
     // Update the morph percentage.
     if (bottle && (bottle->morphEnabled())) {
       bottle->morphPercentage(percent);
@@ -78,18 +101,18 @@ void MONOLITH::monolith_idle(void)
 #ifndef WITHOUT_QT
       int pct = (int)floor(percent * 100.0);
       if (_percentageCallback) {
-	//prevents the slider event from being handled when the slider's value is set programatically.
-	//  (the position and velocity of a subatomic particle can't be known simultaneously)
-	heisenbergUncertaintyPrinciple = true;
-	_percentageCallback(pct);
-	heisenbergUncertaintyPrinciple = false;
+    //prevents the slider event from being handled when the slider's value is set programatically.
+    //  (the position and velocity of a subatomic particle can't be known simultaneously)
+    heisenbergUncertaintyPrinciple = true;
+    _percentageCallback(pct);
+    heisenbergUncertaintyPrinciple = false;
       }
 #endif
     }
-    
+
     soundHelper::updateListener(  Engine::instance()->mainScreen()->_camList.active(),
-				  this->fSystem);
-    
+                  this->fSystem);
+
 }
 
 #ifndef WITHOUT_QT
@@ -106,12 +129,14 @@ void MONOLITH::slotParticleAdd(int value)
 
 void MONOLITH::slotFreezeParticles(bool isEnabled)
 {
-	ps->setPause(isEnabled);
+    ps->setPause(isEnabled);
 }
 void MONOLITH::slotMorphPercentage(int value)
 {
-  if (!heisenbergUncertaintyPrinciple)
-    (*rootScene)["bottle"]->morphPercentage(value / 100.0);
+  if (!heisenbergUncertaintyPrinciple){
+    rootScene->search("bottle")->morphPercentage(value / 100.0);
+    _percentageCallback(value);
+  }
 }
 void MONOLITH::setMorphPercentageCallback(boost::function<void(int)> cb)
 {
@@ -120,39 +145,39 @@ void MONOLITH::setMorphPercentageCallback(boost::function<void(int)> cb)
 void MONOLITH::slotEnableMorphing(bool isEnabled)
 {
   gprint(PRINT_WARNING, "MORPHING := %s\n", isEnabled?"ENABLED":"DISABLED");
-   (*rootScene)["bottle"]->morphEnabled(isEnabled);
+   rootScene->search("bottle")->morphEnabled(isEnabled);
 }
 
 void MONOLITH::slotMorphToWineBottle(void)
 {
-   (*rootScene)["bottle"]->morphPercentage(0.0);
+   rootScene->search("bottle")->morphPercentage(0.0);
     _percentageCallback(0);
 }
 
 void MONOLITH::slotMorphToWhiskyBottle(void)
 {
-    (*rootScene)["bottle"]->morphPercentage(1.0);
+    rootScene->search("bottle")->morphPercentage(1.0);
     _percentageCallback(100);
 }
 
 void MONOLITH::slotEnableMorphMatching(bool isEnabled){
-	if(!_morphMatchCalculated){
-		int heightScale = 10;
-		int widthScale = 1;
-		int depthScale = 1;
-		_scaleModel = new ScaleModel(bottle, bottle->morphTarget(),widthScale,heightScale,depthScale);
-		_rectangularMapping = new RectangularMapping(bottle,bottle->morphTarget());
-		_scaleModel->restoreModels();
-		_morphMatchCalculated = true;
-	}
-	gprint(PRINT_WARNING, "MORPH MATCHING := %s\n", isEnabled?"ENABLED":"DISABLED");
-	if(isEnabled){
-		_rectangularMapping->copyToObjects((*rootScene)["bottle"],(*rootScene)["bottle"]->morphTarget());
-		_scaleModel->restoreModels();
-	}else{
-		_rectangularMapping->revertToOriginal((*rootScene)["bottle"],(*rootScene)["bottle"]->morphTarget());
-	}
-	(*rootScene)["bottle"]->buffer();
+    if(!_morphMatchCalculated){
+        int heightScale = 10;
+        int widthScale = 1;
+        int depthScale = 1;
+        _scaleModel = new ScaleModel(bottle, bottle->morphTarget(),widthScale,heightScale,depthScale);
+        _rectangularMapping = new RectangularMapping(bottle,bottle->morphTarget());
+        _scaleModel->restoreModels();
+        _morphMatchCalculated = true;
+    }
+    gprint(PRINT_WARNING, "MORPH MATCHING := %s\n", isEnabled?"ENABLED":"DISABLED");
+    if(isEnabled){
+        _rectangularMapping->copyToObjects(rootScene->search("bottle"),rootScene->search("bottle")->morphTarget());
+        _scaleModel->restoreModels();
+    }else{
+        _rectangularMapping->revertToOriginal(rootScene->search("bottle"),rootScene->search("bottle")->morphTarget());
+    }
+    rootScene->search("bottle")->buffer();
 }
 
 
@@ -165,15 +190,23 @@ void MONOLITH::slotEnableParticleSystem(bool isEnabled)
 {
     if (isEnabled)
     {
-        ps->setNumParticles(_defaultNumberOfParticles);
+        ps->setEnableTheSystem( true );
+        ps->setNumParticles(1000);
+//        Engine::instance()->getLights()->at(0)->intensity(1);
+//        Engine::instance()->setLights();
+//        flicker = true;
     }
     else
     {
         ps->setNumParticles(0);
+        ps->setEnableTheSystem( false );
+//        flicker = false;
+//        Engine::instance()->getLights()->at(0)->intensity(0);
+//        Engine::instance()->setLights();
     }
 }
 
-void MONOLITH::slotUpdateFlameVecFunc(double pos[3], double scale, float power, float range)
+void MONOLITH::slotUpdateFlameVecFunc(float pos[3], double scale, float power, float range)
 {
     ps->setFuncParams(new FlameParameters( vec3(pos[0], pos[1], pos[2]), scale, power, range));
     ps->setVectorField( ParticleFieldFunctions::flame );
@@ -197,18 +230,18 @@ void MONOLITH::slotUpdateTornadoVecFunc()
     ps->setVectorField( ParticleFieldFunctions::tornado );
 }
 
-void MONOLITH::slotUpdateVectorField(std::string* params)
-{
-    Parameters* funcParams = new UserParameters(params);
-    ps->setFuncParams(funcParams);
-}
-
 void MONOLITH::slotSetParticleLife( float min, float max )
 {
     ps->setLifespan( min, max );
     ps->setRespawnFlag( true );
 }
 
+void MONOLITH::slotUpdateVectorField(std::string fx, std::string fy, std::string fz)
+{
+    ps->uvf()->setAll(fx, fy, fz);
+    ps->setFuncParams( new UserParameters(ps->uvf()));
+    ps->setVectorField(ParticleFieldFunctions::userSupplied);
+}
 /**
  * @brief defaultNumberOfParticles (setter)
  * @param value
@@ -229,15 +262,15 @@ int MONOLITH::defaultNumberOfParticles()
 
 void MONOLITH::slotMaxAcceleration(int num)
 {
-	Engine::instance()->currentCamera()->setMaxAcceleration((float) num);
+    Engine::instance()->currentCamera()->setMaxAcceleration((float) num);
 }
 void MONOLITH::slotFriction(int num)
 {
-	Engine::instance()->currentCamera()->setFriction((float) num);
+    Engine::instance()->currentCamera()->setFriction((float) num);
 }
 void MONOLITH::slotSpeed(int num)
 {
-	Engine::instance()->currentCamera()->setSpeed((float) num);
+    Engine::instance()->currentCamera()->setSpeed((float) num);
 }
 
 void MONOLITH::slotMaxSpeed( int num )
@@ -272,12 +305,19 @@ void MONOLITH::run() {
   Engine::init( &_argc, _argv, "Graphics II Spring 2013 Final Project" );
   Engine *eng = Engine::instance();
 
-  Light* l = new Light( "CandleLight", 2.5, 6.8, 2.5 );
-  l->color(vec3(1.0, 0.5, 0.2));
-  Engine::instance()->addLight(l);
-  Light *l2 = new Light( "Scene Light", 0, 18, 0 );
-  l2->intensity(28);
-  Engine::instance()->addLight(l2);
+  _l1 = new Light( "CandleLight", 2.5, 6.8, 2.5 );
+  _l1->color(vec3(1.0, 0.5, 0.2));
+  Engine::instance()->addLight(_l1);
+  _l2 = new Light( "Scene Light", 0, 18, 0 );
+  _l2->intensity(28);
+  Engine::instance()->addLight(_l2);
+
+#ifndef WITHOUT_QT
+  _l1->intensity(0);
+  flicker = false;
+#else
+  flicker = true;
+#endif
 
   // Now that we have lights, let's make the thread, rather than hoping it will magically re-enter the thread function it broke out of.
   zipo = boost::thread(boost::bind(&MONOLITH::aRomanticEvening, this));
@@ -288,22 +328,22 @@ void MONOLITH::run() {
   // Get handles to the Scene and the Screen.
   rootScene = Engine::instance()->rootScene();
   primScreen = Engine::instance()->mainScreen();
-  
+
   // No Morphing, plus Light Shading.
   shader[1] = Angel::InitShader( "shaders/vEngineNoMorph.glsl",
-				 "shaders/fEngine.glsl" );
+                 "shaders/fEngine.glsl" );
   // Particle Shader.
   shader[2] = Angel::InitShader( "shaders/vParticle2.glsl",
                                  "shaders/fParticle2.glsl" );
 
   // Raytracing shader
   if (eng->glslVersion() >= 1.50)
-    shader[3] = Angel::InitShader( "shaders/vRaytracer.glsl", 
-				   "shaders/fRaytracer.glsl" );
+    shader[3] = Angel::InitShader( "shaders/vRaytracer.glsl",
+                   "shaders/fRaytracer.glsl" );
   else
     shader[3] = 0;
 
-  GLint morphingShader = Engine::instance()->rootScene()->shader(); 
+  GLint morphingShader = Engine::instance()->rootScene()->shader();
   GLint noMorphShader = shader[1];
   GLint particleShader = shader[2];
   GLint raytraceShader = shader[3];
@@ -396,7 +436,6 @@ void MONOLITH::run() {
 #else
   ps = new ParticleSystem( _defaultNumberOfParticles, "ps1", particleShader );
 #endif
-
   ps->setLifespan( 9.0, 12.0 );
   ps->setVectorField( ParticleFieldFunctions::flame );
   ps->setColorFunc( ColorFunctions::flame );
@@ -411,32 +450,32 @@ void MONOLITH::run() {
 
 
   Engine::instance()->cams()->active()->pos(2.0, 5.0, 9.0);
-  
+
   //Set lights for all objects in the scene
   Engine::instance()->setLights();
 
   // need this for smoothness
   glShadeModel(GL_SMOOTH);
 
-  soundHelper::play3dSound( vec4(-9.0,2.0,7.0,1.0), 
-			    vec4(0.0,0.0,0.0,1.0), 
-			    this->fSystem,
-			    &(this->radio),
-			    this->foreverEndless);
+  soundHelper::play3dSound( vec4(-9.0,2.0,7.0,1.0),
+                vec4(0.0,0.0,0.0,1.0),
+                this->fSystem,
+                &(this->radio),
+                this->foreverEndless);
 
   glUniform1i( glGetUniformLocation( morphingShader, "letMeSeeThatPhong" ), 1 );
   glUniform1i( glGetUniformLocation( noMorphShader, "letMeSeeThatPhong" ), 1 );
-  
+
 #ifndef WITHOUT_QT
 #ifndef __APPLE__
   // on Linux the glutMaintLoop is called here when using Qt
   Engine::run();
-  //glutMainLoop(); 
+  //glutMainLoop();
 #endif
 #else
   // if we are not using Qt, the glutMainLoop is called here for both platforms.
   Engine::run();
-  //glutMainLoop(); 
+  //glutMainLoop();
 #endif
 }
 
@@ -501,9 +540,12 @@ void MONOLITH::aRomanticEvening() {
 
     lightness += .7;
 
-    Engine::instance()->safeSetIntensity(0, lightness);
-    Engine::instance()->setLights();
+    //if (ps) lightness *= (ps->getNumParticlesVisible() / 3000.0);
+    //lightness = (float)std::max(0.0,std::min((double)lightness,1.0));
+    //Engine::instance()->safeSetIntensity(0, lightness);
+    //Engine::instance()->setLights();
 
+    boost::this_thread::yield();
     sleep( 0.01 );
   }
   printf("ENDING ROMANCE!\n");

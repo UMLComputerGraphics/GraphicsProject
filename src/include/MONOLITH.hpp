@@ -134,12 +134,12 @@ public slots:
     void slotMorphToWineBottle(void);
     void slotMorphToWhiskyBottle(void);
     //void slotParticleFieldFunction(int index); Deprecated for now.
-    void slotUpdateVectorField(std::string*);
+    void slotUpdateVectorField(std::string, std::string, std::string);
     void slotMaxAcceleration(int num);
     void slotFriction(int num);
     void slotSpeed(int num);
     void slotMaxSpeed(int num);
-    void slotUpdateFlameVecFunc(double[3], double, float, float);
+    void slotUpdateFlameVecFunc(float[3], double, float, float);
     void slotUpdateFlameVecFunc( void );
     void slotUpdateTornadoVecFunc( float, float, float );
     void slotUpdateTornadoVecFunc( void );
@@ -150,6 +150,7 @@ public slots:
 
 signals:
     void sigMorphPercentage(int value);
+    void sigEnableParticlesMelted( bool );
 #endif
 
 private:
@@ -176,6 +177,7 @@ private:
     Object *bottle;
     
     bool extinguish;
+    bool flicker;
 
     ParticleSystem *ps;
     bool _morphIsEnabled;
@@ -187,7 +189,6 @@ private:
     
     int _defaultNumberOfParticles ;
 
-
     boost::thread zipo;
 
     boost::function<void(int)> _percentageCallback;
@@ -198,6 +199,9 @@ private:
     FMOD::System *fSystem;
     FMOD::Sound  *foreverEndless, *fire;
     FMOD::Channel *radio, *flame;
+    
+    Light *_l1;
+    Light *_l2;
 
 };
 

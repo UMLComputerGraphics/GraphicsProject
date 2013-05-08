@@ -68,7 +68,7 @@ void Particle::setAlpha( float newAlpha ) {
   _color.w = newAlpha;
 }
 
-float Particle::setAlpha( void ) {
+float Particle::getAlpha( void ) {
   return _color.w;
 }
 
@@ -96,7 +96,7 @@ void Particle::setVel( vec3 newVel ) {
   _vel = newVel;
 }
 
-void Particle::setRespawnFlag( bool flag )
+void Particle::setParticleRespawnFlag( bool flag )
 {
     _respawnFlag = flag ;
 }

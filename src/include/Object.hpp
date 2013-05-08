@@ -318,6 +318,8 @@ public:
    * @return vec3( minX, minY, minZ )
    */
   Angel::vec3 getMin( void );
+  Angel::vec4 getRealMin( void );
+  Angel::vec4 getRealMax( void );
 
   virtual void sceneToRaytracer( RayTracer &rt );
   virtual void bufferToRaytracer( RayTracer &rt );

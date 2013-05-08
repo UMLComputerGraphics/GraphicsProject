@@ -40,13 +40,13 @@ public:
   void  setPos( vec4 newPos );
   void  setScale( vec3 newScale );
   void  setVel( vec3 newVel );
-  void  setRespawnFlag( bool );
+  void  setParticleRespawnFlag( bool );
 
   // getters
   vec4  getPosition( void );
   float getMaxLifetime(void);
   float getLifetime( void );
-  float setAlpha( void ) ;
+  float getAlpha( void ) ;
   vec4 getColor( void );
   bool getRespawnFlag( void );
   //void setSpin( float newSpin );

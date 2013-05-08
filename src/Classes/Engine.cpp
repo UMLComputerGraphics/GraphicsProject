@@ -59,8 +59,7 @@ Engine::Engine( void ) :
   _isFullScreen = false;
 
   _lights = new vector<Light*>;
-  _lightsSize = (GLint *) malloc( sizeof( GLint ) );
-  
+  _lightsSize = 0;
 
   opt("fixed_yaw", true);
   opt("trap_pointer", true);
@@ -72,6 +71,16 @@ Engine::Engine( void ) :
  */
 Engine::~Engine( void ) {
   // Nihil.
+
+  if (_lights) delete _lights;
+  //if (_lightsSize) free( _lightsSize);
+
+  /*if(_lightPositions) free(_lightPositions);
+  if(_lightSpeculars) free(_lightSpeculars);
+  if(_lightDiffuses) free(_lightDiffuses);
+  if(_lightAmbient) free(_lightAmbient);
+  if(_lightIntensities) free(_lightIntensities);*/
+
   LifeLock.unlock();
 }
 
@@ -157,11 +166,12 @@ void Engine::safeSetIntensity( int index, float intensity ) {
  **/
 void Engine::addLight( Light *newLight ) {
   _lights->push_back( newLight );
-  *_lightsSize = (GLint) ( _lights->size() );
+  getNumLights();
 }
 
 GLint* Engine::getNumLights( void ) {
-  return _lightsSize;
+  _lightsSize = (GLint) ( _lights->size() );
+  return &_lightsSize;
 }
 
 GLfloat* Engine::getLightPositions( void ) {
@@ -183,35 +193,21 @@ GLfloat* Engine::getLightIntensities( void ) {
 void Engine::setLights( void ) {
    vector<Light*>::iterator it;
 
-   //20 of each, 4 floats * 5 maxlights
-   //TODO: make this actually a product 4 * maxlights, and have a maxlights variable
-   GLfloat *allPos = (GLfloat *) malloc(sizeof(GLfloat) * 20);
-   GLfloat *allDiff = (GLfloat *) malloc(sizeof(GLfloat) * 20);
-   GLfloat *allSpec = (GLfloat *) malloc(sizeof(GLfloat) * 20);
-   GLfloat *allIntens= (GLfloat *) malloc(sizeof(GLfloat) * 5);
+   int j = 0;
 
-   _lightPositions   = allPos;
-   _lightDiffuses    = allDiff;
-   _lightSpeculars   = allSpec;
-   _lightIntensities = allIntens;
-   
    for(it = _lights->begin(); it != _lights->end(); ++it) {
     //Ambient is one ambience for whole scene, so only grab this from light 0
-    if( it == _lights->begin() ) _lightAmbient = (*it)->getGLAmbient();
 
     for(int i = 0; i < 4; i++) {
-      allPos[i] = (*it)->getGLPosition()[i];
-      allDiff[i] = (*it)->getGLDiffuse()[i];
-      allSpec[i] = (*it)->getGLSpecular()[i];
-
+      if( it == _lights->begin() ) _lightAmbient[i] = (*it)->getGLAmbient()[i];
+      _lightPositions[i+(j*4)] = (*it)->getGLPosition()[i];
+      _lightDiffuses[i+(j*4)] = (*it)->getGLDiffuse()[i];
+      _lightSpeculars[i+(j*4)] = (*it)->getGLSpecular()[i];
     } 
 
-    *allIntens = (GLfloat) (*it)->intensity();
+    _lightIntensities[j] = (GLfloat) (*it)->intensity();
 
-    allPos += 4;
-    allDiff += 4;
-    allSpec += 4;
-    allIntens++;
+    j++;
   }
 
 }
@@ -357,7 +353,7 @@ void Engine::run( void ) {
 
   glutMainLoop();
 
-  //delete Engine::instance(); //this causes bad juju when other things try to clean up shop
+  delete Engine::instance();
 }
 
 void Engine::registerIdle( boost::function<void(void)> idleFunc ) {

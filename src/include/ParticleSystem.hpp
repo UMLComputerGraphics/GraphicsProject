@@ -19,6 +19,7 @@
 #include "vec.hpp"
 #include "TransCache.hpp"
 #include "ParticleFieldFunctions.hpp"
+#include "UserVectorField.hpp"
 
 using Angel::vec2;
 using Angel::vec3;
@@ -49,6 +50,7 @@ class ParticleSystem : public Object {
   float getMinLife( void ) const ;
   int   getNumParticles( void ) const ;
   int   getNumParticlesActual( void ) const ;
+  int   getNumParticlesVisible( void ) const ;
 
   void  setNumParticles( int newNumParticles );
   void  setSlaughterHeight( float );
@@ -67,6 +69,8 @@ class ParticleSystem : public Object {
   void unpauseTheSystem(void);
   void togglePause(void);
   void setPause(bool);
+  void setEnableTheSystem( bool );
+  bool getEnableTheSystem( void );
 
   //overrides for Engine functionality
   virtual void buffer( GLenum usage = GL_DYNAMIC_DRAW );
@@ -87,8 +91,11 @@ class ParticleSystem : public Object {
 
   Parameters* getFuncParams();
 
+
   void setNumToAddEachFrame(unsigned);
 
+
+  UserVectorField* uvf();
 
 
  private:  
@@ -135,6 +142,7 @@ class ParticleSystem : public Object {
 
   /* system control variables */
   bool     _pauseTheSystem;
+  bool     _enableTheSystem;
   float    _slaughterHeight;
   unsigned _fillSpeedLimit;
 
@@ -148,6 +156,7 @@ public:
 
 private:
   Parameters* _funcParams;//
+  UserVectorField* _uvf;
 
   Angel::vec3 (*_vecFieldFunc)(Angel::vec4 posIn, Parameters* functionParams);
   Angel::vec4 (*_colorFunc)(float lifePct, Angel::vec4 posIn);
