@@ -84,17 +84,14 @@ void MONOLITH::monolith_idle(void)
       Object *candle = rootScene->search( "candle" );
       Object *candletip = rootScene->search( "candletip" );
 
-#ifndef WITHOUT_QT
       if (candle && candletip) {
+#ifndef WITHOUT_QT
           if( candle->getRealMax().y - candle->getRealMin().y <= .15 ) sigEnableParticlesMelted( false );
+#endif
           if( ps->getEnableTheSystem() && (ps->getNumParticlesActual() >= 500) ){
               Animation::candleMelt( candle, candletip, 0.9999 );
           }
       }
-#else
-      if(candle && candletip)
-          Animation::candleMelt( candle, candletip, 0.9999 );
-#endif
     }
 
     // Update the morph percentage.
@@ -536,11 +533,6 @@ void MONOLITH::aRomanticEvening() {
   printf("STARTING ROMANCE!\n");
   while ( !extinguish ) {
 
-//      if( !flicker ){
-//          boost::this_thread::yield();
-//          continue;
-//      }
-
     // random number between 0 and 1
     float lightness = (float) rand() / (float) RAND_MAX;
     // between 0 and .3
@@ -548,7 +540,8 @@ void MONOLITH::aRomanticEvening() {
 
     lightness += .7;
 
-    if (ps) lightness *= (ps->getNumParticlesVisible() / 1000.0);
+    if (ps) lightness *= (ps->getNumParticlesVisible() / 3000.0);
+    lightness = (float)std::max(0.0,std::min((double)lightness,1.0));
 
     Engine::instance()->safeSetIntensity(0, lightness);
     Engine::instance()->setLights();
