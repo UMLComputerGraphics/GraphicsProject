@@ -74,6 +74,7 @@ int main( int argc, char **argv ) {
   QObject::connect(&w, SIGNAL(sigMorphToWineBottle()), &monolith, SLOT(slotMorphToWineBottle()));
   QObject::connect(&w, SIGNAL(sigSetParticleLife(float,float)), &monolith, SLOT(slotSetParticleLife(float, float)));
   QObject::connect(&w, SIGNAL(sigMusicVolume(int)), &monolith, SLOT(slotMusicVolume( int )));
+  QObject::connect(&monolith, SIGNAL(sigEnableParticles(bool)), &w, SLOT(on_particleSystemEnabler_toggled(bool)));
 
   w.show();
 

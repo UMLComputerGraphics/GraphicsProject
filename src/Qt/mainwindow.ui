@@ -119,7 +119,7 @@
        <item>
         <widget class="QCheckBox" name="particleSystemEnabler">
          <property name="text">
-          <string>Light the Candle</string>
+          <string>Enable Particles</string>
          </property>
         </widget>
        </item>

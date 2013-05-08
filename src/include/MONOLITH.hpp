@@ -150,6 +150,7 @@ public slots:
 
 signals:
     void sigMorphPercentage(int value);
+    void sigEnableParticles( bool );
 #endif
 
 private:

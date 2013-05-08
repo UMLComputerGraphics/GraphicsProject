@@ -618,12 +618,12 @@ void ParticleSystem::unpauseTheSystem(void)
 	_pauseTheSystem = false;
 }
 
-void setEnableTheSystem( bool theBool )
+void ParticleSystem::setEnableTheSystem( bool theBool )
 {
     _enableTheSystem = theBool;
 }
 
-bool getEnableTheSystem( void )
+bool ParticleSystem::getEnableTheSystem( void )
 {
     return _enableTheSystem;
 }
