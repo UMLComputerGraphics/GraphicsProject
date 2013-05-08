@@ -90,7 +90,7 @@
        <rect>
         <x>10</x>
         <y>20</y>
-        <width>165</width>
+        <width>183</width>
         <height>105</height>
        </rect>
       </property>
@@ -119,7 +119,7 @@
        <item>
         <widget class="QCheckBox" name="particleSystemEnabler">
          <property name="text">
-          <string>Enable Particles</string>
+          <string>Enable Candle Animation</string>
          </property>
         </widget>
        </item>
