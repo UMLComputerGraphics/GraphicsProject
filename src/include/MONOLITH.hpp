@@ -150,7 +150,7 @@ public slots:
 
 signals:
     void sigMorphPercentage(int value);
-    void sigEnableParticles( bool );
+    void sigEnableParticlesMelted( bool );
 #endif
 
 private:
@@ -177,6 +177,7 @@ private:
     Object *bottle;
     
     bool extinguish;
+    bool flicker;
 
     ParticleSystem *ps;
     bool _morphIsEnabled;

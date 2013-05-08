@@ -49,6 +49,7 @@ class ParticleSystem : public Object {
   float getMinLife( void ) const ;
   int   getNumParticles( void ) const ;
   int   getNumParticlesActual( void ) const ;
+  int   getNumParticlesVisible( void ) const ;
 
   void  setNumParticles( int newNumParticles );
   void  setSlaughterHeight( float );

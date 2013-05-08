@@ -384,6 +384,17 @@ ParticleSystem::getNumParticlesActual( void ) const {
         return _vertices.size();
 }
 
+int
+ParticleSystem::getNumParticlesVisible( void ) const
+{
+    int count = 0;
+    for( vector<ParticleP>::const_iterator i = _particles.begin() ;
+         i != _particles.end() ; ++i )
+        if( (*i)->getAlpha() > 0.1 ) count++;
+
+    return count;
+}
+
 void
 ParticleSystem::setLifespan( float minLifespan, float maxLifespan ) {
 	_minLife = minLifespan;
@@ -500,16 +511,16 @@ ParticleSystem::update() {
 		if( ((*i)->getLifetime() <= 0.0)
 		/*|| ((*i)->getPosition().y >= maxHeight)*/ ) 
 		{
-		  
-		  if( numRespawnsThisFrame )
-		  {
-		          respawnParticle(**i)  ;
-			  numRespawnsThisFrame--;
-		  }
-		  else
-		  {	
-		          hideParticle(*i);
-		  }
+
+          if( numRespawnsThisFrame )
+          {
+                  respawnParticle(**i)  ;
+              numRespawnsThisFrame--;
+          }
+          else
+          {
+                  hideParticle(*i);
+          }
 		}
 
 		// call the update function on each particle

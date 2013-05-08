@@ -68,7 +68,7 @@ void Particle::setAlpha( float newAlpha ) {
   _color.w = newAlpha;
 }
 
-float Particle::setAlpha( void ) {
+float Particle::getAlpha( void ) {
   return _color.w;
 }
 

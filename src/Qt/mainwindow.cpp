@@ -285,17 +285,11 @@ void MainWindow::on_audioOnCheckbox_stateChanged(int arg1)
         sigMusicVolume( 0 );
 }
 
-void MainWindow::on_particleSystemEnabler_toggled(bool checked)
+void MainWindow::on_particleSystemEnabler_toggled_melted(bool checked)
 {
     if ( !checked )
     {
         ui->particleSystemEnabler->setChecked( false );
         ui->particleSystemEnabler->setEnabled( false );
     }
-    else
-    {
-        ui->particleSystemEnabler->setChecked( true );
-        ui->particleSystemEnabler->setEnabled( true );
-    }
-
 }

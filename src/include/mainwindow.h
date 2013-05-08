@@ -87,7 +87,7 @@ private slots:
 
     void on_audioOnCheckbox_stateChanged(int arg1);
 
-    void on_particleSystemEnabler_toggled(bool checked);
+    void on_particleSystemEnabler_toggled_melted(bool checked);
 
 private:
     Ui::MainWindow *ui;
