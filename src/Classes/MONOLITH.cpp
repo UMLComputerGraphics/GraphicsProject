@@ -57,7 +57,7 @@ void MONOLITH::cleanup(void) {
 }
 
 bool heisenbergUncertaintyPrinciple;
-double morphTime, prevTime;
+double morphTime = 0, prevTime = 0;
 /**
  * Apply animations and whatever else your heart desires.
  */
@@ -77,8 +77,8 @@ void MONOLITH::monolith_idle(void)
     }
     prevTime = timer;
 
-    float percent = (sin( morphTime ) + 1.0) / 2.0;
-    
+    float percent = (-cos( morphTime ) + 1.0) / 2.0;
+
     // Candle-melt Animation.
     {
       Object *candle = rootScene->search( "candle" );
