@@ -66,12 +66,18 @@ void MONOLITH::monolith_idle(void)
     {
       Object *candle = rootScene->search( "candle" );
       Object *candletip = rootScene->search( "candletip" );
+
+#ifndef WITHOUT_QT
       if (candle && candletip) {
           if( candle->getRealMax().y - candle->getRealMin().y <= .05 ) sigEnableParticles( false );
           if( ps->getEnableTheSystem() && (ps->getNumParticlesActual() >= 500) ){
               Animation::candleMelt( candle, candletip, 0.9999 );
           }
       }
+#else
+      if(candle && candletip)
+          Animation::candleMelt( candle, candletip, 0.9999 );
+#endif
     }
     
     // Update the morph percentage.
