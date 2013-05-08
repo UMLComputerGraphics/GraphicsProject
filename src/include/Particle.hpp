@@ -46,7 +46,7 @@ public:
   vec4  getPosition( void );
   float getMaxLifetime(void);
   float getLifetime( void );
-  float setAlpha( void ) ;
+  float getAlpha( void ) ;
   vec4 getColor( void );
   bool getRespawnFlag( void );
   //void setSpin( float newSpin );

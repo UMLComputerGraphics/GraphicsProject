@@ -134,7 +134,7 @@ public slots:
     void slotMorphToWineBottle(void);
     void slotMorphToWhiskyBottle(void);
     //void slotParticleFieldFunction(int index); Deprecated for now.
-    void slotUpdateVectorField(std::string*);
+    void slotUpdateVectorField(std::string, std::string, std::string);
     void slotMaxAcceleration(int num);
     void slotFriction(int num);
     void slotSpeed(int num);
@@ -150,7 +150,7 @@ public slots:
 
 signals:
     void sigMorphPercentage(int value);
-    void sigEnableParticles( bool );
+    void sigEnableParticlesMelted( bool );
 #endif
 
 private:
@@ -177,6 +177,7 @@ private:
     Object *bottle;
     
     bool extinguish;
+    bool flicker;
 
     ParticleSystem *ps;
     bool _morphIsEnabled;
@@ -187,7 +188,6 @@ private:
     int _argc;
     
     int _defaultNumberOfParticles ;
-
 
     boost::thread zipo;
 

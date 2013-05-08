@@ -50,10 +50,11 @@ ParticleSystem::ParticleSystem( int particleAmt, const std::string &name,
   _emitterShape(PS_NONE),
   _systemShape(PS_NONE),
   _funcParams( new FlameParameters() ),
+  _uvf( new UserVectorField() ),
   _vecFieldFunc( NULL ), 
   _colorFunc(ColorFunctions::standard)
 {
-  this->drawMode( GL_POINTS );	 
+  this->drawMode( GL_POINTS );
 }
 
 
@@ -386,6 +387,17 @@ ParticleSystem::getNumParticlesActual( void ) const {
         return _vertices.size();
 }
 
+int
+ParticleSystem::getNumParticlesVisible( void ) const
+{
+    int count = 0;
+    for( vector<ParticleP>::const_iterator i = _particles.begin() ;
+         i != _particles.end() ; ++i )
+        if( (*i)->getAlpha() > 0.1 ) count++;
+
+    return count;
+}
+
 void
 ParticleSystem::setLifespan( float minLifespan, float maxLifespan ) {
 	_minLife = minLifespan;
@@ -502,16 +514,16 @@ ParticleSystem::update() {
 		if( ((*i)->getLifetime() <= 0.0)
 		/*|| ((*i)->getPosition().y >= maxHeight)*/ ) 
 		{
-		  
-		  if( numRespawnsThisFrame )
-		  {
-		          respawnParticle(**i)  ;
-			  numRespawnsThisFrame--;
-		  }
-		  else
-		  {	
-		          hideParticle(*i);
-		  }
+
+          if( numRespawnsThisFrame )
+          {
+                  respawnParticle(**i)  ;
+              numRespawnsThisFrame--;
+          }
+          else
+          {
+                  hideParticle(*i);
+          }
 		}
 
 		// call the update function on each particle
@@ -648,7 +660,12 @@ void ParticleSystem::setFuncParams(Parameters* theParameters)
 
 Parameters* ParticleSystem::getFuncParams(void)
 {
-	return _funcParams;
+    return _funcParams;
+}
+
+UserVectorField *ParticleSystem::uvf()
+{
+    return _uvf;
 }
 // Nada. Don't buffer particles to the raytracer,
 // That's crazy-talk!

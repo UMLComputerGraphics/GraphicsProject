@@ -987,6 +987,9 @@
           <property name="tabChangesFocus">
            <bool>true</bool>
           </property>
+          <property name="plainText">
+           <string>0.0</string>
+          </property>
          </widget>
         </item>
         <item row="1" column="0">
@@ -1031,6 +1034,9 @@
           <property name="tabChangesFocus">
            <bool>true</bool>
           </property>
+          <property name="plainText">
+           <string>0.1</string>
+          </property>
          </widget>
         </item>
         <item row="2" column="0">
@@ -1074,6 +1080,9 @@
           </property>
           <property name="tabChangesFocus">
            <bool>true</bool>
+          </property>
+          <property name="plainText">
+           <string>0.0</string>
           </property>
          </widget>
         </item>
@@ -1347,29 +1356,6 @@
          </widget>
         </item>
        </layout>
-      </widget>
-     </widget>
-     <widget class="QScrollArea" name="scrollArea">
-      <property name="geometry">
-       <rect>
-        <x>400</x>
-        <y>310</y>
-        <width>120</width>
-        <height>80</height>
-       </rect>
-      </property>
-      <property name="widgetResizable">
-       <bool>true</bool>
-      </property>
-      <widget class="QWidget" name="scrollAreaWidgetContents">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>118</width>
-         <height>78</height>
-        </rect>
-       </property>
       </widget>
      </widget>
     </widget>

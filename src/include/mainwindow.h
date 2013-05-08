@@ -55,7 +55,7 @@ signals:
     /* Particles */
 	void sigChangeNumberOfParticles(int value);
 	void sigFreezeParticles(bool isEnabled);
-    void sigUserDefVecParams( void );
+    void sigUserDefVecParams( std::string, std::string, std::string );
     void sigFlameVecParams( void );
     void sigFlameVecParams(float[3], double, float, float);
     void sigTornadoVecParams( void );
@@ -70,7 +70,7 @@ private slots:
 
     void on_particleFieldFunctionComboBox_currentIndexChanged(int index);
 
-    //void on_userDefinedShowButton_clicked();
+    void on_userDefinedShowButton_clicked();
 
     void on_flameShowButton_clicked();
     void on_flameDefaultButton_clicked();
@@ -87,7 +87,9 @@ private slots:
 
     void on_audioOnCheckbox_stateChanged(int arg1);
 
-    void on_particleSystemEnabler_toggled(bool checked);
+    void on_particleSystemEnabler_toggled_melted(bool checked);
+
+    void on_userDefinedDefaultButton_clicked();
 
 private:
     Ui::MainWindow *ui;
