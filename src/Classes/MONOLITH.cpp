@@ -67,9 +67,9 @@ void MONOLITH::monolith_idle(void)
       Object *candle = rootScene->search( "candle" );
       Object *candletip = rootScene->search( "candletip" );
       if (candle && candletip) {
-          if( 1 ) sigEnableParticles( false );
+          if( candle->getRealMax().y - candle->getRealMin().y <= .05 ) sigEnableParticles( false );
           if( ps->getEnableTheSystem() && (ps->getNumParticlesActual() >= 500) ){
-              Animation::candleMelt( candle, candletip, 0.9999 );
+              Animation::candleMelt( candle, candletip, 0.99 );
           }
       }
     }
