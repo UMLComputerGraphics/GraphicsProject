@@ -1,4 +1,4 @@
-#ifdef EXPRTK
+//#ifdef EXPRTK
 #include "UserVectorField.hpp"
 #include "vec.hpp"
 #include "exprtk/exprtk.hpp"
@@ -88,4 +88,4 @@ void UserVectorField::setAll( const std::string f[3] ) {
    return getResultingVec3();
    } */
 
-#endif
+//#endif

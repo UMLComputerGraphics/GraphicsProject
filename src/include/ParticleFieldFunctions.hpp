@@ -52,7 +52,7 @@ class UserParameters : public Parameters
 {
 public:
      UserParameters(UserVectorField *value);
-//     UserVectorField* uvf(void);
+     UserVectorField* uvf();
 
 private:
     UserVectorField* _uvf;

@@ -166,9 +166,9 @@ void MainWindow::on_particleFieldFunctionComboBox_currentIndexChanged(int index)
 
 void MainWindow::on_flameShowButton_clicked()
 {
-    double vec3Pos[3] = { ui->xFieldTextInput->toPlainText().toDouble(),
-                          ui->yFieldTextInput->toPlainText().toDouble(),
-                          ui->zFieldTextInput->toPlainText().toDouble() };
+    float vec3Pos[3] = { ui->xFieldTextInput->toPlainText().toFloat(),
+                          ui->yFieldTextInput->toPlainText().toFloat(),
+                          ui->zFieldTextInput->toPlainText().toFloat() };
     double scale = ui->scaleSlider->value() / 100.0;
     float power = ui->powerSlider->value() / 100.0;
     float range = ui->rangeSlider->value() / 100.0;
@@ -217,8 +217,8 @@ void MainWindow::on_tornadoDefaultButton_clicked()
 
 void MainWindow::on_setLifespansButton_clicked()
 {
-    float min = ui->minLifeInput->toPlainText().toDouble();
-    float max = ui->maxLifeInput->toPlainText().toDouble();
+    float min = ui->minLifeInput->toPlainText().toFloat();
+    float max = ui->maxLifeInput->toPlainText().toFloat();
 
     sigSetParticleLife( min, max );
 }
@@ -292,4 +292,19 @@ void MainWindow::on_audioOnCheckbox_stateChanged(int arg1)
         sigMusicVolume( ui->volumeSlider->value() );
     else
         sigMusicVolume( 0 );
+}
+
+void MainWindow::on_particleSystemEnabler_toggled(bool checked)
+{
+    if ( !checked )
+    {
+        ui->particleSystemEnabler->setChecked( false );
+        ui->particleSystemEnabler->setEnabled( false );
+    }
+    else
+    {
+        ui->particleSystemEnabler->setChecked( true );
+        ui->particleSystemEnabler->setEnabled( true );
+    }
+
 }

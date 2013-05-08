@@ -67,7 +67,10 @@ void MONOLITH::monolith_idle(void)
       Object *candle = rootScene->search( "candle" );
       Object *candletip = rootScene->search( "candletip" );
       if (candle && candletip) {
-        Animation::candleMelt( candle, candletip, 0.9999 );
+          if( candle->getRealMax().y - candle->getRealMin().y <= .05 ) sigEnableParticles( false );
+          if( ps->getEnableTheSystem() && (ps->getNumParticlesActual() >= 500) ){
+              Animation::candleMelt( candle, candletip, 0.9999 );
+          }
       }
     }
     
@@ -111,7 +114,7 @@ void MONOLITH::slotFreezeParticles(bool isEnabled)
 void MONOLITH::slotMorphPercentage(int value)
 {
   if (!heisenbergUncertaintyPrinciple)
-    (*rootScene)["bottle"]->morphPercentage(value / 100.0);
+    rootScene->search("bottle")->morphPercentage(value / 100.0);
 }
 void MONOLITH::setMorphPercentageCallback(boost::function<void(int)> cb)
 {
@@ -120,18 +123,18 @@ void MONOLITH::setMorphPercentageCallback(boost::function<void(int)> cb)
 void MONOLITH::slotEnableMorphing(bool isEnabled)
 {
   gprint(PRINT_WARNING, "MORPHING := %s\n", isEnabled?"ENABLED":"DISABLED");
-   (*rootScene)["bottle"]->morphEnabled(isEnabled);
+   rootScene->search("bottle")->morphEnabled(isEnabled);
 }
 
 void MONOLITH::slotMorphToWineBottle(void)
 {
-   (*rootScene)["bottle"]->morphPercentage(0.0);
+   rootScene->search("bottle")->morphPercentage(0.0);
     _percentageCallback(0);
 }
 
 void MONOLITH::slotMorphToWhiskyBottle(void)
 {
-    (*rootScene)["bottle"]->morphPercentage(1.0);
+    rootScene->search("bottle")->morphPercentage(1.0);
     _percentageCallback(100);
 }
 
@@ -147,12 +150,12 @@ void MONOLITH::slotEnableMorphMatching(bool isEnabled){
 	}
 	gprint(PRINT_WARNING, "MORPH MATCHING := %s\n", isEnabled?"ENABLED":"DISABLED");
 	if(isEnabled){
-		_rectangularMapping->copyToObjects((*rootScene)["bottle"],(*rootScene)["bottle"]->morphTarget());
+        _rectangularMapping->copyToObjects(rootScene->search("bottle"),rootScene->search("bottle")->morphTarget());
 		_scaleModel->restoreModels();
 	}else{
-		_rectangularMapping->revertToOriginal((*rootScene)["bottle"],(*rootScene)["bottle"]->morphTarget());
+        _rectangularMapping->revertToOriginal(rootScene->search("bottle"),rootScene->search("bottle")->morphTarget());
 	}
-	(*rootScene)["bottle"]->buffer();
+    rootScene->search("bottle")->buffer();
 }
 
 
@@ -165,15 +168,16 @@ void MONOLITH::slotEnableParticleSystem(bool isEnabled)
 {
     if (isEnabled)
     {
-        ps->setNumParticles(_defaultNumberOfParticles);
+        ps->setEnableTheSystem( true );
     }
     else
     {
         ps->setNumParticles(0);
+        ps->setEnableTheSystem( false );
     }
 }
 
-void MONOLITH::slotUpdateFlameVecFunc(double pos[3], double scale, float power, float range)
+void MONOLITH::slotUpdateFlameVecFunc(float pos[3], double scale, float power, float range)
 {
     ps->setFuncParams(new FlameParameters( vec3(pos[0], pos[1], pos[2]), scale, power, range));
     ps->setVectorField( ParticleFieldFunctions::flame );

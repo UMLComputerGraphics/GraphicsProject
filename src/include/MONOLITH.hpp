@@ -139,7 +139,7 @@ public slots:
     void slotFriction(int num);
     void slotSpeed(int num);
     void slotMaxSpeed(int num);
-    void slotUpdateFlameVecFunc(double[3], double, float, float);
+    void slotUpdateFlameVecFunc(float[3], double, float, float);
     void slotUpdateFlameVecFunc( void );
     void slotUpdateTornadoVecFunc( float, float, float );
     void slotUpdateTornadoVecFunc( void );
@@ -150,6 +150,7 @@ public slots:
 
 signals:
     void sigMorphPercentage(int value);
+    void sigEnableParticles( bool );
 #endif
 
 private:

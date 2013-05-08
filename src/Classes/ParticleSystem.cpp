@@ -43,6 +43,7 @@ ParticleSystem::ParticleSystem( int particleAmt, const std::string &name,
   _minLife( 0.1 ),
   _maxLife( 1 ), 
   _pauseTheSystem( false ), 
+  _enableTheSystem( false ),
   _slaughterHeight( 0.0 ),
   _fillSpeedLimit( 5 ), 
   _emitterRadius( 0.0 ),
@@ -149,10 +150,11 @@ ParticleSystem::respawnParticle(Particle &p)
 
     p.setPos(spawnPosition);
 
-    if ( p.getRespawnFlag() )
+    if ( p.getRespawnFlag() == true )
     {
         p.setMaxLifetime( generateLifespan() );
-        p.setRespawnFlag( false );
+        p.setLifetime( p.getMaxLifetime() );
+        p.setParticleRespawnFlag( false );
     }
     else
     {
@@ -550,7 +552,7 @@ void ParticleSystem::setRespawnFlag( bool flag )
 
     for( i = this->_particles.begin() ; i != this->_particles.end() ; ++i )
     {
-        (*i)->setRespawnFlag( flag );
+        (*i)->setParticleRespawnFlag( flag );
     }
 }
 
@@ -617,6 +619,16 @@ void ParticleSystem::unpauseTheSystem(void)
 	_pauseTheSystem = false;
 }
 
+void ParticleSystem::setEnableTheSystem( bool theBool )
+{
+    _enableTheSystem = theBool;
+}
+
+bool ParticleSystem::getEnableTheSystem( void )
+{
+    return _enableTheSystem;
+}
+
 void ParticleSystem::togglePause(void)
 {
 	_pauseTheSystem =  !_pauseTheSystem ;
@@ -635,7 +647,12 @@ void ParticleSystem::setFuncParams(Parameters* theParameters)
 
 Parameters* ParticleSystem::getFuncParams(void)
 {
-	return _funcParams;
+    return _funcParams;
+}
+
+UserVectorField *ParticleSystem::uvf()
+{
+    return _uvf;
 }
 // Nada. Don't buffer particles to the raytracer,
 // That's crazy-talk!

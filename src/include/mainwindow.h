@@ -57,7 +57,7 @@ signals:
 	void sigFreezeParticles(bool isEnabled);
     void sigUserDefVecParams( std::string, std::string, std::string );
     void sigFlameVecParams( void );
-    void sigFlameVecParams(double[3], double, float, float);
+    void sigFlameVecParams(float[3], double, float, float);
     void sigTornadoVecParams( void );
     void sigTornadoVecParams( float, float, float );
     void sigSetParticleLife( float, float );
@@ -86,6 +86,8 @@ private slots:
     void on_volumeSlider_sliderMoved(int position);
 
     void on_audioOnCheckbox_stateChanged(int arg1);
+
+    void on_particleSystemEnabler_toggled(bool checked);
 
 private:
     Ui::MainWindow *ui;
