@@ -62,6 +62,7 @@ signals:
     void sigTornadoVecParams( float, float, float );
     void sigSetParticleLife( float, float );
     void sigMusicVolume( int );
+    void sigPartColorFunc( int );
 
     // void sigParticleFieldFunction(int index);
 
@@ -90,6 +91,8 @@ private slots:
     void on_particleSystemEnabler_toggled_melted(bool checked);
 
     void on_userDefinedDefaultButton_clicked();
+
+    void on_particleColorComboBox_currentIndexChanged(int index);
 
 private:
     Ui::MainWindow *ui;

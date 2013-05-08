@@ -328,3 +328,8 @@ void MainWindow::on_particleSystemEnabler_toggled_melted(bool checked)
         ui->particleSystemEnabler->setEnabled( false );
     }
 }
+
+void MainWindow::on_particleColorComboBox_currentIndexChanged(int index)
+{
+
+}

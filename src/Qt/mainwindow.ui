@@ -27,7 +27,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="generalTab">
      <attribute name="title">
@@ -568,7 +568,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>110</y>
+        <y>80</y>
         <width>301</width>
         <height>29</height>
        </rect>
@@ -1369,6 +1369,39 @@
         </item>
        </layout>
       </widget>
+     </widget>
+     <widget class="QWidget" name="layoutWidget_5">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>120</y>
+        <width>301</width>
+        <height>29</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="colorLayoutBox">
+       <item>
+        <widget class="QLabel" name="particleColorLabel">
+         <property name="text">
+          <string>Particle Color:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="particleColorComboBox">
+         <item>
+          <property name="text">
+           <string>Flame</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Aurora</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
     <widget class="QWidget" name="morphingTab">

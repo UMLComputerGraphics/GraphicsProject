@@ -296,6 +296,26 @@ void MONOLITH::slotMusicVolume(int vol)
     radio->setVolume(newVol);
     soundHelper::ERRCHECK();
 }
+
+void MONOLITH::slotPartColorFunc( int index )
+{
+    switch ( index )
+    {
+    case 0:
+        ps->setColorFunc( ColorFunctions::flame );
+        break;
+    case 1:
+        ps->setColorFunc( ColorFunction::aurora );
+        break;
+    case 2:
+        break;
+    case 3:
+        break;
+    case 4:
+        break;
+    }
+}
+
 #endif //WITHOUT_QT
 
 /**
