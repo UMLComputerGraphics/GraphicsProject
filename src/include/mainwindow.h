@@ -35,6 +35,10 @@ signals:
 	void sigEnableRaytracing(bool isEnabled);
 	void sigEnableParticleSystem(bool isEnabled);
     void sigEnableMorphMatching(bool isEnabled);
+
+    /*VR Stuff */
+    void sigEnableVRCameraControl(bool isEnabled);
+    void sigVRCameraCoordinates(float, float);
 	
 	/* Camera */
 	void sigChangeAspectRatio(int value);
@@ -74,6 +78,8 @@ private slots:
 
     void on_flameShowButton_clicked();
     void on_flameDefaultButton_clicked();
+
+    void on_VRXLocation_valueChanged(int value);
 
     void on_tornadoShowButton_clicked();
 

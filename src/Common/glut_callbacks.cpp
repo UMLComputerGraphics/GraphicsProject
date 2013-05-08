@@ -432,3 +432,4 @@ void wiilook( Camera &WiiCamera, const Angel::vec3 &NewTheta,
   OldTheta = NewTheta;
 
 }
+
