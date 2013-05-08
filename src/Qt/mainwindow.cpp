@@ -331,5 +331,5 @@ void MainWindow::on_particleSystemEnabler_toggled_melted(bool checked)
 
 void MainWindow::on_particleColorComboBox_currentIndexChanged(int index)
 {
-
+    sigPartColorFunc( index );
 }

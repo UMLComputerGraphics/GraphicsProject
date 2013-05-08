@@ -309,7 +309,7 @@ void MONOLITH::slotPartColorFunc( int index )
         ps->setColorFunc( ColorFunctions::flame );
         break;
     case 1:
-        ps->setColorFunc( ColorFunction::aurora );
+        ps->setColorFunc( ColorFunctions::aurora );
         break;
     case 2:
         break;
