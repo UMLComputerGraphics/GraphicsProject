@@ -63,3 +63,53 @@ vec4 ColorFunctions::aurora( float lifePct, vec4 posIn ) {
 
   return vec4(r, g, b, w);
 }
+
+float scaleOverRange( float min, float max, float pct ) {
+  return pct / (max - min);
+}
+
+vec4 ColorFunctions::rainbow( float lifePct, vec4 posIn ) {
+  float r, g, b, w;
+
+  float pct = 1 - lifePct;
+  
+  r = 1.0;
+  g = 0.0;
+  b = 0.0;
+  w = 1.0;
+
+  if( pct > 0 && pct < 0.1 ) {
+    r = 1.0;
+    g = scaleOverRange( 0, 0.1, pct );
+  }
+  if( pct > 0.1 && pct < 0.4 ) {
+    g = 1.0;
+  }
+  if( pct > 0.2 && pct < 0.3 ) {
+    r = -scaleOverRange( 0.2, 0.3, pct );
+  }
+  if( pct < 0.25 ) {
+    b = 0.0;
+  }
+  if( pct > 0.25 && pct < 0.4 ) {
+    b = scaleOverRange( 0.25, 0.4, pct );
+  }
+  if( pct > 0.25 && pct < 0.6 ) {
+    r = 0.0;
+  }
+  if( pct > 0.4 && pct < 0.6 ) {
+    g = -scaleOverRange( 0.4, 0.6, pct );
+  }
+  if( pct > 0.4 && pct < 0.8 ) {
+    b = 1.0;
+  }
+  if( pct > 0.6 && pct < 0.8 ) {
+    r = scaleOverRange( 0.6, 0.7, pct );
+  }
+  if( pct > 0.8 && pct < 1.0 ) {
+    b = -scaleOverRange( 0.8, 1.0, pct );
+    r = 1.0;
+  }
+  
+  return vec4(r, g, b, w);
+}
