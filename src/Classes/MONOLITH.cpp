@@ -48,6 +48,7 @@ void MONOLITH::cleanup(void) {
 }
 
 bool heisenbergUncertaintyPrinciple;
+double morphTime, prevTime;
 /**
  * Apply animations and whatever else your heart desires.
  */
@@ -60,7 +61,13 @@ void MONOLITH::monolith_idle(void)
     
     // Animation variables.
     double timer = glutGet( GLUT_ELAPSED_TIME ) / 500.0;
-    float percent = (sin( timer ) + 1.0) / 2.0;
+
+    if (bottle && (bottle->morphEnabled())) {
+	    morphTime += timer-prevTime;
+    }
+    prevTime = timer;
+
+    float percent = (sin( morphTime ) + 1.0) / 2.0;
     
     // Candle-melt Animation.
     {
