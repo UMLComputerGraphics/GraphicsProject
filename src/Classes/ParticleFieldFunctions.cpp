@@ -45,9 +45,9 @@ vec3 ParticleFieldFunctions::fixed(vec4 pos)
 }
 
 
-vec3 ParticleFieldFunctions::up(vec4 pos)
+vec3 ParticleFieldFunctions::up(vec4 pos, Parameters* parameters)
 {
-  return vec3(0.0,0.01,0.0);
+  return vec3(0.0,0.005,0.0);
 }
 
 //FIXME DOCS PARAMETERS
