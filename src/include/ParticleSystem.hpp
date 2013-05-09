@@ -94,7 +94,7 @@ class ParticleSystem : public Object {
 
   void setNumToAddEachFrame(unsigned);
 
-
+  void switchUVF( UserVectorField *newUVF );
   UserVectorField* uvf();
 
 

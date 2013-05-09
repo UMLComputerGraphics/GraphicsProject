@@ -256,11 +256,14 @@ void MONOLITH::slotSetParticleLife( float min, float max )
 
 void MONOLITH::slotUpdateVectorField(std::string fx, std::string fy, std::string fz)
 {
-    sigUpdateUdfMessage( "" );
+  sigUpdateUdfMessage( "" );
   try {
-    ps->uvf()->setAll(fx, fy, fz);
-    ps->setFuncParams( new UserParameters(ps->uvf()));
-    ps->setVectorField(ParticleFieldFunctions::userSupplied);
+    UserVectorField *temp = new UserVectorField( fx, fy, fz );
+    // Note, temp's memory is now managed by the particlesystem.
+    // The previous UVF is also now freed as-of the switch.
+    ps->switchUVF( temp );
+    ps->setFuncParams( new UserParameters(ps->uvf()) );
+    ps->setVectorField( ParticleFieldFunctions::userSupplied );
   }
   catch( std::exception &e ) {
     sigUpdateUdfMessage( "Could not compute user function" );
@@ -334,7 +337,7 @@ void MONOLITH::slotPartColorFunc( int index )
         ps->setColorFunc( ColorFunctions::aurora );
         break;
     case 2:
-        ps->setColorFunc( ColorFunctions::rainbow );
+        ps->setColorFunc( ColorFunctions::HSV );
         break;
     case 3:
         ps->setColorFunc( ColorFunctions::tropical );
@@ -590,7 +593,7 @@ void MONOLITH::aRomanticEvening() {
     lightness += .7;
 
     if (ps) lightness *= (ps->getNumParticlesVisible() / 3000.0);
-    lightness = (float)std::max(0.0,std::min((double)lightness,1.0));
+    //lightness = (float)std::max(0.0,std::min((double)lightness,1.0));
 
     // This is dumb and it's why singletons are stupid,
     // but if the engine has exited before we can extinguish this,
