@@ -9,6 +9,8 @@
 var canvas;
 var gl;
 
+var point4 = vec4; // #HighFashion
+
 var NumVertices  = 36;
 
 // This flag is true when the mouse is pressed down
