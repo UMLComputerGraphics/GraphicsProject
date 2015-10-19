@@ -9,6 +9,19 @@
 var canvas;
 var gl;
 
+var vec4 = {};
+vec4.create = function(vec) {
+	var dest = new Float32Array(4);
+	
+	if(vec) {
+		dest[0] = vec[0];
+		dest[1] = vec[1];
+		dest[2] = vec[2];
+    dest[3] = vec[3];
+	}
+	
+	return dest;
+};
 var point4 = vec4; // #HighFashion
 
 var NumVertices  = 36;
